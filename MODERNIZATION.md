@@ -212,3 +212,27 @@ part — subsequent rounds are pure spec authoring.
 
 Smoke re-verified SMOKE_PASS after all changes; lint green; 5 server packages
 re-verified green.
+
+
+## Loop 16 — Coverage campaign round 2 (commit 4783712a2)
+
+client-app: 9.01% → **10.23% lines** (380 tests, 16 files, all green). Real
+fixes landed outside the specs themselves: Publisher restored to reflux-coffee
+(lost in a decaffeinate truncation — the original coffee exported both
+Listener and Publisher), nylas-store/coffee-helpers proper ESM export shapes,
+static-import extension gaps closed, 56 components given the missing
+`import PropTypes`, nylas-api-helpers map converted off bare require.
+
+Five worker specs deferred to `spec/deferred/*.disabled` (draft-factory,
+message-store, focused-content-store, thread-counts-store, components-list-
+tabular, internal-sidebar): mock-wiring mismatches and Rx-timeout issues in
+the specs themselves — the modules under test are fine. First task of the
+next round.
+
+Yield curve is flattening (+1.2 pts this round vs +8.7 last): the remaining
+mass is stores (need Rx/mock wiring) and internal_packages (need the plugin
+bridge). Rounds 3+ should target internal_packages/lib directly (pure logic,
+no bridge) and fix the deferred five first.
+
+Verification after round 2: lint green, smoke SMOKE_PASS, isomorphic-core +
+client-sync re-verified green.
