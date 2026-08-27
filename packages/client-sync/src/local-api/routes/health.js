@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import SyncActivity from '../../shared/sync-activity.js';
 
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'GET',
     path: '/health',

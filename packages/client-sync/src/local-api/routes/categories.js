@@ -2,7 +2,7 @@ import Joi from 'joi';
 import Serialization from '../serialization.js';
 import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
-module.exports = (server) => {
+export default (server) => {
   ['Folder', 'Label'].forEach((klass) => {
     const term = `${klass.toLowerCase()}s`;
 

@@ -20,7 +20,7 @@ async function upsertAccount(accountParams, credentials) {
   return {account, token}
 }
 
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'POST',
     path: '/auth',

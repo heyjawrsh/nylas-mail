@@ -1,4 +1,8 @@
 import {vi} from 'vitest'
+import os from 'node:os'
+import path from 'node:path'
+
+process.env.NYLAS_HOME = path.join(os.tmpdir(), 'nylas-sync-spec-home')
 
 globalThis.window = globalThis
 globalThis.window.$n = globalThis.window.$n || {}

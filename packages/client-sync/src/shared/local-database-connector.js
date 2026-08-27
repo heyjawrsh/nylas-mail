@@ -1,4 +1,5 @@
 import * as IsomorphicCore from 'isomorphic-core'
+import '../../../isomorphic-core/src/database-extensions.js'; // streamAll — relative so spec mocks of the package don't strip the side effect
 import createDebug from 'debug';
 import Sequelize from 'sequelize';
 import fs from 'fs';
@@ -6,7 +7,6 @@ import path from 'path';
 const {StringUtils, loadModels, HookIncrementVersionOnSave, HookTransactionLog} = IsomorphicCore;
 import TransactionConnector from './transaction-connector.js';
 
-require('./database-extensions'); // Extends Sequelize on require
 const debugVerbose = createDebug("sync:K2DB:all");
 
 class LocalDatabaseConnector {

@@ -9,7 +9,7 @@
  *
  * sqlite_autoindex_threadFolders_1 (threadId, folderId)
  */
-module.exports = (sequelize) => {
+export default (sequelize) => {
   return sequelize.define('threadFolder', {
   }, {
     indexes: [

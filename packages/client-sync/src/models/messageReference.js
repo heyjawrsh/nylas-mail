@@ -1,4 +1,4 @@
-module.exports = (sequelize) => {
+export default (sequelize) => {
   return sequelize.define('messageReference', {
   }, {
     indexes: [

@@ -19,7 +19,7 @@ function validateRecipientsPresent(message) {
   }
 }
 
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'message', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },

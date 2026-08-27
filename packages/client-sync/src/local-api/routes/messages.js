@@ -5,7 +5,7 @@ import Serialization from '../serialization.js';
 import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
 
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'GET',
     path: '/messages/{id}',

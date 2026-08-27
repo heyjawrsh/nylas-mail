@@ -47,6 +47,9 @@ const silentLogger = {
   warn: () => {},
   debug: () => {},
   error: () => {},
+  log: () => {},
+  forAccount: () => silentLogger,
+  child: () => silentLogger,
 }
 
 module.exports = {

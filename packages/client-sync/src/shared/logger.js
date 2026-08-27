@@ -76,4 +76,5 @@ function createLogger() {
   })
 }
 
+export {createLogger};
 export default {createLogger};

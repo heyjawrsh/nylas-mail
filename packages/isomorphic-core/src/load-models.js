@@ -12,9 +12,10 @@ export default async function loadModels(Sequelize, sequelize, {loadShared = tru
 
   const db = {};
 
+  const NON_MODEL_FILES = new Set(['define-model.js', '.eslintrc.js']);
   for (const modelsDir of modelDirs) {
     for (const filename of fs.readdirSync(modelsDir)) {
-      if (filename.endsWith('.js')) {
+      if (filename.endsWith('.js') && !NON_MODEL_FILES.has(filename)) {
         const mod = await import(pathToFileURL(path.join(modelsDir, filename)).href)
         let model = mod.default(sequelize, Sequelize);
         if (schema) {

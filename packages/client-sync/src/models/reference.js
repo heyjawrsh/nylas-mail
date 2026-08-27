@@ -4,7 +4,7 @@ import defineModel from './define-model.js';
 // In-Reply-To, and References message headers in an indexable fashion for
 // threading messages in providers that do not provide a thread ID from the
 // server.
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'reference', {
     // We need to specify autoincrement: true here otherwise newly
     // created models come back with the primary key set on an attribute

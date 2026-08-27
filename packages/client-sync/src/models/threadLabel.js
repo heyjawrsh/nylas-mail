@@ -9,7 +9,7 @@
  *
  * sqlite_autoindex_threadLabels_1 labelId, threadId
  */
-module.exports = (sequelize) => {
+export default (sequelize) => {
   return sequelize.define('threadLabel', {
   }, {
     indexes: [

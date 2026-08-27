@@ -1,3 +1,4 @@
+import Sequelize from 'sequelize';
 // straight translated from the Nylas Sync Engine python codebase, see
 // https://github.com/nylas/cloud-core/blob/7db949fec9447b73e2ba9485d8903380414e8223/sync-engine/inbox/util/misc.py#L175-L183
 // for original!
@@ -22,10 +23,10 @@ async function findOrBuildByReferences(db, message) {
   // If we have a thread that matches the new message, at least one element
   // of the new message's references will match an existing reference we've
   // already synced and associated with the correct thread.
-  if (message.headerMessageId) {
+  if (message.headerMessageId && (message.references || []).length > 0) {
     matchingRef = await Reference.findOne({
       where: {
-        rfc2822MessageId: message.references,
+        rfc2822MessageId: {[Sequelize.Op.in]: message.references},
       },
       include: [
         { model: Thread, include: [{model: Label}, {model: Folder}]},

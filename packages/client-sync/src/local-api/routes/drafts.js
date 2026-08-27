@@ -3,7 +3,7 @@ const {MessageUtils, Errors: {APIError}} = IsomorphicCore
 import Joi from 'joi';
 
 // TODO: This is a placeholder.
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'GET',
     path: '/drafts',

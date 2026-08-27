@@ -2,7 +2,7 @@ import * as IsomorphicCore from 'isomorphic-core'
 const {DatabaseTypes: {JSONArrayColumn}} = IsomorphicCore;
 import defineModel from './define-model.js';
 
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'thread', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },

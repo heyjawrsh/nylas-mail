@@ -15,4 +15,4 @@ class TransactionConnector extends EventEmitter {
   }
 }
 
-module.exports = new TransactionConnector();
+export default new TransactionConnector();

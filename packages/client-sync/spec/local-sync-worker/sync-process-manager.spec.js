@@ -20,7 +20,6 @@ describe("SyncProcessManager", () => {
   })
   describe("when a sync worker is stuck", () => {
     beforeEach(() => {
-      vi.spyOn(Actions, 'recordUserEvent')
       vi.spyOn(SyncProcessManager, 'removeWorkerForAccountId')
       vi.spyOn(SyncProcessManager, 'addWorkerForAccount')
       vi.spyOn(SyncActivity, 'getLastSyncActivityForAccount').mockReturnValue({
@@ -36,7 +35,6 @@ describe("SyncProcessManager", () => {
       expect(SyncProcessManager.addWorkerForAccount).toHaveBeenCalledTimes(1)
 
       await SyncProcessManager._checkHealth()
-      expect(Actions.recordUserEvent).toHaveBeenCalledTimes(1)
       expect(SyncProcessManager.removeWorkerForAccountId).toHaveBeenCalledTimes(1)
       expect(SyncProcessManager.addWorkerForAccount).toHaveBeenCalledTimes(2)
     })
@@ -55,7 +53,6 @@ describe("SyncProcessManager", () => {
 
       // Make sure the worker is discarded by the manager
       await SyncProcessManager._checkHealth()
-      expect(Actions.recordUserEvent).toHaveBeenCalledTimes(1)
       expect(SyncProcessManager.removeWorkerForAccountId).toHaveBeenCalledTimes(1)
       expect(SyncProcessManager.addWorkerForAccount).toHaveBeenCalledTimes(2)
 

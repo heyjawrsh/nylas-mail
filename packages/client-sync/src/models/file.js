@@ -11,7 +11,7 @@ import {Actions} from 'nylas-exports';
 
 const MAX_IMAP_TIMEOUT_ERRORS = 5;
 
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'file', {
     id: { type: Sequelize.STRING(500), primaryKey: true },
     size: Sequelize.INTEGER,

@@ -348,4 +348,4 @@ class MessageProcessor {
   }
 }
 
-module.exports = new MessageProcessor()
+export default new MessageProcessor()

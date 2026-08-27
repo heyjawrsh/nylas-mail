@@ -194,4 +194,4 @@ hostWindow.$n.SyncProcessManager = new SyncProcessManager();
 hostWindow.$n.SyncProcessManager.MAX_WORKER_SILENCE_MS = MAX_WORKER_SILENCE_MS
 hostWindow.$n.SyncProcessManager.CHECK_HEALTH_TIME_INTERVAL = CHECK_HEALTH_TIME_INTERVAL
 
-module.exports = hostWindow.$n.SyncProcessManager
+export default hostWindow.$n.SyncProcessManager

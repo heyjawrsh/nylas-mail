@@ -18,7 +18,7 @@ import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
 // const recipientList = Joi.array().items(recipient);
 
-module.exports = (server) => {
+export default (server) => {
   // Closes out a multi-send session by marking the sending draft as sent
   // and moving it to the user's Sent folder.
   server.route({

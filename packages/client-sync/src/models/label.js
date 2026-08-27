@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import defineModel from './define-model.js';
 import {formatImapPath} from '../shared/imap-paths-utils.js';
 
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'label', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },

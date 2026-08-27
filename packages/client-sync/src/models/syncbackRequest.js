@@ -14,7 +14,7 @@ import defineModel from './define-model.js';
  *   `updatedAt` DATETIME NOT NULL
  * );
  */
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'syncbackRequest', {
     type: Sequelize.STRING,
     status: {

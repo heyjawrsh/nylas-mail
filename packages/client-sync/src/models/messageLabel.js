@@ -9,7 +9,7 @@
  *
  * sqlite_autoindex_messageLabels_1 (labelId, messageId)
  */
-module.exports = (sequelize) => {
+export default (sequelize) => {
   return sequelize.define('messageLabel', {
   }, {
     indexes: [

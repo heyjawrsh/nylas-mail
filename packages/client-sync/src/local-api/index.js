@@ -1,94 +1,93 @@
 /* eslint import/no-dynamic-require: 0 */
 /* eslint global-require: 0 */
-import Hapi from 'hapi';
+import Hapi from '@hapi/hapi';
 import HapiSwagger from 'hapi-swagger';
 import HapiBoom from 'hapi-boom-decorators';
 import HapiBasicAuth from 'hapi-auth-basic';
-import Inert from 'inert';
-import Vision from 'vision';
+import Inert from '@hapi/inert';
+import Vision from '@hapi/vision';
 import Package from '../../package.js';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import LocalDatabaseConnector from '../shared/local-database-connector.js';
 
+const port = NylasEnv.inDevMode() ? 1337 : 2578;
+
 const server = new Hapi.Server({
-  connections: {
-    router: {
-      stripTrailingSlash: true,
-    },
+  port,
+  router: {
+    stripTrailingSlash: true,
   },
 });
 
-let port = 2578;
-if (NylasEnv.inDevMode()) port = 1337;
-server.connection({port});
-
-const plugins = [Inert, Vision, HapiBasicAuth, HapiBoom, {
-  register: HapiSwagger,
-  options: {
-    info: {
-      title: 'Nylas API Documentation',
-      version: Package.version,
+const plugins = [
+  {plugin: Inert},
+  {plugin: Vision},
+  {plugin: HapiBasicAuth},
+  {plugin: HapiBoom},
+  {
+    plugin: HapiSwagger,
+    options: {
+      info: {
+        title: 'Nylas API Documentation',
+        version: Package.version,
+      },
     },
   },
-}];
+];
 
 let sharedDb = null;
 
-const validate = (request, username, password, callback) => {
-  let getSharedDb = null;
+const validate = async (request, username, password) => {
+  let db;
   if (sharedDb) {
-    getSharedDb = Promise.resolve(sharedDb)
+    db = sharedDb
   } else {
-    getSharedDb = LocalDatabaseConnector.forShared()
+    db = await LocalDatabaseConnector.forShared()
+    sharedDb = db
   }
 
-  getSharedDb.then((db) => {
-    sharedDb = db;
-    const {AccountToken} = db;
-
-    AccountToken.findOne({
-      where: {
-        value: username,
-      },
-    }).then((token) => {
-      if (!token) {
-        callback(null, false, {});
-        return
-      }
-      token.getAccount().then((account) => {
-        if (!account) {
-          callback(null, false, {});
-          return;
-        }
-        request.logger = request.logger.forAccount(account)
-        callback(null, true, account);
-      });
-    });
+  const {AccountToken} = db;
+  const token = await AccountToken.findOne({
+    where: {
+      value: username,
+    },
   });
+  if (!token) {
+    return {isValid: false, credentials: {}};
+  }
+  const account = await token.getAccount()
+  if (!account) {
+    return {isValid: false, credentials: {}};
+  }
+  request.logger = request.logger.forAccount(account)
+  return {isValid: true, credentials: account};
 };
 
-const attach = (directory) => {
+const attach = async (directory) => {
   const routesDir = path.join(__dirname, directory)
   for (const filename of fs.readdirSync(routesDir)) {
     if (filename.endsWith('.js')) {
       const routeFactory = (await import(`file://${path.join(routesDir, filename)}`)).default;
       routeFactory(server);
     }
-  });
+  }
 }
 
-server.register(plugins, (err) => {
-  if (err) { throw err; }
+export async function startLocalAPI() {
+  await server.register(plugins);
 
-  attach('./routes')
-  attach('./decorators')
+  await attach('./routes')
+  await attach('./decorators')
 
-  server.auth.strategy('api-consumer', 'basic', { validateFunc: validate });
+  server.auth.strategy('api-consumer', 'basic', {validate});
   server.auth.default('api-consumer');
 
-  server.start((startErr) => {
-    if (startErr) { throw startErr; }
-    global.Logger.log('API running', {url: server.info.uri});
-  });
-});
+  await server.start();
+  global.Logger.log('API running', {url: server.info.uri});
+  return server;
+}
+
+if (process.env.NYLAS_START_LOCAL_API === '1') {
+  startLocalAPI();
+}

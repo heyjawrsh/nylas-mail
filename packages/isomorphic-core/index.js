@@ -23,6 +23,7 @@ import ModelUtils from './src/model-utils.js';
 import * as StringUtils from './src/string-utils.js';
 import * as TLSUtils from './src/tls-utils.js';
 import * as DBUtils from './src/db-utils.js';
+import './src/database-extensions.js';
 import * as ShellUtils from './src/shell-utils.js';
 
 export {

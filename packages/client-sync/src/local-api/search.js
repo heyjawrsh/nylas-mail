@@ -262,7 +262,7 @@ class GmailSearchClient extends ImapSearchClient {
   }
 }
 
-module.exports.searchClientForAccount = (account) => {
+export const searchClientForAccount = (account) => {
   switch (account.provider) {
     case 'gmail': {
       return new GmailSearchClient(account);

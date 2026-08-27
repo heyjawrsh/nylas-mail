@@ -10,7 +10,7 @@ import defineModel from './define-model.js';
  *   SEARCH TABLE contacts USING INDEX sqlite_autoindex_contacts_1
  * (id=?)
  */
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
   return defineModel(sequelize, 'contact', {
     id: {type: Sequelize.STRING(65), primaryKey: true},
     accountId: { type: Sequelize.STRING, allowNull: false },

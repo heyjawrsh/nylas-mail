@@ -1,4 +1,4 @@
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'GET',
     path: '/ping',

@@ -5,7 +5,7 @@ import Serialization from '../serialization.js';
 import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 import {searchClientForAccount} from '../search.js';
 
-module.exports = (server) => {
+export default (server) => {
   server.route({
     method: 'GET',
     path: '/threads',
