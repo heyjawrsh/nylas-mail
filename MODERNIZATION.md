@@ -74,6 +74,20 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 5. Reflux: no maintained npm equivalent — vendor it (MIT, tiny) with an allowlist entry; new state code uses modern approaches. If React 19 migration degrades into product-level UI redesign, that tripwires stop-condition (d) and surfaces to the user instead.
 
 
+## Status after loop 12 — coverage gates green on 5/6 packages
+
+| Package | Tests | Lines | Gate |
+|---|---|---|---|
+| isomorphic-core | 138 | 81.7% | ✓ |
+| cloud-core | 1 | 91.3% | ✓ |
+| cloud-workers | 33 | 86.3% | ✓ |
+| cloud-api | 44 | 94.3% | ✓ |
+| client-sync | 197 | 60.7% | ✓ (commit 58e4247f9) |
+| nylas-mail | 11 | 0.32% | ✗ coverage gate — React app, 3 spec files vs ~500 components |
+
+`pnpm lint` GREEN. `pnpm -r test` blocked ONLY by nylas-mail coverage gate.
+Ringer ledger: 11 rounds, 30+ tasks; every failed lane's work salvaged + verified inline.
+
 ## Status after loop 9 (2026-08-27, deep session)
 
 ### Green with enforced coverage gates (individually verified)
