@@ -67,8 +67,12 @@ describe("shared utilities", () => {
 			}
 			shimSequelize({ Model });
 			const result = new Model().hung();
+			// Attach the rejection handler immediately so the timer's rejection
+			// is never "unhandled" between advance and assert.
+			const assertion = expect(result).rejects.toThrow("hung timed out");
 			await vi.advanceTimersByTimeAsync(60_000);
-			await expect(result).rejects.toThrow("hung timed out");
+			await assertion;
+			vi.useRealTimers();
 		});
 	});
 

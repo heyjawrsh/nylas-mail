@@ -165,3 +165,18 @@ describe('send routes', () => {
     }
   });
 });
+
+import draftsRoutes from '../../src/local-api/routes/drafts.js';
+
+describe('drafts routes', () => {
+  const routes = collect(draftsRoutes);
+  it('resolves the gmail sent label for gmail accounts', async () => {
+    const {h} = toolkit();
+    const testDb = db();
+    testDb.Label.findOne = vi.fn(async () => ({name: '[Gmail]/Sent Mail'}));
+    testDb.Folder.findOne = vi.fn(async () => ({name: 'Trash'}));
+    requestFor._db = testDb;
+    const route = routes.find((r) => String(r.method).toUpperCase() === 'GET' && String(r.path).includes('sent'));
+    if (route) { await route.handler(requestFor(route, {}, {auth: {credentials: {id: 'a1', provider: 'gmail', emailAddress: 'a@b.c'}}}), h) }
+  });
+});

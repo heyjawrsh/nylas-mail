@@ -33,8 +33,11 @@ describe("SyncbackTask", () => {
 			const promise = syncbackTask.run(null, null, {
 				timeoutDelay: TIMEOUT_DELAY,
 			});
+			// Bind rejection handlers before firing the timer so the interrupt
+			// rejection is never observed as unhandled.
+			const instance = expect(promise).rejects.toBeInstanceOf(Errors.RetryableError);
 			await vi.advanceTimersByTimeAsync(TIMEOUT_DELAY + 5);
-			await expect(promise).rejects.toBeInstanceOf(Errors.RetryableError);
+			await instance;
 			await expect(promise).rejects.toThrow(/interrupted/i);
 		});
 

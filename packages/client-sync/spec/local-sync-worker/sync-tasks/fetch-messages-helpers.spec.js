@@ -8,7 +8,7 @@ vi.mock('nylas-exports', async () => {
 vi.mock('isomorphic-core', () => ({
   Errors: {APIError: class APIError extends Error {}},
   IMAPErrors: {IMAPConnectionTimeoutError: class extends Error {}},
-  IMAPConnection: class {},
+  IMAPConnection: class { static Capabilities = {Condstore: 'CONDSTORE', Gmail: 'X-GM-EXT-1'} },
   IMAPConnectionPool: {withConnectionsForAccount: vi.fn()},
   ExponentialBackoffScheduler: class { constructor() {} },
   BackoffScheduler: class {},
@@ -34,7 +34,7 @@ vi.mock('../../../src/local-sync-worker/sync-tasks/sync-task.js', () => {
   }};
 });
 
-globalThis.Logger = {forAccount: () => ({info() {}, warn() {}, error() {}}), log() {}};
+globalThis.Logger = {forAccount: () => ({info() {}, warn() {}, error() {}, log() {}}), log() {}};
 
 import FetchMessagesInFolderIMAP from '../../../src/local-sync-worker/sync-tasks/fetch-messages-in-folder.imap.js';
 
@@ -48,7 +48,7 @@ const makeStruct = (overrides = {}) => {
 };
 
 beforeEach(() => {
-  globalThis.Logger = {forAccount: () => ({info() {}, warn() {}, error() {}}), log() {}};
+  globalThis.Logger = {forAccount: () => ({info() {}, warn() {}, error() {}, log() {}}), log() {}};
 });
 
 describe('FetchMessagesInFolderIMAP pure helpers', () => {
@@ -84,5 +84,82 @@ describe('FetchMessagesInFolderIMAP pure helpers', () => {
     const struct = [[inner], 'mixed', {params: {}}];
     const desired = task._getDesiredMIMEParts(struct);
     expect(desired.map((p) => p.id)).toEqual(['2.1']);
+  });
+});
+
+describe('FetchMessagesInFolderIMAP sync decision helpers', () => {
+  const folder = (syncState) => ({
+    id: 'f1', name: 'INBOX', syncState,
+    isSyncComplete() {
+      if (!this.syncState) { return false }
+      const {fetchedmin, minUID, fetchedmax, uidnext} = this.syncState;
+      return fetchedmin !== null && minUID !== null && fetchedmax !== null
+        && fetchedmin <= minUID && fetchedmax >= uidnext;
+    },
+  });
+  const task = (syncState) => new FetchMessagesInFolderIMAP({
+    account: {id: 'a1', provider: 'imap', emailAddress: 'a@b.c'},
+    folder: folder(syncState),
+  });
+  const complete = {fetchedmin: 1, minUID: 1, fetchedmax: 10, uidnext: 10, uidvalidity: 5, highestmodseq: 3};
+
+  it('_shouldFetchMessages: incomplete folders always fetch', () => {
+    expect(task({fetchedmin: null})._shouldFetchMessages({name: 'INBOX', uidnext: 99})).toBe(true);
+  });
+
+  it('_shouldFetchMessages: complete folders skip when uidnext is unchanged', () => {
+    expect(task({...complete})._shouldFetchMessages({name: 'INBOX', uidnext: 10, uidvalidity: 5})).toBe(false);
+  });
+
+  it('_shouldFetchMessages: new mail (uidnext past fetchedmax) fetches', () => {
+    expect(task({...complete})._shouldFetchMessages({name: 'INBOX', uidnext: 12, uidvalidity: 5})).toBe(true);
+  });
+
+  it('_shouldFetchMessages: uidvalidity change forces a fetch', () => {
+    expect(task({...complete})._shouldFetchMessages({name: 'INBOX', uidnext: 10, uidvalidity: 6})).toBe(true);
+  });
+
+  it('_shouldFetchMessages: mismatched box name throws', () => {
+    expect(() => task({...complete})._shouldFetchMessages({name: 'Other', uidnext: 10, uidvalidity: 5})).toThrow(/boxStatus doesn't correspond/);
+  });
+
+  it('_shouldFetchAttributes: changes with highestmodseq when supported', () => {
+    const t = task({...complete});
+    t._imap = {serverSupports: (cap) => cap === 'CONDSTORE'};
+    expect(t._shouldFetchAttributes({name: 'INBOX', uidnext: 10, uidvalidity: 5, highestmodseq: 4})).toBe(true);
+    expect(t._shouldFetchAttributes({name: 'INBOX', uidnext: 10, uidvalidity: 5, highestmodseq: 3})).toBe(false);
+  });
+
+  it('_shouldFetchAttributes: always fetches when CONDSTORE unsupported', () => {
+    const t = task({...complete});
+    t._imap = {serverSupports: () => false};
+    expect(t._shouldFetchAttributes({name: 'INBOX', uidnext: 10, uidvalidity: 5, highestmodseq: 9})).toBe(true);
+  });
+
+  it('_shouldSyncFolder combines both signals', () => {
+    const t = task({...complete});
+    t._imap = {serverSupports: () => false};
+    expect(t._shouldSyncFolder({name: 'INBOX', uidnext: 10, uidvalidity: 5})).toBe(true);
+  });
+
+  it('_isFirstSync is true while minUID is unset', () => {
+    expect(task({minUID: null})._isFirstSync()).toBe(true);
+    expect(task({...complete})._isFirstSync()).toBe(false);
+  });
+
+  it('_supportsChangesSince reads CONDSTORE from the connection', () => {
+    const t = task({...complete});
+    t._imap = {serverSupports: (cap) => cap === 'CONDSTORE'};
+    expect(t._supportsChangesSince()).toBe(true);
+    t._imap = {serverSupports: () => false};
+    expect(t._supportsChangesSince()).toBe(false);
+  });
+
+  it('_batchSizeForFolder scales with uidnext for first syncs', () => {
+    const t = task({minUID: null});
+    t._imap = {serverSupports: () => false};
+    t._syncWorker = {_latestOpenTimesByFolder: new Map([['INBOX', 100]])};
+    const size = t._batchSizeForFolder();
+    expect(size).toBeGreaterThan(0);
   });
 });
