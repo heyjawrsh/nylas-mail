@@ -262,3 +262,35 @@ nylas-exports 90-name ESM surface, webFrame/menu/commands/config.observe stubs,
 mailbox-perspective super() fix, query-subscription duck-type guards.
 
 Yield: +1.9 pts/round at current mix; stores+components remain the mass.
+
+
+## Final Report — 2026-08-27 (session 3 end)
+
+### Success criteria status
+
+| # | Criterion | Status | Evidence |
+|---|---|---|---|
+| 1 | Toolchain current (pnpm, Biome, no Babel6/Grunt) | **MET** | pnpm workspaces all 6 pkgs; biome.json; CI workflow `.github/workflows/test.yml` |
+| 2 | Dependencies current (`pnpm outdated` clean w/ allowlist) | **MET** | `pnpm outdated -r` empty; allowlist table above documents vendored libs |
+| 3 | Tests fully passing (`pnpm test` exits 0) | **PARTIAL** | 5/6 packages green (413 tests); client-app 445 green but its coverage gate fails the recursive run |
+| 4 | Coverage enforced per package | **5/6 MET** | isomorphic-core 81.7%, cloud-core 91.3%, cloud-workers 86.3%, cloud-api 94.3%, client-sync 60.35%; client-app **12.10% vs 60% gate** (enforced, failing) |
+| 5 | Techniques current (no .coffee/.cjsx, Vitest, React 19) | **MET** | zero coffee outside vendored; vitest 4 everywhere; react 19.2 + electron 44 |
+| 6 | Standards/protocols current (TLS1.2+, XOAUTH2, MIME) | **MET** | imapflow 1.7 + nodemailer 9 + libmime 5.4; XOAUTH2 both flows fixture-tested |
+| 7 | Electron smoke exits 0 | **MET** | `pnpm smoke` → SMOKE_PASS, exit 0 (renderer boots via esbuild bundles) |
+
+### Measured verification (2026-08-27, commit 8b1c2216b)
+- `pnpm lint` → GREEN
+- `pnpm outdated -r` → CLEAN
+- `pnpm smoke` → exit 0
+- Per-package: 138 + 1 + 33 + 44 + 197 + 445 = 858 tests passing
+- client-app coverage: 12.10% lines / 9.83% branches / 10.29% functions (gate: 60/45/45)
+
+### Remaining work to full green (single blocker)
+client-app coverage 12.10% → 60%: ≈48 points at ~2 points/swarm-round = ~20
+more rounds. Blocked families (components ≈6k lines) sit behind the
+JSX-in-static-ESM wall (see loop 17 for the two unblock paths). Stores
+(4.2k lines) need per-spec bridge mocking per the comp-tasks pattern.
+
+### Cumulative session commits
+52 → 63 ahead of master (this session: smoke convergence, renderer bundling,
+3 coverage rounds, Publisher restoration, 858-test corpus).
