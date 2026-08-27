@@ -85,7 +85,7 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 | cloud-api | 44/44 | 94.3% | 80/60 ✓ |
 
 ### In progress
-- client-sync: fully ESM (`type: module`), all requires converted, async loadModels restructure; 1/6 suites green — spec harness integration (defineModel export fallout, sync ordering, imap-helpers Transaction harness) is the remaining work. Root `pnpm -r test` aborts here.
+- client-sync: **all 6 suites green** (17 passed, 1 documented skip; commit 1ced654e0). ESM cutover complete, hapi-21 local API, Op.in reference matching. Remaining: coverage 22.2% vs 60% gate — hardening round queued. Root `pnpm -r test` aborts only on this gate now.
 - client-app: runtime 100% JS/JSX (CoffeeScript + .es6 all migrated, parse-verified); modern manifest (react 19/electron 44/vitest+jsdom), atom-era libs vendored (reflux/fs-plus/event-kit/emissary — allowlist), vitest aliases for nylas-* bridges. NOT yet on the workspace ratchet; first proof spec + React 19 component migration remain.
 
 ### Remaining to goal completion
