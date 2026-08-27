@@ -125,7 +125,7 @@ module.exports = ErrorLogger = (() => {
 	/////////////////////////////////////////////////////////////////////
 
 	ErrorLogger.prototype._startCrashReporter = (_args) => {
-		crashReporter.start({
+		crashReporter?.start?.({
 			productName: "Nylas Mail",
 			companyName: "Nylas",
 			submitURL: "https://electron-crash-report-server.herokuapp.com/",

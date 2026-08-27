@@ -1,4 +1,4 @@
-import SerializableRegistry from "./serializable-registry.js";
+const SerializableRegistry = require("./serializable-registry.js").default;
 
 class StoreRegistry extends SerializableRegistry {
 	/**
@@ -30,4 +30,5 @@ class StoreRegistry extends SerializableRegistry {
 }
 
 const registry = new StoreRegistry();
-export default registry;
+module.exports = registry;
+module.exports.default = registry;

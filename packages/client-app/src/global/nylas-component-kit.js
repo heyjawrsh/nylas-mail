@@ -73,84 +73,180 @@ const requireFromSrc = (rel) => {
 // Publically exposed Nylas UI Components
 class NylasComponentKit {
 	static initClass() {
-		NylasComponentKit.load("Menu", "menu");
-		NylasComponentKit.load("DropZone", "drop-zone");
-		NylasComponentKit.load("Spinner", "spinner");
-		NylasComponentKit.load("Switch", "switch");
+		NylasComponentKit.load("Menu", () => require("../components/menu.jsx"));
+		NylasComponentKit.load("DropZone", () =>
+			require("../components/drop-zone.jsx"),
+		);
+		NylasComponentKit.load("Spinner", () =>
+			require("../components/spinner.jsx"),
+		);
+		NylasComponentKit.load("Switch", () => require("../components/switch.jsx"));
 		NylasComponentKit.loadDeprecated("Popover", "popover", {
 			instead: "Actions.openPopover",
 		});
-		NylasComponentKit.load("FixedPopover", "fixed-popover");
+		NylasComponentKit.load("FixedPopover", () =>
+			require("../components/fixed-popover.jsx"),
+		);
 		// Under vitest the module-scope eager require of a .jsx component hits the
 		// CJS shim (no JSX loader); use the lazy registration there.
-		NylasComponentKit.load("DatePickerPopover", "date-picker-popover");
-		NylasComponentKit.load("Modal", "modal");
-		NylasComponentKit.load("Webview", "webview");
-		NylasComponentKit.load("FeatureUsedUpModal", "feature-used-up-modal");
-		NylasComponentKit.load("BillingModal", "billing-modal");
+		NylasComponentKit.load("DatePickerPopover", () =>
+			require("../components/date-picker-popover.jsx"),
+		);
+		NylasComponentKit.load("Modal", () => require("../components/modal.jsx"));
+		NylasComponentKit.load("Webview", () =>
+			require("../components/webview.jsx"),
+		);
+		NylasComponentKit.load("FeatureUsedUpModal", () =>
+			require("../components/feature-used-up-modal.jsx"),
+		);
+		NylasComponentKit.load("BillingModal", () =>
+			require("../components/billing-modal.jsx"),
+		);
 		NylasComponentKit.load(
 			"OpenIdentityPageButton",
 			"open-identity-page-button",
 		);
-		NylasComponentKit.load("Flexbox", "flexbox");
-		NylasComponentKit.load("RetinaImg", "retina-img");
-		NylasComponentKit.load("SwipeContainer", "swipe-container");
-		NylasComponentKit.load("FluxContainer", "flux-container");
-		NylasComponentKit.load("FocusContainer", "focus-container");
-		NylasComponentKit.load("SyncingListState", "syncing-list-state");
-		NylasComponentKit.load("EmptyListState", "empty-list-state");
-		NylasComponentKit.load("ListTabular", "list-tabular");
-		NylasComponentKit.load("Notification", "notification");
-		NylasComponentKit.load("NylasCalendar", "nylas-calendar/nylas-calendar");
-		NylasComponentKit.load("MiniMonthView", "nylas-calendar/mini-month-view");
+		NylasComponentKit.load("Flexbox", () =>
+			require("../components/flexbox.jsx"),
+		);
+		NylasComponentKit.load("RetinaImg", () =>
+			require("../components/retina-img.jsx"),
+		);
+		NylasComponentKit.load("SwipeContainer", () =>
+			require("../components/swipe-container.jsx"),
+		);
+		NylasComponentKit.load("FluxContainer", () =>
+			require("../components/flux-container.jsx"),
+		);
+		NylasComponentKit.load("FocusContainer", () =>
+			require("../components/focus-container.jsx"),
+		);
+		NylasComponentKit.load("SyncingListState", () =>
+			require("../components/syncing-list-state.jsx"),
+		);
+		NylasComponentKit.load("EmptyListState", () =>
+			require("../components/empty-list-state.jsx"),
+		);
+		NylasComponentKit.load("ListTabular", () =>
+			require("../components/list-tabular.jsx"),
+		);
+		NylasComponentKit.load("Notification", () =>
+			require("../components/notification.jsx"),
+		);
+		NylasComponentKit.load("NylasCalendar", () =>
+			require("../components/nylas-calendar/nylas-calendar.jsx"),
+		);
+		NylasComponentKit.load("MiniMonthView", () =>
+			require("../components/nylas-calendar/mini-month-view.jsx"),
+		);
 		NylasComponentKit.load(
 			"CalendarEventPopover",
 			"nylas-calendar/calendar-event-popover",
 		);
-		NylasComponentKit.load("EventedIFrame", "evented-iframe");
-		NylasComponentKit.load("ButtonDropdown", "button-dropdown");
+		NylasComponentKit.load("EventedIFrame", () =>
+			require("../components/evented-iframe.jsx"),
+		);
+		NylasComponentKit.load("ButtonDropdown", () =>
+			require("../components/button-dropdown.jsx"),
+		);
 		NylasComponentKit.load(
 			"Contenteditable",
 			"contenteditable/contenteditable",
 		);
-		NylasComponentKit.load("MultiselectList", "multiselect-list");
-		NylasComponentKit.load("BoldedSearchResult", "bolded-search-result");
-		NylasComponentKit.load("MultiselectDropdown", "multiselect-dropdown");
-		NylasComponentKit.load("KeyCommandsRegion", "key-commands-region");
-		NylasComponentKit.load("TabGroupRegion", "tab-group-region");
-		NylasComponentKit.load("InjectedComponent", "injected-component");
-		NylasComponentKit.load("TokenizingTextField", "tokenizing-text-field");
-		NylasComponentKit.load("ParticipantsTextField", "participants-text-field");
+		NylasComponentKit.load("MultiselectList", () =>
+			require("../components/multiselect-list.jsx"),
+		);
+		NylasComponentKit.load("BoldedSearchResult", () =>
+			require("../components/bolded-search-result.jsx"),
+		);
+		NylasComponentKit.load("MultiselectDropdown", () =>
+			require("../components/multiselect-dropdown.jsx"),
+		);
+		NylasComponentKit.load("KeyCommandsRegion", () =>
+			require("../components/key-commands-region.jsx"),
+		);
+		NylasComponentKit.load("TabGroupRegion", () =>
+			require("../components/tab-group-region.jsx"),
+		);
+		NylasComponentKit.load("InjectedComponent", () =>
+			require("../components/injected-component.jsx"),
+		);
+		NylasComponentKit.load("TokenizingTextField", () =>
+			require("../components/tokenizing-text-field.jsx"),
+		);
+		NylasComponentKit.load("ParticipantsTextField", () =>
+			require("../components/participants-text-field.jsx"),
+		);
 		NylasComponentKit.loadDeprecated(
 			"MultiselectActionBar",
 			"multiselect-action-bar",
 			{ instead: "MultiselectToolbar" },
 		);
-		NylasComponentKit.load("MultiselectToolbar", "multiselect-toolbar");
-		NylasComponentKit.load("InjectedComponentSet", "injected-component-set");
+		NylasComponentKit.load("MultiselectToolbar", () =>
+			require("../components/multiselect-toolbar.jsx"),
+		);
+		NylasComponentKit.load("InjectedComponentSet", () =>
+			require("../components/injected-component-set.jsx"),
+		);
 		NylasComponentKit.load(
 			"MetadataComposerToggleButton",
 			"metadata-composer-toggle-button",
 		);
-		NylasComponentKit.load("ConfigPropContainer", "config-prop-container");
-		NylasComponentKit.load("DisclosureTriangle", "disclosure-triangle");
-		NylasComponentKit.load("EditableList", "editable-list");
-		NylasComponentKit.load("OutlineViewItem", "outline-view-item");
-		NylasComponentKit.load("OutlineView", "outline-view");
-		NylasComponentKit.load("DateInput", "date-input");
-		NylasComponentKit.load("DatePicker", "date-picker");
-		NylasComponentKit.load("TimePicker", "time-picker");
-		NylasComponentKit.load("Table", "table/table");
-		NylasComponentKit.loadFrom("TableRow", "table/table");
-		NylasComponentKit.loadFrom("TableCell", "table/table");
-		NylasComponentKit.load("SelectableTable", "selectable-table");
-		NylasComponentKit.loadFrom("SelectableTableRow", "selectable-table");
-		NylasComponentKit.loadFrom("SelectableTableCell", "selectable-table");
-		NylasComponentKit.load("EditableTable", "editable-table");
-		NylasComponentKit.loadFrom("EditableTableCell", "editable-table");
-		NylasComponentKit.load("Toast", "toast");
-		NylasComponentKit.load("UndoToast", "undo-toast");
-		NylasComponentKit.load("LazyRenderedList", "lazy-rendered-list");
+		NylasComponentKit.load("ConfigPropContainer", () =>
+			require("../components/config-prop-container.jsx"),
+		);
+		NylasComponentKit.load("DisclosureTriangle", () =>
+			require("../components/disclosure-triangle.jsx"),
+		);
+		NylasComponentKit.load("EditableList", () =>
+			require("../components/editable-list.jsx"),
+		);
+		NylasComponentKit.load("OutlineViewItem", () =>
+			require("../components/outline-view-item.jsx"),
+		);
+		NylasComponentKit.load("OutlineView", () =>
+			require("../components/outline-view.jsx"),
+		);
+		NylasComponentKit.load("DateInput", () =>
+			require("../components/date-input.jsx"),
+		);
+		NylasComponentKit.load("DatePicker", () =>
+			require("../components/date-picker.jsx"),
+		);
+		NylasComponentKit.load("TimePicker", () =>
+			require("../components/time-picker.jsx"),
+		);
+		NylasComponentKit.load("Table", () =>
+			require("../components/table/table.jsx"),
+		);
+		NylasComponentKit.loadFrom("TableRow", () =>
+			require("../components/table/table.jsx"),
+		);
+		NylasComponentKit.loadFrom("TableCell", () =>
+			require("../components/table/table.jsx"),
+		);
+		NylasComponentKit.load("SelectableTable", () =>
+			require("../components/selectable-table.jsx"),
+		);
+		NylasComponentKit.loadFrom("SelectableTableRow", () =>
+			require("../components/selectable-table.jsx"),
+		);
+		NylasComponentKit.loadFrom("SelectableTableCell", () =>
+			require("../components/selectable-table.jsx"),
+		);
+		NylasComponentKit.load("EditableTable", () =>
+			require("../components/editable-table.jsx"),
+		);
+		NylasComponentKit.loadFrom("EditableTableCell", () =>
+			require("../components/editable-table.jsx"),
+		);
+		NylasComponentKit.load("Toast", () => require("../components/toast.jsx"));
+		NylasComponentKit.load("UndoToast", () =>
+			require("../components/undo-toast.jsx"),
+		);
+		NylasComponentKit.load("LazyRenderedList", () =>
+			require("../components/lazy-rendered-list.jsx"),
+		);
 		NylasComponentKit.load(
 			"OverlaidComponents",
 			"overlaid-components/overlaid-components",
@@ -159,27 +255,59 @@ class NylasComponentKit {
 			"OverlaidComposerExtension",
 			"overlaid-components/overlaid-composer-extension",
 		);
-		NylasComponentKit.load("OAuthSignInPage", "oauth-signin-page");
-		NylasComponentKit.requireFrom("AttachmentItem", "attachment-items");
-		NylasComponentKit.requireFrom("ImageAttachmentItem", "attachment-items");
-		NylasComponentKit.load("CodeSnippet", "code-snippet");
-		NylasComponentKit.load("DropdownMenu", "dropdown-menu");
+		NylasComponentKit.load("OAuthSignInPage", () =>
+			require("../components/oauth-signin-page.jsx"),
+		);
+		NylasComponentKit.requireFrom("AttachmentItem", () =>
+			require("../components/attachment-items.jsx"),
+		);
+		NylasComponentKit.requireFrom("ImageAttachmentItem", () =>
+			require("../components/attachment-items.jsx"),
+		);
+		NylasComponentKit.load("CodeSnippet", () =>
+			require("../components/code-snippet.jsx"),
+		);
+		NylasComponentKit.load("DropdownMenu", () =>
+			require("../components/dropdown-menu.jsx"),
+		);
 
-		NylasComponentKit.load("ScrollRegion", "scroll-region");
-		NylasComponentKit.load("ResizableRegion", "resizable-region");
+		NylasComponentKit.load("ScrollRegion", () =>
+			require("../components/scroll-region.jsx"),
+		);
+		NylasComponentKit.load("ResizableRegion", () =>
+			require("../components/resizable-region.jsx"),
+		);
 
-		NylasComponentKit.loadFrom("MailLabel", "mail-label");
-		NylasComponentKit.loadFrom("LabelColorizer", "mail-label");
-		NylasComponentKit.load("MailLabelSet", "mail-label-set");
-		NylasComponentKit.load("MailImportantIcon", "mail-important-icon");
+		NylasComponentKit.loadFrom("MailLabel", () =>
+			require("../components/mail-label.jsx"),
+		);
+		NylasComponentKit.loadFrom("LabelColorizer", () =>
+			require("../components/mail-label.jsx"),
+		);
+		NylasComponentKit.load("MailLabelSet", () =>
+			require("../components/mail-label-set.jsx"),
+		);
+		NylasComponentKit.load("MailImportantIcon", () =>
+			require("../components/mail-important-icon.jsx"),
+		);
 
-		NylasComponentKit.loadFrom("FormItem", "generated-form");
-		NylasComponentKit.loadFrom("GeneratedForm", "generated-form");
-		NylasComponentKit.loadFrom("GeneratedFieldset", "generated-form");
+		NylasComponentKit.loadFrom("FormItem", () =>
+			require("../components/generated-form.jsx"),
+		);
+		NylasComponentKit.loadFrom("GeneratedForm", () =>
+			require("../components/generated-form.jsx"),
+		);
+		NylasComponentKit.loadFrom("GeneratedFieldset", () =>
+			require("../components/generated-form.jsx"),
+		);
 
-		NylasComponentKit.load("ScenarioEditor", "scenario-editor");
+		NylasComponentKit.load("ScenarioEditor", () =>
+			require("../components/scenario-editor.jsx"),
+		);
 
-		NylasComponentKit.load("SearchBar", "search-bar");
+		NylasComponentKit.load("SearchBar", () =>
+			require("../components/search-bar.jsx"),
+		);
 
 		// Higher order components
 		NylasComponentKit.load(
@@ -194,19 +322,23 @@ class NylasComponentKit {
 			"ListensToMovementKeys",
 			"decorators/listens-to-movement-keys",
 		);
-		NylasComponentKit.load("HasTutorialTip", "decorators/has-tutorial-tip");
+		NylasComponentKit.load("HasTutorialTip", () =>
+			require("../components/decorators/has-tutorial-tip.jsx"),
+		);
 	}
 
 	static default(requireValue) {
 		return requireValue.default != null ? requireValue.default : requireValue;
 	}
 
-	static load(prop, path) {
+	static load(prop, pathOrThunk) {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
-				return NylasComponentKit.default(
-					requireFromSrc(`../components/${path}`),
-				);
+				const mod =
+					typeof pathOrThunk === "function"
+						? pathOrThunk()
+						: requireFromSrc(`../components/${pathOrThunk}`);
+				return NylasComponentKit.default(mod);
 			},
 		});
 	}
@@ -217,9 +349,11 @@ class NylasComponentKit {
 	// (e.g. opening a popover), so we don't want to wait until that happens to load the
 	// component. In our example, the popover would take a long time to open the first time
 	// if it was lazy loaded
-	static require(prop, path) {
+	static require(prop, pathOrThunk) {
 		const exported = NylasComponentKit.default(
-			requireFromSrc(`../components/${path}`),
+			typeof pathOrThunk === "function"
+				? pathOrThunk()
+				: requireFromSrc(`../components/${pathOrThunk}`),
 		);
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
@@ -228,8 +362,11 @@ class NylasComponentKit {
 		});
 	}
 
-	static requireFrom(prop, path) {
-		const exported = requireFromSrc(`../components/${path}`);
+	static requireFrom(prop, pathOrThunk) {
+		const exported =
+			typeof pathOrThunk === "function"
+				? pathOrThunk()
+				: requireFromSrc(`../components/${pathOrThunk}`);
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
 				return exported[prop];
@@ -237,16 +374,19 @@ class NylasComponentKit {
 		});
 	}
 
-	static loadFrom(prop, path) {
+	static loadFrom(prop, pathOrThunk) {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
-				const exported = requireFromSrc(`../components/${path}`);
+				const exported =
+					typeof pathOrThunk === "function"
+						? pathOrThunk()
+						: requireFromSrc(`../components/${pathOrThunk}`);
 				return exported[prop];
 			},
 		});
 	}
 
-	static loadDeprecated(prop, path, param) {
+	static loadDeprecated(prop, pathOrThunk, param) {
 		if (param == null) {
 			param = {};
 		}
@@ -255,7 +395,9 @@ class NylasComponentKit {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get: deprecate(prop, instead, NylasComponentKit, () => {
 				const exported = NylasComponentKit.default(
-					requireFromSrc(`../components/${path}`),
+					typeof pathOrThunk === "function"
+						? pathOrThunk()
+						: requireFromSrc(`../components/${pathOrThunk}`),
 				);
 				return exported;
 			}),

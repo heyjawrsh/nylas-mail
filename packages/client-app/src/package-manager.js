@@ -24,7 +24,10 @@ const Q = require("q");
 const Actions = require("./flux/actions.js").default;
 const Package = require("./package.js");
 const ThemePackage = require("./theme-package.js");
-const DatabaseStore = require("./flux/stores/database-store.js").default;
+const getDatabaseStore = () => {
+	const DB = globalThis.$n?.DatabaseStore;
+	return DB?.default || DB;
+};
 const APMWrapper = require("./apm-wrapper.js");
 
 let basePackagePaths = null;
@@ -892,9 +895,11 @@ module.exports = PackageManager = (() => {
 		// entry in `packagesWithDatabaseObjects`.
 		refreshDatabaseSchema() {
 			if (this.packagesWithDatabaseObjects.length > 0) {
-				return DatabaseStore.refreshDatabaseSchema().then(() => {
-					return (this.packagesWithDatabaseObjects = []);
-				});
+				return getDatabaseStore()
+					.refreshDatabaseSchema()
+					.then(() => {
+						return (this.packagesWithDatabaseObjects = []);
+					});
 			}
 			return Promise.resolve();
 		}

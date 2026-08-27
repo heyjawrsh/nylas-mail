@@ -1,20 +1,26 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
-import { createRequire } from "node:module";
-
+// Native CJS module: no import.meta (renderer CJS compiler rejects it).
+// In bundled contexts a plain require shim suffices for lazy loads.
 const nodeRequire =
-	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
-		? createRequire(import.meta.url)
-		: require;
-import path from "node:path";
-import fs from "fs-plus";
-import { ipcRenderer } from "electron";
-import { Disposable } from "event-kit";
-import Utils from "./flux/models/utils.js";
+	typeof require !== "undefined"
+		? require
+		: () => {
+				throw new Error("no require");
+			};
+const path = require("node:path");
+const fs = require("fs-plus");
+const { ipcRenderer } = require("electron");
+const { Disposable } = require("event-kit");
+const getUtils = () => {
+	const U = globalThis.$n?.Utils;
+	return U?.default || U;
+};
 
-import MenuHelpers from "./menu-helpers.js";
+const MenuHelpers =
+	require("./menu-helpers.js").default || require("./menu-helpers.js");
 
-export default class MenuManager {
+class MenuManager {
 	constructor({ resourcePath }) {
 		this.resourcePath = resourcePath;
 		this.template = [];
@@ -46,7 +52,7 @@ export default class MenuManager {
 	// Returns a {Disposable} on which `.dispose()` can be called to remove the
 	// added menu items.
 	add(items) {
-		const cloned = Utils.deepClone(items);
+		const cloned = getUtils().deepClone(items);
 		for (const item of cloned) {
 			this.merge(this.template, item);
 		}
@@ -146,3 +152,6 @@ export default class MenuManager {
 		return ipcRenderer.send("update-application-menu", template, filtered);
 	}
 }
+
+module.exports = MenuManager;
+module.exports.default = MenuManager;

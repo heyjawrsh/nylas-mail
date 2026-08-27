@@ -4,9 +4,9 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-import _ from "underscore";
-import _str from "underscore.string";
-import { EventEmitter } from "node:events";
+const _ = require("underscore");
+const _str = require("underscore.string");
+const { EventEmitter } = require("node:events");
 
 const callbackName = (string) =>
 	`on${string.charAt(0).toUpperCase()}${string.slice(1)}`;
@@ -277,6 +277,7 @@ const Publisher = {
 };
 RefluxCoffeeExports.Publisher = Publisher;
 
-const __Listener = RefluxCoffeeExports.Listener;
-export { __Listener as Listener, Publisher };
-export default RefluxCoffeeExports;
+// Dual CJS/ESM surface: runtime-loaded plugin code requires this module
+// natively in the renderer (no ESM loader there).
+module.exports = RefluxCoffeeExports;
+module.exports.default = RefluxCoffeeExports;

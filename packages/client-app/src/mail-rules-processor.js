@@ -259,4 +259,4 @@ class MailRulesProcessor {
 	}
 }
 
-module.exports = new MailRulesProcessor();
+export default new MailRulesProcessor();

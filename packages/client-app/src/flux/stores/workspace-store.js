@@ -12,7 +12,7 @@ const Actions = require("../actions.js").default;
 const _AccountStore = require("./account-store.js").default;
 const _CategoryStore = require("./category-store.js");
 const _MailboxPerspective = require("../../mailbox-perspective.js");
-const NylasStore = require("nylas-store");
+const NylasStore = require("nylas-store").default || require("nylas-store");
 
 let Sheet = {};
 let Location = {};
@@ -66,10 +66,10 @@ class WorkspaceStore extends NylasStore {
 
 		const { windowType } = NylasEnv.getLoadSettings();
 		if (windowType !== "onboarding") {
-			require("electron").webFrame.setZoomLevelLimits(1, 1);
+			require("electron").webFrame?.setZoomLevelLimits?.(1, 1);
 			NylasEnv.config.observe("core.workspace.interfaceZoom", (z) => {
 				if (z && _.isNumber(z)) {
-					return require("electron").webFrame.setZoomFactor(z);
+					return require("electron").webFrame?.setZoomFactor?.(z);
 				}
 			});
 		}

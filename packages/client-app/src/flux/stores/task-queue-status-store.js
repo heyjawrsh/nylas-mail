@@ -7,7 +7,7 @@
  */
 const _ = require("underscore");
 const Rx = require("rx-lite");
-const NylasStore = require("nylas-store");
+const NylasStore = require("nylas-store").default || require("nylas-store");
 const DatabaseStore = require("./database-store.js").default;
 const _AccountStore = require("./account-store.js").default;
 const TaskQueue = require("./task-queue.js");

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import classnames from "classnames";
@@ -7,6 +7,11 @@ import RetinaImg from "./retina-img.jsx";
 import KeyCommandsRegion from "./key-commands-region.jsx";
 
 class SearchBar extends Component {
+	constructor(props) {
+		super(props);
+		this.searchInputRef = React.createRef();
+	}
+
 	static displayName = "SearchBar";
 
 	static propTypes = {
@@ -46,14 +51,15 @@ class SearchBar extends Component {
 		const { onClearSearchQuery } = this.props;
 		onClearSearchQuery();
 
-		const inputEl = ReactDOM.findDOMNode(this.refs.searchInput);
+		// React 19: string refs/findDOMNode removed — createRef + current.
+		const inputEl = this.searchInputRef.current;
 		if (inputEl) {
 			inputEl.blur();
 		}
 	}
 
 	_onFocusSearch = () => {
-		ReactDOM.findDOMNode(this.refs.searchInput).focus();
+		this.searchInputRef.current?.focus();
 	};
 
 	_onInputKeyDown = (event) => {
@@ -132,7 +138,7 @@ class SearchBar extends Component {
 
 		const headerComponents = [
 			<input
-				ref="searchInput"
+				ref={this.searchInputRef}
 				type="text"
 				key="input"
 				className={inputClass}

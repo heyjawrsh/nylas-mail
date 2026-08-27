@@ -1,15 +1,44 @@
-import Rx from "rx-lite";
-import NylasStore from "nylas-store";
-import { ipcRenderer } from "electron";
-import { remote } from "@electron/remote";
-import request from "../../request-compat.js";
-import url from "node:url";
+import { createRequire } from "node:module";
 
-import Utils from "../models/utils.js";
-import Actions from "../actions.js";
-import { APIError } from "../errors.js";
-import KeyManager from "../../key-manager.js";
-import DatabaseStore from "./database-store.js";
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
+
+const NylasStore =
+	nodeRequire("nylas-store").default || nodeRequire("nylas-store");
+const electronNS = nodeRequire("electron");
+const { ipcRenderer } = electronNS.ipcRenderer
+	? electronNS
+	: { ipcRenderer: electronNS };
+const remoteNS = nodeRequire("@electron/remote");
+const remote = remoteNS.remote || remoteNS.default || remoteNS;
+const Rx = nodeRequire("rx-lite");
+const request = (() => {
+	try {
+		const rc = nodeRequire("../../request-compat.js");
+		return rc.default || rc;
+	} catch (_e) {
+		// Bundle context: resolve from the app root through the bridge helper.
+		const rc = globalThis.$nylasRequireSrc("request-compat.js");
+		return rc.default || rc;
+	}
+})();
+const url = nodeRequire("node:url");
+const Utils = (() => {
+	try {
+		return nodeRequire("../models/utils.js").default;
+	} catch (_e) {
+		return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
+	}
+})();
+const Actions = (() => {
+	try {
+		return nodeRequire("../actions.js").default;
+	} catch (_e) {
+		return globalThis.$nylasRequireSrc("flux/actions.js").default;
+	}
+})();
 
 // Note this key name is used when migrating to Nylas Pro accounts from
 // old N1.

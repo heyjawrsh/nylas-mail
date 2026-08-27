@@ -4,7 +4,15 @@
 // property/call access — post-cycle — instead of at bridge load.
 // The literal `module.exports.X =` form is what cjs-module-lexer
 // detects so named ESM imports link successfully.
-const bridge = require("/Users/jawrsh/Work/Repositories/nylas_mail/packages/client-app/src/global/nylas-exports.js");
+// In the ELECTRON RENDERER (smoke runs), resolve to the bundle's already-
+// loaded $n anchor instead of natively requiring the ESM source (which the
+// renderer's CJS compiler rejects).
+let bridge;
+if (typeof process !== "undefined" && process.type === "renderer") {
+	bridge = globalThis.$n || {};
+} else {
+	bridge = require("/Users/jawrsh/Work/Repositories/nylas_mail/packages/client-app/src/global/nylas-exports.js");
+}
 module.exports = bridge;
 
 const lazyProxy = () =>

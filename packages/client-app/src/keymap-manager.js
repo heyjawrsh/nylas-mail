@@ -1,8 +1,8 @@
-import fs from "fs-plus";
-import path from "node:path";
-import mousetrap from "mousetrap";
-import { ipcRenderer } from "electron";
-import { Emitter, Disposable } from "event-kit";
+const fs = require("fs-plus");
+const path = require("node:path");
+const mousetrap = require("mousetrap");
+const { ipcRenderer } = require("electron");
+const { Emitter, Disposable } = require("event-kit");
 
 let suspended = false;
 const templateConfigKey = "core.keymapTemplate";
@@ -79,7 +79,7 @@ class KeymapFile {
 	}
 }
 
-export default class KeymapManager {
+class KeymapManager {
 	constructor({ configDirPath, resourcePath }) {
 		this.configDirPath = configDirPath;
 		this.resourcePath = resourcePath;
@@ -219,3 +219,6 @@ export default class KeymapManager {
 		return this._bindingsCache[command] || [];
 	}
 }
+
+module.exports = KeymapManager;
+module.exports.default = KeymapManager;

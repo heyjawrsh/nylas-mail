@@ -6,7 +6,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const Rx = require("rx-lite");
-const NylasStore = require("nylas-store");
+const NylasStore = require("nylas-store").default || require("nylas-store");
 const DatabaseStore = require("./database-store.js").default;
 const AccountStore = require("./account-store.js").default;
 

@@ -508,7 +508,7 @@ export default class Application extends EventEmitter {
 		});
 
 		app.on("ready", () => {
-			crashReporter.start({
+			crashReporter?.start?.({
 				productName: "Nylas Mail",
 				companyName: "Nylas, Inc.",
 				submitURL: "https://nylas-breakpad-sentry.herokuapp.com/crashreport",

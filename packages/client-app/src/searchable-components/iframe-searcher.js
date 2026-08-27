@@ -1,6 +1,7 @@
-import RealDOMParser from "./real-dom-parser.js";
+const RealDOMParser =
+	require("./real-dom-parser.js").default || require("./real-dom-parser.js");
 
-export default class IFrameSearcher {
+class IFrameSearcher {
 	/**
 	 * An imperative renderer for iframes
 	 */
@@ -19,3 +20,6 @@ export default class IFrameSearcher {
 		}
 	}
 }
+
+module.exports = IFrameSearcher;
+module.exports.default = IFrameSearcher;

@@ -1,5 +1,8 @@
 import _ from "underscore";
-import { Listener, Publisher } from "../flux/modules/reflux-coffee.js";
+import RefluxCoffee from "../flux/modules/reflux-coffee.js";
+
+const RC = RefluxCoffee.Listener ? RefluxCoffee : RefluxCoffee.default;
+const { Listener, Publisher } = RC;
 import { includeModule } from "../flux/coffee-helpers.js";
 
 export class Registry {

@@ -52,7 +52,7 @@ class WindowBridge {
 		}
 		let { objectName, methodName, args, taskId } = param;
 		args = JSON.parse(args, Utils.registeredObjectReviver);
-		const exports = require("nylas-exports");
+		const exports = globalThis.$n || require("nylas-exports");
 		const result = exports[objectName][methodName].apply(null, args);
 		if (_.isFunction(result.then)) {
 			return result.then((returnValue) => {

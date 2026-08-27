@@ -1,4 +1,5 @@
-import Utils from "../models/utils.js";
+const Utils =
+	require("../models/utils.js").default || require("../models/utils.js");
 
 /*
 DatabaseChangeRecord is the object emitted from the DatabaseStore when it triggers.
@@ -6,7 +7,7 @@ The DatabaseChangeRecord contains information about what type of model changed,
 and references to the new model values. All mutations to the database produce these
 change records.
 */
-export default class DatabaseChangeRecord {
+class DatabaseChangeRecord {
 	constructor(options) {
 		this.options = options;
 		this._objects = options.objects;
@@ -57,3 +58,6 @@ export default class DatabaseChangeRecord {
 		};
 	}
 }
+
+module.exports = DatabaseChangeRecord;
+module.exports.default = DatabaseChangeRecord;

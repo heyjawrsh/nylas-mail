@@ -1,9 +1,17 @@
-import _ from "underscore";
-import Actions from "./actions.js";
-import DatabaseStore from "./stores/database-store.js";
-import DatabaseChangeRecord from "./stores/database-change-record.js";
+const _ = require("underscore").default || require("underscore");
+const Actions = require("./actions.js").default || require("./actions.js");
+// Deferred through the lazy bridge: database-store is ESM and cannot be
+// natively required in the renderer; the bridge thunk is bundle-inlined.
+const getDatabaseStore = () => {
+	const DB = globalThis.$n?.DatabaseStore;
+	return DB?.default || DB;
+};
+const DatabaseChangeRecord =
+	require("./stores/database-change-record.js").default ||
+	require("./stores/database-change-record.js");
 
-import Utils from "./models/utils.js";
+const Utils =
+	require("./models/utils.js").default || require("./models/utils.js");
 
 const Role = {
 	WORK: "work",
@@ -72,14 +80,14 @@ class ActionBridge {
 		// Observe the database store (possibly other stores in the future), and
 		// rebroadcast it's trigger() event.
 		const databaseCallback = (change) => {
-			if (DatabaseStore.triggeringFromActionBridge) {
+			if (getDatabaseStore().triggeringFromActionBridge) {
 				return;
 			}
 			this.onRebroadcast(TargetWindows.ALL, Message.DATABASE_STORE_TRIGGER, [
 				change,
 			]);
 		};
-		DatabaseStore.listen(databaseCallback, this);
+		getDatabaseStore().listen(databaseCallback, this);
 
 		if (this.role !== Role.WORK) {
 			// Observe all mainWindow actions fired in this window and re-broadcast
@@ -132,8 +140,9 @@ class ActionBridge {
 			const args = JSON.parse(json, Utils.registeredObjectReviver);
 
 			if (name === Message.DATABASE_STORE_TRIGGER) {
-				DatabaseStore.triggeringFromActionBridge = true;
-				DatabaseStore.trigger(new DatabaseChangeRecord(args[0]));
+				const DB = getDatabaseStore();
+				DB.triggeringFromActionBridge = true;
+				DB.trigger(new DatabaseChangeRecord(args[0]));
 				DatabaseStore.triggeringFromActionBridge = false;
 			} else if (Actions[name]) {
 				Actions[name].firing = true;
@@ -202,4 +211,5 @@ class ActionBridge {
 	}
 }
 
-export default ActionBridge;
+module.exports = ActionBridge;
+module.exports.default = ActionBridge;

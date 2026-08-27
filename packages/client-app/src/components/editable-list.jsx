@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import _ from "underscore";
-import uuid from "uuid";
+import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -119,7 +119,7 @@ class EditableList extends Component {
 
 	constructor(props) {
 		super(props);
-		this.listId = uuid.v4();
+		this.listId = uuid();
 		this.state = {
 			dropInsertionIndex: -1,
 			editingIndex: -1,

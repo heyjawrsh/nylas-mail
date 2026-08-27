@@ -1,11 +1,14 @@
-import _ from "underscore";
-import React from "react";
-import { VirtualDOMUtils } from "nylas-exports";
+const _ = require("underscore").default || require("underscore");
+const React = require("react").default || require("react");
+const { VirtualDOMUtils } = require("nylas-exports");
 
-import SearchMatch from "./search-match.jsx";
-import UnifiedDOMParser from "./unified-dom-parser.js";
+const SearchMatch =
+	require("./search-match.jsx").default || require("./search-match.jsx");
+const UnifiedDOMParser =
+	require("./unified-dom-parser.js").default ||
+	require("./unified-dom-parser.js");
 
-export default class VirtualDOMParser extends UnifiedDOMParser {
+class VirtualDOMParser extends UnifiedDOMParser {
 	getWalker(dom) {
 		const pruneFn = (node) => {
 			return node.type === "style";
@@ -165,3 +168,6 @@ export default class VirtualDOMParser extends UnifiedDOMParser {
 		return element;
 	}
 }
+
+module.exports = VirtualDOMParser;
+module.exports.default = VirtualDOMParser;

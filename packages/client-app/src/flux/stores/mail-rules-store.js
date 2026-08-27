@@ -6,7 +6,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const NylasStore = require("nylas-store");
+const NylasStore = require("nylas-store").default || require("nylas-store");
 const _ = require("underscore");
 const Rx = require("rx-lite");
 const _AccountStore = require("./account-store.js").default;

@@ -1,4 +1,4 @@
-export default {
+const __schema = {
 	core: {
 		type: "object",
 		properties: {
@@ -168,3 +168,6 @@ export default {
 		},
 	},
 };
+
+module.exports = __schema;
+module.exports.default = __schema;

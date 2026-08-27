@@ -3,7 +3,7 @@
 // form, headers, timeout, auth (basic). Callback signature matches request:
 // (error, response, body) where response carries statusCode/statusMessage/
 // headers.
-import querystring from "node:querystring";
+const querystring = require("node:querystring");
 
 const buildURL = (options) => {
 	let url = options.url ?? options.uri;
@@ -88,4 +88,5 @@ const requestCompat = (options, callback) => {
 	return promise;
 };
 
-export default requestCompat;
+module.exports = requestCompat;
+module.exports.default = requestCompat;

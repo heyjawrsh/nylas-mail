@@ -78,3 +78,13 @@ export function databasePath(configDirPath, specMode = false) {
 	}
 	return dbPath;
 }
+
+// Dual CJS surface for native renderer loads (module is undefined in ESM).
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = {
+		openDatabase,
+		handleUnrecoverableDatabaseError,
+		databasePath,
+	};
+	module.exports.default = module.exports;
+}

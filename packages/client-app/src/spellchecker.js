@@ -22,9 +22,13 @@ const customDictFilePath = path.join(
 
 class Spellchecker {
 	constructor() {
-		this.handler = new SpellCheckHandler();
-		this.handler.switchLanguage("en-US"); // Start with US English
-		this.handler.attachToInput();
+		if (SpellCheckHandler) {
+			this.handler = new SpellCheckHandler();
+		} else {
+			this.handler = null;
+		}
+		this.handler?.switchLanguage?.("en-US"); // Start with US English
+		this.handler?.attachToInput?.();
 		this.isMisspelledCache = {};
 
 		this._customDictLoaded = false;
@@ -96,7 +100,7 @@ class Spellchecker {
 		if (Object.hasOwn(this.isMisspelledCache, word)) {
 			return this.isMisspelledCache[word];
 		}
-		const misspelled = !this.handler.handleElectronSpellCheck(word);
+		const misspelled = !this.handler?.handleElectronSpellCheck?.(word);
 		this.isMisspelledCache[word] = misspelled;
 		return misspelled;
 	};
@@ -116,7 +120,7 @@ class Spellchecker {
 	appendSpellingItemsToMenu = ({ menu, word, onCorrect, onDidLearn }) => {
 		if (this.isMisspelled(word)) {
 			const corrections =
-				this.handler.currentSpellchecker.getCorrectionsForMisspelling(word);
+				this.handler?.currentSpellchecker?.getCorrectionsForMisspelling?.(word);
 			if (corrections.length > 0) {
 				corrections.forEach((correction) => {
 					menu.append(

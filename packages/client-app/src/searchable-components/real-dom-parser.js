@@ -1,8 +1,10 @@
-import _ from "underscore";
-import { DOMUtils } from "nylas-exports";
-import UnifiedDOMParser from "./unified-dom-parser.js";
+const _ = require("underscore").default || require("underscore");
+const { DOMUtils } = require("nylas-exports");
+const UnifiedDOMParser =
+	require("./unified-dom-parser.js").default ||
+	require("./unified-dom-parser.js");
 
-export default class RealDOMParser extends UnifiedDOMParser {
+class RealDOMParser extends UnifiedDOMParser {
 	*_pruningDOMWalker({ node, pruneFn, filterFn }) {
 		if (filterFn(node)) {
 			yield node;
@@ -96,3 +98,6 @@ export default class RealDOMParser extends UnifiedDOMParser {
 		}
 	}
 }
+
+module.exports = RealDOMParser;
+module.exports.default = RealDOMParser;

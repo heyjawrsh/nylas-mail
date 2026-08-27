@@ -15,7 +15,7 @@
  *
  * Note that there is one registry per window.
  */
-export default class SerializableRegistry {
+class SerializableRegistry {
 	constructor() {
 		this._constructorFactories = {};
 	}
@@ -63,3 +63,9 @@ Your constructor factory must return a class constructor.`);
 		delete this._constructorFactories[name];
 	}
 }
+
+const __registry = new SerializableRegistry();
+module.exports = __registry;
+module.exports.SerializableRegistry = SerializableRegistry;
+module.exports.default = SerializableRegistry;
+module.exports.instance = __registry;

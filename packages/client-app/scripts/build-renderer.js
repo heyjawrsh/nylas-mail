@@ -14,22 +14,41 @@ const BANNER = `
 	if (typeof window === "undefined" || window.NylasEnv) return;
 	var qs = {};
 	try {
-		new URLSearchParams(window.location.search).forEach(function (v, k) { qs[k] = v; });
+		var params = new URLSearchParams(window.location.search);
+		params.forEach(function (v, k) { qs[k] = v; });
+		// The app passes its full settings blob as ?loadSettings=<json>
+		var raw = params.get("loadSettings");
+		if (raw) {
+			try { qs = Object.assign(JSON.parse(raw), qs); } catch (e) {}
+		}
 	} catch (e) {}
 	window.NylasEnv = {
 		loadSettings: qs,
 		inSpecMode: function () { return qs.specMode === "1" || qs.specMode === "true"; },
+		isWorkWindow: function () { return qs.windowType === "work" || false; },
+		isMainWindow: function () { return qs.windowType !== "work"; },
+		getWindowType: function () { return qs.windowType || "root"; },
+		getLoadSettings: function () { return qs; },
 		inDevMode: function () { return qs.devMode === "1" || qs.devMode === "true"; },
 		inBenchmarkMode: function () { return false; },
 		getConfigDirPath: function () { return qs.configDirPath || ""; },
 		getResourcePath: function () { return qs.resourcePath || ""; },
 		reportError: function () {},
+		getCurrentWindow: function () {
+			return { setSheetOffset: function () {}, close: function () {}, focus: function () {} };
+		},
+		onBeforeUnload: function () {},
+		on: function () { return { dispose: function () {} }; },
+		off: function () {},
+		emit: function () {},
 		errorLogger: { reportError: function () {} },
 		config: {
 			get: function () { return null; },
 			set: function () {},
 			onDidChange: function () { return { dispose: function () {} }; },
+			observe: function (_path, cb) { if (cb) cb(undefined); return { dispose: function () {} }; },
 			unobserve: function () {},
+			toggle: function () {},
 		},
 		commands: { add: function () {}, onWillDispatch: function () { return { dispose: function () {} }; } },
 		workspace: { open: function () {} },
@@ -66,7 +85,7 @@ for (const entry of entries) {
 		target: "chrome130",
 		outfile: path.join(root, "static", `${entry.out}.js`),
 		// electron must stay external — it only exists inside the app runtime
-		external: ["electron", "pg-hstore", "*.node"],
+		external: ["electron", "pg-hstore", "*.node", "windows-shortcuts"],
 		// native / optional modules: stubbed for the renderer bundle
 		alias: {
 			keytar: path.join(root, "src/renderer-stubs/optional-native.js"),

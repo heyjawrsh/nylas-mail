@@ -1,8 +1,8 @@
 import _ from "underscore";
 import fs from "node:fs";
 import path from "node:path";
-import rimraf from "rimraf";
-import mkdirp from "mkdirp";
+import { rimraf } from "rimraf";
+import { mkdirp } from "mkdirp";
 import NylasStore from "nylas-store";
 import Actions from "../actions.js";
 import Utils from "../models/utils.js";

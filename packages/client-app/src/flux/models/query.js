@@ -50,8 +50,7 @@ export default class ModelQuery {
 	//
 	constructor(klass, database) {
 		this._klass = klass;
-		this._database =
-			database || nodeRequire("../stores/database-store.js").default;
+		this._database = database || DatabaseStore;
 		this._matchers = [];
 		this._orders = [];
 		this._background = false;

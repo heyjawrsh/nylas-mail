@@ -9,6 +9,7 @@ export const ipcRenderer = {
 };
 export const remote = {
 	getGlobal: () => ({}),
+		getCurrentWindow: () => ({ setSheetOffset: () => {}, close: () => {}, focus: () => {} }),
 	getCurrentWebContents: () => ({ getId: () => -1, id: -1 }),
 	app: { getVersion: () => "0.0.0-test", getPath: () => "/tmp" },
 	process: { env: {} },

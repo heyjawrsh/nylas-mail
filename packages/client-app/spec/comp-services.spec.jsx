@@ -5,7 +5,8 @@ import { afterEach } from "vitest";
 afterEach(cleanup);
 
 import SearchQueryParser from "../src/services/search/search-query-parser.js";
-import LocalSearchQueryBackend from "../src/services/search/search-query-backend-local.js";
+import LSQB from "../src/services/search/search-query-backend-local.js";
+const LocalSearchQueryBackend = LSQB.default || LSQB;
 import IMAPSearchQueryBackend from "../src/services/search/search-query-backend-imap.js";
 import RealDOMParser from "../src/searchable-components/real-dom-parser.js";
 import {

@@ -1,6 +1,6 @@
-import { Emitter, Disposable, CompositeDisposable } from "event-kit";
+const { Emitter, Disposable, CompositeDisposable } = require("event-kit");
 
-export default class CommandRegistry {
+class CommandRegistry {
 	constructor() {
 		this.emitter = new Emitter();
 		this.listenerCounts = {};
@@ -91,3 +91,6 @@ export default class CommandRegistry {
 		return this.emitter.on("commands-changed", callback);
 	}
 }
+
+module.exports = CommandRegistry;
+module.exports.default = CommandRegistry;

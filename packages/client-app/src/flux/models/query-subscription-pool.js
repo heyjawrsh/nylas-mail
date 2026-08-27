@@ -109,9 +109,11 @@ class QuerySubscriptionPool {
 	}
 
 	_setup() {
-		DatabaseStore =
-			DatabaseStore || nodeRequire("../stores/database-store.js").default;
-		DatabaseStore.listen(this._onChange);
+		// Deferred: database-store's module graph circularly reaches this
+		// module; reading the singleton through the bridge at call time
+		// lands after both modules have evaluated.
+		const DB = DatabaseStore ?? globalThis.$n?.DatabaseStore;
+		DB?.listen?.(this._onChange);
 	}
 
 	_onChange = (record) => {

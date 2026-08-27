@@ -1,6 +1,7 @@
 import UtilsNS from "../models/utils.js";
 const { tableNameForJoin } = UtilsNS.default || UtilsNS;
-import LocalSearchQueryBackend from "../../services/search/search-query-backend-local.js";
+import LSQB from "../../services/search/search-query-backend-local.js";
+const LocalSearchQueryBackend = LSQB.default || LSQB;
 
 // https://www.sqlite.org/faq.html#q14
 // That's right. Two single quotes in a row…

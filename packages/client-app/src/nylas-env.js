@@ -6,6 +6,26 @@ const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
 		? createRequire(import.meta.url)
 		: require;
+
+// Bundle context: nodeRequire resolves against the bundle file; fall
+// back to the app-root absolute path for native renderer loads.
+const loadFromSrc = (rel) => {
+	try {
+		const mod = nodeRequire(rel);
+		return mod.default || mod;
+	} catch (_e) {
+		const root =
+			global.NylasEnv?.getResourcePath?.() ??
+			(typeof document !== "undefined"
+				? new URL(".", document.baseURI).pathname
+						.replace(/\/$/, "")
+						.replace(/\/static$/, "")
+				: "");
+		const mod = nodeRequire(`${root}/src/${rel.replace(/^\.\//, "")}`);
+		return mod.default || mod;
+	}
+};
+
 import path from "node:path";
 
 import { ipcRenderer, shell } from "electron";
@@ -119,7 +139,7 @@ export default class NylasEnvConstructor {
 				);
 			}
 		} else {
-			stateString = NylasEnvConstructor.getLoadSettings().windowState;
+			stateString = NylasEnvConstructor.getLoadSettings()?.windowState;
 		}
 
 		try {
@@ -160,7 +180,8 @@ export default class NylasEnvConstructor {
 		// The loadSettings.windowState could be large, request it only when needed.
 		Object.defineProperty(cloned, "windowState", {
 			get: () => {
-				return NylasEnvConstructor.getCurrentWindow().loadSettings.windowState;
+				const win = NylasEnvConstructor.getCurrentWindow?.();
+				return win?.loadSettings?.windowState;
 			},
 			set: (value) => {
 				NylasEnvConstructor.getCurrentWindow().loadSettings.windowState = value;
@@ -201,12 +222,12 @@ export default class NylasEnvConstructor {
 		this.setupErrorLogger();
 
 		this.loadTime = null;
-		const KeymapManager = nodeRequire("./keymap-manager.js").default;
-		const CommandRegistry = nodeRequire(
-			"./registries/command-registry.js",
-		).default;
-		const ActionBridge = nodeRequire("./flux/action-bridge.js").default;
-		const MenuManager = nodeRequire("./menu-manager.js").default;
+		// Bundle context: nodeRequire resolves against the bundle; fall back
+		// to the app-root path for native loads.
+		const KeymapManager = loadFromSrc("./keymap-manager.js");
+		const CommandRegistry = loadFromSrc("./registries/command-registry.js");
+		const ActionBridge = loadFromSrc("./flux/action-bridge.js");
+		const MenuManager = loadFromSrc("./menu-manager.js");
 
 		const {
 			devMode,
@@ -255,7 +276,8 @@ export default class NylasEnvConstructor {
 		this.commands = new CommandRegistry();
 		this.packages = new (
 			PackageManager ||
-			(PackageManager = nodeRequire("../package-manager.js").default)
+			(PackageManager =
+				globalThis.$n.PackageManager.default || globalThis.$n.PackageManager)
 		)({
 			devMode,
 			benchmarkMode,
@@ -278,7 +300,8 @@ export default class NylasEnvConstructor {
 		}
 
 		// initialize spell checking
-		this.spellchecker = nodeRequire("./spellchecker.js").default;
+		this.spellchecker =
+			globalThis.$n.Spellchecker?.default || globalThis.$n.Spellchecker;
 
 		this.packages.onDidActivateInitialPackages(() => this.watchThemes());
 		this.windowEventHandler = new WindowEventHandler();
@@ -1199,7 +1222,7 @@ export default class NylasEnvConstructor {
 	loadConfig() {
 		this.config.setSchema(null, {
 			type: "object",
-			properties: _.clone(nodeRequire("./config-schema.js").default),
+			properties: _.clone(loadFromSrc("./config-schema.js")),
 		});
 		return this.config.load();
 	}

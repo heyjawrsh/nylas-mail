@@ -1,3 +1,4 @@
+import Promise from "bluebird";
 import _ from "underscore";
 import os from "node:os";
 import fs from "node:fs";
@@ -5,15 +6,14 @@ import path from "node:path";
 import { ShellUtils } from "isomorphic-core";
 import { shell } from "electron";
 import { remote } from "@electron/remote";
-import mkdirp from "mkdirp";
+import { mkdirp } from "mkdirp";
 import progress from "request-progress";
 import NylasStore from "nylas-store";
 import Actions from "../actions.js";
 import NylasAPI from "../nylas-api.js";
 import NylasAPIRequest from "../nylas-api-request.js";
 
-Promise.promisifyAll(fs);
-const mkdirpAsync = Promise.promisify(mkdirp);
+const mkdirpAsync = (dir) => Promise.resolve(mkdirp(dir));
 
 const State = {
 	Unstarted: "unstarted",

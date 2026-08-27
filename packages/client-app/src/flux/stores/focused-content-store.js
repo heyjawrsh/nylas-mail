@@ -20,7 +20,10 @@ import Actions from "../actions.js";
 import _Thread from "../models/thread.js";
 import Model from "../models/model.js";
 
-import { Listener, Publisher } from "../modules/reflux-coffee.js";
+import RefluxCoffee from "../modules/reflux-coffee.js";
+
+const RC = RefluxCoffee.Listener ? RefluxCoffee : RefluxCoffee.default;
+const { Listener, Publisher } = RC;
 import CoffeeHelpers from "../coffee-helpers.js";
 
 /*

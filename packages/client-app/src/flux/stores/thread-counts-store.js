@@ -7,7 +7,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const NylasStore = require("nylas-store");
+const NylasStore = require("nylas-store").default || require("nylas-store");
 const DatabaseStore = require("./database-store.js").default;
 const Thread = require("../models/thread.js").default;
 

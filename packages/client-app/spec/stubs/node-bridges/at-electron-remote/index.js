@@ -2,6 +2,7 @@
 // requires an Electron runtime and process.type routing).
 const stub = {
 	getGlobal: () => ({}),
+		getCurrentWindow: () => ({ setSheetOffset: () => {}, close: () => {}, focus: () => {} }),
 	getCurrentWebContents: () => ({ getId: () => -1, id: -1, setZoomLevelLimits: () => {} }),
 	app: { getVersion: () => "0.0.0-test", getPath: () => "/tmp" },
 	process: { env: {} },
