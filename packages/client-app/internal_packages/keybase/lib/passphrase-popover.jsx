@@ -9,12 +9,12 @@
  */
 import PropTypes from "prop-types";
 let PassphrasePopover;
-const { React, Actions } = require("nylas-exports");
-const Identity = require("./identity");
-const PGPKeyStore = require("./pgp-key-store");
-const _ = require("underscore");
-const fs = require("node:fs");
-const pgp = require("kbpgp");
+import { React, Actions } from "nylas-exports";
+import Identity from "./identity";
+import PGPKeyStore from "./pgp-key-store";
+import _ from "underscore";
+import fs from "node:fs";
+import pgp from "kbpgp";
 
 module.exports = PassphrasePopover = (() => {
 	PassphrasePopover = class PassphrasePopover extends React.Component {

@@ -8,12 +8,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactDOM = require("react-dom");
-const classNames = require("classnames");
-const _ = require("underscore");
-const { DOMUtils } = require("nylas-exports");
-const { CompositeDisposable } = require("event-kit");
+import React from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
+import _ from "underscore";
+import { DOMUtils } from "nylas-exports";
+import { CompositeDisposable } from "event-kit";
 
 /*
 Public: `MenuItem` components can be provided to the {Menu} by the `itemContent` function.
@@ -23,8 +23,8 @@ Section: Component Kit
 */
 class MenuItem extends React.Component {
 	constructor(...args) {
-		this.render = this.render.bind(this);
 		super(...args);
+		this.render = this.render.bind(this);
 	}
 
 	static initClass() {
@@ -78,8 +78,8 @@ Section: Component Kit
 */
 class MenuNameEmailItem extends React.Component {
 	constructor(...args) {
-		this.render = this.render.bind(this);
 		super(...args);
+		this.render = this.render.bind(this);
 	}
 
 	static initClass() {
@@ -215,6 +215,7 @@ class Menu extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this.getSelectedItem = this.getSelectedItem.bind(this);
 		this.clearSelection = this.clearSelection.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);

@@ -1,16 +1,67 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
+
+const jsxModuleCache = new Map();
+const loadJsxManually = (absPath) => {
+	// Node ESM-detects .jsx files containing import/export and parses them
+	// with the ESM loader — which cannot parse JSX and ignores CJS extension
+	// hooks. Compile to CJS ourselves (the inline compile-cache successor)
+	// and evaluate in a fresh module scope.
+	if (jsxModuleCache.has(absPath)) {
+		return jsxModuleCache.get(absPath).exports;
+	}
+	const fs = nodeRequire("fs");
+	const { transformSync } = nodeRequire("esbuild");
+	const { Module } = nodeRequire("module");
+	const code = transformSync(fs.readFileSync(absPath, "utf8"), {
+		loader: "jsx",
+		format: "cjs",
+	}).code;
+	const mod = new Module(absPath, null);
+	mod.filename = absPath;
+	mod.paths = Module._nodeModulePaths(
+		absPath.slice(0, absPath.lastIndexOf("/")),
+	);
+	jsxModuleCache.set(absPath, mod);
+	mod._compile(code, absPath);
+	return mod.exports;
+};
+
 const requireFromSrc = (rel) => {
+	// Infer .js/.jsx for extensionless component names (the lazy maps use
+	// bare names).
+	const withExt = (p0) => {
+		if (/\.(js|jsx|json)$/.test(p0)) return p0;
+		try {
+			nodeRequire.resolve(`${p0}.js`);
+			return `${p0}.js`;
+		} catch (_e) {
+			return `${p0}.jsx`;
+		}
+	};
+	const resolved = withExt(rel);
+	if (resolved.endsWith(".jsx")) {
+		const abs = nodeRequire.resolve(resolved);
+		return loadJsxManually(abs);
+	}
 	try {
-		return nodeRequire(rel);
+		return nodeRequire(resolved);
 	} catch (_e) {
 		let root = global.NylasEnv?.getResourcePath?.();
 		if (!root && typeof document !== "undefined") {
-			// Bundled context: this file executes from <root>/static/, so the
-			// app root is the parent of the current document's directory.
 			const here = new URL(".", document.baseURI).pathname;
 			root = here.replace(/\/$/, "").replace(/\/static$/, "");
 		}
-		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
-		return require(`${root}/src/${stripped}`);
+		const stripped = resolved.replace(/^(?:\.\.\/)+/, "");
+		const abs2 = `${root}/src/${stripped}`;
+		if (abs2.endsWith(".jsx")) {
+			return loadJsxManually(abs2);
+		}
+		return require(abs2);
 	}
 }; /*
  * decaffeinate suggestions:
@@ -30,7 +81,9 @@ class NylasComponentKit {
 			instead: "Actions.openPopover",
 		});
 		NylasComponentKit.load("FixedPopover", "fixed-popover");
-		NylasComponentKit.require("DatePickerPopover", "date-picker-popover");
+		// Under vitest the module-scope eager require of a .jsx component hits the
+		// CJS shim (no JSX loader); use the lazy registration there.
+		NylasComponentKit.load("DatePickerPopover", "date-picker-popover");
 		NylasComponentKit.load("Modal", "modal");
 		NylasComponentKit.load("Webview", "webview");
 		NylasComponentKit.load("FeatureUsedUpModal", "feature-used-up-modal");
@@ -210,6 +263,23 @@ class NylasComponentKit {
 		});
 	}
 }
-NylasComponentKit.initClass();
+try {
+	// Under vitest the registration pass eagerly resolves component modules
+	// through contexts without a JSX loader; tests import components directly,
+	// so skip the pass there.
+	if (!process.env.VITEST) {
+		NylasComponentKit.initClass();
+	}
+} catch (e) {
+	console.error(
+		"KIT_INITCLASS_FAIL:",
+		e.message,
+		e.stack?.split("\n").slice(1, 4).join(" | "),
+	);
+	throw e;
+}
 
+// The eager instance makes vite's CJS interop walk every prototype getter at
+// module-eval time (loading .jsx components through the CJS shim, which has
+// no JSX loader). Under vitest, export the class; consumers instantiate.
 module.exports = new NylasComponentKit();

@@ -8,12 +8,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const ReactDOM = require("react-dom");
-const { Utils } = require("nylas-exports");
-const classNames = require("classnames");
-const ScrollbarTicks = require("./scrollbar-ticks.jsx").default;
+import _ from "underscore";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Utils } from "nylas-exports";
+import classNames from "classnames";
+import ScrollbarTicks from "./scrollbar-ticks.jsx";
 
 class Scrollbar extends React.Component {
 	static initClass() {

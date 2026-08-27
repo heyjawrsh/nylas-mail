@@ -17,8 +17,7 @@ const {
 	SearchableComponentMaker,
 	SearchableComponentStore,
 } = require("nylas-exports");
-const IFrameSearcher =
-	require("../searchable-components/iframe-searcher.js").default;
+import IFrameSearcher from "../searchable-components/iframe-searcher.js";
 const url = require("node:url");
 const _ = require("underscore");
 

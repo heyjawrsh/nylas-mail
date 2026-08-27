@@ -6,9 +6,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const { RetinaImg } = require("nylas-component-kit");
-const { Actions, FocusedContentStore } = require("nylas-exports");
+import React from "react";
+import { RetinaImg } from "nylas-component-kit";
+import { Actions, FocusedContentStore } from "nylas-exports";
 
 class DraftDeleteButton extends React.Component {
 	constructor(...args) {

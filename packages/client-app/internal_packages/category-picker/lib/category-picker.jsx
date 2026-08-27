@@ -6,15 +6,15 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const ReactDOM = require("react-dom");
+import _ from "underscore";
+import React from "react";
+import ReactDOM from "react-dom";
 
-const { Actions, AccountStore, WorkspaceStore } = require("nylas-exports");
+import { Actions, AccountStore, WorkspaceStore } from "nylas-exports";
 
-const { RetinaImg, KeyCommandsRegion } = require("nylas-component-kit");
+import { RetinaImg, KeyCommandsRegion } from "nylas-component-kit";
 
-const CategoryPickerPopover = require("./category-picker-popover").default;
+import CategoryPickerPopover from "./category-picker-popover";
 
 // This changes the category on one or more threads.
 class CategoryPicker extends React.Component {

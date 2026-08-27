@@ -30,6 +30,7 @@ globalThis.NylasEnv = {
 	getResourcePath: vi.fn(() => packageRoot),
 	packages: { pluginIdFor: vi.fn(() => null) },
 	menu: { add: vi.fn(() => ({ dispose: vi.fn() })), remove: vi.fn() },
+	fileListCache: vi.fn(() => ({ read: vi.fn(() => ({})) })),
 	commands: {
 		add: vi.fn(() => ({ dispose: vi.fn() })),
 		dispatch: vi.fn(),

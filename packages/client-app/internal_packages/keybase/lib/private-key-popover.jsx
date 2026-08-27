@@ -8,14 +8,14 @@
  */
 import PropTypes from "prop-types";
 let PrivateKeyPopover;
-const { React, Actions, AccountStore } = require("nylas-exports");
-const { remote } = require("electron");
-const Identity = require("./identity");
-const PGPKeyStore = require("./pgp-key-store");
-const _PassphrasePopover = require("./passphrase-popover");
-const _ = require("underscore");
-const fs = require("node:fs");
-const pgp = require("kbpgp");
+import { React, Actions, AccountStore } from "nylas-exports";
+import { remote } from "electron";
+import Identity from "./identity";
+import PGPKeyStore from "./pgp-key-store";
+import _PassphrasePopover from "./passphrase-popover";
+import _ from "underscore";
+import fs from "node:fs";
+import pgp from "kbpgp";
 
 module.exports = PrivateKeyPopover = (() => {
 	PrivateKeyPopover = class PrivateKeyPopover extends React.Component {

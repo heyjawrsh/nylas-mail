@@ -6,9 +6,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const { Actions } = require("nylas-exports");
-const { RetinaImg } = require("nylas-component-kit");
+import React from "react";
+import { Actions } from "nylas-exports";
+import { RetinaImg } from "nylas-component-kit";
 
 class SendingCancelButton extends React.Component {
 	static initClass() {

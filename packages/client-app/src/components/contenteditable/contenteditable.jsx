@@ -30,10 +30,8 @@ const DOMNormalizer = require("./dom-normalizer.js");
 const ClipboardService = require("./clipboard-service.js").default;
 const BlockquoteManager = require("./blockquote-manager.js").default;
 const ToolbarButtonManager = require("./toolbar-button-manager.js").default;
-const EmphasisFormattingExtension =
-	require("./emphasis-formatting-extension.js").default;
-const ParagraphFormattingExtension =
-	require("./paragraph-formatting-extension.js").default;
+import EmphasisFormattingExtension from "./emphasis-formatting-extension.js";
+import ParagraphFormattingExtension from "./paragraph-formatting-extension.js";
 
 /*
 Public: A modern React-compatible contenteditable

@@ -63254,7 +63254,7 @@ var require_thread_stream = __commonJS({
 var require_transport = __commonJS({
   "../../node_modules/.pnpm/pino@10.3.1/node_modules/pino/lib/transport.js"(exports2, module2) {
     "use strict";
-    var { createRequire: createRequire20 } = require("module");
+    var { createRequire: createRequire21 } = require("module");
     var { existsSync } = require("fs");
     var getCallers = require_caller();
     var { join, isAbsolute, sep } = require("path");
@@ -63457,7 +63457,7 @@ var require_transport = __commonJS({
         for (const filePath of callers) {
           try {
             const context = filePath === "node:repl" ? process.cwd() + sep : filePath;
-            fixTarget2 = createRequire20(context).resolve(origin);
+            fixTarget2 = createRequire21(context).resolve(origin);
             break;
           } catch (err) {
             continue;
@@ -222133,140 +222133,7 @@ var init_flexbox = __esm({
   }
 });
 
-// src/components/unsafe-component.jsx
-var require_unsafe_component = __commonJS({
-  "src/components/unsafe-component.jsx"(exports2, module2) {
-    var import_prop_types5 = __toESM(require_prop_types());
-    var React8 = require_react();
-    var ReactDOM3 = require_react_dom();
-    var { Utils: Utils14 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var UnsafeComponent = class _UnsafeComponent extends React8.Component {
-      constructor(...args) {
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-        this.componentDidUpdate = this.componentDidUpdate.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.render = this.render.bind(this);
-        this.renderInjected = this.renderInjected.bind(this);
-        this.unmountInjected = this.unmountInjected.bind(this);
-        this.focus = this.focus.bind(this);
-        this.blur = this.blur.bind(this);
-        this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
-        super(...args);
-      }
-      static initClass() {
-        _UnsafeComponent.displayName = "UnsafeComponent";
-        _UnsafeComponent.propTypes = {
-          component: import_prop_types5.default.func.isRequired,
-          onComponentDidRender: import_prop_types5.default.func
-        };
-        _UnsafeComponent.defaultProps = { onComponentDidRender() {
-        } };
-      }
-      componentDidMount() {
-        return this.renderInjected();
-      }
-      shouldComponentUpdate(nextProps, nextState) {
-        return !Utils14.isEqualReact(nextProps, this.props) || !Utils14.isEqualReact(nextState, this.state);
-      }
-      componentDidUpdate() {
-        return this.renderInjected();
-      }
-      componentWillUnmount() {
-        return this.unmountInjected();
-      }
-      render() {
-        return React8.createElement("div", {
-          name: "unsafe-component-wrapper",
-          style: this.props.component != null ? this.props.component.containerStyles : void 0
-        });
-      }
-      renderInjected() {
-        let props;
-        const node = ReactDOM3.findDOMNode(this);
-        let element = null;
-        try {
-          props = Utils14.fastOmit(
-            this.props,
-            Object.keys(this.constructor.propTypes)
-          );
-          const Component2 = this.props.component;
-          element = React8.createElement(
-            Component2,
-            Object.assign({ key: name }, props)
-          );
-          return this.injected = ReactDOM3.render(
-            element,
-            node,
-            this.props.onComponentDidRender
-          );
-        } catch (err) {
-          if (NylasEnv.inDevMode()) {
-            let { stack } = err;
-            let stackEnd = stack.indexOf("react/lib/");
-            if (stackEnd > 0) {
-              stackEnd = stack.lastIndexOf("\n", stackEnd);
-              stack = stack.substr(0, stackEnd);
-            }
-            element = React8.createElement(
-              "div",
-              { className: "unsafe-component-exception" },
-              React8.createElement(
-                "div",
-                { className: "message" },
-                this.props.component.displayName,
-                " could not be displayed."
-              ),
-              React8.createElement("div", { className: "trace" }, stack)
-            );
-          } else {
-            element = React8.createElement("div", null);
-            this.injected = ReactDOM3.render(element, node);
-          }
-          return NylasEnv.reportError(err);
-        }
-      }
-      unmountInjected() {
-        try {
-          const node = ReactDOM3.findDOMNode(this);
-          return ReactDOM3.unmountComponentAtNode(node);
-        } catch (_err) {
-        }
-      }
-      focus() {
-        return this._runInjectedDOMMethod("focus");
-      }
-      blur() {
-        return this._runInjectedDOMMethod("blur");
-      }
-      // Private: Attempts to run the DOM method, ie 'focus', on
-      // 1. Any implementation provided by the inner component
-      // 2. Any native implementation provided by the DOM
-      // 3. Ourselves, so that the method always has /some/ effect.
-      //
-      _runInjectedDOMMethod(method) {
-        let target = null;
-        if (this.injected?.[method]) {
-          target = this.injected;
-        } else if (this.injected) {
-          target = ReactDOM3.findDOMNode(this.injected);
-        } else {
-          target = ReactDOM3.findDOMNode(this);
-        }
-        return typeof target[method] === "function" ? target[method]() : void 0;
-      }
-    };
-    UnsafeComponent.initClass();
-    module2.exports = UnsafeComponent;
-  }
-});
-
 // src/components/injected-component-label.jsx
-var injected_component_label_exports = {};
-__export(injected_component_label_exports, {
-  default: () => InjectedComponentLabel
-});
 var import_react4, import_prop_types4, InjectedComponentLabel;
 var init_injected_component_label = __esm({
   "src/components/injected-component-label.jsx"() {
@@ -222309,15 +222176,144 @@ var init_injected_component_label = __esm({
   }
 });
 
+// src/components/unsafe-component.jsx
+var require_unsafe_component = __commonJS({
+  "src/components/unsafe-component.jsx"(exports2, module2) {
+    var import_prop_types5 = __toESM(require_prop_types());
+    var import_react6 = __toESM(require_react());
+    var import_react_dom2 = __toESM(require_react_dom());
+    init_nylas_exports();
+    init_index_all();
+    var UnsafeComponent = class _UnsafeComponent extends import_react6.default.Component {
+      constructor(...args) {
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.render = this.render.bind(this);
+        this.renderInjected = this.renderInjected.bind(this);
+        this.unmountInjected = this.unmountInjected.bind(this);
+        this.focus = this.focus.bind(this);
+        this.blur = this.blur.bind(this);
+        this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
+        super(...args);
+      }
+      static initClass() {
+        _UnsafeComponent.displayName = "UnsafeComponent";
+        _UnsafeComponent.propTypes = {
+          component: import_prop_types5.default.func.isRequired,
+          onComponentDidRender: import_prop_types5.default.func
+        };
+        _UnsafeComponent.defaultProps = { onComponentDidRender() {
+        } };
+      }
+      componentDidMount() {
+        return this.renderInjected();
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        return !Utils7.isEqualReact(nextProps, this.props) || !Utils7.isEqualReact(nextState, this.state);
+      }
+      componentDidUpdate() {
+        return this.renderInjected();
+      }
+      componentWillUnmount() {
+        return this.unmountInjected();
+      }
+      render() {
+        return import_react6.default.createElement("div", {
+          name: "unsafe-component-wrapper",
+          style: this.props.component != null ? this.props.component.containerStyles : void 0
+        });
+      }
+      renderInjected() {
+        let props;
+        const node = import_react_dom2.default.findDOMNode(this);
+        let element = null;
+        try {
+          props = Utils7.fastOmit(
+            this.props,
+            Object.keys(this.constructor.propTypes)
+          );
+          const Component2 = this.props.component;
+          element = import_react6.default.createElement(
+            Component2,
+            Object.assign({ key: name }, props)
+          );
+          return this.injected = import_react_dom2.default.render(
+            element,
+            node,
+            this.props.onComponentDidRender
+          );
+        } catch (err) {
+          if (NylasEnv.inDevMode()) {
+            let { stack } = err;
+            let stackEnd = stack.indexOf("react/lib/");
+            if (stackEnd > 0) {
+              stackEnd = stack.lastIndexOf("\n", stackEnd);
+              stack = stack.substr(0, stackEnd);
+            }
+            element = import_react6.default.createElement(
+              "div",
+              { className: "unsafe-component-exception" },
+              import_react6.default.createElement(
+                "div",
+                { className: "message" },
+                this.props.component.displayName,
+                " could not be displayed."
+              ),
+              import_react6.default.createElement("div", { className: "trace" }, stack)
+            );
+          } else {
+            element = import_react6.default.createElement("div", null);
+            this.injected = import_react_dom2.default.render(element, node);
+          }
+          return NylasEnv.reportError(err);
+        }
+      }
+      unmountInjected() {
+        try {
+          const node = import_react_dom2.default.findDOMNode(this);
+          return import_react_dom2.default.unmountComponentAtNode(node);
+        } catch (_err) {
+        }
+      }
+      focus() {
+        return this._runInjectedDOMMethod("focus");
+      }
+      blur() {
+        return this._runInjectedDOMMethod("blur");
+      }
+      // Private: Attempts to run the DOM method, ie 'focus', on
+      // 1. Any implementation provided by the inner component
+      // 2. Any native implementation provided by the DOM
+      // 3. Ourselves, so that the method always has /some/ effect.
+      //
+      _runInjectedDOMMethod(method) {
+        let target = null;
+        if (this.injected?.[method]) {
+          target = this.injected;
+        } else if (this.injected) {
+          target = import_react_dom2.default.findDOMNode(this.injected);
+        } else {
+          target = import_react_dom2.default.findDOMNode(this);
+        }
+        return typeof target[method] === "function" ? target[method]() : void 0;
+      }
+    };
+    UnsafeComponent.initClass();
+    module2.exports = UnsafeComponent;
+  }
+});
+
 // src/components/injected-component-set.jsx
 var require_injected_component_set = __commonJS({
   "src/components/injected-component-set.jsx"(exports2, module2) {
     var import_prop_types5 = __toESM(require_prop_types());
+    init_injected_component_label();
     var React8 = require_react();
     var _3 = (init_index_all(), __toCommonJS(index_all_exports));
     var UnsafeComponent = require_unsafe_component();
     var Flexbox2 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
-    var InjectedComponentLabel2 = (init_injected_component_label(), __toCommonJS(injected_component_label_exports)).default;
     var {
       Utils: Utils14,
       Actions: Actions3,
@@ -222416,7 +222412,7 @@ var require_injected_component_set = __commonJS({
             0,
             0,
             React8.createElement(
-              InjectedComponentLabel2,
+              InjectedComponentLabel,
               Object.assign(
                 { key: "_label", matching: this.props.matching },
                 exposedProps
@@ -223479,209 +223475,11 @@ var require_sheet_container = __commonJS({
   }
 });
 
-// src/global/nylas-component-kit.js
-var require_nylas_component_kit = __commonJS({
-  "src/global/nylas-component-kit.js"(exports2, module2) {
-    var requireFromSrc2 = (rel) => {
-      try {
-        return nodeRequire(rel);
-      } catch (_e) {
-        let root2 = global.NylasEnv?.getResourcePath?.();
-        if (!root2 && typeof document !== "undefined") {
-          const here = new URL(".", document.baseURI).pathname;
-          root2 = here.replace(/\/$/, "").replace(/\/static$/, "");
-        }
-        const stripped = rel.replace(/^(?:\.\.\/)+/, "");
-        return require(`${root2}/src/${stripped}`);
-      }
-    };
-    var NylasComponentKit = class _NylasComponentKit {
-      static initClass() {
-        _NylasComponentKit.load("Menu", "menu");
-        _NylasComponentKit.load("DropZone", "drop-zone");
-        _NylasComponentKit.load("Spinner", "spinner");
-        _NylasComponentKit.load("Switch", "switch");
-        _NylasComponentKit.loadDeprecated("Popover", "popover", {
-          instead: "Actions.openPopover"
-        });
-        _NylasComponentKit.load("FixedPopover", "fixed-popover");
-        _NylasComponentKit.require("DatePickerPopover", "date-picker-popover");
-        _NylasComponentKit.load("Modal", "modal");
-        _NylasComponentKit.load("Webview", "webview");
-        _NylasComponentKit.load("FeatureUsedUpModal", "feature-used-up-modal");
-        _NylasComponentKit.load("BillingModal", "billing-modal");
-        _NylasComponentKit.load(
-          "OpenIdentityPageButton",
-          "open-identity-page-button"
-        );
-        _NylasComponentKit.load("Flexbox", "flexbox");
-        _NylasComponentKit.load("RetinaImg", "retina-img");
-        _NylasComponentKit.load("SwipeContainer", "swipe-container");
-        _NylasComponentKit.load("FluxContainer", "flux-container");
-        _NylasComponentKit.load("FocusContainer", "focus-container");
-        _NylasComponentKit.load("SyncingListState", "syncing-list-state");
-        _NylasComponentKit.load("EmptyListState", "empty-list-state");
-        _NylasComponentKit.load("ListTabular", "list-tabular");
-        _NylasComponentKit.load("Notification", "notification");
-        _NylasComponentKit.load("NylasCalendar", "nylas-calendar/nylas-calendar");
-        _NylasComponentKit.load("MiniMonthView", "nylas-calendar/mini-month-view");
-        _NylasComponentKit.load(
-          "CalendarEventPopover",
-          "nylas-calendar/calendar-event-popover"
-        );
-        _NylasComponentKit.load("EventedIFrame", "evented-iframe");
-        _NylasComponentKit.load("ButtonDropdown", "button-dropdown");
-        _NylasComponentKit.load(
-          "Contenteditable",
-          "contenteditable/contenteditable"
-        );
-        _NylasComponentKit.load("MultiselectList", "multiselect-list");
-        _NylasComponentKit.load("BoldedSearchResult", "bolded-search-result");
-        _NylasComponentKit.load("MultiselectDropdown", "multiselect-dropdown");
-        _NylasComponentKit.load("KeyCommandsRegion", "key-commands-region");
-        _NylasComponentKit.load("TabGroupRegion", "tab-group-region");
-        _NylasComponentKit.load("InjectedComponent", "injected-component");
-        _NylasComponentKit.load("TokenizingTextField", "tokenizing-text-field");
-        _NylasComponentKit.load("ParticipantsTextField", "participants-text-field");
-        _NylasComponentKit.loadDeprecated(
-          "MultiselectActionBar",
-          "multiselect-action-bar",
-          { instead: "MultiselectToolbar" }
-        );
-        _NylasComponentKit.load("MultiselectToolbar", "multiselect-toolbar");
-        _NylasComponentKit.load("InjectedComponentSet", "injected-component-set");
-        _NylasComponentKit.load(
-          "MetadataComposerToggleButton",
-          "metadata-composer-toggle-button"
-        );
-        _NylasComponentKit.load("ConfigPropContainer", "config-prop-container");
-        _NylasComponentKit.load("DisclosureTriangle", "disclosure-triangle");
-        _NylasComponentKit.load("EditableList", "editable-list");
-        _NylasComponentKit.load("OutlineViewItem", "outline-view-item");
-        _NylasComponentKit.load("OutlineView", "outline-view");
-        _NylasComponentKit.load("DateInput", "date-input");
-        _NylasComponentKit.load("DatePicker", "date-picker");
-        _NylasComponentKit.load("TimePicker", "time-picker");
-        _NylasComponentKit.load("Table", "table/table");
-        _NylasComponentKit.loadFrom("TableRow", "table/table");
-        _NylasComponentKit.loadFrom("TableCell", "table/table");
-        _NylasComponentKit.load("SelectableTable", "selectable-table");
-        _NylasComponentKit.loadFrom("SelectableTableRow", "selectable-table");
-        _NylasComponentKit.loadFrom("SelectableTableCell", "selectable-table");
-        _NylasComponentKit.load("EditableTable", "editable-table");
-        _NylasComponentKit.loadFrom("EditableTableCell", "editable-table");
-        _NylasComponentKit.load("Toast", "toast");
-        _NylasComponentKit.load("UndoToast", "undo-toast");
-        _NylasComponentKit.load("LazyRenderedList", "lazy-rendered-list");
-        _NylasComponentKit.load(
-          "OverlaidComponents",
-          "overlaid-components/overlaid-components"
-        );
-        _NylasComponentKit.load(
-          "OverlaidComposerExtension",
-          "overlaid-components/overlaid-composer-extension"
-        );
-        _NylasComponentKit.load("OAuthSignInPage", "oauth-signin-page");
-        _NylasComponentKit.requireFrom("AttachmentItem", "attachment-items");
-        _NylasComponentKit.requireFrom("ImageAttachmentItem", "attachment-items");
-        _NylasComponentKit.load("CodeSnippet", "code-snippet");
-        _NylasComponentKit.load("DropdownMenu", "dropdown-menu");
-        _NylasComponentKit.load("ScrollRegion", "scroll-region");
-        _NylasComponentKit.load("ResizableRegion", "resizable-region");
-        _NylasComponentKit.loadFrom("MailLabel", "mail-label");
-        _NylasComponentKit.loadFrom("LabelColorizer", "mail-label");
-        _NylasComponentKit.load("MailLabelSet", "mail-label-set");
-        _NylasComponentKit.load("MailImportantIcon", "mail-important-icon");
-        _NylasComponentKit.loadFrom("FormItem", "generated-form");
-        _NylasComponentKit.loadFrom("GeneratedForm", "generated-form");
-        _NylasComponentKit.loadFrom("GeneratedFieldset", "generated-form");
-        _NylasComponentKit.load("ScenarioEditor", "scenario-editor");
-        _NylasComponentKit.load("SearchBar", "search-bar");
-        _NylasComponentKit.load(
-          "ListensToObservable",
-          "decorators/listens-to-observable"
-        );
-        _NylasComponentKit.load(
-          "ListensToFluxStore",
-          "decorators/listens-to-flux-store"
-        );
-        _NylasComponentKit.load(
-          "ListensToMovementKeys",
-          "decorators/listens-to-movement-keys"
-        );
-        _NylasComponentKit.load("HasTutorialTip", "decorators/has-tutorial-tip");
-      }
-      static default(requireValue) {
-        return requireValue.default != null ? requireValue.default : requireValue;
-      }
-      static load(prop, path10) {
-        return Object.defineProperty(_NylasComponentKit.prototype, prop, {
-          get() {
-            return _NylasComponentKit.default(
-              requireFromSrc2(`../components/${path10}`)
-            );
-          }
-        });
-      }
-      // We use require to load the component immediately (instead of lazy loading)
-      // to improve visible latency,
-      // Sometimes a component won't be loaded until the user performs an action
-      // (e.g. opening a popover), so we don't want to wait until that happens to load the
-      // component. In our example, the popover would take a long time to open the first time
-      // if it was lazy loaded
-      static require(prop, path10) {
-        const exported = _NylasComponentKit.default(
-          requireFromSrc2(`../components/${path10}`)
-        );
-        return Object.defineProperty(_NylasComponentKit.prototype, prop, {
-          get() {
-            return exported;
-          }
-        });
-      }
-      static requireFrom(prop, path10) {
-        const exported = requireFromSrc2(`../components/${path10}`);
-        return Object.defineProperty(_NylasComponentKit.prototype, prop, {
-          get() {
-            return exported[prop];
-          }
-        });
-      }
-      static loadFrom(prop, path10) {
-        return Object.defineProperty(_NylasComponentKit.prototype, prop, {
-          get() {
-            const exported = requireFromSrc2(`../components/${path10}`);
-            return exported[prop];
-          }
-        });
-      }
-      static loadDeprecated(prop, path10, param) {
-        if (param == null) {
-          param = {};
-        }
-        const { instead } = param;
-        const { deprecate } = requireFromSrc2("../deprecate-utils.js");
-        return Object.defineProperty(_NylasComponentKit.prototype, prop, {
-          get: deprecate(prop, instead, _NylasComponentKit, () => {
-            const exported = _NylasComponentKit.default(
-              requireFromSrc2(`../components/${path10}`)
-            );
-            return exported;
-          }),
-          enumerable: true
-        });
-      }
-    };
-    NylasComponentKit.initClass();
-    module2.exports = new NylasComponentKit();
-  }
-});
-
 // src/window-bootstrap.js
-var import_node_module19 = require("module");
+var import_node_module20 = require("module");
 
 // src/nylas-env.js
-var import_node_module18 = require("module");
+var import_node_module19 = require("module");
 var import_node_path9 = __toESM(require("path"));
 var import_electron4 = require("electron");
 var import_remote5 = __toESM(require_at_electron_remote());
@@ -223703,9 +223501,257 @@ var import_react5 = __toESM(require_react());
 var import_react_dom = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
 init_nylas_exports();
-var import_nylas_component_kit = __toESM(require_nylas_component_kit());
+
+// src/global/nylas-component-kit.js
+var import_node_module18 = require("module");
 var import_meta19 = {};
 var nodeRequire19 = typeof import_meta19.url === "string" && import_meta19.url.startsWith("file:") ? (0, import_node_module18.createRequire)(import_meta19.url) : require;
+var jsxModuleCache = /* @__PURE__ */ new Map();
+var loadJsxManually = (absPath) => {
+  if (jsxModuleCache.has(absPath)) {
+    return jsxModuleCache.get(absPath).exports;
+  }
+  const fs5 = nodeRequire19("fs");
+  const { transformSync } = nodeRequire19("esbuild");
+  const { Module } = nodeRequire19("module");
+  const code = transformSync(fs5.readFileSync(absPath, "utf8"), {
+    loader: "jsx",
+    format: "cjs"
+  }).code;
+  const mod = new Module(absPath, null);
+  mod.filename = absPath;
+  mod.paths = Module._nodeModulePaths(
+    absPath.slice(0, absPath.lastIndexOf("/"))
+  );
+  jsxModuleCache.set(absPath, mod);
+  mod._compile(code, absPath);
+  return mod.exports;
+};
+var requireFromSrc2 = (rel) => {
+  const withExt = (p0) => {
+    if (/\.(js|jsx|json)$/.test(p0)) return p0;
+    try {
+      nodeRequire19.resolve(`${p0}.js`);
+      return `${p0}.js`;
+    } catch (_e) {
+      return `${p0}.jsx`;
+    }
+  };
+  const resolved = withExt(rel);
+  if (resolved.endsWith(".jsx")) {
+    const abs = nodeRequire19.resolve(resolved);
+    return loadJsxManually(abs);
+  }
+  try {
+    return nodeRequire19(resolved);
+  } catch (_e) {
+    let root2 = global.NylasEnv?.getResourcePath?.();
+    if (!root2 && typeof document !== "undefined") {
+      const here = new URL(".", document.baseURI).pathname;
+      root2 = here.replace(/\/$/, "").replace(/\/static$/, "");
+    }
+    const stripped = resolved.replace(/^(?:\.\.\/)+/, "");
+    const abs2 = `${root2}/src/${stripped}`;
+    if (abs2.endsWith(".jsx")) {
+      return loadJsxManually(abs2);
+    }
+    return require(abs2);
+  }
+};
+var NylasComponentKit = class _NylasComponentKit {
+  static initClass() {
+    _NylasComponentKit.load("Menu", "menu");
+    _NylasComponentKit.load("DropZone", "drop-zone");
+    _NylasComponentKit.load("Spinner", "spinner");
+    _NylasComponentKit.load("Switch", "switch");
+    _NylasComponentKit.loadDeprecated("Popover", "popover", {
+      instead: "Actions.openPopover"
+    });
+    _NylasComponentKit.load("FixedPopover", "fixed-popover");
+    _NylasComponentKit.load("DatePickerPopover", "date-picker-popover");
+    _NylasComponentKit.load("Modal", "modal");
+    _NylasComponentKit.load("Webview", "webview");
+    _NylasComponentKit.load("FeatureUsedUpModal", "feature-used-up-modal");
+    _NylasComponentKit.load("BillingModal", "billing-modal");
+    _NylasComponentKit.load(
+      "OpenIdentityPageButton",
+      "open-identity-page-button"
+    );
+    _NylasComponentKit.load("Flexbox", "flexbox");
+    _NylasComponentKit.load("RetinaImg", "retina-img");
+    _NylasComponentKit.load("SwipeContainer", "swipe-container");
+    _NylasComponentKit.load("FluxContainer", "flux-container");
+    _NylasComponentKit.load("FocusContainer", "focus-container");
+    _NylasComponentKit.load("SyncingListState", "syncing-list-state");
+    _NylasComponentKit.load("EmptyListState", "empty-list-state");
+    _NylasComponentKit.load("ListTabular", "list-tabular");
+    _NylasComponentKit.load("Notification", "notification");
+    _NylasComponentKit.load("NylasCalendar", "nylas-calendar/nylas-calendar");
+    _NylasComponentKit.load("MiniMonthView", "nylas-calendar/mini-month-view");
+    _NylasComponentKit.load(
+      "CalendarEventPopover",
+      "nylas-calendar/calendar-event-popover"
+    );
+    _NylasComponentKit.load("EventedIFrame", "evented-iframe");
+    _NylasComponentKit.load("ButtonDropdown", "button-dropdown");
+    _NylasComponentKit.load(
+      "Contenteditable",
+      "contenteditable/contenteditable"
+    );
+    _NylasComponentKit.load("MultiselectList", "multiselect-list");
+    _NylasComponentKit.load("BoldedSearchResult", "bolded-search-result");
+    _NylasComponentKit.load("MultiselectDropdown", "multiselect-dropdown");
+    _NylasComponentKit.load("KeyCommandsRegion", "key-commands-region");
+    _NylasComponentKit.load("TabGroupRegion", "tab-group-region");
+    _NylasComponentKit.load("InjectedComponent", "injected-component");
+    _NylasComponentKit.load("TokenizingTextField", "tokenizing-text-field");
+    _NylasComponentKit.load("ParticipantsTextField", "participants-text-field");
+    _NylasComponentKit.loadDeprecated(
+      "MultiselectActionBar",
+      "multiselect-action-bar",
+      { instead: "MultiselectToolbar" }
+    );
+    _NylasComponentKit.load("MultiselectToolbar", "multiselect-toolbar");
+    _NylasComponentKit.load("InjectedComponentSet", "injected-component-set");
+    _NylasComponentKit.load(
+      "MetadataComposerToggleButton",
+      "metadata-composer-toggle-button"
+    );
+    _NylasComponentKit.load("ConfigPropContainer", "config-prop-container");
+    _NylasComponentKit.load("DisclosureTriangle", "disclosure-triangle");
+    _NylasComponentKit.load("EditableList", "editable-list");
+    _NylasComponentKit.load("OutlineViewItem", "outline-view-item");
+    _NylasComponentKit.load("OutlineView", "outline-view");
+    _NylasComponentKit.load("DateInput", "date-input");
+    _NylasComponentKit.load("DatePicker", "date-picker");
+    _NylasComponentKit.load("TimePicker", "time-picker");
+    _NylasComponentKit.load("Table", "table/table");
+    _NylasComponentKit.loadFrom("TableRow", "table/table");
+    _NylasComponentKit.loadFrom("TableCell", "table/table");
+    _NylasComponentKit.load("SelectableTable", "selectable-table");
+    _NylasComponentKit.loadFrom("SelectableTableRow", "selectable-table");
+    _NylasComponentKit.loadFrom("SelectableTableCell", "selectable-table");
+    _NylasComponentKit.load("EditableTable", "editable-table");
+    _NylasComponentKit.loadFrom("EditableTableCell", "editable-table");
+    _NylasComponentKit.load("Toast", "toast");
+    _NylasComponentKit.load("UndoToast", "undo-toast");
+    _NylasComponentKit.load("LazyRenderedList", "lazy-rendered-list");
+    _NylasComponentKit.load(
+      "OverlaidComponents",
+      "overlaid-components/overlaid-components"
+    );
+    _NylasComponentKit.load(
+      "OverlaidComposerExtension",
+      "overlaid-components/overlaid-composer-extension"
+    );
+    _NylasComponentKit.load("OAuthSignInPage", "oauth-signin-page");
+    _NylasComponentKit.requireFrom("AttachmentItem", "attachment-items");
+    _NylasComponentKit.requireFrom("ImageAttachmentItem", "attachment-items");
+    _NylasComponentKit.load("CodeSnippet", "code-snippet");
+    _NylasComponentKit.load("DropdownMenu", "dropdown-menu");
+    _NylasComponentKit.load("ScrollRegion", "scroll-region");
+    _NylasComponentKit.load("ResizableRegion", "resizable-region");
+    _NylasComponentKit.loadFrom("MailLabel", "mail-label");
+    _NylasComponentKit.loadFrom("LabelColorizer", "mail-label");
+    _NylasComponentKit.load("MailLabelSet", "mail-label-set");
+    _NylasComponentKit.load("MailImportantIcon", "mail-important-icon");
+    _NylasComponentKit.loadFrom("FormItem", "generated-form");
+    _NylasComponentKit.loadFrom("GeneratedForm", "generated-form");
+    _NylasComponentKit.loadFrom("GeneratedFieldset", "generated-form");
+    _NylasComponentKit.load("ScenarioEditor", "scenario-editor");
+    _NylasComponentKit.load("SearchBar", "search-bar");
+    _NylasComponentKit.load(
+      "ListensToObservable",
+      "decorators/listens-to-observable"
+    );
+    _NylasComponentKit.load(
+      "ListensToFluxStore",
+      "decorators/listens-to-flux-store"
+    );
+    _NylasComponentKit.load(
+      "ListensToMovementKeys",
+      "decorators/listens-to-movement-keys"
+    );
+    _NylasComponentKit.load("HasTutorialTip", "decorators/has-tutorial-tip");
+  }
+  static default(requireValue) {
+    return requireValue.default != null ? requireValue.default : requireValue;
+  }
+  static load(prop, path10) {
+    return Object.defineProperty(_NylasComponentKit.prototype, prop, {
+      get() {
+        return _NylasComponentKit.default(
+          requireFromSrc2(`../components/${path10}`)
+        );
+      }
+    });
+  }
+  // We use require to load the component immediately (instead of lazy loading)
+  // to improve visible latency,
+  // Sometimes a component won't be loaded until the user performs an action
+  // (e.g. opening a popover), so we don't want to wait until that happens to load the
+  // component. In our example, the popover would take a long time to open the first time
+  // if it was lazy loaded
+  static require(prop, path10) {
+    const exported = _NylasComponentKit.default(
+      requireFromSrc2(`../components/${path10}`)
+    );
+    return Object.defineProperty(_NylasComponentKit.prototype, prop, {
+      get() {
+        return exported;
+      }
+    });
+  }
+  static requireFrom(prop, path10) {
+    const exported = requireFromSrc2(`../components/${path10}`);
+    return Object.defineProperty(_NylasComponentKit.prototype, prop, {
+      get() {
+        return exported[prop];
+      }
+    });
+  }
+  static loadFrom(prop, path10) {
+    return Object.defineProperty(_NylasComponentKit.prototype, prop, {
+      get() {
+        const exported = requireFromSrc2(`../components/${path10}`);
+        return exported[prop];
+      }
+    });
+  }
+  static loadDeprecated(prop, path10, param) {
+    if (param == null) {
+      param = {};
+    }
+    const { instead } = param;
+    const { deprecate } = requireFromSrc2("../deprecate-utils.js");
+    return Object.defineProperty(_NylasComponentKit.prototype, prop, {
+      get: deprecate(prop, instead, _NylasComponentKit, () => {
+        const exported = _NylasComponentKit.default(
+          requireFromSrc2(`../components/${path10}`)
+        );
+        return exported;
+      }),
+      enumerable: true
+    });
+  }
+};
+try {
+  if (!process.env.VITEST) {
+    NylasComponentKit.initClass();
+  }
+} catch (e) {
+  console.error(
+    "KIT_INITCLASS_FAIL:",
+    e.message,
+    e.stack?.split("\n").slice(1, 4).join(" | ")
+  );
+  throw e;
+}
+module.exports = new NylasComponentKit();
+
+// src/nylas-env.js
+var import_meta20 = {};
+var nodeRequire20 = typeof import_meta20.url === "string" && import_meta20.url.startsWith("file:") ? (0, import_node_module19.createRequire)(import_meta20.url) : require;
 var PackageManager = null;
 function ensureInteger(f, fallback) {
   let int = f;
@@ -223830,12 +223876,12 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.enhanceEventObject();
     this.setupErrorLogger();
     this.loadTime = null;
-    const KeymapManager = nodeRequire19("./keymap-manager.js").default;
-    const CommandRegistry = nodeRequire19(
+    const KeymapManager = nodeRequire20("./keymap-manager.js").default;
+    const CommandRegistry = nodeRequire20(
       "./registries/command-registry.js"
     ).default;
-    const ActionBridge = nodeRequire19("./flux/action-bridge.js").default;
-    const MenuManager = nodeRequire19("./menu-manager.js").default;
+    const ActionBridge = nodeRequire20("./flux/action-bridge.js").default;
+    const MenuManager = nodeRequire20("./menu-manager.js").default;
     const {
       devMode,
       benchmarkMode,
@@ -223859,7 +223905,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.keymaps = new KeymapManager({ configDirPath, resourcePath: resourcePath2 });
     const specMode = this.inSpecMode();
     this.commands = new CommandRegistry();
-    this.packages = new (PackageManager || (PackageManager = nodeRequire19("../package-manager.js").default))({
+    this.packages = new (PackageManager || (PackageManager = nodeRequire20("../package-manager.js").default))({
       devMode,
       benchmarkMode,
       configDirPath,
@@ -223879,7 +223925,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     if (process.platform === "win32") {
       this.getCurrentWindow().setMenuBarVisibility(false);
     }
-    this.spellchecker = nodeRequire19("./spellchecker.js").default;
+    this.spellchecker = nodeRequire20("./spellchecker.js").default;
     this.packages.onDidActivateInitialPackages(() => this.watchThemes());
     this.windowEventHandler = new import_window_event_handler.default();
     this.timer = import_remote5.remote.getGlobal("application").timer;
@@ -223888,7 +223934,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
       this.actionBridge = new ActionBridge(import_electron4.ipcRenderer);
     }
     this.extendRxObservables();
-    nodeRequire19("nylas-exports");
+    nodeRequire20("nylas-exports");
     process.title = `Nylas Mail ${this.getWindowType()}`;
     return this.onWindowPropsReceived(() => {
       process.title = `Nylas Mail ${this.getWindowType()}`;
@@ -224540,7 +224586,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   // We extend nylas observables with our own methods. This happens on
   // require of nylas-observables
   extendRxObservables() {
-    return nodeRequire19("nylas-observables");
+    return nodeRequire20("nylas-observables");
   }
   // Launches a new window via the browser/WindowLauncher.
   //
@@ -224657,7 +224703,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   loadConfig() {
     this.config.setSchema(null, {
       type: "object",
-      properties: index_default_default.clone(nodeRequire19("./config-schema.js").default)
+      properties: index_default_default.clone(nodeRequire20("./config-schema.js").default)
     });
     return this.config.load();
   }
@@ -224726,7 +224772,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
       (buttonIndex) => {
         if (buttonIndex === 1) {
           Actions2.openModal({
-            component: (0, import_nylas_component_kit.CodeSnippet)({
+            component: (void 0)({
               intro: message,
               code: detail,
               className: "error-details"
@@ -224857,9 +224903,9 @@ window.profile = (description, fn2) => measure(description, () => {
 });
 
 // src/window-bootstrap.js
-var import_meta20 = {};
-var nodeRequire20 = typeof import_meta20.url === "string" && import_meta20.url.startsWith("file:") ? (0, import_node_module19.createRequire)(import_meta20.url) : require;
-global.Promise = nodeRequire20("bluebird");
+var import_meta21 = {};
+var nodeRequire21 = typeof import_meta21.url === "string" && import_meta21.url.startsWith("file:") ? (0, import_node_module20.createRequire)(import_meta21.url) : require;
+global.Promise = nodeRequire21("bluebird");
 var timeout = global.setTimeout;
 Promise.setScheduler((fn2) => timeout(fn2, 0));
 NylasEnv.initialize();

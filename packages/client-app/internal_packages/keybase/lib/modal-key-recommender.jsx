@@ -10,12 +10,12 @@
  */
 import PropTypes from "prop-types";
 let ModalKeyRecommender;
-const { Utils, React, Actions } = require("nylas-exports");
-const PGPKeyStore = require("./pgp-key-store");
-const KeybaseSearch = require("./keybase-search");
-const KeybaseUser = require("./keybase-user");
-const kb = require("./keybase");
-const _ = require("underscore");
+import { Utils, React, Actions } from "nylas-exports";
+import PGPKeyStore from "./pgp-key-store";
+import KeybaseSearch from "./keybase-search";
+import KeybaseUser from "./keybase-user";
+import kb from "./keybase";
+import _ from "underscore";
 
 module.exports = ModalKeyRecommender = (() => {
 	ModalKeyRecommender = class ModalKeyRecommender extends React.Component {

@@ -12,7 +12,7 @@ import {
 import { RetinaImg } from "nylas-component-kit";
 import SendLaterPopover from "./send-later-popover";
 import { PLUGIN_ID, PLUGIN_NAME } from "./send-later-constants";
-const { NylasAPIRequest, NylasAPI, N1CloudAPI } = require("nylas-exports");
+import { NylasAPIRequest, NylasAPI, N1CloudAPI } from "nylas-exports";
 
 const OPEN_TRACKING_ID = NylasEnv.packages.pluginIdFor("open-tracking");
 const LINK_TRACKING_ID = NylasEnv.packages.pluginIdFor("link-tracking");

@@ -15,8 +15,8 @@ export default defineConfig({
 			"@electron/remote": path.join(__dirname, "spec/stubs/electron.js"),
 			"nylas-exports": path.join(__dirname, "spec/stubs/nylas-exports.js"), // eager re-export for named-import analysis
 			"nylas-component-kit": path.join(
-				root,
-				"src/global/nylas-component-kit.js",
+				__dirname,
+				"spec/stubs/nylas-component-kit.js",
 			),
 			"nylas-store": path.join(root, "src/global/nylas-store.js"),
 			"nylas-observables": path.join(

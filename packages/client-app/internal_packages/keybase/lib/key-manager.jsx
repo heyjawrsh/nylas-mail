@@ -7,14 +7,14 @@
  */
 import PropTypes from "prop-types";
 let KeyManager;
-const { Utils, React, Actions } = require("nylas-exports");
-const PGPKeyStore = require("./pgp-key-store");
-const KeybaseUser = require("./keybase-user");
-const PassphrasePopover = require("./passphrase-popover");
-const _kb = require("./keybase");
-const _ = require("underscore");
-const pgp = require("kbpgp");
-const fs = require("node:fs");
+import { Utils, React, Actions } from "nylas-exports";
+import PGPKeyStore from "./pgp-key-store";
+import KeybaseUser from "./keybase-user";
+import PassphrasePopover from "./passphrase-popover";
+import _kb from "./keybase";
+import _ from "underscore";
+import pgp from "kbpgp";
+import fs from "node:fs";
 
 module.exports = KeyManager = (() => {
 	KeyManager = class KeyManager extends React.Component {

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const { Actions, Utils } = require("nylas-exports");
-const { RetinaImg } = require("nylas-component-kit");
+import _ from "underscore";
+import React from "react";
+import { Actions, Utils } from "nylas-exports";
+import { RetinaImg } from "nylas-component-kit";
 
 class StarButton extends React.Component {
 	static displayName = "StarButton";

@@ -7,10 +7,10 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const _ReactDOM = require("react-dom");
-const _ = require("underscore");
-const classNames = require("classnames");
+import React from "react";
+import _ReactDOM from "react-dom";
+import _ from "underscore";
+import classNames from "classnames";
 
 /*
 Public: Displays an indeterminate progress indicator in the center of it's

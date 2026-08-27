@@ -7,10 +7,10 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactDOM = require("react-dom");
-const { Utils } = require("nylas-exports");
-const _ = require("underscore");
+import React from "react";
+import ReactDOM from "react-dom";
+import { Utils } from "nylas-exports";
+import _ from "underscore";
 
 /*
 Public: Renders a component provided via the `component` prop, and ensures that

@@ -7,10 +7,10 @@
  */
 import PropTypes from "prop-types";
 let EmailPopover;
-const { React, Actions } = require("nylas-exports");
-const { ParticipantsTextField } = require("nylas-component-kit");
-const Identity = require("./identity");
-const _ = require("underscore");
+import { React, Actions } from "nylas-exports";
+import { ParticipantsTextField } from "nylas-component-kit";
+import Identity from "./identity";
+import _ from "underscore";
 
 module.exports = EmailPopover = (() => {
 	EmailPopover = class EmailPopover extends React.Component {

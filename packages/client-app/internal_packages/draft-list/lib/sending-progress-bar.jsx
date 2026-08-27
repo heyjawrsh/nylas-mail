@@ -5,8 +5,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const { Utils } = require("nylas-exports");
+import React from "react";
+import { Utils } from "nylas-exports";
 
 class SendingProgressBar extends React.Component {
 	static initClass() {

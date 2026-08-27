@@ -7,12 +7,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const RetinaImg = require("./retina-img.jsx").default;
-const { Utils } = require("nylas-exports");
-const classnames = require("classnames");
+import RetinaImg from "./retina-img.jsx";
+import { Utils } from "nylas-exports";
+import classnames from "classnames";
 
-const React = require("react");
-const ReactDOM = require("react-dom");
+import React from "react";
+import ReactDOM from "react-dom";
 class ButtonDropdown extends React.Component {
 	static initClass() {
 		ButtonDropdown.displayName = "ButtonDropdown";

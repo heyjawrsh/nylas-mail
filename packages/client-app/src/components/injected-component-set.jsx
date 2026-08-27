@@ -11,8 +11,7 @@ const React = require("react");
 const _ = require("underscore");
 const UnsafeComponent = require("./unsafe-component.jsx");
 const Flexbox = require("./flexbox.jsx").default;
-const InjectedComponentLabel =
-	require("./injected-component-label.jsx").default;
+import InjectedComponentLabel from "./injected-component-label.jsx";
 const {
 	Utils,
 	Actions,

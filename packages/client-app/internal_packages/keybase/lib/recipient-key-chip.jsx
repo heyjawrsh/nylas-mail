@@ -5,11 +5,11 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const { MessageStore, React } = require("nylas-exports");
-const { RetinaImg } = require("nylas-component-kit");
-const PGPKeyStore = require("./pgp-key-store");
-const _pgp = require("kbpgp");
-const _ = require("underscore");
+import { MessageStore, React } from "nylas-exports";
+import { RetinaImg } from "nylas-component-kit";
+import PGPKeyStore from "./pgp-key-store";
+import _pgp from "kbpgp";
+import _ from "underscore";
 
 // Sits next to recipient chips in the composer and turns them green/red
 // depending on whether or not there's a PGP key present for that user

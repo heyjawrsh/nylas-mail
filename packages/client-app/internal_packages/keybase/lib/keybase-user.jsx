@@ -8,13 +8,13 @@
  */
 import PropTypes from "prop-types";
 let KeybaseUser;
-const { Utils, React, Actions } = require("nylas-exports");
-const { ParticipantsTextField } = require("nylas-component-kit");
-const PGPKeyStore = require("./pgp-key-store");
-const EmailPopover = require("./email-popover");
-const Identity = require("./identity");
-const _kb = require("./keybase");
-const _ = require("underscore");
+import { Utils, React, Actions } from "nylas-exports";
+import { ParticipantsTextField } from "nylas-component-kit";
+import PGPKeyStore from "./pgp-key-store";
+import EmailPopover from "./email-popover";
+import Identity from "./identity";
+import _kb from "./keybase";
+import _ from "underscore";
 
 module.exports = KeybaseUser = (() => {
 	KeybaseUser = class KeybaseUser extends React.Component {

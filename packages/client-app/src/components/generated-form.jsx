@@ -9,13 +9,13 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const classNames = require("classnames");
-const React = require("react");
-const ReactDOM = require("react-dom");
-const { Utils } = require("nylas-exports");
-const DatePicker = require("./date-picker.jsx").default;
-const TabGroupRegion = require("./tab-group-region.jsx");
+import _ from "underscore";
+import classNames from "classnames";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Utils } from "nylas-exports";
+import DatePicker from "./date-picker.jsx";
+import TabGroupRegion from "./tab-group-region.jsx";
 
 const idPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 

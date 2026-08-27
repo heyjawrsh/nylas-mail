@@ -5,9 +5,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const Utils = require("./utils");
-const SimpleMDE = require("simplemde");
-const { React, ReactDOM, QuotedHTMLTransformer } = require("nylas-exports");
+import Utils from "./utils";
+import SimpleMDE from "simplemde";
+import { React, ReactDOM, QuotedHTMLTransformer } from "nylas-exports";
 
 // Keep a file-scope variable containing the contents of the markdown stylesheet.
 // This will be embedded in the markdown preview iFrame, as well as the email body.

@@ -1,3 +1,7 @@
+import { createRequire } from "node:module";
+
+const nodeRequire = createRequire(import.meta.url);
+
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -6,9 +10,9 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const _str = require("underscore.string");
-const {
+import _ from "underscore";
+import _str from "underscore.string";
+import {
 	WorkspaceStore,
 	MailboxPerspective,
 	FocusedPerspectiveStore,
@@ -18,10 +22,10 @@ const {
 	Actions,
 	Utils,
 	RegExpUtils,
-} = require("nylas-exports");
-const { OutlineViewItem } = require("nylas-component-kit");
+} from "nylas-exports";
+import { OutlineViewItem } from "nylas-component-kit";
 
-const SidebarActions = require("./sidebar-actions");
+import SidebarActions from "./sidebar-actions.js";
 
 const idForCategories = (categories) => _.pluck(categories, "id").join("-");
 
@@ -206,7 +210,9 @@ class SidebarItem {
 		if (opts == null) {
 			opts = {};
 		}
-		const constants = require("../../thread-snooze/lib/snooze-constants");
+		const constants = nodeRequire(
+			"../../thread-snooze/lib/snooze-constants.js",
+		);
 		const displayName = constants.SNOOZE_CATEGORY_NAME;
 		let id = displayName;
 		if (opts.name) {
@@ -274,4 +280,4 @@ class SidebarItem {
 	}
 }
 
-module.exports = SidebarItem;
+export default SidebarItem;

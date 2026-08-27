@@ -1,0 +1,264 @@
+import React from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+
+afterEach(cleanup);
+
+vi.mock("electron", () => ({
+	clipboard: { writeText: vi.fn() },
+	remote: {
+		Menu: class { append() {} popup() {} },
+		MenuItem: class { constructor(options) { Object.assign(this, options); } },
+		getCurrentWindow: vi.fn(),
+	},
+}));
+
+vi.mock("@electron/remote", () => ({
+	remote: {},
+	Menu: class { append() {} popup() {} },
+	MenuItem: class { constructor(options) { Object.assign(this, options); } },
+	getCurrentWindow: vi.fn(),
+}));
+
+import MiniMonthView from "../src/components/nylas-calendar/mini-month-view.js";
+import ListHandler from "../src/components/multiselect-list-interaction-handler.js";
+import SplitHandler from "../src/components/multiselect-split-interaction-handler.js";
+import OutlineViewItem from "../src/components/outline-view-item.js";
+import ParticipantsTextField from "../src/components/participants-text-field.js";
+import Spinner from "../src/components/spinner.js";
+import Table, { TableCell, TableRow } from "../src/components/table/table.js";
+import TableDataSource from "../src/components/table/table-data-source.js";
+import TokenizingTextField from "../src/components/tokenizing-text-field.js";
+
+const items = [{ id: "a" }, { id: "b" }, { id: "c" }];
+
+function handlerFixture(overrides = {}) {
+	let selected = [];
+	const selection = {
+		toggle: vi.fn((item) => {
+			selected = selected.includes(item)
+				? selected.filter((candidate) => candidate !== item)
+				: selected.concat(item);
+		}),
+		expandTo: vi.fn(),
+		clear: vi.fn(() => { selected = []; }),
+		set: vi.fn((next) => { selected = next; }),
+		add: vi.fn((item) => {
+			if (item && !selected.includes(item)) selected.push(item);
+		}),
+		walk: vi.fn(),
+		count: vi.fn(() => selected.length),
+		items: vi.fn(() => selected),
+		top: vi.fn(() => selected[0]),
+	};
+	const dataSource = {
+		selection,
+		getById: vi.fn((id) => items.find((item) => item.id === id)),
+		indexOfId: vi.fn((id) => items.findIndex((item) => item.id === id)),
+		count: vi.fn(() => items.length),
+		get: vi.fn((index) => items[index]),
+	};
+	return {
+		selection,
+		props: {
+			dataSource,
+			focused: items[0],
+			focusedId: "a",
+			keyboardCursorId: null,
+			onFocusItem: vi.fn(),
+			onSetCursorPosition: vi.fn(),
+			...overrides,
+		},
+	};
+}
+
+describe("multiselect list interaction handler", () => {
+	it("describes list presentation behavior", () => {
+		const handler = new ListHandler(handlerFixture().props);
+		expect(handler.cssClass()).toBe("handler-list");
+		expect(handler.shouldShowFocus()).toBe(false);
+		expect(handler.shouldShowCheckmarks()).toBe(true);
+		expect(handler.shouldShowKeyboardCursor()).toBe(true);
+	});
+
+	it("focuses a clicked item", () => {
+		const fixture = handlerFixture();
+		new ListHandler(fixture.props).onClick(items[1]);
+		expect(fixture.props.onFocusItem).toHaveBeenCalledWith(items[1]);
+	});
+
+	it("toggles and positions a meta-clicked item", () => {
+		const fixture = handlerFixture();
+		new ListHandler(fixture.props).onMetaClick(items[1]);
+		expect(fixture.selection.toggle).toHaveBeenCalledWith(items[1]);
+		expect(fixture.props.onSetCursorPosition).toHaveBeenCalledWith(items[1]);
+	});
+
+	it("expands selection to a shift-clicked item", () => {
+		const fixture = handlerFixture();
+		new ListHandler(fixture.props).onShiftClick(items[2]);
+		expect(fixture.selection.expandTo).toHaveBeenCalledWith(items[2]);
+	});
+
+	it("clears and replaces selection", () => {
+		const fixture = handlerFixture();
+		const handler = new ListHandler(fixture.props);
+		handler.onDeselect();
+		handler.onSelect(items.slice(1));
+		expect(fixture.selection.clear).toHaveBeenCalledOnce();
+		expect(fixture.selection.set).toHaveBeenCalledWith(items.slice(1));
+	});
+});
+
+describe("multiselect split interaction handler", () => {
+	it("describes split presentation behavior", () => {
+		const handler = new SplitHandler(handlerFixture().props);
+		expect(handler.cssClass()).toBe("handler-split");
+		expect(handler.shouldShowFocus()).toBe(true);
+		expect(handler.shouldShowCheckmarks()).toBe(false);
+	});
+
+	it("focuses a normal click and clears selection", () => {
+		const fixture = handlerFixture();
+		new SplitHandler(fixture.props).onClick(items[1]);
+		expect(fixture.props.onFocusItem).toHaveBeenCalledWith(items[1]);
+		expect(fixture.selection.clear).toHaveBeenCalled();
+	});
+
+	it("turns focus into selection on meta click", () => {
+		const fixture = handlerFixture();
+		new SplitHandler(fixture.props).onMetaClick(items[1]);
+		expect(fixture.selection.add).toHaveBeenCalledWith(items[0]);
+		expect(fixture.selection.toggle).toHaveBeenCalledWith(items[1]);
+	});
+
+	it("moves a lone selection back into focus", () => {
+		const fixture = handlerFixture({ focused: null, focusedId: null });
+		fixture.selection.set([items[2]]);
+		new SplitHandler(fixture.props).onSelectKeyboardItem();
+		expect(fixture.props.onFocusItem).toHaveBeenCalledWith(items[2]);
+		expect(fixture.selection.clear).toHaveBeenCalled();
+	});
+});
+
+describe("MiniMonthView", () => {
+	const january = new Date(2024, 0, 15).valueOf();
+
+	it("renders its month and weekday legend", () => {
+		const { container } = render(<MiniMonthView value={january} />);
+		expect(screen.getByText("January 2024")).toBeDefined();
+		expect(container.querySelectorAll(".weekday")).toHaveLength(7);
+	});
+
+	it("marks the selected day", () => {
+		const { container } = render(<MiniMonthView value={january} />);
+		expect(container.querySelector(".cur-day").textContent).toBe("15");
+	});
+
+	it("moves to the next month", () => {
+		const { container } = render(<MiniMonthView value={january} />);
+		fireEvent.click(container.querySelectorAll(".btn-icon")[1]);
+		expect(screen.getByText("February 2024")).toBeDefined();
+	});
+
+	it("reports a clicked date", () => {
+		const onChange = vi.fn();
+		const { container } = render(<MiniMonthView value={january} onChange={onChange} />);
+		fireEvent.click(container.querySelector(".cur-day"));
+		expect(onChange).toHaveBeenCalledWith(january);
+	});
+});
+
+const outlineItem = (overrides = {}) => ({
+	id: "inbox",
+	name: "Inbox",
+	iconName: "inbox.png",
+	children: [],
+	...overrides,
+});
+
+describe("OutlineViewItem", () => {
+	it("renders a named item and count", () => {
+		render(<OutlineViewItem item={outlineItem({ count: 8 })} />);
+		expect(screen.getByText("Inbox")).toBeDefined();
+		expect(screen.getByText("8")).toBeDefined();
+	});
+
+	it("calls the item selection callback", () => {
+		const onSelect = vi.fn();
+		render(<OutlineViewItem item={outlineItem({ onSelect })} />);
+		fireEvent.click(screen.getByText("Inbox"));
+		expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "inbox" }));
+	});
+
+	it("renders expanded children", () => {
+		render(<OutlineViewItem item={outlineItem({ children: [outlineItem({ id: "child", name: "Archive" })] })} />);
+		expect(screen.getByText("Archive")).toBeDefined();
+	});
+
+	it("renders its initial editing state", () => {
+		render(<OutlineViewItem item={outlineItem({ editing: true })} />);
+		expect(screen.getByDisplayValue("Inbox")).toBeDefined();
+	});
+});
+
+describe("ParticipantsTextField helpers", () => {
+	it("removes participant values from its field", () => {
+		const change = vi.fn();
+		const alice = { email: "alice@example.com" };
+		const component = new ParticipantsTextField({ field: "to", participants: { to: [alice, { email: "bob@example.com" }] }, change });
+		component._remove([alice]);
+		expect(change).toHaveBeenCalledWith({ to: [{ email: "bob@example.com" }] });
+	});
+
+	it("breaks tokens on separators", () => {
+		const component = new ParticipantsTextField({ field: "to", participants: { to: [] }, change: vi.fn() });
+		expect(component._shouldBreakOnKeydown({ key: ";", target: { value: "person" } })).toBe(true);
+		expect(component._shouldBreakOnKeydown({ key: "x", target: { value: "person" } })).toBe(false);
+	});
+});
+
+describe("TokenizingTextField.Token", () => {
+	const tokenProps = (overrides = {}) => ({ item: { toString: () => "Alice" }, onClick: vi.fn(), onDragStart: vi.fn(), valid: true, ...overrides });
+
+	it("renders token content and state classes", () => {
+		const { container } = render(<TokenizingTextField.Token {...tokenProps({ selected: true })}>Alice</TokenizingTextField.Token>);
+		expect(screen.getByText("Alice")).toBeDefined();
+		expect(container.querySelector(".token").className).toContain("selected");
+	});
+
+	it("forwards clicks with the token item", () => {
+		const props = tokenProps();
+		render(<TokenizingTextField.Token {...props}>Alice</TokenizingTextField.Token>);
+		fireEvent.click(screen.getByText("Alice"));
+		expect(props.onClick).toHaveBeenCalledWith(expect.anything(), props.item);
+	});
+
+	it("does not forward clicks when disabled", () => {
+		const props = tokenProps({ disabled: true });
+		render(<TokenizingTextField.Token {...props}>Alice</TokenizingTextField.Token>);
+		fireEvent.click(screen.getByText("Alice"));
+		expect(props.onClick).not.toHaveBeenCalled();
+	});
+});
+
+describe("spinner and table components", () => {
+	it("shows an active spinner", () => {
+		const { container } = render(<Spinner visible />);
+		expect(container.querySelector(".spinner").className).not.toContain("hidden");
+	});
+
+	it("renders a table header and body", () => {
+		const source = new TableDataSource({ columns: ["Name"], rows: [["Alpha"]] });
+		render(<Table tableDataSource={source} displayHeader />);
+		expect(screen.getByText("Name").tagName).toBe("TH");
+		expect(screen.getByText("Alpha").tagName).toBe("TD");
+	});
+
+	it("passes extra properties to custom table cells", () => {
+		const source = new TableDataSource({ columns: ["Name"], rows: [["Alpha"]] });
+		const Cell = (props) => <TableCell data-testid={`cell-${props.marker}`}>{props.children}</TableCell>;
+		render(<table><tbody><TableRow tableDataSource={source} rowIdx={0} CellRenderer={Cell} extraProps={{ marker: "custom" }} /></tbody></table>);
+		expect(screen.getByTestId("cell-custom")).toBeDefined();
+	});
+});

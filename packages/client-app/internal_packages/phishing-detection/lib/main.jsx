@@ -7,7 +7,7 @@ import {
 	MessageStore,
 } from "nylas-exports";
 
-const tld = require("tld");
+import tld from "tld";
 
 // Notice that this file is `main.cjsx` rather than `main.coffee`. We use the
 // `.cjsx` filetype because we use the CJSX DSL to describe markup for React to

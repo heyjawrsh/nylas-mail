@@ -7,13 +7,13 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const _ = require("underscore");
-const Rx = require("rx-lite");
-const { RetinaImg, Flexbox } = require("nylas-component-kit");
-const { CategoryStore, Actions, Utils } = require("nylas-exports");
+import React from "react";
+import _ from "underscore";
+import Rx from "rx-lite";
+import { RetinaImg, Flexbox } from "nylas-component-kit";
+import { CategoryStore, Actions, Utils } from "nylas-exports";
 
-const { Comparator, Template } = require("./scenario-editor-models.js");
+import { Comparator, Template } from "./scenario-editor-models.js";
 
 const SOURCE_SELECT_NULL = "NULL";
 

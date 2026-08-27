@@ -11,8 +11,10 @@ const lazy = (name) =>
 		get(_t, prop) {
 			const real = bridgeNS[name];
 			if (real === undefined || real === null) return real;
+			// NOTE: unbound — bound functions lose .prototype and break
+			// `class X extends Proxy.get(...)` consumers (React.Component).
 			const v = real[prop];
-			return typeof v === "function" ? v.bind(real) : v;
+			return v;
 		},
 		apply(_t, _thisArg, args) {
 			return bridgeNS[name](...args);

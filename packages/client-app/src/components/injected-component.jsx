@@ -12,8 +12,7 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const _ = require("underscore");
 const UnsafeComponent = require("./unsafe-component.jsx");
-const InjectedComponentLabel =
-	require("./injected-component-label.jsx").default;
+import InjectedComponentLabel from "./injected-component-label.jsx";
 
 const { Actions, WorkspaceStore, ComponentRegistry } = require("nylas-exports");
 

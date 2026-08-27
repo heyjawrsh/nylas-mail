@@ -7,9 +7,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const { Utils, DateUtils } = require("nylas-exports");
-const ThreadListStore = require("./thread-list-store");
+import React from "react";
+import { Utils, DateUtils } from "nylas-exports";
+import ThreadListStore from "./thread-list-store";
 
 class ThreadListScrollTooltip extends React.Component {
 	constructor(...args) {

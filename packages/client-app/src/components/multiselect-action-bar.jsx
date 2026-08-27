@@ -9,13 +9,13 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactCSSTransitionGroup = require("./css-transition-group-compat.jsx");
-const _ = require("underscore");
+import React from "react";
+import ReactCSSTransitionGroup from "./css-transition-group-compat.jsx";
+import _ from "underscore";
 
-const { Utils, Actions } = require("nylas-exports");
-const InjectedComponentSet = require("./injected-component-set.jsx");
-const _Flexbox = require("./flexbox.jsx").default;
+import { Utils, Actions } from "nylas-exports";
+import InjectedComponentSet from "./injected-component-set.jsx";
+import _Flexbox from "./flexbox.jsx";
 
 /*
 Public: MultiselectActionBar is a simple component that can be placed in a {Sheet} Toolbar.

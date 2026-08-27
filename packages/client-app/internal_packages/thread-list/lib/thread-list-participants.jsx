@@ -8,9 +8,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const { Utils } = require("nylas-exports");
-const _ = require("underscore");
+import React from "react";
+import { Utils } from "nylas-exports";
+import _ from "underscore";
 
 class ThreadListParticipants extends React.Component {
 	constructor(...args) {

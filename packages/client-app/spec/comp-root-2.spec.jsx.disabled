@@ -1,0 +1,300 @@
+import React from "react";
+import { describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach } from "vitest";
+
+afterEach(cleanup);
+
+vi.mock("react-dom", async (importOriginal) => ({
+	...(await importOriginal()),
+	findDOMNode: () => document.querySelector(".menu"),
+}));
+
+import HasTutorialTip from "../src/components/decorators/has-tutorial-tip.js";
+import InjectedComponentLabel from "../src/components/injected-component-label.js";
+import ListDataSource from "../src/components/list-data-source.js";
+import ListTabular from "../src/components/list-tabular.js";
+import Menu from "../src/components/menu.js";
+
+class FixtureListDataSource extends ListDataSource {
+	constructor(items = []) {
+		super();
+		this.items = items;
+		this.range = null;
+	}
+
+	loaded() {
+		return true;
+	}
+
+	empty() {
+		return this.items.length === 0;
+	}
+
+	get(idx) {
+		return this.items[idx] || null;
+	}
+
+	getById(id) {
+		return this.items.find((item) => item.id === id) || null;
+	}
+
+	indexOfId(id) {
+		return this.items.findIndex((item) => item.id === id);
+	}
+
+	count() {
+		return this.items.length;
+	}
+
+	itemsCurrentlyInViewMatching(matchFn) {
+		return this.items.filter(matchFn);
+	}
+
+	setRetainedRange(range) {
+		this.range = range;
+	}
+}
+
+const fixtures = [
+	{ id: "alpha", name: "Alpha", count: 2 },
+	{ id: "beta", name: "Beta", count: 5 },
+];
+
+describe("ListDataSource", () => {
+	it("requires subclasses to implement loaded", () => {
+		expect(() => new ListDataSource().loaded()).toThrow("does not implement loaded");
+	});
+
+	it("requires subclasses to implement row access", () => {
+		expect(() => new ListDataSource().get(0)).toThrow("does not implement get");
+	});
+
+	it("reads fixture rows by index and id", () => {
+		const source = new FixtureListDataSource(fixtures);
+		expect(source.get(1)).toEqual(fixtures[1]);
+		expect(source.getById("alpha")).toEqual(fixtures[0]);
+	});
+
+	it("reports fixture counts and indexes", () => {
+		const source = new FixtureListDataSource(fixtures);
+		expect(source.count()).toBe(2);
+		expect(source.indexOfId("beta")).toBe(1);
+	});
+
+	it("filters the currently visible fixture rows", () => {
+		const source = new FixtureListDataSource(fixtures);
+		expect(source.itemsCurrentlyInViewMatching((item) => item.count > 2)).toEqual([
+			fixtures[1],
+		]);
+	});
+
+	it("records the retained row range", () => {
+		const source = new FixtureListDataSource(fixtures);
+		source.setRetainedRange({ start: 1, end: 4 });
+		expect(source.range).toEqual({ start: 1, end: 4 });
+	});
+
+	it("provides a loaded, empty source implementation", () => {
+		const source = new ListDataSource.Empty();
+		expect(source.loaded()).toBe(true);
+		expect(source.empty()).toBe(true);
+		expect(source.count()).toBe(0);
+	});
+
+	it("notifies listeners with trigger payloads", () => {
+		const source = new FixtureListDataSource(fixtures);
+		const listener = vi.fn();
+		source.listen(listener);
+		source.trigger({ changed: true });
+		expect(listener).toHaveBeenCalledWith({ changed: true });
+	});
+
+	it("rejects non-function listeners", () => {
+		expect(() => new FixtureListDataSource().listen("listener")).toThrow(
+			"must pass a function",
+		);
+	});
+});
+
+describe("ListTabular row building", () => {
+	const columns = [
+		new ListTabular.Column({ name: "name", resolver: (item) => item.name, flex: 1 }),
+		new ListTabular.Column({ name: "count", resolver: (item) => item.count, width: 50 }),
+	];
+
+	it("exposes its data source, selection, item, and column types", () => {
+		expect(ListTabular.DataSource).toBe(ListDataSource);
+		expect(ListTabular.Item).toBeDefined();
+		expect(ListTabular.Selection).toBeDefined();
+		expect(ListTabular.Column).toBeDefined();
+	});
+
+	it("stores column display configuration", () => {
+		expect(columns[0]).toMatchObject({ name: "name", flex: 1 });
+		expect(columns[1]).toMatchObject({ name: "count", width: 50 });
+	});
+
+	it("renders resolved cells for a fixture row", () => {
+		render(
+			<ListTabular.Item
+				item={fixtures[0]}
+				metrics={{ top: 20, height: 40 }}
+				columns={columns}
+			/>,
+		);
+		expect(screen.getByText("Alpha")).toBeDefined();
+		expect(screen.getByText("2")).toBeDefined();
+	});
+
+	it("builds cell classes and row metrics", () => {
+		const { container } = render(
+			<ListTabular.Item
+				item={fixtures[1]}
+				metrics={{ top: 40, height: 20 }}
+				columns={columns}
+			/>,
+		);
+		expect(container.querySelector(".list-column-name")).toBeDefined();
+		expect(container.querySelector(".list-tabular-item").style.height).toBe("20px");
+	});
+
+	it("passes the selected row to click callbacks", () => {
+		const onSelect = vi.fn();
+		const onClick = vi.fn();
+		const { container } = render(
+			<ListTabular.Item
+				item={fixtures[0]}
+				metrics={{ top: 0, height: 30 }}
+				columns={columns}
+				onSelect={onSelect}
+				onClick={onClick}
+			/>,
+		);
+		fireEvent.click(container.firstChild);
+		expect(onSelect).toHaveBeenCalledWith(fixtures[0], expect.anything());
+		expect(onClick).toHaveBeenCalledWith(fixtures[0], expect.anything());
+	});
+
+	it("requires a nonzero item height", () => {
+		expect(
+			() => new ListTabular({ dataSource: new FixtureListDataSource(), columns }),
+		).toThrow("must provide an itemHeight");
+	});
+
+	it("builds initial state from a fixture data source", () => {
+		const source = new FixtureListDataSource(fixtures);
+		const list = new ListTabular({ dataSource: source, columns, itemHeight: 30 });
+		expect(list.state).toMatchObject({ count: 2, loaded: true, empty: false });
+		expect(list.state.items).toEqual({});
+	});
+});
+
+describe("Menu", () => {
+	const items = [{ id: "a", label: "Alpha" }, { id: "b", label: "Beta" }];
+	const menuProps = (overrides = {}) => ({
+		items,
+		itemKey: (item) => item.id,
+		itemContent: (item) => item.label,
+		onSelect: vi.fn(),
+		...overrides,
+	});
+
+	it("renders header, items, and footer", () => {
+		render(<Menu {...menuProps({ headerComponents: "Header", footerComponents: "Footer" })} />);
+		expect(screen.getByText("Header")).toBeDefined();
+		expect(screen.getByText("Alpha")).toBeDefined();
+		expect(screen.getByText("Footer")).toBeDefined();
+	});
+
+	it("selects the configured default item", () => {
+		const { container } = render(<Menu {...menuProps({ defaultSelectedIndex: 1 })} />);
+		expect(container.querySelector(".selected").textContent).toBe("Beta");
+	});
+
+	it("marks checked items", () => {
+		const { container } = render(
+			<Menu {...menuProps({ itemChecked: (item) => item.id === "b" })} />,
+		);
+		expect(container.querySelector(".checked").textContent).toBe("Beta");
+	});
+
+	it("calls onSelect when an item is pressed", () => {
+		const onSelect = vi.fn();
+		render(<Menu {...menuProps({ onSelect })} />);
+		fireEvent.mouseDown(screen.getByText("Beta"));
+		expect(onSelect).toHaveBeenCalledWith(items[1]);
+	});
+
+	it("moves selection with ArrowDown", () => {
+		const { container } = render(<Menu {...menuProps()} />);
+		fireEvent.keyDown(container.firstChild, { key: "ArrowDown" });
+		expect(container.querySelector(".selected").textContent).toBe("Beta");
+	});
+
+	it("selects the current item with Enter", () => {
+		const onSelect = vi.fn();
+		const { container } = render(<Menu {...menuProps({ onSelect })} />);
+		fireEvent.keyDown(container.firstChild, { key: "Enter" });
+		expect(onSelect).toHaveBeenCalledWith(items[0]);
+	});
+
+	it("calls onEscape for Escape", () => {
+		const onEscape = vi.fn();
+		const { container } = render(<Menu {...menuProps({ onEscape })} />);
+		fireEvent.keyDown(container.firstChild, { key: "Escape" });
+		expect(onEscape).toHaveBeenCalledTimes(1);
+	});
+
+	it("renders labeled dividers", () => {
+		render(<Menu.Item divider="Recent" />);
+		expect(screen.getByText("Recent").className).toContain("divider");
+	});
+
+	it("renders names and email addresses", () => {
+		render(<Menu.NameEmailItem name="Ada" email="ada@example.com" />);
+		expect(screen.getByText("Ada")).toBeDefined();
+		expect(screen.getByText("(ada@example.com)")).toBeDefined();
+	});
+});
+
+describe("InjectedComponentLabel", () => {
+	it("describes matching locations by id", () => {
+		render(<InjectedComponentLabel matching={{ location: { id: "composer" } }} />);
+		expect(screen.getByText(/location: composer/)).toBeDefined();
+	});
+
+	it("describes multiple matching locations", () => {
+		render(
+			<InjectedComponentLabel matching={{ locations: [{ id: "one" }, { id: "two" }] }} />,
+		);
+		expect(screen.getByText(/locations: one,two/)).toBeDefined();
+	});
+
+	it("includes the constructor names of additional props", () => {
+		render(<InjectedComponentLabel matching={{ role: "toolbar" }} enabled count={3} />);
+		expect(screen.getByText(/enabled:<Boolean>/)).toBeDefined();
+		expect(screen.getByText(/count:<Number>/)).toBeDefined();
+	});
+});
+
+describe("HasTutorialTip", () => {
+	it("requires a display name on decorated components", () => {
+		expect(() => HasTutorialTip(() => <div />, { title: "Tip" })).toThrow(
+			"must have a displayName",
+		);
+	});
+
+	it("preserves component metadata on its wrapper", () => {
+		function Target() {
+			return <div>Target</div>;
+		}
+		Target.displayName = "TutorialTarget";
+		Target.containerRequired = true;
+		Target.containerStyles = { padding: 4 };
+		const Wrapped = HasTutorialTip(Target, { title: "Tip", instructions: "Help" });
+		expect(Wrapped.displayName).toBe("TutorialTarget");
+		expect(Wrapped.containerRequired).toBe(true);
+		expect(Wrapped.containerStyles).toEqual({ padding: 4 });
+	});
+});

@@ -7,10 +7,10 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const SwipeContainer = require("./swipe-container.jsx").default;
-const { Utils } = require("nylas-exports");
+import _ from "underscore";
+import React from "react";
+import SwipeContainer from "./swipe-container.jsx";
+import { Utils } from "nylas-exports";
 
 class ListTabularItem extends React.Component {
 	constructor(...args) {

@@ -1,72 +1,95 @@
-// Test-resolution shim: materializes the lazy getter exports of the
-// runtime bridge so vitest static named-import analysis sees them.
-// Each read is guarded: the app module graph has intentional
-// model<->store cycles that only resolve lazily; a read that lands
-// mid-cycle yields undefined rather than aborting the whole suite.
+// Test-resolution shim for nylas-component-kit: named exports are LAZY
+// PROXIES over the runtime bridge getters (see nylas-exports shim).
 import bridge from "../../src/global/nylas-component-kit.js";
 
-const safe = (name) => {
-	try {
-		return bridge[name];
-	} catch (_e) {
-		return undefined;
-	}
-};
+// Components that specs render directly resolve through the vite pipeline
+// (the kit's registration pass is skipped under vitest, so its prototype
+// getters don't exist).
+import MenuReal from "../../src/components/menu.jsx";
+import RetinaImgReal from "../../src/components/retina-img.jsx";
+import SpinnerReal from "../../src/components/spinner.jsx";
+import FlexboxReal from "../../src/components/flexbox.jsx";
+import DropZoneReal from "../../src/components/drop-zone.jsx";
+import DisclosureTriangleReal from "../../src/components/disclosure-triangle.jsx";
+import SwitchReal from "../../src/components/switch.jsx";
+import ModalReal from "../../src/components/modal.jsx";
 
-export const AttachmentItem = safe("AttachmentItem");
-export const BoldedSearchResult = safe("BoldedSearchResult");
-export const ButtonDropdown = safe("ButtonDropdown");
-export const CalendarEventPopover = safe("CalendarEventPopover");
-export const CodeSnippet = safe("CodeSnippet");
-export const ConfigPropContainer = safe("ConfigPropContainer");
-export const Contenteditable = safe("Contenteditable");
-export const DateInput = safe("DateInput");
-export const DatePicker = safe("DatePicker");
-export const DatePickerPopover = safe("DatePickerPopover");
-export const DisclosureTriangle = safe("DisclosureTriangle");
-export const DropZone = safe("DropZone");
-export const DropdownMenu = safe("DropdownMenu");
-export const EditableList = safe("EditableList");
-export const EditableTable = safe("EditableTable");
-export const EventedIFrame = safe("EventedIFrame");
-export const FeatureUsedUpModal = safe("FeatureUsedUpModal");
-export const Flexbox = safe("Flexbox");
-export const FluxContainer = safe("FluxContainer");
-export const FormItem = safe("FormItem");
-export const GeneratedFieldset = safe("GeneratedFieldset");
-export const GeneratedForm = safe("GeneratedForm");
-export const HasTutorialTip = safe("HasTutorialTip");
-export const ImageAttachmentItem = safe("ImageAttachmentItem");
-export const InjectedComponent = safe("InjectedComponent");
-export const InjectedComponentSet = safe("InjectedComponentSet");
-export const KeyCommandsRegion = safe("KeyCommandsRegion");
-export const LabelColorizer = safe("LabelColorizer");
-export const ListTabular = safe("ListTabular");
-export const ListensToFluxStore = safe("ListensToFluxStore");
-export const ListensToObservable = safe("ListensToObservable");
-export const MailLabel = safe("MailLabel");
-export const Menu = safe("Menu");
-export const MetadataComposerToggleButton = safe("MetadataComposerToggleButton");
-export const MiniMonthView = safe("MiniMonthView");
-export const Modal = safe("Modal");
-export const MultiselectDropdown = safe("MultiselectDropdown");
-export const MultiselectToolbar = safe("MultiselectToolbar");
-export const Notification = safe("Notification");
-export const NylasCalendar = safe("NylasCalendar");
-export const OAuthSignInPage = safe("OAuthSignInPage");
-export const OverlaidComponents = safe("OverlaidComponents");
-export const OverlaidComposerExtension = safe("OverlaidComposerExtension");
-export const ParticipantsTextField = safe("ParticipantsTextField");
-export const Popover = safe("Popover");
-export const ResizableRegion = safe("ResizableRegion");
-export const RetinaImg = safe("RetinaImg");
-export const ScenarioEditor = safe("ScenarioEditor");
-export const ScrollRegion = safe("ScrollRegion");
-export const SearchBar = safe("SearchBar");
-export const Spinner = safe("Spinner");
-export const Switch = safe("Switch");
-export const TabGroupRegion = safe("TabGroupRegion");
-export const Table = safe("Table");
-export const TimePicker = safe("TimePicker");
-export const TokenizingTextField = safe("TokenizingTextField");
-export const UndoToast = safe("UndoToast");
+const lazy = (name) =>
+	new Proxy(function lazyKit() {}, {
+		get(_t, prop) {
+			const real = bridge[name];
+			if (real === undefined || real === null) return real;
+			// NOTE: unbound — bound functions lose .prototype and break
+			// `class X extends Proxy.get(...)` consumers (React.Component).
+			const v = real[prop];
+			return v;
+		},
+		apply(_t, _thisArg, args) {
+			return bridge[name](...args);
+		},
+		construct(_t, args, newTarget) {
+			return Reflect.construct(bridge[name], args, newTarget);
+		},
+		has(_t, prop) {
+			return prop in (bridge[name] || {});
+		},
+	});
+
+export const AttachmentItem = lazy("AttachmentItem");
+export const BoldedSearchResult = lazy("BoldedSearchResult");
+export const ButtonDropdown = lazy("ButtonDropdown");
+export const CalendarEventPopover = lazy("CalendarEventPopover");
+export const CodeSnippet = lazy("CodeSnippet");
+export const ConfigPropContainer = lazy("ConfigPropContainer");
+export const Contenteditable = lazy("Contenteditable");
+export const DateInput = lazy("DateInput");
+export const DatePicker = lazy("DatePicker");
+export const DatePickerPopover = lazy("DatePickerPopover");
+export const DisclosureTriangle = DisclosureTriangleReal;
+export const DropZone = DropZoneReal;
+export const DropdownMenu = lazy("DropdownMenu");
+export const EditableList = lazy("EditableList");
+export const EditableTable = lazy("EditableTable");
+export const EventedIFrame = lazy("EventedIFrame");
+export const FeatureUsedUpModal = lazy("FeatureUsedUpModal");
+export const Flexbox = FlexboxReal;
+export const FluxContainer = lazy("FluxContainer");
+export const FormItem = lazy("FormItem");
+export const GeneratedFieldset = lazy("GeneratedFieldset");
+export const GeneratedForm = lazy("GeneratedForm");
+export const HasTutorialTip = lazy("HasTutorialTip");
+export const ImageAttachmentItem = lazy("ImageAttachmentItem");
+export const InjectedComponent = lazy("InjectedComponent");
+export const InjectedComponentSet = lazy("InjectedComponentSet");
+export const KeyCommandsRegion = lazy("KeyCommandsRegion");
+export const LabelColorizer = lazy("LabelColorizer");
+export const ListTabular = lazy("ListTabular");
+export const ListensToFluxStore = lazy("ListensToFluxStore");
+export const ListensToObservable = lazy("ListensToObservable");
+export const MailLabel = lazy("MailLabel");
+export const Menu = MenuReal;
+export const MetadataComposerToggleButton = lazy("MetadataComposerToggleButton");
+export const MiniMonthView = lazy("MiniMonthView");
+export const Modal = ModalReal;
+export const MultiselectDropdown = lazy("MultiselectDropdown");
+export const MultiselectToolbar = lazy("MultiselectToolbar");
+export const Notification = lazy("Notification");
+export const NylasCalendar = lazy("NylasCalendar");
+export const OAuthSignInPage = lazy("OAuthSignInPage");
+export const OverlaidComponents = lazy("OverlaidComponents");
+export const OverlaidComposerExtension = lazy("OverlaidComposerExtension");
+export const ParticipantsTextField = lazy("ParticipantsTextField");
+export const Popover = lazy("Popover");
+export const ResizableRegion = lazy("ResizableRegion");
+export const RetinaImg = RetinaImgReal;
+export const ScenarioEditor = lazy("ScenarioEditor");
+export const ScrollRegion = lazy("ScrollRegion");
+export const SearchBar = lazy("SearchBar");
+export const Spinner = SpinnerReal;
+export const Switch = SwitchReal;
+export const TabGroupRegion = lazy("TabGroupRegion");
+export const Table = lazy("Table");
+export const TimePicker = lazy("TimePicker");
+export const TokenizingTextField = lazy("TokenizingTextField");
+export const UndoToast = lazy("UndoToast");
+export default bridge;

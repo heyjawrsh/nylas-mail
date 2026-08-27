@@ -9,11 +9,11 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const classNames = require("classnames");
-const React = require("react");
+import _ from "underscore";
+import classNames from "classnames";
+import React from "react";
 
-const { Utils, DOMUtils, ExtensionRegistry } = require("nylas-exports");
+import { Utils, DOMUtils, ExtensionRegistry } from "nylas-exports";
 
 // Positions and renders a FloatingToolbar in the composer.
 //
