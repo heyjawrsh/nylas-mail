@@ -27,4 +27,9 @@ describe('ping routes', () => {
     expect((await server.inject('/ping/401')).statusCode).toBe(401)
     expect((await server.inject('/ping/500')).statusCode).toBe(500)
   })
+  it('formats thrown and downstream errors', async () => {
+    expect((await server.inject('/ping/broken')).statusCode).toBe(500)
+    const downstream = await server.inject('/ping/downstream_error')
+    expect(downstream.statusCode).toBe(400); expect(downstream.result.message).toBe('Extra info here: Downstream badness')
+  })
 })
