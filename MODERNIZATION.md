@@ -30,8 +30,14 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 
 ## Loop log
 
-### Loop 1 — Baseline
-- Created branch `modernize/current`.
-- Inventoried manifests, spec counts, module styles, forked deps (table above).
-- Toolchain audit: Node 26.3.0 + pnpm 11.18.0 via mise.
-- Next: pnpm workspace scaffold; isomorphic-core first target.
+### Loop 2 — Workspace scaffold (commit 88f96aefd)
+- Root manifest: pnpm 11 workspaces (`packages/*`), engines `>=24`, MIT, scripts test/lint/format; devDeps vitest 4.1.11 / tsx 4.23.12 / biome 2.5.10; root `.babelrc` deleted; lerna-era postinstall replaced by `scripts/link-workspaces.mjs` (client-sync → internal_packages symlink).
+- Biome wired at root (`biome.json`); `pnpm lint` exit-0 arrives with the migrations (legacy code still trips it).
+- Toolchain audit: Node 26.3.0 + pnpm 11.18.0 via mise; branch `modernize/current` cut from master.
+
+### Round 1 — Ringer swarm (run `nylas-mail-modernize`)
+- Engine: codex GPT-5.6 Sol per scoreboard (proven code-fix, 42 tasks / 86% pass; user unavailable → standing "educated guesses" instruction). HUD at http://127.0.0.1:8700.
+- Lanes: `isomorphic-core-convert` (pilot: vitest+joi17+sequelize6+nodemailer7, .es6→.js) and `coffee-migrate-message-list` (19 files, decaffeinate one-shot + esbuild parse gate). Gates: lint clean, baseline 2/2 correctly-fail, prove-fail 2/2 proved.
+- Dep decisions: drop atob/btoa/promise-props/promise.prototype.finally (native); joi→17, sequelize→6, nodemailer→7, rx-lite→rxjs 7 if imported.
+- **Protocol port design (my lane, next round)**: keep IMAPConnection/IMAPBox public API frozen, reimplement on `imapflow`; TLS floors `minVersion: TLSv1.2` + `rejectUnauthorized: true` by default (the old "insecure by default" backcompat branch dies; explicit opt-in only); XOAUTH2 keeps xoauth2 generator feeding imapflow `accessToken`; fixture/mocked tests only (no live servers).
+- Allowlist (pre-declared): `imap-provider-settings` (provider dataset, no registry equivalent — vendor later); `imap` fork pending my imapflow port (temporary).
