@@ -1,6 +1,4 @@
 const stream = require('stream');
-const PrettyStream = require('bunyan-prettystream')
-
 
 class StringStream extends stream.Writable {
   constructor() {
@@ -27,49 +25,33 @@ const testStream = {
   stream: new StringStream(),
 }
 
-const stdoutStream = {
-  level: 'info',
-  stream: process.stdout,
-}
-
-const getLogStreams = (name, env) => {
+/**
+ * @returns {{level: string, stream?: object, transport?: object}}
+ * pino destination description for the given environment.
+ */
+const getLogDestination = (name, env) => {
   switch (env) {
     case 'development': {
-      const prettyStdOut = new PrettyStream({
-        mode: 'pm2',
-        lessThan: 'error',
-      });
-      const prettyStdErr = new PrettyStream({
-        mode: 'pm2',
-      });
-      prettyStdOut.pipe(process.stdout);
-      prettyStdErr.pipe(process.stderr);
-      return [
-        {
-          type: 'raw',
-          level: 'error',
-          stream: prettyStdErr,
-          reemitErrorEvents: true,
+      return {
+        level: 'debug',
+        transport: {
+          targets: [
+            {target: 'pino-pretty', level: 'error', options: {destination: 2}},
+            {target: 'pino-pretty', level: 'debug', options: {destination: 1}},
+          ],
         },
-        {
-          type: 'raw',
-          level: 'debug',
-          stream: prettyStdOut,
-          reemitErrorEvents: true,
-        },
-      ]
+      }
     }
     case 'test': {
-      return [
-        testStream,
-      ]
+      return testStream
     }
     default: {
-      return [
-        stdoutStream,
-      ]
+      return {
+        level: 'info',
+        stream: process.stdout,
+      }
     }
   }
 }
 
-module.exports = {getLogStreams, testStream}
+module.exports = {getLogDestination, testStream}

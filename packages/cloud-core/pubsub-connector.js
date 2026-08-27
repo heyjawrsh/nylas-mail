@@ -1,59 +1,66 @@
-const Rx = require('rx-lite')
-const redis = require("redis");
-const {PromiseUtils} = require('isomorphic-core');
-
-PromiseUtils.promisifyAll(redis.RedisClient.prototype);
-PromiseUtils.promisifyAll(redis.Multi.prototype);
-
+const {Observable} = require('rxjs')
+const {createClient} = require("redis");
 
 class PubsubConnector {
   constructor() {
     this._broadcastClient = null;
-    this._listenClient = null;
     this._listenClientSubs = {};
   }
 
-  buildClient(accountId, {onClose} = {}) {
-    const client = redis.createClient(process.env.REDIS_URL || null);
+  async buildClient(accountId, {onClose} = {}) {
+    const client = createClient(process.env.REDIS_URL ? {url: process.env.REDIS_URL} : undefined)
     global.Logger.info({account_id: accountId}, "Connecting to Redis")
-    client.on("error", (...args) => {
-      global.Logger.error(...args);
+    client.on("error", (err) => {
+      global.Logger.error({err, account_id: accountId}, "Redis error");
       if (onClose) onClose();
     });
     client.on("end", () => {
       global.Logger.info({account_id: accountId}, "Redis disconnected");
       if (onClose) onClose();
     })
+    await client.connect();
     return client;
   }
 
-  broadcastClient() {
+  async broadcastClient() {
     if (!this._broadcastClient) {
+      // We null out the memoized broadcast client. In case it closes
+      // for any reason, we want to make sure the next time it's
+      // requested, we'll create a new one.
       this._broadcastClient = this.buildClient("broadcast", {onClose: () => {
-        // We null out the memoized broadcast client. In case it closes
-        // for any reason, we want to make sure the next time it's
-        // requested, we'll create a new one.
         this._broadcastClient = null
       }});
     }
     return this._broadcastClient;
   }
 
-  notifyDelta(accountId, transactionJSON) {
-    this.broadcastClient().publish(`deltas-${accountId}`, JSON.stringify(transactionJSON))
+  async notifyDelta(accountId, transactionJSON) {
+    const client = await this.broadcastClient()
+    return client.publish(`deltas-${accountId}`, JSON.stringify(transactionJSON))
   }
 
   observeDeltas(accountId) {
-    return Rx.Observable.create((observer) => {
-      const sub = this.buildClient(accountId);
-      sub.on("message", (channel, transactionJSONString) => {
-        observer.onNext(JSON.parse(transactionJSONString))
-      })
-      sub.subscribe(`deltas-${accountId}`);
+    return new Observable((observer) => {
+      let sub = null;
+      let closed = false;
+      this.buildClient(accountId).then((client) => {
+        if (closed) {
+          client.quit();
+          return;
+        }
+        sub = client;
+        client.on("message", (channel, transactionJSONString) => {
+          observer.next(JSON.parse(transactionJSONString))
+        })
+        client.subscribe(`deltas-${accountId}`);
+      }).catch((err) => observer.error(err))
       return () => {
+        closed = true;
         global.Logger.info({account_id: accountId}, "Closing Redis")
-        sub.unsubscribe();
-        sub.quit();
+        if (sub) {
+          sub.unsubscribe();
+          sub.quit();
+        }
       }
     })
   }

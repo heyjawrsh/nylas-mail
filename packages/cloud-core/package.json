@@ -1,33 +1,30 @@
 {
   "name": "cloud-core",
   "version": "0.0.1",
+  "private": true,
   "description": "Core shared packages",
   "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest run --coverage",
+    "migrate-db": "node scripts/migrate-db.js"
+  },
   "dependencies": {
-    "aws-sdk": "2.25.0",
-    "bunyan": "1.8.0",
-    "bunyan-prettystream": "github:emorikawa/node-bunyan-prettystream",
-    "googleapis": "9.0.0",
-    "isomorphic-core": "0.x.x",
-    "mysql": "2.12.0",
-    "promise-props": "1.0.0",
-    "promise.prototype.finally": "2.0.1",
-    "redis": "2.6.3",
-    "request": "2.79.0",
-    "rx-lite": "4.0.8",
-    "sequelize": "3.28.0",
-    "signalfx": "3.0.1",
-    "sqlite3": "3.1.8",
-    "underscore": "1.8.3",
-    "xoauth2": "1.2.0"
+    "googleapis": "^152.0.0",
+    "isomorphic-core": "workspace:*",
+    "mysql2": "^3.15.4",
+    "pino": "^10.1.0",
+    "redis": "^5.10.0",
+    "rxjs": "^7.8.0",
+    "sequelize": "^6.37.0",
+    "sqlite3": "^5.1.7",
+    "underscore": "^1.13.0"
   },
   "devDependencies": {
-    "babel-cli": "6.x.x",
-    "jasmine": "2.x.x"
+    "@vitest/coverage-v8": "latest",
+    "pino-pretty": "^13.1.1",
+    "vitest": "latest"
   },
   "author": "Nylas",
-  "license": "ISC",
-  "scripts": {
-    "test": "NODE_ENV=test babel-node spec/run.es6"
-  }
+  "license": "MIT"
 }

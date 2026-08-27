@@ -4,8 +4,13 @@ packages:
   # unresolvable (github forks, node-6 native tarballs) until their
   # conversion round, so they are NOT workspace members yet.
   - "packages/isomorphic-core"
+  - "packages/cloud-core"
+
+allowBuilds:
+  sqlite3: set this to true or false
 
 onlyBuiltDependencies:
   - esbuild
+  - sqlite3
 
 verifyDepsBeforeRun: false

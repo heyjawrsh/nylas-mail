@@ -1,16 +1,16 @@
-const Sequelize = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-const {loadModels, HookIncrementVersionOnSave, HookTransactionLog} = require('isomorphic-core')
-const PubsubConnector = require('./pubsub-connector');
+import Sequelize from 'sequelize';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import {loadModels, HookIncrementVersionOnSave, HookTransactionLog} from 'isomorphic-core'
+import PubsubConnector from './pubsub-connector';
 
-require('./database-extensions'); // Extends Sequelize on require
+import './database-extensions'; // Extends Sequelize on require
 
 // If we're running locally, create the sqlite directory if
 // it's not present.
 let STORAGE_DIR;
 if (!process.env.DB_HOSTNAME) {
-  const os = require('os')
   STORAGE_DIR = path.join(os.homedir(), '.nylas-cloud-storage');
   try {
     if (!fs.existsSync(STORAGE_DIR)) {
@@ -51,7 +51,7 @@ class DatabaseConnector {
     })
   }
 
-  _sequelizeForShared(options) {
+  async _sequelizeForShared(options) {
     const sequelize = this._sequelizePoolForDatabase(process.env.DB_NAME, options);
     const db = loadModels(Sequelize, sequelize, {
       modelDirs: [path.join(__dirname, 'models')],
@@ -68,9 +68,9 @@ class DatabaseConnector {
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
 
-    return sequelize.authenticate().then(() =>
-      sequelize.sync()
-    ).thenReturn(db);
+    await sequelize.authenticate();
+    await sequelize.sync();
+    return db;
   }
 
   async forShared() {

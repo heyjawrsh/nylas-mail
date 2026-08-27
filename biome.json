@@ -4,9 +4,8 @@
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
-  },
   "files": {
-    "includes": ["**", "!**/node_modules/**", "!**/spec/fixtures/**", "!**/blog-posts/**", "!**/screenshot/**"]
+    "includes": ["**", "!**/node_modules/**", "!**/coverage/**", "!**/spec/fixtures/**", "!**/blog-posts/**", "!**/screenshot/**"]
   },
   "assist": {
     "actions": {

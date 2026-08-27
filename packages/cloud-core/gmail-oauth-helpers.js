@@ -1,4 +1,4 @@
-import google from 'googleapis';
+import {google} from 'googleapis';
 import {Provider, IMAPConnection, AuthHelpers} from 'isomorphic-core'
 import DatabaseConnector from './database-connector'
 
@@ -11,27 +11,14 @@ class GmailOAuthHelpers {
   }
 
   async exchangeCodeForGoogleToken(client, oAuthCode) {
-    return new Promise((resolve, reject) => {
-      client.getToken(oAuthCode, (err, googleToken) => {
-        if (err) {
-          return reject(err)
-        }
-        client.setCredentials(googleToken);
-        return resolve(googleToken)
-      })
-    })
+    const {tokens: googleToken} = await client.getToken(oAuthCode);
+    client.setCredentials(googleToken);
+    return googleToken;
   }
 
   async fetchGoogleProfile(client) {
-    return new Promise((resolve, reject) => {
-      google.oauth2({version: 'v2', auth: client})
-      .userinfo.get((err, googleProfile) => {
-        if (err) {
-          return reject(err)
-        }
-        return resolve(googleProfile)
-      })
-    })
+    const res = await google.oauth2({version: 'v2', auth: client}).userinfo.get();
+    return res.data;
   }
 
   async resolveIMAPSettings(imapSettings, logger) {
@@ -61,24 +48,26 @@ class GmailOAuthHelpers {
     const oauthClient = new OAuth2(GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REDIRECT_URL);
     const credentials = account.decryptedCredentials()
     const refreshToken = credentials.refresh_token;
-    oauthClient.setCredentials({ refresh_token: refreshToken });
+    oauthClient.setCredentials({refresh_token: refreshToken});
 
-    return new Promise((resolve, reject) => {
-      oauthClient.refreshAccessToken(async (err, tokens) => {
+    const tokens = await new Promise((resolve, reject) => {
+      oauthClient.refreshAccessToken((err, res) => {
         if (err) {
           reject(err);
+        } else {
+          resolve(res);
         }
-        const res = {}
-        res.access_token = tokens.access_token;
-        res.xoauth2 = AuthHelpers.generateXOAuth2Token(account.emailAddress,
-                                                tokens.access_token);
-        res.expiry_date = Math.floor(tokens.expiry_date / 1000);
-        const newCredentials = Object.assign(credentials, res);
-        account.setCredentials(newCredentials);
-        await account.save();
-        resolve(newCredentials);
       });
     });
+    const res = {}
+    res.access_token = tokens.access_token;
+    res.xoauth2 = AuthHelpers.generateXOAuth2Token(account.emailAddress,
+                                          tokens.access_token);
+    res.expiry_date = Math.floor(tokens.expiry_date / 1000);
+    const newCredentials = Object.assign(credentials, res);
+    account.setCredentials(newCredentials);
+    await account.save();
+    return newCredentials;
   }
 
   async createPendingAuthResponse({account, token}, imapSettings, n1Key) {
