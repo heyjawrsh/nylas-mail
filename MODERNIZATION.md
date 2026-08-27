@@ -41,3 +41,13 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 - Dep decisions: drop atob/btoa/promise-props/promise.prototype.finally (native); joi→17, sequelize→6, nodemailer→7, rx-lite→rxjs 7 if imported.
 - **Protocol port design (my lane, next round)**: keep IMAPConnection/IMAPBox public API frozen, reimplement on `imapflow`; TLS floors `minVersion: TLSv1.2` + `rejectUnauthorized: true` by default (the old "insecure by default" backcompat branch dies; explicit opt-in only); XOAUTH2 keeps xoauth2 generator feeding imapflow `accessToken`; fixture/mocked tests only (no live servers).
 - Allowlist (pre-declared): `imap-provider-settings` (provider dataset, no registry equivalent — vendor later); `imap` fork pending my imapflow port (temporary).
+
+### Loop 3 — isomorphic-core conversion landed (commit 63edb0497)
+- Ringer pilot failed on my scaffold's stale lockfile (filtered installs still validate the whole workspace). Fix: workspace membership ratchets to converted packages only (`pnpm-workspace.yaml`); salvaged the worker's completed conversion, verified + repaired inline (mixed require/import codemod via ast_edit, message-utils ESM exports, vendored provider dataset after discovering upstream repo deleted + npm-unpublished; fork snapshot + gmail/office365 canonical keys restored with 2026 values; SSLv3 cipher pins stripped).
+- `imap` fork switched to https tarball (ssh-agent unavailable to ringer workers and my shell).
+
+### Loop 4 — IMAP protocol port to imapflow 1.7 (commit 87ce26775)
+- node-imap fork REMOVED. `IMAPConnection`/`IMAPBox` APIs frozen; internals on imapflow. Translators in `src/imap-translators.js` cover the exact node-imap shapes client-sync emits (criteria, struct, body specs, XOAUTH2 SASL).
+- TLS: `minVersion: TLSv1.2` both modes; cert verification default-on; insecure is explicit opt-in only. XOAUTH2: refresh-token and backend-token flows → imapflow accessToken.
+- 48/48 tests green (32 new). Coverage 27% — hardening round queued. Allowlist: `imap` fork entry CLOSED (dep deleted).
+- Coffee lane: sandbox has no network → decaffeinate + esbuild staged at absolute paths (`~/.ringer/tools/decaffeinate`); lane relaunched.
