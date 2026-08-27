@@ -8,15 +8,15 @@
   },
   "dependencies": {
     "he": "^1.2.0",
-    "iconv-lite": "^0.7.0",
+    "iconv-lite": "^0.7.3",
     "imapflow": "^1.7.6",
-    "joi": "^17.13.3",
-    "libmime": "^5.3.7",
+    "joi": "^18.2.5",
+    "libmime": "^5.4.2",
     "mkdirp": "^3.0.1",
-    "nodemailer": "^7.0.0",
+    "nodemailer": "^9.0.5",
     "rxjs": "^7.8.0",
-    "sequelize": "^6.37.0",
-    "underscore": "^1.13.0",
+    "sequelize": "^6.37.8",
+    "underscore": "^1.13.8",
     "xoauth2": "^1.2.0"
   },
   "devDependencies": {
