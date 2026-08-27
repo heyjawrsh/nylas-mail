@@ -294,3 +294,28 @@ JSX-in-static-ESM wall (see loop 17 for the two unblock paths). Stores
 ### Cumulative session commits
 52 → 63 ahead of master (this session: smoke convergence, renderer bundling,
 3 coverage rounds, Publisher restoration, 858-test corpus).
+
+
+## Loop 18 — The JSX wall, dismantled (commit 2abb1549a)
+
+client-app: 12.53% → **15.76% lines** (647 tests, 27/27 files green). Every
+deferred spec recovered. What the wall actually was — three stacked problems:
+
+1. **Mixed module syntax**: 33 component files used CJS `require` inside
+   ESM-syntax files; the vite transform chain failed with a misleading
+   `Unexpected token '<'` pointing at unrelated JSX. All converted to ESM.
+2. **Eager kit registration**: `NylasComponentKit.initClass()` eagerly
+   required a .jsx at module scope; under vitest the CJS shim has no JSX
+   loader, and Node ESM-detects .jsx files (import statements) so extension
+   hooks don't apply either. Fixed by env-gating the pass under vitest and an
+   inline esbuild compile-cache in `requireFromSrc` for runtime/native paths.
+3. **Silent alias gap**: the vitest alias for `nylas-component-kit` pointed at
+   the real module, not the shim — every kit import in specs bypassed the
+   lazy-proxy machinery.
+
+Also: unbound proxy returns (bound functions lose `.prototype` →
+`class extends React.Component` broke), bind-before-super constructors in
+menu.jsx, React 19 findDOMNode removal honored in two retired tests.
+
+**Consequence**: all component families are now reachable by specs. Swarm
+rounds 4+ can target any directory without per-file interop work.
