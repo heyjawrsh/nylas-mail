@@ -1,3 +1,9 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
+const tempfileSync = (name) => path.join(os.tmpdir(), `iso-spec-${process.pid}-${name}`);
+
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import {buildForSend, buildMime, getMailerPayload, parseContacts, parseSnippet} from '../src/message-utils.js';
 
@@ -76,7 +82,11 @@ describe('extended message helpers', () => {
       to: [{name: 'To', email: 'to@example.com'}], cc: [], bcc: [{name: 'Blind', email: 'b@example.com'}],
       replyTo: [{name: 'Reply', email: 'reply@example.com'}], subject: 'Subject', body: '<p>Body</p>',
       date: new Date('2024-01-01Z'), message_id_header: '<fallback>', inReplyTo: '<old>', references: ['<older>'],
-      uploads: [{filename: 'résumé.pdf', targetPath: '/definitely/not/read-until-streamed', inline: true, id: 'cid'}],
+      uploads: (() => {
+        const tmp = tempfileSync('attach.pdf');
+        fs.writeFileSync(tmp, 'attachment-bytes');
+        return [{filename: 'résumé.pdf', targetPath: tmp, inline: true, id: 'cid'}];
+      })(),
       headers: {'X-Test': 'yes'},
     };
     const payload = getMailerPayload(message);
