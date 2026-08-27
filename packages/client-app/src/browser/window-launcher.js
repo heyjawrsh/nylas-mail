@@ -1,4 +1,4 @@
-import {createRequire} from "node:module";
+import { createRequire } from "node:module";
 import NylasWindow from "./nylas-window.js";
 
 const nodeRequire =
@@ -41,7 +41,9 @@ export default class WindowLauncher {
 			benchmarkMode,
 			resizable: true,
 			windowType: WindowLauncher.EMPTY_WINDOW,
-			bootstrapScript: nodeRequire.resolve("../../static/secondary-window-bootstrap.bundle.js"),
+			bootstrapScript: nodeRequire.resolve(
+				"../../static/secondary-window-bootstrap.bundle.js",
+			),
 			resourcePath,
 			configDirPath,
 		};

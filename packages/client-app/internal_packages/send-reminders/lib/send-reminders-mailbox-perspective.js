@@ -1,46 +1,41 @@
-import {
-  MailboxPerspective,
-} from 'nylas-exports'
-import SendRemindersQuerySubscription from './send-reminders-query-subscription'
-
+import { MailboxPerspective } from "nylas-exports";
+import SendRemindersQuerySubscription from "./send-reminders-query-subscription";
 
 class SendRemindersMailboxPerspective extends MailboxPerspective {
+	constructor(accountIds) {
+		super(accountIds);
+		this.accountIds = accountIds;
+		this.name = "Reminders";
+		this.iconName = "reminders.png";
+	}
 
-  constructor(accountIds) {
-    super(accountIds)
-    this.accountIds = accountIds
-    this.name = 'Reminders'
-    this.iconName = 'reminders.png'
-  }
+	get isReminders() {
+		return true;
+	}
 
-  get isReminders() {
-    return true
-  }
+	emptyMessage() {
+		return "No reminders set";
+	}
 
-  emptyMessage() {
-    return "No reminders set"
-  }
+	threads() {
+		return new SendRemindersQuerySubscription(this.accountIds);
+	}
 
-  threads() {
-    return new SendRemindersQuerySubscription(this.accountIds)
-  }
+	canReceiveThreadsFromAccountIds() {
+		return false;
+	}
 
-  canReceiveThreadsFromAccountIds() {
-    return false
-  }
+	canArchiveThreads() {
+		return false;
+	}
 
-  canArchiveThreads() {
-    return false
-  }
+	canTrashThreads() {
+		return false;
+	}
 
-  canTrashThreads() {
-    return false
-  }
-
-  canMoveThreadsTo() {
-    return false
-  }
-
+	canMoveThreadsTo() {
+		return false;
+	}
 }
 
-export default SendRemindersMailboxPerspective
+export default SendRemindersMailboxPerspective;

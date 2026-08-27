@@ -88,7 +88,6 @@ let plus;
 			}
 		},
 	};
-
 }).call(this);
 
 export default plus;

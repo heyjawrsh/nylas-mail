@@ -11,8 +11,10 @@ if (process.type === "renderer") {
 	errorLogger = new Proxy(
 		{},
 		{
-			get: (_t, prop) =>
-				(...args) => NylasEnv.errorLogger[prop](...args),
+			get:
+				(_t, prop) =>
+				(...args) =>
+					NylasEnv.errorLogger[prop](...args),
 		},
 	);
 } else {

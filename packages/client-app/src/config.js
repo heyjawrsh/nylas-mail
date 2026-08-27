@@ -27,9 +27,9 @@ const Color = require("./color");
 if (process.type === "renderer") {
 	app = remote.getGlobal("application");
 	webContentsId =
-			remote.getCurrentWebContents()?.getId?.() ??
-			remote.getCurrentWebContents()?.id ??
-			-1;
+		remote.getCurrentWebContents()?.getId?.() ??
+		remote.getCurrentWebContents()?.id ??
+		-1;
 	// Deferred: NylasEnv is assigned by the window bootstrap after this module
 	// loads; resolve the error logger lazily at first use.
 	getErrorLogger = () => NylasEnv.errorLogger;

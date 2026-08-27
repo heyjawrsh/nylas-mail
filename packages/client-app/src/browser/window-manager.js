@@ -1,4 +1,4 @@
-import {createRequire} from "node:module";
+import { createRequire } from "node:module";
 import _ from "underscore";
 
 const nodeRequire =
@@ -215,7 +215,9 @@ export default class WindowManager {
 			windowType: WindowManager.MAIN_WINDOW,
 			title: "Message Viewer",
 			neverClose: true,
-			bootstrapScript: nodeRequire.resolve("../../static/window-bootstrap.bundle.js"),
+			bootstrapScript: nodeRequire.resolve(
+				"../../static/window-bootstrap.bundle.js",
+			),
 			mainWindow: true,
 			width: 640, // Gets reset once app boots up
 			height: 396, // Gets reset once app boots up

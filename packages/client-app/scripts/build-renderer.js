@@ -47,7 +47,10 @@ const BANNER = `
 `;
 
 const entries = [
-	{ in: path.join(root, "src/window-bootstrap.js"), out: "window-bootstrap.bundle" },
+	{
+		in: path.join(root, "src/window-bootstrap.js"),
+		out: "window-bootstrap.bundle",
+	},
 	{
 		in: path.join(root, "src/secondary-window-bootstrap.js"),
 		out: "secondary-window-bootstrap.bundle",
@@ -81,7 +84,10 @@ for (const entry of entries) {
 		// the alias bridges the old ModuleCache runtime resolution
 		alias: {
 			"nylas-exports": path.join(root, "src/global/nylas-exports.js"),
-			"nylas-component-kit": path.join(root, "src/global/nylas-component-kit.js"),
+			"nylas-component-kit": path.join(
+				root,
+				"src/global/nylas-component-kit.js",
+			),
 			"nylas-store": path.join(root, "src/global/nylas-store.js"),
 			"nylas-observables": path.join(root, "src/global/nylas-observables.js"),
 			// internal packages load through their own package.json at runtime

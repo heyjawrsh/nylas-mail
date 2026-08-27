@@ -15,7 +15,11 @@ const _ = require("underscore");
 const EmitterMixin = require("emissary").Emitter;
 const { Emitter, Disposable, CompositeDisposable } = require("event-kit");
 let File = null;
-try { ({ File } = require("pathwatcher")); } catch (_e) { /* optional native */ }
+try {
+	({ File } = require("pathwatcher"));
+} catch (_e) {
+	/* optional native */
+}
 const fs = require("fs-plus");
 const Q = require("q");
 
@@ -61,7 +65,11 @@ module.exports = ThemeManager = (() => {
 			const watchStylesIn = (folder) => {
 				const stylePaths = fs.listTreeSync(folder);
 				let PathWatcher = null;
-				try { PathWatcher = require("pathwatcher"); } catch (_e) { return null; }
+				try {
+					PathWatcher = require("pathwatcher");
+				} catch (_e) {
+					return null;
+				}
 				return (() => {
 					const result = [];
 					for (var stylePath of Array.from(stylePaths)) {

@@ -1,4 +1,4 @@
-import request from "request";
+import request from "../request-compat.js";
 
 import Utils from "./models/utils.js";
 import Actions from "./actions.js";

@@ -23,9 +23,3 @@ neverBuiltDependencies:
 
 verifyDepsBeforeRun: false
 
-allowBuilds:
-  '@scarf/scarf': set this to true or false
-  es5-ext: set this to true or false
-  keytar: set this to true or false
-  nslog: set this to true or false
-  unix-dgram: set this to true or false

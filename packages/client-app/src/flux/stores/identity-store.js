@@ -2,7 +2,7 @@ import Rx from "rx-lite";
 import NylasStore from "nylas-store";
 import { ipcRenderer } from "electron";
 import { remote } from "@electron/remote";
-import request from "request";
+import request from "../request-compat.js";
 import url from "node:url";
 
 import Utils from "../models/utils.js";

@@ -9,7 +9,7 @@ try {
 	__dirname = path.dirname(new URL(".", import.meta.url).pathname);
 } catch (_e) {
 	__dirname = path.dirname(
-		(typeof require !== "undefined" ? require : (() => null))?.main?.filename ||
+		(typeof require !== "undefined" ? require : () => null)?.main?.filename ||
 			process.cwd(),
 	);
 }

@@ -1,5 +1,3 @@
-
-
 const requireFromSrc = (rel) => {
 	try {
 		return nodeRequire(rel);
@@ -14,7 +12,7 @@ const requireFromSrc = (rel) => {
 		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
 		return require(`${root}/src/${stripped}`);
 	}
-};/*
+}; /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
  * DS206: Consider reworking classes to avoid initClass
@@ -153,7 +151,9 @@ class NylasComponentKit {
 	static load(prop, path) {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
-				return NylasComponentKit.default(requireFromSrc(`../components/${path}`));
+				return NylasComponentKit.default(
+					requireFromSrc(`../components/${path}`),
+				);
 			},
 		});
 	}

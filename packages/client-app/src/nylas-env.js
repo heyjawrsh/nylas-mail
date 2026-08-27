@@ -251,7 +251,10 @@ export default class NylasEnvConstructor {
 		const specMode = this.inSpecMode();
 
 		this.commands = new CommandRegistry();
-		this.packages = new (PackageManager || (PackageManager = nodeRequire("../package-manager.js").default))({
+		this.packages = new (
+			PackageManager ||
+			(PackageManager = nodeRequire("../package-manager.js").default)
+		)({
 			devMode,
 			benchmarkMode,
 			configDirPath,

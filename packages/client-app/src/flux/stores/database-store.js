@@ -30,7 +30,8 @@ const DatabasePhase = {
 	Close: "close",
 };
 
-const DEBUG_QUERY_PLANS = typeof NylasEnv !== "undefined" && NylasEnv?.inDevMode?.();
+const DEBUG_QUERY_PLANS =
+	typeof NylasEnv !== "undefined" && NylasEnv?.inDevMode?.();
 
 const BASE_RETRY_LOCK_DELAY = 50;
 const MAX_RETRY_LOCK_DELAY = 500;

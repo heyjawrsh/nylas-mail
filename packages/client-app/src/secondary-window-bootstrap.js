@@ -20,7 +20,6 @@ Promise.setScheduler((fn) => timeout(fn, 0));
 import "./bootstrap-assign-env.js";
 import "./window";
 
-
 NylasEnv.initialize();
 NylasEnv.startSecondaryWindow();
 
