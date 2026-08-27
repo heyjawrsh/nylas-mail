@@ -338,3 +338,29 @@ bundle loads them natively (deprecate-utils reverted — ESM `export` breaks
 Cumulative session arcs: 12.10% (loop 17 start) → 18.18% through wall
 demolition + two swarm rounds. Remaining mass: components (~2.5k lines),
 stores remainder, browser/ (1.4k), services.
+
+
+## Loop 20 — Round 5 + the dual-context module contract (commit f1c58d9b0)
+
+client-app: 18.18% → **20.13% lines** (997 tests + 4 skipped, 49/49 files).
+Smoke was broken by round-5's ESM conversions; recovering it produced the
+missing architectural piece:
+
+**The dual-context module contract.** Three loading worlds now coexist:
+(a) the esbuild renderer bundle, (b) native renderer CJS requires
+(runtime-loaded modules), (c) vite/vitest ESM transforms. Contract:
+- Bridge registrations use literal-require thunks → esbuild inlines them;
+  the same thunk falls back to requireFromSrc under vite.
+- Modules the renderer loads natively are dual-CJS (no import syntax) with
+  `.default` interop; their ESM consumers destructure defensively.
+- ESM-graph modules (stores, models) stay ESM; native contexts reach them
+  only through the bridge.
+
+Also this round: search-bar React 19 port (createRef for string refs —
+findDOMNode removed in 19), spellcheck/webFrame/crashReporter renderer-API
+guards, config-schema/menu-manager/keymap-manager/command-registry/
+action-bridge/database-change-record dual-CJS, api-helpers map through
+bridge names, rimraf/mkdirp/uuid named-import fixes.
+
+Verified: 997 tests green, lint green, bundle clean, smoke SMOKE_PASS rc=0,
+5 server packages green, `pnpm outdated -r` clean.
