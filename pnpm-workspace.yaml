@@ -6,13 +6,15 @@ packages:
   - "packages/isomorphic-core"
   - "packages/cloud-core"
   - "packages/cloud-workers"
+  - "packages/cloud-api"
+  - "packages/client-sync"
 
 allowBuilds:
+  '@scarf/scarf': set this to true or false
   sqlite3: set this to true or false
   unix-dgram: set this to true or false
 
 onlyBuiltDependencies:
   - esbuild
   - sqlite3
-
-verifyDepsBeforeRun: false
+  - unix-dgram
