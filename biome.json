@@ -1,0 +1,23 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**", "!**/node_modules/**", "!**/spec/fixtures/**", "!**/blog-posts/**", "!**/screenshot/**"]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "off"
+        }
+      }
+    }
+  },
+  "javascript": {
+    "globals": ["atom", "NylasEnv", "jasmine"]
+  }
+}
