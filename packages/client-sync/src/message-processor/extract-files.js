@@ -1,4 +1,6 @@
-import libmime from 'libmime';
+import {Libmime} from 'libmime';
+
+const libmime = new Libmime();
 
 function collectFilesFromStruct({db, messageValues, struct, fileIds = new Set()}) {
   const {File} = db;

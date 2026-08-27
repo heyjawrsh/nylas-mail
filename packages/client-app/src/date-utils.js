@@ -1,5 +1,5 @@
 import moment from 'moment-timezone'
-import chrono from 'chrono-node'
+import * as chrono from 'chrono-node'
 import _ from 'underscore'
 
 // Init locale for moment
@@ -49,8 +49,9 @@ function isPastDate(inputDateObj, currentDate) {
   return inputMoment.isBefore(currentMoment)
 }
 
-const EnforceFutureDate = new chrono.Refiner();
-EnforceFutureDate.refine = (text, results) => {
+// chrono-node v2: user refiners are plain classes with refine(text, results)
+class EnforceFutureDate {
+  refine(text, results) {
   results.forEach((result) => {
     const current = _.extend({}, result.start.knownValues, result.start.impliedValues);
 
@@ -71,11 +72,12 @@ EnforceFutureDate.refine = (text, results) => {
       }
     }
   });
-  return results;
-};
+    return results;
+  }
+}
 
-const chronoFuture = new chrono.Chrono(chrono.options.casualOption());
-chronoFuture.refiners.push(EnforceFutureDate);
+const chronoFuture = chrono.casual.clone();
+chronoFuture.refiners.push(new EnforceFutureDate());
 
 
 const DateUtils = {

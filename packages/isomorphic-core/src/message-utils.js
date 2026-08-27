@@ -1,6 +1,16 @@
 /* eslint no-useless-escape: 0 */
 import MailComposer from "nodemailer/lib/mail-composer/index.js";
-import libmime from "libmime";
+import {Libmime} from "libmime";
+import libqp from "libqp";
+import iconv from "iconv-lite";
+
+const libmime = new Libmime();
+// libmime 5.4 moved body decoding to libqp; preserve the old
+// decodeQuotedPrintable(text, charset) contract.
+const decodeQuotedPrintable = (text, charset) => {
+	const buf = libqp.decode(text);
+	return iconv.decode(buf, charset || "utf-8");
+};
 import iconv from "iconv-lite";
 import addressparser from "nodemailer/lib/addressparser/index.js";
 import he from "he";
@@ -167,7 +177,7 @@ function bodyFromParts(imapMessage, desiredParts) {
 		let decoded = "";
 		// see https://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html
 		if (/quot(ed)?[-/]print(ed|able)?/gi.test(transferEncoding)) {
-			const buffer = libmime.decodeQuotedPrintable(imapMessage.parts[id]);
+			const buffer = decodeQuotedPrintable(imapMessage.parts[id]);
 			decoded = iconv.decode(buffer, charset || "utf-8");
 		} else if (/base64/gi.test(transferEncoding)) {
 			decoded = iconv.decode(

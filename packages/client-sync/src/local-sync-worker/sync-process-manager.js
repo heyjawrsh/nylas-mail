@@ -1,9 +1,11 @@
 import _ from 'underscore';
 const getIpcRenderer = () => {
   try {
-    return require('electron').ipcRenderer
+    const ipc = require('electron').ipcRenderer
+    // Outside the real Electron runtime (tests, node), the module resolves
+    // to its path-string export — fall back to a no-op transport.
+    return ipc && typeof ipc.on === 'function' ? ipc : {on() {}, send() {}}
   } catch (error) {
-    if (error.code !== 'MODULE_NOT_FOUND') throw error
     return {on() {}, send() {}}
   }
 }

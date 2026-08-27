@@ -3,7 +3,16 @@ import _ from 'underscore';
 const DEFAULT_SEQUELIZE_SHIM_TIMEOUT = 60 * 1000; // 1 min
 
 const shimObject = (obj) => {
-  Object.keys(obj).forEach(key => {
+  // Class methods are non-enumerable — include them, but never rebind
+  // accessors or the constructor.
+  const keys = Object.getOwnPropertyNames(obj).filter(
+    (key) => {
+      if (key === 'constructor' || key.startsWith('_')) return false;
+      const desc = Object.getOwnPropertyDescriptor(obj, key);
+      return !!(desc && (desc.value !== undefined));
+    },
+  );
+  keys.forEach(key => {
     // Skip internal methods.
     if (key.startsWith('_')) {
       return;

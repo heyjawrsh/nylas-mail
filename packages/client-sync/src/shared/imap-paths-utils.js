@@ -8,4 +8,5 @@ function formatImapPath(pathStr) {
   return s;
 }
 
+export {formatImapPath};
 export default {formatImapPath};

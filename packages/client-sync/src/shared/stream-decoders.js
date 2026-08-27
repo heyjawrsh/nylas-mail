@@ -1,5 +1,10 @@
 import {Transform} from 'stream'
-import libmime from 'libmime';
+import {Libmime} from 'libmime';
+import libqp from 'libqp';
+import iconv from 'iconv-lite';
+
+const libmime = new Libmime();
+const decodeQuotedPrintable = (text, charset) => iconv.decode(libqp.decode(text), charset || 'utf-8');
 
 export class QuotedPrintableStreamDecoder extends Transform {
   constructor(opts = {}) {
@@ -27,7 +32,7 @@ export class QuotedPrintableStreamDecoder extends Transform {
   _flush = (cb) => {
     // If this.charset is null (a very common case for attachments),
     // libmime defaults to utf-8 as the charset.
-    this.push(libmime.decodeQuotedPrintable(this._text, this.charset));
+    this.push(decodeQuotedPrintable(this._text, this.charset));
     cb();
   }
 }

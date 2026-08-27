@@ -54,7 +54,12 @@ function Logger(boundArgs = {}) {
     }
   })
   logger.boundArgs = boundArgs
-  logger.child = (extraBoundArgs) => Logger({...boundArgs, ...extraBoundArgs})
+  logger.child = (extraBoundArgs) => {
+    if (!extraBoundArgs || typeof extraBoundArgs !== 'object') {
+      throw new Error('Logger.child: bound context must be an object')
+    }
+    return Logger({...boundArgs, ...extraBoundArgs})
+  }
   return logger
 }
 

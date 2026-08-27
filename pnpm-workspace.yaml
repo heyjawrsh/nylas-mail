@@ -8,11 +8,14 @@ packages:
   - "packages/cloud-workers"
   - "packages/cloud-api"
   - "packages/client-sync"
+  - "packages/client-app"
 
 onlyBuiltDependencies:
   - esbuild
   - sqlite3
   - unix-dgram
+  - better-sqlite3
+  - electron
 
 # @scarf/scarf is opt-out telemetry — never allow its postinstall
 neverBuiltDependencies:
@@ -20,3 +23,6 @@ neverBuiltDependencies:
 
 verifyDepsBeforeRun: false
 
+allowBuilds:
+  '@scarf/scarf': set this to true or false
+  unix-dgram: set this to true or false

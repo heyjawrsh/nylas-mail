@@ -23,6 +23,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    setupFiles: ['spec/setup.js'],
     include: ['spec/**/*.spec.{js,jsx}'],
     coverage: {
       provider: 'v8',
