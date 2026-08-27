@@ -189,3 +189,26 @@ client-app coverage: 11 tests / 0.32% vs enforced 60/45 gate — the only red
 item. ~18.3k source lines; needs component + store spec authoring at scale
 (@testing-library/react patterns proven in `spec/toast.spec.jsx`; store specs
 per the client-sync rounds). This is the final goal criterion.
+
+
+## Loop 15 — Coverage campaign round 1 (commit 819d4606e)
+
+client-app: 0.32% → **9.01% lines** (322 tests, 13 files, all green). Ringer
+swarm (6 codex workers, round12.json) authored the specs; integration hardened
+the vitest harness into something the next rounds can build on directly:
+
+- package-root pinning (root runs were swallowing sibling packages' specs)
+- `spec/stubs/` node-bridge packages (electron, @electron/remote, nylas-*):
+  named exports cjs-module-lexer can see; default electron export remains the
+  binary path so smoke keeps working
+- eager-but-cycle-guarded materialization of the lazy bridge getters
+- `globalThis.$n` anchor makes nylas-exports loadable in CJS and ESM contexts
+- `model.fromJSON` no longer assigns getter-only computed attributes
+
+Per-round yield ≈ +9 pts/line-coverage at current module mix. Remaining gap to
+the 60% gate ≈ 6 rounds of similar scope (stores, components via
+testing-library, internal_packages). The harness is now the bottleneck-free
+part — subsequent rounds are pure spec authoring.
+
+Smoke re-verified SMOKE_PASS after all changes; lint green; 5 server packages
+re-verified green.
