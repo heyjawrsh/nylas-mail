@@ -6,20 +6,22 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const _Reflux = require("reflux");
-const AccountStore = require("./account-store.js").default;
-const WorkspaceStore = require("./workspace-store.js");
-const DatabaseStore = require("./database-store.js").default;
+import _ from "underscore";
+import _Reflux from "reflux";
+import AccountStore from "./account-store.js";
+import WorkspaceStore from "./workspace-store.js";
+import DatabaseStore from "./database-store.js";
 const _FocusedPerspectiveStore =
 	require("./focused-perspective-store.js").default;
-const _MailboxPerspective = require("../../mailbox-perspective.js");
-const Actions = require("../actions.js").default;
-const _Thread = require("../models/thread.js").default;
-const Model = require("../models/model.js");
+import * as _MailboxPerspectiveNS from "../../mailbox-perspective.js";
+const _MailboxPerspective =
+	_MailboxPerspectiveNS.default || _MailboxPerspectiveNS;
+import Actions from "../actions.js";
+import _Thread from "../models/thread.js";
+import Model from "../models/model.js";
 
-const { Listener, Publisher } = require("../modules/reflux-coffee.js");
-const CoffeeHelpers = require("../coffee-helpers.js");
+import { Listener, Publisher } from "../modules/reflux-coffee.js";
+import CoffeeHelpers from "../coffee-helpers.js";
 
 /*
 Public: The FocusedContentStore provides access to the objects currently selected

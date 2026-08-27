@@ -43,6 +43,11 @@ module.exports.Menu = class {
 module.exports.nativeImage = {
 	createFromPath: () => ({ toDataURL: () => "" }),
 };
+module.exports.webFrame = {
+	setZoomLevelLimits: () => {},
+	setZoomFactor: () => {},
+	getZoomFactor: () => 1,
+};
 module.exports.screen = {
 	getPrimaryDisplay: () => ({ workAreaSize: { width: 1440, height: 900 } }),
 };

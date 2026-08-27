@@ -5,29 +5,28 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const path = require("node:path");
+import _ from "underscore";
+import path from "node:path";
 
-const { FileDownloadStore } = require("nylas-exports");
+import { FileDownloadStore } from "nylas-exports";
 
-const Actions = require("../actions.js").default;
-const DatabaseStore = require("./database-store.js").default;
-const AccountStore = require("./account-store.js").default;
-const ContactStore = require("./contact-store.js");
-const MessageStore = require("./message-store.js");
-const FocusedPerspectiveStore =
-	require("./focused-perspective-store.js").default;
+import Actions from "../actions.js";
+import DatabaseStore from "./database-store.js";
+import AccountStore from "./account-store.js";
+import ContactStore from "./contact-store.js";
+import MessageStore from "./message-store.js";
+import FocusedPerspectiveStore from "./focused-perspective-store.js";
 
 let DraftStore = null;
-const DraftHelpers = require("./draft-helpers.js").default;
+import DraftHelpers from "./draft-helpers.js";
 
-const _Thread = require("../models/thread.js").default;
-const _Contact = require("../models/contact.js").default;
-const Message = require("../models/message.js").default;
-const Utils = require("../models/utils.js");
+import _Thread from "../models/thread.js";
+import _Contact from "../models/contact.js";
+import Message from "../models/message.js";
+import Utils from "../models/utils.js";
 
-const { subjectWithPrefix } = require("../models/utils.js");
-const DOMUtils = require("../../dom-utils.js");
+import { subjectWithPrefix } from "../models/utils.js";
+import DOMUtils from "../../dom-utils.js";
 
 class DraftFactory {
 	constructor() {

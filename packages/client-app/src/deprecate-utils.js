@@ -40,4 +40,5 @@ Use ${newName} instead.\nCheck your code at ${stack[1]}`,
 	}
 }
 
-module.exports = DeprecateUtils;
+export const deprecate = DeprecateUtils.deprecate;
+export default DeprecateUtils;

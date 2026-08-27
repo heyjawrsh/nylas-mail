@@ -103,7 +103,9 @@ class QuerySubscriptionPool {
 	}
 
 	_keyForQuery(query) {
-		return query.sql();
+		// Queries are duck-typed in tests and bundle contexts; fall back to a
+		// stable identity key when the SQL compiler isn't present.
+		return query.sql?.() ?? `query:${query.constructor?.name ?? "opaque"}`;
 	}
 
 	_setup() {

@@ -29,6 +29,11 @@ export const Menu = class {
 	popup() {}
 };
 export const nativeImage = { createFromPath: () => ({ toDataURL: () => "" }) };
+export const webFrame = {
+	setZoomLevelLimits: () => {},
+	setZoomFactor: () => {},
+	getZoomFactor: () => 1,
+};
 export const screen = {
 	getPrimaryDisplay: () => ({ workAreaSize: { width: 1440, height: 900 } }),
 };

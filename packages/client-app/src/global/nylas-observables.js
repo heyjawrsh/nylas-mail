@@ -6,10 +6,20 @@
  */
 const Rx = require("rx-lite");
 const _ = require("underscore");
-const Category = require("../flux/models/category.js").default;
-const QuerySubscriptionPool =
-	require("../flux/models/query-subscription-pool.js").default;
-const DatabaseStore = require("../flux/stores/database-store.js").default;
+let Category = null;
+const getCategory = () =>
+	Category || (Category = require("../flux/models/category.js").default);
+// Deferred: these flux-layer modules participate in model<->store
+// require(esm) cycles when nylas-observables loads natively.
+let DatabaseStore = null;
+let QuerySubscriptionPool = null;
+const getDatabaseStore = () =>
+	DatabaseStore ||
+	(DatabaseStore = require("../flux/stores/database-store.js").default);
+const getQuerySubscriptionPool = () =>
+	QuerySubscriptionPool ||
+	(QuerySubscriptionPool =
+		require("../flux/models/query-subscription-pool.js").default);
 
 var CategoryOperators = {
 	sort() {
@@ -41,7 +51,9 @@ var CategoryOperators = {
 
 var CategoryObservables = {
 	forAllAccounts: () => {
-		const observable = Rx.Observable.fromQuery(DatabaseStore.findAll(Category));
+		const observable = Rx.Observable.fromQuery(
+			getDatabaseStore().findAll(getCategory()),
+		);
 		_.extend(observable, CategoryOperators);
 		return observable;
 	},
@@ -50,10 +62,14 @@ var CategoryObservables = {
 		let observable;
 		if (account) {
 			observable = Rx.Observable.fromQuery(
-				DatabaseStore.findAll(Category).where({ accountId: account.id }),
+				getDatabaseStore()
+					.findAll(getCategory())
+					.where({ accountId: account.id }),
 			);
 		} else {
-			observable = Rx.Observable.fromQuery(DatabaseStore.findAll(Category));
+			observable = Rx.Observable.fromQuery(
+				getDatabaseStore().findAll(getCategory()),
+			);
 		}
 		_.extend(observable, CategoryOperators);
 		return observable;
@@ -148,7 +164,7 @@ Rx.Observable.fromAction = (action) => {
 
 Rx.Observable.fromQuery = (query) => {
 	return Rx.Observable.create((observer) => {
-		const unsubscribe = QuerySubscriptionPool.add(query, (result) => {
+		const unsubscribe = getQuerySubscriptionPool().add(query, (result) => {
 			return observer.onNext(result);
 		});
 		return Rx.Disposable.create(unsubscribe);
@@ -157,7 +173,7 @@ Rx.Observable.fromQuery = (query) => {
 
 Rx.Observable.fromNamedQuerySubscription = (name, subscription) => {
 	return Rx.Observable.create((observer) => {
-		const unsubscribe = QuerySubscriptionPool.addPrivateSubscription(
+		const unsubscribe = getQuerySubscriptionPool().addPrivateSubscription(
 			name,
 			subscription,
 			(result) => {

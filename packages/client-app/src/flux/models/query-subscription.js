@@ -22,7 +22,7 @@ export default class QuerySubscription {
 				);
 			}
 
-			this._query.finalize();
+			this._query.finalize?.();
 
 			if (this._options.initialModels) {
 				this._set = new MutableQueryResultSet();
@@ -185,6 +185,11 @@ export default class QuerySubscription {
 	}
 
 	update({ mustRefetchEntireRange } = {}) {
+		// Duck-typed or absent queries (tests, bundles) have no range to
+		// refresh — bail instead of crashing the background cycle.
+		if (!this._query || typeof this._query.range !== "function") {
+			return;
+		}
 		this._updateInFlight = true;
 
 		const desiredRange = this._query.range();

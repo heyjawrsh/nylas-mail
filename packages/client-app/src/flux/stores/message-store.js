@@ -7,20 +7,20 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const NylasStore = require("nylas-store");
-const Actions = require("../actions.js").default;
-const Message = require("../models/message.js").default;
-const Thread = require("../models/thread.js").default;
-const _Utils = require("../models/utils.js");
-const DatabaseStore = require("./database-store.js").default;
-const FocusedPerspectiveStore =
-	require("./focused-perspective-store.js").default;
-const FocusedContentStore = require("./focused-content-store.js");
-const NylasAPIHelpers = require("../nylas-api-helpers.js");
-const ExtensionRegistry = require("../../registries/extension-registry.js");
-const { deprecate } = require("../../deprecate-utils.js");
-const _async = require("async");
-const _ = require("underscore");
+import NylasStore from "nylas-store";
+import Actions from "../actions.js";
+import Message from "../models/message.js";
+import Thread from "../models/thread.js";
+import * as _Utils from "../models/utils.js";
+import DatabaseStore from "./database-store.js";
+import FocusedPerspectiveStore from "./focused-perspective-store.js";
+import FocusedContentStore from "./focused-content-store.js";
+import * as NylasAPIHelpers from "../nylas-api-helpers.js";
+import * as ExtensionRegistryNS from "../../registries/extension-registry.js";
+const ExtensionRegistry = ExtensionRegistryNS.default || ExtensionRegistryNS;
+import { deprecate } from "../../deprecate-utils.js";
+import _async from "async";
+import _ from "underscore";
 
 const CategoryNamesHiddenByDefault = ["spam", "trash"];
 
@@ -521,4 +521,4 @@ store.unregisterExtension = deprecate(
 );
 store.CategoryNamesHiddenByDefault = CategoryNamesHiddenByDefault;
 
-module.exports = store;
+export default store;

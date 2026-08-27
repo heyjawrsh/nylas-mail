@@ -318,102 +318,116 @@ lazyLoadDeprecated(
 // ESM surface: named imports from this module resolve eagerly through the
 // lazy getters (safe against the app's intentional model<->store cycles).
 export default $n;
-const __safe = (name) => {
-	try {
-		return $n[name];
-	} catch (_e) {
-		return undefined;
-	}
-};
-export const APIError = __safe("APIError");
-export const APMWrapper = __safe("APMWrapper");
-export const Account = __safe("Account");
-export const AccountStore = __safe("AccountStore");
-export const Actions = __safe("Actions");
-export const Attributes = __safe("Attributes");
-export const BadgeStore = __safe("BadgeStore");
-export const BaseDraftTask = __safe("BaseDraftTask");
-export const Calendar = __safe("Calendar");
-export const CalendarDataSource = __safe("CalendarDataSource");
-export const Category = __safe("Category");
-export const CategoryStore = __safe("CategoryStore");
-export const ComponentRegistry = __safe("ComponentRegistry");
-export const ComposerExtension = __safe("ComposerExtension");
-export const Contact = __safe("Contact");
-export const ContactStore = __safe("ContactStore");
-export const ContenteditableExtension = __safe("ContenteditableExtension");
-export const CustomContenteditableComponents = __safe(
+// Named exports are lazy proxies: the bridge getters load real modules on
+// first ACCESS (post-cycle). Eager reads — even guarded — fire every getter
+// at module-eval time and re-enter the intentional model<->store cycles.
+const __lazy = (name) =>
+	new Proxy(function lazyBridge() {}, {
+		get(_t, prop) {
+			const real = $n[name];
+			if (real === undefined || real === null) return real;
+			const v = real[prop];
+			return typeof v === "function" ? v.bind(real) : v;
+		},
+		apply(_t, _thisArg, args) {
+			return $n[name](...args);
+		},
+		construct(_t, args, newTarget) {
+			return Reflect.construct($n[name], args, newTarget);
+		},
+		has(_t, prop) {
+			return prop in ($n[name] || {});
+		},
+	});
+export const APIError = __lazy("APIError");
+export const APMWrapper = __lazy("APMWrapper");
+export const Account = __lazy("Account");
+export const AccountStore = __lazy("AccountStore");
+export const Actions = __lazy("Actions");
+export const Attributes = __lazy("Attributes");
+export const BadgeStore = __lazy("BadgeStore");
+export const BaseDraftTask = __lazy("BaseDraftTask");
+export const Calendar = __lazy("Calendar");
+export const CalendarDataSource = __lazy("CalendarDataSource");
+export const Category = __lazy("Category");
+export const CategoryStore = __lazy("CategoryStore");
+export const ComponentRegistry = __lazy("ComponentRegistry");
+export const ComposerExtension = __lazy("ComposerExtension");
+export const Contact = __lazy("Contact");
+export const ContactStore = __lazy("ContactStore");
+export const ContenteditableExtension = __lazy("ContenteditableExtension");
+export const CustomContenteditableComponents = __lazy(
 	"CustomContenteditableComponents",
 );
-export const DOMUtils = __safe("DOMUtils");
-export const DatabaseStore = __safe("DatabaseStore");
-export const DateUtils = __safe("DateUtils");
-export const DefaultClientHelper = __safe("DefaultClientHelper");
-export const DestroyModelTask = __safe("DestroyModelTask");
-export const DraftHelpers = __safe("DraftHelpers");
-export const DraftStore = __safe("DraftStore");
-export const EditorAPI = __safe("EditorAPI");
-export const Event = __safe("Event");
-export const ExtensionRegistry = __safe("ExtensionRegistry");
-export const FeatureUsageStore = __safe("FeatureUsageStore");
-export const FileDownloadStore = __safe("FileDownloadStore");
-export const FocusedContactsStore = __safe("FocusedContactsStore");
-export const FocusedContentStore = __safe("FocusedContentStore");
-export const FocusedPerspectiveStore = __safe("FocusedPerspectiveStore");
-export const FolderSyncProgressStore = __safe("FolderSyncProgressStore");
-export const IdentityStore = __safe("IdentityStore");
-export const InflatesDraftClientId = __safe("InflatesDraftClientId");
-export const InlineStyleTransformer = __safe("InlineStyleTransformer");
-export const KeyManager = __safe("KeyManager");
-export const MailRulesStore = __safe("MailRulesStore");
-export const MailRulesTemplates = __safe("MailRulesTemplates");
-export const MailboxPerspective = __safe("MailboxPerspective");
-export const Matcher = __safe("Matcher");
-export const Message = __safe("Message");
-export const MessageBodyProcessor = __safe("MessageBodyProcessor");
-export const MessageStore = __safe("MessageStore");
-export const MessageViewExtension = __safe("MessageViewExtension");
-export const Model = __safe("Model");
-export const ModelSearchIndexer = __safe("ModelSearchIndexer");
-export const MutableQuerySubscription = __safe("MutableQuerySubscription");
-export const N1CloudAPI = __safe("N1CloudAPI");
-export const NativeNotifications = __safe("NativeNotifications");
-export const NylasAPI = __safe("NylasAPI");
-export const NylasAPIHelpers = __safe("NylasAPIHelpers");
-export const NylasAPIRequest = __safe("NylasAPIRequest");
-export const NylasLongConnection = __safe("NylasLongConnection");
-export const NylasTestUtils = __safe("NylasTestUtils");
-export const ObservableListDataSource = __safe("ObservableListDataSource");
-export const OnlineStatusStore = __safe("OnlineStatusStore");
-export const PreferencesUIStore = __safe("PreferencesUIStore");
-export const QueryResultSet = __safe("QueryResultSet");
-export const QuerySubscription = __safe("QuerySubscription");
-export const QuotedHTMLTransformer = __safe("QuotedHTMLTransformer");
-export const React = __safe("React");
-export const ReactDOM = __safe("ReactDOM");
-export const Reflux = __safe("Reflux");
-export const RegExpUtils = __safe("RegExpUtils");
-export const ReprocessMailRulesTask = __safe("ReprocessMailRulesTask");
-export const Rx = __safe("Rx");
-export const SanitizeTransformer = __safe("SanitizeTransformer");
-export const SearchIndexScheduler = __safe("SearchIndexScheduler");
-export const SearchQueryParser = __safe("SearchQueryParser");
-export const SearchableComponentStore = __safe("SearchableComponentStore");
-export const SendActionsStore = __safe("SendActionsStore");
-export const SendDraftTask = __safe("SendDraftTask");
-export const SignatureStore = __safe("SignatureStore");
-export const SoundRegistry = __safe("SoundRegistry");
-export const Spellchecker = __safe("Spellchecker");
-export const SyncbackCategoryTask = __safe("SyncbackCategoryTask");
-export const SyncbackEventTask = __safe("SyncbackEventTask");
-export const SyncbackMetadataTask = __safe("SyncbackMetadataTask");
-export const SystemStartService = __safe("SystemStartService");
-export const Task = __safe("Task");
-export const TaskFactory = __safe("TaskFactory");
-export const TaskQueue = __safe("TaskQueue");
-export const TaskQueueStatusStore = __safe("TaskQueueStatusStore");
-export const Thread = __safe("Thread");
-export const UndoRedoStore = __safe("UndoRedoStore");
-export const Utils = __safe("Utils");
-export const VirtualDOMUtils = __safe("VirtualDOMUtils");
-export const WorkspaceStore = __safe("WorkspaceStore");
+export const DOMUtils = __lazy("DOMUtils");
+export const DatabaseStore = __lazy("DatabaseStore");
+export const DateUtils = __lazy("DateUtils");
+export const DefaultClientHelper = __lazy("DefaultClientHelper");
+export const DestroyModelTask = __lazy("DestroyModelTask");
+export const DraftHelpers = __lazy("DraftHelpers");
+export const DraftStore = __lazy("DraftStore");
+export const EditorAPI = __lazy("EditorAPI");
+export const Event = __lazy("Event");
+export const ExtensionRegistry = __lazy("ExtensionRegistry");
+export const FeatureUsageStore = __lazy("FeatureUsageStore");
+export const FileDownloadStore = __lazy("FileDownloadStore");
+export const FocusedContactsStore = __lazy("FocusedContactsStore");
+export const FocusedContentStore = __lazy("FocusedContentStore");
+export const FocusedPerspectiveStore = __lazy("FocusedPerspectiveStore");
+export const FolderSyncProgressStore = __lazy("FolderSyncProgressStore");
+export const IdentityStore = __lazy("IdentityStore");
+export const InflatesDraftClientId = __lazy("InflatesDraftClientId");
+export const InlineStyleTransformer = __lazy("InlineStyleTransformer");
+export const KeyManager = __lazy("KeyManager");
+export const MailRulesStore = __lazy("MailRulesStore");
+export const MailRulesTemplates = __lazy("MailRulesTemplates");
+export const MailboxPerspective = __lazy("MailboxPerspective");
+export const Matcher = __lazy("Matcher");
+export const Message = __lazy("Message");
+export const MessageBodyProcessor = __lazy("MessageBodyProcessor");
+export const MessageStore = __lazy("MessageStore");
+export const MessageViewExtension = __lazy("MessageViewExtension");
+export const Model = __lazy("Model");
+export const ModelSearchIndexer = __lazy("ModelSearchIndexer");
+export const MutableQuerySubscription = __lazy("MutableQuerySubscription");
+export const N1CloudAPI = __lazy("N1CloudAPI");
+export const NativeNotifications = __lazy("NativeNotifications");
+export const NylasAPI = __lazy("NylasAPI");
+export const NylasAPIHelpers = __lazy("NylasAPIHelpers");
+export const NylasAPIRequest = __lazy("NylasAPIRequest");
+export const NylasLongConnection = __lazy("NylasLongConnection");
+export const NylasTestUtils = __lazy("NylasTestUtils");
+export const ObservableListDataSource = __lazy("ObservableListDataSource");
+export const OnlineStatusStore = __lazy("OnlineStatusStore");
+export const PreferencesUIStore = __lazy("PreferencesUIStore");
+export const QueryResultSet = __lazy("QueryResultSet");
+export const QuerySubscription = __lazy("QuerySubscription");
+export const QuotedHTMLTransformer = __lazy("QuotedHTMLTransformer");
+export const React = __lazy("React");
+export const ReactDOM = __lazy("ReactDOM");
+export const Reflux = __lazy("Reflux");
+export const RegExpUtils = __lazy("RegExpUtils");
+export const ReprocessMailRulesTask = __lazy("ReprocessMailRulesTask");
+export const Rx = __lazy("Rx");
+export const SanitizeTransformer = __lazy("SanitizeTransformer");
+export const SearchIndexScheduler = __lazy("SearchIndexScheduler");
+export const SearchQueryParser = __lazy("SearchQueryParser");
+export const SearchableComponentStore = __lazy("SearchableComponentStore");
+export const SendActionsStore = __lazy("SendActionsStore");
+export const SendDraftTask = __lazy("SendDraftTask");
+export const SignatureStore = __lazy("SignatureStore");
+export const SoundRegistry = __lazy("SoundRegistry");
+export const Spellchecker = __lazy("Spellchecker");
+export const SyncbackCategoryTask = __lazy("SyncbackCategoryTask");
+export const SyncbackEventTask = __lazy("SyncbackEventTask");
+export const SyncbackMetadataTask = __lazy("SyncbackMetadataTask");
+export const SystemStartService = __lazy("SystemStartService");
+export const Task = __lazy("Task");
+export const TaskFactory = __lazy("TaskFactory");
+export const TaskQueue = __lazy("TaskQueue");
+export const TaskQueueStatusStore = __lazy("TaskQueueStatusStore");
+export const Thread = __lazy("Thread");
+export const UndoRedoStore = __lazy("UndoRedoStore");
+export const Utils = __lazy("Utils");
+export const VirtualDOMUtils = __lazy("VirtualDOMUtils");
+export const WorkspaceStore = __lazy("WorkspaceStore");

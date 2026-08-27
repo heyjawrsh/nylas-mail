@@ -12,7 +12,13 @@ const _Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
 const AccountStore = require("./account-store.js").default;
 const Account = require("../models/account.js").default;
-const { StandardCategoryNames } = require("../models/category.js").default;
+// Deferred: category.js imports back through the flux layer; requiring it
+// eagerly at module scope creates a require(esm) cycle.
+let _standardCategoryNames = null;
+const getStandardCategoryNames = () =>
+	_standardCategoryNames ||
+	(_standardCategoryNames = require("../models/category.js").default
+		.StandardCategoryNames);
 const { Categories } = require("nylas-observables");
 
 const asAccount = (a) => {
@@ -129,7 +135,7 @@ class CategoryStore extends NylasStore {
 			return null;
 		}
 
-		if (!Array.from(StandardCategoryNames).includes(name)) {
+		if (!Array.from(getStandardCategoryNames()).includes(name)) {
 			throw new Error(`'${name}' is not a standard category`);
 		}
 
@@ -249,8 +255,8 @@ class CategoryStore extends NylasStore {
 			var _items = this._standardCategories[accountId];
 			this._standardCategories[accountId].sort(
 				(a, b) =>
-					StandardCategoryNames.indexOf(a.name) -
-					StandardCategoryNames.indexOf(b.name),
+					getStandardCategoryNames().indexOf(a.name) -
+					getStandardCategoryNames().indexOf(b.name),
 			);
 		}
 

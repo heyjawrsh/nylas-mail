@@ -375,6 +375,7 @@ class StarredMailboxPerspective extends MailboxPerspective {
 
 class EmptyMailboxPerspective extends MailboxPerspective {
 	constructor() {
+		super([]);
 		this.threads = this.threads.bind(this);
 		this.canReceiveThreadsFromAccountIds =
 			this.canReceiveThreadsFromAccountIds.bind(this);

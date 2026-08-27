@@ -87,7 +87,8 @@ var require_at_electron_remote = __commonJS({
   "spec/stubs/node-bridges/at-electron-remote/index.js"(exports2, module2) {
     var stub = {
       getGlobal: () => ({}),
-      getCurrentWebContents: () => ({ getId: () => -1, id: -1 }),
+      getCurrentWebContents: () => ({ getId: () => -1, id: -1, setZoomLevelLimits: () => {
+      } }),
       app: { getVersion: () => "0.0.0-test", getPath: () => "/tmp" },
       process: { env: {} },
       shell: { openExternal: () => {
@@ -193240,7 +193241,7 @@ __export(nylas_exports_exports, {
   WorkspaceStore: () => WorkspaceStore,
   default: () => nylas_exports_default
 });
-var import_node_module10, import_meta11, nodeRequire11, resolveExport, requireFromSrc, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __safe, APIError2, APMWrapper, Account2, AccountStore2, Actions2, Attributes, BadgeStore, BaseDraftTask, Calendar, CalendarDataSource, Category, CategoryStore2, ComponentRegistry, ComposerExtension, Contact2, ContactStore, ContenteditableExtension, CustomContenteditableComponents, DOMUtils, DatabaseStore2, DateUtils, DefaultClientHelper, DestroyModelTask, DraftHelpers, DraftStore, EditorAPI, Event2, ExtensionRegistry, FeatureUsageStore, FileDownloadStore, FocusedContactsStore, FocusedContentStore, FocusedPerspectiveStore, FolderSyncProgressStore, IdentityStore, InflatesDraftClientId, InlineStyleTransformer, KeyManager2, MailRulesStore, MailRulesTemplates, MailboxPerspective, Matcher3, Message, MessageBodyProcessor, MessageStore, MessageViewExtension, Model5, ModelSearchIndexer, MutableQuerySubscription, N1CloudAPI, NativeNotifications, NylasAPI, NylasAPIHelpers, NylasAPIRequest, NylasLongConnection, NylasTestUtils, ObservableListDataSource, OnlineStatusStore, PreferencesUIStore, QueryResultSet, QuerySubscription, QuotedHTMLTransformer, React2, ReactDOM, Reflux2, RegExpUtils, ReprocessMailRulesTask, Rx, SanitizeTransformer, SearchIndexScheduler, SearchQueryParser, SearchableComponentStore, SendActionsStore, SendDraftTask, SignatureStore, SoundRegistry, Spellchecker2, SyncbackCategoryTask, SyncbackEventTask, SyncbackMetadataTask, SystemStartService, Task, TaskFactory, TaskQueue, TaskQueueStatusStore, Thread, UndoRedoStore, Utils7, VirtualDOMUtils, WorkspaceStore;
+var import_node_module10, import_meta11, nodeRequire11, resolveExport, requireFromSrc, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError2, APMWrapper, Account2, AccountStore2, Actions2, Attributes, BadgeStore, BaseDraftTask, Calendar, CalendarDataSource, Category, CategoryStore2, ComponentRegistry, ComposerExtension, Contact2, ContactStore, ContenteditableExtension, CustomContenteditableComponents, DOMUtils, DatabaseStore2, DateUtils, DefaultClientHelper, DestroyModelTask, DraftHelpers, DraftStore, EditorAPI, Event2, ExtensionRegistry, FeatureUsageStore, FileDownloadStore, FocusedContactsStore, FocusedContentStore, FocusedPerspectiveStore, FolderSyncProgressStore, IdentityStore, InflatesDraftClientId, InlineStyleTransformer, KeyManager2, MailRulesStore, MailRulesTemplates, MailboxPerspective, Matcher3, Message, MessageBodyProcessor, MessageStore, MessageViewExtension, Model5, ModelSearchIndexer, MutableQuerySubscription, N1CloudAPI, NativeNotifications, NylasAPI, NylasAPIHelpers, NylasAPIRequest, NylasLongConnection, NylasTestUtils, ObservableListDataSource, OnlineStatusStore, PreferencesUIStore, QueryResultSet, QuerySubscription, QuotedHTMLTransformer, React2, ReactDOM, Reflux2, RegExpUtils, ReprocessMailRulesTask, Rx, SanitizeTransformer, SearchIndexScheduler, SearchQueryParser, SearchableComponentStore, SendActionsStore, SendDraftTask, SignatureStore, SoundRegistry, Spellchecker2, SyncbackCategoryTask, SyncbackEventTask, SyncbackMetadataTask, SystemStartService, Task, TaskFactory, TaskQueue, TaskQueueStatusStore, Thread, UndoRedoStore, Utils7, VirtualDOMUtils, WorkspaceStore;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module10 = require("module");
@@ -193490,103 +193491,116 @@ var init_nylas_exports = __esm({
       }
     );
     nylas_exports_default = $n;
-    __safe = (name2) => {
-      try {
-        return $n[name2];
-      } catch (_e) {
-        return void 0;
+    __lazy = (name2) => new Proxy(function lazyBridge() {
+    }, {
+      get(_t, prop) {
+        const real = $n[name2];
+        if (real === void 0 || real === null) return real;
+        const v = real[prop];
+        return typeof v === "function" ? v.bind(real) : v;
+      },
+      apply(_t, _thisArg, args) {
+        return $n[name2](...args);
+      },
+      construct(_t, args, newTarget) {
+        return Reflect.construct($n[name2], args, newTarget);
+      },
+      has(_t, prop) {
+        return prop in ($n[name2] || {});
       }
-    };
-    APIError2 = __safe("APIError");
-    APMWrapper = __safe("APMWrapper");
-    Account2 = __safe("Account");
-    AccountStore2 = __safe("AccountStore");
-    Actions2 = __safe("Actions");
-    Attributes = __safe("Attributes");
-    BadgeStore = __safe("BadgeStore");
-    BaseDraftTask = __safe("BaseDraftTask");
-    Calendar = __safe("Calendar");
-    CalendarDataSource = __safe("CalendarDataSource");
-    Category = __safe("Category");
-    CategoryStore2 = __safe("CategoryStore");
-    ComponentRegistry = __safe("ComponentRegistry");
-    ComposerExtension = __safe("ComposerExtension");
-    Contact2 = __safe("Contact");
-    ContactStore = __safe("ContactStore");
-    ContenteditableExtension = __safe("ContenteditableExtension");
-    CustomContenteditableComponents = __safe("CustomContenteditableComponents");
-    DOMUtils = __safe("DOMUtils");
-    DatabaseStore2 = __safe("DatabaseStore");
-    DateUtils = __safe("DateUtils");
-    DefaultClientHelper = __safe("DefaultClientHelper");
-    DestroyModelTask = __safe("DestroyModelTask");
-    DraftHelpers = __safe("DraftHelpers");
-    DraftStore = __safe("DraftStore");
-    EditorAPI = __safe("EditorAPI");
-    Event2 = __safe("Event");
-    ExtensionRegistry = __safe("ExtensionRegistry");
-    FeatureUsageStore = __safe("FeatureUsageStore");
-    FileDownloadStore = __safe("FileDownloadStore");
-    FocusedContactsStore = __safe("FocusedContactsStore");
-    FocusedContentStore = __safe("FocusedContentStore");
-    FocusedPerspectiveStore = __safe("FocusedPerspectiveStore");
-    FolderSyncProgressStore = __safe("FolderSyncProgressStore");
-    IdentityStore = __safe("IdentityStore");
-    InflatesDraftClientId = __safe("InflatesDraftClientId");
-    InlineStyleTransformer = __safe("InlineStyleTransformer");
-    KeyManager2 = __safe("KeyManager");
-    MailRulesStore = __safe("MailRulesStore");
-    MailRulesTemplates = __safe("MailRulesTemplates");
-    MailboxPerspective = __safe("MailboxPerspective");
-    Matcher3 = __safe("Matcher");
-    Message = __safe("Message");
-    MessageBodyProcessor = __safe("MessageBodyProcessor");
-    MessageStore = __safe("MessageStore");
-    MessageViewExtension = __safe("MessageViewExtension");
-    Model5 = __safe("Model");
-    ModelSearchIndexer = __safe("ModelSearchIndexer");
-    MutableQuerySubscription = __safe("MutableQuerySubscription");
-    N1CloudAPI = __safe("N1CloudAPI");
-    NativeNotifications = __safe("NativeNotifications");
-    NylasAPI = __safe("NylasAPI");
-    NylasAPIHelpers = __safe("NylasAPIHelpers");
-    NylasAPIRequest = __safe("NylasAPIRequest");
-    NylasLongConnection = __safe("NylasLongConnection");
-    NylasTestUtils = __safe("NylasTestUtils");
-    ObservableListDataSource = __safe("ObservableListDataSource");
-    OnlineStatusStore = __safe("OnlineStatusStore");
-    PreferencesUIStore = __safe("PreferencesUIStore");
-    QueryResultSet = __safe("QueryResultSet");
-    QuerySubscription = __safe("QuerySubscription");
-    QuotedHTMLTransformer = __safe("QuotedHTMLTransformer");
-    React2 = __safe("React");
-    ReactDOM = __safe("ReactDOM");
-    Reflux2 = __safe("Reflux");
-    RegExpUtils = __safe("RegExpUtils");
-    ReprocessMailRulesTask = __safe("ReprocessMailRulesTask");
-    Rx = __safe("Rx");
-    SanitizeTransformer = __safe("SanitizeTransformer");
-    SearchIndexScheduler = __safe("SearchIndexScheduler");
-    SearchQueryParser = __safe("SearchQueryParser");
-    SearchableComponentStore = __safe("SearchableComponentStore");
-    SendActionsStore = __safe("SendActionsStore");
-    SendDraftTask = __safe("SendDraftTask");
-    SignatureStore = __safe("SignatureStore");
-    SoundRegistry = __safe("SoundRegistry");
-    Spellchecker2 = __safe("Spellchecker");
-    SyncbackCategoryTask = __safe("SyncbackCategoryTask");
-    SyncbackEventTask = __safe("SyncbackEventTask");
-    SyncbackMetadataTask = __safe("SyncbackMetadataTask");
-    SystemStartService = __safe("SystemStartService");
-    Task = __safe("Task");
-    TaskFactory = __safe("TaskFactory");
-    TaskQueue = __safe("TaskQueue");
-    TaskQueueStatusStore = __safe("TaskQueueStatusStore");
-    Thread = __safe("Thread");
-    UndoRedoStore = __safe("UndoRedoStore");
-    Utils7 = __safe("Utils");
-    VirtualDOMUtils = __safe("VirtualDOMUtils");
-    WorkspaceStore = __safe("WorkspaceStore");
+    });
+    APIError2 = __lazy("APIError");
+    APMWrapper = __lazy("APMWrapper");
+    Account2 = __lazy("Account");
+    AccountStore2 = __lazy("AccountStore");
+    Actions2 = __lazy("Actions");
+    Attributes = __lazy("Attributes");
+    BadgeStore = __lazy("BadgeStore");
+    BaseDraftTask = __lazy("BaseDraftTask");
+    Calendar = __lazy("Calendar");
+    CalendarDataSource = __lazy("CalendarDataSource");
+    Category = __lazy("Category");
+    CategoryStore2 = __lazy("CategoryStore");
+    ComponentRegistry = __lazy("ComponentRegistry");
+    ComposerExtension = __lazy("ComposerExtension");
+    Contact2 = __lazy("Contact");
+    ContactStore = __lazy("ContactStore");
+    ContenteditableExtension = __lazy("ContenteditableExtension");
+    CustomContenteditableComponents = __lazy(
+      "CustomContenteditableComponents"
+    );
+    DOMUtils = __lazy("DOMUtils");
+    DatabaseStore2 = __lazy("DatabaseStore");
+    DateUtils = __lazy("DateUtils");
+    DefaultClientHelper = __lazy("DefaultClientHelper");
+    DestroyModelTask = __lazy("DestroyModelTask");
+    DraftHelpers = __lazy("DraftHelpers");
+    DraftStore = __lazy("DraftStore");
+    EditorAPI = __lazy("EditorAPI");
+    Event2 = __lazy("Event");
+    ExtensionRegistry = __lazy("ExtensionRegistry");
+    FeatureUsageStore = __lazy("FeatureUsageStore");
+    FileDownloadStore = __lazy("FileDownloadStore");
+    FocusedContactsStore = __lazy("FocusedContactsStore");
+    FocusedContentStore = __lazy("FocusedContentStore");
+    FocusedPerspectiveStore = __lazy("FocusedPerspectiveStore");
+    FolderSyncProgressStore = __lazy("FolderSyncProgressStore");
+    IdentityStore = __lazy("IdentityStore");
+    InflatesDraftClientId = __lazy("InflatesDraftClientId");
+    InlineStyleTransformer = __lazy("InlineStyleTransformer");
+    KeyManager2 = __lazy("KeyManager");
+    MailRulesStore = __lazy("MailRulesStore");
+    MailRulesTemplates = __lazy("MailRulesTemplates");
+    MailboxPerspective = __lazy("MailboxPerspective");
+    Matcher3 = __lazy("Matcher");
+    Message = __lazy("Message");
+    MessageBodyProcessor = __lazy("MessageBodyProcessor");
+    MessageStore = __lazy("MessageStore");
+    MessageViewExtension = __lazy("MessageViewExtension");
+    Model5 = __lazy("Model");
+    ModelSearchIndexer = __lazy("ModelSearchIndexer");
+    MutableQuerySubscription = __lazy("MutableQuerySubscription");
+    N1CloudAPI = __lazy("N1CloudAPI");
+    NativeNotifications = __lazy("NativeNotifications");
+    NylasAPI = __lazy("NylasAPI");
+    NylasAPIHelpers = __lazy("NylasAPIHelpers");
+    NylasAPIRequest = __lazy("NylasAPIRequest");
+    NylasLongConnection = __lazy("NylasLongConnection");
+    NylasTestUtils = __lazy("NylasTestUtils");
+    ObservableListDataSource = __lazy("ObservableListDataSource");
+    OnlineStatusStore = __lazy("OnlineStatusStore");
+    PreferencesUIStore = __lazy("PreferencesUIStore");
+    QueryResultSet = __lazy("QueryResultSet");
+    QuerySubscription = __lazy("QuerySubscription");
+    QuotedHTMLTransformer = __lazy("QuotedHTMLTransformer");
+    React2 = __lazy("React");
+    ReactDOM = __lazy("ReactDOM");
+    Reflux2 = __lazy("Reflux");
+    RegExpUtils = __lazy("RegExpUtils");
+    ReprocessMailRulesTask = __lazy("ReprocessMailRulesTask");
+    Rx = __lazy("Rx");
+    SanitizeTransformer = __lazy("SanitizeTransformer");
+    SearchIndexScheduler = __lazy("SearchIndexScheduler");
+    SearchQueryParser = __lazy("SearchQueryParser");
+    SearchableComponentStore = __lazy("SearchableComponentStore");
+    SendActionsStore = __lazy("SendActionsStore");
+    SendDraftTask = __lazy("SendDraftTask");
+    SignatureStore = __lazy("SignatureStore");
+    SoundRegistry = __lazy("SoundRegistry");
+    Spellchecker2 = __lazy("Spellchecker");
+    SyncbackCategoryTask = __lazy("SyncbackCategoryTask");
+    SyncbackEventTask = __lazy("SyncbackEventTask");
+    SyncbackMetadataTask = __lazy("SyncbackMetadataTask");
+    SystemStartService = __lazy("SystemStartService");
+    Task = __lazy("Task");
+    TaskFactory = __lazy("TaskFactory");
+    TaskQueue = __lazy("TaskQueue");
+    TaskQueueStatusStore = __lazy("TaskQueueStatusStore");
+    Thread = __lazy("Thread");
+    UndoRedoStore = __lazy("UndoRedoStore");
+    Utils7 = __lazy("Utils");
+    VirtualDOMUtils = __lazy("VirtualDOMUtils");
+    WorkspaceStore = __lazy("WorkspaceStore");
   }
 });
 
@@ -193974,7 +193988,7 @@ var init_query_subscription = __esm({
               "QuerySubscription::constructor - You cannot listen to count queries."
             );
           }
-          this._query.finalize();
+          this._query.finalize?.();
           if (this._options.initialModels) {
             this._set = new MutableQueryResultSet();
             this._set.addModelsInRange(
@@ -194108,6 +194122,9 @@ var init_query_subscription = __esm({
         return false;
       }
       update({ mustRefetchEntireRange } = {}) {
+        if (!this._query || typeof this._query.range !== "function") {
+          return;
+        }
         this._updateInFlight = true;
         const desiredRange = this._query.range();
         const currentRange = this._set ? this._set.range() : null;
@@ -194306,7 +194323,7 @@ var init_query_subscription_pool = __esm({
         return stack.slice(ii, ii + 4).join("\n");
       }
       _keyForQuery(query) {
-        return query.sql();
+        return query.sql?.() ?? `query:${query.constructor?.name ?? "opaque"}`;
       }
       _setup() {
         DatabaseStore3 = DatabaseStore3 || nodeRequire13("../stores/database-store.js").default;
@@ -194329,9 +194346,12 @@ var require_nylas_observables = __commonJS({
   "src/global/nylas-observables.js"(exports2, module2) {
     var Rx3 = require_rx_lite();
     var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Category3 = (init_category(), __toCommonJS(category_exports)).default;
-    var QuerySubscriptionPool2 = (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)).default;
-    var DatabaseStore4 = (init_database_store(), __toCommonJS(database_store_exports)).default;
+    var Category3 = null;
+    var getCategory = () => Category3 || (Category3 = (init_category(), __toCommonJS(category_exports)).default);
+    var DatabaseStore4 = null;
+    var QuerySubscriptionPool2 = null;
+    var getDatabaseStore = () => DatabaseStore4 || (DatabaseStore4 = (init_database_store(), __toCommonJS(database_store_exports)).default);
+    var getQuerySubscriptionPool = () => QuerySubscriptionPool2 || (QuerySubscriptionPool2 = (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)).default);
     var CategoryOperators = {
       sort() {
         const obs = this.map(
@@ -194356,7 +194376,9 @@ var require_nylas_observables = __commonJS({
     };
     var CategoryObservables = {
       forAllAccounts: () => {
-        const observable = Rx3.Observable.fromQuery(DatabaseStore4.findAll(Category3));
+        const observable = Rx3.Observable.fromQuery(
+          getDatabaseStore().findAll(getCategory())
+        );
         _3.extend(observable, CategoryOperators);
         return observable;
       },
@@ -194364,10 +194386,12 @@ var require_nylas_observables = __commonJS({
         let observable;
         if (account) {
           observable = Rx3.Observable.fromQuery(
-            DatabaseStore4.findAll(Category3).where({ accountId: account.id })
+            getDatabaseStore().findAll(getCategory()).where({ accountId: account.id })
           );
         } else {
-          observable = Rx3.Observable.fromQuery(DatabaseStore4.findAll(Category3));
+          observable = Rx3.Observable.fromQuery(
+            getDatabaseStore().findAll(getCategory())
+          );
         }
         _3.extend(observable, CategoryOperators);
         return observable;
@@ -194440,7 +194464,7 @@ var require_nylas_observables = __commonJS({
     };
     Rx3.Observable.fromQuery = (query) => {
       return Rx3.Observable.create((observer) => {
-        const unsubscribe = QuerySubscriptionPool2.add(query, (result2) => {
+        const unsubscribe = getQuerySubscriptionPool().add(query, (result2) => {
           return observer.onNext(result2);
         });
         return Rx3.Disposable.create(unsubscribe);
@@ -194448,7 +194472,7 @@ var require_nylas_observables = __commonJS({
     };
     Rx3.Observable.fromNamedQuerySubscription = (name2, subscription) => {
       return Rx3.Observable.create((observer) => {
-        const unsubscribe = QuerySubscriptionPool2.addPrivateSubscription(
+        const unsubscribe = getQuerySubscriptionPool().addPrivateSubscription(
           name2,
           subscription,
           (result2) => {
@@ -194469,7 +194493,8 @@ var require_category_store = __commonJS({
     var NylasStore2 = (init_nylas_store(), __toCommonJS(nylas_store_exports));
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
     var Account3 = (init_account(), __toCommonJS(account_exports)).default;
-    var { StandardCategoryNames } = (init_category(), __toCommonJS(category_exports)).default;
+    var _standardCategoryNames = null;
+    var getStandardCategoryNames = () => _standardCategoryNames || (_standardCategoryNames = (init_category(), __toCommonJS(category_exports)).default.StandardCategoryNames);
     var { Categories } = require_nylas_observables();
     var asAccount = (a) => {
       if (!a) {
@@ -194562,7 +194587,7 @@ var require_category_store = __commonJS({
         if (!accountOrId) {
           return null;
         }
-        if (!Array.from(StandardCategoryNames).includes(name2)) {
+        if (!Array.from(getStandardCategoryNames()).includes(name2)) {
           throw new Error(`'${name2}' is not a standard category`);
         }
         return _3.findWhere(this._standardCategories[asAccountId(accountOrId)], {
@@ -194667,7 +194692,7 @@ var require_category_store = __commonJS({
         for (var accountId in this._standardCategories) {
           var _items = this._standardCategories[accountId];
           this._standardCategories[accountId].sort(
-            (a, b) => StandardCategoryNames.indexOf(a.name) - StandardCategoryNames.indexOf(b.name)
+            (a, b) => getStandardCategoryNames().indexOf(a.name) - getStandardCategoryNames().indexOf(b.name)
           );
         }
         return this.trigger();
@@ -218430,6 +218455,7 @@ var require_mailbox_perspective = __commonJS({
     };
     var EmptyMailboxPerspective = class extends MailboxPerspective3 {
       constructor() {
+        super([]);
         this.threads = this.threads.bind(this);
         this.canReceiveThreadsFromAccountIds = this.canReceiveThreadsFromAccountIds.bind(this);
         this.accountIds = [];

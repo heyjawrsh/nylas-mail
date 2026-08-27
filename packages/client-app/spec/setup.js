@@ -10,6 +10,10 @@ globalThis.NylasEnv = {
 		get: vi.fn(() => false),
 		set: vi.fn(),
 		onDidChange: vi.fn(() => ({ dispose: vi.fn() })),
+		observe: vi.fn((_path, cb) => {
+			if (cb) cb(undefined);
+			return { dispose: vi.fn() };
+		}),
 		unobserve: vi.fn(),
 		toggle: vi.fn(),
 	},
@@ -25,6 +29,11 @@ globalThis.NylasEnv = {
 	getConfigDirPath: vi.fn(() => "/tmp/nylas-spec"),
 	getResourcePath: vi.fn(() => packageRoot),
 	packages: { pluginIdFor: vi.fn(() => null) },
+	menu: { add: vi.fn(() => ({ dispose: vi.fn() })), remove: vi.fn() },
+	commands: {
+		add: vi.fn(() => ({ dispose: vi.fn() })),
+		dispatch: vi.fn(),
+	},
 	isWorkWindow: vi.fn(() => false),
 	onBeforeUnload: vi.fn(),
 	on: vi.fn(() => ({ dispose: () => {} })),

@@ -1,99 +1,114 @@
-// Node-resolution bridge for the app-internal module name "nylas-exports".
-// The bundler and vitest use aliases; externalized CJS/ESM consumers
-// resolve through node_modules. Explicit named re-exports keep
-// cjs-module-lexer happy; each read is guarded against the app's
-// intentional model<->store load cycles.
+// Node-resolution bridge for the app-internal "nylas-exports" module.
+// Named exports are LAZY PROXIES: the bridge getters (which load real
+// modules through intentional model<->store cycles) fire on first
+// property/call access — post-cycle — instead of at bridge load.
+// The literal `module.exports.X =` form is what cjs-module-lexer
+// detects so named ESM imports link successfully.
 const bridge = require("/Users/jawrsh/Work/Repositories/nylas_mail/packages/client-app/src/global/nylas-exports.js");
 module.exports = bridge;
-try { module.exports.APIError = bridge.APIError; } catch (_e) { /* mid-cycle */ }
-try { module.exports.APMWrapper = bridge.APMWrapper; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Account = bridge.Account; } catch (_e) { /* mid-cycle */ }
-try { module.exports.AccountStore = bridge.AccountStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Actions = bridge.Actions; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Attributes = bridge.Attributes; } catch (_e) { /* mid-cycle */ }
-try { module.exports.BadgeStore = bridge.BadgeStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.BaseDraftTask = bridge.BaseDraftTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Calendar = bridge.Calendar; } catch (_e) { /* mid-cycle */ }
-try { module.exports.CalendarDataSource = bridge.CalendarDataSource; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Category = bridge.Category; } catch (_e) { /* mid-cycle */ }
-try { module.exports.CategoryStore = bridge.CategoryStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ComponentRegistry = bridge.ComponentRegistry; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ComposerExtension = bridge.ComposerExtension; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Contact = bridge.Contact; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ContactStore = bridge.ContactStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ContenteditableExtension = bridge.ContenteditableExtension; } catch (_e) { /* mid-cycle */ }
-try { module.exports.CustomContenteditableComponents = bridge.CustomContenteditableComponents; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DOMUtils = bridge.DOMUtils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DatabaseObjectRegistry = bridge.DatabaseObjectRegistry; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DatabaseStore = bridge.DatabaseStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DateUtils = bridge.DateUtils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DefaultClientHelper = bridge.DefaultClientHelper; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DestroyModelTask = bridge.DestroyModelTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DraftHelpers = bridge.DraftHelpers; } catch (_e) { /* mid-cycle */ }
-try { module.exports.DraftStore = bridge.DraftStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.EditorAPI = bridge.EditorAPI; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Event = bridge.Event; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ExtensionRegistry = bridge.ExtensionRegistry; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FeatureUsageStore = bridge.FeatureUsageStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FileDownloadStore = bridge.FileDownloadStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FocusedContactsStore = bridge.FocusedContactsStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FocusedContentStore = bridge.FocusedContentStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FocusedPerspectiveStore = bridge.FocusedPerspectiveStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.FolderSyncProgressStore = bridge.FolderSyncProgressStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.IdentityStore = bridge.IdentityStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.InflatesDraftClientId = bridge.InflatesDraftClientId; } catch (_e) { /* mid-cycle */ }
-try { module.exports.InlineStyleTransformer = bridge.InlineStyleTransformer; } catch (_e) { /* mid-cycle */ }
-try { module.exports.KeyManager = bridge.KeyManager; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MailRulesStore = bridge.MailRulesStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MailRulesTemplates = bridge.MailRulesTemplates; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MailboxPerspective = bridge.MailboxPerspective; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Matcher = bridge.Matcher; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Message = bridge.Message; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MessageBodyProcessor = bridge.MessageBodyProcessor; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MessageStore = bridge.MessageStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MessageViewExtension = bridge.MessageViewExtension; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Model = bridge.Model; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ModelSearchIndexer = bridge.ModelSearchIndexer; } catch (_e) { /* mid-cycle */ }
-try { module.exports.MutableQuerySubscription = bridge.MutableQuerySubscription; } catch (_e) { /* mid-cycle */ }
-try { module.exports.N1CloudAPI = bridge.N1CloudAPI; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NativeNotifications = bridge.NativeNotifications; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NylasAPI = bridge.NylasAPI; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NylasAPIHelpers = bridge.NylasAPIHelpers; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NylasAPIRequest = bridge.NylasAPIRequest; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NylasLongConnection = bridge.NylasLongConnection; } catch (_e) { /* mid-cycle */ }
-try { module.exports.NylasTestUtils = bridge.NylasTestUtils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ObservableListDataSource = bridge.ObservableListDataSource; } catch (_e) { /* mid-cycle */ }
-try { module.exports.OnlineStatusStore = bridge.OnlineStatusStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.PreferencesUIStore = bridge.PreferencesUIStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.QueryResultSet = bridge.QueryResultSet; } catch (_e) { /* mid-cycle */ }
-try { module.exports.QuerySubscription = bridge.QuerySubscription; } catch (_e) { /* mid-cycle */ }
-try { module.exports.QuotedHTMLTransformer = bridge.QuotedHTMLTransformer; } catch (_e) { /* mid-cycle */ }
-try { module.exports.React = bridge.React; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ReactDOM = bridge.ReactDOM; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Reflux = bridge.Reflux; } catch (_e) { /* mid-cycle */ }
-try { module.exports.RegExpUtils = bridge.RegExpUtils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.ReprocessMailRulesTask = bridge.ReprocessMailRulesTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Rx = bridge.Rx; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SanitizeTransformer = bridge.SanitizeTransformer; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SearchIndexScheduler = bridge.SearchIndexScheduler; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SearchQueryParser = bridge.SearchQueryParser; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SearchableComponentStore = bridge.SearchableComponentStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SendActionsStore = bridge.SendActionsStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SendDraftTask = bridge.SendDraftTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SignatureStore = bridge.SignatureStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SoundRegistry = bridge.SoundRegistry; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Spellchecker = bridge.Spellchecker; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SyncbackCategoryTask = bridge.SyncbackCategoryTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SyncbackEventTask = bridge.SyncbackEventTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SyncbackMetadataTask = bridge.SyncbackMetadataTask; } catch (_e) { /* mid-cycle */ }
-try { module.exports.SystemStartService = bridge.SystemStartService; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Task = bridge.Task; } catch (_e) { /* mid-cycle */ }
-try { module.exports.TaskFactory = bridge.TaskFactory; } catch (_e) { /* mid-cycle */ }
-try { module.exports.TaskQueue = bridge.TaskQueue; } catch (_e) { /* mid-cycle */ }
-try { module.exports.TaskQueueStatusStore = bridge.TaskQueueStatusStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.TaskRegistry = bridge.TaskRegistry; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Thread = bridge.Thread; } catch (_e) { /* mid-cycle */ }
-try { module.exports.UndoRedoStore = bridge.UndoRedoStore; } catch (_e) { /* mid-cycle */ }
-try { module.exports.Utils = bridge.Utils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.VirtualDOMUtils = bridge.VirtualDOMUtils; } catch (_e) { /* mid-cycle */ }
-try { module.exports.WorkspaceStore = bridge.WorkspaceStore; } catch (_e) { /* mid-cycle */ }
+
+const lazyProxy = () =>
+	new Proxy(function () {}, {
+		get(_t, prop, receiver) {
+			const real = Reflect.get(bridge, prop, receiver);
+			if (real === undefined || real === null) return real;
+			const v = real[prop];
+			return typeof v === "function" ? v.bind(real) : v;
+		},
+		apply(_t, _thisArg, args) {
+			return bridge(...args);
+		},
+	});
+
+module.exports.APIError = lazyProxy();
+module.exports.APMWrapper = lazyProxy();
+module.exports.Account = lazyProxy();
+module.exports.AccountStore = lazyProxy();
+module.exports.Actions = lazyProxy();
+module.exports.Attributes = lazyProxy();
+module.exports.BadgeStore = lazyProxy();
+module.exports.BaseDraftTask = lazyProxy();
+module.exports.Calendar = lazyProxy();
+module.exports.CalendarDataSource = lazyProxy();
+module.exports.Category = lazyProxy();
+module.exports.CategoryStore = lazyProxy();
+module.exports.ComponentRegistry = lazyProxy();
+module.exports.ComposerExtension = lazyProxy();
+module.exports.Contact = lazyProxy();
+module.exports.ContactStore = lazyProxy();
+module.exports.ContenteditableExtension = lazyProxy();
+module.exports.CustomContenteditableComponents = lazyProxy();
+module.exports.DOMUtils = lazyProxy();
+module.exports.DatabaseObjectRegistry = lazyProxy();
+module.exports.DatabaseStore = lazyProxy();
+module.exports.DateUtils = lazyProxy();
+module.exports.DefaultClientHelper = lazyProxy();
+module.exports.DestroyModelTask = lazyProxy();
+module.exports.DraftHelpers = lazyProxy();
+module.exports.DraftStore = lazyProxy();
+module.exports.EditorAPI = lazyProxy();
+module.exports.Event = lazyProxy();
+module.exports.ExtensionRegistry = lazyProxy();
+module.exports.FeatureUsageStore = lazyProxy();
+module.exports.FileDownloadStore = lazyProxy();
+module.exports.FocusedContactsStore = lazyProxy();
+module.exports.FocusedContentStore = lazyProxy();
+module.exports.FocusedPerspectiveStore = lazyProxy();
+module.exports.FolderSyncProgressStore = lazyProxy();
+module.exports.IdentityStore = lazyProxy();
+module.exports.InflatesDraftClientId = lazyProxy();
+module.exports.InlineStyleTransformer = lazyProxy();
+module.exports.KeyManager = lazyProxy();
+module.exports.MailRulesStore = lazyProxy();
+module.exports.MailRulesTemplates = lazyProxy();
+module.exports.MailboxPerspective = lazyProxy();
+module.exports.Matcher = lazyProxy();
+module.exports.Message = lazyProxy();
+module.exports.MessageBodyProcessor = lazyProxy();
+module.exports.MessageStore = lazyProxy();
+module.exports.MessageViewExtension = lazyProxy();
+module.exports.Model = lazyProxy();
+module.exports.ModelSearchIndexer = lazyProxy();
+module.exports.MutableQuerySubscription = lazyProxy();
+module.exports.N1CloudAPI = lazyProxy();
+module.exports.NativeNotifications = lazyProxy();
+module.exports.NylasAPI = lazyProxy();
+module.exports.NylasAPIHelpers = lazyProxy();
+module.exports.NylasAPIRequest = lazyProxy();
+module.exports.NylasLongConnection = lazyProxy();
+module.exports.NylasTestUtils = lazyProxy();
+module.exports.ObservableListDataSource = lazyProxy();
+module.exports.OnlineStatusStore = lazyProxy();
+module.exports.PreferencesUIStore = lazyProxy();
+module.exports.QueryResultSet = lazyProxy();
+module.exports.QuerySubscription = lazyProxy();
+module.exports.QuotedHTMLTransformer = lazyProxy();
+module.exports.React = lazyProxy();
+module.exports.ReactDOM = lazyProxy();
+module.exports.Reflux = lazyProxy();
+module.exports.RegExpUtils = lazyProxy();
+module.exports.ReprocessMailRulesTask = lazyProxy();
+module.exports.Rx = lazyProxy();
+module.exports.SanitizeTransformer = lazyProxy();
+module.exports.SearchIndexScheduler = lazyProxy();
+module.exports.SearchQueryParser = lazyProxy();
+module.exports.SearchableComponentStore = lazyProxy();
+module.exports.SendActionsStore = lazyProxy();
+module.exports.SendDraftTask = lazyProxy();
+module.exports.SignatureStore = lazyProxy();
+module.exports.SoundRegistry = lazyProxy();
+module.exports.Spellchecker = lazyProxy();
+module.exports.SyncbackCategoryTask = lazyProxy();
+module.exports.SyncbackEventTask = lazyProxy();
+module.exports.SyncbackMetadataTask = lazyProxy();
+module.exports.SystemStartService = lazyProxy();
+module.exports.Task = lazyProxy();
+module.exports.TaskFactory = lazyProxy();
+module.exports.TaskQueue = lazyProxy();
+module.exports.TaskQueueStatusStore = lazyProxy();
+module.exports.TaskRegistry = lazyProxy();
+module.exports.Thread = lazyProxy();
+module.exports.UndoRedoStore = lazyProxy();
+module.exports.Utils = lazyProxy();
+module.exports.VirtualDOMUtils = lazyProxy();
+module.exports.WorkspaceStore = lazyProxy();
