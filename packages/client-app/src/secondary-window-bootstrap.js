@@ -26,13 +26,6 @@ global.Promise = nodeRequire("bluebird");
 const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
-// biome-ignore lint/correctness/noUnusedImports: createRequire IS used in the file:file branch below
-import { createRequire } from "node:module";
-
-const nodeRequire =
-	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
-		? createRequire(import.meta.url)
-		: require;
 import "./bootstrap-assign-env.js";
 import "./window";
 

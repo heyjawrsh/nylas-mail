@@ -1,0 +1,327 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+
+import BoldedSearchResult from "../src/components/bolded-search-result.js";
+import CodeSnippet from "../src/components/code-snippet.js";
+import DisclosureTriangle from "../src/components/disclosure-triangle.js";
+import DropZone from "../src/components/drop-zone.js";
+import DropdownMenu from "../src/components/dropdown-menu.js";
+import EditableList from "../src/components/editable-list.js";
+import Flexbox from "../src/components/flexbox.js";
+import FluxContainer from "../src/components/flux-container.js";
+
+afterEach(cleanup);
+
+globalThis.NylasEnv.commands = {
+	add: vi.fn(() => ({ dispose: vi.fn() })),
+};
+
+describe("BoldedSearchResult", () => {
+	it("renders an unadorned value when the query is blank", () => {
+		const { container } = render(<BoldedSearchResult query="  " value="Team inbox" />);
+		expect(screen.getByText("Team inbox")).toBeDefined();
+		expect(container.querySelector("strong")).toBeNull();
+	});
+
+	it("bolds a case-insensitive search match", () => {
+		const { container } = render(
+			<BoldedSearchResult query="REPORT" value="Quarterly report" />,
+		);
+		expect(container.querySelector("strong").textContent).toBe("report");
+	});
+
+	it("preserves punctuation before a matching word", () => {
+		const { container } = render(
+			<BoldedSearchResult query="beta" value="Alpha, beta release" />,
+		);
+		expect(container.querySelector(".search-result").textContent).toBe(
+			"Alpha, beta release",
+		);
+		expect(container.querySelector("strong").textContent).toBe("beta");
+	});
+});
+
+describe("CodeSnippet", () => {
+	it("renders its introduction and code", () => {
+		render(<CodeSnippet intro="Run this command" code="npm test" />);
+		expect(screen.getByText("Run this command")).toBeDefined();
+		expect(screen.getByDisplayValue("npm test")).toBeDefined();
+	});
+
+	it("keeps the code textarea disabled", () => {
+		render(<CodeSnippet intro="Command" code="pnpm vitest" />);
+		expect(screen.getByDisplayValue("pnpm vitest").disabled).toBe(true);
+	});
+
+	it("applies a caller-provided class", () => {
+		const { container } = render(
+			<CodeSnippet className="terminal-example" intro="Command" code="pwd" />,
+		);
+		expect(container.firstChild.className).toBe("terminal-example");
+	});
+});
+
+describe("DisclosureTriangle", () => {
+	it("renders the triangle and its inner element", () => {
+		const { container } = render(<DisclosureTriangle />);
+		expect(container.querySelectorAll(".disclosure-triangle > div")).toHaveLength(1);
+	});
+
+	it("reflects visible and collapsed state", () => {
+		const { container } = render(<DisclosureTriangle visible collapsed />);
+		expect(container.firstChild.className).toContain("visible");
+		expect(container.firstChild.className).toContain("collapsed");
+	});
+
+	it("notifies the caller when clicked", () => {
+		const onCollapseToggled = vi.fn();
+		const { container } = render(
+			<DisclosureTriangle onCollapseToggled={onCollapseToggled} />,
+		);
+		fireEvent.click(container.firstChild);
+		expect(onCollapseToggled).toHaveBeenCalledOnce();
+	});
+});
+
+describe("DropZone", () => {
+	it("passes ordinary DOM props through and renders children", () => {
+		render(
+			<DropZone shouldAcceptDrop={() => true} onDrop={() => {}} data-testid="drop-zone">
+				Attach files
+			</DropZone>,
+		);
+		expect(screen.getByTestId("drop-zone").textContent).toBe("Attach files");
+	});
+
+	it("forwards drag-over events", () => {
+		const onDragOver = vi.fn();
+		render(
+			<DropZone
+				shouldAcceptDrop={() => true}
+				onDrop={() => {}}
+				onDragOver={onDragOver}
+				data-testid="drop-zone"
+			/>,
+		);
+		fireEvent.dragOver(screen.getByTestId("drop-zone"));
+		expect(onDragOver).toHaveBeenCalledOnce();
+	});
+
+	it("balances nested accepted drag entries before leaving", () => {
+		const onDragStateChange = vi.fn();
+		render(
+			<DropZone
+				shouldAcceptDrop={() => true}
+				onDrop={() => {}}
+				onDragStateChange={onDragStateChange}
+				data-testid="drop-zone"
+			/>,
+		);
+		const zone = screen.getByTestId("drop-zone");
+		fireEvent.dragEnter(zone);
+		fireEvent.dragEnter(zone);
+		fireEvent.dragLeave(zone);
+		expect(onDragStateChange).toHaveBeenCalledTimes(1);
+		fireEvent.dragLeave(zone);
+		expect(onDragStateChange).toHaveBeenLastCalledWith({ isDropping: false });
+	});
+
+	it("ignores a rejected drop", () => {
+		const onDrop = vi.fn();
+		render(
+			<DropZone
+				shouldAcceptDrop={() => false}
+				onDrop={onDrop}
+				data-testid="drop-zone"
+			/>,
+		);
+		fireEvent.drop(screen.getByTestId("drop-zone"));
+		expect(onDrop).not.toHaveBeenCalled();
+	});
+
+	it("resets drag state and handles an accepted drop", () => {
+		const onDrop = vi.fn();
+		const onDragStateChange = vi.fn();
+		render(
+			<DropZone
+				shouldAcceptDrop={() => true}
+				onDrop={onDrop}
+				onDragStateChange={onDragStateChange}
+				data-testid="drop-zone"
+			/>,
+		);
+		fireEvent.drop(screen.getByTestId("drop-zone"));
+		expect(onDragStateChange).toHaveBeenCalledWith({ isDropping: false });
+		expect(onDrop).toHaveBeenCalledOnce();
+	});
+});
+
+describe("DropdownMenu", () => {
+	const itemContent = (item) => <span>{item.label}</span>;
+
+	it("renders the initial selection", () => {
+		render(
+			<DropdownMenu
+				intitialSelectionItem={{ label: "Inbox" }}
+				itemContent={itemContent}
+				items={[]}
+			/>,
+		);
+		expect(screen.getByText("Inbox")).toBeDefined();
+	});
+
+	it("opens the menu when its selection is clicked", () => {
+		const { container } = render(
+			<DropdownMenu
+				intitialSelectionItem={{ label: "Inbox" }}
+				itemContent={itemContent}
+				items={[{ label: "Archive" }]}
+			/>,
+		);
+		fireEvent.click(screen.getByText("Inbox"));
+		expect(container.querySelector(".menu")).not.toBeNull();
+	});
+
+	it("updates when the initial-selection prop changes", () => {
+		const { rerender } = render(
+			<DropdownMenu
+				intitialSelectionItem={{ label: "Inbox" }}
+				itemContent={itemContent}
+				items={[]}
+			/>,
+		);
+		rerender(
+			<DropdownMenu
+				intitialSelectionItem={{ label: "Sent" }}
+				itemContent={itemContent}
+				items={[]}
+			/>,
+		);
+		expect(screen.getByText("Sent")).toBeDefined();
+	});
+});
+
+describe("EditableList", () => {
+	it("renders realistic list items and controls", () => {
+		const { container } = render(<EditableList items={["Inbox", "Archive"]} />);
+		expect(screen.getByText("Inbox")).toBeDefined();
+		expect(screen.getByText("Archive")).toBeDefined();
+		expect(container.querySelectorAll(".list-item")).toHaveLength(2);
+		expect(screen.getByText("+")).toBeDefined();
+	});
+
+	it("reports a clicked item and its index", () => {
+		const onSelectItem = vi.fn();
+		render(
+			<EditableList items={["Inbox", "Archive"]} onSelectItem={onSelectItem} />,
+		);
+		fireEvent.click(screen.getByText("Archive"));
+		expect(onSelectItem).toHaveBeenCalledWith("Archive", 1);
+	});
+
+	it("uses the external selected item to style a row", () => {
+		const { container } = render(
+			<EditableList items={["Inbox", "Archive"]} selected="Inbox" onSelectItem={() => {}} />,
+		);
+		expect(container.querySelector('[data-item-idx="0"]').className).toContain("selected");
+	});
+
+	it("delegates creation when an onCreateItem callback is supplied", () => {
+		const onCreateItem = vi.fn();
+		render(<EditableList items={[]} onCreateItem={onCreateItem} />);
+		fireEvent.click(screen.getByText("+"));
+		expect(onCreateItem).toHaveBeenCalledOnce();
+	});
+
+	it("deletes the selected item", () => {
+		const onDeleteItem = vi.fn();
+		render(
+			<EditableList
+				items={["Inbox", "Archive"]}
+				selected="Archive"
+				onSelectItem={() => {}}
+				onDeleteItem={onDeleteItem}
+			/>,
+		);
+		fireEvent.click(screen.getByText("—"));
+		expect(onDeleteItem).toHaveBeenCalledWith("Archive", 1);
+	});
+});
+
+describe("Flexbox", () => {
+	it("renders children in a flex container", () => {
+		render(<Flexbox data-testid="flex">Message list</Flexbox>);
+		expect(screen.getByText("Message list")).toBeDefined();
+		expect(screen.getByTestId("flex").style.display).toBe("flex");
+	});
+
+	it("combines layout props with custom styles", () => {
+		render(
+			<Flexbox
+				data-testid="flex"
+				direction="column"
+				height="20rem"
+				style={{ gap: "6px" }}
+			/>,
+		);
+		const flex = screen.getByTestId("flex");
+		expect(flex.style.flexDirection).toBe("column");
+		expect(flex.style.height).toBe("20rem");
+		expect(flex.style.gap).toBe("6px");
+	});
+
+	it("supports inline flex", () => {
+		render(<Flexbox inline data-testid="flex" />);
+		expect(screen.getByTestId("flex").style.display).toBe("inline-flex");
+	});
+});
+
+describe("FluxContainer", () => {
+	it("injects store state and ordinary props into its child", () => {
+		const store = { listen: vi.fn(() => vi.fn()) };
+		render(
+			<FluxContainer
+				stores={[store]}
+				getStateFromStores={() => ({ count: 4 })}
+				label="Drafts"
+			>
+				<div data-testid="flux-child" />
+			</FluxContainer>,
+		);
+		const child = screen.getByTestId("flux-child");
+		expect(child.getAttribute("count")).toBe("4");
+		expect(child.getAttribute("label")).toBe("Drafts");
+	});
+
+	it("subscribes on mount and disposes on unmount", () => {
+		const unlisten = vi.fn();
+		const store = { listen: vi.fn(() => unlisten) };
+		const view = render(
+			<FluxContainer stores={[store]} getStateFromStores={() => ({})}>
+				<span>Connected</span>
+			</FluxContainer>,
+		);
+		expect(store.listen).toHaveBeenCalledOnce();
+		view.unmount();
+		expect(unlisten).toHaveBeenCalledOnce();
+	});
+
+	it("refreshes child props when a store emits", () => {
+		let listener;
+		let count = 1;
+		const store = {
+			listen: vi.fn((callback) => {
+				listener = callback;
+				return vi.fn();
+			}),
+		};
+		render(
+			<FluxContainer stores={[store]} getStateFromStores={() => ({ count })}>
+				<span data-testid="flux-value" />
+			</FluxContainer>,
+		);
+		count = 2;
+		act(() => listener());
+		expect(screen.getByTestId("flux-value").getAttribute("count")).toBe("2");
+	});
+});
