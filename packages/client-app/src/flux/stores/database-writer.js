@@ -1,7 +1,15 @@
 /* eslint global-require:0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import Model from "../models/model.js";
 import ModelQuery from "../models/query.js";
-import { tableNameForJoin, registeredObjectReplacer } from "../models/utils.js";
+import UtilsNS from "../models/utils.js";
+const { tableNameForJoin, registeredObjectReplacer } =
+	UtilsNS.default || UtilsNS;
 
 import Attributes from "../attributes.js";
 
@@ -77,7 +85,7 @@ export default class DatabaseWriter {
 	// Mutating the Database
 
 	persistJSONBlob(id, json) {
-		const JSONBlob = require("../models/json-blob").default;
+		const JSONBlob = nodeRequire("../models/json-blob.js").default;
 
 		return this.persistModel(new JSONBlob({ id, json }));
 	}

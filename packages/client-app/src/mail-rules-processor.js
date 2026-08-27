@@ -4,23 +4,26 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
+import { createRequire } from "node:module";
 
-const Task = require("./flux/tasks/task").default;
-const Actions = require("./flux/actions").default;
-const Category = require("./flux/models/category").default;
-const Thread = require("./flux/models/thread").default;
-const _Message = require("./flux/models/message").default;
-const AccountStore = require("./flux/stores/account-store").default;
-const DatabaseStore = require("./flux/stores/database-store").default;
-const TaskQueueStatusStore = require("./flux/stores/task-queue-status-store");
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
+import _ from "underscore";
 
-const { ConditionMode, ConditionTemplates } = require("./mail-rules-templates");
+import Task from "./flux/tasks/task.js";
+import Actions from "./flux/actions.js";
+import AccountStore from "./flux/stores/account-store.js";
+import DatabaseStore from "./flux/stores/database-store.js";
+import TaskQueueStatusStore from "./flux/stores/task-queue-status-store.js";
 
-const ChangeUnreadTask = require("./flux/tasks/change-unread-task").default;
-const ChangeFolderTask = require("./flux/tasks/change-folder-task").default;
-const ChangeStarredTask = require("./flux/tasks/change-starred-task").default;
-const ChangeLabelsTask = require("./flux/tasks/change-labels-task").default;
+import { ConditionMode, ConditionTemplates } from "./mail-rules-templates.js";
+
+import ChangeUnreadTask from "./flux/tasks/change-unread-task.js";
+import ChangeFolderTask from "./flux/tasks/change-folder-task.js";
+import ChangeStarredTask from "./flux/tasks/change-starred-task.js";
+import ChangeLabelsTask from "./flux/tasks/change-labels-task.js";
 let MailRulesStore = null;
 
 /*
@@ -164,7 +167,7 @@ class MailRulesProcessor {
 
 	processMessages(messages) {
 		if (MailRulesStore == null) {
-			MailRulesStore = require("./flux/stores/mail-rules-store");
+			MailRulesStore = nodeRequire("./flux/stores/mail-rules-store.js");
 		}
 		if (!(messages.length > 0)) {
 			return Promise.resolve();

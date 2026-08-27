@@ -201,10 +201,12 @@ export default class NylasEnvConstructor {
 		this.setupErrorLogger();
 
 		this.loadTime = null;
-		const KeymapManager = require("./keymap-manager").default;
-		const CommandRegistry = require("./registries/command-registry").default;
-		const ActionBridge = require("./flux/action-bridge").default;
-		const MenuManager = require("./menu-manager").default;
+		const KeymapManager = nodeRequire("./keymap-manager.js").default;
+		const CommandRegistry = nodeRequire(
+			"./registries/command-registry.js",
+		).default;
+		const ActionBridge = nodeRequire("./flux/action-bridge.js").default;
+		const MenuManager = nodeRequire("./menu-manager.js").default;
 
 		const {
 			devMode,
@@ -276,7 +278,7 @@ export default class NylasEnvConstructor {
 		}
 
 		// initialize spell checking
-		this.spellchecker = require("./spellchecker").default;
+		this.spellchecker = nodeRequire("./spellchecker.js").default;
 
 		this.packages.onDidActivateInitialPackages(() => this.watchThemes());
 		this.windowEventHandler = new WindowEventHandler();
@@ -1060,7 +1062,7 @@ export default class NylasEnvConstructor {
 	// We extend nylas observables with our own methods. This happens on
 	// require of nylas-observables
 	extendRxObservables() {
-		return require("nylas-observables");
+		return nodeRequire("nylas-observables");
 	}
 
 	// Launches a new window via the browser/WindowLauncher.
@@ -1197,7 +1199,7 @@ export default class NylasEnvConstructor {
 	loadConfig() {
 		this.config.setSchema(null, {
 			type: "object",
-			properties: _.clone(require("./config-schema").default),
+			properties: _.clone(nodeRequire("./config-schema.js").default),
 		});
 		return this.config.load();
 	}

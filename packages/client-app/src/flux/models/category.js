@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import { FolderSyncProgressStore } from "nylas-exports";
 import Model from "./model.js";
 import Attributes from "../attributes.js";
@@ -120,7 +126,8 @@ export default class Category extends Model {
 	}
 
 	displayType() {
-		AccountStore = AccountStore || require("../stores/account-store").default;
+		AccountStore =
+			AccountStore || nodeRequire("../stores/account-store.js").default;
 		if (AccountStore.accountForId(this.accountId).usesLabels()) {
 			return "label";
 		}

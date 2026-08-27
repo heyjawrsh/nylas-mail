@@ -1,9 +1,15 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import { remote } from "@electron/remote";
 
 // Optional native secret storage; the renderer bundle runs against a stub.
 let keytar = null;
 try {
-	keytar = require("keytar");
+	keytar = nodeRequire("keytar");
 } catch (_e) {
 	keytar = {
 		getPassword: async () => null,

@@ -1,3 +1,9 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";

@@ -1,3 +1,9 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import _ from "underscore";
 import { ExponentialBackoffScheduler } from "isomorphic-core";
 import N1CloudAPI from "../n1-cloud-api.js";
@@ -161,7 +167,7 @@ class DeltaStreamingConnection {
 			);
 			NylasEnv.reportError(error);
 			this._setCursor(0);
-			const app = require("@electron/remote").getGlobal("application"); // eslint-disable-line
+			const app = nodeRequire("@electron/remote").getGlobal("application"); // eslint-disable-line
 			app.rebuildDatabase({ showErrorDialog: false });
 			return;
 		}

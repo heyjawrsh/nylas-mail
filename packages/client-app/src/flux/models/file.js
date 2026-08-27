@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import path from "node:path";
 import Model from "./model.js";
 import Attributes from "../attributes.js";
@@ -70,7 +76,7 @@ export default class File extends Model {
 	}
 
 	safeDisplayName() {
-		RegExpUtils = RegExpUtils || require("../../regexp-utils");
+		RegExpUtils = RegExpUtils || nodeRequire("../../regexp-utils.js");
 		return this.displayName().replace(
 			RegExpUtils.illegalPathCharactersRegexp(),
 			"-",

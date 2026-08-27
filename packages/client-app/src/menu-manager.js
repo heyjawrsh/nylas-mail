@@ -1,5 +1,11 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import path from "node:path";
 import fs from "fs-plus";
 import { ipcRenderer } from "electron";
@@ -90,7 +96,7 @@ export default class MenuManager {
 		const platformMenuPath = fs.resolve(menusDirPath, process.platform, [
 			"json",
 		]);
-		const { menu } = require(platformMenuPath);
+		const { menu } = nodeRequire(platformMenuPath);
 		return this.add(menu);
 	}
 

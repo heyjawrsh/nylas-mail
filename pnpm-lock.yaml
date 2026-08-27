@@ -140,6 +140,9 @@ importers:
       property-accessors:
         specifier: ^1.1.3
         version: 1.1.3
+      q:
+        specifier: ^1.5.1
+        version: 1.5.1
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -3035,6 +3038,14 @@ packages:
   purepack@1.0.6:
     resolution: {integrity: sha512-L/e3qq/3m/TrYtINo2aBB98oz6w8VHGyFy+arSKwPMZDUNNw2OaQxYnZO6UIZZw2OnRl2qkxGmuSOEfsuHXJdA==}
     engines: {node: '>=0.10.0'}
+
+  q@1.5.1:
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
+    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.15.3:
     resolution: {integrity: sha512-O9gl3zCl5h5blw1KGUzQKhA5oUXSl8rwUIM5o0S3nCXMliSvy5Dzx7/DJcI+SwgICv+IneSZwhBh1oSyEHA71A==}
@@ -6613,6 +6624,8 @@ snapshots:
   punycode@2.3.1: {}
 
   purepack@1.0.6: {}
+
+  q@1.5.1: {}
 
   qs@6.15.3:
     dependencies:

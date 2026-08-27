@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import path from "node:path";
 import createDebug from "debug";
 import childProcess from "node:child_process";
@@ -642,8 +648,12 @@ class DatabaseStore extends NylasStore {
 		});
 	}
 
-	findJSONBlob(id) {
-		JSONBlob = JSONBlob || require("../models/json-blob").default;
+	async findJSONBlob(id) {
+		JSONBlob =
+			JSONBlob ||
+			(typeof require !== "undefined"
+				? require("../models/json-blob.js").default
+				: (await import("../models/json-blob.js")).default);
 		return new JSONBlob.Query(JSONBlob, this).where({ id }).one();
 	}
 

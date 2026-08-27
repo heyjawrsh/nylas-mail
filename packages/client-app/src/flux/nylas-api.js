@@ -1,4 +1,5 @@
-import { AccountStore } from "nylas-exports";
+import NylasExports from "nylas-exports";
+const { AccountStore } = NylasExports;
 import NylasLongConnection from "./nylas-long-connection.js";
 
 // A 0 code is when an error returns without a status code, like "ESOCKETTIMEDOUT"

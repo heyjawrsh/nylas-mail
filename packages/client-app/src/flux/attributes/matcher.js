@@ -1,4 +1,5 @@
-import { tableNameForJoin } from "../models/utils.js";
+import UtilsNS from "../models/utils.js";
+const { tableNameForJoin } = UtilsNS.default || UtilsNS;
 import LocalSearchQueryBackend from "../../services/search/search-query-backend-local.js";
 
 // https://www.sqlite.org/faq.html#q14

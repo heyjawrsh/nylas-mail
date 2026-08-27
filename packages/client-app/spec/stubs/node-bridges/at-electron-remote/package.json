@@ -1,0 +1,1 @@
+{"name": "@electron/remote", "version": "0.0.0-local", "main": "index.js", "exports": {"./main": "./index.js", "./renderer": "./index.js", ".": "./index.js"}}

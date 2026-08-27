@@ -1,10 +1,16 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import React from "react";
 import PropTypes from "prop-types";
 import { ipcRenderer, shell } from "electron";
 import { Actions } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 
-const clipboard = require("electron").clipboard;
+const clipboard = nodeRequire("electron").clipboard;
 
 export default class OAuthSignInPage extends React.Component {
 	static displayName = "OAuthSignInPage";

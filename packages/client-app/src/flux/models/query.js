@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import Attributes from "../attributes.js";
 import QueryRange from "./query-range.js";
 import Utils from "./utils.js";
@@ -44,7 +50,8 @@ export default class ModelQuery {
 	//
 	constructor(klass, database) {
 		this._klass = klass;
-		this._database = database || require("../stores/database-store.js").default;
+		this._database =
+			database || nodeRequire("../stores/database-store.js").default;
 		this._matchers = [];
 		this._orders = [];
 		this._background = false;

@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import { ipcRenderer } from "electron";
 import crypto from "node:crypto";
 import _ from "underscore";
@@ -54,7 +60,9 @@ class InlineStyleTransformer {
 		}
 
 		if (typeof userAgentDefault === "undefined" || userAgentDefault === null) {
-			userAgentDefault = require("../chrome-user-agent-stylesheet-string");
+			userAgentDefault = nodeRequire(
+				"../chrome-user-agent-stylesheet-string.js",
+			);
 		}
 		return `${body.slice(0, i)}<style>${userAgentDefault}</style>${body.slice(i)}`;
 	}

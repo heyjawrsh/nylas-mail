@@ -1,4 +1,10 @@
 /* eslint global-require:0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import Attributes from "../attributes.js";
 import ModelWithMetadata from "./model-with-metadata.js";
 
@@ -107,7 +113,7 @@ export default class Account extends ModelWithMetadata {
 
 	// Returns a {Contact} model that represents the current user.
 	me() {
-		Contact = Contact || require("./contact").default;
+		Contact = Contact || nodeRequire("./contact.js").default;
 
 		return new Contact({
 			accountId: this.id,
@@ -117,7 +123,7 @@ export default class Account extends ModelWithMetadata {
 	}
 
 	meUsingAlias(alias) {
-		Contact = Contact || require("./contact").default;
+		Contact = Contact || nodeRequire("./contact.js").default;
 
 		if (!alias) {
 			return this.me();
@@ -174,19 +180,19 @@ export default class Account extends ModelWithMetadata {
 	}
 
 	canArchiveThreads() {
-		CategoryStore = CategoryStore || require("../stores/category-store");
+		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
 
 		return CategoryStore.getArchiveCategory(this);
 	}
 
 	canTrashThreads() {
-		CategoryStore = CategoryStore || require("../stores/category-store");
+		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
 
 		return CategoryStore.getTrashCategory(this);
 	}
 
 	defaultFinishedCategory() {
-		CategoryStore = CategoryStore || require("../stores/category-store");
+		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
 
 		const preferDelete = NylasEnv.config.get("core.reading.backspaceDelete");
 		const archiveCategory = CategoryStore.getArchiveCategory(this);

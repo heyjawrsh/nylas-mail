@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import _str from "underscore.string";
 import Model from "./model.js";
 import Attributes from "../attributes.js";
@@ -414,7 +420,7 @@ export default class Contact extends Model {
 		if (includeAccountLabel) {
 			FocusedPerspectiveStore =
 				FocusedPerspectiveStore ||
-				require("../stores/focused-perspective-store").default;
+				nodeRequire("../stores/focused-perspective-store.js").default;
 			if (
 				account &&
 				(FocusedPerspectiveStore.current().accountIds.length > 1 ||

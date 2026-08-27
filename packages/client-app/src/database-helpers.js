@@ -1,3 +1,9 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import path from "node:path";
 import Sqlite3 from "better-sqlite3";
 
@@ -5,7 +11,7 @@ let app;
 let errorLogger;
 
 if (process.type === "renderer") {
-	const remote = require("@electron/remote");
+	const remote = nodeRequire("@electron/remote");
 	app = remote.getGlobal("application");
 	// NylasEnv is assigned by the window bootstrap after module init.
 	errorLogger = new Proxy(

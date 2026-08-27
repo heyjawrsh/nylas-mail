@@ -1,3 +1,9 @@
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import fs from "node:fs";
 import path from "node:path";
 
@@ -16,7 +22,7 @@ export default function preventLegacyN1Migration(configDirPath) {
 		if (!fs.existsSync(legacyConfigPath)) {
 			return;
 		}
-		const legacyConfig = require(legacyConfigPath) || {}; // eslint-disable-line
+		const legacyConfig = nodeRequire(legacyConfigPath) || {}; // eslint-disable-line
 		if (!legacyConfig["*"]) {
 			legacyConfig["*"] = {};
 		}

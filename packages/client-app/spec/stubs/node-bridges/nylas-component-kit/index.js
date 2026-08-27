@@ -1,0 +1,64 @@
+// Node-resolution bridge for the app-internal module name "nylas-component-kit".
+// The bundler and vitest use aliases; externalized CJS/ESM consumers
+// resolve through node_modules. Explicit named re-exports keep
+// cjs-module-lexer happy; each read is guarded against the app's
+// intentional model<->store load cycles.
+const bridge = require("/Users/jawrsh/Work/Repositories/nylas_mail/packages/client-app/src/global/nylas-component-kit.js");
+module.exports = bridge;
+try { module.exports.AttachmentItem = bridge.AttachmentItem; } catch (_e) { /* mid-cycle */ }
+try { module.exports.BoldedSearchResult = bridge.BoldedSearchResult; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ButtonDropdown = bridge.ButtonDropdown; } catch (_e) { /* mid-cycle */ }
+try { module.exports.CalendarEventPopover = bridge.CalendarEventPopover; } catch (_e) { /* mid-cycle */ }
+try { module.exports.CodeSnippet = bridge.CodeSnippet; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ConfigPropContainer = bridge.ConfigPropContainer; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Contenteditable = bridge.Contenteditable; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DateInput = bridge.DateInput; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DatePicker = bridge.DatePicker; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DatePickerPopover = bridge.DatePickerPopover; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DisclosureTriangle = bridge.DisclosureTriangle; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DropZone = bridge.DropZone; } catch (_e) { /* mid-cycle */ }
+try { module.exports.DropdownMenu = bridge.DropdownMenu; } catch (_e) { /* mid-cycle */ }
+try { module.exports.EditableList = bridge.EditableList; } catch (_e) { /* mid-cycle */ }
+try { module.exports.EditableTable = bridge.EditableTable; } catch (_e) { /* mid-cycle */ }
+try { module.exports.EventedIFrame = bridge.EventedIFrame; } catch (_e) { /* mid-cycle */ }
+try { module.exports.FeatureUsedUpModal = bridge.FeatureUsedUpModal; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Flexbox = bridge.Flexbox; } catch (_e) { /* mid-cycle */ }
+try { module.exports.FluxContainer = bridge.FluxContainer; } catch (_e) { /* mid-cycle */ }
+try { module.exports.FormItem = bridge.FormItem; } catch (_e) { /* mid-cycle */ }
+try { module.exports.GeneratedFieldset = bridge.GeneratedFieldset; } catch (_e) { /* mid-cycle */ }
+try { module.exports.GeneratedForm = bridge.GeneratedForm; } catch (_e) { /* mid-cycle */ }
+try { module.exports.HasTutorialTip = bridge.HasTutorialTip; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ImageAttachmentItem = bridge.ImageAttachmentItem; } catch (_e) { /* mid-cycle */ }
+try { module.exports.InjectedComponent = bridge.InjectedComponent; } catch (_e) { /* mid-cycle */ }
+try { module.exports.InjectedComponentSet = bridge.InjectedComponentSet; } catch (_e) { /* mid-cycle */ }
+try { module.exports.KeyCommandsRegion = bridge.KeyCommandsRegion; } catch (_e) { /* mid-cycle */ }
+try { module.exports.LabelColorizer = bridge.LabelColorizer; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ListTabular = bridge.ListTabular; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ListensToFluxStore = bridge.ListensToFluxStore; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ListensToObservable = bridge.ListensToObservable; } catch (_e) { /* mid-cycle */ }
+try { module.exports.MailLabel = bridge.MailLabel; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Menu = bridge.Menu; } catch (_e) { /* mid-cycle */ }
+try { module.exports.MetadataComposerToggleButton = bridge.MetadataComposerToggleButton; } catch (_e) { /* mid-cycle */ }
+try { module.exports.MiniMonthView = bridge.MiniMonthView; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Modal = bridge.Modal; } catch (_e) { /* mid-cycle */ }
+try { module.exports.MultiselectDropdown = bridge.MultiselectDropdown; } catch (_e) { /* mid-cycle */ }
+try { module.exports.MultiselectToolbar = bridge.MultiselectToolbar; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Notification = bridge.Notification; } catch (_e) { /* mid-cycle */ }
+try { module.exports.NylasCalendar = bridge.NylasCalendar; } catch (_e) { /* mid-cycle */ }
+try { module.exports.OAuthSignInPage = bridge.OAuthSignInPage; } catch (_e) { /* mid-cycle */ }
+try { module.exports.OverlaidComponents = bridge.OverlaidComponents; } catch (_e) { /* mid-cycle */ }
+try { module.exports.OverlaidComposerExtension = bridge.OverlaidComposerExtension; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ParticipantsTextField = bridge.ParticipantsTextField; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Popover = bridge.Popover; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ResizableRegion = bridge.ResizableRegion; } catch (_e) { /* mid-cycle */ }
+try { module.exports.RetinaImg = bridge.RetinaImg; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ScenarioEditor = bridge.ScenarioEditor; } catch (_e) { /* mid-cycle */ }
+try { module.exports.ScrollRegion = bridge.ScrollRegion; } catch (_e) { /* mid-cycle */ }
+try { module.exports.SearchBar = bridge.SearchBar; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Spinner = bridge.Spinner; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Switch = bridge.Switch; } catch (_e) { /* mid-cycle */ }
+try { module.exports.TabGroupRegion = bridge.TabGroupRegion; } catch (_e) { /* mid-cycle */ }
+try { module.exports.Table = bridge.Table; } catch (_e) { /* mid-cycle */ }
+try { module.exports.TimePicker = bridge.TimePicker; } catch (_e) { /* mid-cycle */ }
+try { module.exports.TokenizingTextField = bridge.TokenizingTextField; } catch (_e) { /* mid-cycle */ }
+try { module.exports.UndoToast = bridge.UndoToast; } catch (_e) { /* mid-cycle */ }

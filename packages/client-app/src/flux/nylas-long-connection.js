@@ -1,8 +1,16 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import _ from "underscore";
 import url from "node:url";
 import { Emitter } from "event-kit";
-import { IdentityStore, APIError } from "nylas-exports";
+import NylasExports from "nylas-exports";
+const { IdentityStore } = NylasExports;
+import { APIError } from "./errors.js";
 
 const CONNECTION_TIMEOUT = 60 * 60 * 1000;
 const PROCESS_BUFFER_THROTTLE = 400;
@@ -140,9 +148,9 @@ class NylasLongConnection {
 
 			let lib;
 			if (this._api.APIRoot.indexOf("https") === -1) {
-				lib = require("node:http");
+				lib = nodeRequire("node:http");
 			} else {
-				lib = require("node:https");
+				lib = nodeRequire("node:https");
 			}
 
 			this._req = lib.request(options, (responseStream) => {

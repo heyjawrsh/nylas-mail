@@ -1,4 +1,10 @@
 /* eslint global-require:0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import _ from "underscore";
 import Task from "./task.js";
 import NylasAPI from "../nylas-api.js";
@@ -25,7 +31,7 @@ export default class DestroyModelTask extends Task {
 	}
 
 	getModelConstructor() {
-		return require("nylas-exports")[this.modelName];
+		return nodeRequire("nylas-exports")[this.modelName];
 	}
 
 	performLocal() {

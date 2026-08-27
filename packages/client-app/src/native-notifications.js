@@ -2,7 +2,7 @@
 let MacNotifierNotification = null;
 if (process.platform === "darwin") {
 	try {
-		MacNotifierNotification = require("node-mac-notifier");
+		MacNotifierNotification = nodeRequire("node-mac-notifier");
 	} catch (_err) {
 		console.error(
 			"node-mac-notifier (a platform-specific optionalDependency) was not installed correctly! Check the Travis build log for errors.",

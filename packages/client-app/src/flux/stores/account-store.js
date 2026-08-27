@@ -1,5 +1,11 @@
 /* eslint global-require: 0 */
 
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import _ from "underscore";
 
 import NylasStore from "nylas-store";
@@ -46,8 +52,9 @@ class AccountStore extends NylasStore {
 				Actions.focusDefaultMailboxPerspectiveForAccounts([newId], {
 					sidebarAccountIds: accountIds,
 				});
-				const FolderSyncProgressStore =
-					require("./folder-sync-progress-store").default;
+				const FolderSyncProgressStore = nodeRequire(
+					"./folder-sync-progress-store.js",
+				).default;
 				await FolderSyncProgressStore.whenCategoryListSynced(newId);
 				Actions.focusDefaultMailboxPerspectiveForAccounts([newId], {
 					sidebarAccountIds: accountIds,
@@ -262,7 +269,7 @@ class AccountStore extends NylasStore {
 		this._save();
 
 		if (remainingAccounts.length === 0) {
-			const ipc = require("electron").ipcRenderer;
+			const ipc = nodeRequire("electron").ipcRenderer;
 			ipc.send("command", "application:relaunch-to-initial-windows", {
 				resetDatabase: true,
 			});
@@ -418,8 +425,8 @@ class AccountStore extends NylasStore {
 
 	// Private: Load fake data from a directory for taking nice screenshots
 	_importFakeData = (dir) => {
-		const Message = require("../models/message").default;
-		const Thread = require("../models/thread").default;
+		const Message = nodeRequire("../models/message.js").default;
+		const Thread = nodeRequire("../models/thread.js").default;
 
 		this._caches = {};
 

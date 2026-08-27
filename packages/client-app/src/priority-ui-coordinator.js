@@ -1,4 +1,5 @@
-import { generateTempId } from "./flux/models/utils.js";
+import UtilsNS from "./flux/models/utils.js";
+const { generateTempId } = UtilsNS.default || UtilsNS;
 
 // A small object that keeps track of the current animation state of the
 // application. You can use it to defer work until animations have finished.

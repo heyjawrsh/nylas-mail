@@ -1,6 +1,7 @@
 /* eslint no-unused-vars: 0*/
 import _ from "underscore";
-import { generateTempId } from "../models/utils.js";
+import UtilsNS from "../models/utils.js";
+const { generateTempId } = UtilsNS.default || UtilsNS;
 import { PermanentErrorCodes } from "../nylas-api.js";
 import { APIError } from "../errors.js";
 

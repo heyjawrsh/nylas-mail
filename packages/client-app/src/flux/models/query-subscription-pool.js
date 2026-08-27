@@ -1,4 +1,10 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import QuerySubscription from "./query-subscription.js";
 let DatabaseStore = null;
 
@@ -102,7 +108,7 @@ class QuerySubscriptionPool {
 
 	_setup() {
 		DatabaseStore =
-			DatabaseStore || require("../stores/database-store").default;
+			DatabaseStore || nodeRequire("../stores/database-store.js").default;
 		DatabaseStore.listen(this._onChange);
 	}
 

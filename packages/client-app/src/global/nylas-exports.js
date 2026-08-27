@@ -31,13 +31,18 @@ const requireFromSrc = (rel) => {
 			root = here.replace(/\/$/, "").replace(/\/static$/, "");
 		}
 		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
-		return require(`${root}/src/${stripped}`);
+		return nodeRequire(`${root}/src/${stripped}`);
 	}
 };
 
 // This module exports an empty object, with a ton of defined properties that
 // `require` files the first time they're called.
-module.exports = exports = window.$n = {};
+// Works under CJS (electron main, nodeRequire chains) and ESM (vitest/vite):
+// anchor the bridge object on the window/global and re-export both ways.
+const $n = (window.$n = globalThis.$n = {});
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = exports = $n;
+}
 
 // Calling require() repeatedly isn't free! Even though it has it's own cache,
 // it still needs to resolve the path to a file based on the current __dirname,
@@ -48,10 +53,10 @@ const RequireCache = {};
 const lazyLoadWithGetter = (prop, getter) => {
 	const key = `${prop}`;
 
-	if (exports[key]) {
+	if ($n[key]) {
 		throw new Error(`Fatal error: Duplicate entry in nylas-exports: ${key}`);
 	}
-	Object.defineProperty(exports, prop, {
+	Object.defineProperty($n, prop, {
 		get: () => {
 			RequireCache[key] = RequireCache[key] || getter();
 			return RequireCache[key];
@@ -66,23 +71,23 @@ const lazyLoad = (prop, path) => {
 
 const lazyLoadAndRegisterStore = (klassName, path) => {
 	lazyLoad(klassName, `flux/stores/${path}`);
-	StoreRegistry.register(klassName, () => exports[klassName]);
+	StoreRegistry.register(klassName, () => $n[klassName]);
 };
 
 const lazyLoadAndRegisterModel = (klassName, path) => {
 	lazyLoad(klassName, `flux/models/${path}`);
-	DatabaseObjectRegistry.register(klassName, () => exports[klassName]);
+	DatabaseObjectRegistry.register(klassName, () => $n[klassName]);
 };
 
 const lazyLoadAndRegisterTask = (klassName, path) => {
 	lazyLoad(klassName, `flux/tasks/${path}`);
-	TaskRegistry.register(klassName, () => exports[klassName]);
+	TaskRegistry.register(klassName, () => $n[klassName]);
 };
 
 const lazyLoadDeprecated = (prop, path, { instead } = {}) => {
 	const { deprecate } = requireFromSrc("../deprecate-utils.js");
-	Object.defineProperty(exports, prop, {
-		get: deprecate(prop, instead, exports, () => {
+	Object.defineProperty($n, prop, {
+		get: deprecate(prop, instead, $n, () => {
 			return resolveExport(requireFromSrc(`../${path}`));
 		}),
 		enumerable: true,
@@ -115,7 +120,7 @@ lazyLoad(`ObservableListDataSource`, "flux/stores/observable-list-data-source");
 lazyLoad(`MutableQuerySubscription`, "flux/models/mutable-query-subscription");
 
 // Database Objects
-exports.DatabaseObjectRegistry = DatabaseObjectRegistry;
+$n.DatabaseObjectRegistry = DatabaseObjectRegistry;
 lazyLoad(`Model`, "flux/models/model");
 lazyLoad(`Attributes`, "flux/attributes");
 lazyLoadAndRegisterModel(`File`, "file");
@@ -140,7 +145,7 @@ lazyLoad(`SearchQueryParser`, "services/search/search-query-parser");
 lazyLoad(`IMAPSearchQueryBackend`, "services/search/search-query-backend-imap");
 
 // Tasks
-exports.TaskRegistry = TaskRegistry;
+$n.TaskRegistry = TaskRegistry;
 lazyLoad(`Task`, "flux/tasks/task");
 lazyLoad(`TaskFactory`, "flux/tasks/task-factory");
 lazyLoadAndRegisterTask(`EventRSVPTask`, "event-rsvp-task");

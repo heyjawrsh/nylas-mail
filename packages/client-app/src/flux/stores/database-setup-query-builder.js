@@ -1,6 +1,13 @@
 /* eslint global-require:0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import DatabaseObjectRegistry from "../../registries/database-object-registry.js";
-import { tableNameForJoin } from "../models/utils.js";
+import UtilsNS from "../models/utils.js";
+const { tableNameForJoin } = UtilsNS.default || UtilsNS;
 
 import Attributes from "../attributes.js";
 const { AttributeCollection, AttributeJoinedData } = Attributes;
@@ -78,7 +85,7 @@ export default class DatabaseSetupQueryBuilder {
 		}
 
 		if (klass.searchable === true) {
-			const DatabaseStore = require("./database-store").default;
+			const DatabaseStore = nodeRequire("./database-store.js").default;
 			queries.push(DatabaseStore.createSearchIndexSql(klass));
 		}
 

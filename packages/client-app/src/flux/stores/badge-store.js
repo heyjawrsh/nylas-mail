@@ -1,4 +1,10 @@
 /* eslint global-require:0 */
+import { createRequire } from "node:module";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import NylasStore from "nylas-store";
 import FocusedPerspectiveStore from "./focused-perspective-store";
 import ThreadCountsStore from "./thread-counts-store.js";

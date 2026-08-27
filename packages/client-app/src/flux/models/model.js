@@ -153,6 +153,15 @@ class Model {
 			var attr = this.constructor.attributes[key];
 			var attrValue = json[attr.jsonKey];
 			if (attrValue !== undefined) {
+				// Computed attributes (e.g. Thread.inAllMail) are exposed as
+				// getter-only properties; assignment would throw.
+				var descriptor = Object.getOwnPropertyDescriptor(
+					this.constructor.prototype,
+					key,
+				);
+				if (descriptor?.get && !descriptor.set) {
+					continue;
+				}
 				this[key] = attr.fromJSON(attrValue);
 			}
 		}
