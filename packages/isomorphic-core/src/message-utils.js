@@ -46,6 +46,17 @@ function parseContacts(input) {
 }
 
 function parseSnippet(body) {
+	if (typeof DOMParser === "undefined") {
+		// Node environments (workers, vitest) have no DOM — strip tags directly.
+		// The renderer keeps the DOMParser path below for fidelity.
+		return body
+			.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, " ")
+			.replace(/<[^>]+>/g, " ")
+			.replace(/&nbsp;/gi, " ")
+			.replace(/\s+/g, " ")
+			.trim()
+			.slice(0, SNIPPET_SIZE);
+	}
 	const doc = new DOMParser().parseFromString(body, "text/html");
 	const skipTags = new Set(["TITLE", "SCRIPT", "STYLE", "IMG"]);
 	const noSpaceTags = new Set(["B", "I", "STRONG", "EM", "SPAN"]);
