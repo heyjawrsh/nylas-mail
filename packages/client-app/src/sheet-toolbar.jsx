@@ -222,7 +222,7 @@ class Toolbar extends React.Component {
     this.getChildContext = this.getChildContext.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
     this.render = this.render.bind(this);
@@ -255,7 +255,7 @@ class Toolbar extends React.Component {
     return Array.from(this.unlisteners).map((unlistener) => unlistener());
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     return this.setState(this._getStateFromStores(props));
   }
 

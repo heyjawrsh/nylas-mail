@@ -20,11 +20,11 @@ export default class ParticipantDecorator extends React.Component {
     this.state = { sfContacts: [] }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._setupObserver(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this._setupObserver(nextProps)
   }
 

@@ -43,7 +43,7 @@ export default class NewEventCard extends React.Component {
     this._loadCalendarsForEmail(email);
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     const email = newProps.draft.from[0].email
     this._loadCalendarsForEmail(email);
   }

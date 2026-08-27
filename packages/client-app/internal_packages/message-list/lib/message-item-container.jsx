@@ -23,7 +23,7 @@ class MessageItemContainer extends React.Component {
     this.state = this._getStateFromStores();
   }
 
-  componentWillReceiveProps(newProps) { return this.setState(this._getStateFromStores(newProps)); }
+  UNSAFE_componentWillReceiveProps(newProps) { return this.setState(this._getStateFromStores(newProps)); }
   componentDidMount() { if (this.props.message.draft) { this._unlisten = DraftStore.listen(this._onSendingStateChanged); } }
   shouldComponentUpdate(nextProps, nextState) { return !Utils.isEqualReact(nextProps, this.props) || !Utils.isEqualReact(nextState, this.state); }
   componentWillUnmount() { if (this._unlisten) { return this._unlisten(); } }

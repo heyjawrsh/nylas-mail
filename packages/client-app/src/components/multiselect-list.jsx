@@ -53,7 +53,7 @@ class MultiselectList extends React.Component {
 
   constructor(props) {
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.teardownForProps = this.teardownForProps.bind(this);
@@ -78,7 +78,7 @@ class MultiselectList extends React.Component {
     return this.setupForProps(this.props);
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (_.isEqual(this.props, newProps)) { return; }
     this.teardownForProps();
     this.setupForProps(newProps);

@@ -14,12 +14,12 @@ class MessageListScrollTooltip extends React.Component {
   static propTypes = {viewportCenter: PropTypes.number.isRequired, totalHeight: PropTypes.number.isRequired};
   constructor() {
     super(...arguments);
-    this.componentWillMount = this.componentWillMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
   }
-  componentWillMount() { return this.setupForProps(this.props); }
-  componentWillReceiveProps(newProps) { return this.setupForProps(newProps); }
+  UNSAFE_componentWillMount() { return this.setupForProps(this.props); }
+  UNSAFE_componentWillReceiveProps(newProps) { return this.setupForProps(newProps); }
   shouldComponentUpdate(newProps, newState) { return !_.isEqual(this.state, newState); }
   setupForProps(props) {
     const els = document.querySelectorAll('.message-item-wrap');

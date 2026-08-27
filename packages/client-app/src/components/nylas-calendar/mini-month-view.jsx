@@ -23,7 +23,7 @@ export default class MiniMonthView extends React.Component {
     this.state = this._stateFromProps(props)
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     this.setState(this._stateFromProps(newProps))
   }
 

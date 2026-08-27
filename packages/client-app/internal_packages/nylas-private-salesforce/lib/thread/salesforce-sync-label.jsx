@@ -26,7 +26,7 @@ class SalesforceSyncLabel extends React.Component {
     this._setupDataSource(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this._setupDataSource(nextProps);
     this.setState(this._initialState(nextProps))
   }

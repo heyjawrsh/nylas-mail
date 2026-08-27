@@ -37,7 +37,7 @@ class Spinner extends React.Component {
   constructor(props) {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.pauseAfterDelay = this.pauseAfterDelay.bind(this);
     this.showAfterDelay = this.showAfterDelay.bind(this);
     this.render = this.render.bind(this);
@@ -65,7 +65,7 @@ class Spinner extends React.Component {
     if (this.timer) { return clearTimeout(this.timer); }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // If we have a cover, show right away.
     if (nextProps.withCover) {
       this.setState({hidden: !nextProps.visible});

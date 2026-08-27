@@ -20,7 +20,7 @@ class FluxContainer extends React.Component {
     return this.setupListeners();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState(nextProps.getStateFromStores());
     return this.setupListeners(nextProps);
   }

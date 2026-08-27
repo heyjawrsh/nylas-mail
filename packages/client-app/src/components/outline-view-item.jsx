@@ -155,7 +155,7 @@ class OutlineViewItem extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.editing) {
       this.setState({editing: newProps.editing});
     }

@@ -234,7 +234,7 @@ class ScrollRegion extends React.Component {
   constructor(props) {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
     this.shouldInvalidateScrollbarComponent = this.shouldInvalidateScrollbarComponent.bind(this);
@@ -285,7 +285,7 @@ class ScrollRegion extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (this.shouldInvalidateScrollbarComponent(props)) {
       return this._scrollbarComponent = null;
     }

@@ -33,12 +33,12 @@ class RelatedObjectsForThread extends React.Component {
     this.state = this._initialState();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._setupDataSource(this.props);
     this._usub = FocusedContactsStore.listen(this._onContactChange)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this._setupDataSource(nextProps)
   }
 

@@ -48,7 +48,7 @@ export default class ComposerHeader extends React.Component {
     this.state = this._initialStateForDraft(this.props.draft, props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.session !== nextProps.session) {
       this.setState(this._initialStateForDraft(nextProps.draft, nextProps));
     } else {

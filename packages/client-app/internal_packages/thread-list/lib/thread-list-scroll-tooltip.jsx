@@ -12,8 +12,8 @@ const ThreadListStore = require('./thread-list-store');
 
 class ThreadListScrollTooltip extends React.Component {
   constructor(...args) {
-    this.componentWillMount = this.componentWillMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
     super(...args);
   }
@@ -26,11 +26,11 @@ class ThreadListScrollTooltip extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     return this.setupForProps(this.props);
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     return this.setupForProps(newProps);
   }
 

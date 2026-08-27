@@ -118,7 +118,7 @@ export default class KeyCommandsRegion extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     this._unmountListeners()
     this._setupListeners(newProps)
 

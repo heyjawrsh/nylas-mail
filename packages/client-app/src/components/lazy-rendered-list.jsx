@@ -34,7 +34,7 @@ class LazyRenderedList extends Component {
     this.state = this.getRangeState(props)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.updateRangeState(nextProps)
   }
 

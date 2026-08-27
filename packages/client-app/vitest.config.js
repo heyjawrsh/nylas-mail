@@ -25,6 +25,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['spec/setup.js'],
     include: ['spec/**/*.spec.{js,jsx}'],
+    jsx: {mode: 'automatic'},
     coverage: {
       provider: 'v8',
       reporter: ['text'],

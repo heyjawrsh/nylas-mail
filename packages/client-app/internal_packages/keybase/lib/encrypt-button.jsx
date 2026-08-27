@@ -53,7 +53,7 @@ class EncryptMessageButton extends React.Component {
     return this.unlistenKeystore();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.currentlyEncrypted && (nextProps.draft.body !== this.props.draft.body) && (nextProps.draft.body !== this.state.cryptotext)) {
       // A) we're encrypted
       // B) someone changed something

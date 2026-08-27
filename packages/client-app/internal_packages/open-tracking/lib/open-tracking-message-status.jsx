@@ -21,7 +21,7 @@ export default class OpenTrackingMessageStatus extends React.Component {
     this.state = this._getStateFromMessage(props.message)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState(this._getStateFromMessage(nextProps.message))
   }
 

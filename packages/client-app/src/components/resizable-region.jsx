@@ -87,7 +87,7 @@ class ResizableRegion extends React.Component {
   constructor(props) {
     this.render = this.render.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this._mouseDown = this._mouseDown.bind(this);
     this._mouseUp = this._mouseUp.bind(this);
@@ -154,7 +154,7 @@ class ResizableRegion extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ((nextProps.handle.axis === 'vertical') && (nextProps.initialHeight !== this.props.initialHeight)) {
       this.setState({height: nextProps.initialHeight});
     }

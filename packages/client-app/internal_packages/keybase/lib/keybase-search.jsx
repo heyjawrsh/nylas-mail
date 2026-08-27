@@ -64,7 +64,7 @@ module.exports =
       return this._search();
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
       return this.setState({query: props.initialSearch});
     }
 

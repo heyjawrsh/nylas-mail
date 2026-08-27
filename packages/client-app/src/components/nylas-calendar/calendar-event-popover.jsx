@@ -21,7 +21,7 @@ export default class CalendarEventPopover extends React.Component {
     this.state.participants = participants || []
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     const {description, start, end, location, participants} = nextProps.event;
     this.setState({description, start, end, location})
     this.setState({

@@ -70,7 +70,7 @@ export default class OverlaidComponents extends React.Component {
     this._setupMutationObservers()
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     this._teardownMutationObservers()
   }
 

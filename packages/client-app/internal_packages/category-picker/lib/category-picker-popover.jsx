@@ -41,7 +41,7 @@ export default class CategoryPickerPopover extends Component {
     this._registerObservables()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this._registerObservables(nextProps)
     this.setState(this._recalculateState(nextProps))
   }

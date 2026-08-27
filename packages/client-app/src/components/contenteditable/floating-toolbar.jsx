@@ -64,7 +64,7 @@ class FloatingToolbar extends React.Component {
 
   constructor(props) {
     this.componentWillReceiveInnerProps = this.componentWillReceiveInnerProps.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this._calculatePositionState = this._calculatePositionState.bind(this);
     this._toolbarClasses = this._toolbarClasses.bind(this);
     this._toolbarStyles = this._toolbarStyles.bind(this);
@@ -107,7 +107,7 @@ class FloatingToolbar extends React.Component {
     return this.setState(this._getStateFromProps(fullProps));
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const fullProps = _.extend(this.innerProps, nextProps);
     return this.setState(this._getStateFromProps(fullProps));
   }

@@ -201,7 +201,7 @@ class Menu extends React.Component {
     this.clearSelection = this.clearSelection.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.render = this.render.bind(this);
     this._onKeyDown = this._onKeyDown.bind(this);
@@ -237,7 +237,7 @@ class Menu extends React.Component {
     return this._mounted = false;
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     // Attempt to preserve selection across props.items changes by
     // finding an item in the new list with a key matching the old
     // selected item's key

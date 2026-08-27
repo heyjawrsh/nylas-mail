@@ -25,7 +25,7 @@ export default class NewEventPreview extends React.Component {
     this.state = this._stateFromProps(props)
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     this.setState(this._stateFromProps(props))
   }
 

@@ -35,7 +35,7 @@ export default class SalesforceManuallyRelateThreadButton extends React.Componen
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._usubs = [
       SalesforceActions.syncbackSuccess.listen(this._onObjectCreate),
       SalesforceActions.salesforceWindowClosing.listen(this._onWinClose),

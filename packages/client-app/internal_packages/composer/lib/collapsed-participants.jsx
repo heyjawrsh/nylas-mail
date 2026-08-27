@@ -39,7 +39,7 @@ export default class CollapsedParticipants extends React.Component {
     this._setNumHiddenParticipants();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!Utils.isEqualReact(nextProps, this.props)) {
       // Always re-evaluate the hidden participant count when the participant set changes
       this.setState({

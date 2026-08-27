@@ -18,7 +18,7 @@ export const Account = {
 }
 export const AccountStore = {accounts: vi.fn(() => []), isMyEmail: vi.fn(() => false), listen: vi.fn()}
 export class APIError extends Error {}
-export const BatteryStatusManager = {isOnBatteryPower: vi.fn(() => false)}
+export const BatteryStatusManager = {isOnBatteryPower: vi.fn(() => false), isBatteryCharging: vi.fn(() => true)}
 export const ComponentRegistry = {register: vi.fn()}
 export const DatabaseStore = {findJSONBlob: vi.fn(), inTransaction: vi.fn(fn => fn())}
 export class DeltaProcessor {}

@@ -31,7 +31,7 @@ class EventHeader extends React.Component {
   constructor(props) {
     this._onChange = this._onChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.render = this.render.bind(this);
     this._renderEventActions = this._renderEventActions.bind(this);
@@ -60,7 +60,7 @@ class EventHeader extends React.Component {
     return this._onChange();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({event:nextProps.message.events[0]});
     return this._onChange();
   }

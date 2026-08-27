@@ -59,7 +59,7 @@ export default class ComposerView extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.session !== this.props.session) {
       this._teardownForProps();
       this._setupForProps(nextProps);

@@ -63,7 +63,7 @@ export default class WeekView extends React.Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._initializeComponent(this.props)
   }
 
@@ -77,7 +77,7 @@ export default class WeekView extends React.Component {
     window.addEventListener('resize', this._setIntervalHeight, true)
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     this._initializeComponent(props)
   }
 

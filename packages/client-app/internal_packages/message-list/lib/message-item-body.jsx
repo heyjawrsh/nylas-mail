@@ -14,7 +14,7 @@ class MessageItemBody extends React.Component {
 
   constructor(props) {
     super(props);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.render = this.render.bind(this);
@@ -26,11 +26,11 @@ class MessageItemBody extends React.Component {
     this.state = {showQuotedText: DraftHelpers.isForwardedMessage(this.props.message), processedBody: null};
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._unsub = MessageBodyProcessor.subscribe(this.props.message, processedBody => this.setState({processedBody}));
   }
   componentDidMount() { this._mounted = true; }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.message.id !== this.props.message.id) {
       if (this._unsub != null) { this._unsub(); }
       this._unsub = MessageBodyProcessor.subscribe(nextProps.message, processedBody => this.setState({processedBody}));

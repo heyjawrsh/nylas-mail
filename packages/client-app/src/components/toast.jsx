@@ -33,7 +33,7 @@ class Toast extends Component {
     this._ensureTimeout()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({visible: nextProps.visible})
   }
 

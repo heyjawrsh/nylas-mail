@@ -44,7 +44,7 @@ class LinkEditor extends React.Component {
       {urlInputValue: (left = this._initialUrl()) != null ? left : ""};
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     return this.setState({urlInputValue: this._initialUrl(newProps)});
   }
 

@@ -156,7 +156,7 @@ class EmptyListState extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.visible === false) {
       return this.setState({active:false});
     }

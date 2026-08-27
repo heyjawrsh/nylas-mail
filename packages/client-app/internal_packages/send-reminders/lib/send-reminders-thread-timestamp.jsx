@@ -41,7 +41,7 @@ class SendRemindersThreadTimestamp extends Component {
     this.setupMessageObservable(message)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {thread, messages} = nextProps
     const message = getLatestMessageWithReminder(thread, messages)
     this.disposeMessageObservable()

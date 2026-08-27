@@ -23,7 +23,7 @@ class MailMergeHeaderInput extends Component {
     this.state = {inputSize: getInputSize(props.defaultValue)}
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({inputSize: getInputSize(nextProps.defaultValue)})
   }
 
