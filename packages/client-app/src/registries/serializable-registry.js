@@ -16,50 +16,50 @@
  * Note that there is one registry per window.
  */
 export default class SerializableRegistry {
-  constructor() {
-    this._constructorFactories = {}
-  }
+	constructor() {
+		this._constructorFactories = {};
+	}
 
-  get(name) {
-    return this._constructorFactories[name].call(null)
-  }
+	get(name) {
+		return this._constructorFactories[name].call(null);
+	}
 
-  getAllConstructors() {
-    const constructors = []
-    for (const name of Object.keys(this._constructorFactories)) {
-      constructors.push(this.get(name))
-    }
-    return constructors;
-  }
+	getAllConstructors() {
+		const constructors = [];
+		for (const name of Object.keys(this._constructorFactories)) {
+			constructors.push(this.get(name));
+		}
+		return constructors;
+	}
 
-  isInRegistry(name) {
-    return !!this._constructorFactories[name]
-  }
+	isInRegistry(name) {
+		return !!this._constructorFactories[name];
+	}
 
-  deserialize(name, dataJSON) {
-    let data = dataJSON;
-    if (typeof data === "string") {
-      data = JSON.parse(dataJSON)
-    }
+	deserialize(name, dataJSON) {
+		let data = dataJSON;
+		if (typeof data === "string") {
+			data = JSON.parse(dataJSON);
+		}
 
-    const constructor = this.get(name)
+		const constructor = this.get(name);
 
-    if (typeof constructor !== "function") {
-      throw new Error(`Unsure of how to inflate ${JSON.stringify(data)}. \
+		if (typeof constructor !== "function") {
+			throw new Error(`Unsure of how to inflate ${JSON.stringify(data)}. \
 Your constructor factory must return a class constructor.`);
-    }
+		}
 
-    const object = new constructor()
-    object.fromJSON(data)
+		const object = new constructor();
+		object.fromJSON(data);
 
-    return object
-  }
+		return object;
+	}
 
-  register(name, constructorFactory) {
-    this._constructorFactories[name] = constructorFactory
-  }
+	register(name, constructorFactory) {
+		this._constructorFactories[name] = constructorFactory;
+	}
 
-  unregister(name) {
-    delete this._constructorFactories[name]
-  }
+	unregister(name) {
+		delete this._constructorFactories[name];
+	}
 }

@@ -1,5 +1,5 @@
-import Model from './model';
-import Attributes from '../attributes';
+import Model from "./model";
+import Attributes from "../attributes";
 
 /**
 Public: The Calendar model represents a Calendar object served by the
@@ -18,18 +18,18 @@ This class also inherits attributes from {Model}
 Section: Models
 */
 export default class Calendar extends Model {
-  static attributes = Object.assign({}, Model.attributes, {
-    name: Attributes.String({
-      modelKey: 'name',
-      jsonKey: 'name',
-    }),
-    description: Attributes.String({
-      modelKey: 'description',
-      jsonKey: 'description',
-    }),
-    readOnly: Attributes.Boolean({
-      modelKey: 'readOnly',
-      jsonKey: 'read_only',
-    }),
-  });
+	static attributes = Object.assign({}, Model.attributes, {
+		name: Attributes.String({
+			modelKey: "name",
+			jsonKey: "name",
+		}),
+		description: Attributes.String({
+			modelKey: "description",
+			jsonKey: "description",
+		}),
+		readOnly: Attributes.Boolean({
+			modelKey: "readOnly",
+			jsonKey: "read_only",
+		}),
+	});
 }

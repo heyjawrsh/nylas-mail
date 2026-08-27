@@ -1,27 +1,27 @@
 {
-  "name": "nylas-mail-all",
-  "version": "0.0.1",
-  "private": true,
-  "description": "All components required to run Nylas Mail",
-  "license": "MIT",
-  "engines": {
-    "node": ">=24"
-  },
-  "packageManager": "pnpm@11.18.0",
-  "scripts": {
-    "postinstall": "node scripts/link-workspaces.mjs",
-    "test": "pnpm -r run test",
-    "lint": "biome check .",
-    "format": "biome format --write ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nylas/nylas-mail-all.git"
-  },
-  "author": "Nylas",
-  "devDependencies": {
-    "@biomejs/biome": "^2.5.10",
-    "tsx": "^4.23.12",
-    "vitest": "^4.1.11"
-  }
+	"name": "nylas-mail-all",
+	"version": "0.0.1",
+	"private": true,
+	"description": "All components required to run Nylas Mail",
+	"license": "MIT",
+	"engines": {
+		"node": ">=24"
+	},
+	"packageManager": "pnpm@11.18.0",
+	"scripts": {
+		"postinstall": "node scripts/link-workspaces.mjs",
+		"test": "pnpm -r run test",
+		"lint": "biome check .",
+		"format": "biome format --write ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nylas/nylas-mail-all.git"
+	},
+	"author": "Nylas",
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.10",
+		"tsx": "^4.23.12",
+		"vitest": "^4.1.11"
+	}
 }

@@ -1,9 +1,9 @@
-import {shell} from 'electron'
-import PropTypes from 'prop-types';
-import {Actions, React} from 'nylas-exports'
-import {RetinaImg, KeyCommandsRegion} from 'nylas-component-kit'
+import { shell } from "electron";
+import PropTypes from "prop-types";
+import { Actions, React } from "nylas-exports";
+import { RetinaImg, KeyCommandsRegion } from "nylas-component-kit";
 
-import GithubStore from './github-store'
+import GithubStore from "./github-store";
 
 /**
 The `ViewOnGithubButton` displays a button whenever there's a relevant
@@ -48,52 +48,52 @@ simple button with a GitHub logo in it.
 We'll also display nothing if there is no link.
 */
 export default class ViewOnGithubButton extends React.Component {
-  static displayName = "ViewOnGithubButton"
+	static displayName = "ViewOnGithubButton";
 
-  static containerRequired = false
+	static containerRequired = false;
 
-  static propTypes = {
-    items: PropTypes.array,
-  }
+	static propTypes = {
+		items: PropTypes.array,
+	};
 
-  /** ** React methods ****
-  * The following methods are React methods that we override. See {React}
-  * documentation for more info
-  */
+	/** ** React methods ****
+	 * The following methods are React methods that we override. See {React}
+	 * documentation for more info
+	 */
 
-  constructor(props) {
-    super(props)
-    this.state = this._getStateFromStores()
-  }
+	constructor(props) {
+		super(props);
+		this.state = this._getStateFromStores();
+	}
 
-  /*
-   * When components mount, it's very common to have them listen to a
-   * `Store`. Since most of our React Components in N1 are registered into
-   * {ComponentRegistry} regions instead of manually rendered top-down much
-   * of our data is side-loaded from stores instead of passed in as props.
-  */
-  componentDidMount() {
-    /*
-    * The `listen` method of {NylasStore}s (which {GithubStore}
-    * subclasses) returns an "unlistener" function. When the unlistener is
-    * invoked (as it is in `componentWillUnmount`) the listener references
-    * are cleaned up. Every time the `GithubStore` calls its `trigger`
-    * method, the `_onStoreChanged` callback will be fired.
-    */
-    this._unlisten = GithubStore.listen(this._onStoreChanged)
-  }
+	/*
+	 * When components mount, it's very common to have them listen to a
+	 * `Store`. Since most of our React Components in N1 are registered into
+	 * {ComponentRegistry} regions instead of manually rendered top-down much
+	 * of our data is side-loaded from stores instead of passed in as props.
+	 */
+	componentDidMount() {
+		/*
+		 * The `listen` method of {NylasStore}s (which {GithubStore}
+		 * subclasses) returns an "unlistener" function. When the unlistener is
+		 * invoked (as it is in `componentWillUnmount`) the listener references
+		 * are cleaned up. Every time the `GithubStore` calls its `trigger`
+		 * method, the `_onStoreChanged` callback will be fired.
+		 */
+		this._unlisten = GithubStore.listen(this._onStoreChanged);
+	}
 
-  componentWillUnmount() {
-    this._unlisten()
-  }
+	componentWillUnmount() {
+		this._unlisten();
+	}
 
-  _keymapHandlers() {
-    return {
-      'github:open': this._openLink,
-    }
-  }
+	_keymapHandlers() {
+		return {
+			"github:open": this._openLink,
+		};
+	}
 
-  /** ** Super common N1 Component private methods ****
+	/** ** Super common N1 Component private methods ****
   /*
   * An extremely common pattern for all N1 components are the methods
   * `onStoreChanged` and `getStateFromStores`.
@@ -112,22 +112,22 @@ export default class ViewOnGithubButton extends React.Component {
   * method used as a callback must be bound. In Coffeescript we use the
   * fat arrow (`=>`)
   */
-  _onStoreChanged = () => {
-    this.setState(this._getStateFromStores())
-  }
+	_onStoreChanged = () => {
+		this.setState(this._getStateFromStores());
+	};
 
-  /*
-  * getStateFromStores fetches the data the view needs from the
-  * appropriate data source (our GithubStore). We return a basic object
-  * that can be passed directly into `setState`.
-  */
-  _getStateFromStores() {
-    return {
-      link: GithubStore.link(),
-    }
-  }
+	/*
+	 * getStateFromStores fetches the data the view needs from the
+	 * appropriate data source (our GithubStore). We return a basic object
+	 * that can be passed directly into `setState`.
+	 */
+	_getStateFromStores() {
+		return {
+			link: GithubStore.link(),
+		};
+	}
 
-  /** ** Other utility "private" methods ****
+	/** ** Other utility "private" methods ****
   /*
   * This responds to user interaction. Since it's a callback we have to
   * bind it to the instances's `this` (Coffeescript fat arrow `=>`)
@@ -140,29 +140,35 @@ export default class ViewOnGithubButton extends React.Component {
   * also queue a {Task} to eventually perform a mutating API POST or PUT
   * request.
   */
-  _openLink = () => {
-    Actions.recordUserEvent("Github Thread Opened", {pageUrl: this.state.link})
-    if (this.state.link) {
-      shell.openExternal(this.state.link)
-    }
-  }
+	_openLink = () => {
+		Actions.recordUserEvent("Github Thread Opened", {
+			pageUrl: this.state.link,
+		});
+		if (this.state.link) {
+			shell.openExternal(this.state.link);
+		}
+	};
 
-  render() {
-    if (this.props.items.length !== 1) { return false }
-    if (!this.state.link) { return false }
-    return (
-      <KeyCommandsRegion globalHandlers={this._keymapHandlers()}>
-        <button
-          className="btn btn-toolbar btn-view-on-github"
-          onClick={this._openLink}
-          title={"Visit Thread on GitHub"}
-        >
-          <RetinaImg
-            mode={RetinaImg.Mode.ContentIsMask}
-            url="nylas://message-view-on-github/assets/github@2x.png"
-          />
-        </button>
-      </KeyCommandsRegion>
-    )
-  }
+	render() {
+		if (this.props.items.length !== 1) {
+			return false;
+		}
+		if (!this.state.link) {
+			return false;
+		}
+		return (
+			<KeyCommandsRegion globalHandlers={this._keymapHandlers()}>
+				<button
+					className="btn btn-toolbar btn-view-on-github"
+					onClick={this._openLink}
+					title={"Visit Thread on GitHub"}
+				>
+					<RetinaImg
+						mode={RetinaImg.Mode.ContentIsMask}
+						url="nylas://message-view-on-github/assets/github@2x.png"
+					/>
+				</button>
+			</KeyCommandsRegion>
+		);
+	}
 }

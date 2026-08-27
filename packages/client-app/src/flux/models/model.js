@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * decaffeinate suggestions:
  * DS101: Remove unnecessary use of Array.from
@@ -8,9 +6,9 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require('underscore');
-const Utils = require('./utils');
-const Attributes = require('../attributes').default;
+const _ = require("underscore");
+const Utils = require("./utils");
+const Attributes = require("../attributes").default;
 
 /*
 Public: A base class for API objects that provides abstract support for
@@ -40,151 +38,186 @@ object.
 Section: Models
 */
 class Model {
-  static initClass() {
-  
-    Object.defineProperty(this.prototype, "id", {
-      enumerable: false,
-      get() { return this.serverId != null ? this.serverId : this.clientId; },
-      set() {
-        throw new Error("You may not directly set the ID of an object. Set either the `clientId` or the `serverId` instead.");
-      }
-    }
-    );
-  
-    this.attributes = {
-      // Lookups will go through the custom getter.
-      'id': Attributes.String({
-        queryable: true,
-        modelKey: 'id'
-      }),
-  
-      'clientId': Attributes.String({
-        queryable: true,
-        modelKey: 'clientId',
-        jsonKey: 'client_id'
-      }),
-  
-      'serverId': Attributes.ServerId({
-        modelKey: 'serverId',
-        jsonKey: 'server_id'
-      }),
-  
-      'object': Attributes.String({
-        modelKey: 'object'}),
-  
-      'accountId': Attributes.ServerId({
-        queryable: true,
-        modelKey: 'accountId',
-        jsonKey: 'account_id'
-      })
-    };
-  }
+	static initClass() {
+		Object.defineProperty(Model.prototype, "id", {
+			enumerable: false,
+			get() {
+				return this.serverId != null ? this.serverId : this.clientId;
+			},
+			set() {
+				throw new Error(
+					"You may not directly set the ID of an object. Set either the `clientId` or the `serverId` instead.",
+				);
+			},
+		});
 
-  static naturalSortOrder() { return null; }
+		Model.attributes = {
+			// Lookups will go through the custom getter.
+			id: Attributes.String({
+				queryable: true,
+				modelKey: "id",
+			}),
 
-  constructor(values) {
-    if (values == null) { values = {}; }
-    if (values["id"] && Utils.isTempId(values["id"])) {
-      if (values["clientId"] == null) { values["clientId"] = values["id"]; }
-    } else {
-      if (values["serverId"] == null) { values["serverId"] = values["id"]; }
-    }
+			clientId: Attributes.String({
+				queryable: true,
+				modelKey: "clientId",
+				jsonKey: "client_id",
+			}),
 
-    for (var key of Array.from(Object.keys(this.constructor.attributes))) {
-      if (key === 'id') { continue; }
-      if (values[key] == null) { continue; }
-      this[key] = values[key];
-    }
+			serverId: Attributes.ServerId({
+				modelKey: "serverId",
+				jsonKey: "server_id",
+			}),
 
-    if (this.clientId == null) { this.clientId = Utils.generateTempId(); }
-    this;
-  }
+			object: Attributes.String({
+				modelKey: "object",
+			}),
 
-  isSavedRemotely() {
-    return (this.serverId != null);
-  }
+			accountId: Attributes.ServerId({
+				queryable: true,
+				modelKey: "accountId",
+				jsonKey: "account_id",
+			}),
+		};
+	}
 
-  clone() {
-    return (new this.constructor).fromJSON(this.toJSON());
-  }
+	static naturalSortOrder() {
+		return null;
+	}
 
-  // Public: Returns an {Array} of {Attribute} objects defined on the Model's constructor
-  //
-  attributes() {
-    const attrs = _.clone(this.constructor.attributes);
-    delete attrs["id"];
-    return attrs;
-  }
+	constructor(values) {
+		if (values == null) {
+			values = {};
+		}
+		if (values["id"] && Utils.isTempId(values["id"])) {
+			if (values["clientId"] == null) {
+				values["clientId"] = values["id"];
+			}
+		} else {
+			if (values["serverId"] == null) {
+				values["serverId"] = values["id"];
+			}
+		}
 
-  //#
-  // Public: Inflates the model object from JSON, using the defined attributes to
-  // guide type coercision.
-  //
-  // - `json` A plain Javascript {Object} with the JSON representation of the model.
-  //
-  // This method is chainable.
-  //
-  fromJSON(json) {
-    // Note: The loop in this function has been optimized for the V8 'fast case'
-    // https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
-    //
-    if (json["id"] && !Utils.isTempId(json["id"])) {
-      this.serverId = json["id"];
-    }
-    for (var key of Array.from(Object.keys(this.constructor.attributes))) {
-      if (key === 'id') { continue; }
-      var attr = this.constructor.attributes[key];
-      var attrValue = json[attr.jsonKey];
-      if (attrValue !== undefined) { this[key] = attr.fromJSON(attrValue); }
-    }
-    return this;
-  }
+		for (var key of Array.from(Object.keys(this.constructor.attributes))) {
+			if (key === "id") {
+				continue;
+			}
+			if (values[key] == null) {
+				continue;
+			}
+			this[key] = values[key];
+		}
 
-  // Public: Deflates the model to a plain JSON object. Only attributes defined
-  // on the model are included in the JSON.
-  //
-  // - `options` (optional) An {Object} with additional options. To skip joined
-  //    data attributes in the toJSON representation, pass the `joined:false`
-  //
-  // Returns an {Object} with the JSON representation of the model.
-  //
-  toJSON(options) {
-    if (options == null) { options = {}; }
-    const json = {};
-    for (var key of Array.from(Object.keys(this.constructor.attributes))) {
-      if (key === 'id') { continue; }
-      var attr = this.constructor.attributes[key];
-      var attrValue = this[key];
-      if (attrValue === undefined) {
-        attrValue = attr.defaultValue;
-      }
-      if (attrValue === undefined) { continue; }
-      if (attr instanceof Attributes.AttributeJoinedData && (options.joined === false)) { continue; }
-      json[attr.jsonKey] = attr.toJSON(attrValue);
-    }
-    json["id"] = this.id;
-    return json;
-  }
+		if (this.clientId == null) {
+			this.clientId = Utils.generateTempId();
+		}
+		this;
+	}
 
-  toString() {
-    return JSON.stringify(this.toJSON());
-  }
+	isSavedRemotely() {
+		return this.serverId != null;
+	}
 
-  // Public: Evaluates the model against one or more {Matcher} objects.
-  //
-  // - `criteria` An {Array} of {Matcher}s to run on the model.
-  //
-  // Returns true if the model matches the criteria.
-  //
-  matches(criteria) {
-    if (!(criteria instanceof Array)) { return false; }
-    for (var matcher of Array.from(criteria)) {
-      if (!matcher.evaluate(this)) { return false; }
-    }
-    return true;
-  }
+	clone() {
+		return new this.constructor().fromJSON(this.toJSON());
+	}
+
+	// Public: Returns an {Array} of {Attribute} objects defined on the Model's constructor
+	//
+	attributes() {
+		const attrs = _.clone(this.constructor.attributes);
+		delete attrs["id"];
+		return attrs;
+	}
+
+	//#
+	// Public: Inflates the model object from JSON, using the defined attributes to
+	// guide type coercision.
+	//
+	// - `json` A plain Javascript {Object} with the JSON representation of the model.
+	//
+	// This method is chainable.
+	//
+	fromJSON(json) {
+		// Note: The loop in this function has been optimized for the V8 'fast case'
+		// https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
+		//
+		if (json["id"] && !Utils.isTempId(json["id"])) {
+			this.serverId = json["id"];
+		}
+		for (var key of Array.from(Object.keys(this.constructor.attributes))) {
+			if (key === "id") {
+				continue;
+			}
+			var attr = this.constructor.attributes[key];
+			var attrValue = json[attr.jsonKey];
+			if (attrValue !== undefined) {
+				this[key] = attr.fromJSON(attrValue);
+			}
+		}
+		return this;
+	}
+
+	// Public: Deflates the model to a plain JSON object. Only attributes defined
+	// on the model are included in the JSON.
+	//
+	// - `options` (optional) An {Object} with additional options. To skip joined
+	//    data attributes in the toJSON representation, pass the `joined:false`
+	//
+	// Returns an {Object} with the JSON representation of the model.
+	//
+	toJSON(options) {
+		if (options == null) {
+			options = {};
+		}
+		const json = {};
+		for (var key of Array.from(Object.keys(this.constructor.attributes))) {
+			if (key === "id") {
+				continue;
+			}
+			var attr = this.constructor.attributes[key];
+			var attrValue = this[key];
+			if (attrValue === undefined) {
+				attrValue = attr.defaultValue;
+			}
+			if (attrValue === undefined) {
+				continue;
+			}
+			if (
+				attr instanceof Attributes.AttributeJoinedData &&
+				options.joined === false
+			) {
+				continue;
+			}
+			json[attr.jsonKey] = attr.toJSON(attrValue);
+		}
+		json["id"] = this.id;
+		return json;
+	}
+
+	toString() {
+		return JSON.stringify(this.toJSON());
+	}
+
+	// Public: Evaluates the model against one or more {Matcher} objects.
+	//
+	// - `criteria` An {Array} of {Matcher}s to run on the model.
+	//
+	// Returns true if the model matches the criteria.
+	//
+	matches(criteria) {
+		if (!(criteria instanceof Array)) {
+			return false;
+		}
+		for (var matcher of Array.from(criteria)) {
+			if (!matcher.evaluate(this)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 Model.initClass();
-
 
 module.exports = Model;

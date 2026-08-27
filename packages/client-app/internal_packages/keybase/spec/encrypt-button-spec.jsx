@@ -4,15 +4,21 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const {React, ReactDOM, ReactTestUtils, DraftStore, Message} = require('nylas-exports');
-const pgp = require('kbpgp');
+const {
+	React,
+	ReactDOM,
+	ReactTestUtils,
+	DraftStore,
+	Message,
+} = require("nylas-exports");
+const pgp = require("kbpgp");
 
-const EncryptMessageButton = require('../lib/encrypt-button');
-const PGPKeyStore = require('../lib/pgp-key-store');
+const EncryptMessageButton = require("../lib/encrypt-button");
+const PGPKeyStore = require("../lib/pgp-key-store");
 
-describe("EncryptMessageButton", function() {
-  beforeEach(function() {
-    const key = `-----BEGIN PGP PRIVATE KEY BLOCK-----
+describe("EncryptMessageButton", () => {
+	beforeEach(function () {
+		const key = `-----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: GnuPG v1
 
 lQOYBFbgdCwBCADP7pEHzySjYHIlQK7T3XlqfFaot7VAgwmBUmXwFNRsYxGFj5sC
@@ -71,91 +77,109 @@ VsVlQKtXimFLpck1z0BPQ0NmRdEzRHQwP2WNYfxdNCeFAGDL4tpblBzw/vp/CFTO
 =UY7Y
 -----END PGP PRIVATE KEY BLOCK-----`;
 
-    pgp.KeyManager.import_from_armored_pgp({
-      armored: key
-    }, (err, km) => {
-      return this.km = km;
-    });
+		pgp.KeyManager.import_from_armored_pgp(
+			{
+				armored: key,
+			},
+			(err, km) => {
+				return (this.km = km);
+			},
+		);
 
-    waitsFor((() => (this.km != null)), "getting a key took too long", 1000);
+		waitsFor(() => this.km != null, "getting a key took too long", 1000);
 
-    this.msg = new Message({subject: 'Subject', body: '<p>Body</p>', draft: true});
-    this.session = {
-      draft: () => {
-        return this.msg;
-      },
-      changes: {
-        add: changes => {
-          return this.output = changes;
-        }
-      }
-    };
+		this.msg = new Message({
+			subject: "Subject",
+			body: "<p>Body</p>",
+			draft: true,
+		});
+		this.session = {
+			draft: () => {
+				return this.msg;
+			},
+			changes: {
+				add: (changes) => {
+					return (this.output = changes);
+				},
+			},
+		};
 
-    this.output = null;
+		this.output = null;
 
-    const add = jasmine.createSpy('add');
-    spyOn(DraftStore, 'sessionForClientId').andCallFake(draftClientId => {
-      return Promise.resolve(this.session);
-    });
+		const add = jasmine.createSpy("add");
+		spyOn(DraftStore, "sessionForClientId").andCallFake((draftClientId) => {
+			return Promise.resolve(this.session);
+		});
 
-    return this.component = ReactTestUtils.renderIntoDocument(
-      <EncryptMessageButton draft={this.msg} session={this.session} />
-    );
-  });
+		return (this.component = ReactTestUtils.renderIntoDocument(
+			<EncryptMessageButton draft={this.msg} session={this.session} />,
+		));
+	});
 
-  it("should render into the page", function() {
-    return expect(this.component).toBeDefined();
-  });
+	it("should render into the page", function () {
+		return expect(this.component).toBeDefined();
+	});
 
-  it("should have a displayName", () => expect(EncryptMessageButton.displayName).toBe('EncryptMessageButton'));
+	it("should have a displayName", () =>
+		expect(EncryptMessageButton.displayName).toBe("EncryptMessageButton"));
 
-  it("should have an onClick behavior which encrypts the message", function() {
-    spyOn(this.component, '_onClick');
-    const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
-    ReactTestUtils.Simulate.click(buttonNode);
-    return expect(this.component._onClick).toHaveBeenCalled();
-  });
+	it("should have an onClick behavior which encrypts the message", function () {
+		spyOn(this.component, "_onClick");
+		const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
+		ReactTestUtils.Simulate.click(buttonNode);
+		return expect(this.component._onClick).toHaveBeenCalled();
+	});
 
-  it("should store the message body's plaintext on encryption", function() {
-    spyOn(this.component, '_onClick');
-    const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
-    ReactTestUtils.Simulate.click(buttonNode);
-    return expect(this.component.plaintext === this.msg.body);
-  });
+	it("should store the message body's plaintext on encryption", function () {
+		spyOn(this.component, "_onClick");
+		const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
+		ReactTestUtils.Simulate.click(buttonNode);
+		return expect(this.component.plaintext === this.msg.body);
+	});
 
-  it("should mark itself as encrypted", function() {
-    spyOn(this.component, '_onClick');
-    const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
-    ReactTestUtils.Simulate.click(buttonNode);
-    return expect(this.component.currentlyEncrypted === true);
-  });
+	it("should mark itself as encrypted", function () {
+		spyOn(this.component, "_onClick");
+		const buttonNode = ReactDOM.findDOMNode(this.component.refs.button);
+		ReactTestUtils.Simulate.click(buttonNode);
+		return expect(this.component.currentlyEncrypted === true);
+	});
 
-  return xit("should be able to encrypt messages", function() {
-    // NOTE: this doesn't work.
-    // As best I can tell, something is wrong with the pgp.box function -
-    // nothing seems to get it to complete. Weird.
+	return xit("should be able to encrypt messages", function () {
+		// NOTE: this doesn't work.
+		// As best I can tell, something is wrong with the pgp.box function -
+		// nothing seems to get it to complete. Weird.
 
-    runs( () => {
-      console.log(this.km);
-      this.component._encrypt("test text", [this.km]);
+		runs(() => {
+			console.log(this.km);
+			this.component._encrypt("test text", [this.km]);
 
-      this.flag = false;
-      return pgp.box({encrypt_for: [this.km], msg: "test text"}, (err, result_string) => {
-        expect((err == null));
-        this.err = err;
-        this.result_string = result_string;
-        return this.flag = true;
-    });
-    });
+			this.flag = false;
+			return pgp.box(
+				{ encrypt_for: [this.km], msg: "test text" },
+				(err, result_string) => {
+					expect(err == null);
+					this.err = err;
+					this.result_string = result_string;
+					return (this.flag = true);
+				},
+			);
+		});
 
-    waitsFor((() => { console.log(this.flag); return this.flag; }), "encryption took too long", 5000);
+		waitsFor(
+			() => {
+				console.log(this.flag);
+				return this.flag;
+			},
+			"encryption took too long",
+			5000,
+		);
 
-    return runs( () => {
-      console.log(this.err);
-      console.log(this.result_string);
-      console.log(this.output);
+		return runs(() => {
+			console.log(this.err);
+			console.log(this.result_string);
+			console.log(this.output);
 
-      return expect(this.output === this.result_string);
-  });
-  });
+			return expect(this.output === this.result_string);
+		});
+	});
 });

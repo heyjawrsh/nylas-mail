@@ -8,9 +8,9 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let Task;
-const _ = require('underscore');
-const ChildProcess = require('child_process');
-const {Emitter} = require('event-kit');
+const _ = require("underscore");
+const ChildProcess = require("child_process");
+const { Emitter } = require("event-kit");
 
 // Extended: Run a node script in a separate process.
 //
@@ -45,161 +45,191 @@ const {Emitter} = require('event-kit');
 //
 //   callback()
 // ```
-module.exports =
-(Task = (function() {
-  Task = class Task {
-    static initClass() {
-  
-      // Called upon task completion.
-      //
-      // It receives the same arguments that were passed to the task.
-      //
-      // If subclassed, this is intended to be overridden. However if {::start}
-      // receives a completion callback, this is overridden.
-      this.prototype.callback = null;
-    }
-    // Public: A helper method to easily launch and run a task once.
-    //
-    // * `taskPath` The {String} path to the CoffeeScript/JavaScript file which
-    //   exports a single {Function} to execute.
-    // * `args` The arguments to pass to the exported function.
-    //
-    // Returns the created {Task}.
-    static once(taskPath, ...args) {
-      const task = new Task(taskPath);
-      task.once('task:completed', () => task.terminate());
-      task.start(...Array.from(args || []));
-      return task;
-    }
+module.exports = Task = (() => {
+	Task = class Task {
+		static initClass() {
+			// Called upon task completion.
+			//
+			// It receives the same arguments that were passed to the task.
+			//
+			// If subclassed, this is intended to be overridden. However if {::start}
+			// receives a completion callback, this is overridden.
+			Task.prototype.callback = null;
+		}
+		// Public: A helper method to easily launch and run a task once.
+		//
+		// * `taskPath` The {String} path to the CoffeeScript/JavaScript file which
+		//   exports a single {Function} to execute.
+		// * `args` The arguments to pass to the exported function.
+		//
+		// Returns the created {Task}.
+		static once(taskPath, ...args) {
+			const task = new Task(taskPath);
+			task.once("task:completed", () => task.terminate());
+			task.start(...Array.from(args || []));
+			return task;
+		}
 
-    // Public: Creates a task. You should probably use {.once}
-    //
-    // * `taskPath` The {String} path to the CoffeeScript/JavaScript file that
-    //   exports a single {Function} to execute.
-    constructor(taskPath) {
-      this.emitter = new Emitter;
+		// Public: Creates a task. You should probably use {.once}
+		//
+		// * `taskPath` The {String} path to the CoffeeScript/JavaScript file that
+		//   exports a single {Function} to execute.
+		constructor(taskPath) {
+			this.emitter = new Emitter();
 
-      const compileCacheRequire = `require('${require.resolve('./compile-cache')}')`;
-      const compileCachePath = require('./compile-cache').getCacheDirectory();
-      const taskBootstrapRequire = `require('${require.resolve('./task-bootstrap')}');`;
-      let bootstrap = `\
+			const compileCacheRequire = `require('${require.resolve("./compile-cache")}')`;
+			const compileCachePath = require("./compile-cache").getCacheDirectory();
+			const taskBootstrapRequire = `require('${require.resolve("./task-bootstrap")}');`;
+			let bootstrap = `\
 ${compileCacheRequire}.setCacheDirectory('${compileCachePath}');
 ${taskBootstrapRequire}\
 `;
-      bootstrap = bootstrap.replace(/\\/g, "\\\\");
+			bootstrap = bootstrap.replace(/\\/g, "\\\\");
 
-      taskPath = require.resolve(taskPath);
-      taskPath = taskPath.replace(/\\/g, "\\\\");
+			taskPath = require.resolve(taskPath);
+			taskPath = taskPath.replace(/\\/g, "\\\\");
 
-      const env = _.extend({}, process.env, {taskPath, userAgent: 'NylasMail'});
-      this.childProcess = ChildProcess.fork('--eval', [bootstrap], {env, silent: true});
+			const env = _.extend({}, process.env, {
+				taskPath,
+				userAgent: "NylasMail",
+			});
+			this.childProcess = ChildProcess.fork("--eval", [bootstrap], {
+				env,
+				silent: true,
+			});
 
-      this.on("task:log", function() { return console.log(...arguments); });
-      this.on("task:warn", function() { return console.warn(...arguments); });
-      this.on("task:error", function() { return console.error(...arguments); });
-      this.on("task:completed", (...args) => (typeof this.callback === 'function' ? this.callback(...Array.from(args || [])) : undefined));
+			this.on("task:log", function () {
+				return console.log(...arguments);
+			});
+			this.on("task:warn", function () {
+				return console.warn(...arguments);
+			});
+			this.on("task:error", function () {
+				return console.error(...arguments);
+			});
+			this.on("task:completed", (...args) =>
+				typeof this.callback === "function"
+					? this.callback(...Array.from(args || []))
+					: undefined,
+			);
 
-      this.handleEvents();
-    }
+			this.handleEvents();
+		}
 
-    // Routes messages from the child to the appropriate event.
-    handleEvents() {
-      this.childProcess.removeAllListeners();
-      this.childProcess.on('message', ({event, args}) => {
-        if (this.childProcess != null) { return this.emitter.emit(event, args); }
-      });
+		// Routes messages from the child to the appropriate event.
+		handleEvents() {
+			this.childProcess.removeAllListeners();
+			this.childProcess.on("message", ({ event, args }) => {
+				if (this.childProcess != null) {
+					return this.emitter.emit(event, args);
+				}
+			});
 
-      // Catch the errors that happened before task-bootstrap.
-      if (this.childProcess.stdout != null) {
-        this.childProcess.stdout.removeAllListeners();
-        this.childProcess.stdout.on('data', data => console.log(data.toString()));
-      }
+			// Catch the errors that happened before task-bootstrap.
+			if (this.childProcess.stdout != null) {
+				this.childProcess.stdout.removeAllListeners();
+				this.childProcess.stdout.on("data", (data) =>
+					console.log(data.toString()),
+				);
+			}
 
-      if (this.childProcess.stderr != null) {
-        this.childProcess.stderr.removeAllListeners();
-        return this.childProcess.stderr.on('data', data => console.error(data.toString()));
-      }
-    }
+			if (this.childProcess.stderr != null) {
+				this.childProcess.stderr.removeAllListeners();
+				return this.childProcess.stderr.on("data", (data) =>
+					console.error(data.toString()),
+				);
+			}
+		}
 
-    // Public: Starts the task.
-    //
-    // Throws an error if this task has already been terminated or if sending a
-    // message to the child process fails.
-    //
-    // * `args` The arguments to pass to the function exported by this task's script.
-    // * `callback` (optional) A {Function} to call when the task completes.
-    start(...args1) {
-      const adjustedLength = Math.max(args1.length, 1), args = args1.slice(0, adjustedLength - 1), callback = args1[adjustedLength - 1];
-      if (this.childProcess == null) { throw new Error('Cannot start terminated process'); }
+		// Public: Starts the task.
+		//
+		// Throws an error if this task has already been terminated or if sending a
+		// message to the child process fails.
+		//
+		// * `args` The arguments to pass to the function exported by this task's script.
+		// * `callback` (optional) A {Function} to call when the task completes.
+		start(...args1) {
+			const adjustedLength = Math.max(args1.length, 1),
+				args = args1.slice(0, adjustedLength - 1),
+				callback = args1[adjustedLength - 1];
+			if (this.childProcess == null) {
+				throw new Error("Cannot start terminated process");
+			}
 
-      this.handleEvents();
-      if (_.isFunction(callback)) {
-        this.callback = callback;
-      } else {
-        args.push(callback);
-      }
-      this.send({event: 'start', args});
-      return undefined;
-    }
+			this.handleEvents();
+			if (_.isFunction(callback)) {
+				this.callback = callback;
+			} else {
+				args.push(callback);
+			}
+			this.send({ event: "start", args });
+			return undefined;
+		}
 
-    // Public: Send message to the task.
-    //
-    // Throws an error if this task has already been terminated or if sending a
-    // message to the child process fails.
-    //
-    // * `message` The message to send to the task.
-    send(message) {
-      if (this.childProcess != null) {
-        this.childProcess.send(message);
-      } else {
-        throw new Error('Cannot send message to terminated process');
-      }
-      return undefined;
-    }
+		// Public: Send message to the task.
+		//
+		// Throws an error if this task has already been terminated or if sending a
+		// message to the child process fails.
+		//
+		// * `message` The message to send to the task.
+		send(message) {
+			if (this.childProcess != null) {
+				this.childProcess.send(message);
+			} else {
+				throw new Error("Cannot send message to terminated process");
+			}
+			return undefined;
+		}
 
-    // Public: Call a function when an event is emitted by the child process
-    //
-    // * `eventName` The {String} name of the event to handle.
-    // * `callback` The {Function} to call when the event is emitted.
-    //
-    // Returns a {Disposable} that can be used to stop listening for the event.
-    on(eventName, callback) { return this.emitter.on(eventName, args => callback(...Array.from(args || []))); }
+		// Public: Call a function when an event is emitted by the child process
+		//
+		// * `eventName` The {String} name of the event to handle.
+		// * `callback` The {Function} to call when the event is emitted.
+		//
+		// Returns a {Disposable} that can be used to stop listening for the event.
+		on(eventName, callback) {
+			return this.emitter.on(eventName, (args) =>
+				callback(...Array.from(args || [])),
+			);
+		}
 
-    once(eventName, callback) {
-      let disposable;
-      return disposable = this.on(eventName, function(...args) {
-        disposable.dispose();
-        return callback(...Array.from(args || []));
-      });
-    }
+		once(eventName, callback) {
+			let disposable;
+			return (disposable = this.on(eventName, (...args) => {
+				disposable.dispose();
+				return callback(...Array.from(args || []));
+			}));
+		}
 
-    // Public: Forcefully stop the running task.
-    //
-    // No more events are emitted once this method is called.
-    terminate() {
-      if (this.childProcess == null) { return false; }
+		// Public: Forcefully stop the running task.
+		//
+		// No more events are emitted once this method is called.
+		terminate() {
+			if (this.childProcess == null) {
+				return false;
+			}
 
-      this.childProcess.removeAllListeners();
-      if (this.childProcess.stdout != null) {
-        this.childProcess.stdout.removeAllListeners();
-      }
-      if (this.childProcess.stderr != null) {
-        this.childProcess.stderr.removeAllListeners();
-      }
-      this.childProcess.kill();
-      this.childProcess = null;
+			this.childProcess.removeAllListeners();
+			if (this.childProcess.stdout != null) {
+				this.childProcess.stdout.removeAllListeners();
+			}
+			if (this.childProcess.stderr != null) {
+				this.childProcess.stderr.removeAllListeners();
+			}
+			this.childProcess.kill();
+			this.childProcess = null;
 
-      return true;
-    }
+			return true;
+		}
 
-    cancel() {
-      const didForcefullyTerminate = this.terminate();
-      if (didForcefullyTerminate) {
-        this.emitter.emit('task:canceled');
-      }
-      return didForcefullyTerminate;
-    }
-  };
-  Task.initClass();
-  return Task;
-})());
+		cancel() {
+			const didForcefullyTerminate = this.terminate();
+			if (didForcefullyTerminate) {
+				this.emitter.emit("task:canceled");
+			}
+			return didForcefullyTerminate;
+		}
+	};
+	Task.initClass();
+	return Task;
+})();

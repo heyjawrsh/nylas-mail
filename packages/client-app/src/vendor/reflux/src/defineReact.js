@@ -1,6 +1,6 @@
 /* globals React: false */
 
-var Reflux = require('reflux-core');
+var Reflux = require("reflux-core");
 
 /**
  * Reflux.defineReact function where you can manually supply
@@ -9,25 +9,25 @@ var Reflux = require('reflux-core');
  * React variable.
  * @note The third param is for internal usage only.
  */
-var _react, _defined = false;
-function defineReact(react, noLongerUsed, extend)
-{
+var _react,
+	_defined = false;
+function defineReact(react, noLongerUsed, extend) {
 	var proto, _extend;
-	
+
 	// if no Reflux object is yet available then return and just wait until defineReact is called manually with it
 	try {
-		_react  = react  || _react  || React;
+		_react = react || _react || React;
 		_extend = extend || _react.Component;
 	} catch (e) {
 		return;
 	}
-	
+
 	// if Reflux and React aren't present then ignore, wait until they are properly present
 	// also ignore if it's been called before UNLESS there's manual extending happening
 	if (!_react || !_extend || (_defined && !extend)) {
 		return;
 	}
-	
+
 	// ----------- BEGIN Reflux.Component ------------
 	/**
 	 * Reflux.Component:
@@ -42,15 +42,15 @@ function defineReact(react, noLongerUsed, extend)
 	 * further `trigger` calls from that store will update properties passed
 	 * in the trigger into the component automatically.
 	 */
-	var RefluxComponent = function(props, context, updater) {
+	var RefluxComponent = function (props, context, updater) {
 		_extend.call(this, props, context, updater);
 	};
-	
+
 	// equivalent of `extends React.Component` or other class if provided via `extend` param
 	Reflux.utils.inherits(RefluxComponent, _extend);
-	
+
 	proto = RefluxComponent.prototype;
-	
+
 	/**
 	 * this.storeKeys
 	 * When this is a falsey value (null by default) the component mixes in
@@ -61,7 +61,7 @@ function defineReact(react, noLongerUsed, extend)
 	 * by-component basis. If using this it is best set in the constructor.
 	 */
 	proto.storeKeys = null;
-	
+
 	// on the mounting of the component that is where the store/stores are attached and initialized if needed
 	proto.componentWillMount = function () {
 		// if there is a this.store then simply push it onto the this.stores array or make one if needed
@@ -72,12 +72,12 @@ function defineReact(react, noLongerUsed, extend)
 				this.stores = [this.store];
 			}
 		}
-		
+
 		if (this.stores) {
 			this.__storeunsubscribes__ = this.__storeunsubscribes__ || [];
 			var sS = this.setState.bind(this);
 			// this handles the triggering of a store, checking what's updated if proto.storeKeys is utilized
-			var onStoreTrigger = function(obj){
+			var onStoreTrigger = function (obj) {
 				var updateObj = filterByStoreKeys(this.storeKeys, obj);
 				if (updateObj) {
 					sS(updateObj);
@@ -87,7 +87,7 @@ function defineReact(react, noLongerUsed, extend)
 			for (var i = 0, ii = this.stores.length; i < ii; i++) {
 				var str = this.stores[i];
 				// if's a function then we know it's a class getting passed, not an instance
-				if (typeof str === 'function') {
+				if (typeof str === "function") {
 					var storeId = str.id;
 					// if there is NOT a .singleton property on the store then this store has not been initialized yet, so do so
 					if (!str.singleton) {
@@ -109,7 +109,7 @@ function defineReact(react, noLongerUsed, extend)
 							str.state[key] = Reflux.GlobalState[storeId][key];
 						}
 						Reflux.GlobalState[storeId] = str.state;
-					// otherwise (if it has an id) set the global state to the default state of the store
+						// otherwise (if it has an id) set the global state to the default state of the store
 					} else if (storeId) {
 						Reflux.GlobalState[storeId] = str.state;
 					}
@@ -126,19 +126,19 @@ function defineReact(react, noLongerUsed, extend)
 				}
 			}
 		}
-		
+
 		// mapStoreToState needs to know if is ready to map or must wait
 		this.__readytomap__ = true;
 		// if there are mappings that were delayed, do them now
 		var dmaps = this.__delayedmaps__;
 		if (dmaps) {
-			for (var j=0,jj=dmaps.length; j<jj; j++) {
-				dmaps[j].func( dmaps[j].state );
+			for (var j = 0, jj = dmaps.length; j < jj; j++) {
+				dmaps[j].func(dmaps[j].state);
 			}
 		}
 		this.__delayedmaps__ = null;
 	};
-	
+
 	// on the unmount phase of the component unsubscribe that which we subscribed earlier to keep our garbage trail clean
 	proto.componentWillUnmount = function () {
 		if (this.__storeunsubscribes__) {
@@ -148,7 +148,7 @@ function defineReact(react, noLongerUsed, extend)
 		}
 		this.__readytomap__ = false;
 	};
-	
+
 	/**
 	 * this.mapStoreToState
 	 * This function allow you to supply map the state of a store to the
@@ -161,21 +161,20 @@ function defineReact(react, noLongerUsed, extend)
 	 * which will be merged with the component state (IF it has any properties at all,
 	 * should you return a blank object the component will not rerender).
 	 */
-	proto.mapStoreToState = function(store, filterFunc)
-	{
+	proto.mapStoreToState = function (store, filterFunc) {
 		// make sure we have a proper singleton instance to work with
-		if (typeof store === 'function') {
+		if (typeof store === "function") {
 			if (store.singleton) {
 				store = store.singleton;
 			} else {
 				store = Reflux.initStore(store);
 			}
 		}
-		
+
 		// we need a closure so that the called function can remember the proper filter function to use, so function gets defined here
 		var self = this;
 		function onMapStoreTrigger(obj) {
-			// get an object 
+			// get an object
 			var update = filterFunc.call(self, obj);
 			// if no object returned from filter functions do nothing
 			if (!update) {
@@ -193,20 +192,23 @@ function defineReact(react, noLongerUsed, extend)
 				self.setState(update);
 			}
 		}
-		
+
 		// add the listener to know when the store is triggered
 		this.__storeunsubscribes__ = this.__storeunsubscribes__ || [];
 		this.__storeunsubscribes__.push(store.listen(onMapStoreTrigger));
-		
+
 		// now actually run onMapStoreTrigger with the full store state so that we immediately have all store state mapped to component state
 		if (this.__readytomap__) {
 			onMapStoreTrigger(store.state);
 		} else {
 			this.__delayedmaps__ = this.__delayedmaps__ || [];
-			this.__delayedmaps__.push({func:onMapStoreTrigger, state:store.state});
+			this.__delayedmaps__.push({
+				func: onMapStoreTrigger,
+				state: store.state,
+			});
 		}
 	};
-	
+
 	/**
 	 * Reflux.Component.extend(OtherClass)
 	 * This allows you to get classes that extend off of another React.Component
@@ -217,25 +219,23 @@ function defineReact(react, noLongerUsed, extend)
 	 * then you can use `class MyComponent extends MyDualComponent` to get the benefits
 	 * of both libraries.
 	 */
-	RefluxComponent.extend = function(clss) {
-		return defineReact(null, null, clss);
-	};
-	
+	RefluxComponent.extend = (clss) => defineReact(null, null, clss);
+
 	// if is being manually called with an `extend` argument present then just return the created class
 	if (extend) {
 		return RefluxComponent;
 	}
-	
+
 	// otherwise set as Reflux.Component and continue with other normal definitions
 	Reflux.Component = RefluxComponent;
-	
+
 	// also set Reflux.PureComponent (if it exists) using the .extend feature
 	if (_react.PureComponent) {
 		Reflux.PureComponent = RefluxComponent.extend(_react.PureComponent);
 	}
-	
+
 	// ------------ END Reflux.Component ------------
-	
+
 	// --------- BEGIN Reflux.Store ------------
 	/**
 	 * Reflux.Store:
@@ -247,26 +247,27 @@ function defineReact(react, noLongerUsed, extend)
 	 * with this.store or this.stores in an ES6 component just plass the class,
 	 * it will deal with a singleton instantiation of the class automatically.
 	 */
-	var RefluxStore = function() {
+	var RefluxStore = function () {
 		// extending doesn't really work well here, so instead we create an internal instance
 		// and just loop through its properties/methods and make a getter/setter for each
 		// that will actually be getting and setting on that internal instance.
 		this.__store__ = Reflux.createStore();
 		this.state = {};
-		var self = this;
 		for (var key in this.__store__) {
 			/*jshint loopfunc: true */
-			(function (prop) {
-				Object.defineProperty(self, prop, {
-					get: function () { return self.__store__[prop]; },
-					set: function (v) { self.__store__[prop] = v; }
+			((prop) => {
+				Object.defineProperty(this, prop, {
+					get: () => this.__store__[prop],
+					set: (v) => {
+						this.__store__[prop] = v;
+					},
 				});
 			})(key);
 		}
 	};
-	
+
 	proto = RefluxStore.prototype;
-	
+
 	// this defines the listenables property, mostly intended to be set as `this.listenables` in the constructor of the store
 	// it is essentially a shortcut to the `listenToMany` method
 	Object.defineProperty(proto, "listenables", {
@@ -275,8 +276,8 @@ function defineReact(react, noLongerUsed, extend)
 		},
 		set: function (v) {
 			var Combined = {};
-			if (Array.isArray(v)){
-				v.forEach(function(obj) {
+			if (Array.isArray(v)) {
+				v.forEach((obj) => {
 					for (var key in obj) {
 						Combined[key] = obj[key];
 					}
@@ -288,9 +289,9 @@ function defineReact(react, noLongerUsed, extend)
 			this.listenToMany(Combined);
 		},
 		enumerable: true,
-		configurable: true
+		configurable: true,
 	});
-	
+
 	// allows simple usage of `this.setState(obj)` within the store to both update the state and trigger the store to update
 	// components that it is attached to in a simple way that is idiomatic with React
 	proto.setState = function (obj) {
@@ -305,38 +306,38 @@ function defineReact(react, noLongerUsed, extend)
 		// trigger, because any component it's attached to is listening and will merge the store state into its own on a store trigger
 		this.trigger(obj);
 	};
-	
+
 	// this is a static property so that other code can identify that this is a Reflux.Store class
 	// has issues specifically when using babel to transpile your ES6 stores for IE10 and below, not documented and shouldn't use yet
 	Object.defineProperty(RefluxStore, "isES6Store", {
-		get: function () {
-			return true;
-		},
+		get: () => true,
 		enumerable: true,
-		configurable: true
+		configurable: true,
 	});
-	
+
 	// allows a shortcut for accessing MyStore.singleton.state as MyStore.state (since common usage makes a singleton)
 	Object.defineProperty(RefluxStore, "state", {
 		get: function () {
 			if (!this.singleton) {
-				throw new Error('Reflux.Store.state is inaccessible before the store has been initialized.');
+				throw new Error(
+					"Reflux.Store.state is inaccessible before the store has been initialized.",
+				);
 			}
 			return this.singleton.state;
 		},
 		enumerable: true,
-		configurable: true
+		configurable: true,
 	});
-	
+
 	/* NOTE:
 	If a Reflux.Store definition is given a static id property and used
 	properly within a Reflux.Component or with Reflux.initStore then
 	it will be added to the Reflux.GlobalState object which automatically tracks the
 	current state of all such defined stores in the program. */
-	
+
 	Reflux.Store = RefluxStore;
 	// ----------- END Reflux.Store -------------
-	
+
 	// --------- BEGIN Reflux Static Props/Methods ------------
 	/**
 	 * Reflux.GlobalState is where data is stored for any Reflux.Store that has a static id property. Each store's
@@ -349,22 +350,20 @@ function defineReact(react, noLongerUsed, extend)
 	 * not continue to mutate as Reflux.GlobalState continues to mutate.
 	 */
 	Reflux.GlobalState = Reflux.GlobalState || {};
-	
+
 	/**
 	 * Reflux.stores
 	 * All initialized stores that have an id will have a reference to their singleton stored here with the key being the id.
 	 */
 	Reflux.stores = {};
-	
+
 	/**
-	 * Reflux.getGlobalState takes no arguments, and returns a deep clone of Reflux.GlobalState 
+	 * Reflux.getGlobalState takes no arguments, and returns a deep clone of Reflux.GlobalState
 	 * which will not continue to mutate as Reflux.GlobalState does. It can essentially store
 	 * snapshots of the global state as the program goes for saving or for in-app time travel.
 	 */
-	Reflux.getGlobalState = function() {
-		return clone(Reflux.GlobalState);
-	};
-	
+	Reflux.getGlobalState = () => clone(Reflux.GlobalState);
+
 	/**
 	 * Reflux.setGlobalState takes one argument that is a representation of the a possible
 	 * global state. It updates all stores in the program to represent data in that given state.
@@ -372,7 +371,7 @@ function defineReact(react, noLongerUsed, extend)
 	 * instances they are attached to. Partial states may be given to it, and only the represented
 	 * stores/state values will be updated.
 	 */
-	Reflux.setGlobalState = function(obj) {
+	Reflux.setGlobalState = (obj) => {
 		for (var storeID in obj) {
 			if (Reflux.stores[storeID]) {
 				Reflux.stores[storeID].setState(obj[storeID]);
@@ -381,7 +380,7 @@ function defineReact(react, noLongerUsed, extend)
 			}
 		}
 	};
-	
+
 	/**
 	 * Reflux.initStore takes one argument (a class that extends Reflux.Store) and returns a singleton
 	 * intance of that class. Its main functionality is to be able to mimic what happens to stores attached to
@@ -390,7 +389,7 @@ function defineReact(react, noLongerUsed, extend)
 	 */
 	// Reflux.initializeGlobalStore is kept for backwards compatibility, but deprecated since the function is
 	// now for more broad instantiation of globally stored AND non-globally stored classes
-	Reflux.initializeGlobalStore = Reflux.initStore = function(str) {
+	Reflux.initializeGlobalStore = Reflux.initStore = (str) => {
 		var storeId = str.id;
 		// if they're initializing something twice then we're done already, return it
 		if (str.singleton) {
@@ -402,7 +401,7 @@ function defineReact(react, noLongerUsed, extend)
 			return str.singleton;
 		}
 		// create the singleton and assign it to the class's singleton static property
-		var inst = str.singleton = new str();
+		var inst = (str.singleton = new str());
 		// store it on the Reflux.stores array to be accessible later
 		Reflux.stores[storeId] = inst;
 		// the singleton instance itself should also have the id property of the class
@@ -414,7 +413,7 @@ function defineReact(react, noLongerUsed, extend)
 				inst.state[key] = Reflux.GlobalState[storeId][key];
 			}
 			Reflux.GlobalState[storeId] = inst.state;
-		// otherwise just set the global state to the default state of the class
+			// otherwise just set the global state to the default state of the class
 		} else {
 			Reflux.GlobalState[storeId] = inst.state;
 		}
@@ -422,15 +421,14 @@ function defineReact(react, noLongerUsed, extend)
 		return inst;
 	};
 	// --------- END Reflux Static Props/Methods ------------
-	
+
 	// so it knows not to redefine Reflux static stuff and stores if called again
 	_defined = true;
 }
 
 // filters a state object by storeKeys array (if it exists)
 // if filtering and obj contains no properties to use, returns false to let the component know not to update
-function filterByStoreKeys(storeKeys, obj)
-{
+function filterByStoreKeys(storeKeys, obj) {
 	// if there are not storeKeys defined then simply return the whole original object
 	if (!storeKeys) {
 		return obj;
@@ -440,7 +438,7 @@ function filterByStoreKeys(storeKeys, obj)
 	var updateObj = {};
 	for (var i = 0, ii = storeKeys.length; i < ii; i++) {
 		var prop = storeKeys[i];
-		if (obj.hasOwnProperty(prop)) {
+		if (Object.hasOwn(obj, prop)) {
 			doUpdate = true;
 			updateObj[prop] = obj[prop];
 		}
@@ -457,16 +455,22 @@ function clone(frm, to) {
 	if (frm.constructor !== Object && frm.constructor !== Array) {
 		return frm;
 	}
-	if (frm.constructor === Date || frm.constructor === RegExp || frm.constructor === Function ||
-		frm.constructor === String || frm.constructor === Number || frm.constructor === Boolean) {
+	if (
+		frm.constructor === Date ||
+		frm.constructor === RegExp ||
+		frm.constructor === Function ||
+		frm.constructor === String ||
+		frm.constructor === Number ||
+		frm.constructor === Boolean
+	) {
 		return new frm.constructor(frm);
 	}
 	to = to || new frm.constructor();
 	for (var name in frm) {
-		to[name] = typeof to[name] === "undefined" ? clone(frm[name], null) : to[name];
+		to[name] =
+			typeof to[name] === "undefined" ? clone(frm[name], null) : to[name];
 	}
 	return to;
 }
 
 module.exports = defineReact;
-

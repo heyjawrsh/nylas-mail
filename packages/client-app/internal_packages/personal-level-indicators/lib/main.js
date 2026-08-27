@@ -1,5 +1,5 @@
-import {ComponentRegistry} from 'nylas-exports'
-import PersonalLevelIcon from './personal-level-icon'
+import { ComponentRegistry } from "nylas-exports";
+import PersonalLevelIcon from "./personal-level-icon";
 
 /*
 All packages must export a basic object that has at least the following 3
@@ -18,15 +18,15 @@ up or your package is manually activated.
 */
 
 export function activate() {
-  ComponentRegistry.register(PersonalLevelIcon, {
-    role: 'ThreadListIcon',
-  });
+	ComponentRegistry.register(PersonalLevelIcon, {
+		role: "ThreadListIcon",
+	});
 }
 
 export function serialize() {
-  return {};
+	return {};
 }
 
 export function deactivate() {
-  ComponentRegistry.unregister(PersonalLevelIcon);
+	ComponentRegistry.unregister(PersonalLevelIcon);
 }

@@ -10,16 +10,19 @@
  * sqlite_autoindex_threadLabels_1 labelId, threadId
  */
 export default (sequelize) => {
-  return sequelize.define('threadLabel', {
-  }, {
-    indexes: [
-      // NOTE: When SQLite sets up this table, it creates an auto index in
-      // the order ['labelId', 'threadId']. This is the correct index we
-      // need for queries requesting Threads for a certain Label.
-      //
-      // We need to create one more index to allow queries from the
-      // reverse direction requesting Labels for a certain Thread.
-      {fields: ['threadId', 'labelId']},
-    ],
-  });
+	return sequelize.define(
+		"threadLabel",
+		{},
+		{
+			indexes: [
+				// NOTE: When SQLite sets up this table, it creates an auto index in
+				// the order ['labelId', 'threadId']. This is the correct index we
+				// need for queries requesting Threads for a certain Label.
+				//
+				// We need to create one more index to allow queries from the
+				// reverse direction requesting Labels for a certain Thread.
+				{ fields: ["threadId", "labelId"] },
+			],
+		},
+	);
 };

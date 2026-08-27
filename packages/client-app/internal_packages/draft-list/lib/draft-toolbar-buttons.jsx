@@ -6,39 +6,45 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const React = require("react");
-const {RetinaImg} = require('nylas-component-kit');
-const {Actions, FocusedContentStore} = require("nylas-exports");
+const { RetinaImg } = require("nylas-component-kit");
+const { Actions, FocusedContentStore } = require("nylas-exports");
 
 class DraftDeleteButton extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this._destroySelected = this._destroySelected.bind(this);
-  }
+	constructor(...args) {
+		super(...args);
+		this._destroySelected = this._destroySelected.bind(this);
+	}
 
-  static initClass() {
-    this.displayName = 'DraftDeleteButton';
-    this.containerRequired = false;
-  
-    this.propTypes =
-      {selection: PropTypes.object.isRequired};
-  }
+	static initClass() {
+		DraftDeleteButton.displayName = "DraftDeleteButton";
+		DraftDeleteButton.containerRequired = false;
 
-  render() {
-    return <button style={{order:-100}}
-            className="btn btn-toolbar"
-            title="Delete"
-            onClick={this._destroySelected}>
-      <RetinaImg name="icon-composer-trash.png" mode={RetinaImg.Mode.ContentIsMask} />
-    </button>;
-  }
+		DraftDeleteButton.propTypes = { selection: PropTypes.object.isRequired };
+	}
 
-  _destroySelected() {
-    for (var item of Array.from(this.props.selection.items())) {
-      Actions.destroyDraft(item.clientId);
-    }
-    this.props.selection.clear();
-  }
+	render() {
+		return (
+			<button
+				style={{ order: -100 }}
+				className="btn btn-toolbar"
+				title="Delete"
+				onClick={this._destroySelected}
+			>
+				<RetinaImg
+					name="icon-composer-trash.png"
+					mode={RetinaImg.Mode.ContentIsMask}
+				/>
+			</button>
+		);
+	}
+
+	_destroySelected() {
+		for (var item of Array.from(this.props.selection.items())) {
+			Actions.destroyDraft(item.clientId);
+		}
+		this.props.selection.clear();
+	}
 }
 DraftDeleteButton.initClass();
 
-module.exports = {DraftDeleteButton};
+module.exports = { DraftDeleteButton };

@@ -1,5 +1,5 @@
-import Attribute from './attribute';
-import Matcher from './matcher';
+import Attribute from "./attribute";
+import Matcher from "./matcher";
 
 /*
 Public: Collection attributes provide basic support for one-to-many relationships.
@@ -30,76 +30,87 @@ The value of this attribute is always an array of other model objects.
 Section: Database
 */
 export default class AttributeCollection extends Attribute {
-  constructor({modelKey, jsonKey, itemClass, joinOnField, joinQueryableBy, queryable}) {
-    super({modelKey, jsonKey, queryable});
-    this.ItemClass = this.itemClass = itemClass;
-    this.joinOnField = joinOnField;
-    this.joinQueryableBy = joinQueryableBy || [];
-  }
+	constructor({
+		modelKey,
+		jsonKey,
+		itemClass,
+		joinOnField,
+		joinQueryableBy,
+		queryable,
+	}) {
+		super({ modelKey, jsonKey, queryable });
+		this.ItemClass = this.itemClass = itemClass;
+		this.joinOnField = joinOnField;
+		this.joinQueryableBy = joinQueryableBy || [];
+	}
 
-  toJSON(vals) {
-    if (!vals) {
-      return [];
-    }
+	toJSON(vals) {
+		if (!vals) {
+			return [];
+		}
 
-    if (!(vals instanceof Array)) {
-      throw new Error(`AttributeCollection::toJSON: ${this.modelKey} is not an array.`);
-    }
+		if (!(vals instanceof Array)) {
+			throw new Error(
+				`AttributeCollection::toJSON: ${this.modelKey} is not an array.`,
+			);
+		}
 
-    const json = []
-    for (const val of vals) {
-      if (!(val instanceof this.ItemClass)) {
-        throw new Error(`AttributeCollection::toJSON: Value \`${val}\` in ${this.modelKey} is not an ${this.ItemClass.name}`);
-      }
-      if (val.toJSON !== undefined) {
-        json.push(val.toJSON());
-      } else {
-        json.push(val);
-      }
-    }
-    return json;
-  }
+		const json = [];
+		for (const val of vals) {
+			if (!(val instanceof this.ItemClass)) {
+				throw new Error(
+					`AttributeCollection::toJSON: Value \`${val}\` in ${this.modelKey} is not an ${this.ItemClass.name}`,
+				);
+			}
+			if (val.toJSON !== undefined) {
+				json.push(val.toJSON());
+			} else {
+				json.push(val);
+			}
+		}
+		return json;
+	}
 
-  fromJSON(json) {
-    if (!json || !(json instanceof Array)) {
-      return [];
-    }
-    const objs = [];
+	fromJSON(json) {
+		if (!json || !(json instanceof Array)) {
+			return [];
+		}
+		const objs = [];
 
-    for (const objJSON of json) {
-      // Note: It's possible for a malformed API request to return an array
-      // of null values. N1 is tolerant to this type of error, but shouldn't
-      // happen on the API end.
-      if (!objJSON) {
-        continue;
-      }
+		for (const objJSON of json) {
+			// Note: It's possible for a malformed API request to return an array
+			// of null values. N1 is tolerant to this type of error, but shouldn't
+			// happen on the API end.
+			if (!objJSON) {
+				continue;
+			}
 
-      if (this.ItemClass.prototype.fromJSON) {
-        const obj = new this.ItemClass();
-        // Important: if no ids are in the JSON, don't make them up
-        // randomly.  This causes an object to be "different" each time it's
-        // de-serialized even if it's actually the same, makes React
-        // components re-render!
-        obj.clientId = undefined;
-        obj.fromJSON(objJSON);
-        objs.push(obj);
-      } else {
-        const obj = new this.ItemClass(objJSON);
-        obj.clientId = undefined;
-        objs.push(obj);
-      }
-    }
-    return objs;
-  }
+			if (this.ItemClass.prototype.fromJSON) {
+				const obj = new this.ItemClass();
+				// Important: if no ids are in the JSON, don't make them up
+				// randomly.  This causes an object to be "different" each time it's
+				// de-serialized even if it's actually the same, makes React
+				// components re-render!
+				obj.clientId = undefined;
+				obj.fromJSON(objJSON);
+				objs.push(obj);
+			} else {
+				const obj = new this.ItemClass(objJSON);
+				obj.clientId = undefined;
+				objs.push(obj);
+			}
+		}
+		return objs;
+	}
 
-  // Public: Returns a {Matcher} for objects containing the provided value.
-  contains(val) {
-    this._assertPresentAndQueryable('contains', val);
-    return new Matcher(this, 'contains', val);
-  }
+	// Public: Returns a {Matcher} for objects containing the provided value.
+	contains(val) {
+		this._assertPresentAndQueryable("contains", val);
+		return new Matcher(this, "contains", val);
+	}
 
-  containsAny(vals) {
-    this._assertPresentAndQueryable('contains', vals);
-    return new Matcher(this, 'containsAny', vals);
-  }
+	containsAny(vals) {
+		this._assertPresentAndQueryable("contains", vals);
+		return new Matcher(this, "containsAny", vals);
+	}
 }

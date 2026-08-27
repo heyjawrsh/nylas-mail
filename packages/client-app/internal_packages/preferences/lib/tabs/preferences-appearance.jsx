@@ -1,108 +1,113 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {RetinaImg, Flexbox} from 'nylas-component-kit';
+import React from "react";
+import PropTypes from "prop-types";
+import { RetinaImg, Flexbox } from "nylas-component-kit";
 
 class AppearanceModeSwitch extends React.Component {
+	static displayName = "AppearanceModeSwitch";
 
-  static displayName = 'AppearanceModeSwitch';
+	static propTypes = {
+		config: PropTypes.object.isRequired,
+	};
 
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-  };
+	constructor(props) {
+		super();
+		this.state = {
+			value: props.config.get("core.workspace.mode"),
+		};
+	}
 
-  constructor(props) {
-    super();
-    this.state = {
-      value: props.config.get('core.workspace.mode'),
-    };
-  }
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.setState({
+			value: nextProps.config.get("core.workspace.mode"),
+		});
+	}
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.config.get('core.workspace.mode'),
-    });
-  }
+	_onApplyChanges = () => {
+		NylasEnv.commands.dispatch(`application:select-${this.state.value}-mode`);
+	};
 
-  _onApplyChanges = () => {
-    NylasEnv.commands.dispatch(`application:select-${this.state.value}-mode`);
-  }
+	_renderModeOptions() {
+		return ["list", "split"].map((mode) => (
+			<AppearanceModeOption
+				mode={mode}
+				key={mode}
+				active={this.state.value === mode}
+				onClick={() => this.setState({ value: mode })}
+			/>
+		));
+	}
 
-  _renderModeOptions() {
-    return ['list', 'split'].map((mode) =>
-      <AppearanceModeOption
-        mode={mode}
-        key={mode}
-        active={this.state.value === mode}
-        onClick={() => this.setState({value: mode})}
-      />
-    );
-  }
+	render() {
+		const hasChanges =
+			this.state.value !== this.props.config.get("core.workspace.mode");
+		let applyChangesClass = "btn";
+		if (!hasChanges) applyChangesClass += " btn-disabled";
 
-  render() {
-    const hasChanges = this.state.value !== this.props.config.get('core.workspace.mode');
-    let applyChangesClass = "btn";
-    if (!hasChanges) applyChangesClass += " btn-disabled";
-
-    return (
-      <div className="appearance-mode-switch">
-        <Flexbox
-          direction="row"
-          style={{alignItems: "center"}}
-          className="item"
-        >
-          {this._renderModeOptions()}
-        </Flexbox>
-        <div className={applyChangesClass} onClick={this._onApplyChanges}>Apply Layout</div>
-      </div>
-    );
-  }
-
+		return (
+			<div className="appearance-mode-switch">
+				<Flexbox
+					direction="row"
+					style={{ alignItems: "center" }}
+					className="item"
+				>
+					{this._renderModeOptions()}
+				</Flexbox>
+				<div className={applyChangesClass} onClick={this._onApplyChanges}>
+					Apply Layout
+				</div>
+			</div>
+		);
+	}
 }
 
 const AppearanceModeOption = function AppearanceModeOption(props) {
-  let classname = "appearance-mode";
-  if (props.active) classname += " active";
+	let classname = "appearance-mode";
+	if (props.active) classname += " active";
 
-  const label = {
-    list: 'Single Panel',
-    split: 'Two Panel',
-  }[props.mode];
+	const label = {
+		list: "Single Panel",
+		split: "Two Panel",
+	}[props.mode];
 
-  return (
-    <div className={classname} onClick={props.onClick}>
-      <RetinaImg name={`appearance-mode-${props.mode}.png`} mode={RetinaImg.Mode.ContentIsMask} />
-      <div>{label}</div>
-    </div>
-  );
-}
+	return (
+		<div className={classname} onClick={props.onClick}>
+			<RetinaImg
+				name={`appearance-mode-${props.mode}.png`}
+				mode={RetinaImg.Mode.ContentIsMask}
+			/>
+			<div>{label}</div>
+		</div>
+	);
+};
 AppearanceModeOption.propTypes = {
-  mode: PropTypes.string.isRequired,
-  active: PropTypes.bool,
-  onClick: PropTypes.func,
-}
+	mode: PropTypes.string.isRequired,
+	active: PropTypes.bool,
+	onClick: PropTypes.func,
+};
 
 class PreferencesAppearance extends React.Component {
+	static displayName = "PreferencesAppearance";
 
-  static displayName = 'PreferencesAppearance';
+	static propTypes = {
+		config: PropTypes.object,
+		configSchema: PropTypes.object,
+	};
 
-  static propTypes = {
-    config: PropTypes.object,
-    configSchema: PropTypes.object,
-  }
+	onClick = () => {
+		NylasEnv.commands.dispatch("window:launch-theme-picker");
+	};
 
-  onClick = () => {
-    NylasEnv.commands.dispatch("window:launch-theme-picker");
-  }
-
-  render() {
-    return (
-      <div className="container-appearance">
-        <label htmlFor="change-layout">Change layout:</label>
-        <AppearanceModeSwitch id="change-layout" config={this.props.config} />
-        <button className="btn btn-large" onClick={this.onClick}>Change theme...</button>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div className="container-appearance">
+				<label htmlFor="change-layout">Change layout:</label>
+				<AppearanceModeSwitch id="change-layout" config={this.props.config} />
+				<button className="btn btn-large" onClick={this.onClick}>
+					Change theme...
+				</button>
+			</div>
+		);
+	}
 }
 
 export default PreferencesAppearance;

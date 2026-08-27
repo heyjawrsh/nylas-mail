@@ -6,12 +6,11 @@
  */
 
 class Utils {
-
-  static getTextFromHtml(html) {
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent != null ? div.textContent : div.innerText;
-  }
+	static getTextFromHtml(html) {
+		const div = document.createElement("div");
+		div.innerHTML = html;
+		return div.textContent != null ? div.textContent : div.innerText;
+	}
 }
 
 module.exports = Utils;

@@ -10,12 +10,12 @@
 // fn - A {Function} to measure the duration of.
 //
 // Returns the value returned by the given function.
-window.measure = function(description, fn) {
-  const start = Date.now();
-  const value = fn();
-  const result = Date.now() - start;
-  console.log(description, result);
-  return value;
+window.measure = (description, fn) => {
+	const start = Date.now();
+	const value = fn();
+	const result = Date.now() - start;
+	console.log(description, result);
+	return value;
 };
 
 // Public: Create a dev tools profile for a function.
@@ -25,9 +25,10 @@ window.measure = function(description, fn) {
 // fn - A {Function} to profile.
 //
 // Returns the value returned by the given function.
-window.profile = (description, fn) => measure(description, function() {
-  console.profile(description);
-  const value = fn();
-  console.profileEnd(description);
-  return value;
-});
+window.profile = (description, fn) =>
+	measure(description, () => {
+		console.profile(description);
+		const value = fn();
+		console.profileEnd(description);
+		return value;
+	});

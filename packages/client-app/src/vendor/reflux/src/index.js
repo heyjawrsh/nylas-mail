@@ -1,17 +1,17 @@
-var Reflux = require('reflux-core');
+var Reflux = require("reflux-core");
 
-Reflux.serverMode = typeof window !== 'object';
+Reflux.serverMode = typeof window !== "object";
 
-Reflux.connect = require('./connect');
+Reflux.connect = require("./connect");
 
-Reflux.connectFilter = require('./connectFilter');
+Reflux.connectFilter = require("./connectFilter");
 
-Reflux.ListenerMixin = require('./ListenerMixin');
+Reflux.ListenerMixin = require("./ListenerMixin");
 
-Reflux.listenTo = require('./listenTo');
+Reflux.listenTo = require("./listenTo");
 
-Reflux.listenToMany = require('./listenToMany');
+Reflux.listenToMany = require("./listenToMany");
 
-require('./addES6');
+require("./addES6");
 
 module.exports = Reflux;

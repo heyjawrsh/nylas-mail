@@ -1,18 +1,19 @@
-import {React} from 'nylas-exports';
-import PropTypes from 'prop-types';
+import { React } from "nylas-exports";
+import PropTypes from "prop-types";
 
 export default function CodeSnippet(props) {
-  return (
-    <div className={props.className}>
-      {props.intro}
-      <br /><br />
-      <textarea disabled value={props.code} />
-    </div>
-  )
+	return (
+		<div className={props.className}>
+			{props.intro}
+			<br />
+			<br />
+			<textarea disabled value={props.code} />
+		</div>
+	);
 }
 
 CodeSnippet.propTypes = {
-  intro: PropTypes.string,
-  code: PropTypes.string,
-  className: PropTypes.string,
-}
+	intro: PropTypes.string,
+	code: PropTypes.string,
+	className: PropTypes.string,
+};

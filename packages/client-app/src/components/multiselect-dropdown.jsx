@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {ButtonDropdown, Menu} from 'nylas-component-kit'
-import ReactDOM from 'react-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { ButtonDropdown, Menu } from "nylas-component-kit";
+import ReactDOM from "react-dom";
 
 /*
 Renders a drop down of items that can have multiple selected
@@ -17,68 +17,71 @@ Item can be string or object
 **/
 
 class MultiselectDropdown extends Component {
-  static displayName = 'MultiselectDropdown'
+	static displayName = "MultiselectDropdown";
 
-  static propTypes = {
-    className: PropTypes.string,
-    items: PropTypes.array.isRequired,
-    itemChecked: PropTypes.func,
-    onToggleItem: PropTypes.func,
-    itemKey: PropTypes.func,
-    buttonText: PropTypes.string,
-    itemContent: PropTypes.func,
-  }
+	static propTypes = {
+		className: PropTypes.string,
+		items: PropTypes.array.isRequired,
+		itemChecked: PropTypes.func,
+		onToggleItem: PropTypes.func,
+		itemKey: PropTypes.func,
+		buttonText: PropTypes.string,
+		itemContent: PropTypes.func,
+	};
 
-  static defaultProps = {
-    className: '',
-    items: [],
-    itemChecked: {},
-    onToggleItem: () => {},
-    itemKey: () => {},
-    buttonText: '',
-    itemContent: () => {},
-  }
+	static defaultProps = {
+		className: "",
+		items: [],
+		itemChecked: {},
+		onToggleItem: () => {},
+		itemKey: () => {},
+		buttonText: "",
+		itemContent: () => {},
+	};
 
-  componentDidUpdate() {
-    if (ReactDOM.findDOMNode(this.refs.select)) {
-      ReactDOM.findDOMNode(this.refs.select).focus()
-    }
-  }
+	componentDidUpdate() {
+		if (ReactDOM.findDOMNode(this.refs.select)) {
+			ReactDOM.findDOMNode(this.refs.select).focus();
+		}
+	}
 
+	_onItemClick = (item) => {
+		this.props.onToggleItem(item);
+	};
 
-  _onItemClick = (item) => {
-    this.props.onToggleItem(item)
-  }
+	_renderItem = (item) => {
+		const MenuItem = Menu.Item;
+		return (
+			<MenuItem
+				onMouseDown={() => this._onItemClick(item)}
+				checked={this.props.itemChecked(item)}
+				key={this.props.itemKey(item)}
+				content={this.props.itemContent(item)}
+			/>
+		);
+	};
 
-  _renderItem = (item) => {
-    const MenuItem = Menu.Item
-    return (
-      <MenuItem onMouseDown={() => this._onItemClick(item)} checked={this.props.itemChecked(item)} key={this.props.itemKey(item)} content={this.props.itemContent(item)} />
-    )
-  }
+	_renderMenu = (items) => {
+		return (
+			<Menu
+				items={items}
+				itemContent={this._renderItem}
+				itemKey={(item) => item.id}
+				onSelect={() => {}}
+			/>
+		);
+	};
 
-
-  _renderMenu= (items) => {
-    return (
-      <Menu
-        items={items}
-        itemContent={this._renderItem}
-        itemKey={item => item.id}
-        onSelect={() => {}}
-      />
-    )
-  }
-
-  render() {
-    const {items} = this.props
-    const menu = this._renderMenu(items)
-    return (
-      <ButtonDropdown
-        className={'btn-multiselect'}
-        primaryItem={<span>{this.props.buttonText}</span>}
-        menu={menu}
-      />
-    )
-  }
+	render() {
+		const { items } = this.props;
+		const menu = this._renderMenu(items);
+		return (
+			<ButtonDropdown
+				className={"btn-multiselect"}
+				primaryItem={<span>{this.props.buttonText}</span>}
+				menu={menu}
+			/>
+		);
+	}
 }
-export default MultiselectDropdown
+export default MultiselectDropdown;

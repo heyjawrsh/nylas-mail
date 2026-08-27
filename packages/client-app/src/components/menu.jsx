@@ -7,12 +7,12 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const classNames = require('classnames');
-const _ = require('underscore');
-const {DOMUtils} = require('nylas-exports');
-const {CompositeDisposable} = require('event-kit');
+const React = require("react");
+const ReactDOM = require("react-dom");
+const classNames = require("classnames");
+const _ = require("underscore");
+const { DOMUtils } = require("nylas-exports");
+const { CompositeDisposable } = require("event-kit");
 
 /*
 Public: `MenuItem` components can be provided to the {Menu} by the `itemContent` function.
@@ -21,16 +21,15 @@ MenuItem's props allow you to display dividers as well as standard items.
 Section: Component Kit
 */
 class MenuItem extends React.Component {
-  constructor(...args) {
-    this.render = this.render.bind(this);
-    super(...args);
-  }
+	constructor(...args) {
+		this.render = this.render.bind(this);
+		super(...args);
+	}
 
-  static initClass() {
-  
-    this.displayName = 'MenuItem';
-  
-    /*
+	static initClass() {
+		MenuItem.displayName = "MenuItem";
+
+		/*
     Public: React `props` supported by MenuItem:
   
      - `divider` (optional) Pass a {Boolean} to render the menu item as a section divider.
@@ -38,30 +37,36 @@ class MenuItem extends React.Component {
      - `selected` (optional) Pass a {Boolean} to specify whether the item is selected.
      - `checked` (optional) Pass a {Boolean} to specify whether the item is checked.
     */
-    this.propTypes = {
-      divider: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      selected: PropTypes.bool,
-      checked: PropTypes.bool
-    };
-  }
+		MenuItem.propTypes = {
+			divider: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+			selected: PropTypes.bool,
+			checked: PropTypes.bool,
+		};
+	}
 
-  render() {
-    if (this.props.divider) {
-      const dividerLabel = _.isString(this.props.divider) ? this.props.divider : '';
-      return React.createElement("div", {"className": "item divider"},
-        (dividerLabel)
-      );
-    } else {
-      const className = classNames({
-        "item": true,
-        "selected": this.props.selected,
-        "checked": this.props.checked
-      });
-      return React.createElement("div", {"className": (className), "onMouseDown": (this.props.onMouseDown)},
-        (this.props.content)
-      );
-    }
-  }
+	render() {
+		if (this.props.divider) {
+			const dividerLabel = _.isString(this.props.divider)
+				? this.props.divider
+				: "";
+			return React.createElement(
+				"div",
+				{ className: "item divider" },
+				dividerLabel,
+			);
+		} else {
+			const className = classNames({
+				item: true,
+				selected: this.props.selected,
+				checked: this.props.checked,
+			});
+			return React.createElement(
+				"div",
+				{ className: className, onMouseDown: this.props.onMouseDown },
+				this.props.content,
+			);
+		}
+	}
 }
 MenuItem.initClass();
 
@@ -71,36 +76,49 @@ Public: React component for a {Menu} item that displays a name and email address
 Section: Component Kit
 */
 class MenuNameEmailItem extends React.Component {
-  constructor(...args) {
-    this.render = this.render.bind(this);
-    super(...args);
-  }
+	constructor(...args) {
+		this.render = this.render.bind(this);
+		super(...args);
+	}
 
-  static initClass() {
-    this.displayName = 'MenuNameEmailItem';
-  
-    /*
+	static initClass() {
+		MenuNameEmailItem.displayName = "MenuNameEmailItem";
+
+		/*
     Public: React `props` supported by MenuNameEmailItem:
   
      - `name` (optional) The {String} name to be displayed.
      - `email` (optional) The {String} email address to be displayed.
     */
-    this.propTypes = {
-      name: PropTypes.string,
-      email: PropTypes.string
-    };
-  }
+		MenuNameEmailItem.propTypes = {
+			name: PropTypes.string,
+			email: PropTypes.string,
+		};
+	}
 
-  render() {
-    if (((this.props.name != null ? this.props.name.length : undefined) > 0) && (this.props.name !== this.props.email)) {
-      return React.createElement("span", null,
-        React.createElement("span", {"className": "primary"}, (this.props.name)),
-        React.createElement("span", {"className": "secondary"}, (`(${this.props.email})`))
-      );
-    } else {
-      return React.createElement("span", {"className": "primary"}, (this.props.email));
-    }
-  }
+	render() {
+		if (
+			(this.props.name != null ? this.props.name.length : undefined) > 0 &&
+			this.props.name !== this.props.email
+		) {
+			return React.createElement(
+				"span",
+				null,
+				React.createElement("span", { className: "primary" }, this.props.name),
+				React.createElement(
+					"span",
+					{ className: "secondary" },
+					`(${this.props.email})`,
+				),
+			);
+		} else {
+			return React.createElement(
+				"span",
+				{ className: "primary" },
+				this.props.email,
+			);
+		}
+	}
 }
 MenuNameEmailItem.initClass();
 
@@ -133,10 +151,10 @@ component's Menu instance:
 Section: Component Kit
 */
 class Menu extends React.Component {
-  static initClass() {
-    this.displayName = 'Menu';
-  
-    /*
+	static initClass() {
+		Menu.displayName = "Menu";
+
+		/*
     Public: React `props` supported by Menu:
   
      - `className` (optional) The {String} class name applied to the Menu
@@ -174,211 +192,261 @@ class Menu extends React.Component {
      nothing selected.
   
     */
-    this.propTypes = {
-      className: PropTypes.string,
-      footerComponents: PropTypes.node,
-      headerComponents: PropTypes.node,
-      itemContext: PropTypes.object,
-      itemContent: PropTypes.func.isRequired,
-      itemKey: PropTypes.func.isRequired,
-      itemChecked: PropTypes.func,
-  
-      items: PropTypes.array.isRequired,
-  
-      onSelect: PropTypes.func.isRequired,
-  
-      onEscape: PropTypes.func,
-  
-      defaultSelectedIndex: PropTypes.number
-    };
-  
-    this.defaultProps =
-      {onEscape() {}};
-  }
+		Menu.propTypes = {
+			className: PropTypes.string,
+			footerComponents: PropTypes.node,
+			headerComponents: PropTypes.node,
+			itemContext: PropTypes.object,
+			itemContent: PropTypes.func.isRequired,
+			itemKey: PropTypes.func.isRequired,
+			itemChecked: PropTypes.func,
 
-  constructor(props) {
-    this.getSelectedItem = this.getSelectedItem.bind(this);
-    this.clearSelection = this.clearSelection.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.render = this.render.bind(this);
-    this._onKeyDown = this._onKeyDown.bind(this);
-    this._contentContainer = this._contentContainer.bind(this);
-    this._onShiftSelectedIndex = this._onShiftSelectedIndex.bind(this);
-    this._onEnter = this._onEnter.bind(this);
-    this._onEscape = this._onEscape.bind(this);
-    this.props = props;
-    this._mounted = false;
-    this.state =
-      {selectedIndex: this.props.defaultSelectedIndex != null ? this.props.defaultSelectedIndex : 0};
-  }
+			items: PropTypes.array.isRequired,
 
-  // Public: Returns the currently selected item.
-  //
-  getSelectedItem() {
-    return this.props.items[this.state.selectedIndex];
-  }
+			onSelect: PropTypes.func.isRequired,
 
-  // TODO this is a hack, refactor
-  clearSelection() {
-    return setImmediate(() => {
-      if (this._mounted === false) { return; }
-      return this.setState({selectedIndex: -1});
-    });
-  }
+			onEscape: PropTypes.func,
 
-  componentDidMount() {
-    return this._mounted = true;
-  }
+			defaultSelectedIndex: PropTypes.number,
+		};
 
-  componentWillUnmount() {
-    return this._mounted = false;
-  }
+		Menu.defaultProps = { onEscape() {} };
+	}
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    // Attempt to preserve selection across props.items changes by
-    // finding an item in the new list with a key matching the old
-    // selected item's key
-    let newSelectionIndex, selection;
-    if (this.state.selectedIndex >= 0) {
-      selection = this.props.items[this.state.selectedIndex];
-      newSelectionIndex = 0;
-    } else {
-      newSelectionIndex = newProps.defaultSelectedIndex != null ? newProps.defaultSelectedIndex : -1;
-    }
+	constructor(props) {
+		this.getSelectedItem = this.getSelectedItem.bind(this);
+		this.clearSelection = this.clearSelection.bind(this);
+		this.componentDidMount = this.componentDidMount.bind(this);
+		this.componentWillUnmount = this.componentWillUnmount.bind(this);
+		this.UNSAFE_componentWillReceiveProps =
+			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
+		this.render = this.render.bind(this);
+		this._onKeyDown = this._onKeyDown.bind(this);
+		this._contentContainer = this._contentContainer.bind(this);
+		this._onShiftSelectedIndex = this._onShiftSelectedIndex.bind(this);
+		this._onEnter = this._onEnter.bind(this);
+		this._onEscape = this._onEscape.bind(this);
+		this.props = props;
+		this._mounted = false;
+		this.state = {
+			selectedIndex:
+				this.props.defaultSelectedIndex != null
+					? this.props.defaultSelectedIndex
+					: 0,
+		};
+	}
 
-    if (selection != null) {
-      const selectionKey = this.props.itemKey(selection);
-      const newSelection = _.find(newProps.items, item => this.props.itemKey(item) === selectionKey);
-      if (newSelection != null) { newSelectionIndex = newProps.items.indexOf(newSelection); }
-    }
+	// Public: Returns the currently selected item.
+	//
+	getSelectedItem() {
+		return this.props.items[this.state.selectedIndex];
+	}
 
-    return this.setState({
-      selectedIndex: newSelectionIndex});
-  }
+	// TODO this is a hack, refactor
+	clearSelection() {
+		return setImmediate(() => {
+			if (this._mounted === false) {
+				return;
+			}
+			return this.setState({ selectedIndex: -1 });
+		});
+	}
 
-  componentDidUpdate() {
-    const item = ReactDOM.findDOMNode(this).querySelector(".selected");
-    const container = ReactDOM.findDOMNode(this).querySelector(".content-container");
-    const adjustment = DOMUtils.scrollAdjustmentToMakeNodeVisibleInContainer(item, container);
-    if (adjustment !== 0) {
-      return container.scrollTop += adjustment;
-    }
-  }
+	componentDidMount() {
+		return (this._mounted = true);
+	}
 
-  render() {
-    const hc = this.props.headerComponents != null ? this.props.headerComponents : React.createElement("span", null);
-    const fc = this.props.footerComponents != null ? this.props.footerComponents : React.createElement("span", null);
-    const className = this.props.className ? this.props.className : '';
-    return React.createElement("div", {"onKeyDown": (this._onKeyDown),  
-         "className": (`menu ${className}`),  
-         "tabIndex": "-1"},
-      React.createElement("div", {"className": "header-container"},
-        (hc)
-      ),
-      (this._contentContainer()),
-      React.createElement("div", {"className": "footer-container"},
-        (fc)
-      )
-    );
-  }
+	componentWillUnmount() {
+		return (this._mounted = false);
+	}
 
-  _onKeyDown(event) {
-    if (this.props.items.length === 0) { return; }
-    event.stopPropagation();
-    if (["Enter", "Return"].includes(event.key)) {
-      this._onEnter();
-    }
-    if (event.key === "Escape") {
-      this._onEscape();
-    } else if ((event.key === "ArrowUp") || ((event.key === "Tab") && event.shiftKey)) {
-      this._onShiftSelectedIndex(-1);
-      event.preventDefault();
-    } else if ((event.key === "ArrowDown") || (event.key === "Tab")) {
-      this._onShiftSelectedIndex(1);
-      event.preventDefault();
-    }
+	UNSAFE_componentWillReceiveProps(newProps) {
+		// Attempt to preserve selection across props.items changes by
+		// finding an item in the new list with a key matching the old
+		// selected item's key
+		let newSelectionIndex, selection;
+		if (this.state.selectedIndex >= 0) {
+			selection = this.props.items[this.state.selectedIndex];
+			newSelectionIndex = 0;
+		} else {
+			newSelectionIndex =
+				newProps.defaultSelectedIndex != null
+					? newProps.defaultSelectedIndex
+					: -1;
+		}
 
-  }
+		if (selection != null) {
+			const selectionKey = this.props.itemKey(selection);
+			const newSelection = _.find(
+				newProps.items,
+				(item) => this.props.itemKey(item) === selectionKey,
+			);
+			if (newSelection != null) {
+				newSelectionIndex = newProps.items.indexOf(newSelection);
+			}
+		}
 
-  _contentContainer() {
-    const seenItemKeys = {};
+		return this.setState({
+			selectedIndex: newSelectionIndex,
+		});
+	}
 
-    const items = (this.props.items || []).map((item, i) => {
-      const content = this.props.itemContent(item);
-      if (React.isValidElement(content) && (content.type === MenuItem)) {
-        return content;
-      }
+	componentDidUpdate() {
+		const item = ReactDOM.findDOMNode(this).querySelector(".selected");
+		const container =
+			ReactDOM.findDOMNode(this).querySelector(".content-container");
+		const adjustment = DOMUtils.scrollAdjustmentToMakeNodeVisibleInContainer(
+			item,
+			container,
+		);
+		if (adjustment !== 0) {
+			return (container.scrollTop += adjustment);
+		}
+	}
 
-      const onMouseDown = event => {
-        event.preventDefault();
-        return this.setState({selectedIndex: i}, () => {
-          if (this.props.onSelect) { return this.props.onSelect(item); }
-        });
-      };
+	render() {
+		const hc =
+			this.props.headerComponents != null
+				? this.props.headerComponents
+				: React.createElement("span", null);
+		const fc =
+			this.props.footerComponents != null
+				? this.props.footerComponents
+				: React.createElement("span", null);
+		const className = this.props.className ? this.props.className : "";
+		return React.createElement(
+			"div",
+			{
+				onKeyDown: this._onKeyDown,
+				className: `menu ${className}`,
+				tabIndex: "-1",
+			},
+			React.createElement("div", { className: "header-container" }, hc),
+			this._contentContainer(),
+			React.createElement("div", { className: "footer-container" }, fc),
+		);
+	}
 
-      const key = this.props.itemKey(item);
-      if (!key) {
-        console.warn("Menu parent did not return an itemKey for item", item);
-      }
-      if (seenItemKeys[key]) {
-        console.warn({"Menu items have colliding keys": item}, seenItemKeys[key]);
-      }
-      seenItemKeys[key] = item;
+	_onKeyDown(event) {
+		if (this.props.items.length === 0) {
+			return;
+		}
+		event.stopPropagation();
+		if (["Enter", "Return"].includes(event.key)) {
+			this._onEnter();
+		}
+		if (event.key === "Escape") {
+			this._onEscape();
+		} else if (
+			event.key === "ArrowUp" ||
+			(event.key === "Tab" && event.shiftKey)
+		) {
+			this._onShiftSelectedIndex(-1);
+			event.preventDefault();
+		} else if (event.key === "ArrowDown" || event.key === "Tab") {
+			this._onShiftSelectedIndex(1);
+			event.preventDefault();
+		}
+	}
 
-      return React.createElement(MenuItem, { 
-        "key": (key),  
-        "onMouseDown": (onMouseDown),  
-        "checked": (typeof this.props.itemChecked === 'function' ? this.props.itemChecked(item) : undefined),  
-        "content": (content),  
-        "selected": (this.state.selectedIndex === i)
-      });
-    });
+	_contentContainer() {
+		const seenItemKeys = {};
 
-    const contentClass = classNames({
-      'content-container': true,
-      'empty': items.length === 0
-    });
+		const items = (this.props.items || []).map((item, i) => {
+			const content = this.props.itemContent(item);
+			if (React.isValidElement(content) && content.type === MenuItem) {
+				return content;
+			}
 
-    return React.createElement("div", {"className": (contentClass)},
-      (items)
-    );
-  }
+			const onMouseDown = (event) => {
+				event.preventDefault();
+				return this.setState({ selectedIndex: i }, () => {
+					if (this.props.onSelect) {
+						return this.props.onSelect(item);
+					}
+				});
+			};
 
-  _onShiftSelectedIndex(delta) {
-    if (this.props.items.length === 0) { return; }
+			const key = this.props.itemKey(item);
+			if (!key) {
+				console.warn("Menu parent did not return an itemKey for item", item);
+			}
+			if (seenItemKeys[key]) {
+				console.warn(
+					{ "Menu items have colliding keys": item },
+					seenItemKeys[key],
+				);
+			}
+			seenItemKeys[key] = item;
 
-    let index = this.state.selectedIndex + delta;
+			return React.createElement(MenuItem, {
+				key: key,
+				onMouseDown: onMouseDown,
+				checked:
+					typeof this.props.itemChecked === "function"
+						? this.props.itemChecked(item)
+						: undefined,
+				content: content,
+				selected: this.state.selectedIndex === i,
+			});
+		});
 
-    let isDivider = true;
-    while (isDivider) {
-      var item = this.props.items[index];
-      if (!item) { break; }
-      if (__guard__(this.props.itemContent(item, this.props.itemContext).props, x => x.divider)) {
-        if (delta > 0) { index += 1;
-        } else if (delta < 0) { index -= 1; }
-      } else { isDivider = false; }
-    }
+		const contentClass = classNames({
+			"content-container": true,
+			empty: items.length === 0,
+		});
 
-    index = Math.max(0, Math.min(this.props.items.length-1, index));
+		return React.createElement("div", { className: contentClass }, items);
+	}
 
-    // Update the selected index
-    return this.setState({selectedIndex: index});
-  }
+	_onShiftSelectedIndex(delta) {
+		if (this.props.items.length === 0) {
+			return;
+		}
 
-  _onEnter() {
-    const item = this.props.items[this.state.selectedIndex];
-    if (item != null) { return this.props.onSelect(item); }
-  }
+		let index = this.state.selectedIndex + delta;
 
-  _onEscape() {
-    return this.props.onEscape();
-  }
+		let isDivider = true;
+		while (isDivider) {
+			var item = this.props.items[index];
+			if (!item) {
+				break;
+			}
+			if (
+				__guard__(
+					this.props.itemContent(item, this.props.itemContext).props,
+					(x) => x.divider,
+				)
+			) {
+				if (delta > 0) {
+					index += 1;
+				} else if (delta < 0) {
+					index -= 1;
+				}
+			} else {
+				isDivider = false;
+			}
+		}
+
+		index = Math.max(0, Math.min(this.props.items.length - 1, index));
+
+		// Update the selected index
+		return this.setState({ selectedIndex: index });
+	}
+
+	_onEnter() {
+		const item = this.props.items[this.state.selectedIndex];
+		if (item != null) {
+			return this.props.onSelect(item);
+		}
+	}
+
+	_onEscape() {
+		return this.props.onEscape();
+	}
 }
 Menu.initClass();
-
 
 Menu.Item = MenuItem;
 Menu.NameEmailItem = MenuNameEmailItem;
@@ -386,5 +454,7 @@ Menu.NameEmailItem = MenuNameEmailItem;
 module.exports = Menu;
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+	return typeof value !== "undefined" && value !== null
+		? transform(value)
+		: undefined;
 }

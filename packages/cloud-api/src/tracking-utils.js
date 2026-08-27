@@ -12,15 +12,15 @@
  * open/link tracking performance.
  */
 export function decodeRecipient(query = {}) {
-  if (query.recipient) {
-    return query.recipient
-  }
+	if (query.recipient) {
+		return query.recipient;
+	}
 
-  // Legacy encoding scheme
-  if (query.r) {
-    // reverse of btoa(recipient.email).replace(/\+/g,'-').replace(/\//g, '_')
-    return atob(query.r.replace(/_/g, "/").replace(/-/g, "+"))
-  }
+	// Legacy encoding scheme
+	if (query.r) {
+		// reverse of btoa(recipient.email).replace(/\+/g,'-').replace(/\//g, '_')
+		return atob(query.r.replace(/_/g, "/").replace(/-/g, "+"));
+	}
 
-  return null
+	return null;
 }

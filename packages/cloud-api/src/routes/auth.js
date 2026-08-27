@@ -1,25 +1,22 @@
-import Joi from 'joi';
-import Boom from '@hapi/boom';
-import {GmailOAuthHelpers as GAuth, DatabaseConnector} from 'cloud-core';
-import {
-  AuthHelpers,
-  IMAPErrors,
-} from 'isomorphic-core';
+import Joi from "joi";
+import Boom from "@hapi/boom";
+import { GmailOAuthHelpers as GAuth, DatabaseConnector } from "cloud-core";
+import { AuthHelpers, IMAPErrors } from "isomorphic-core";
 
-const {GMAIL_CLIENT_ID, GMAIL_REDIRECT_URL} = process.env;
+const { GMAIL_CLIENT_ID, GMAIL_REDIRECT_URL } = process.env;
 const SCOPES = [
-  'https://www.googleapis.com/auth/userinfo.email',  // email address
-  'https://www.googleapis.com/auth/userinfo.profile',  // G+ profile
-  'https://mail.google.com/',  // email
-  'https://www.google.com/m8/feeds',  // contacts
-  'https://www.googleapis.com/auth/calendar',  // calendar
+	"https://www.googleapis.com/auth/userinfo.email", // email address
+	"https://www.googleapis.com/auth/userinfo.profile", // G+ profile
+	"https://mail.google.com/", // email
+	"https://www.google.com/m8/feeds", // contacts
+	"https://www.googleapis.com/auth/calendar", // calendar
 ];
 
 const upsertAccount = (accountParams, credentials) => {
-  return DatabaseConnector.forShared().then(({Account}) =>
-    Account.upsertWithCredentials(accountParams, credentials)
-  );
-}
+	return DatabaseConnector.forShared().then(({ Account }) =>
+		Account.upsertWithCredentials(accountParams, credentials),
+	);
+};
 
 /**
  * How Gmail Auth works:
@@ -56,184 +53,214 @@ const upsertAccount = (accountParams, credentials) => {
  * get a new xoauth2 token and return it to N1.
  */
 export default function registerAuthRoutes(server) {
-  server.route({
-    method: 'POST',
-    path: '/auth',
-    options: AuthHelpers.imapAuthRouteConfig(),
-    handler: AuthHelpers.imapAuthHandler(upsertAccount),
-  });
+	server.route({
+		method: "POST",
+		path: "/auth",
+		options: AuthHelpers.imapAuthRouteConfig(),
+		handler: AuthHelpers.imapAuthHandler(upsertAccount),
+	});
 
-  /**
-   * Gmail Auth Step 1
-   */
-  server.route({
-    method: 'GET',
-    path: '/auth/gmail',
-    options: {
-      description: 'Redirects to Gmail OAuth',
-      tags: ['accounts'],
-      auth: false,
-      validate: {
-        query: {
-          state: Joi.string().required(),
-        },
-      },
-    },
-    async handler(request, h) {
-      request.logger.debug("Redirecting to Gmail OAuth")
-      try {
-        const oauthClient = GAuth.newOAuthClient();
-        const authUrl = oauthClient.generateAuthUrl({
-          access_type: 'offline',
-          prompt: 'select_account consent',
-          scope: SCOPES,
-          state: request.query.state,
-        });
-        return h.redirect(authUrl)
-      } catch (err) {
-        return Boom.boomify(err)
-      }
-    },
-  });
+	/**
+	 * Gmail Auth Step 1
+	 */
+	server.route({
+		method: "GET",
+		path: "/auth/gmail",
+		options: {
+			description: "Redirects to Gmail OAuth",
+			tags: ["accounts"],
+			auth: false,
+			validate: {
+				query: {
+					state: Joi.string().required(),
+				},
+			},
+		},
+		async handler(request, h) {
+			request.logger.debug("Redirecting to Gmail OAuth");
+			try {
+				const oauthClient = GAuth.newOAuthClient();
+				const authUrl = oauthClient.generateAuthUrl({
+					access_type: "offline",
+					prompt: "select_account consent",
+					scope: SCOPES,
+					state: request.query.state,
+				});
+				return h.redirect(authUrl);
+			} catch (err) {
+				return Boom.boomify(err);
+			}
+		},
+	});
 
-  /**
-   * Gmail Auth Step 2
-   */
-  server.route({
-    method: 'GET',
-    path: '/auth/gmail/oauthcallback',
-    options: {
-      description: 'Authenticates a new account.',
-      tags: ['accounts'],
-      auth: false,
-      validate: {
-        query: {
-          state: Joi.string().required(),
-          code: Joi.string(),
-          error: Joi.string(),
-        },
-      },
-    },
-    async handler(request, h) {
-      request.logger.debug('Have Google OAuth Code. Exchanging for token')
-      const code = request.query.code
-      const n1Key = request.query.state
-      const error = request.query.error // Google sometimes passes the error back here
-      let profile = {};
-      let account = {};
+	/**
+	 * Gmail Auth Step 2
+	 */
+	server.route({
+		method: "GET",
+		path: "/auth/gmail/oauthcallback",
+		options: {
+			description: "Authenticates a new account.",
+			tags: ["accounts"],
+			auth: false,
+			validate: {
+				query: {
+					state: Joi.string().required(),
+					code: Joi.string(),
+					error: Joi.string(),
+				},
+			},
+		},
+		async handler(request, h) {
+			request.logger.debug("Have Google OAuth Code. Exchanging for token");
+			const code = request.query.code;
+			const n1Key = request.query.state;
+			const error = request.query.error; // Google sometimes passes the error back here
+			let profile = {};
+			let account = {};
 
-      // See onboarding-helpers:buildGmailSessionKey()
-      const nylasId = n1Key.split("-----")[0]
+			// See onboarding-helpers:buildGmailSessionKey()
+			const nylasId = n1Key.split("-----")[0];
 
-      try {
-        const client = GAuth.newOAuthClient()
-        const tok = await GAuth.exchangeCodeForGoogleToken(client, code);
+			try {
+				const client = GAuth.newOAuthClient();
+				const tok = await GAuth.exchangeCodeForGoogleToken(client, code);
 
-        profile = await GAuth.fetchGoogleProfile(client);
-        const settings = AuthHelpers.googleSettings(tok, profile.email)
+				profile = await GAuth.fetchGoogleProfile(client);
+				const settings = AuthHelpers.googleSettings(tok, profile.email);
 
-        request.logger.debug("Resolving IMAP connection")
+				request.logger.debug("Resolving IMAP connection");
 
-        settings.resolved = await GAuth.resolveIMAPSettings(settings, request.logger)
-        account = await GAuth.createCloudAccount(settings, profile)
+				settings.resolved = await GAuth.resolveIMAPSettings(
+					settings,
+					request.logger,
+				);
+				account = await GAuth.createCloudAccount(settings, profile);
 
-        request.logger.debug("Creating PendingAuthResponse")
-        await GAuth.createPendingAuthResponse(account, settings, n1Key)
-      } catch (err) {
-        const res = {
-          state_string: n1Key,
-          google_client_id: GMAIL_CLIENT_ID,
-          redirect_uri: GMAIL_REDIRECT_URL,
-          error: err.message,
-        }
-        const logger = request.logger.child({
-          account_provider: 'gmail',
-          account_email: account.emailAddress || profile.email,
-          error: err,
-          error_message: err.message,
-          error_source: err.source,
-        })
+				request.logger.debug("Creating PendingAuthResponse");
+				await GAuth.createPendingAuthResponse(account, settings, n1Key);
+			} catch (err) {
+				const res = {
+					state_string: n1Key,
+					google_client_id: GMAIL_CLIENT_ID,
+					redirect_uri: GMAIL_REDIRECT_URL,
+					error: err.message,
+				};
+				const logger = request.logger.child({
+					account_provider: "gmail",
+					account_email: account.emailAddress || profile.email,
+					error: err,
+					error_message: err.message,
+					error_source: err.source,
+				});
 
-        // TODO make sure we are considering all possible errors
-        if (error === 'access_denied') {
-          res.try_again = true
-          res.access_denied = true
-          logger.error('Encountered access denied error while exchanging gmail oauth code for token')
-        } else if (err instanceof IMAPErrors.IMAPAuthenticationError) {
-          res.try_again = true
-          res.imap_auth_error = true
-          logger.error('Encountered imap auth error while exchanging gmail oauth code for token')
-        } else if (err instanceof IMAPErrors.IMAPAuthenticationTimeoutError || err instanceof IMAPErrors.IMAPConnectionTimeoutError) {
-          res.try_again = true
-          res.auth_timeout = true
-          logger.error('Encountered imap timeout error while exchanging gmail oauth code for token')
-        } else if ((err.message || '').includes("invalid_grant")) {
-          res.try_again = true
-          res.invalid_grant = true
-          logger.error('Encountered invalid grant error while exchanging gmail oauth code for token')
-        } else {
-          logger.error('Encountered unknown error while exchanging gmail oauth code for token')
-        }
+				// TODO make sure we are considering all possible errors
+				if (error === "access_denied") {
+					res.try_again = true;
+					res.access_denied = true;
+					logger.error(
+						"Encountered access denied error while exchanging gmail oauth code for token",
+					);
+				} else if (err instanceof IMAPErrors.IMAPAuthenticationError) {
+					res.try_again = true;
+					res.imap_auth_error = true;
+					logger.error(
+						"Encountered imap auth error while exchanging gmail oauth code for token",
+					);
+				} else if (
+					err instanceof IMAPErrors.IMAPAuthenticationTimeoutError ||
+					err instanceof IMAPErrors.IMAPConnectionTimeoutError
+				) {
+					res.try_again = true;
+					res.auth_timeout = true;
+					logger.error(
+						"Encountered imap timeout error while exchanging gmail oauth code for token",
+					);
+				} else if ((err.message || "").includes("invalid_grant")) {
+					res.try_again = true;
+					res.invalid_grant = true;
+					logger.error(
+						"Encountered invalid grant error while exchanging gmail oauth code for token",
+					);
+				} else {
+					logger.error(
+						"Encountered unknown error while exchanging gmail oauth code for token",
+					);
+				}
 
-        return h.view('gmail-auth-failure', res)
-      }
+				return h.view("gmail-auth-failure", res);
+			}
 
-      return h.view('gmail-auth-success')
-    },
-  });
+			return h.view("gmail-auth-success");
+		},
+	});
 
-  /**
-   * Gmail Auth Step 3
-   * N1 continues to poll this endpoint with the original key it set in
-   * the state parameter during Step 1
-   */
-  server.route({
-    method: "GET",
-    path: "/auth/gmail/token",
-    options: {
-      auth: false,
-      validate: {
-        query: {
-          key: Joi.string().required(),
-        },
-      },
-    },
-    async handler(request) {
-      const {PendingAuthResponse} = await DatabaseConnector.forShared();
-      let tokenData = null;
-      try {
-        tokenData = await PendingAuthResponse.find({where:
-          {pendingAuthKey: request.query.key},
-        })
-        if (!tokenData) {
-          return Boom.notFound()
-        }
-      } catch (err) {
-        return Boom.notFound()
-      }
-      if (!tokenData.response) {
-        request.logger.error("Error getting access token, malformed PendingAuthResponse")
-        return Boom.badImplementation("Malformed PendingAuthResponse", tokenData)
-      }
-      await tokenData.destroy()
-      return tokenData.response
-    },
-  });
+	/**
+	 * Gmail Auth Step 3
+	 * N1 continues to poll this endpoint with the original key it set in
+	 * the state parameter during Step 1
+	 */
+	server.route({
+		method: "GET",
+		path: "/auth/gmail/token",
+		options: {
+			auth: false,
+			validate: {
+				query: {
+					key: Joi.string().required(),
+				},
+			},
+		},
+		async handler(request) {
+			const { PendingAuthResponse } = await DatabaseConnector.forShared();
+			let tokenData = null;
+			try {
+				tokenData = await PendingAuthResponse.find({
+					where: { pendingAuthKey: request.query.key },
+				});
+				if (!tokenData) {
+					return Boom.notFound();
+				}
+			} catch (err) {
+				return Boom.notFound();
+			}
+			if (!tokenData.response) {
+				request.logger.error(
+					"Error getting access token, malformed PendingAuthResponse",
+				);
+				return Boom.badImplementation(
+					"Malformed PendingAuthResponse",
+					tokenData,
+				);
+			}
+			await tokenData.destroy();
+			return tokenData.response;
+		},
+	});
 
-  server.route({
-    method: "POST",
-    path: "/auth/gmail/refresh",
-    async handler(request, h) {
-      const {account} = request.auth.credentials;
-      try {
-        const tokens = await GAuth.refreshAccessToken(account)
-        return {access_token: tokens.access_token,
-          xoauth2: AuthHelpers.generateXOAuth2Token(account.emailAddress, tokens.access_token),
-          expiry_date: Math.floor(tokens.expiry_date / 1000)}
-      } catch (err) {
-        request.logger.error(err, 'Error refreshing gmail access token.')
-        return h.response('Backend error: could not refresh Gmail access token. Please try again.').code(400)
-      }
-    },
-  });
+	server.route({
+		method: "POST",
+		path: "/auth/gmail/refresh",
+		async handler(request, h) {
+			const { account } = request.auth.credentials;
+			try {
+				const tokens = await GAuth.refreshAccessToken(account);
+				return {
+					access_token: tokens.access_token,
+					xoauth2: AuthHelpers.generateXOAuth2Token(
+						account.emailAddress,
+						tokens.access_token,
+					),
+					expiry_date: Math.floor(tokens.expiry_date / 1000),
+				};
+			} catch (err) {
+				request.logger.error(err, "Error refreshing gmail access token.");
+				return h
+					.response(
+						"Backend error: could not refresh Gmail access token. Please try again.",
+					)
+					.code(400);
+			}
+		},
+	});
 }

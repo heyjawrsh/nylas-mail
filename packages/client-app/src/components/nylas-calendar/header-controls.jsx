@@ -1,69 +1,75 @@
-import React from 'react'
-import PropTypes from 'prop-types';
-import {Utils} from 'nylas-exports'
-import {RetinaImg} from 'nylas-component-kit'
+import React from "react";
+import PropTypes from "prop-types";
+import { Utils } from "nylas-exports";
+import { RetinaImg } from "nylas-component-kit";
 
 export default class HeaderControls extends React.Component {
-  static displayName = "HeaderControls";
+	static displayName = "HeaderControls";
 
-  static propTypes = {
-    title: PropTypes.string,
-    headerComponents: PropTypes.node,
-    nextAction: PropTypes.func,
-    prevAction: PropTypes.func,
-  }
+	static propTypes = {
+		title: PropTypes.string,
+		headerComponents: PropTypes.node,
+		nextAction: PropTypes.func,
+		prevAction: PropTypes.func,
+	};
 
-  static defaultProps = {
-    headerComonents: false,
-  }
+	static defaultProps = {
+		headerComonents: false,
+	};
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (!Utils.isEqualReact(nextProps, this.props) ||
-            !Utils.isEqualReact(nextState, this.state));
-  }
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			!Utils.isEqualReact(nextProps, this.props) ||
+			!Utils.isEqualReact(nextState, this.state)
+		);
+	}
 
-  _renderNextAction() {
-    if (!this.props.nextAction) { return false; }
-    return (
-      <button
-        className="btn btn-icon next"
-        ref="onNextAction"
-        onClick={this.props.nextAction}
-      >
-        <RetinaImg
-          name="ic-calendar-right-arrow.png"
-          mode={RetinaImg.Mode.ContentIsMask}
-        />
-      </button>
-    )
-  }
+	_renderNextAction() {
+		if (!this.props.nextAction) {
+			return false;
+		}
+		return (
+			<button
+				className="btn btn-icon next"
+				ref="onNextAction"
+				onClick={this.props.nextAction}
+			>
+				<RetinaImg
+					name="ic-calendar-right-arrow.png"
+					mode={RetinaImg.Mode.ContentIsMask}
+				/>
+			</button>
+		);
+	}
 
-  _renderPrevAction() {
-    if (!this.props.prevAction) { return false; }
-    return (
-      <button
-        className="btn btn-icon prev"
-        ref="onPreviousAction"
-        onClick={this.props.prevAction}
-      >
-        <RetinaImg
-          name="ic-calendar-left-arrow.png"
-          mode={RetinaImg.Mode.ContentIsMask}
-        />
-      </button>
-    )
-  }
+	_renderPrevAction() {
+		if (!this.props.prevAction) {
+			return false;
+		}
+		return (
+			<button
+				className="btn btn-icon prev"
+				ref="onPreviousAction"
+				onClick={this.props.prevAction}
+			>
+				<RetinaImg
+					name="ic-calendar-left-arrow.png"
+					mode={RetinaImg.Mode.ContentIsMask}
+				/>
+			</button>
+		);
+	}
 
-  render() {
-    return (
-      <div className="header-controls">
-        <div className="center-controls">
-          {this._renderPrevAction()}
-          <span className="title">{this.props.title}</span>
-          {this._renderNextAction()}
-        </div>
-        {this.props.headerComponents}
-      </div>
-    )
-  }
+	render() {
+		return (
+			<div className="header-controls">
+				<div className="center-controls">
+					{this._renderPrevAction()}
+					<span className="title">{this.props.title}</span>
+					{this._renderNextAction()}
+				</div>
+				{this.props.headerComponents}
+			</div>
+		);
+	}
 }

@@ -1,9 +1,9 @@
 /* eslint global-require:0 */
-import Attributes from '../attributes'
-import ModelWithMetadata from './model-with-metadata'
+import Attributes from "../attributes";
+import ModelWithMetadata from "./model-with-metadata";
 
-let CategoryStore = null
-let Contact = null
+let CategoryStore = null;
+let Contact = null;
 
 /*
  * Public: The Account model represents a Account served by the Nylas Platform API.
@@ -31,179 +31,178 @@ let Contact = null
  * Section: Models
  */
 export default class Account extends ModelWithMetadata {
+	static SYNC_STATE_RUNNING = "running";
 
-  static SYNC_STATE_RUNNING = "running"
+	static SYNC_STATE_AUTH_FAILED = "invalid";
 
-  static SYNC_STATE_AUTH_FAILED = "invalid"
+	static SYNC_STATE_ERROR = "sync_error";
 
-  static SYNC_STATE_ERROR = "sync_error"
+	static N1_CLOUD_STATE_RUNNING = "n1_cloud_running";
 
-  static N1_CLOUD_STATE_RUNNING = "n1_cloud_running"
+	static N1_CLOUD_STATE_AUTH_FAILED = "n1_cloud_auth_failed";
 
-  static N1_CLOUD_STATE_AUTH_FAILED = "n1_cloud_auth_failed"
+	static attributes = Object.assign({}, ModelWithMetadata.attributes, {
+		name: Attributes.String({
+			modelKey: "name",
+		}),
 
-  static attributes = Object.assign({}, ModelWithMetadata.attributes, {
-    name: Attributes.String({
-      modelKey: 'name',
-    }),
+		provider: Attributes.String({
+			modelKey: "provider",
+		}),
 
-    provider: Attributes.String({
-      modelKey: 'provider',
-    }),
+		emailAddress: Attributes.String({
+			queryable: true,
+			modelKey: "emailAddress",
+			jsonKey: "email_address",
+		}),
 
-    emailAddress: Attributes.String({
-      queryable: true,
-      modelKey: 'emailAddress',
-      jsonKey: 'email_address',
-    }),
+		organizationUnit: Attributes.String({
+			modelKey: "organizationUnit",
+			jsonKey: "organization_unit",
+		}),
 
-    organizationUnit: Attributes.String({
-      modelKey: 'organizationUnit',
-      jsonKey: 'organization_unit',
-    }),
+		label: Attributes.String({
+			modelKey: "label",
+		}),
 
-    label: Attributes.String({
-      modelKey: 'label',
-    }),
+		aliases: Attributes.Object({
+			modelKey: "aliases",
+		}),
 
-    aliases: Attributes.Object({
-      modelKey: 'aliases',
-    }),
+		defaultAlias: Attributes.Object({
+			modelKey: "defaultAlias",
+			jsonKey: "default_alias",
+		}),
 
-    defaultAlias: Attributes.Object({
-      modelKey: 'defaultAlias',
-      jsonKey: 'default_alias',
-    }),
+		syncState: Attributes.String({
+			modelKey: "syncState",
+			jsonKey: "sync_state",
+		}),
 
-    syncState: Attributes.String({
-      modelKey: 'syncState',
-      jsonKey: 'sync_state',
-    }),
+		syncError: Attributes.Object({
+			modelKey: "syncError",
+			jsonKey: "sync_error",
+		}),
 
-    syncError: Attributes.Object({
-      modelKey: 'syncError',
-      jsonKey: 'sync_error',
-    }),
+		n1CloudState: Attributes.String({
+			modelKey: "n1CloudState",
+			jsonKey: "n1_cloud_state",
+		}),
+	});
 
-    n1CloudState: Attributes.String({
-      modelKey: 'n1CloudState',
-      jsonKey: 'n1_cloud_state',
-    }),
-  });
+	constructor(args) {
+		super(args);
+		this.aliases = this.aliases || [];
+		this.label = this.label || this.emailAddress;
+		this.syncState = this.syncState || "running";
+	}
 
-  constructor(args) {
-    super(args)
-    this.aliases = this.aliases || [];
-    this.label = this.label || this.emailAddress;
-    this.syncState = this.syncState || "running";
-  }
+	fromJSON(json) {
+		super.fromJSON(json);
+		if (!this.label) {
+			this.label = this.emailAddress;
+		}
+		return this;
+	}
 
-  fromJSON(json) {
-    super.fromJSON(json);
-    if (!this.label) {
-      this.label = this.emailAddress;
-    }
-    return this;
-  }
+	// Returns a {Contact} model that represents the current user.
+	me() {
+		Contact = Contact || require("./contact").default;
 
-  // Returns a {Contact} model that represents the current user.
-  me() {
-    Contact = Contact || require('./contact').default
+		return new Contact({
+			accountId: this.id,
+			name: this.name,
+			email: this.emailAddress,
+		});
+	}
 
-    return new Contact({
-      accountId: this.id,
-      name: this.name,
-      email: this.emailAddress,
-    })
-  }
+	meUsingAlias(alias) {
+		Contact = Contact || require("./contact").default;
 
-  meUsingAlias(alias) {
-    Contact = Contact || require('./contact').default
+		if (!alias) {
+			return this.me();
+		}
+		return Contact.fromString(alias, { accountId: this.id });
+	}
 
-    if (!alias) {
-      return this.me()
-    }
-    return Contact.fromString(alias, {accountId: this.id})
-  }
+	defaultMe() {
+		if (this.defaultAlias) {
+			return this.meUsingAlias(this.defaultAlias);
+		}
+		return this.me();
+	}
 
-  defaultMe() {
-    if (this.defaultAlias) {
-      return this.meUsingAlias(this.defaultAlias)
-    }
-    return this.me()
-  }
+	usesLabels() {
+		return this.organizationUnit === "label";
+	}
 
-  usesLabels() {
-    return this.organizationUnit === "label"
-  }
+	usesFolders() {
+		return this.organizationUnit === "folder";
+	}
 
-  usesFolders() {
-    return this.organizationUnit === "folder"
-  }
+	categoryLabel() {
+		if (this.usesFolders()) {
+			return "Folders";
+		} else if (this.usesLabels()) {
+			return "Labels";
+		}
+		return "Unknown";
+	}
 
-  categoryLabel() {
-    if (this.usesFolders()) {
-      return 'Folders'
-    } else if (this.usesLabels()) {
-      return 'Labels'
-    }
-    return 'Unknown'
-  }
+	categoryCollection() {
+		return `${this.organizationUnit}s`;
+	}
 
-  categoryCollection() {
-    return `${this.organizationUnit}s`
-  }
+	categoryIcon() {
+		if (this.usesFolders()) {
+			return "folder.png";
+		} else if (this.usesLabels()) {
+			return "tag.png";
+		}
+		return "folder.png";
+	}
 
-  categoryIcon() {
-    if (this.usesFolders()) {
-      return 'folder.png'
-    } else if (this.usesLabels()) {
-      return 'tag.png'
-    }
-    return 'folder.png'
-  }
+	// Public: Returns the localized, properly capitalized provider name,
+	// like Gmail, Exchange, or Outlook 365
+	displayProvider() {
+		if (this.provider === "eas") {
+			return "Exchange";
+		} else if (this.provider === "gmail") {
+			return "Gmail";
+		}
+		return this.provider;
+	}
 
-  // Public: Returns the localized, properly capitalized provider name,
-  // like Gmail, Exchange, or Outlook 365
-  displayProvider() {
-    if (this.provider === 'eas') {
-      return 'Exchange'
-    } else if (this.provider === 'gmail') {
-      return 'Gmail'
-    }
-    return this.provider
-  }
+	canArchiveThreads() {
+		CategoryStore = CategoryStore || require("../stores/category-store");
 
-  canArchiveThreads() {
-    CategoryStore = CategoryStore || require('../stores/category-store')
+		return CategoryStore.getArchiveCategory(this);
+	}
 
-    return CategoryStore.getArchiveCategory(this)
-  }
+	canTrashThreads() {
+		CategoryStore = CategoryStore || require("../stores/category-store");
 
-  canTrashThreads() {
-    CategoryStore = CategoryStore || require('../stores/category-store')
+		return CategoryStore.getTrashCategory(this);
+	}
 
-    return CategoryStore.getTrashCategory(this)
-  }
+	defaultFinishedCategory() {
+		CategoryStore = CategoryStore || require("../stores/category-store");
 
-  defaultFinishedCategory() {
-    CategoryStore = CategoryStore || require('../stores/category-store')
+		const preferDelete = NylasEnv.config.get("core.reading.backspaceDelete");
+		const archiveCategory = CategoryStore.getArchiveCategory(this);
+		const trashCategory = CategoryStore.getTrashCategory(this);
 
-    const preferDelete = NylasEnv.config.get('core.reading.backspaceDelete')
-    const archiveCategory = CategoryStore.getArchiveCategory(this)
-    const trashCategory = CategoryStore.getTrashCategory(this)
+		if (preferDelete || !archiveCategory) {
+			return trashCategory;
+		}
+		return archiveCategory;
+	}
 
-    if (preferDelete || !archiveCategory) {
-      return trashCategory
-    }
-    return archiveCategory
-  }
+	hasN1CloudError() {
+		return this.n1CloudState === Account.N1_CLOUD_STATE_AUTH_FAILED;
+	}
 
-  hasN1CloudError() {
-    return this.n1CloudState === Account.N1_CLOUD_STATE_AUTH_FAILED
-  }
-
-  hasSyncStateError() {
-    return this.syncState !== Account.SYNC_STATE_RUNNING
-  }
+	hasSyncStateError() {
+		return this.syncState !== Account.SYNC_STATE_RUNNING;
+	}
 }

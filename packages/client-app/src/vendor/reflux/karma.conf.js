@@ -1,29 +1,23 @@
-module.exports = function(config) {
-    config.set({
-        logLevel: 'LOG_DEBUG',
+module.exports = (config) => {
+	config.set({
+		logLevel: "LOG_DEBUG",
 
-        reporters: ['spec'],
+		reporters: ["spec"],
 
-        singleRun : true,
-        autoWatch : false,
+		singleRun: true,
+		autoWatch: false,
 
-        frameworks: [
-            'mocha',
-            'browserify'
-        ],
+		frameworks: ["mocha", "browserify"],
 
-        files: [
-            'test/shims/phantomjs-shims.js',
-            'test/*.spec.js'
-        ],
+		files: ["test/shims/phantomjs-shims.js", "test/*.spec.js"],
 
-        preprocessors: {
-            'test/shims/phantomjs-shims.js': ['browserify'],
-            'test/*.spec.js': ['browserify']
-        },
+		preprocessors: {
+			"test/shims/phantomjs-shims.js": ["browserify"],
+			"test/*.spec.js": ["browserify"],
+		},
 
-        browserify: {
-            debug: true
-        }
-    });
+		browserify: {
+			debug: true,
+		},
+	});
 };

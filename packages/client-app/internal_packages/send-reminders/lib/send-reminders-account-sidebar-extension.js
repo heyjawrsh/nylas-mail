@@ -1,13 +1,12 @@
-import SendRemindersMailboxPerspective from './send-reminders-mailbox-perspective'
+import SendRemindersMailboxPerspective from "./send-reminders-mailbox-perspective";
 
-
-export const name = 'SendRemindersAccountSidebarExtension'
+export const name = "SendRemindersAccountSidebarExtension";
 
 export function sidebarItem(accountIds) {
-  return {
-    id: 'Reminders',
-    name: 'Reminders',
-    iconName: 'reminders.png',
-    perspective: new SendRemindersMailboxPerspective(accountIds),
-  }
+	return {
+		id: "Reminders",
+		name: "Reminders",
+		iconName: "reminders.png",
+		perspective: new SendRemindersMailboxPerspective(accountIds),
+	};
 }

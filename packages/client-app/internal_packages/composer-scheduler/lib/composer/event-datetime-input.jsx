@@ -1,69 +1,74 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment-timezone'
-import {DateUtils} from 'nylas-exports'
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment-timezone";
+import { DateUtils } from "nylas-exports";
 
 function getDateFormat(type) {
-  if (type === "date") {
-    return "YYYY-MM-DD";
-  } else if (type === "time") {
-    return "HH:mm:ss"
-  }
-  return null
+	if (type === "date") {
+		return "YYYY-MM-DD";
+	} else if (type === "time") {
+		return "HH:mm:ss";
+	}
+	return null;
 }
 
 export default class EventDatetimeInput extends React.Component {
-  static displayName = "EventDatetimeInput";
+	static displayName = "EventDatetimeInput";
 
-  static propTypes = {
-    name: PropTypes.string,
-    value: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired,
-    reversed: PropTypes.bool,
-  };
+	static propTypes = {
+		name: PropTypes.string,
+		value: PropTypes.number.isRequired,
+		onChange: PropTypes.func.isRequired,
+		reversed: PropTypes.bool,
+	};
 
-  constructor(props) {
-    super(props);
-    this._datePartStrings = {time: "", date: ""};
-  }
+	constructor(props) {
+		super(props);
+		this._datePartStrings = { time: "", date: "" };
+	}
 
-  _onDateChange() {
-    const {date, time} = this._datePartStrings;
-    const format = `${getDateFormat("date")} ${getDateFormat("time")}`;
-    const newDate = moment.tz(`${date} ${time}`, format, DateUtils.timeZone).unix();
-    this.props.onChange(newDate)
-  }
+	_onDateChange() {
+		const { date, time } = this._datePartStrings;
+		const format = `${getDateFormat("date")} ${getDateFormat("time")}`;
+		const newDate = moment
+			.tz(`${date} ${time}`, format, DateUtils.timeZone)
+			.unix();
+		this.props.onChange(newDate);
+	}
 
-  _renderInput(type) {
-    const unixDate = this.props.value;
-    const str = moment.unix(unixDate).tz(DateUtils.timeZone).format(getDateFormat(type))
-    this._datePartStrings[type] = unixDate != null ? str : null;
-    return (
-      <input
-        type={type}
-        ref={type}
-        name={`${this.props.name}-${type}`}
-        value={this._datePartStrings[type]}
-        onChange={e => {
-          this._datePartStrings[type] = e.target.value;
-          this._onDateChange()
-        }}
-      />
-    )
-  }
+	_renderInput(type) {
+		const unixDate = this.props.value;
+		const str = moment
+			.unix(unixDate)
+			.tz(DateUtils.timeZone)
+			.format(getDateFormat(type));
+		this._datePartStrings[type] = unixDate != null ? str : null;
+		return (
+			<input
+				type={type}
+				ref={type}
+				name={`${this.props.name}-${type}`}
+				value={this._datePartStrings[type]}
+				onChange={(e) => {
+					this._datePartStrings[type] = e.target.value;
+					this._onDateChange();
+				}}
+			/>
+		);
+	}
 
-  render() {
-    if (this.props.reversed) {
-      return (
-        <span className="datetime-input-container">
-          {this._renderInput("time")} on {this._renderInput("date")}
-        </span>
-      )
-    }
-    return (
-      <span className="datetime-input-container">
-        {this._renderInput("date")} at {this._renderInput("time")}
-      </span>
-    )
-  }
+	render() {
+		if (this.props.reversed) {
+			return (
+				<span className="datetime-input-container">
+					{this._renderInput("time")} on {this._renderInput("date")}
+				</span>
+			);
+		}
+		return (
+			<span className="datetime-input-container">
+				{this._renderInput("date")} at {this._renderInput("time")}
+			</span>
+		);
+	}
 }

@@ -1,10 +1,7 @@
-
 class ThreadListExtension {
+	static cssClassNamesForThreadListItem() {}
 
-  static cssClassNamesForThreadListItem() {}
-
-  static cssClassNamesForThreadListIcon() {}
-
+	static cssClassNamesForThreadListIcon() {}
 }
 
-export default ThreadListExtension
+export default ThreadListExtension;

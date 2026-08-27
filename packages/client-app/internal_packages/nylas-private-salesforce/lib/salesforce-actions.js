@@ -1,35 +1,33 @@
-import _ from 'underscore'
-import {Reflux} from 'nylas-exports'
+import _ from "underscore";
+import { Reflux } from "nylas-exports";
 
 const globalSFActions = Reflux.createActions([
-  "deleteSuccess",
+	"deleteSuccess",
 
-  "syncbackSuccess",
-  "syncbackFailed",
+	"syncbackSuccess",
+	"syncbackFailed",
 
-  "salesforceWindowClosing",
+	"salesforceWindowClosing",
 
-  "loginToSalesforce",
-  "logoutOfSalesforce",
+	"loginToSalesforce",
+	"logoutOfSalesforce",
 
-  "syncSalesforce",
+	"syncSalesforce",
 
-  "reportError",
-])
+	"reportError",
+]);
 
-const localSFActions = Reflux.createActions([
-  "openObjectForm",
-])
+const localSFActions = Reflux.createActions(["openObjectForm"]);
 
-const SalesforceActions = _.extend({}, localSFActions, globalSFActions)
+const SalesforceActions = _.extend({}, localSFActions, globalSFActions);
 
 for (const actionName of Object.keys(SalesforceActions)) {
-  SalesforceActions[actionName].sync = true
+	SalesforceActions[actionName].sync = true;
 }
 
 NylasEnv.registerGlobalActions({
-  pluginName: "Salesforce",
-  actions: globalSFActions,
+	pluginName: "Salesforce",
+	actions: globalSFActions,
 });
 
-export default SalesforceActions
+export default SalesforceActions;

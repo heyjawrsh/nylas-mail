@@ -1,50 +1,52 @@
 /* eslint no-prototype-builtins: 0 */
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-function ListensToFluxStore(ComposedComponent, {stores, getStateFromStores}) {
-  return class extends Component {
-    static displayName = ComposedComponent.displayName
+function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
+	return class extends Component {
+		static displayName = ComposedComponent.displayName;
 
-    static containerRequired = false;
+		static containerRequired = false;
 
-    static propTypes = ComposedComponent.propTypes
+		static propTypes = ComposedComponent.propTypes;
 
-    constructor(props) {
-      super(props);
-      this._unlisteners = [];
-      this.state = getStateFromStores(props);
-    }
+		constructor(props) {
+			super(props);
+			this._unlisteners = [];
+			this.state = getStateFromStores(props);
+		}
 
-    componentDidMount() {
-      stores.forEach((store) => {
-        this._unlisteners.push(store.listen(() => {
-          this.setState(getStateFromStores(this.props));
-        }));
-      });
-    }
+		componentDidMount() {
+			stores.forEach((store) => {
+				this._unlisteners.push(
+					store.listen(() => {
+						this.setState(getStateFromStores(this.props));
+					}),
+				);
+			});
+		}
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-      this.setState(getStateFromStores(nextProps));
-    }
+		UNSAFE_componentWillReceiveProps(nextProps) {
+			this.setState(getStateFromStores(nextProps));
+		}
 
-    componentWillUnmount() {
-      for (const unlisten of this._unlisteners) {
-        unlisten();
-      }
-      this._unlisteners = [];
-    }
+		componentWillUnmount() {
+			for (const unlisten of this._unlisteners) {
+				unlisten();
+			}
+			this._unlisteners = [];
+		}
 
-    render() {
-      const props = {
-        ...this.props,
-        ...this.state,
-      }
-      if (Component.isPrototypeOf(ComposedComponent)) {
-        props.ref = 'composed'
-      }
-      return <ComposedComponent {...props} />;
-    }
-  };
+		render() {
+			const props = {
+				...this.props,
+				...this.state,
+			};
+			if (Component.isPrototypeOf(ComposedComponent)) {
+				props.ref = "composed";
+			}
+			return <ComposedComponent {...props} />;
+		}
+	};
 }
 
-export default ListensToFluxStore
+export default ListensToFluxStore;

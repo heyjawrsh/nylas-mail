@@ -1,12 +1,12 @@
 function formatImapPath(pathStr) {
-  if (!pathStr) {
-    throw new Error("Can not format an empty path!");
-  }
+	if (!pathStr) {
+		throw new Error("Can not format an empty path!");
+	}
 
-  // https://regex101.com/r/yeyZJh/1
-  const s = pathStr.replace(/^\[Gmail]\//, '');
-  return s;
+	// https://regex101.com/r/yeyZJh/1
+	const s = pathStr.replace(/^\[Gmail]\//, "");
+	return s;
 }
 
-export {formatImapPath};
-export default {formatImapPath};
+export { formatImapPath };
+export default { formatImapPath };

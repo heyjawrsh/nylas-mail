@@ -1,4 +1,4 @@
-import {Utils} from 'nylas-exports'
+import { Utils } from "nylas-exports";
 
 /*
 There are many places we want to have a SalesforceObject for which we
@@ -11,18 +11,18 @@ an activity is in progress.
 */
 
 export default class PendingSalesforceObject {
-  constructor({id, type, name}) {
-    this.id = id || Utils.generateTempId();
-    this.type = type;
-    this.name = name;
-  }
+	constructor({ id, type, name }) {
+		this.id = id || Utils.generateTempId();
+		this.type = type;
+		this.name = name;
+	}
 
-  toJSON() {
-    return {
-      id: this.id,
-      type: this.type,
-      name: this.name,
-      pendingSalesforceObject: true,
-    }
-  }
+	toJSON() {
+		return {
+			id: this.id,
+			type: this.type,
+			name: this.name,
+			pendingSalesforceObject: true,
+		};
+	}
 }

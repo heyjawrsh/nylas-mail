@@ -28,43 +28,43 @@
 // }
 
 export function activate() {
-  return;
-  // WorkspaceStore.defineSheet('Main', {root: true}, {list: ['Center']});
-  //
-  // if (process.platform === 'darwin') {
-  //   resolveHelperPath((helperPath) => {
-  //     if (!helperPath) {
-  //       return;
-  //     }
-  //
-  //     exec(`chmod +x "${helperPath}/Contents/MacOS/Nylas Calendar"`, () => {
-  //       exec(`open "${helperPath}"`);
-  //     });
-  //
-  //     if (!NylasEnv.config.get('addedToDockCalendar')) {
-  //       exec(`defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${helperPath}/</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"`, () => {
-  //         NylasEnv.config.set('addedToDockCalendar', true);
-  //         exec(`killall Dock`);
-  //       });
-  //     }
-  //   });
-  //
-  //   NylasEnv.onBeforeUnload(() => {
-  //     exec('killall "Nylas Calendar"');
-  //     return true;
-  //   });
-  // }
-  //
-  // ComponentRegistry.register(CalendarWrapper, {
-  //   location: WorkspaceStore.Location.Center,
-  // });
-  // ComponentRegistry.register(QuickEventButton, {
-  //   location: WorkspaceStore.Location.Center.Toolbar,
-  // });
+	return;
+	// WorkspaceStore.defineSheet('Main', {root: true}, {list: ['Center']});
+	//
+	// if (process.platform === 'darwin') {
+	//   resolveHelperPath((helperPath) => {
+	//     if (!helperPath) {
+	//       return;
+	//     }
+	//
+	//     exec(`chmod +x "${helperPath}/Contents/MacOS/Nylas Calendar"`, () => {
+	//       exec(`open "${helperPath}"`);
+	//     });
+	//
+	//     if (!NylasEnv.config.get('addedToDockCalendar')) {
+	//       exec(`defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${helperPath}/</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"`, () => {
+	//         NylasEnv.config.set('addedToDockCalendar', true);
+	//         exec(`killall Dock`);
+	//       });
+	//     }
+	//   });
+	//
+	//   NylasEnv.onBeforeUnload(() => {
+	//     exec('killall "Nylas Calendar"');
+	//     return true;
+	//   });
+	// }
+	//
+	// ComponentRegistry.register(CalendarWrapper, {
+	//   location: WorkspaceStore.Location.Center,
+	// });
+	// ComponentRegistry.register(QuickEventButton, {
+	//   location: WorkspaceStore.Location.Center.Toolbar,
+	// });
 }
 
 export function deactivate() {
-  return;
-  // ComponentRegistry.unregister(CalendarWrapper);
-  // ComponentRegistry.unregister(QuickEventButton);
+	return;
+	// ComponentRegistry.unregister(CalendarWrapper);
+	// ComponentRegistry.unregister(QuickEventButton);
 }

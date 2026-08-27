@@ -4,17 +4,17 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const {React, ReactTestUtils, DraftStore, Message} = require('nylas-exports');
-const pgp = require('kbpgp');
-const _ = require('underscore');
-const fs = require('fs');
+const { React, ReactTestUtils, DraftStore, Message } = require("nylas-exports");
+const pgp = require("kbpgp");
+const _ = require("underscore");
+const fs = require("fs");
 
-const Identity = require('../lib/identity');
-const PGPKeyStore = require('../lib/pgp-key-store');
+const Identity = require("../lib/identity");
+const PGPKeyStore = require("../lib/pgp-key-store");
 
-describe("PGPKeyStore", function() {
-  beforeEach(function() {
-    this.TEST_KEY = `-----BEGIN PGP PRIVATE KEY BLOCK-----
+describe("PGPKeyStore", () => {
+	beforeEach(function () {
+		this.TEST_KEY = `-----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: GnuPG v1
 
 lQOYBFbgdCwBCADP7pEHzySjYHIlQK7T3XlqfFaot7VAgwmBUmXwFNRsYxGFj5sC
@@ -73,165 +73,256 @@ VsVlQKtXimFLpck1z0BPQ0NmRdEzRHQwP2WNYfxdNCeFAGDL4tpblBzw/vp/CFTO
 =UY7Y
 -----END PGP PRIVATE KEY BLOCK-----`;
 
-    // mock getKeyContents to get rid of all the fs.readFiles
-    spyOn(PGPKeyStore, "getKeyContents").andCallFake( ({key, passphrase, callback}) => {
-      const data = this.TEST_KEY;
-      return pgp.KeyManager.import_from_armored_pgp({
-        armored: data
-      }, (err, km) => {
-        expect(err).toEqual(null);
-        if (km.is_pgp_locked()) {
-          expect(passphrase).toBeDefined();
-          km.unlock_pgp({ passphrase }, err => {
-            return expect(err).toEqual(null);
-          });
-        }
-        key.key = km;
-        key.setTimeout();
-        if (callback != null) {
-          return callback();
-        }
-    });
-    });
+		// mock getKeyContents to get rid of all the fs.readFiles
+		spyOn(PGPKeyStore, "getKeyContents").andCallFake(
+			({ key, passphrase, callback }) => {
+				const data = this.TEST_KEY;
+				return pgp.KeyManager.import_from_armored_pgp(
+					{
+						armored: data,
+					},
+					(err, km) => {
+						expect(err).toEqual(null);
+						if (km.is_pgp_locked()) {
+							expect(passphrase).toBeDefined();
+							km.unlock_pgp({ passphrase }, (err) => {
+								return expect(err).toEqual(null);
+							});
+						}
+						key.key = km;
+						key.setTimeout();
+						if (callback != null) {
+							return callback();
+						}
+					},
+				);
+			},
+		);
 
-    // define an encrypted and an unencrypted message
-    this.unencryptedMsg = new Message({clientId: 'test', subject: 'Subject', body: '<p>Body</p>'});
-    const body = `-----BEGIN PGP MESSAGE-----
+		// define an encrypted and an unencrypted message
+		this.unencryptedMsg = new Message({
+			clientId: "test",
+			subject: "Subject",
+			body: "<p>Body</p>",
+		});
+		const body = `-----BEGIN PGP MESSAGE-----
 Version: Keybase OpenPGP v2.0.52 Comment: keybase.io/crypto
 
 wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI67qXhC03lFczu2Zp2Qofgs8YePIEv7wwb27/cviODsE42YJvX 1zGir+jBp81s9ZiF4dex6Ir9XfiZJlypI2QV2dHjO+5pstW+XhKIc1R5vKvoFTGI 1XmZtL3EgtKfj/HkPUkq2N0G5kAoB2MTTQuurfXm+3TRkftqesyTKlek652sFjCv nSF+LQ1GYq5hI4YaUBiHnZd7wKUgDrIh2rzbuGq+AHjrHdVLMfRTbN0Xsy3OWRcC 9uWU8Nln00Ly6KbTqPXKcBDcMrOJuoxYcpmLlhRds9JoAY7MyIsj87M2mkTtAtMK hqK0PPvJKfepV+eljDhQ7y0TQ0IvNtO5/pcY2CozbFJncm/ToxxZPNJueKRcz+EH M9uBvrWNTwfHj26g405gpRDN1T8CsY5ZeiaDHduIKnBWd4za0ak0Xfw=
 =1aPN
 -----END PGP MESSAGE-----`;
-    this.encryptedMsg = new Message({clientId: 'test2', subject: 'Subject', body});
+		this.encryptedMsg = new Message({
+			clientId: "test2",
+			subject: "Subject",
+			body,
+		});
 
-    // blow away the saved identities and set up a test pub/priv keypair
-    PGPKeyStore._identities = {};
-    const pubIdent = new Identity({
-      addresses: ["benbitdiddle@icloud.com"],
-      isPriv: false
-    });
-    PGPKeyStore._identities[pubIdent.clientId] = pubIdent;
-    const privIdent = new Identity({
-      addresses: ["benbitdiddle@icloud.com"],
-      isPriv: true
-    });
-    return PGPKeyStore._identities[privIdent.clientId] = privIdent;
-  });
+		// blow away the saved identities and set up a test pub/priv keypair
+		PGPKeyStore._identities = {};
+		const pubIdent = new Identity({
+			addresses: ["benbitdiddle@icloud.com"],
+			isPriv: false,
+		});
+		PGPKeyStore._identities[pubIdent.clientId] = pubIdent;
+		const privIdent = new Identity({
+			addresses: ["benbitdiddle@icloud.com"],
+			isPriv: true,
+		});
+		return (PGPKeyStore._identities[privIdent.clientId] = privIdent);
+	});
 
-  describe("when handling private keys", function() {
-    it('should be able to retrieve and unlock a private key', function() {
-      expect(PGPKeyStore.privKeys().some((cv, index, array) => {
-        return cv.hasOwnProperty("key");
-    })).toBeFalsey;
-      const key = PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false})[0];
-      return PGPKeyStore.getKeyContents({key, passphrase: "", callback: () => {
-        return expect(PGPKeyStore.privKeys({timed: false}).some((cv, index, array) => {
-          return cv.hasOwnProperty("key");
-      })).toBeTruthy;
-      }
-      });
-    });
+	describe("when handling private keys", () => {
+		it("should be able to retrieve and unlock a private key", () => {
+			expect(
+				PGPKeyStore.privKeys().some((cv, index, array) => {
+					return Object.hasOwn(cv, "key");
+				}),
+			).toBeFalsey;
+			const key = PGPKeyStore.privKeys({
+				address: "benbitdiddle@icloud.com",
+				timed: false,
+			})[0];
+			return PGPKeyStore.getKeyContents({
+				key,
+				passphrase: "",
+				callback: () => {
+					return expect(
+						PGPKeyStore.privKeys({ timed: false }).some((cv, index, array) => {
+							return Object.hasOwn(cv, "key");
+						}),
+					).toBeTruthy;
+				},
+			});
+		});
 
-    it('should not return a private key after its timeout has passed', function() {
-      expect(PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false}).length).toEqual(1);
-      PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false})[0].timeout = Date.now() - 5;
-      expect(PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: true}).length).toEqual(0);
-      return PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false})[0].setTimeout();
-    });
+		it("should not return a private key after its timeout has passed", () => {
+			expect(
+				PGPKeyStore.privKeys({
+					address: "benbitdiddle@icloud.com",
+					timed: false,
+				}).length,
+			).toEqual(1);
+			PGPKeyStore.privKeys({
+				address: "benbitdiddle@icloud.com",
+				timed: false,
+			})[0].timeout = Date.now() - 5;
+			expect(
+				PGPKeyStore.privKeys({
+					address: "benbitdiddle@icloud.com",
+					timed: true,
+				}).length,
+			).toEqual(0);
+			return PGPKeyStore.privKeys({
+				address: "benbitdiddle@icloud.com",
+				timed: false,
+			})[0].setTimeout();
+		});
 
-    it('should only return the key(s) corresponding to a supplied email address', () => expect(PGPKeyStore.privKeys({address: "wrong@example.com", timed: true}).length).toEqual(0));
+		it("should only return the key(s) corresponding to a supplied email address", () =>
+			expect(
+				PGPKeyStore.privKeys({ address: "wrong@example.com", timed: true })
+					.length,
+			).toEqual(0));
 
-    it('should return all private keys when an address is not supplied', () => expect(PGPKeyStore.privKeys({timed: false}).length).toEqual(1));
+		it("should return all private keys when an address is not supplied", () =>
+			expect(PGPKeyStore.privKeys({ timed: false }).length).toEqual(1));
 
-    return it('should update an existing key when it is unlocked, not add a new one', function() {
-      const {
-        timeout
-      } = PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false})[0];
-      return PGPKeyStore.getKeyContents({key: PGPKeyStore.privKeys({timed: false})[0], passphrase: "", callback: () => {
-        // expect no new keys to have been added
-        expect(PGPKeyStore.privKeys({timed: false}).length).toEqual(1);
-        // make sure the timeout is updated
-        return expect(timeout < PGPKeyStore.privKeys({address: "benbitdiddle@icloud.com", timed: false}).timeout);
-      }
-      });
-    });
-  });
+		return it("should update an existing key when it is unlocked, not add a new one", () => {
+			const { timeout } = PGPKeyStore.privKeys({
+				address: "benbitdiddle@icloud.com",
+				timed: false,
+			})[0];
+			return PGPKeyStore.getKeyContents({
+				key: PGPKeyStore.privKeys({ timed: false })[0],
+				passphrase: "",
+				callback: () => {
+					// expect no new keys to have been added
+					expect(PGPKeyStore.privKeys({ timed: false }).length).toEqual(1);
+					// make sure the timeout is updated
+					return expect(
+						timeout <
+							PGPKeyStore.privKeys({
+								address: "benbitdiddle@icloud.com",
+								timed: false,
+							}).timeout,
+					);
+				},
+			});
+		});
+	});
 
-  describe("when decrypting messages", function() {
-    xit('should be able to decrypt a message', function() {
-      // TODO for some reason, the pgp.unbox has a problem with the message body
-      runs( () => {
-        spyOn(PGPKeyStore, 'trigger');
-        return PGPKeyStore.getKeyContents({key: PGPKeyStore.privKeys({timed: false})[0], passphrase: "", callback: () => {
-          return PGPKeyStore.decrypt(this.encryptedMsg);
-        }
-        });
-      });
-      waitsFor((() => PGPKeyStore.trigger.callCount > 0), 'message to decrypt');
-      return runs( () => {
-        return expect(_.findWhere(PGPKeyStore._msgCache,
-               {clientId: this.encryptedMsg.clientId})).toExist();
-      });
-    });
+	describe("when decrypting messages", () => {
+		xit("should be able to decrypt a message", function () {
+			// TODO for some reason, the pgp.unbox has a problem with the message body
+			runs(() => {
+				spyOn(PGPKeyStore, "trigger");
+				return PGPKeyStore.getKeyContents({
+					key: PGPKeyStore.privKeys({ timed: false })[0],
+					passphrase: "",
+					callback: () => {
+						return PGPKeyStore.decrypt(this.encryptedMsg);
+					},
+				});
+			});
+			waitsFor(() => PGPKeyStore.trigger.callCount > 0, "message to decrypt");
+			return runs(() => {
+				return expect(
+					_.findWhere(PGPKeyStore._msgCache, {
+						clientId: this.encryptedMsg.clientId,
+					}),
+				).toExist();
+			});
+		});
 
-    it('should be able to handle an unencrypted message', function() {
-      PGPKeyStore.decrypt(this.unencryptedMsg);
-      return expect(_.findWhere(PGPKeyStore._msgCache,
-             {clientId: this.unencryptedMsg.clientId})).not.toBeDefined();
-    });
+		it("should be able to handle an unencrypted message", function () {
+			PGPKeyStore.decrypt(this.unencryptedMsg);
+			return expect(
+				_.findWhere(PGPKeyStore._msgCache, {
+					clientId: this.unencryptedMsg.clientId,
+				}),
+			).not.toBeDefined();
+		});
 
-    it('should be able to tell when a message has no encrypted component', function() {
-      expect(PGPKeyStore.hasEncryptedComponent(this.unencryptedMsg)).not;
-      return expect(PGPKeyStore.hasEncryptedComponent(this.encryptedMsg));
-    });
+		it("should be able to tell when a message has no encrypted component", function () {
+			expect(PGPKeyStore.hasEncryptedComponent(this.unencryptedMsg)).not;
+			return expect(PGPKeyStore.hasEncryptedComponent(this.encryptedMsg));
+		});
 
-    it('should be able to handle a message with no BEGIN PGP MESSAGE block', function() {
-      const body = `Version: Keybase OpenPGP v2.0.52 Comment: keybase.io/crypto
+		it("should be able to handle a message with no BEGIN PGP MESSAGE block", () => {
+			const body = `Version: Keybase OpenPGP v2.0.52 Comment: keybase.io/crypto
 
 wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI67qXhC03lFczu2Zp2Qofgs8YePIEv7wwb27/cviODsE42YJvX 1zGir+jBp81s9ZiF4dex6Ir9XfiZJlypI2QV2dHjO+5pstW+XhKIc1R5vKvoFTGI 1XmZtL3EgtKfj/HkPUkq2N0G5kAoB2MTTQuurfXm+3TRkftqesyTKlek652sFjCv nSF+LQ1GYq5hI4YaUBiHnZd7wKUgDrIh2rzbuGq+AHjrHdVLMfRTbN0Xsy3OWRcC 9uWU8Nln00Ly6KbTqPXKcBDcMrOJuoxYcpmLlhRds9JoAY7MyIsj87M2mkTtAtMK hqK0PPvJKfepV+eljDhQ7y0TQ0IvNtO5/pcY2CozbFJncm/ToxxZPNJueKRcz+EH M9uBvrWNTwfHj26g405gpRDN1T8CsY5ZeiaDHduIKnBWd4za0ak0Xfw=
 =1aPN
 -----END PGP MESSAGE-----`;
-      const badMsg = new Message({clientId: 'test2', subject: 'Subject', body});
+			const badMsg = new Message({
+				clientId: "test2",
+				subject: "Subject",
+				body,
+			});
 
-      return PGPKeyStore.getKeyContents({key: PGPKeyStore.privKeys({timed: false})[0], passphrase: "", callback: () => {
-        PGPKeyStore.decrypt(badMsg);
-        return expect(_.findWhere(PGPKeyStore._msgCache,
-               {clientId: badMsg.clientId})).not.toBeDefined();
-      }
-      });
-    });
+			return PGPKeyStore.getKeyContents({
+				key: PGPKeyStore.privKeys({ timed: false })[0],
+				passphrase: "",
+				callback: () => {
+					PGPKeyStore.decrypt(badMsg);
+					return expect(
+						_.findWhere(PGPKeyStore._msgCache, { clientId: badMsg.clientId }),
+					).not.toBeDefined();
+				},
+			});
+		});
 
-    it('should be able to handle a message with no END PGP MESSAGE block', function() {
-      const body = `-----BEGIN PGP MESSAGE-----
+		it("should be able to handle a message with no END PGP MESSAGE block", () => {
+			const body = `-----BEGIN PGP MESSAGE-----
 Version: Keybase OpenPGP v2.0.52 Comment: keybase.io/crypto
 
 wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI67qXhC03lFczu2Zp2Qofgs8YePIEv7wwb27/cviODsE42YJvX 1zGir+jBp81s9ZiF4dex6Ir9XfiZJlypI2QV2dHjO+5pstW+XhKIc1R5vKvoFTGI 1XmZtL3EgtKfj/HkPUkq2N0G5kAoB2MTTQuurfXm+3TRkftqesyTKlek652sFjCv nSF+LQ1GYq5hI4YaUBiHnZd7wKUgDrIh2rzbuGq+AHjrHdVLMfRTbN0Xsy3OWRcC 9uWU8Nln00Ly6KbTqPXKcBDcMrOJuoxYcpmLlhRds9JoAY7MyIsj87M2mkTtAtMK hqK0PPvJKfepV+eljDhQ7y0TQ0IvNtO5/pcY2CozbFJncm/ToxxZPNJueKRcz+EH M9uBvrWNTwfHj26g405gpRDN1T8CsY5ZeiaDHduIKnBWd4za0ak0Xfw=
 =1aPN`;
-      const badMsg = new Message({clientId: 'test2', subject: 'Subject', body});
+			const badMsg = new Message({
+				clientId: "test2",
+				subject: "Subject",
+				body,
+			});
 
-      return PGPKeyStore.getKeyContents({key: PGPKeyStore.privKeys({timed: false})[0], passphrase: "", callback: () => {
-        PGPKeyStore.decrypt(badMsg);
-        return expect(_.findWhere(PGPKeyStore._msgCache,
-               {clientId: badMsg.clientId})).not.toBeDefined();
-      }
-      });
-    });
+			return PGPKeyStore.getKeyContents({
+				key: PGPKeyStore.privKeys({ timed: false })[0],
+				passphrase: "",
+				callback: () => {
+					PGPKeyStore.decrypt(badMsg);
+					return expect(
+						_.findWhere(PGPKeyStore._msgCache, { clientId: badMsg.clientId }),
+					).not.toBeDefined();
+				},
+			});
+		});
 
-    it('should not return a decrypted message which has timed out', function() {
-      PGPKeyStore._msgCache.push({clientId: "testID", body: "example body", timeout: Date.now()});
+		it("should not return a decrypted message which has timed out", () => {
+			PGPKeyStore._msgCache.push({
+				clientId: "testID",
+				body: "example body",
+				timeout: Date.now(),
+			});
 
-      const msg = new Message({clientId: "testID"});
-      return expect(PGPKeyStore.getDecrypted(msg)).toEqual(null);
-    });
+			const msg = new Message({ clientId: "testID" });
+			return expect(PGPKeyStore.getDecrypted(msg)).toEqual(null);
+		});
 
-    return it('should return a decrypted message', function() {
-      const timeout = Date.now() + (1000*60*60);
-      PGPKeyStore._msgCache.push({clientId: "testID2", body: "example body", timeout});
+		return it("should return a decrypted message", () => {
+			const timeout = Date.now() + 1000 * 60 * 60;
+			PGPKeyStore._msgCache.push({
+				clientId: "testID2",
+				body: "example body",
+				timeout,
+			});
 
-      const msg = new Message({clientId: "testID2", body: "example body"});
-      return expect(PGPKeyStore.getDecrypted(msg)).toEqual(msg.body);
-    });
-  });
+			const msg = new Message({ clientId: "testID2", body: "example body" });
+			return expect(PGPKeyStore.getDecrypted(msg)).toEqual(msg.body);
+		});
+	});
 
-  return describe("when handling public keys", () => it("should immediately return a pre-cached key", () => expect(PGPKeyStore.pubKeys('benbitdiddle@icloud.com').length).toEqual(1)));
+	return describe("when handling public keys", () =>
+		it("should immediately return a pre-cached key", () =>
+			expect(PGPKeyStore.pubKeys("benbitdiddle@icloud.com").length).toEqual(
+				1,
+			)));
 });

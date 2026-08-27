@@ -1,10 +1,9 @@
-import {Utils} from 'nylas-exports'
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import DropZone from './drop-zone';
-import RetinaImg from './retina-img';
-import OutlineViewItem from './outline-view-item';
-
+import { Utils } from "nylas-exports";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import DropZone from "./drop-zone";
+import RetinaImg from "./retina-img";
+import OutlineViewItem from "./outline-view-item";
 
 /*
  * Renders a section that contains a list of {@link OutlineViewItem}s. These items can
@@ -32,174 +31,171 @@ import OutlineViewItem from './outline-view-item';
  * @class OutlineView
  */
 class OutlineView extends Component {
-  static displayName = 'OutlineView';
+	static displayName = "OutlineView";
 
-  /*
-   * If provided, this function will be called when an item has been created.
-   * @callback props.onItemCreated
-   * @param {string} value - The value for the created item
-   */
-  /*
-   * If provided, this function will be called when the user clicks the action
-   * to collapse or uncollapse the OutlineView
-   * @callback props.onCollapseToggled
-   * @param {object} props - The entire props object for this OutlineView
-   */
-  static propTypes = {
-    title: PropTypes.string,
-    iconName: PropTypes.string,
-    items: PropTypes.array,
-    collapsed: PropTypes.bool,
-    onItemCreated: PropTypes.func,
-    onCollapseToggled: PropTypes.func,
-  };
+	/*
+	 * If provided, this function will be called when an item has been created.
+	 * @callback props.onItemCreated
+	 * @param {string} value - The value for the created item
+	 */
+	/*
+	 * If provided, this function will be called when the user clicks the action
+	 * to collapse or uncollapse the OutlineView
+	 * @callback props.onCollapseToggled
+	 * @param {object} props - The entire props object for this OutlineView
+	 */
+	static propTypes = {
+		title: PropTypes.string,
+		iconName: PropTypes.string,
+		items: PropTypes.array,
+		collapsed: PropTypes.bool,
+		onItemCreated: PropTypes.func,
+		onCollapseToggled: PropTypes.func,
+	};
 
-  static defaultProps = {
-    title: '',
-    items: [],
-  };
+	static defaultProps = {
+		title: "",
+		items: [],
+	};
 
-  state = {
-    showCreateInput: false,
-  };
+	state = {
+		showCreateInput: false,
+	};
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !Utils.isEqualReact(nextProps, this.props) ||
-      !Utils.isEqualReact(nextState, this.state);
-  }
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			!Utils.isEqualReact(nextProps, this.props) ||
+			!Utils.isEqualReact(nextState, this.state)
+		);
+	}
 
-  componentWillUnmount() {
-    clearTimeout(this._expandTimeout);
-  }
+	componentWillUnmount() {
+		clearTimeout(this._expandTimeout);
+	}
 
-  // Handlers
+	// Handlers
 
-  _onCreateButtonMouseDown = () => {
-    this._clickingCreateButton = true;
-  };
+	_onCreateButtonMouseDown = () => {
+		this._clickingCreateButton = true;
+	};
 
-  _onCreateButtonClicked = () => {
-    this._clickingCreateButton = false;
-    this.setState({showCreateInput: !this.state.showCreateInput});
-  };
+	_onCreateButtonClicked = () => {
+		this._clickingCreateButton = false;
+		this.setState({ showCreateInput: !this.state.showCreateInput });
+	};
 
-  _onCollapseToggled = () => {
-    if (this.props.onCollapseToggled) {
-      this.props.onCollapseToggled(this.props);
-    }
-  };
+	_onCollapseToggled = () => {
+		if (this.props.onCollapseToggled) {
+			this.props.onCollapseToggled(this.props);
+		}
+	};
 
-  _onDragStateChange = ({isDropping}) => {
-    if (this.props.collapsed && !this._expandTimeout && isDropping) {
-      this._expandTimeout = setTimeout(this._onCollapseToggled, 650);
-    } else if (this._expandTimeout && !isDropping) {
-      clearTimeout(this._expandTimeout);
-      this._expandTimeout = null;
-    }
-  }
+	_onDragStateChange = ({ isDropping }) => {
+		if (this.props.collapsed && !this._expandTimeout && isDropping) {
+			this._expandTimeout = setTimeout(this._onCollapseToggled, 650);
+		} else if (this._expandTimeout && !isDropping) {
+			clearTimeout(this._expandTimeout);
+			this._expandTimeout = null;
+		}
+	};
 
-  _onItemCreated = (item, value) => {
-    this.setState({showCreateInput: false});
-    this.props.onItemCreated(value)
-  };
+	_onItemCreated = (item, value) => {
+		this.setState({ showCreateInput: false });
+		this.props.onItemCreated(value);
+	};
 
-  _onCreateInputCleared = () => {
-    if (!this._clickingCreateButton) {
-      this.setState({showCreateInput: false});
-    }
-  };
+	_onCreateInputCleared = () => {
+		if (!this._clickingCreateButton) {
+			this.setState({ showCreateInput: false });
+		}
+	};
 
+	// Renderers
 
-  // Renderers
+	_renderCreateInput(props = this.props) {
+		const item = {
+			id: `add-item-${props.title}`,
+			name: "",
+			children: [],
+			editing: true,
+			iconName: props.iconName,
+			onEdited: this._onItemCreated,
+			inputPlaceholder: "Create new item",
+			onInputCleared: this._onCreateInputCleared,
+		};
+		return <OutlineViewItem item={item} />;
+	}
 
-  _renderCreateInput(props = this.props) {
-    const item = {
-      id: `add-item-${props.title}`,
-      name: '',
-      children: [],
-      editing: true,
-      iconName: props.iconName,
-      onEdited: this._onItemCreated,
-      inputPlaceholder: 'Create new item',
-      onInputCleared: this._onCreateInputCleared,
-    }
-    return <OutlineViewItem item={item} />;
-  }
+	_renderCreateButton() {
+		return (
+			<span
+				className="add-item-button"
+				onMouseDown={this._onCreateButtonMouseDown}
+				onMouseUp={this._onCreateButtonClicked}
+			>
+				<RetinaImg
+					url="nylas://account-sidebar/assets/icon-sidebar-addcategory@2x.png"
+					style={{ height: 15, width: 14 }}
+					mode={RetinaImg.Mode.ContentIsMask}
+				/>
+			</span>
+		);
+	}
 
-  _renderCreateButton() {
-    return (
-      <span
-        className="add-item-button"
-        onMouseDown={this._onCreateButtonMouseDown}
-        onMouseUp={this._onCreateButtonClicked}
-      >
-        <RetinaImg
-          url="nylas://account-sidebar/assets/icon-sidebar-addcategory@2x.png"
-          style={{height: 15, width: 14}}
-          mode={RetinaImg.Mode.ContentIsMask}
-        />
-      </span>
-    );
-  }
+	_renderHeading(allowCreate, collapsed, collapsible) {
+		const collapseLabel = collapsed ? "Show" : "Hide";
+		return (
+			<DropZone
+				className="heading"
+				onDrop={() => true}
+				onDragStateChange={this._onDragStateChange}
+				shouldAcceptDrop={() => true}
+			>
+				<span className="text" title={this.props.title}>
+					{this.props.title}
+				</span>
+				{allowCreate ? this._renderCreateButton() : null}
+				{collapsible ? (
+					<span className="collapse-button" onClick={this._onCollapseToggled}>
+						{collapseLabel}
+					</span>
+				) : null}
+			</DropZone>
+		);
+	}
 
-  _renderHeading(allowCreate, collapsed, collapsible) {
-    const collapseLabel = collapsed ? 'Show' : 'Hide';
-    return (
-      <DropZone
-        className="heading"
-        onDrop={() => true}
-        onDragStateChange={this._onDragStateChange}
-        shouldAcceptDrop={() => true}
-      >
-        <span className="text" title={this.props.title}>
-          {this.props.title}
-        </span>
-        {allowCreate ? this._renderCreateButton() : null}
-        {collapsible ?
-          <span
-            className="collapse-button"
-            onClick={this._onCollapseToggled}
-          >
-            {collapseLabel}
-          </span>
-          : null
-        }
-      </DropZone>
-    );
-  }
+	_renderItems() {
+		return this.props.items.map((item) => (
+			<OutlineViewItem key={item.id} item={item} />
+		));
+	}
 
-  _renderItems() {
-    return this.props.items.map(item => (
-      <OutlineViewItem key={item.id} item={item} />
-    ));
-  }
+	_renderOutline(allowCreate, collapsed) {
+		if (collapsed) {
+			return <span />;
+		}
 
-  _renderOutline(allowCreate, collapsed) {
-    if (collapsed) {
-      return <span />;
-    }
+		const showInput = allowCreate && this.state.showCreateInput;
+		return (
+			<div>
+				{showInput ? this._renderCreateInput() : null}
+				{this._renderItems()}
+			</div>
+		);
+	}
 
-    const showInput = allowCreate && this.state.showCreateInput;
-    return (
-      <div>
-        {showInput ? this._renderCreateInput() : null}
-        {this._renderItems()}
-      </div>
-    );
-  }
+	render() {
+		const collapsible = this.props.onCollapseToggled;
+		const collapsed = this.props.collapsed;
+		const allowCreate = this.props.onItemCreated != null && !collapsed;
 
-  render() {
-    const collapsible = this.props.onCollapseToggled;
-    const collapsed = this.props.collapsed;
-    const allowCreate = this.props.onItemCreated != null && !collapsed;
-
-    return (
-      <section className="nylas-outline-view">
-        {this._renderHeading(allowCreate, collapsed, collapsible)}
-        {this._renderOutline(allowCreate, collapsed)}
-      </section>
-    );
-  }
+		return (
+			<section className="nylas-outline-view">
+				{this._renderHeading(allowCreate, collapsed, collapsible)}
+				{this._renderOutline(allowCreate, collapsed)}
+			</section>
+		);
+	}
 }
 
 export default OutlineView;

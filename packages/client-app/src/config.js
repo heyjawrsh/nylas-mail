@@ -9,27 +9,23 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let app, Config, errorLogger, webContentsId;
-let _ = require('underscore');
-_ = _.extend(_, require('./config-utils'));
-const {remote} = require('electron');
-const fs = require('fs-plus');
-const EmitterMixin = require('emissary').Emitter;
-const {CompositeDisposable, Disposable, Emitter} = require('event-kit');
+let _ = require("underscore");
+_ = _.extend(_, require("./config-utils"));
+const { remote } = require("electron");
+const fs = require("fs-plus");
+const EmitterMixin = require("emissary").Emitter;
+const { CompositeDisposable, Disposable, Emitter } = require("event-kit");
 
-const Color = require('./color');
+const Color = require("./color");
 
-if (process.type === 'renderer') {
-  app = remote.getGlobal('application');
-  webContentsId = remote.getCurrentWebContents().getId();
-  ({
-    errorLogger
-  } = NylasEnv);
+if (process.type === "renderer") {
+	app = remote.getGlobal("application");
+	webContentsId = remote.getCurrentWebContents().getId();
+	({ errorLogger } = NylasEnv);
 } else {
-  app = global.application;
-  webContentsId = null;
-  ({
-    errorLogger
-  } = global);
+	app = global.application;
+	webContentsId = null;
+	({ errorLogger } = global);
 }
 
 // Essential: Used to access all of N1's configuration details.
@@ -305,454 +301,511 @@ if (process.type === 'renderer') {
 //
 // * Don't depend on (or write to) configuration keys outside of your keypath.
 //
-module.exports =
-(Config = (function() {
-  Config = class Config {
-    static initClass() {
-      EmitterMixin.includeInto(this);
-      this.schemaEnforcers = {};
-    }
+module.exports = Config = (() => {
+	Config = class Config {
+		static initClass() {
+			EmitterMixin.includeInto(Config);
+			Config.schemaEnforcers = {};
+		}
 
-    static addSchemaEnforcer(typeName, enforcerFunction) {
-      if (this.schemaEnforcers[typeName] == null) { this.schemaEnforcers[typeName] = []; }
-      return this.schemaEnforcers[typeName].push(enforcerFunction);
-    }
+		static addSchemaEnforcer(typeName, enforcerFunction) {
+			if (Config.schemaEnforcers[typeName] == null) {
+				Config.schemaEnforcers[typeName] = [];
+			}
+			return Config.schemaEnforcers[typeName].push(enforcerFunction);
+		}
 
-    static addSchemaEnforcers(filters) {
-      return (() => {
-        const result = [];
-        for (var typeName in filters) {
-          var functions = filters[typeName];
-          result.push((() => {
-            const result1 = [];
-            for (var name in functions) {
-              var enforcerFunction = functions[name];
-              result1.push(this.addSchemaEnforcer(typeName, enforcerFunction));
-            }
-            return result1;
-          })());
-        }
-        return result;
-      })();
-    }
+		static addSchemaEnforcers(filters) {
+			return (() => {
+				const result = [];
+				for (var typeName in filters) {
+					var functions = filters[typeName];
+					result.push(
+						(() => {
+							const result1 = [];
+							for (var name in functions) {
+								var enforcerFunction = functions[name];
+								result1.push(
+									Config.addSchemaEnforcer(typeName, enforcerFunction),
+								);
+							}
+							return result1;
+						})(),
+					);
+				}
+				return result;
+			})();
+		}
 
-    static executeSchemaEnforcers(keyPath, value, schema) {
-      let error = null;
-      let types = schema.type;
-      if (!Array.isArray(types)) { types = [types]; }
-      for (var type of Array.from(types)) {
-        try {
-          var enforcerFunctions = this.schemaEnforcers[type].concat(this.schemaEnforcers['*']);
-          for (var enforcer of Array.from(enforcerFunctions)) {
-            // At some point in one's life, one must call upon an enforcer.
-            value = enforcer.call(this, keyPath, value, schema);
-          }
-          error = null;
-          break;
-        } catch (e) {
-          error = e;
-        }
-      }
+		static executeSchemaEnforcers(keyPath, value, schema) {
+			let error = null;
+			let types = schema.type;
+			if (!Array.isArray(types)) {
+				types = [types];
+			}
+			for (var type of Array.from(types)) {
+				try {
+					var enforcerFunctions = Config.schemaEnforcers[type].concat(
+						Config.schemaEnforcers["*"],
+					);
+					for (var enforcer of Array.from(enforcerFunctions)) {
+						// At some point in one's life, one must call upon an enforcer.
+						value = enforcer.call(Config, keyPath, value, schema);
+					}
+					error = null;
+					break;
+				} catch (e) {
+					error = e;
+				}
+			}
 
-      if (error != null) { throw error; }
-      return value;
-    }
+			if (error != null) {
+				throw error;
+			}
+			return value;
+		}
 
-    // Created during initialization, available as `NylasEnv.config`
-    constructor() {
-      this.updateSettings = this.updateSettings.bind(this);
-      this.emitter = new Emitter;
-      this.schema = {
-        type: 'object',
-        properties: {}
-      };
+		// Created during initialization, available as `NylasEnv.config`
+		constructor() {
+			this.updateSettings = this.updateSettings.bind(this);
+			this.emitter = new Emitter();
+			this.schema = {
+				type: "object",
+				properties: {},
+			};
 
-      this.settings = {};
-      this.defaultSettings = {};
-      this.transactDepth = 0;
+			this.settings = {};
+			this.defaultSettings = {};
+			this.transactDepth = 0;
 
-      if (process.type === 'renderer') {
-        const {ipcRenderer} = require('electron');
-        // If new Config() has already been called, unmount it's listener when
-        // we attach ourselves. This is only done during specs, Config is a singleton.
-        ipcRenderer.removeAllListeners('on-config-reloaded');
-        ipcRenderer.on('on-config-reloaded', (event, settings) => {
-          return this.updateSettings(settings);
-        });
-      }
-    }
+			if (process.type === "renderer") {
+				const { ipcRenderer } = require("electron");
+				// If new Config() has already been called, unmount it's listener when
+				// we attach ourselves. This is only done during specs, Config is a singleton.
+				ipcRenderer.removeAllListeners("on-config-reloaded");
+				ipcRenderer.on("on-config-reloaded", (event, settings) => {
+					return this.updateSettings(settings);
+				});
+			}
+		}
 
-    _logError(prefix, error) {
-      error.message = `${prefix}: ${error.message}`;
-      console.error(error.message);
-      return errorLogger.reportError(error);
-    }
+		_logError(prefix, error) {
+			error.message = `${prefix}: ${error.message}`;
+			console.error(error.message);
+			return errorLogger.reportError(error);
+		}
 
-    load() {
-      return this.updateSettings(this.getRawValues());
-    }
+		load() {
+			return this.updateSettings(this.getRawValues());
+		}
 
-    /*
+		/*
     Section: Config Subscription
     */
 
-    // Essential: Add a listener for changes to a given key path. This is different
-    // than {::onDidChange} in that it will immediately call your callback with the
-    // current value of the config entry.
-    //
-    // ### Examples
-    //
-    // You might want to be notified when the themes change. We'll watch
-    // `core.themes` for changes
-    //
-    // ```coffee
-    // NylasEnv.config.observe 'core.themes', (value) ->
-    //   # do stuff with value
-    // ```
-    //
-    // * `keyPath` {String} name of the key to observe
-    // * `callback` {Function} to call when the value of the key changes.
-    //   * `value` the new value of the key
-    //
-    // Returns a {Disposable} with the following keys on which you can call
-    // `.dispose()` to unsubscribe.
-    observe(keyPath, callback) {
-      callback(this.get(keyPath));
-      return this.onDidChangeKeyPath(keyPath, event => callback(event.newValue));
-    }
+		// Essential: Add a listener for changes to a given key path. This is different
+		// than {::onDidChange} in that it will immediately call your callback with the
+		// current value of the config entry.
+		//
+		// ### Examples
+		//
+		// You might want to be notified when the themes change. We'll watch
+		// `core.themes` for changes
+		//
+		// ```coffee
+		// NylasEnv.config.observe 'core.themes', (value) ->
+		//   # do stuff with value
+		// ```
+		//
+		// * `keyPath` {String} name of the key to observe
+		// * `callback` {Function} to call when the value of the key changes.
+		//   * `value` the new value of the key
+		//
+		// Returns a {Disposable} with the following keys on which you can call
+		// `.dispose()` to unsubscribe.
+		observe(keyPath, callback) {
+			callback(this.get(keyPath));
+			return this.onDidChangeKeyPath(keyPath, (event) =>
+				callback(event.newValue),
+			);
+		}
 
-    // Essential: Add a listener for changes to a given key path. If `keyPath` is
-    // not specified, your callback will be called on changes to any key.
-    //
-    // * `keyPath` (optional) {String} name of the key to observe.
-    // * `callback` {Function} to call when the value of the key changes.
-    //   * `event` {Object}
-    //     * `newValue` the new value of the key
-    //     * `oldValue` the prior value of the key.
-    //     * `keyPath` the keyPath of the changed key
-    //
-    // Returns a {Disposable} with the following keys on which you can call
-    // `.dispose()` to unsubscribe.
-    onDidChange() {
-      let callback, keyPath;
-      if (arguments.length === 1) {
-        [callback] = Array.from(arguments);
-      } else if (arguments.length === 2) {
-        [keyPath, callback] = Array.from(arguments);
-      }
-      return this.onDidChangeKeyPath(keyPath, callback);
-    }
+		// Essential: Add a listener for changes to a given key path. If `keyPath` is
+		// not specified, your callback will be called on changes to any key.
+		//
+		// * `keyPath` (optional) {String} name of the key to observe.
+		// * `callback` {Function} to call when the value of the key changes.
+		//   * `event` {Object}
+		//     * `newValue` the new value of the key
+		//     * `oldValue` the prior value of the key.
+		//     * `keyPath` the keyPath of the changed key
+		//
+		// Returns a {Disposable} with the following keys on which you can call
+		// `.dispose()` to unsubscribe.
+		onDidChange() {
+			let callback, keyPath;
+			if (arguments.length === 1) {
+				[callback] = Array.from(arguments);
+			} else if (arguments.length === 2) {
+				[keyPath, callback] = Array.from(arguments);
+			}
+			return this.onDidChangeKeyPath(keyPath, callback);
+		}
 
-    /*
+		/*
     Section: Managing Settings
     */
 
-    // Essential: Retrieves the setting for the given key.
-    //
-    // ### Examples
-    //
-    // You might want to know what themes are enabled, so check `core.themes`
-    //
-    // ```coffee
-    // NylasEnv.config.get('core.themes')
-    // ```
-    //
-    // * `keyPath` The {String} name of the key to retrieve.
-    //
-    // Returns the value from N1's default settings, the user's configuration
-    // file in the type specified by the configuration schema.
-    get(keyPath) {
-      return this.getRawValue(keyPath);
-    }
+		// Essential: Retrieves the setting for the given key.
+		//
+		// ### Examples
+		//
+		// You might want to know what themes are enabled, so check `core.themes`
+		//
+		// ```coffee
+		// NylasEnv.config.get('core.themes')
+		// ```
+		//
+		// * `keyPath` The {String} name of the key to retrieve.
+		//
+		// Returns the value from N1's default settings, the user's configuration
+		// file in the type specified by the configuration schema.
+		get(keyPath) {
+			return this.getRawValue(keyPath);
+		}
 
-    // Essential: Sets the value for a configuration setting.
-    //
-    // This value is stored in N1's internal configuration file.
-    //
-    // ### Examples
-    //
-    // You might want to change the themes programmatically:
-    //
-    // ```coffee
-    // NylasEnv.config.set('core.themes', ['ui-light', 'my-custom-theme'])
-    // ```
-    //
-    // * `keyPath` The {String} name of the key.
-    // * `value` The value of the setting. Passing `undefined` will revert the
-    //   setting to the default value.
-    //
-    // Returns a {Boolean}
-    // * `true` if the value was set.
-    // * `false` if the value was not able to be coerced to the type specified in the setting's schema.
-    set(keyPath, value) {
-      if (value === undefined) {
-        value = _.valueForKeyPath(this.defaultSettings, keyPath);
-      } else {
-        try {
-          value = this.makeValueConformToSchema(keyPath, value);
-        } catch (e) {
-          this._logError(`Failed to set keyPath: ${keyPath} = ${value}`, e);
-          return false;
-        }
-      }
+		// Essential: Sets the value for a configuration setting.
+		//
+		// This value is stored in N1's internal configuration file.
+		//
+		// ### Examples
+		//
+		// You might want to change the themes programmatically:
+		//
+		// ```coffee
+		// NylasEnv.config.set('core.themes', ['ui-light', 'my-custom-theme'])
+		// ```
+		//
+		// * `keyPath` The {String} name of the key.
+		// * `value` The value of the setting. Passing `undefined` will revert the
+		//   setting to the default value.
+		//
+		// Returns a {Boolean}
+		// * `true` if the value was set.
+		// * `false` if the value was not able to be coerced to the type specified in the setting's schema.
+		set(keyPath, value) {
+			if (value === undefined) {
+				value = _.valueForKeyPath(this.defaultSettings, keyPath);
+			} else {
+				try {
+					value = this.makeValueConformToSchema(keyPath, value);
+				} catch (e) {
+					this._logError(`Failed to set keyPath: ${keyPath} = ${value}`, e);
+					return false;
+				}
+			}
 
-      // Ensure that we never send anything but plain javascript objects through
-      // remote. Specifically, we don't want to serialize and send function bodies
-      // across the IPC bridge.
-      if (_.isObject(value)) {
-        value = JSON.parse(JSON.stringify(value));
-      }
+			// Ensure that we never send anything but plain javascript objects through
+			// remote. Specifically, we don't want to serialize and send function bodies
+			// across the IPC bridge.
+			if (_.isObject(value)) {
+				value = JSON.parse(JSON.stringify(value));
+			}
 
-      this.setRawValue(keyPath, value);
-      return true;
-    }
+			this.setRawValue(keyPath, value);
+			return true;
+		}
 
-    // Essential: Restore the setting at `keyPath` to its default value.
-    //
-    // * `keyPath` The {String} name of the key.
-    // * `options` (optional) {Object}
-    unset(keyPath) {
-      return this.set(keyPath, _.valueForKeyPath(this.defaultSettings, keyPath));
-    }
+		// Essential: Restore the setting at `keyPath` to its default value.
+		//
+		// * `keyPath` The {String} name of the key.
+		// * `options` (optional) {Object}
+		unset(keyPath) {
+			return this.set(
+				keyPath,
+				_.valueForKeyPath(this.defaultSettings, keyPath),
+			);
+		}
 
-    // Extended: Retrieve the schema for a specific key path. The schema will tell
-    // you what type the keyPath expects, and other metadata about the config
-    // option.
-    //
-    // * `keyPath` The {String} name of the key.
-    //
-    // Returns an {Object} eg. `{type: 'integer', default: 23, minimum: 1}`.
-    // Returns `null` when the keyPath has no schema specified.
-    getSchema(keyPath) {
-      const keys = splitKeyPath(keyPath);
-      let {
-        schema
-      } = this;
-      for (var key of Array.from(keys)) {
-        if (schema == null) { break; }
-        schema = schema.properties != null ? schema.properties[key] : undefined;
-      }
-      return schema;
-    }
+		// Extended: Retrieve the schema for a specific key path. The schema will tell
+		// you what type the keyPath expects, and other metadata about the config
+		// option.
+		//
+		// * `keyPath` The {String} name of the key.
+		//
+		// Returns an {Object} eg. `{type: 'integer', default: 23, minimum: 1}`.
+		// Returns `null` when the keyPath has no schema specified.
+		getSchema(keyPath) {
+			const keys = splitKeyPath(keyPath);
+			let { schema } = this;
+			for (var key of Array.from(keys)) {
+				if (schema == null) {
+					break;
+				}
+				schema = schema.properties != null ? schema.properties[key] : undefined;
+			}
+			return schema;
+		}
 
-    // Extended: Suppress calls to handler functions registered with {::onDidChange}
-    // and {::observe} for the duration of `callback`. After `callback` executes,
-    // handlers will be called once if the value for their key-path has changed.
-    //
-    // * `callback` {Function} to execute while suppressing calls to handlers.
-    transact(callback) {
-      this.transactDepth++;
-      try {
-        return callback();
-      } finally {
-        this.transactDepth--;
-        this.emitChangeEvent();
-      }
-    }
+		// Extended: Suppress calls to handler functions registered with {::onDidChange}
+		// and {::observe} for the duration of `callback`. After `callback` executes,
+		// handlers will be called once if the value for their key-path has changed.
+		//
+		// * `callback` {Function} to execute while suppressing calls to handlers.
+		transact(callback) {
+			this.transactDepth++;
+			try {
+				return callback();
+			} finally {
+				this.transactDepth--;
+				this.emitChangeEvent();
+			}
+		}
 
-    /*
+		/*
     Section: Internal methods used by core
     */
 
-    pushAtKeyPath(keyPath, value) {
-      let left;
-      const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-      if (!(arrayValue instanceof Array)) {
-        throw new Error(`Config.pushAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`);
-      }
-      const result = arrayValue.push(value);
-      this.set(keyPath, arrayValue);
-      return result;
-    }
+		pushAtKeyPath(keyPath, value) {
+			let left;
+			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
+			if (!(arrayValue instanceof Array)) {
+				throw new Error(
+					`Config.pushAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
+				);
+			}
+			const result = arrayValue.push(value);
+			this.set(keyPath, arrayValue);
+			return result;
+		}
 
-    unshiftAtKeyPath(keyPath, value) {
-      let left;
-      const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-      if (!(arrayValue instanceof Array)) {
-        throw new Error(`Config.unshiftAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`);
-      }
-      const result = arrayValue.unshift(value);
-      this.set(keyPath, arrayValue);
-      return result;
-    }
+		unshiftAtKeyPath(keyPath, value) {
+			let left;
+			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
+			if (!(arrayValue instanceof Array)) {
+				throw new Error(
+					`Config.unshiftAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
+				);
+			}
+			const result = arrayValue.unshift(value);
+			this.set(keyPath, arrayValue);
+			return result;
+		}
 
-    removeAtKeyPath(keyPath, value) {
-      let left;
-      const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-      if (!(arrayValue instanceof Array)) {
-        throw new Error(`Config.removeAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`);
-      }
-      const result = _.remove(arrayValue, value);
-      this.set(keyPath, arrayValue);
-      return result;
-    }
+		removeAtKeyPath(keyPath, value) {
+			let left;
+			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
+			if (!(arrayValue instanceof Array)) {
+				throw new Error(
+					`Config.removeAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
+				);
+			}
+			const result = _.remove(arrayValue, value);
+			this.set(keyPath, arrayValue);
+			return result;
+		}
 
-    setSchema(keyPath, schema) {
-      if (!isPlainObject(schema)) {
-        throw new Error(`Error loading schema for ${keyPath}: schemas can only be objects!`);
-      }
+		setSchema(keyPath, schema) {
+			if (!isPlainObject(schema)) {
+				throw new Error(
+					`Error loading schema for ${keyPath}: schemas can only be objects!`,
+				);
+			}
 
-      if (!typeof (schema.type != null)) {
-        throw new Error(`Error loading schema for ${keyPath}: schema objects must have a type attribute`);
-      }
+			if (!typeof (schema.type != null)) {
+				throw new Error(
+					`Error loading schema for ${keyPath}: schema objects must have a type attribute`,
+				);
+			}
 
-      let rootSchema = this.schema;
-      if (keyPath) {
-        for (var key of Array.from(splitKeyPath(keyPath))) {
-          rootSchema.type = 'object';
-          if (rootSchema.properties == null) { rootSchema.properties = {}; }
-          var {
-            properties
-          } = rootSchema;
-          if (properties[key] == null) { properties[key] = {}; }
-          rootSchema = properties[key];
-        }
-      }
+			let rootSchema = this.schema;
+			if (keyPath) {
+				for (var key of Array.from(splitKeyPath(keyPath))) {
+					rootSchema.type = "object";
+					if (rootSchema.properties == null) {
+						rootSchema.properties = {};
+					}
+					var { properties } = rootSchema;
+					if (properties[key] == null) {
+						properties[key] = {};
+					}
+					rootSchema = properties[key];
+				}
+			}
 
-      _.extend(rootSchema, schema);
-      this.setDefaults(keyPath, this.extractDefaultsFromSchema(schema));
-      return this.resetSettingsForSchemaChange();
-    }
+			_.extend(rootSchema, schema);
+			this.setDefaults(keyPath, this.extractDefaultsFromSchema(schema));
+			return this.resetSettingsForSchemaChange();
+		}
 
-    /*
+		/*
     Section: Private methods managing global settings
     */
 
-    updateSettings(newSettings) {
-      if (!newSettings || _.isEmpty(newSettings)) {
-        throw new Error(`Tried to update settings with false-y value: ${newSettings}`);
-      }
-      this.settings = newSettings;
-      return this.emitChangeEvent();
-    }
+		updateSettings(newSettings) {
+			if (!newSettings || _.isEmpty(newSettings)) {
+				throw new Error(
+					`Tried to update settings with false-y value: ${newSettings}`,
+				);
+			}
+			this.settings = newSettings;
+			return this.emitChangeEvent();
+		}
 
-    getRawValue(keyPath) {
-      let value = _.valueForKeyPath(this.settings, keyPath);
-      const defaultValue = _.valueForKeyPath(this.defaultSettings, keyPath);
+		getRawValue(keyPath) {
+			let value = _.valueForKeyPath(this.settings, keyPath);
+			const defaultValue = _.valueForKeyPath(this.defaultSettings, keyPath);
 
-      if (value != null) {
-        value = this.deepClone(value);
-        if (isPlainObject(value) && isPlainObject(defaultValue)) { _.defaults(value, defaultValue); }
-      } else {
-        value = this.deepClone(defaultValue);
-      }
+			if (value != null) {
+				value = this.deepClone(value);
+				if (isPlainObject(value) && isPlainObject(defaultValue)) {
+					_.defaults(value, defaultValue);
+				}
+			} else {
+				value = this.deepClone(defaultValue);
+			}
 
-      return value;
-    }
+			return value;
+		}
 
-    onDidChangeKeyPath(keyPath, callback) {
-      let oldValue = this.get(keyPath);
-      return this.emitter.on('did-change', () => {
-        const newValue = this.get(keyPath);
-        if (!_.isEqual(oldValue, newValue)) {
-          const event = {oldValue, newValue};
-          oldValue = newValue;
-          return callback(event);
-        }
-      });
-    }
+		onDidChangeKeyPath(keyPath, callback) {
+			let oldValue = this.get(keyPath);
+			return this.emitter.on("did-change", () => {
+				const newValue = this.get(keyPath);
+				if (!_.isEqual(oldValue, newValue)) {
+					const event = { oldValue, newValue };
+					oldValue = newValue;
+					return callback(event);
+				}
+			});
+		}
 
-    isSubKeyPath(keyPath, subKeyPath) {
-      if ((keyPath == null) || (subKeyPath == null)) { return false; }
-      const pathSubTokens = splitKeyPath(subKeyPath);
-      const pathTokens = splitKeyPath(keyPath).slice(0, pathSubTokens.length);
-      return _.isEqual(pathTokens, pathSubTokens);
-    }
+		isSubKeyPath(keyPath, subKeyPath) {
+			if (keyPath == null || subKeyPath == null) {
+				return false;
+			}
+			const pathSubTokens = splitKeyPath(subKeyPath);
+			const pathTokens = splitKeyPath(keyPath).slice(0, pathSubTokens.length);
+			return _.isEqual(pathTokens, pathSubTokens);
+		}
 
-    setRawDefault(keyPath, value) {
-      _.setValueForKeyPath(this.defaultSettings, keyPath, value);
-      return this.emitChangeEvent();
-    }
+		setRawDefault(keyPath, value) {
+			_.setValueForKeyPath(this.defaultSettings, keyPath, value);
+			return this.emitChangeEvent();
+		}
 
-    setDefaults(keyPath, defaults) {
-      if ((defaults != null) && isPlainObject(defaults)) {
-        const keys = splitKeyPath(keyPath);
-        return (() => {
-          const result = [];
-          for (var key in defaults) {
-            var childValue = defaults[key];
-            if (!defaults.hasOwnProperty(key)) { continue; }
-            result.push(this.setDefaults(keys.concat([key]).join('.'), childValue));
-          }
-          return result;
-        })();
-      } else {
-        try {
-          defaults = this.makeValueConformToSchema(keyPath, defaults);
-          return this.setRawDefault(keyPath, defaults);
-        } catch (e) {
-          return this._logError(`Failed to set keypath to default: ${keyPath} = ${JSON.stringify(defaults)}`, e);
-        }
-      }
-    }
+		setDefaults(keyPath, defaults) {
+			if (defaults != null && isPlainObject(defaults)) {
+				const keys = splitKeyPath(keyPath);
+				return (() => {
+					const result = [];
+					for (var key in defaults) {
+						var childValue = defaults[key];
+						if (!Object.hasOwn(defaults, key)) {
+							continue;
+						}
+						result.push(
+							this.setDefaults(keys.concat([key]).join("."), childValue),
+						);
+					}
+					return result;
+				})();
+			} else {
+				try {
+					defaults = this.makeValueConformToSchema(keyPath, defaults);
+					return this.setRawDefault(keyPath, defaults);
+				} catch (e) {
+					return this._logError(
+						`Failed to set keypath to default: ${keyPath} = ${JSON.stringify(defaults)}`,
+						e,
+					);
+				}
+			}
+		}
 
-    deepClone(object) {
-      if (object instanceof Color) {
-        return object.clone();
-      } else if (_.isArray(object)) {
-        return object.map(value => this.deepClone(value));
-      } else if (isPlainObject(object)) {
-        return _.mapObject(object, value => this.deepClone(value));
-      } else {
-        return object;
-      }
-    }
+		deepClone(object) {
+			if (object instanceof Color) {
+				return object.clone();
+			} else if (_.isArray(object)) {
+				return object.map((value) => this.deepClone(value));
+			} else if (isPlainObject(object)) {
+				return _.mapObject(object, (value) => this.deepClone(value));
+			} else {
+				return object;
+			}
+		}
 
-    extractDefaultsFromSchema(schema) {
-      if (schema.default != null) {
-        return schema.default;
-      } else if ((schema.type === 'object') && (schema.properties != null) && isPlainObject(schema.properties)) {
-        const defaults = {};
-        const properties = schema.properties || {};
-        for (var key in properties) { var value = properties[key]; defaults[key] = this.extractDefaultsFromSchema(value); }
-        return defaults;
-      }
-    }
+		extractDefaultsFromSchema(schema) {
+			if (schema.default != null) {
+				return schema.default;
+			} else if (
+				schema.type === "object" &&
+				schema.properties != null &&
+				isPlainObject(schema.properties)
+			) {
+				const defaults = {};
+				const properties = schema.properties || {};
+				for (var key in properties) {
+					var value = properties[key];
+					defaults[key] = this.extractDefaultsFromSchema(value);
+				}
+				return defaults;
+			}
+		}
 
-    makeValueConformToSchema(keyPath, value) {
-      let schema;
-      if (schema = this.getSchema(keyPath)) { value = this.constructor.executeSchemaEnforcers(keyPath, value, schema); }
-      return value;
-    }
+		makeValueConformToSchema(keyPath, value) {
+			let schema;
+			if ((schema = this.getSchema(keyPath))) {
+				value = this.constructor.executeSchemaEnforcers(keyPath, value, schema);
+			}
+			return value;
+		}
 
-    // When the schema is changed / added, there may be values set in the config
-    // that do not conform to the schema. This reset will make them conform.
-    resetSettingsForSchemaChange() {
-      return this.transact(() => {
-        let settings = this.getRawValues();
-        settings = this.makeValueConformToSchema(null, settings);
-        if (!settings || _.isEmpty(settings)) {
-          throw new Error("settings is falsey or empty");
-        }
-        app.configPersistenceManager.setSettings(settings, webContentsId);
-      });
-    }
+		// When the schema is changed / added, there may be values set in the config
+		// that do not conform to the schema. This reset will make them conform.
+		resetSettingsForSchemaChange() {
+			return this.transact(() => {
+				let settings = this.getRawValues();
+				settings = this.makeValueConformToSchema(null, settings);
+				if (!settings || _.isEmpty(settings)) {
+					throw new Error("settings is falsey or empty");
+				}
+				app.configPersistenceManager.setSettings(settings, webContentsId);
+			});
+		}
 
-    emitChangeEvent() {
-      if (!(this.transactDepth > 0)) { return this.emitter.emit('did-change'); }
-    }
+		emitChangeEvent() {
+			if (!(this.transactDepth > 0)) {
+				return this.emitter.emit("did-change");
+			}
+		}
 
-    getRawValues() {
-      try {
-        const result = JSON.parse(app.configPersistenceManager.getRawValuesString());
-        if (!result || _.isEmpty(result)) {
-          throw new Error('settings is falsey or empty');
-        }
-        return result;
-      } catch (error) {
-        this._logError('Failed to parse response from getRawValuesString', error);
-        throw error;
-      }
-    }
+		getRawValues() {
+			try {
+				const result = JSON.parse(
+					app.configPersistenceManager.getRawValuesString(),
+				);
+				if (!result || _.isEmpty(result)) {
+					throw new Error("settings is falsey or empty");
+				}
+				return result;
+			} catch (error) {
+				this._logError(
+					"Failed to parse response from getRawValuesString",
+					error,
+				);
+				throw error;
+			}
+		}
 
-    setRawValue(keyPath, value) {
-      app.configPersistenceManager.setRawValue(keyPath, value, webContentsId);
-      return this.load();
-    }
-  };
-  Config.initClass();
-  return Config;
-})());
+		setRawValue(keyPath, value) {
+			app.configPersistenceManager.setRawValue(keyPath, value, webContentsId);
+			return this.load();
+		}
+	};
+	Config.initClass();
+	return Config;
+})();
 
 // Base schema enforcers. These will coerce raw input into the specified type,
 // and will throw an error when the value cannot be coerced. Throwing the error
@@ -763,169 +816,226 @@ module.exports =
 // order of specification. Then the `*` enforcers will be run, in order of
 // specification.
 Config.addSchemaEnforcers({
-  'integer': {
-    coerce(keyPath, value, schema) {
-      value = parseInt(value);
-      if (isNaN(value) || !isFinite(value)) { throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into an int`); }
-      return value;
-    }
-  },
+	integer: {
+		coerce(keyPath, value, schema) {
+			value = parseInt(value);
+			if (isNaN(value) || !isFinite(value)) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into an int`,
+				);
+			}
+			return value;
+		},
+	},
 
-  'number': {
-    coerce(keyPath, value, schema) {
-      value = parseFloat(value);
-      if (isNaN(value) || !isFinite(value)) { throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into a number`); }
-      return value;
-    }
-  },
+	number: {
+		coerce(keyPath, value, schema) {
+			value = parseFloat(value);
+			if (isNaN(value) || !isFinite(value)) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into a number`,
+				);
+			}
+			return value;
+		},
+	},
 
-  'boolean': {
-    coerce(keyPath, value, schema) {
-      switch (typeof value) {
-        case 'string':
-          if (value.toLowerCase() === 'true') {
-            return true;
-          } else if (value.toLowerCase() === 'false') {
-            return false;
-          } else {
-            throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a boolean or the string 'true' or 'false'`);
-          }
-        case 'boolean':
-          return value;
-        default:
-          throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a boolean or the string 'true' or 'false'`);
-      }
-    }
-  },
+	boolean: {
+		coerce(keyPath, value, schema) {
+			switch (typeof value) {
+				case "string":
+					if (value.toLowerCase() === "true") {
+						return true;
+					} else if (value.toLowerCase() === "false") {
+						return false;
+					} else {
+						throw new Error(
+							`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a boolean or the string 'true' or 'false'`,
+						);
+					}
+				case "boolean":
+					return value;
+				default:
+					throw new Error(
+						`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a boolean or the string 'true' or 'false'`,
+					);
+			}
+		},
+	},
 
-  'string': {
-    validate(keyPath, value, schema) {
-      if (typeof value !== 'string') {
-        throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a string`);
-      }
-      return value;
-    }
-  },
+	string: {
+		validate(keyPath, value, schema) {
+			if (typeof value !== "string") {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a string`,
+				);
+			}
+			return value;
+		},
+	},
 
-  'null': {
-    // null sort of isnt supported. It will just unset in this case
-    coerce(keyPath, value, schema) {
-      if (![undefined, null].includes(value)) { throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be null`); }
-      return value;
-    }
-  },
+	null: {
+		// null sort of isnt supported. It will just unset in this case
+		coerce(keyPath, value, schema) {
+			if (![undefined, null].includes(value)) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be null`,
+				);
+			}
+			return value;
+		},
+	},
 
-  'object': {
-    coerce(keyPath, value, schema) {
-      if (!isPlainObject(value)) { throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be an object`); }
-      if (schema.properties == null) { return value; }
+	object: {
+		coerce(keyPath, value, schema) {
+			if (!isPlainObject(value)) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be an object`,
+				);
+			}
+			if (schema.properties == null) {
+				return value;
+			}
 
-      const newValue = {};
-      for (var prop in value) {
-        var propValue = value[prop];
-        var childSchema = schema.properties[prop];
-        if (childSchema != null) {
-          try {
-            newValue[prop] = this.executeSchemaEnforcers(`${keyPath}.${prop}`, propValue, childSchema);
-          } catch (error) {
-            console.warn(`Error setting item in object: ${error.message}`);
-          }
-        } else {
-          // Just pass through un-schema'd values
-          newValue[prop] = propValue;
-        }
-      }
+			const newValue = {};
+			for (var prop in value) {
+				var propValue = value[prop];
+				var childSchema = schema.properties[prop];
+				if (childSchema != null) {
+					try {
+						newValue[prop] = this.executeSchemaEnforcers(
+							`${keyPath}.${prop}`,
+							propValue,
+							childSchema,
+						);
+					} catch (error) {
+						console.warn(`Error setting item in object: ${error.message}`);
+					}
+				} else {
+					// Just pass through un-schema'd values
+					newValue[prop] = propValue;
+				}
+			}
 
-      return newValue;
-    }
-  },
+			return newValue;
+		},
+	},
 
-  'array': {
-    coerce(keyPath, value, schema) {
-      if (!Array.isArray(value)) { throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be an array`); }
-      const itemSchema = schema.items;
-      if (itemSchema != null) {
-        const newValue = [];
-        for (var item of Array.from(value)) {
-          try {
-            newValue.push(this.executeSchemaEnforcers(keyPath, item, itemSchema));
-          } catch (error) {
-            console.warn(`Error setting item in array: ${error.message}`);
-          }
-        }
-        return newValue;
-      } else {
-        return value;
-      }
-    }
-  },
+	array: {
+		coerce(keyPath, value, schema) {
+			if (!Array.isArray(value)) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be an array`,
+				);
+			}
+			const itemSchema = schema.items;
+			if (itemSchema != null) {
+				const newValue = [];
+				for (var item of Array.from(value)) {
+					try {
+						newValue.push(
+							this.executeSchemaEnforcers(keyPath, item, itemSchema),
+						);
+					} catch (error) {
+						console.warn(`Error setting item in array: ${error.message}`);
+					}
+				}
+				return newValue;
+			} else {
+				return value;
+			}
+		},
+	},
 
-  'color': {
-    coerce(keyPath, value, schema) {
-      const color = Color.parse(value);
-      if (color == null) {
-        throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into a color`);
-      }
-      return color;
-    }
-  },
+	color: {
+		coerce(keyPath, value, schema) {
+			const color = Color.parse(value);
+			if (color == null) {
+				throw new Error(
+					`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into a color`,
+				);
+			}
+			return color;
+		},
+	},
 
-  '*': {
-    coerceMinimumAndMaximum(keyPath, value, schema) {
-      if (typeof value !== 'number') { return value; }
-      if ((schema.minimum != null) && (typeof schema.minimum === 'number')) {
-        value = Math.max(value, schema.minimum);
-      }
-      if ((schema.maximum != null) && (typeof schema.maximum === 'number')) {
-        value = Math.min(value, schema.maximum);
-      }
-      return value;
-    },
+	"*": {
+		coerceMinimumAndMaximum(keyPath, value, schema) {
+			if (typeof value !== "number") {
+				return value;
+			}
+			if (schema.minimum != null && typeof schema.minimum === "number") {
+				value = Math.max(value, schema.minimum);
+			}
+			if (schema.maximum != null && typeof schema.maximum === "number") {
+				value = Math.min(value, schema.maximum);
+			}
+			return value;
+		},
 
-    validateEnum(keyPath, value, schema) {
-      const possibleValues = schema.enum;
-      if ((possibleValues == null) || !Array.isArray(possibleValues) || !possibleValues.length) { return value; }
+		validateEnum(keyPath, value, schema) {
+			const possibleValues = schema.enum;
+			if (
+				possibleValues == null ||
+				!Array.isArray(possibleValues) ||
+				!possibleValues.length
+			) {
+				return value;
+			}
 
-      for (var possibleValue of Array.from(possibleValues)) {
-        // Using `isEqual` for possibility of placing enums on array and object schemas
-        if (_.isEqual(possibleValue, value)) { return value; }
-      }
+			for (var possibleValue of Array.from(possibleValues)) {
+				// Using `isEqual` for possibility of placing enums on array and object schemas
+				if (_.isEqual(possibleValue, value)) {
+					return value;
+				}
+			}
 
-      throw new Error(`Validation failed at ${keyPath}, ${JSON.stringify(value)} is not one of ${JSON.stringify(possibleValues)}`);
-    }
-  }
+			throw new Error(
+				`Validation failed at ${keyPath}, ${JSON.stringify(value)} is not one of ${JSON.stringify(possibleValues)}`,
+			);
+		},
+	},
 });
 
-var isPlainObject = value => _.isObject(value) && !_.isArray(value) && !_.isFunction(value) && !_.isString(value) && !(value instanceof Color);
+var isPlainObject = (value) =>
+	_.isObject(value) &&
+	!_.isArray(value) &&
+	!_.isFunction(value) &&
+	!_.isString(value) &&
+	!(value instanceof Color);
 
-var splitKeyPath = function(keyPath) {
-  if (keyPath == null) { return []; }
-  let startIndex = 0;
-  const keyPathArray = [];
-  for (let i = 0; i < keyPath.length; i++) {
-    var char = keyPath[i];
-    if ((char === '.') && ((i === 0) || (keyPath[i-1] !== '\\'))) {
-      keyPathArray.push(keyPath.substring(startIndex, i));
-      startIndex = i + 1;
-    }
-  }
-  keyPathArray.push(keyPath.substr(startIndex, keyPath.length));
-  return keyPathArray;
+var splitKeyPath = (keyPath) => {
+	if (keyPath == null) {
+		return [];
+	}
+	let startIndex = 0;
+	const keyPathArray = [];
+	for (let i = 0; i < keyPath.length; i++) {
+		var char = keyPath[i];
+		if (char === "." && (i === 0 || keyPath[i - 1] !== "\\")) {
+			keyPathArray.push(keyPath.substring(startIndex, i));
+			startIndex = i + 1;
+		}
+	}
+	keyPathArray.push(keyPath.substr(startIndex, keyPath.length));
+	return keyPathArray;
 };
 
-var withoutEmptyObjects = function(object) {
-  let resultObject = undefined;
-  if (isPlainObject(object)) {
-    for (var key in object) {
-      var value = object[key];
-      var newValue = withoutEmptyObjects(value);
-      if (newValue != null) {
-        if (resultObject == null) { resultObject = {}; }
-        resultObject[key] = newValue;
-      }
-    }
-  } else {
-    resultObject = object;
-  }
-  return resultObject;
+var withoutEmptyObjects = (object) => {
+	let resultObject;
+	if (isPlainObject(object)) {
+		for (var key in object) {
+			var value = object[key];
+			var newValue = withoutEmptyObjects(value);
+			if (newValue != null) {
+				if (resultObject == null) {
+					resultObject = {};
+				}
+				resultObject[key] = newValue;
+			}
+		}
+	} else {
+		resultObject = object;
+	}
+	return resultObject;
 };

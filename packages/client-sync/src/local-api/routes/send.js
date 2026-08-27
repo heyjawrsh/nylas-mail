@@ -1,8 +1,7 @@
-import * as IsomorphicCore from 'isomorphic-core'
-import Joi from 'joi';
-const {ModelUtils} = IsomorphicCore;
-import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
-
+import * as IsomorphicCore from "isomorphic-core";
+import Joi from "joi";
+const { ModelUtils } = IsomorphicCore;
+import { createAndReplyWithSyncbackRequest } from "../route-helpers.js";
 
 // const recipient = Joi.object().keys({
 //   name: Joi.string().required(),
@@ -19,33 +18,33 @@ import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 // const recipientList = Joi.array().items(recipient);
 
 export default (server) => {
-  // Closes out a multi-send session by marking the sending draft as sent
-  // and moving it to the user's Sent folder.
-  server.route({
-    method: 'POST',
-    path: '/ensure-message-in-sent-folder/{messageId}',
-    config: {
-      validate: {
-        payload: {
-          customSentMessage: Joi.boolean(),
-        },
-        params: {
-          messageId: Joi.string(),
-        },
-      },
-    },
-    async handler(request, reply) {
-      const {messageId} = request.params;
-      const {customSentMessage} = request.payload;
+	// Closes out a multi-send session by marking the sending draft as sent
+	// and moving it to the user's Sent folder.
+	server.route({
+		method: "POST",
+		path: "/ensure-message-in-sent-folder/{messageId}",
+		config: {
+			validate: {
+				payload: {
+					customSentMessage: Joi.boolean(),
+				},
+				params: {
+					messageId: Joi.string(),
+				},
+			},
+		},
+		async handler(request, reply) {
+			const { messageId } = request.params;
+			const { customSentMessage } = request.payload;
 
-      if (!ModelUtils.isValidId(messageId)) {
-        reply.badRequest(`messageId is not a base-36 integer`)
-        return
-      }
-      createAndReplyWithSyncbackRequest(request, reply, {
-        type: "EnsureMessageInSentFolder",
-        props: { messageId, customSentMessage },
-      })
-    },
-  });
+			if (!ModelUtils.isValidId(messageId)) {
+				reply.badRequest(`messageId is not a base-36 integer`);
+				return;
+			}
+			createAndReplyWithSyncbackRequest(request, reply, {
+				type: "EnsureMessageInSentFolder",
+				props: { messageId, customSentMessage },
+			});
+		},
+	});
 };

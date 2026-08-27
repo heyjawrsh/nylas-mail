@@ -13,16 +13,16 @@ DatabaseStore.findBy(Message)
 Section: Database
 */
 export default class SortOrder {
-  constructor(attr, direction = 'DESC') {
-    this.attr = attr;
-    this.direction = direction;
-  }
+	constructor(attr, direction = "DESC") {
+		this.attr = attr;
+		this.direction = direction;
+	}
 
-  orderBySQL(klass) {
-    return `\`${klass.name}\`.\`${this.attr.jsonKey}\` ${this.direction}`;
-  }
+	orderBySQL(klass) {
+		return `\`${klass.name}\`.\`${this.attr.jsonKey}\` ${this.direction}`;
+	}
 
-  attribute() {
-    return this.attr;
-  }
+	attribute() {
+		return this.attr;
+	}
 }

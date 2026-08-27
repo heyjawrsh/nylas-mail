@@ -10,16 +10,19 @@
  * sqlite_autoindex_threadFolders_1 (threadId, folderId)
  */
 export default (sequelize) => {
-  return sequelize.define('threadFolder', {
-  }, {
-    indexes: [
-      // NOTE: When SQLite sets up this table, it creates an auto index in
-      // the order ['threadId', 'folderId']. This is the correct index we
-      // need for queries requesting Folders for a certain Thread.
-      //
-      // We need to create one more index to allow queries from the
-      // reverse direction requesting Threads for a certain Folder.
-      {fields: ['folderId', 'threadId']},
-    ],
-  });
+	return sequelize.define(
+		"threadFolder",
+		{},
+		{
+			indexes: [
+				// NOTE: When SQLite sets up this table, it creates an auto index in
+				// the order ['threadId', 'folderId']. This is the correct index we
+				// need for queries requesting Folders for a certain Thread.
+				//
+				// We need to create one more index to allow queries from the
+				// reverse direction requesting Threads for a certain Folder.
+				{ fields: ["folderId", "threadId"] },
+			],
+		},
+	);
 };

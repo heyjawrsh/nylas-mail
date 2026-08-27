@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * decaffeinate suggestions:
  * DS101: Remove unnecessary use of Array.from
@@ -8,19 +6,19 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require('underscore');
-const Reflux = require('reflux');
-const AccountStore = require('./account-store').default;
-const WorkspaceStore = require('./workspace-store');
-const DatabaseStore = require('./database-store').default;
-const FocusedPerspectiveStore = require('./focused-perspective-store').default;
-const MailboxPerspective = require('../../mailbox-perspective');
-const Actions = require('../actions').default;
-const Thread = require('../models/thread').default;
-const Model = require('../models/model');
+const _ = require("underscore");
+const Reflux = require("reflux");
+const AccountStore = require("./account-store").default;
+const WorkspaceStore = require("./workspace-store");
+const DatabaseStore = require("./database-store").default;
+const FocusedPerspectiveStore = require("./focused-perspective-store").default;
+const MailboxPerspective = require("../../mailbox-perspective");
+const Actions = require("../actions").default;
+const Thread = require("../models/thread").default;
+const Model = require("../models/model");
 
-const {Listener, Publisher} = require('../modules/reflux-coffee');
-const CoffeeHelpers = require('../coffee-helpers');
+const { Listener, Publisher } = require("../modules/reflux-coffee");
+const CoffeeHelpers = require("../coffee-helpers");
 
 /*
 Public: The FocusedContentStore provides access to the objects currently selected
@@ -64,184 +62,240 @@ _onFocusChanged: ->
 Section: Stores
 */
 class FocusedContentStore {
-  static initClass() {
-    this.include = CoffeeHelpers.includeModule;
-  
-    this.include(Publisher);
-    this.include(Listener);
-  }
+	static initClass() {
+		FocusedContentStore.include = CoffeeHelpers.includeModule;
 
-  constructor() {
-    this.triggerAfterAnimationFrame = this.triggerAfterAnimationFrame.bind(this);
-    this._resetInstanceVars = this._resetInstanceVars.bind(this);
-    this._onAccountsChange = this._onAccountsChange.bind(this);
-    this._onFocusKeyboard = this._onFocusKeyboard.bind(this);
-    this._onFocus = this._onFocus.bind(this);
-    this._onWorkspaceChange = this._onWorkspaceChange.bind(this);
-    this._onDataChange = this._onDataChange.bind(this);
-    this.focused = this.focused.bind(this);
-    this.focusedId = this.focusedId.bind(this);
-    this.didFocusUsingClick = this.didFocusUsingClick.bind(this);
-    this.keyboardCursor = this.keyboardCursor.bind(this);
-    this.keyboardCursorId = this.keyboardCursorId.bind(this);
-    this.keyboardCursorEnabled = this.keyboardCursorEnabled.bind(this);
-    this._resetInstanceVars();
-    this.listenTo(AccountStore, this._onAccountsChange);
-    this.listenTo(WorkspaceStore, this._onWorkspaceChange);
-    this.listenTo(DatabaseStore, this._onDataChange);
-    this.listenTo(Actions.setFocus, this._onFocus);
-    this.listenTo(Actions.setCursorPosition, this._onFocusKeyboard);
-  }
+		FocusedContentStore.include(Publisher);
+		FocusedContentStore.include(Listener);
+	}
 
-  triggerAfterAnimationFrame(payload) {
-    return window.requestAnimationFrame(() => {
-      return this.trigger(payload);
-    });
-  }
+	constructor() {
+		this.triggerAfterAnimationFrame =
+			this.triggerAfterAnimationFrame.bind(this);
+		this._resetInstanceVars = this._resetInstanceVars.bind(this);
+		this._onAccountsChange = this._onAccountsChange.bind(this);
+		this._onFocusKeyboard = this._onFocusKeyboard.bind(this);
+		this._onFocus = this._onFocus.bind(this);
+		this._onWorkspaceChange = this._onWorkspaceChange.bind(this);
+		this._onDataChange = this._onDataChange.bind(this);
+		this.focused = this.focused.bind(this);
+		this.focusedId = this.focusedId.bind(this);
+		this.didFocusUsingClick = this.didFocusUsingClick.bind(this);
+		this.keyboardCursor = this.keyboardCursor.bind(this);
+		this.keyboardCursorId = this.keyboardCursorId.bind(this);
+		this.keyboardCursorEnabled = this.keyboardCursorEnabled.bind(this);
+		this._resetInstanceVars();
+		this.listenTo(AccountStore, this._onAccountsChange);
+		this.listenTo(WorkspaceStore, this._onWorkspaceChange);
+		this.listenTo(DatabaseStore, this._onDataChange);
+		this.listenTo(Actions.setFocus, this._onFocus);
+		this.listenTo(Actions.setCursorPosition, this._onFocusKeyboard);
+	}
 
-  _resetInstanceVars() {
-    this._focused = {};
-    this._focusedUsingClick = {};
-    this._keyboardCursor = {};
-    return this._keyboardCursorEnabled = WorkspaceStore.layoutMode() === 'list';
-  }
+	triggerAfterAnimationFrame(payload) {
+		return window.requestAnimationFrame(() => {
+			return this.trigger(payload);
+		});
+	}
 
-  // Inbound Events
+	_resetInstanceVars() {
+		this._focused = {};
+		this._focusedUsingClick = {};
+		this._keyboardCursor = {};
+		return (this._keyboardCursorEnabled =
+			WorkspaceStore.layoutMode() === "list");
+	}
 
-  _onAccountsChange() {
-    // Ensure internal consistency by removing any focused items that belong
-    // to accounts which no longer exist.
-    const changed = [];
+	// Inbound Events
 
-    for (var dict of [this._focused, this._keyboardCursor]) {
-      for (var collection in dict) {
-        var item = dict[collection];
-        if (item && item.accountId && !AccountStore.accountForId(item.accountId)) {
-          delete dict[collection];
-          changed.push(collection);
-        }
-      }
-    }
+	_onAccountsChange() {
+		// Ensure internal consistency by removing any focused items that belong
+		// to accounts which no longer exist.
+		const changed = [];
 
-    if (changed.length > 0) {
-      return this.trigger({ impactsCollection(c) { return changed.includes(c); } });
-    }
-  }
+		for (var dict of [this._focused, this._keyboardCursor]) {
+			for (var collection in dict) {
+				var item = dict[collection];
+				if (
+					item &&
+					item.accountId &&
+					!AccountStore.accountForId(item.accountId)
+				) {
+					delete dict[collection];
+					changed.push(collection);
+				}
+			}
+		}
 
-  _onFocusKeyboard({collection, item}) {
-    if (item && !(item instanceof Model)) { throw new Error("focusKeyboard() requires a Model or null"); }
-    if (!collection) { throw new Error("focusKeyboard() requires a collection"); }
-    if ((this._keyboardCursor[collection] != null ? this._keyboardCursor[collection].id : undefined) === (item != null ? item.id : undefined)) { return; }
+		if (changed.length > 0) {
+			return this.trigger({
+				impactsCollection(c) {
+					return changed.includes(c);
+				},
+			});
+		}
+	}
 
-    this._keyboardCursor[collection] = item;
-    return this.triggerAfterAnimationFrame({ impactsCollection(c) { return c === collection; } });
-  }
+	_onFocusKeyboard({ collection, item }) {
+		if (item && !(item instanceof Model)) {
+			throw new Error("focusKeyboard() requires a Model or null");
+		}
+		if (!collection) {
+			throw new Error("focusKeyboard() requires a collection");
+		}
+		if (
+			(this._keyboardCursor[collection] != null
+				? this._keyboardCursor[collection].id
+				: undefined) === (item != null ? item.id : undefined)
+		) {
+			return;
+		}
 
-  _onFocus({collection, item, usingClick}) {
-    if (item && !(item instanceof Model)) { throw new Error("focus() requires a Model or null"); }
-    if (!collection) { throw new Error("focus() requires a collection"); }
-    if ((this._focused[collection] != null ? this._focused[collection].id : undefined) === (item != null ? item.id : undefined)) { return; }
+		this._keyboardCursor[collection] = item;
+		return this.triggerAfterAnimationFrame({
+			impactsCollection(c) {
+				return c === collection;
+			},
+		});
+	}
 
-    if ((collection === 'thread') && item) {
-      NylasEnv.timer.start(`select-thread-${item.id}`);
-    }
+	_onFocus({ collection, item, usingClick }) {
+		if (item && !(item instanceof Model)) {
+			throw new Error("focus() requires a Model or null");
+		}
+		if (!collection) {
+			throw new Error("focus() requires a collection");
+		}
+		if (
+			(this._focused[collection] != null
+				? this._focused[collection].id
+				: undefined) === (item != null ? item.id : undefined)
+		) {
+			return;
+		}
 
-    this._focused[collection] = item;
-    this._focusedUsingClick[collection] = usingClick;
-    if (item) { this._keyboardCursor[collection] = item; }
-    return this.triggerAfterAnimationFrame({ impactsCollection(c) { return c === collection; } });
-  }
+		if (collection === "thread" && item) {
+			NylasEnv.timer.start(`select-thread-${item.id}`);
+		}
 
-  _onWorkspaceChange() {
-    const keyboardCursorEnabled = WorkspaceStore.layoutMode() === 'list';
+		this._focused[collection] = item;
+		this._focusedUsingClick[collection] = usingClick;
+		if (item) {
+			this._keyboardCursor[collection] = item;
+		}
+		return this.triggerAfterAnimationFrame({
+			impactsCollection(c) {
+				return c === collection;
+			},
+		});
+	}
 
-    if (keyboardCursorEnabled !== this._keyboardCursorEnabled) {
-      let collection, item;
-      this._keyboardCursorEnabled = keyboardCursorEnabled;
+	_onWorkspaceChange() {
+		const keyboardCursorEnabled = WorkspaceStore.layoutMode() === "list";
 
-      if (keyboardCursorEnabled) {
-        for (collection in this._focused) {
-          item = this._focused[collection];
-          this._keyboardCursor[collection] = item;
-        }
-        this._focused = {};
-      } else {
-        for (collection in this._keyboardCursor) {
-          item = this._keyboardCursor[collection];
-          this._onFocus({collection, item});
-        }
-      }
-    }
+		if (keyboardCursorEnabled !== this._keyboardCursorEnabled) {
+			let collection, item;
+			this._keyboardCursorEnabled = keyboardCursorEnabled;
 
-    return this.trigger({ impactsCollection() { return true; } });
-  }
+			if (keyboardCursorEnabled) {
+				for (collection in this._focused) {
+					item = this._focused[collection];
+					this._keyboardCursor[collection] = item;
+				}
+				this._focused = {};
+			} else {
+				for (collection in this._keyboardCursor) {
+					item = this._keyboardCursor[collection];
+					this._onFocus({ collection, item });
+				}
+			}
+		}
 
-  _onDataChange(change) {
-    // If one of the objects we're storing in our focused or keyboard cursor
-    // dictionaries has changed, we need to let our observers know, since they
-    // may now be holding on to outdated data.
-    if (!change || !change.objectClass) { return; }
+		return this.trigger({
+			impactsCollection() {
+				return true;
+			},
+		});
+	}
 
-    const touched = [];
+	_onDataChange(change) {
+		// If one of the objects we're storing in our focused or keyboard cursor
+		// dictionaries has changed, we need to let our observers know, since they
+		// may now be holding on to outdated data.
+		if (!change || !change.objectClass) {
+			return;
+		}
 
-    for (var data of [this._focused, this._keyboardCursor]) {
-      for (var key in data) {
-        var val = data[key];
-        if (!val || (val.constructor.name !== change.objectClass)) { continue; }
-        for (var obj of Array.from(change.objects)) {
-          if (val.id === obj.id) {
-            if (change.type === 'unpersist') {
-              data[key] = null;
-            } else {
-              data[key] = obj;
-            }
-            touched.push(key);
-          }
-        }
-      }
-    }
+		const touched = [];
 
-    if (touched.length > 0) {
-      return this.trigger({ impactsCollection(c) { return Array.from(touched).includes(c); } });
-    }
-  }
+		for (var data of [this._focused, this._keyboardCursor]) {
+			for (var key in data) {
+				var val = data[key];
+				if (!val || val.constructor.name !== change.objectClass) {
+					continue;
+				}
+				for (var obj of Array.from(change.objects)) {
+					if (val.id === obj.id) {
+						if (change.type === "unpersist") {
+							data[key] = null;
+						} else {
+							data[key] = obj;
+						}
+						touched.push(key);
+					}
+				}
+			}
+		}
 
-  // Public Methods
+		if (touched.length > 0) {
+			return this.trigger({
+				impactsCollection(c) {
+					return Array.from(touched).includes(c);
+				},
+			});
+		}
+	}
 
-  /*
+	// Public Methods
+
+	/*
   Public: Returns the focused {Model} in the collection specified,
   or undefined if no item is focused.
 
   - `collection` The {String} name of a collection. Standard collections are
     listed above.
   */
-  focused(collection) {
-    return this._focused[collection];
-  }
+	focused(collection) {
+		return this._focused[collection];
+	}
 
-  /*
+	/*
   Public: Returns the ID of the focused {Model} in the collection specified,
   or undefined if no item is focused.
 
   - `collection` The {String} name of a collection. Standard collections are
     listed above.
   */
-  focusedId(collection) {
-    return (this._focused[collection] != null ? this._focused[collection].id : undefined);
-  }
+	focusedId(collection) {
+		return this._focused[collection] != null
+			? this._focused[collection].id
+			: undefined;
+	}
 
-  /*
+	/*
   Public: Returns true if the item for the collection was focused via a click or
   false otherwise.
 
   - `collection` The {String} name of a collection. Standard collections are
     listed above.
   */
-  didFocusUsingClick(collection) {
-    return this._focusedUsingClick[collection] != null ? this._focusedUsingClick[collection] : false;
-  }
+	didFocusUsingClick(collection) {
+		return this._focusedUsingClick[collection] != null
+			? this._focusedUsingClick[collection]
+			: false;
+	}
 
-  /*
+	/*
   Public: Returns the {Model} the keyboard is currently focused on
   in the collection specified. Keyboard focus is not always separate from
   primary focus (selection). You can use {::keyboardCursorEnabled} to determine
@@ -250,11 +304,11 @@ class FocusedContentStore {
   - `collection` The {String} name of a collection. Standard collections are
     listed above.
   */
-  keyboardCursor(collection) {
-    return this._keyboardCursor[collection];
-  }
+	keyboardCursor(collection) {
+		return this._keyboardCursor[collection];
+	}
 
-  /*
+	/*
   Public: Returns the ID of the {Model} the keyboard is currently focused on
   in the collection specified. Keyboard focus is not always separate from
   primary focus (selection). You can use {::keyboardCursorEnabled} to determine
@@ -263,20 +317,21 @@ class FocusedContentStore {
   - `collection` The {String} name of a collection. Standard collections are
     listed above.
   */
-  keyboardCursorId(collection) {
-    return (this._keyboardCursor[collection] != null ? this._keyboardCursor[collection].id : undefined);
-  }
+	keyboardCursorId(collection) {
+		return this._keyboardCursor[collection] != null
+			? this._keyboardCursor[collection].id
+			: undefined;
+	}
 
-  /*
+	/*
   Public: Returns a {Boolean} - `true` if the keyboard cursor concept applies in
   the current {WorkspaceStore} layout mode. The keyboard cursor is currently only
   enabled in `list` mode.
   */
-  keyboardCursorEnabled() {
-    return this._keyboardCursorEnabled;
-  }
+	keyboardCursorEnabled() {
+		return this._keyboardCursorEnabled;
+	}
 }
 FocusedContentStore.initClass();
-
 
 module.exports = new FocusedContentStore();

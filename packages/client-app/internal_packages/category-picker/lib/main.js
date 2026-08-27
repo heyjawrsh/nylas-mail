@@ -6,18 +6,20 @@
  */
 const CategoryPicker = require("./category-picker");
 
-const {ComponentRegistry,
- WorkspaceStore} = require('nylas-exports');
+const { ComponentRegistry, WorkspaceStore } = require("nylas-exports");
 
 module.exports = {
-  activate(state) {
-    if (state == null) { state = {}; }
-    this.state = state;
-    return ComponentRegistry.register(CategoryPicker,
-      {role: 'ThreadActionsToolbarButton'});
-  },
+	activate(state) {
+		if (state == null) {
+			state = {};
+		}
+		this.state = state;
+		return ComponentRegistry.register(CategoryPicker, {
+			role: "ThreadActionsToolbarButton",
+		});
+	},
 
-  deactivate() {
-    return ComponentRegistry.unregister(CategoryPicker);
-  }
+	deactivate() {
+		return ComponentRegistry.unregister(CategoryPicker);
+	},
 };

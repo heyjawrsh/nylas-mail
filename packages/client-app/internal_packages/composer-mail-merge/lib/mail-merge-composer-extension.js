@@ -1,10 +1,10 @@
-import * as Handlers from './mail-merge-token-dnd-handlers'
+import * as Handlers from "./mail-merge-token-dnd-handlers";
 
-export const name = 'MailMergeComposerExtension'
+export const name = "MailMergeComposerExtension";
 
 export {
-  onDragOver,
-  shouldAcceptDrop,
-} from './mail-merge-token-dnd-handlers'
+	onDragOver,
+	shouldAcceptDrop,
+} from "./mail-merge-token-dnd-handlers";
 
-export const onDrop = Handlers.onDrop.bind(null, 'body')
+export const onDrop = Handlers.onDrop.bind(null, "body");

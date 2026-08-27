@@ -1,53 +1,55 @@
-import React from 'react'
-import PropTypes from 'prop-types';
-import {Rx, DatabaseStore} from 'nylas-exports'
+import React from "react";
+import PropTypes from "prop-types";
+import { Rx, DatabaseStore } from "nylas-exports";
 
-import SalesforceIcon from '../shared-components/salesforce-icon'
-import SalesforceObject from '../models/salesforce-object'
+import SalesforceIcon from "../shared-components/salesforce-icon";
+import SalesforceObject from "../models/salesforce-object";
 
 export default class ParticipantDecorator extends React.Component {
+	static displayName = "ParticipantDecorator";
+	static containerRequired = false;
 
-  static displayName = "ParticipantDecorator"
-  static containerRequired = false
+	static propTypes = {
+		contact: PropTypes.object,
+		collapsed: PropTypes.bool,
+	};
 
-  static propTypes = {
-    contact: PropTypes.object,
-    collapsed: PropTypes.bool,
-  }
+	constructor(props) {
+		super(props);
+		this.state = { sfContacts: [] };
+	}
 
-  constructor(props) {
-    super(props);
-    this.state = { sfContacts: [] }
-  }
+	UNSAFE_componentWillMount() {
+		this._setupObserver(this.props);
+	}
 
-  UNSAFE_componentWillMount() {
-    this._setupObserver(this.props)
-  }
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this._setupObserver(nextProps);
+	}
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this._setupObserver(nextProps)
-  }
+	componentWillUnmount() {
+		this._disposable.dispose();
+	}
 
-  componentWillUnmount() {
-    this._disposable.dispose();
-  }
+	_setupObserver(props) {
+		if (this._disposable) this._disposable.dispose();
+		const email = (props.contact.email || "").toLowerCase().trim();
+		if (email.length === 0) return;
+		const query = DatabaseStore.findAll(SalesforceObject).where({
+			type: "Contact",
+			identifier: email,
+		});
 
-  _setupObserver(props) {
-    if (this._disposable) this._disposable.dispose();
-    const email = (props.contact.email || "").toLowerCase().trim()
-    if (email.length === 0) return;
-    const query = DatabaseStore.findAll(SalesforceObject)
-    .where({type: "Contact", identifier: email})
+		this._disposable = Rx.Observable.fromQuery(query).subscribe(
+			(sfContacts = []) => {
+				this.setState({ sfContacts });
+			},
+		);
+	}
 
-    this._disposable = Rx.Observable.fromQuery(query)
-    .subscribe((sfContacts = []) => {
-      this.setState({sfContacts})
-    })
-  }
-
-  render() {
-    if (this.props.collapsed) return false;
-    if (this.state.sfContacts.length === 0) return false
-    return <SalesforceIcon objectType="Contact" />
-  }
+	render() {
+		if (this.props.collapsed) return false;
+		if (this.state.sfContacts.length === 0) return false;
+		return <SalesforceIcon objectType="Contact" />;
+	}
 }

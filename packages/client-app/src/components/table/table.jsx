@@ -1,10 +1,9 @@
-import classnames from 'classnames'
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {pickHTMLProps} from 'pick-react-known-prop'
-import LazyRenderedList from '../lazy-rendered-list'
-import TableDataSource from './table-data-source'
-
+import classnames from "classnames";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { pickHTMLProps } from "pick-react-known-prop";
+import LazyRenderedList from "../lazy-rendered-list";
+import TableDataSource from "./table-data-source";
 
 /*
  * Scrollable Table component which supports headers, numbering and lazily rendering rows.
@@ -53,164 +52,188 @@ import TableDataSource from './table-data-source'
  * @class Table
  */
 
-const RendererType = PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-const IndexType = PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+const RendererType = PropTypes.oneOfType([PropTypes.func, PropTypes.string]);
+const IndexType = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
 const TablePropTypes = {
-  idx: IndexType,
-  renderer: RendererType,
-  tableDataSource: PropTypes.instanceOf(TableDataSource),
-}
+	idx: IndexType,
+	renderer: RendererType,
+	tableDataSource: PropTypes.instanceOf(TableDataSource),
+};
 
 export function TableCell(props) {
-  const {className, isHeader, children, ...extraProps} = props;
-  const CellTag = isHeader ? 'th' : 'td'
-  return (
-    <CellTag {...pickHTMLProps(extraProps)} className={`table-cell ${className}`} >
-      {children}
-    </CellTag>
-  )
+	const { className, isHeader, children, ...extraProps } = props;
+	const CellTag = isHeader ? "th" : "td";
+	return (
+		<CellTag
+			{...pickHTMLProps(extraProps)}
+			className={`table-cell ${className}`}
+		>
+			{children}
+		</CellTag>
+	);
 }
 
 TableCell.propTypes = {
-  isHeader: PropTypes.bool,
-  className: PropTypes.string,
+	isHeader: PropTypes.bool,
+	className: PropTypes.string,
 };
 
 export class TableRow extends Component {
+	static propTypes = {
+		className: PropTypes.string,
+		isHeader: PropTypes.bool,
+		displayNumbers: PropTypes.bool,
+		tableDataSource: TablePropTypes.tableDataSource.isRequired,
+		rowIdx: TablePropTypes.idx,
+		extraProps: PropTypes.object,
+		CellRenderer: TablePropTypes.renderer,
+	};
 
-  static propTypes = {
-    className: PropTypes.string,
-    isHeader: PropTypes.bool,
-    displayNumbers: PropTypes.bool,
-    tableDataSource: TablePropTypes.tableDataSource.isRequired,
-    rowIdx: TablePropTypes.idx,
-    extraProps: PropTypes.object,
-    CellRenderer: TablePropTypes.renderer,
-  }
+	static defaultProps = {
+		className: "",
+		extraProps: {},
+		CellRenderer: TableCell,
+	};
 
-  static defaultProps = {
-    className: '',
-    extraProps: {},
-    CellRenderer: TableCell,
-  }
+	render() {
+		const {
+			className,
+			displayNumbers,
+			isHeader,
+			tableDataSource,
+			rowIdx,
+			extraProps,
+			CellRenderer,
+			...props
+		} = this.props;
+		const classes = classnames({
+			"table-row": true,
+			"table-row-header": isHeader,
+			[className]: true,
+		});
 
-  render() {
-    const {className, displayNumbers, isHeader, tableDataSource, rowIdx, extraProps, CellRenderer, ...props} = this.props
-    const classes = classnames({
-      'table-row': true,
-      'table-row-header': isHeader,
-      [className]: true,
-    })
-
-    return (
-      <tr className={classes} {...pickHTMLProps(props)}>
-        {displayNumbers ?
-          <TableCell
-            className="numbered-cell"
-            isHeader={isHeader}
-          >
-            {isHeader ? '' : rowIdx + 1}
-          </TableCell> :
-          null
-        }
-        {tableDataSource.columns().map((colName, colIdx) => {
-          const cellProps = {tableDataSource, rowIdx, colIdx, ...extraProps}
-          return (
-            <CellRenderer key={`cell-${rowIdx}-${colIdx}`} {...cellProps}>
-              {tableDataSource.cellAt({rowIdx, colIdx})}
-            </CellRenderer>
-          )
-        })}
-      </tr>
-    )
-  }
+		return (
+			<tr className={classes} {...pickHTMLProps(props)}>
+				{displayNumbers ? (
+					<TableCell className="numbered-cell" isHeader={isHeader}>
+						{isHeader ? "" : rowIdx + 1}
+					</TableCell>
+				) : null}
+				{tableDataSource.columns().map((colName, colIdx) => {
+					const cellProps = { tableDataSource, rowIdx, colIdx, ...extraProps };
+					return (
+						<CellRenderer key={`cell-${rowIdx}-${colIdx}`} {...cellProps}>
+							{tableDataSource.cellAt({ rowIdx, colIdx })}
+						</CellRenderer>
+					);
+				})}
+			</tr>
+		);
+	}
 }
 
-
 export default class Table extends Component {
-  static displayName = 'Table'
+	static displayName = "Table";
 
-  static propTypes = {
-    className: PropTypes.string,
-    displayHeader: PropTypes.bool,
-    displayNumbers: PropTypes.bool,
-    rowHeight: PropTypes.number,
-    bodyHeight: PropTypes.number,
-    tableDataSource: TablePropTypes.tableDataSource.isRequired,
-    extraProps: PropTypes.object,
-    RowRenderer: TablePropTypes.renderer,
-    CellRenderer: TablePropTypes.renderer,
-  }
+	static propTypes = {
+		className: PropTypes.string,
+		displayHeader: PropTypes.bool,
+		displayNumbers: PropTypes.bool,
+		rowHeight: PropTypes.number,
+		bodyHeight: PropTypes.number,
+		tableDataSource: TablePropTypes.tableDataSource.isRequired,
+		extraProps: PropTypes.object,
+		RowRenderer: TablePropTypes.renderer,
+		CellRenderer: TablePropTypes.renderer,
+	};
 
-  static defaultProps = {
-    className: '',
-    extraProps: {},
-    RowRenderer: TableRow,
-    CellRenderer: TableCell,
-  }
+	static defaultProps = {
+		className: "",
+		extraProps: {},
+		RowRenderer: TableRow,
+		CellRenderer: TableCell,
+	};
 
-  static TableDataSource = TableDataSource
+	static TableDataSource = TableDataSource;
 
-  renderRow = ({idx}) => {
-    const {tableDataSource, displayNumbers, extraProps, RowRenderer, CellRenderer} = this.props
-    return (
-      <RowRenderer
-        key={`row-${idx}`}
-        rowIdx={idx}
-        displayNumbers={displayNumbers}
-        tableDataSource={tableDataSource}
-        extraProps={extraProps}
-        CellRenderer={CellRenderer}
-        {...extraProps}
-      />
-    )
-  }
+	renderRow = ({ idx }) => {
+		const {
+			tableDataSource,
+			displayNumbers,
+			extraProps,
+			RowRenderer,
+			CellRenderer,
+		} = this.props;
+		return (
+			<RowRenderer
+				key={`row-${idx}`}
+				rowIdx={idx}
+				displayNumbers={displayNumbers}
+				tableDataSource={tableDataSource}
+				extraProps={extraProps}
+				CellRenderer={CellRenderer}
+				{...extraProps}
+			/>
+		);
+	};
 
-  renderBody() {
-    const {tableDataSource, rowHeight, bodyHeight} = this.props
-    const rows = tableDataSource.rows()
+	renderBody() {
+		const { tableDataSource, rowHeight, bodyHeight } = this.props;
+		const rows = tableDataSource.rows();
 
-    return (
-      <LazyRenderedList
-        items={rows}
-        itemHeight={rowHeight}
-        containerHeight={bodyHeight}
-        BufferTag="tr"
-        RootRenderer="tbody"
-        ItemRenderer={this.renderRow}
-      />
-    )
-  }
+		return (
+			<LazyRenderedList
+				items={rows}
+				itemHeight={rowHeight}
+				containerHeight={bodyHeight}
+				BufferTag="tr"
+				RootRenderer="tbody"
+				ItemRenderer={this.renderRow}
+			/>
+		);
+	}
 
-  renderHeader() {
-    const {tableDataSource, displayNumbers, displayHeader, extraProps, RowRenderer, CellRenderer} = this.props
-    if (!displayHeader) { return false }
+	renderHeader() {
+		const {
+			tableDataSource,
+			displayNumbers,
+			displayHeader,
+			extraProps,
+			RowRenderer,
+			CellRenderer,
+		} = this.props;
+		if (!displayHeader) {
+			return false;
+		}
 
-    const extraHeaderProps = {...extraProps, isHeader: true}
-    return (
-      <thead>
-        <RowRenderer
-          rowIdx={null}
-          tableDataSource={tableDataSource}
-          displayNumbers={displayNumbers}
-          extraProps={extraHeaderProps}
-          CellRenderer={CellRenderer}
-          {...extraHeaderProps}
-        />
-      </thead>
-    )
-  }
+		const extraHeaderProps = { ...extraProps, isHeader: true };
+		return (
+			<thead>
+				<RowRenderer
+					rowIdx={null}
+					tableDataSource={tableDataSource}
+					displayNumbers={displayNumbers}
+					extraProps={extraHeaderProps}
+					CellRenderer={CellRenderer}
+					{...extraHeaderProps}
+				/>
+			</thead>
+		);
+	}
 
-  render() {
-    const {className, ...otherProps} = this.props
+	render() {
+		const { className, ...otherProps } = this.props;
 
-    return (
-      <div className={`nylas-table ${className}`} {...pickHTMLProps(otherProps)}>
-        <table>
-          {this.renderHeader()}
-          {this.renderBody()}
-        </table>
-      </div>
-    )
-  }
+		return (
+			<div
+				className={`nylas-table ${className}`}
+				{...pickHTMLProps(otherProps)}
+			>
+				<table>
+					{this.renderHeader()}
+					{this.renderBody()}
+				</table>
+			</div>
+		);
+	}
 }

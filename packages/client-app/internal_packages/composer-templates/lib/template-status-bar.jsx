@@ -1,38 +1,38 @@
-import {React} from 'nylas-exports';
-import PropTypes from 'prop-types';
+import { React } from "nylas-exports";
+import PropTypes from "prop-types";
 
 class TemplateStatusBar extends React.Component {
-  static displayName = 'TemplateStatusBar';
+	static displayName = "TemplateStatusBar";
 
-  static propTypes = {
-    draft: PropTypes.object.isRequired,
-  };
+	static propTypes = {
+		draft: PropTypes.object.isRequired,
+	};
 
-  shouldComponentUpdate(nextProps) {
-    return (this._usingTemplate(nextProps) !== this._usingTemplate(this.props));
-  }
+	shouldComponentUpdate(nextProps) {
+		return this._usingTemplate(nextProps) !== this._usingTemplate(this.props);
+	}
 
-  _usingTemplate({draft}) {
-    return draft && draft.body.search(/<code[^>]*class="var[^>]*>/i) > 0;
-  }
+	_usingTemplate({ draft }) {
+		return draft && draft.body.search(/<code[^>]*class="var[^>]*>/i) > 0;
+	}
 
-  render() {
-    if (this._usingTemplate(this.props)) {
-      return (
-        <div className="template-status-bar">
-          Press &quot;tab&quot; to quickly move between the blanks - highlighting will not be visible to recipients.
-        </div>
-      );
-    }
-    return <div />;
-  }
-
+	render() {
+		if (this._usingTemplate(this.props)) {
+			return (
+				<div className="template-status-bar">
+					Press &quot;tab&quot; to quickly move between the blanks -
+					highlighting will not be visible to recipients.
+				</div>
+			);
+		}
+		return <div />;
+	}
 }
 
 TemplateStatusBar.containerStyles = {
-  textAlign: 'center',
-  width: 580,
-  margin: 'auto',
+	textAlign: "center",
+	width: 580,
+	margin: "auto",
 };
 
 export default TemplateStatusBar;

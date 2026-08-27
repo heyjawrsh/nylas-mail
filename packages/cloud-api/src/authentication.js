@@ -1,9 +1,9 @@
-import {DatabaseConnector} from 'cloud-core';
+import { DatabaseConnector } from "cloud-core";
 
-let db = null // cache this.
+let db = null; // cache this.
 
 export function resetAuthenticationCache() {
-  db = null
+	db = null;
 }
 
 /**
@@ -25,11 +25,13 @@ export function resetAuthenticationCache() {
  * function(err, isValid, credentials)
  */
 export async function apiAuthenticate(req, username) {
-  const accountToken = username
-  if (!db) { db = await DatabaseConnector.forShared() }
-  const token = await db.AccountToken.find({where: {value: accountToken}})
-  if (!token) return {isValid: false, credentials: {}};
-  const account = await token.getAccount();
-  req.logger = req.logger.forAccount(account);
-  return {isValid: true, credentials: {account}};
+	const accountToken = username;
+	if (!db) {
+		db = await DatabaseConnector.forShared();
+	}
+	const token = await db.AccountToken.find({ where: { value: accountToken } });
+	if (!token) return { isValid: false, credentials: {} };
+	const account = await token.getAccount();
+	req.logger = req.logger.forAccount(account);
+	return { isValid: true, credentials: { account } };
 }

@@ -28,7 +28,7 @@ it figures that out, it makes that data available for the
 `ViewOnGithubButton` to display.
 */
 
-import {ComponentRegistry} from 'nylas-exports';
+import { ComponentRegistry } from "nylas-exports";
 import ViewOnGithubButton from "./view-on-github-button";
 
 /*
@@ -47,11 +47,11 @@ before N1 quits. This gets passed back into `activate` next time N1 boots
 up or your package is manually activated.
 */
 export function activate() {
-  ComponentRegistry.register(ViewOnGithubButton, {
-    role: 'ThreadActionsToolbarButton',
-  });
+	ComponentRegistry.register(ViewOnGithubButton, {
+		role: "ThreadActionsToolbarButton",
+	});
 }
 
 export function deactivate() {
-  ComponentRegistry.unregister(ViewOnGithubButton);
+	ComponentRegistry.unregister(ViewOnGithubButton);
 }

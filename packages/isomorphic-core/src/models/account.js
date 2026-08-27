@@ -1,20 +1,30 @@
-import crypto from 'crypto';
+import crypto from "crypto";
 
-import {JSONColumn, JSONArrayColumn} from '../database-types.js';
-import {credentialsForProvider, smtpConfigFromSettings} from '../auth-helpers.js';
-import {MAX_INDEXABLE_LENGTH} from '../db-utils.js';
+import { JSONColumn, JSONArrayColumn } from "../database-types.js";
+import {
+	credentialsForProvider,
+	smtpConfigFromSettings,
+} from "../auth-helpers.js";
+import { MAX_INDEXABLE_LENGTH } from "../db-utils.js";
 
 const { DB_ENCRYPTION_ALGORITHM, DB_ENCRYPTION_PASSWORD } = process.env;
 
 // Modern credential crypto: aes-XXX via createCipheriv with a random IV
 // (createCipher was removed from Node). Format: hex(iv) + ":" + hex(cipher).
 function deriveKey() {
-	return crypto.createHash("sha256").update(String(DB_ENCRYPTION_PASSWORD), "utf8").digest();
+	return crypto
+		.createHash("sha256")
+		.update(String(DB_ENCRYPTION_PASSWORD), "utf8")
+		.digest();
 }
 
 function encryptJson(json) {
 	const iv = crypto.randomBytes(16);
-	const cipher = crypto.createCipheriv(DB_ENCRYPTION_ALGORITHM, deriveKey(), iv);
+	const cipher = crypto.createCipheriv(
+		DB_ENCRYPTION_ALGORITHM,
+		deriveKey(),
+		iv,
+	);
 	let crypted = cipher.update(JSON.stringify(json), "utf8", "hex");
 	crypted += cipher.final("hex");
 	return `${iv.toString("hex")}:${crypted}`;

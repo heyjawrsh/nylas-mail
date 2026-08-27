@@ -1,13 +1,12 @@
-import _ from 'underscore'
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom'
-import classnames from 'classnames';
-import compose from './decorators/compose';
-import AutoFocuses from './decorators/auto-focuses';
-import ListensToMovementKeys from './decorators/listens-to-movement-keys';
-import Table, {TableRow, TableCell} from './table/table'
-
+import _ from "underscore";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import classnames from "classnames";
+import compose from "./decorators/compose";
+import AutoFocuses from "./decorators/auto-focuses";
+import ListensToMovementKeys from "./decorators/listens-to-movement-keys";
+import Table, { TableRow, TableCell } from "./table/table";
 
 /*
 SelectableTable component which renders a {Table} that supports selecting
@@ -77,221 +76,219 @@ move the selection. E.g. 1, -2.
 shift the selection
  */
 export class SelectableTableCell extends Component {
+	static propTypes = {
+		className: PropTypes.string,
+		tableDataSource: Table.propTypes.tableDataSource,
+		rowIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		colIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		selection: PropTypes.object,
+		onSetSelection: PropTypes.func.isRequired,
+	};
 
-  static propTypes = {
-    className: PropTypes.string,
-    tableDataSource: Table.propTypes.tableDataSource,
-    rowIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    colIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    selection: PropTypes.object,
-    onSetSelection: PropTypes.func.isRequired,
-  }
+	static defaultProps = {
+		className: "",
+	};
 
-  static defaultProps = {
-    className: '',
-  }
+	shouldComponentUpdate(nextProps) {
+		const cellValueChanged =
+			this.props.tableDataSource.cellAt({
+				rowIdx: this.props.rowIdx,
+				colIdx: this.props.colIdx,
+			}) !==
+			nextProps.tableDataSource.cellAt({
+				rowIdx: nextProps.rowIdx,
+				colIdx: nextProps.colIdx,
+			});
+		const selectionStateChanged =
+			this.isSelected(this.props) !== this.isSelected(nextProps);
+		return cellValueChanged || selectionStateChanged;
+	}
 
-  shouldComponentUpdate(nextProps) {
-    const cellValueChanged = (
-      this.props.tableDataSource.cellAt({rowIdx: this.props.rowIdx, colIdx: this.props.colIdx}) !==
-      nextProps.tableDataSource.cellAt({rowIdx: nextProps.rowIdx, colIdx: nextProps.colIdx})
-    )
-    const selectionStateChanged = (
-      this.isSelected(this.props) !== this.isSelected(nextProps)
-    )
-    return cellValueChanged || selectionStateChanged
-  }
+	onClickCell = () => {
+		const { selection, rowIdx, colIdx, onSetSelection } = this.props;
+		if (_.isEqual(selection, { row: rowIdx, col: colIdx })) {
+			return;
+		}
+		onSetSelection({ rowIdx, colIdx, key: null });
+	};
 
-  onClickCell = () => {
-    const {selection, rowIdx, colIdx, onSetSelection} = this.props
-    if (_.isEqual(selection, {row: rowIdx, col: colIdx})) { return }
-    onSetSelection({rowIdx, colIdx, key: null})
-  }
+	isSelected({ selection, rowIdx, colIdx }) {
+		return (
+			selection && selection.rowIdx === rowIdx && selection.colIdx === colIdx
+		);
+	}
 
-  isSelected({selection, rowIdx, colIdx}) {
-    return (
-      selection && selection.rowIdx === rowIdx && selection.colIdx === colIdx
-    )
-  }
+	isSelectedUsingKey(key) {
+		const { selection } = this.props;
+		return this.isSelected(this.props) && selection.key === key;
+	}
 
-  isSelectedUsingKey(key) {
-    const {selection} = this.props
-    return this.isSelected(this.props) && selection.key === key
-  }
+	isInLastRow() {
+		const { rowIdx, tableDataSource } = this.props;
+		const rows = tableDataSource.rows();
+		return rowIdx === rows.length - 1;
+	}
 
-  isInLastRow() {
-    const {rowIdx, tableDataSource} = this.props
-    const rows = tableDataSource.rows()
-    return rowIdx === rows.length - 1;
-  }
-
-  render() {
-    const {className} = this.props
-    const classes = classnames({
-      [className]: true,
-      selected: this.isSelected(this.props),
-    })
-    return (
-      <TableCell
-        {...this.props}
-        className={classes}
-        onClick={this.onClickCell}
-      />
-    )
-  }
+	render() {
+		const { className } = this.props;
+		const classes = classnames({
+			[className]: true,
+			selected: this.isSelected(this.props),
+		});
+		return (
+			<TableCell
+				{...this.props}
+				className={classes}
+				onClick={this.onClickCell}
+			/>
+		);
+	}
 }
-
 
 export class SelectableTableRow extends Component {
+	static propTypes = {
+		className: PropTypes.string,
+		tableDataSource: Table.propTypes.tableDataSource,
+		selection: PropTypes.object,
+		rowIdx: TableRow.propTypes.rowIdx,
+	};
 
-  static propTypes = {
-    className: PropTypes.string,
-    tableDataSource: Table.propTypes.tableDataSource,
-    selection: PropTypes.object,
-    rowIdx: TableRow.propTypes.rowIdx,
-  }
+	static defaultProps = {
+		className: "",
+	};
 
-  static defaultProps = {
-    className: '',
-  }
+	shouldComponentUpdate(nextProps) {
+		const rowChanged =
+			this.props.tableDataSource.rowAt(this.props.rowIdx) !==
+			nextProps.tableDataSource.rowAt(nextProps.rowIdx);
+		const selectionStateChanged =
+			this.isSelected(this.props) !== this.isSelected(nextProps);
+		const selectedColChanged =
+			this.props.selection.colIdx !== nextProps.selection.colIdx;
 
-  shouldComponentUpdate(nextProps) {
-    const rowChanged = (
-      this.props.tableDataSource.rowAt(this.props.rowIdx) !==
-      nextProps.tableDataSource.rowAt(nextProps.rowIdx)
-    )
-    const selectionStateChanged = (
-      this.isSelected(this.props) !== this.isSelected(nextProps)
-    )
-    const selectedColChanged = (
-      this.props.selection.colIdx !== nextProps.selection.colIdx
-    )
+		return rowChanged || selectionStateChanged || selectedColChanged;
+	}
 
-    return rowChanged || selectionStateChanged || selectedColChanged
-  }
+	componentDidUpdate() {
+		if (this.isSelected(this.props)) {
+			ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(false);
+		}
+	}
 
-  componentDidUpdate() {
-    if (this.isSelected(this.props)) {
-      ReactDOM.findDOMNode(this)
-      .scrollIntoViewIfNeeded(false)
-    }
-  }
+	isSelected({ selection, rowIdx }) {
+		return selection && selection.rowIdx === rowIdx;
+	}
 
-  isSelected({selection, rowIdx}) {
-    return selection && selection.rowIdx === rowIdx
-  }
-
-  render() {
-    const {className} = this.props
-    const classes = classnames({
-      [className]: true,
-      selected: this.isSelected(this.props),
-    })
-    return (
-      <TableRow
-        {...this.props}
-        className={classes}
-      />
-    )
-  }
+	render() {
+		const { className } = this.props;
+		const classes = classnames({
+			[className]: true,
+			selected: this.isSelected(this.props),
+		});
+		return <TableRow {...this.props} className={classes} />;
+	}
 }
-
 
 class SelectableTable extends Component {
-  static displayName = 'SelectableTable'
+	static displayName = "SelectableTable";
 
-  static propTypes = {
-    tableDataSource: Table.propTypes.tableDataSource,
-    extraProps: PropTypes.object,
-    RowRenderer: Table.propTypes.RowRenderer,
-    CellRenderer: Table.propTypes.CellRenderer,
-    selection: PropTypes.shape({
-      rowIdx: PropTypes.number,
-      colIdx: PropTypes.number,
-    }).isRequired,
-    onSetSelection: PropTypes.func.isRequired,
-    onShiftSelection: PropTypes.func.isRequired,
-  }
+	static propTypes = {
+		tableDataSource: Table.propTypes.tableDataSource,
+		extraProps: PropTypes.object,
+		RowRenderer: Table.propTypes.RowRenderer,
+		CellRenderer: Table.propTypes.CellRenderer,
+		selection: PropTypes.shape({
+			rowIdx: PropTypes.number,
+			colIdx: PropTypes.number,
+		}).isRequired,
+		onSetSelection: PropTypes.func.isRequired,
+		onShiftSelection: PropTypes.func.isRequired,
+	};
 
-  static defaultProps = {
-    extraProps: {},
-    RowRenderer: SelectableTableRow,
-    CellRenderer: SelectableTableCell,
-  }
+	static defaultProps = {
+		extraProps: {},
+		RowRenderer: SelectableTableRow,
+		CellRenderer: SelectableTableCell,
+	};
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      this.props.tableDataSource !== nextProps.tableDataSource ||
-      this.props.selection !== nextProps.selection
-    )
-  }
+	shouldComponentUpdate(nextProps) {
+		return (
+			this.props.tableDataSource !== nextProps.tableDataSource ||
+			this.props.selection !== nextProps.selection
+		);
+	}
 
-  onArrowUp({key}) {
-    const {onShiftSelection} = this.props
-    onShiftSelection({row: -1, key})
-  }
+	onArrowUp({ key }) {
+		const { onShiftSelection } = this.props;
+		onShiftSelection({ row: -1, key });
+	}
 
-  onArrowDown({key}) {
-    const {onShiftSelection} = this.props
-    onShiftSelection({row: 1, key})
-  }
+	onArrowDown({ key }) {
+		const { onShiftSelection } = this.props;
+		onShiftSelection({ row: 1, key });
+	}
 
-  onArrowLeft({key}) {
-    const {onShiftSelection} = this.props
-    onShiftSelection({col: -1, key})
-  }
+	onArrowLeft({ key }) {
+		const { onShiftSelection } = this.props;
+		onShiftSelection({ col: -1, key });
+	}
 
-  onArrowRight({key}) {
-    const {onShiftSelection} = this.props
-    onShiftSelection({col: 1, key})
-  }
+	onArrowRight({ key }) {
+		const { onShiftSelection } = this.props;
+		onShiftSelection({ col: 1, key });
+	}
 
-  onEnter({key}) {
-    const {onShiftSelection} = this.props
-    onShiftSelection({row: 1, key})
-  }
+	onEnter({ key }) {
+		const { onShiftSelection } = this.props;
+		onShiftSelection({ row: 1, key });
+	}
 
-  onTab({key}) {
-    const {tableDataSource, selection, onShiftSelection} = this.props
-    const colLen = tableDataSource.columns().length
-    if (selection.colIdx === colLen - 1) {
-      onShiftSelection({row: 1, col: -(colLen - 1), key})
-    } else {
-      onShiftSelection({col: 1, key})
-    }
-  }
+	onTab({ key }) {
+		const { tableDataSource, selection, onShiftSelection } = this.props;
+		const colLen = tableDataSource.columns().length;
+		if (selection.colIdx === colLen - 1) {
+			onShiftSelection({ row: 1, col: -(colLen - 1), key });
+		} else {
+			onShiftSelection({ col: 1, key });
+		}
+	}
 
-  onShiftTab({key}) {
-    const {tableDataSource, selection, onShiftSelection} = this.props
-    const colLen = tableDataSource.columns().length
-    if (selection.colIdx === 0) {
-      onShiftSelection({row: -1, col: colLen - 1, key})
-    } else {
-      onShiftSelection({col: -1, key})
-    }
-  }
+	onShiftTab({ key }) {
+		const { tableDataSource, selection, onShiftSelection } = this.props;
+		const colLen = tableDataSource.columns().length;
+		if (selection.colIdx === 0) {
+			onShiftSelection({ row: -1, col: colLen - 1, key });
+		} else {
+			onShiftSelection({ col: -1, key });
+		}
+	}
 
-  render() {
-    const {selection, onSetSelection, onShiftSelection, extraProps, RowRenderer, CellRenderer} = this.props
-    const selectionProps = {
-      selection,
-      onSetSelection,
-      onShiftSelection,
-    }
+	render() {
+		const {
+			selection,
+			onSetSelection,
+			onShiftSelection,
+			extraProps,
+			RowRenderer,
+			CellRenderer,
+		} = this.props;
+		const selectionProps = {
+			selection,
+			onSetSelection,
+			onShiftSelection,
+		};
 
-    return (
-      <Table
-        {...this.props}
-        extraProps={{...extraProps, ...selectionProps}}
-        RowRenderer={RowRenderer}
-        CellRenderer={CellRenderer}
-      />
-    )
-  }
+		return (
+			<Table
+				{...this.props}
+				extraProps={{ ...extraProps, ...selectionProps }}
+				RowRenderer={RowRenderer}
+				CellRenderer={CellRenderer}
+			/>
+		);
+	}
 }
 
-export default compose(
-  SelectableTable,
-  ListensToMovementKeys,
-  (Comp) => AutoFocuses(Comp, {onUpdate: false})
-)
+export default compose(SelectableTable, ListensToMovementKeys, (Comp) =>
+	AutoFocuses(Comp, { onUpdate: false }),
+);

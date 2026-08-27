@@ -1,10 +1,9 @@
-import ContactRankingsCache from './contact-rankings-cache'
-
+import ContactRankingsCache from "./contact-rankings-cache";
 
 export function activate() {
-  ContactRankingsCache.activate();
+	ContactRankingsCache.activate();
 }
 
 export function deactivate() {
-  ContactRankingsCache.deactivate();
+	ContactRankingsCache.deactivate();
 }

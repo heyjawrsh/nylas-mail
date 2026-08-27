@@ -1,6 +1,6 @@
-import SerializableRegistry from './serializable-registry'
+import SerializableRegistry from "./serializable-registry";
 
-class TaskRegistry extends SerializableRegistry { }
+class TaskRegistry extends SerializableRegistry {}
 
-const registry = new TaskRegistry()
-export default registry
+const registry = new TaskRegistry();
+export default registry;

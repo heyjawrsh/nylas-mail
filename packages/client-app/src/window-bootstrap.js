@@ -2,25 +2,24 @@
 
 // Swap out Node's native Promise for Bluebird, which allows us to
 // do fancy things like handle exceptions inside promise blocks
-global.Promise = require('bluebird');
+global.Promise = require("bluebird");
 const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
 // Like sands through the hourglass, so are the days of our lives.
-import './window';
+import "./window";
 
-import NylasEnvConstructor from './nylas-env';
+import NylasEnvConstructor from "./nylas-env";
 window.NylasEnv = NylasEnvConstructor.loadOrCreate();
 NylasEnv.initialize();
 NylasEnv.startRootWindow();
 
-
 // Workaround for focus getting cleared upon window creation
 const windowFocused = () => {
-  window.removeEventListener('focus', windowFocused);
-  return setTimeout((() => {
-    const elt = document.getElementById('sheet-container');
-    if (elt) elt.focus();
-  }), 0);
-}
-window.addEventListener('focus', windowFocused);
+	window.removeEventListener("focus", windowFocused);
+	return setTimeout(() => {
+		const elt = document.getElementById("sheet-container");
+		if (elt) elt.focus();
+	}, 0);
+};
+window.addEventListener("focus", windowFocused);

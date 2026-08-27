@@ -1,6 +1,6 @@
 /* eslint no-useless-escape: 0 */
 import MailComposer from "nodemailer/lib/mail-composer/index.js";
-import {Libmime} from "libmime";
+import { Libmime } from "libmime";
 import libqp from "libqp";
 import iconv from "iconv-lite";
 
@@ -17,7 +17,7 @@ import he from "he";
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {mkdirp} from "mkdirp";
+import { mkdirp } from "mkdirp";
 import { APIError } from "./errors.js";
 import { deepClone } from "./model-utils.js";
 import TrackingUtils from "./tracking-utils.js";

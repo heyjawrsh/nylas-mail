@@ -1,29 +1,29 @@
-import _ from 'underscore';
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Utils} from "nylas-exports";
+import _ from "underscore";
+import React from "react";
+import PropTypes from "prop-types";
+import { Utils } from "nylas-exports";
 
 const StylesImpactedByZoom = [
-  'top',
-  'left',
-  'right',
-  'bottom',
-  'paddingTop',
-  'paddingLeft',
-  'paddingRight',
-  'paddingBottom',
-  'marginTop',
-  'marginBottom',
-  'marginLeft',
-  'marginRight',
+	"top",
+	"left",
+	"right",
+	"bottom",
+	"paddingTop",
+	"paddingLeft",
+	"paddingRight",
+	"paddingBottom",
+	"marginTop",
+	"marginBottom",
+	"marginLeft",
+	"marginRight",
 ];
 
 const Mode = {
-  ContentPreserve: 'original',
-  ContentLight: 'light',
-  ContentDark: 'dark',
-  ContentIsMask: 'mask',
-}
+	ContentPreserve: "original",
+	ContentLight: "light",
+	ContentDark: "dark",
+	ContentIsMask: "mask",
+};
 
 /*
 Public: RetinaImg wraps the DOM's standard `<img`> tag and implements a `UIImage` style
@@ -67,10 +67,9 @@ developers to properly adjust it. The four modes are described below:
 Section: Component Kit
 */
 class RetinaImg extends React.Component {
+	static displayName = "RetinaImg";
 
-  static displayName = 'RetinaImg';
-
-  /*
+	/*
   Public: React `props` supported by RetinaImg:
 
    - `mode` (required) One of the RetinaImg.Mode constants. See above for details.
@@ -83,77 +82,86 @@ class RetinaImg extends React.Component {
    - `style` (optional) An {Object} with additional styles to apply to the image.
    - `resourcePath` (options) Changes the default lookup location used to find the images.
   */
-  static propTypes = {
-    mode: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    url: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    fallback: PropTypes.string,
-    selected: PropTypes.bool,
-    active: PropTypes.bool,
-    resourcePath: PropTypes.string,
-  }
+	static propTypes = {
+		mode: PropTypes.string.isRequired,
+		name: PropTypes.string,
+		url: PropTypes.string,
+		className: PropTypes.string,
+		style: PropTypes.object,
+		fallback: PropTypes.string,
+		selected: PropTypes.bool,
+		active: PropTypes.bool,
+		resourcePath: PropTypes.string,
+	};
 
-  static Mode = Mode;
+	static Mode = Mode;
 
-  shouldComponentUpdate = (nextProps) => {
-    return !(_.isEqual(this.props, nextProps));
-  }
+	shouldComponentUpdate = (nextProps) => {
+		return !_.isEqual(this.props, nextProps);
+	};
 
-  _pathFor = (name) => {
-    if (!name || !_.isString(name)) return null;
-    let pathName = name;
+	_pathFor = (name) => {
+		if (!name || !_.isString(name)) return null;
+		let pathName = name;
 
-    const [basename, ext] = name.split('.');
-    if (this.props.active === true) {
-      pathName = `${basename}-active.${ext}`;
-    }
-    if (this.props.selected === true) {
-      pathName = `${basename}-selected.${ext}`
-    }
+		const [basename, ext] = name.split(".");
+		if (this.props.active === true) {
+			pathName = `${basename}-active.${ext}`;
+		}
+		if (this.props.selected === true) {
+			pathName = `${basename}-selected.${ext}`;
+		}
 
-    return Utils.imageNamed(pathName, this.props.resourcePath);
-  }
+		return Utils.imageNamed(pathName, this.props.resourcePath);
+	};
 
-  render() {
-    const path = this.props.url ||
-                 this._pathFor(this.props.name) ||
-                 this._pathFor(this.props.fallback) ||
-                 '';
-    const pathIsRetina = path.indexOf('@2x') > 0;
-    let className = this.props.className || '';
+	render() {
+		const path =
+			this.props.url ||
+			this._pathFor(this.props.name) ||
+			this._pathFor(this.props.fallback) ||
+			"";
+		const pathIsRetina = path.indexOf("@2x") > 0;
+		let className = this.props.className || "";
 
-    const style = this.props.style || {};
-    style.WebkitUserDrag = 'none';
-    style.zoom = pathIsRetina ? 0.5 : 1;
-    if (style.width) style.width /= style.zoom;
-    if (style.height) style.height /= style.zoom
+		const style = this.props.style || {};
+		style.WebkitUserDrag = "none";
+		style.zoom = pathIsRetina ? 0.5 : 1;
+		if (style.width) style.width /= style.zoom;
+		if (style.height) style.height /= style.zoom;
 
-    if (this.props.mode === Mode.ContentIsMask) {
-      style.WebkitMaskImage = `url('${path}')`;
-      style.WebkitMaskRepeat = "no-repeat";
-      style.objectPosition = "10000px";
-      className += " content-mask";
-    } else if (this.props.mode === Mode.ContentDark) {
-      className += " content-dark";
-    } else if (this.props.mode === Mode.ContentLight) {
-      className += " content-light";
-    }
+		if (this.props.mode === Mode.ContentIsMask) {
+			style.WebkitMaskImage = `url('${path}')`;
+			style.WebkitMaskRepeat = "no-repeat";
+			style.objectPosition = "10000px";
+			className += " content-mask";
+		} else if (this.props.mode === Mode.ContentDark) {
+			className += " content-dark";
+		} else if (this.props.mode === Mode.ContentLight) {
+			className += " content-light";
+		}
 
-    for (const key of Object.keys(style)) {
-      const val = style[key].toString();
-      if (StylesImpactedByZoom.indexOf(key) !== -1 && val.indexOf("%") === -1) {
-        style[key] = val.replace('px', '') / style.zoom;
-      }
-    }
+		for (const key of Object.keys(style)) {
+			const val = style[key].toString();
+			if (StylesImpactedByZoom.indexOf(key) !== -1 && val.indexOf("%") === -1) {
+				style[key] = val.replace("px", "") / style.zoom;
+			}
+		}
 
-    const otherProps = Utils.fastOmit(this.props, Object.keys(this.constructor.propTypes));
-    return (
-      <img alt={this.props.name} className={className} src={path} style={style} {...otherProps} />
-    );
-  }
-
+		const otherProps = Utils.fastOmit(
+			this.props,
+			Object.keys(this.constructor.propTypes),
+		);
+		return (
+			<img
+				alt={this.props.name}
+				className={className}
+				src={path}
+				style={style}
+				{...otherProps}
+			/>
+		);
+	}
 }
 
 export default RetinaImg;

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
 Public: DraftStoreExtension is deprecated. Use {ComposerExtension} instead.
 Section: Extensions

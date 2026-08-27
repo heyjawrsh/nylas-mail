@@ -1,104 +1,115 @@
-import {React} from 'nylas-exports';
-import PropTypes from 'prop-types';
+import { React } from "nylas-exports";
+import PropTypes from "prop-types";
 
 export default class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      onOpen: props.onOpen || (() => {}),
-      onClose: props.onClose || (() => {}),
-    }
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			open: false,
+			onOpen: props.onOpen || (() => {}),
+			onClose: props.onClose || (() => {}),
+		};
+	}
 
-  componentDidMount() {
-    this.keydownHandler = (e) => {
-      // Close modal on escape
-      if (e.keyCode === 27) {
-        this.close();
-      }
-    }
-    document.addEventListener('keydown', this.keydownHandler);
-  }
+	componentDidMount() {
+		this.keydownHandler = (e) => {
+			// Close modal on escape
+			if (e.keyCode === 27) {
+				this.close();
+			}
+		};
+		document.addEventListener("keydown", this.keydownHandler);
+	}
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.keydownHandler);
-  }
+	componentWillUnmount() {
+		document.removeEventListener("keydown", this.keydownHandler);
+	}
 
-  open() {
-    this.setState({open: true});
-    this.state.onOpen();
-  }
+	open() {
+		this.setState({ open: true });
+		this.state.onOpen();
+	}
 
-  close() {
-    this.setState({open: false});
-    this.state.onClose();
-  }
+	close() {
+		this.setState({ open: false });
+		this.state.onClose();
+	}
 
-  // type can be 'button' or 'div'.
-  // Always closes modal after the callback
-  renderActionElem({title, type = 'button', action = () => {}, className = ""}) {
-    const callback = (e) => {
-      action(e);
-      this.close();
-    }
-    if (type === 'button') {
-      return (
-        <button className={className} onClick={callback}>
-          {title}
-        </button>
-      )
-    }
-    return (
-      <div className={className} onClick={callback}>
-        {title}
-      </div>
-    )
-  }
+	// type can be 'button' or 'div'.
+	// Always closes modal after the callback
+	renderActionElem({
+		title,
+		type = "button",
+		action = () => {},
+		className = "",
+	}) {
+		const callback = (e) => {
+			action(e);
+			this.close();
+		};
+		if (type === "button") {
+			return (
+				<button className={className} onClick={callback}>
+					{title}
+				</button>
+			);
+		}
+		return (
+			<div className={className} onClick={callback}>
+				{title}
+			</div>
+		);
+	}
 
-  render() {
-    const activator = (
-      <div
-        className={this.props.openLink.className}
-        id={this.props.openLink.id}
-        onClick={() => this.open.call(this)}
-      >
-        {this.props.openLink.text}
-      </div>
-    )
-    if (!this.state.open) {
-      return activator;
-    }
+	render() {
+		const activator = (
+			<div
+				className={this.props.openLink.className}
+				id={this.props.openLink.id}
+				onClick={() => this.open.call(this)}
+			>
+				{this.props.openLink.text}
+			</div>
+		);
+		if (!this.state.open) {
+			return activator;
+		}
 
-    const actionElems = [];
-    if (this.props.actionElems) {
-      for (const config of this.props.actionElems) {
-        actionElems.push(this.renderActionElem(config));
-      }
-    }
+		const actionElems = [];
+		if (this.props.actionElems) {
+			for (const config of this.props.actionElems) {
+				actionElems.push(this.renderActionElem(config));
+			}
+		}
 
-    return (
-      <div>
-        {activator}
-        <div className="modal-bg">
-          <div className={`${this.props.className || ''} modal`} id={this.props.id}>
-            <div className="modal-close-wrapper">
-              <div className="modal-close" onClick={() => this.close.call(this)} />
-            </div>
-            {this.props.children}
-            {actionElems}
-          </div>
-        </div>
-      </div>
-    )
-  }
+		return (
+			<div>
+				{activator}
+				<div className="modal-bg">
+					<div
+						className={`${this.props.className || ""} modal`}
+						id={this.props.id}
+					>
+						<div className="modal-close-wrapper">
+							<div
+								className="modal-close"
+								onClick={() => this.close.call(this)}
+							/>
+						</div>
+						{this.props.children}
+						{actionElems}
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 Modal.propTypes = {
-  openLink: PropTypes.object,
-  className: PropTypes.string,
-  id: PropTypes.string,
-  onOpen: PropTypes.func,
-  onClose: PropTypes.func,
-  actionElems: PropTypes.arrayOf(PropTypes.object),
-}
+	openLink: PropTypes.object,
+	className: PropTypes.string,
+	id: PropTypes.string,
+	onOpen: PropTypes.func,
+	onClose: PropTypes.func,
+	actionElems: PropTypes.arrayOf(PropTypes.object),
+};

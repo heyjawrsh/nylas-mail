@@ -7,174 +7,199 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require('react');
-const {Utils} = require('nylas-exports');
-const _ = require('underscore');
+const React = require("react");
+const { Utils } = require("nylas-exports");
+const _ = require("underscore");
 
 class ThreadListParticipants extends React.Component {
-  constructor(...args) {
-    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-    this.render = this.render.bind(this);
-    this.renderSpans = this.renderSpans.bind(this);
-    this.getTokensFromMessages = this.getTokensFromMessages.bind(this);
-    this.getTokensFromParticipants = this.getTokensFromParticipants.bind(this);
-    this.getTokens = this.getTokens.bind(this);
-    super(...args);
-  }
+	constructor(...args) {
+		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+		this.render = this.render.bind(this);
+		this.renderSpans = this.renderSpans.bind(this);
+		this.getTokensFromMessages = this.getTokensFromMessages.bind(this);
+		this.getTokensFromParticipants = this.getTokensFromParticipants.bind(this);
+		this.getTokens = this.getTokens.bind(this);
+		super(...args);
+	}
 
-  static initClass() {
-    this.displayName = 'ThreadListParticipants';
-  
-    this.propTypes =
-      {thread: PropTypes.object.isRequired};
-  }
+	static initClass() {
+		ThreadListParticipants.displayName = "ThreadListParticipants";
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.thread === this.props.thread) { return false; }
-    return true;
-  }
+		ThreadListParticipants.propTypes = { thread: PropTypes.object.isRequired };
+	}
 
-  render() {
-    const items = this.getTokens();
-    return React.createElement("div", {"className": "participants"},
-      (this.renderSpans(items))
-    );
-  }
+	shouldComponentUpdate(nextProps) {
+		if (nextProps.thread === this.props.thread) {
+			return false;
+		}
+		return true;
+	}
 
-  renderSpans(items) {
-    const spans = [];
-    let accumulated = null;
-    let accumulatedUnread = false;
+	render() {
+		const items = this.getTokens();
+		return React.createElement(
+			"div",
+			{ className: "participants" },
+			this.renderSpans(items),
+		);
+	}
 
-    const flush = function() {
-      if (accumulated) {
-        spans.push(React.createElement("span", {"key": (spans.length), "className": `unread-${accumulatedUnread}`}, (accumulated)));
-      }
-      accumulated = null;
-      return accumulatedUnread = false;
-    };
+	renderSpans(items) {
+		const spans = [];
+		let accumulated = null;
+		let accumulatedUnread = false;
 
-    const accumulate = function(text, unread) {
-      if (accumulated && unread && (accumulatedUnread !== unread)) {
-        flush();
-      }
-      if (accumulated) {
-        return accumulated += text;
-      } else {
-        accumulated = text;
-        return accumulatedUnread = unread;
-      }
-    };
+		const flush = () => {
+			if (accumulated) {
+				spans.push(
+					React.createElement(
+						"span",
+						{ key: spans.length, className: `unread-${accumulatedUnread}` },
+						accumulated,
+					),
+				);
+			}
+			accumulated = null;
+			return (accumulatedUnread = false);
+		};
 
-    for (let idx = 0; idx < items.length; idx++) {
-      var {spacer, contact, unread} = items[idx];
-      if (spacer) {
-        accumulate('...');
-      } else {
-        var short;
-        if (contact.name.length > 0) {
-          if (items.length > 1) {
-            short = contact.displayName({includeAccountLabel: false, compact: true});
-          } else {
-            short = contact.displayName({includeAccountLabel: false});
-          }
-        } else {
-          short = contact.email;
-        }
-        if ((idx < (items.length-1)) && !items[idx+1].spacer) {
-          short += ", ";
-        }
-        accumulate(short, unread);
-      }
-    }
+		const accumulate = (text, unread) => {
+			if (accumulated && unread && accumulatedUnread !== unread) {
+				flush();
+			}
+			if (accumulated) {
+				return (accumulated += text);
+			} else {
+				accumulated = text;
+				return (accumulatedUnread = unread);
+			}
+		};
 
-    const messages = (this.props.thread.__messages != null ? this.props.thread.__messages : []);
-    if (messages.length > 1) {
-      accumulate(` (${messages.length})`);
-    }
+		for (let idx = 0; idx < items.length; idx++) {
+			var { spacer, contact, unread } = items[idx];
+			if (spacer) {
+				accumulate("...");
+			} else {
+				var short;
+				if (contact.name.length > 0) {
+					if (items.length > 1) {
+						short = contact.displayName({
+							includeAccountLabel: false,
+							compact: true,
+						});
+					} else {
+						short = contact.displayName({ includeAccountLabel: false });
+					}
+				} else {
+					short = contact.email;
+				}
+				if (idx < items.length - 1 && !items[idx + 1].spacer) {
+					short += ", ";
+				}
+				accumulate(short, unread);
+			}
+		}
 
-    flush();
+		const messages =
+			this.props.thread.__messages != null ? this.props.thread.__messages : [];
+		if (messages.length > 1) {
+			accumulate(` (${messages.length})`);
+		}
 
-    return spans;
-  }
+		flush();
 
-  getTokensFromMessages() {
-    const messages = this.props.thread.__messages;
-    const tokens = [];
+		return spans;
+	}
 
-    let field = 'from';
-    if (messages.every(message => message.isFromMe())) {
-      field = 'to';
-    }
+	getTokensFromMessages() {
+		const messages = this.props.thread.__messages;
+		const tokens = [];
 
-    for (let idx = 0; idx < messages.length; idx++) {
-      var message = messages[idx];
-      if (message.draft) {
-        continue;
-      }
+		let field = "from";
+		if (messages.every((message) => message.isFromMe())) {
+			field = "to";
+		}
 
-      for (var contact of Array.from(message[field])) {
-        if (tokens.length === 0) {
-          tokens.push({ contact, unread: message.unread });
-        } else {
-          var lastToken = tokens[tokens.length - 1];
-          var lastContact = lastToken.contact;
+		for (let idx = 0; idx < messages.length; idx++) {
+			var message = messages[idx];
+			if (message.draft) {
+				continue;
+			}
 
-          var sameEmail = Utils.emailIsEquivalent(lastContact.email, contact.email);
-          var sameName = lastContact.name === contact.name;
-          if (sameEmail && sameName) {
-            if (!lastToken.unread) { lastToken.unread = message.unread; }
-          } else {
-            tokens.push({ contact, unread: message.unread });
-          }
-        }
-      }
-    }
+			for (var contact of Array.from(message[field])) {
+				if (tokens.length === 0) {
+					tokens.push({ contact, unread: message.unread });
+				} else {
+					var lastToken = tokens[tokens.length - 1];
+					var lastContact = lastToken.contact;
 
-    return tokens;
-  }
+					var sameEmail = Utils.emailIsEquivalent(
+						lastContact.email,
+						contact.email,
+					);
+					var sameName = lastContact.name === contact.name;
+					if (sameEmail && sameName) {
+						if (!lastToken.unread) {
+							lastToken.unread = message.unread;
+						}
+					} else {
+						tokens.push({ contact, unread: message.unread });
+					}
+				}
+			}
+		}
 
-  getTokensFromParticipants() {
-    let contacts = this.props.thread.participants != null ? this.props.thread.participants : [];
-    contacts = contacts.filter(contact => !contact.isMe());
-    return contacts.map(contact => ({
-      contact,
-      unread: false
-    }));
-  }
+		return tokens;
+	}
 
-  getTokens() {
-    let list;
-    if (this.props.thread.__messages instanceof Array) {
-      list = this.getTokensFromMessages();
-    } else {
-      list = this.getTokensFromParticipants();
-    }
+	getTokensFromParticipants() {
+		let contacts =
+			this.props.thread.participants != null
+				? this.props.thread.participants
+				: [];
+		contacts = contacts.filter((contact) => !contact.isMe());
+		return contacts.map((contact) => ({
+			contact,
+			unread: false,
+		}));
+	}
 
-    // If no participants, we should at least add current user as sole participant
-    if ((list.length === 0) && ((this.props.thread.participants != null ? this.props.thread.participants.length : undefined) > 0)) {
-      list.push({ contact: this.props.thread.participants[0], unread: false });
-    }
+	getTokens() {
+		let list;
+		if (this.props.thread.__messages instanceof Array) {
+			list = this.getTokensFromMessages();
+		} else {
+			list = this.getTokensFromParticipants();
+		}
 
-    // We only ever want to show three. Ben...Kevin... Marty
-    // But we want the *right* three.
-    if (list.length > 3) {
-      const listTrimmed = [
-        // Always include the first item
-        list[0],
-        { spacer: true },
+		// If no participants, we should at least add current user as sole participant
+		if (
+			list.length === 0 &&
+			(this.props.thread.participants != null
+				? this.props.thread.participants.length
+				: undefined) > 0
+		) {
+			list.push({ contact: this.props.thread.participants[0], unread: false });
+		}
 
-        // Always include last two items
-        list[list.length - 2],
-        list[list.length - 1]
-      ];
-      list = listTrimmed;
-    }
+		// We only ever want to show three. Ben...Kevin... Marty
+		// But we want the *right* three.
+		if (list.length > 3) {
+			const listTrimmed = [
+				// Always include the first item
+				list[0],
+				{ spacer: true },
 
-    return list;
-  }
+				// Always include last two items
+				list[list.length - 2],
+				list[list.length - 1],
+			];
+			list = listTrimmed;
+		}
+
+		return list;
+	}
 }
 ThreadListParticipants.initClass();
-
 
 module.exports = ThreadListParticipants;

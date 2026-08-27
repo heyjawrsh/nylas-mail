@@ -1,5 +1,3 @@
-'use strict';
-
 /*
 Public: MessageStoreExtension is deprecated. Use {MessageViewExtension} instead.
 Section: Extensions

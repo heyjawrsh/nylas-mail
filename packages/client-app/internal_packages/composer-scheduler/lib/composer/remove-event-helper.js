@@ -1,4 +1,4 @@
-import {PLUGIN_ID} from '../scheduler-constants'
+import { PLUGIN_ID } from "../scheduler-constants";
 
 /**
  * Removing a proposed event can happen through various mechansism.
@@ -14,19 +14,19 @@ import {PLUGIN_ID} from '../scheduler-constants'
  * it's likely the user will want to at some point restore their work.
  */
 export default class RemoveEventHelper {
-  static deleteEventData(session) {
-    session.changes.addPluginMetadata(PLUGIN_ID, {});
-  }
+	static deleteEventData(session) {
+		session.changes.addPluginMetadata(PLUGIN_ID, {});
+	}
 
-  static hideEventData(session) {
-    const draft = session.draft()
-    const metadata = draft.metadataForPluginId(PLUGIN_ID);
-    if (metadata) {
-      metadata.hiddenPendingEvent = metadata.pendingEvent
-      metadata.hiddenProposals = metadata.proposals
-      delete metadata.pendingEvent;
-      delete metadata.proposals
-      session.changes.addPluginMetadata(PLUGIN_ID, metadata);
-    }
-  }
+	static hideEventData(session) {
+		const draft = session.draft();
+		const metadata = draft.metadataForPluginId(PLUGIN_ID);
+		if (metadata) {
+			metadata.hiddenPendingEvent = metadata.pendingEvent;
+			metadata.hiddenProposals = metadata.proposals;
+			delete metadata.pendingEvent;
+			delete metadata.proposals;
+			session.changes.addPluginMetadata(PLUGIN_ID, metadata);
+		}
+	}
 }

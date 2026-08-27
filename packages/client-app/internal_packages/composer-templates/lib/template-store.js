@@ -1,296 +1,333 @@
 /* eslint global-require: 0*/
 
-import {DraftStore, Actions, QuotedHTMLTransformer} from 'nylas-exports';
-import NylasStore from 'nylas-store';
-import path from 'path';
-import fs from 'fs';
+import { DraftStore, Actions, QuotedHTMLTransformer } from "nylas-exports";
+import NylasStore from "nylas-store";
+import path from "path";
+import fs from "fs";
 
 class TemplateStore extends NylasStore {
+	// Support accented characters in template names
+	// https://regex101.com/r/nD3eY8/1
+	static INVALID_TEMPLATE_NAME_REGEX = /[^a-zA-Z\u00C0-\u017F0-9_\- ]+/g;
 
-  // Support accented characters in template names
-  // https://regex101.com/r/nD3eY8/1
-  static INVALID_TEMPLATE_NAME_REGEX = /[^a-zA-Z\u00C0-\u017F0-9_\- ]+/g;
+	constructor() {
+		super();
+		this._init();
+	}
 
-  constructor() {
-    super();
-    this._init();
-  }
+	_init(templatesDir = path.join(NylasEnv.getConfigDirPath(), "templates")) {
+		this.items = this.items.bind(this);
+		this.templatesDirectory = this.templatesDirectory.bind(this);
+		this._setStoreDefaults = this._setStoreDefaults.bind(this);
+		this._registerListeners = this._registerListeners.bind(this);
+		this._populate = this._populate.bind(this);
+		this._onCreateTemplate = this._onCreateTemplate.bind(this);
+		this._onShowTemplates = this._onShowTemplates.bind(this);
+		this._displayDialog = this._displayDialog.bind(this);
+		this._displayError = this._displayError.bind(this);
+		this.saveNewTemplate = this.saveNewTemplate.bind(this);
+		this.saveTemplate = this.saveTemplate.bind(this);
+		this.deleteTemplate = this.deleteTemplate.bind(this);
+		this.renameTemplate = this.renameTemplate.bind(this);
+		this.getTemplateContents = this.getTemplateContents.bind(this);
+		this._onInsertTemplateId = this._onInsertTemplateId.bind(this);
+		this._setStoreDefaults();
+		this._registerListeners();
 
-  _init(templatesDir = path.join(NylasEnv.getConfigDirPath(), 'templates')) {
-    this.items = this.items.bind(this);
-    this.templatesDirectory = this.templatesDirectory.bind(this);
-    this._setStoreDefaults = this._setStoreDefaults.bind(this);
-    this._registerListeners = this._registerListeners.bind(this);
-    this._populate = this._populate.bind(this);
-    this._onCreateTemplate = this._onCreateTemplate.bind(this);
-    this._onShowTemplates = this._onShowTemplates.bind(this);
-    this._displayDialog = this._displayDialog.bind(this);
-    this._displayError = this._displayError.bind(this);
-    this.saveNewTemplate = this.saveNewTemplate.bind(this);
-    this.saveTemplate = this.saveTemplate.bind(this);
-    this.deleteTemplate = this.deleteTemplate.bind(this);
-    this.renameTemplate = this.renameTemplate.bind(this);
-    this.getTemplateContents = this.getTemplateContents.bind(this);
-    this._onInsertTemplateId = this._onInsertTemplateId.bind(this);
-    this._setStoreDefaults();
-    this._registerListeners();
+		this._templatesDir = templatesDir;
+		this._welcomeName = "Welcome to Quick Replies.html";
+		this._welcomePath = path.join(__dirname, "..", "assets", this._welcomeName);
+		this._watcher = null;
 
-    this._templatesDir = templatesDir;
-    this._welcomeName = 'Welcome to Quick Replies.html';
-    this._welcomePath = path.join(__dirname, '..', 'assets', this._welcomeName);
-    this._watcher = null;
+		// I know this is a bit of pain but don't do anything that
+		// could possibly slow down app launch
+		fs.exists(this._templatesDir, (exists) => {
+			if (exists) {
+				this._populate();
+				this.watch();
+			} else {
+				fs.mkdir(this._templatesDir, () => {
+					fs.readFile(this._welcomePath, (err, welcome) => {
+						fs.writeFile(
+							path.join(this._templatesDir, this._welcomeName),
+							welcome,
+							() => {
+								this.watch();
+							},
+						);
+					});
+				});
+			}
+		});
+	}
 
-    // I know this is a bit of pain but don't do anything that
-    // could possibly slow down app launch
-    fs.exists(this._templatesDir, (exists) => {
-      if (exists) {
-        this._populate();
-        this.watch();
-      } else {
-        fs.mkdir(this._templatesDir, () => {
-          fs.readFile(this._welcomePath, (err, welcome) => {
-            fs.writeFile(path.join(this._templatesDir, this._welcomeName), welcome, () => {
-              this.watch();
-            });
-          });
-        });
-      }
-    });
-  }
+	watch() {
+		if (!this._watcher) {
+			this._watcher = fs.watch(this._templatesDir, () => this._populate());
+		}
+	}
+	unwatch() {
+		if (this._watcher) {
+			this._watcher.close();
+		}
+		this._watcher = null;
+	}
 
-  watch() {
-    if (!this._watcher) {
-      this._watcher = fs.watch(this._templatesDir, () => this._populate());
-    }
-  }
-  unwatch() {
-    if (this._watcher) {
-      this._watcher.close();
-    }
-    this._watcher = null;
-  }
+	items() {
+		return this._items;
+	}
 
-  items() {
-    return this._items;
-  }
+	templatesDirectory() {
+		return this._templatesDir;
+	}
 
-  templatesDirectory() {
-    return this._templatesDir;
-  }
+	_setStoreDefaults() {
+		this._items = [];
+	}
 
-  _setStoreDefaults() {
-    this._items = [];
-  }
+	_registerListeners() {
+		this.listenTo(Actions.insertTemplateId, this._onInsertTemplateId);
+		this.listenTo(Actions.createTemplate, this._onCreateTemplate);
+		this.listenTo(Actions.showTemplates, this._onShowTemplates);
+	}
 
-  _registerListeners() {
-    this.listenTo(Actions.insertTemplateId, this._onInsertTemplateId);
-    this.listenTo(Actions.createTemplate, this._onCreateTemplate);
-    this.listenTo(Actions.showTemplates, this._onShowTemplates);
-  }
+	_populate() {
+		fs.readdir(this._templatesDir, (err, filenames) => {
+			if (err) {
+				NylasEnv.showErrorDialog({
+					title: "Cannot scan templates directory",
+					message: `N1 was unable to read the contents of your templates directory (${this._templatesDir}). You may want to delete this folder or ensure filesystem permissions are set correctly.`,
+				});
+				return;
+			}
+			this._items = [];
+			for (let i = 0, filename; i < filenames.length; i++) {
+				filename = filenames[i];
+				if (filename[0] === ".") {
+					continue;
+				}
+				const displayname = path.basename(filename, path.extname(filename));
+				this._items.push({
+					id: filename,
+					name: displayname,
+					path: path.join(this._templatesDir, filename),
+				});
+			}
+			this.trigger(this);
+		});
+	}
 
-  _populate() {
-    fs.readdir(this._templatesDir, (err, filenames) => {
-      if (err) {
-        NylasEnv.showErrorDialog({
-          title: "Cannot scan templates directory",
-          message: `N1 was unable to read the contents of your templates directory (${this._templatesDir}). You may want to delete this folder or ensure filesystem permissions are set correctly.`,
-        });
-        return;
-      }
-      this._items = [];
-      for (let i = 0, filename; i < filenames.length; i++) {
-        filename = filenames[i];
-        if (filename[0] === '.') { continue; }
-        const displayname = path.basename(filename, path.extname(filename));
-        this._items.push({
-          id: filename,
-          name: displayname,
-          path: path.join(this._templatesDir, filename),
-        });
-      }
-      this.trigger(this);
-    });
-  }
+	_onCreateTemplate({ draftClientId, name, contents } = {}) {
+		if (draftClientId) {
+			DraftStore.sessionForClientId(draftClientId).then((session) => {
+				const draft = session.draft();
+				const draftName =
+					name ||
+					draft.subject.replace(TemplateStore.INVALID_TEMPLATE_NAME_REGEX, "");
+				let draftContents =
+					contents || QuotedHTMLTransformer.removeQuotedHTML(draft.body);
 
-  _onCreateTemplate({draftClientId, name, contents} = {}) {
-    if (draftClientId) {
-      DraftStore.sessionForClientId(draftClientId).then((session) => {
-        const draft = session.draft();
-        const draftName = name || draft.subject.replace(TemplateStore.INVALID_TEMPLATE_NAME_REGEX, '');
-        let draftContents = contents || QuotedHTMLTransformer.removeQuotedHTML(draft.body);
+				const sigIndex = draftContents.indexOf("<signature>");
+				draftContents =
+					sigIndex > -1 ? draftContents.slice(0, sigIndex) : draftContents;
+				if (!draftName || draftName.length === 0) {
+					this._displayError(
+						"Give your draft a subject to name your template.",
+					);
+				}
+				if (!draftContents || draftContents.length === 0) {
+					this._displayError(
+						"To create a template you need to fill the body of the current draft.",
+					);
+				}
+				this.saveNewTemplate(draftName, draftContents, this._onShowTemplates);
+			});
+			return;
+		}
+		if (!name || name.length === 0) {
+			this._displayError("You must provide a name for your template.");
+		}
+		if (!contents || contents.length === 0) {
+			this._displayError("You must provide contents for your template.");
+		}
+		this.saveNewTemplate(name, contents, this._onShowTemplates);
+	}
 
-        const sigIndex = draftContents.indexOf('<signature>');
-        draftContents = sigIndex > -1 ? draftContents.slice(0, sigIndex) : draftContents;
-        if (!draftName || draftName.length === 0) {
-          this._displayError('Give your draft a subject to name your template.');
-        }
-        if (!draftContents || draftContents.length === 0) {
-          this._displayError('To create a template you need to fill the body of the current draft.');
-        }
-        this.saveNewTemplate(draftName, draftContents, this._onShowTemplates);
-      });
-      return;
-    }
-    if (!name || name.length === 0) {
-      this._displayError('You must provide a name for your template.');
-    }
-    if (!contents || contents.length === 0) {
-      this._displayError('You must provide contents for your template.');
-    }
-    this.saveNewTemplate(name, contents, this._onShowTemplates);
-  }
+	_onShowTemplates() {
+		Actions.switchPreferencesTab("Quick Replies");
+		Actions.openPreferences();
+	}
 
-  _onShowTemplates() {
-    Actions.switchPreferencesTab('Quick Replies');
-    Actions.openPreferences();
-  }
+	_displayError(message) {
+		const dialog = require("electron").remote.dialog;
+		dialog.showErrorBox("Template Creation Error", message);
+	}
+	_displayDialog(title, message, buttons) {
+		const dialog = require("electron").remote.dialog;
+		return (
+			dialog.showMessageBox({
+				title: title,
+				message: title,
+				detail: message,
+				buttons: buttons,
+				type: "info",
+			}) === 0
+		);
+	}
 
-  _displayError(message) {
-    const dialog = require('electron').remote.dialog;
-    dialog.showErrorBox('Template Creation Error', message);
-  }
-  _displayDialog(title, message, buttons) {
-    const dialog = require('electron').remote.dialog;
-    return (dialog.showMessageBox({
-      title: title,
-      message: title,
-      detail: message,
-      buttons: buttons,
-      type: 'info',
-    }) === 0);
-  }
+	saveNewTemplate(name, contents, callback) {
+		if (!name || name.length === 0) {
+			this._displayError("You must provide a template name.");
+			return;
+		}
 
-  saveNewTemplate(name, contents, callback) {
-    if (!name || name.length === 0) {
-      this._displayError('You must provide a template name.');
-      return;
-    }
+		if (name.match(TemplateStore.INVALID_TEMPLATE_NAME_REGEX)) {
+			this._displayError(
+				"Invalid template name! Names can only contain letters, numbers, spaces, dashes, and underscores.",
+			);
+			return;
+		}
 
-    if (name.match(TemplateStore.INVALID_TEMPLATE_NAME_REGEX)) {
-      this._displayError('Invalid template name! Names can only contain letters, numbers, spaces, dashes, and underscores.');
-      return;
-    }
+		const template = this._getTemplate(name);
+		if (template) {
+			this._displayError("A template with that name already exists!");
+			return;
+		}
+		this.saveTemplate(name, contents, callback);
+		this.trigger(this);
+	}
 
-    const template = this._getTemplate(name);
-    if (template) {
-      this._displayError('A template with that name already exists!');
-      return;
-    }
-    this.saveTemplate(name, contents, callback);
-    this.trigger(this);
-  }
+	_getTemplate(name, id) {
+		for (const template of this._items) {
+			if (
+				(template.name === name || name == null) &&
+				(template.id === id || id == null)
+			) {
+				return template;
+			}
+		}
+		return null;
+	}
 
-  _getTemplate(name, id) {
-    for (const template of this._items) {
-      if ((template.name === name || name == null) && (template.id === id || id == null)) {
-        return template;
-      }
-    }
-    return null;
-  }
+	saveTemplate(name, contents, callback) {
+		const filename = `${name}.html`;
+		const templatePath = path.join(this._templatesDir, filename);
 
-  saveTemplate(name, contents, callback) {
-    const filename = `${name}.html`;
-    const templatePath = path.join(this._templatesDir, filename);
+		let template = this._getTemplate(name);
+		this.unwatch();
+		fs.writeFile(templatePath, contents, (err) => {
+			this.watch();
+			if (err) {
+				this._displayError(err);
+			}
+			if (template === null) {
+				template = {
+					id: filename,
+					name: name,
+					path: templatePath,
+				};
+				this._items.unshift(template);
+			}
+			if (callback) {
+				callback(template);
+			}
+		});
+	}
 
-    let template = this._getTemplate(name);
-    this.unwatch();
-    fs.writeFile(templatePath, contents, (err) => {
-      this.watch();
-      if (err) { this._displayError(err); }
-      if (template === null) {
-        template = {
-          id: filename,
-          name: name,
-          path: templatePath,
-        };
-        this._items.unshift(template);
-      }
-      if (callback) {
-        callback(template);
-      }
-    });
-  }
+	deleteTemplate(name, callback) {
+		const template = this._getTemplate(name);
+		if (!template) {
+			return;
+		}
 
-  deleteTemplate(name, callback) {
-    const template = this._getTemplate(name);
-    if (!template) { return; }
+		if (
+			this._displayDialog(
+				"Delete this template?",
+				"The template and its file will be permanently deleted.",
+				["Delete", "Cancel"],
+			)
+		) {
+			fs.unlink(template.path, () => {
+				this._populate();
+				if (callback) {
+					callback();
+				}
+			});
+		}
+	}
 
-    if (this._displayDialog(
-        'Delete this template?',
-        'The template and its file will be permanently deleted.',
-        ['Delete', 'Cancel']
-    )) {
-      fs.unlink(template.path, () => {
-        this._populate();
-        if (callback) {
-          callback();
-        }
-      });
-    }
-  }
+	renameTemplate(oldName, newName, callback) {
+		const template = this._getTemplate(oldName);
+		if (!template) {
+			return;
+		}
 
-  renameTemplate(oldName, newName, callback) {
-    const template = this._getTemplate(oldName);
-    if (!template) { return; }
+		if (newName.match(TemplateStore.INVALID_TEMPLATE_NAME_REGEX)) {
+			this._displayError(
+				"Invalid template name! Names can only contain letters, numbers, spaces, dashes, and underscores.",
+			);
+			return;
+		}
+		if (newName.length === 0) {
+			this._displayError("You must provide a template name.");
+			return;
+		}
 
-    if (newName.match(TemplateStore.INVALID_TEMPLATE_NAME_REGEX)) {
-      this._displayError('Invalid template name! Names can only contain letters, numbers, spaces, dashes, and underscores.');
-      return;
-    }
-    if (newName.length === 0) {
-      this._displayError('You must provide a template name.');
-      return;
-    }
+		const newFilename = `${newName}.html`;
+		const oldPath = path.join(this._templatesDir, `${oldName}.html`);
+		const newPath = path.join(this._templatesDir, newFilename);
+		fs.rename(oldPath, newPath, () => {
+			template.name = newName;
+			template.id = newFilename;
+			template.path = newPath;
+			this.trigger(this);
+			callback(template);
+		});
+	}
 
-    const newFilename = `${newName}.html`;
-    const oldPath = path.join(this._templatesDir, `${oldName}.html`);
-    const newPath = path.join(this._templatesDir, newFilename);
-    fs.rename(oldPath, newPath, () => {
-      template.name = newName;
-      template.id = newFilename;
-      template.path = newPath;
-      this.trigger(this);
-      callback(template);
-    });
-  }
+	_onInsertTemplateId({ templateId, draftClientId } = {}) {
+		this.getTemplateContents(templateId, (templateBody) => {
+			DraftStore.sessionForClientId(draftClientId).then((session) => {
+				let proceed = true;
+				if (!session.draft().pristine && !session.draft().hasEmptyBody()) {
+					proceed = this._displayDialog(
+						"Replace draft contents?",
+						"It looks like your draft already has some content. Loading this template will " +
+							"overwrite all draft contents.",
+						["Replace contents", "Cancel"],
+					);
+				}
 
-  _onInsertTemplateId({templateId, draftClientId} = {}) {
-    this.getTemplateContents(templateId, (templateBody) => {
-      DraftStore.sessionForClientId(draftClientId).then((session) => {
-        let proceed = true;
-        if (!session.draft().pristine && !session.draft().hasEmptyBody()) {
-          proceed = this._displayDialog(
-              'Replace draft contents?',
-              'It looks like your draft already has some content. Loading this template will ' +
-              'overwrite all draft contents.',
-              ['Replace contents', 'Cancel']
-          );
-        }
+				if (proceed) {
+					const draftContents = QuotedHTMLTransformer.removeQuotedHTML(
+						session.draft().body,
+					);
+					const sigIndex = draftContents.indexOf("<signature>");
+					const signature = sigIndex > -1 ? draftContents.slice(sigIndex) : "";
 
-        if (proceed) {
-          const draftContents = QuotedHTMLTransformer.removeQuotedHTML(session.draft().body);
-          const sigIndex = draftContents.indexOf('<signature>');
-          const signature = sigIndex > -1 ? draftContents.slice(sigIndex) : '';
+					const draftHtml = QuotedHTMLTransformer.appendQuotedHTML(
+						templateBody + signature,
+						session.draft().body,
+					);
+					Actions.recordUserEvent("Email Template Inserted");
+					session.changes.add({ body: draftHtml });
+				}
+			});
+		});
+	}
 
-          const draftHtml = QuotedHTMLTransformer.appendQuotedHTML(templateBody + signature, session.draft().body);
-          Actions.recordUserEvent("Email Template Inserted")
-          session.changes.add({body: draftHtml});
-        }
-      });
-    });
-  }
+	getTemplateContents(templateId, callback) {
+		const template = this._getTemplate(null, templateId);
+		if (!template) {
+			return;
+		}
 
-  getTemplateContents(templateId, callback) {
-    const template = this._getTemplate(null, templateId);
-    if (!template) { return; }
-
-    fs.readFile(template.path, (err, data) => {
-      const body = data.toString();
-      callback(body);
-    });
-  }
+		fs.readFile(template.path, (err, data) => {
+			const body = data.toString();
+			callback(body);
+		});
+	}
 }
 
 const store = new TemplateStore();
-export default store
+export default store;

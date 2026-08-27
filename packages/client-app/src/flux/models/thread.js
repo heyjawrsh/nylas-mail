@@ -1,11 +1,10 @@
-import _ from 'underscore'
-import Message from './message'
-import Contact from './contact'
-import Category from './category'
-import Attributes from '../attributes'
-import DatabaseStore from '../stores/database-store'
-import ModelWithMetadata from './model-with-metadata'
-
+import _ from "underscore";
+import Message from "./message";
+import Contact from "./contact";
+import Category from "./category";
+import Attributes from "../attributes";
+import DatabaseStore from "../stores/database-store";
+import ModelWithMetadata from "./model-with-metadata";
 
 /*
 Public: The Thread model represents a Thread object served by the Nylas Platform API.
@@ -38,277 +37,287 @@ Section: Models
 @class Thread
 */
 class Thread extends ModelWithMetadata {
+	static attributes = _.extend({}, ModelWithMetadata.attributes, {
+		snippet: Attributes.String({
+			modelKey: "snippet",
+		}),
 
-  static attributes = _.extend({}, ModelWithMetadata.attributes, {
-    snippet: Attributes.String({
-      modelKey: 'snippet',
-    }),
+		subject: Attributes.String({
+			queryable: true,
+			modelKey: "subject",
+		}),
 
-    subject: Attributes.String({
-      queryable: true,
-      modelKey: 'subject',
-    }),
+		unread: Attributes.Boolean({
+			queryable: true,
+			modelKey: "unread",
+		}),
 
-    unread: Attributes.Boolean({
-      queryable: true,
-      modelKey: 'unread',
-    }),
+		starred: Attributes.Boolean({
+			queryable: true,
+			modelKey: "starred",
+		}),
 
-    starred: Attributes.Boolean({
-      queryable: true,
-      modelKey: 'starred',
-    }),
+		version: Attributes.Number({
+			queryable: true,
+			modelKey: "version",
+		}),
 
-    version: Attributes.Number({
-      queryable: true,
-      modelKey: 'version',
-    }),
+		categories: Attributes.Collection({
+			queryable: true,
+			modelKey: "categories",
+			joinOnField: "id",
+			joinQueryableBy: [
+				"inAllMail",
+				"lastMessageReceivedTimestamp",
+				"lastMessageSentTimestamp",
+				"unread",
+			],
+			itemClass: Category,
+		}),
 
-    categories: Attributes.Collection({
-      queryable: true,
-      modelKey: 'categories',
-      joinOnField: 'id',
-      joinQueryableBy: ['inAllMail', 'lastMessageReceivedTimestamp', 'lastMessageSentTimestamp', 'unread'],
-      itemClass: Category,
-    }),
+		categoriesType: Attributes.String({
+			modelKey: "categoriesType",
+		}),
 
-    categoriesType: Attributes.String({
-      modelKey: 'categoriesType',
-    }),
+		participants: Attributes.Collection({
+			queryable: true,
+			modelKey: "participants",
+			joinOnField: "email",
+			joinQueryableBy: ["lastMessageReceivedTimestamp"],
+			itemClass: Contact,
+		}),
 
-    participants: Attributes.Collection({
-      queryable: true,
-      modelKey: 'participants',
-      joinOnField: 'email',
-      joinQueryableBy: ['lastMessageReceivedTimestamp'],
-      itemClass: Contact,
-    }),
+		hasAttachments: Attributes.Boolean({
+			modelKey: "has_attachments",
+		}),
 
-    hasAttachments: Attributes.Boolean({
-      modelKey: 'has_attachments',
-    }),
+		lastMessageReceivedTimestamp: Attributes.DateTime({
+			queryable: true,
+			modelKey: "lastMessageReceivedTimestamp",
+			jsonKey: "last_message_received_timestamp",
+		}),
 
-    lastMessageReceivedTimestamp: Attributes.DateTime({
-      queryable: true,
-      modelKey: 'lastMessageReceivedTimestamp',
-      jsonKey: 'last_message_received_timestamp',
-    }),
+		lastMessageSentTimestamp: Attributes.DateTime({
+			queryable: true,
+			modelKey: "lastMessageSentTimestamp",
+			jsonKey: "last_message_sent_timestamp",
+		}),
 
-    lastMessageSentTimestamp: Attributes.DateTime({
-      queryable: true,
-      modelKey: 'lastMessageSentTimestamp',
-      jsonKey: 'last_message_sent_timestamp',
-    }),
+		inAllMail: Attributes.Boolean({
+			queryable: true,
+			modelKey: "inAllMail",
+			jsonKey: "in_all_mail",
+		}),
 
-    inAllMail: Attributes.Boolean({
-      queryable: true,
-      modelKey: 'inAllMail',
-      jsonKey: 'in_all_mail',
-    }),
+		isSearchIndexed: Attributes.Boolean({
+			queryable: true,
+			modelKey: "isSearchIndexed",
+			jsonKey: "is_search_indexed",
+			defaultValue: false,
+			loadFromColumn: true,
+		}),
 
-    isSearchIndexed: Attributes.Boolean({
-      queryable: true,
-      modelKey: 'isSearchIndexed',
-      jsonKey: 'is_search_indexed',
-      defaultValue: false,
-      loadFromColumn: true,
-    }),
+		// This corresponds to the rowid in the FTS table. We need to use the FTS
+		// rowid when updating and deleting items in the FTS table because otherwise
+		// these operations would be way too slow on large FTS tables.
+		searchIndexId: Attributes.Number({
+			modelKey: "searchIndexId",
+			jsonKey: "search_index_id",
+		}),
+	});
 
-    // This corresponds to the rowid in the FTS table. We need to use the FTS
-    // rowid when updating and deleting items in the FTS table because otherwise
-    // these operations would be way too slow on large FTS tables.
-    searchIndexId: Attributes.Number({
-      modelKey: 'searchIndexId',
-      jsonKey: 'search_index_id',
-    }),
-  })
+	static sortOrderAttribute = () => {
+		return Thread.attributes.lastMessageReceivedTimestamp;
+	};
 
-  static sortOrderAttribute = () => {
-    return Thread.attributes.lastMessageReceivedTimestamp
-  }
+	static naturalSortOrder = () => {
+		return Thread.sortOrderAttribute().descending();
+	};
 
-  static naturalSortOrder = () => {
-    return Thread.sortOrderAttribute().descending()
-  }
+	static additionalSQLiteConfig = {
+		setup: () => [
+			// ThreadCounts
+			"CREATE TABLE IF NOT EXISTS `ThreadCounts` (`category_id` TEXT PRIMARY KEY, `unread` INTEGER, `total` INTEGER)",
+			"CREATE UNIQUE INDEX IF NOT EXISTS ThreadCountsIndex ON `ThreadCounts` (category_id DESC)",
 
-  static additionalSQLiteConfig = {
-    setup: () => [
-      // ThreadCounts
-      'CREATE TABLE IF NOT EXISTS `ThreadCounts` (`category_id` TEXT PRIMARY KEY, `unread` INTEGER, `total` INTEGER)',
-      'CREATE UNIQUE INDEX IF NOT EXISTS ThreadCountsIndex ON `ThreadCounts` (category_id DESC)',
+			// ThreadContact
+			"CREATE INDEX IF NOT EXISTS ThreadContactDateIndex ON `ThreadContact` (last_message_received_timestamp DESC, value, id)",
 
-      // ThreadContact
-      'CREATE INDEX IF NOT EXISTS ThreadContactDateIndex ON `ThreadContact` (last_message_received_timestamp DESC, value, id)',
+			// ThreadCategory
+			"CREATE INDEX IF NOT EXISTS ThreadListCategoryIndex ON `ThreadCategory` (last_message_received_timestamp DESC, value, in_all_mail, unread, id)",
+			"CREATE INDEX IF NOT EXISTS ThreadListCategorySentIndex ON `ThreadCategory` (last_message_sent_timestamp DESC, value, in_all_mail, unread, id)",
 
-      // ThreadCategory
-      'CREATE INDEX IF NOT EXISTS ThreadListCategoryIndex ON `ThreadCategory` (last_message_received_timestamp DESC, value, in_all_mail, unread, id)',
-      'CREATE INDEX IF NOT EXISTS ThreadListCategorySentIndex ON `ThreadCategory` (last_message_sent_timestamp DESC, value, in_all_mail, unread, id)',
+			// Thread: General index
+			"CREATE INDEX IF NOT EXISTS ThreadDateIndex ON `Thread` (last_message_received_timestamp DESC)",
+			"CREATE INDEX IF NOT EXISTS ThreadClientIdIndex ON `Thread` (client_id)",
 
-      // Thread: General index
-      'CREATE INDEX IF NOT EXISTS ThreadDateIndex ON `Thread` (last_message_received_timestamp DESC)',
-      'CREATE INDEX IF NOT EXISTS ThreadClientIdIndex ON `Thread` (client_id)',
+			// Thread: Partial indexes for specific views
+			"CREATE INDEX IF NOT EXISTS ThreadUnreadIndex ON `Thread` (account_id, last_message_received_timestamp DESC) WHERE unread = 1 AND in_all_mail = 1",
+			"CREATE INDEX IF NOT EXISTS ThreadUnifiedUnreadIndex ON `Thread` (last_message_received_timestamp DESC) WHERE unread = 1 AND in_all_mail = 1",
 
-      // Thread: Partial indexes for specific views
-      'CREATE INDEX IF NOT EXISTS ThreadUnreadIndex ON `Thread` (account_id, last_message_received_timestamp DESC) WHERE unread = 1 AND in_all_mail = 1',
-      'CREATE INDEX IF NOT EXISTS ThreadUnifiedUnreadIndex ON `Thread` (last_message_received_timestamp DESC) WHERE unread = 1 AND in_all_mail = 1',
+			"DROP INDEX IF EXISTS `Thread`.ThreadStarIndex",
+			"CREATE INDEX IF NOT EXISTS ThreadStarredIndex ON `Thread` (account_id, last_message_received_timestamp DESC) WHERE starred = 1 AND in_all_mail = 1",
+			"CREATE INDEX IF NOT EXISTS ThreadUnifiedStarredIndex ON `Thread` (last_message_received_timestamp DESC) WHERE starred = 1 AND in_all_mail = 1",
 
-      'DROP INDEX IF EXISTS `Thread`.ThreadStarIndex',
-      'CREATE INDEX IF NOT EXISTS ThreadStarredIndex ON `Thread` (account_id, last_message_received_timestamp DESC) WHERE starred = 1 AND in_all_mail = 1',
-      'CREATE INDEX IF NOT EXISTS ThreadUnifiedStarredIndex ON `Thread` (last_message_received_timestamp DESC) WHERE starred = 1 AND in_all_mail = 1',
+			"CREATE INDEX IF NOT EXISTS ThreadIsSearchIndexedIndex ON `Thread` (is_search_indexed, id)",
+			"CREATE INDEX IF NOT EXISTS ThreadIsSearchIndexedLastMessageReceivedIndex ON `Thread` (is_search_indexed, last_message_received_timestamp)",
+		],
+	};
 
-      'CREATE INDEX IF NOT EXISTS ThreadIsSearchIndexedIndex ON `Thread` (is_search_indexed, id)',
-      'CREATE INDEX IF NOT EXISTS ThreadIsSearchIndexedLastMessageReceivedIndex ON `Thread` (is_search_indexed, last_message_received_timestamp)',
-    ],
-  }
+	static searchable = true;
 
-  static searchable = true
+	static searchFields = ["subject", "to_", "from_", "categories", "body"];
 
-  static searchFields = ['subject', 'to_', 'from_', 'categories', 'body']
+	async messages({ includeHidden } = {}) {
+		const messages = await DatabaseStore.findAll(Message)
+			.where({ threadId: this.id })
+			.include(Message.attributes.body);
+		if (!includeHidden) {
+			return messages.filter((message) => !message.isHidden());
+		}
+		return messages;
+	}
 
-  async messages({includeHidden} = {}) {
-    const messages = await DatabaseStore.findAll(Message)
-      .where({threadId: this.id})
-      .include(Message.attributes.body)
-    if (!includeHidden) {
-      return messages.filter(message => !message.isHidden())
-    }
-    return messages
-  }
+	/** Computes the plaintext version of ALL messages.
+	 * WARNING: This method is VERY expensive.
+	 * Parsing a thread with ~50 messages took ~2-3 seconds!
+	 */
+	computePlainText() {
+		return Promise.map(this.messages(), (message) => {
+			return new Promise((resolve) => {
+				// Add a defer tick so we don't COMPLETELY hang the thread.
+				setTimeout(() => {
+					resolve(
+						`${message.replyAttributionLine()}\n\n${message.computePlainText()}`,
+					);
+				}, 1);
+			});
+		}).then((plainTextBodies = []) => {
+			const msgDivider =
+				"\n\n--------------------------------------------------\n";
+			return plainTextBodies.join(msgDivider);
+		});
+	}
 
-  /** Computes the plaintext version of ALL messages.
-   * WARNING: This method is VERY expensive.
-   * Parsing a thread with ~50 messages took ~2-3 seconds!
-   */
-  computePlainText() {
-    return Promise.map(this.messages(), (message) => {
-      return new Promise((resolve) => {
-        // Add a defer tick so we don't COMPLETELY hang the thread.
-        setTimeout(() => {
-          resolve(`${message.replyAttributionLine()}\n\n${message.computePlainText()}`)
-        }, 1)
-      })
-    }).then((plainTextBodies = []) => {
-      const msgDivider = "\n\n--------------------------------------------------\n"
-      return plainTextBodies.join(msgDivider)
-    })
-  }
+	get labels() {
+		return this.categories;
+	}
 
-  get labels() {
-    return this.categories;
-  }
+	set labels(labels) {
+		this.categories = labels;
+	}
 
-  set labels(labels) {
-    this.categories = labels;
-  }
+	get folders() {
+		return this.categories;
+	}
 
-  get folders() {
-    return this.categories;
-  }
+	set folders(folders) {
+		this.categories = folders;
+	}
 
-  set folders(folders) {
-    this.categories = folders;
-  }
+	get inAllMail() {
+		if (this.categoriesType === "labels") {
+			const inAllMail = _.any(this.categories, (cat) => cat.name === "all");
+			if (inAllMail) {
+				return true;
+			}
+			const inTrashOrSpam = _.any(
+				this.categories,
+				(cat) => cat.name === "trash" || cat.name === "spam",
+			);
+			if (!inTrashOrSpam) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	}
 
-  get inAllMail() {
-    if (this.categoriesType === 'labels') {
-      const inAllMail = _.any(this.categories, cat => cat.name === 'all')
-      if (inAllMail) {
-        return true;
-      }
-      const inTrashOrSpam = _.any(this.categories, cat => cat.name === 'trash' || cat.name === 'spam')
-      if (!inTrashOrSpam) {
-        return true;
-      }
-      return false
-    }
-    return true
-  }
+	/**
+	 * In the `clone` case, there are `categories` set, but no `folders` nor
+	 * `labels`
+	 *
+	 * When loading data from the API, there are `folders` AND `labels` but
+	 * no `categories` yet.
+	 */
+	fromJSON(json) {
+		super.fromJSON(json);
 
-  /**
-   * In the `clone` case, there are `categories` set, but no `folders` nor
-   * `labels`
-   *
-   * When loading data from the API, there are `folders` AND `labels` but
-   * no `categories` yet.
-   */
-  fromJSON(json) {
-    super.fromJSON(json)
+		if (json.folders) {
+			this.categoriesType = "folders";
+			this.categories = Thread.attributes.categories.fromJSON(json.folders);
+		}
 
-    if (json.folders) {
-      this.categoriesType = 'folders'
-      this.categories = Thread.attributes.categories.fromJSON(json.folders)
-    }
+		if (json.labels && json.labels.length > 0) {
+			this.categoriesType = "labels";
+			if (!this.categories) this.categories = [];
+			this.categories = this.categories.concat(
+				Thread.attributes.categories.fromJSON(json.labels),
+			);
+		}
 
-    if (json.labels && json.labels.length > 0) {
-      this.categoriesType = 'labels'
-      if (!this.categories) this.categories = [];
-      this.categories = this.categories.concat(Thread.attributes.categories.fromJSON(json.labels))
-    }
+		["participants"].forEach((attr) => {
+			const value = this[attr];
+			if (!(value && value instanceof Array)) {
+				return;
+			}
+			value.forEach((item) => {
+				item.accountId = this.accountId;
+			});
+		});
 
-    ['participants'].forEach((attr) => {
-      const value = this[attr]
-      if (!(value && value instanceof Array)) {
-        return;
-      }
-      value.forEach((item) => {
-        item.accountId = this.accountId
-      })
-    })
+		return this;
+	}
 
-    return this
-  }
+	/**
+	 * Public: Returns true if the thread has a {Category} with the given
+	 * name. Note, only catgories of type `Category.Types.Standard` have valid
+	 * `names`
+	 * - `id` A {String} {Category} name
+	 */
+	categoryNamed(name) {
+		return _.findWhere(this.categories, { name });
+	}
 
-  /**
-  * Public: Returns true if the thread has a {Category} with the given
-  * name. Note, only catgories of type `Category.Types.Standard` have valid
-  * `names`
-  * - `id` A {String} {Category} name
-  */
-  categoryNamed(name) {
-    return _.findWhere(this.categories, {name})
-  }
+	sortedCategories() {
+		if (!this.categories) {
+			return [];
+		}
+		let out = [];
+		const isImportant = (l) => l.name === "important";
+		const isStandardCategory = (l) => l.isStandardCategory();
+		const isUnhiddenStandardLabel = (l) =>
+			!isImportant(l) && isStandardCategory(l) && !l.isHiddenCategory();
 
-  sortedCategories() {
-    if (!this.categories) {
-      return []
-    }
-    let out = []
-    const isImportant = (l) => l.name === 'important'
-    const isStandardCategory = (l) => l.isStandardCategory()
-    const isUnhiddenStandardLabel = (l) => (
-      !isImportant(l) &&
-      isStandardCategory(l) &&
-      !(l.isHiddenCategory())
-    )
+		const importantLabel = _.find(this.categories, isImportant);
+		if (importantLabel) {
+			out = out.concat(importantLabel);
+		}
 
-    const importantLabel = _.find(this.categories, isImportant)
-    if (importantLabel) {
-      out = out.concat(importantLabel)
-    }
+		const standardLabels = _.filter(this.categories, isUnhiddenStandardLabel);
+		if (standardLabels.length > 0) {
+			out = out.concat(standardLabels);
+		}
 
-    const standardLabels = _.filter(this.categories, isUnhiddenStandardLabel)
-    if (standardLabels.length > 0) {
-      out = out.concat(standardLabels)
-    }
-
-    const userLabels = _.filter(this.categories, (l) => (
-      !isImportant(l) && !isStandardCategory(l)
-    ))
-    if (userLabels.length > 0) {
-      out = out.concat(_.sortBy(userLabels, 'displayName'))
-    }
-    return out
-  }
+		const userLabels = _.filter(
+			this.categories,
+			(l) => !isImportant(l) && !isStandardCategory(l),
+		);
+		if (userLabels.length > 0) {
+			out = out.concat(_.sortBy(userLabels, "displayName"));
+		}
+		return out;
+	}
 }
 
 Object.defineProperty(Thread.attributes, "labels", {
-  enumerable: false,
-  get: () => Thread.attributes.categories,
-})
+	enumerable: false,
+	get: () => Thread.attributes.categories,
+});
 
 Object.defineProperty(Thread.attributes, "folders", {
-  enumerable: false,
-  get: () => Thread.attributes.categories,
-})
+	enumerable: false,
+	get: () => Thread.attributes.categories,
+});
 
 export default Thread;

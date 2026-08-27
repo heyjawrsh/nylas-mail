@@ -1,9 +1,9 @@
-import Actions from './actions'
-import {APIError} from './errors'
-import DatabaseStore from './stores/database-store'
-import NylasAPIRequest from './nylas-api-request'
-import * as NylasAPIHelpers from './nylas-api-helpers'
-import ProviderSyncbackRequest from './models/provider-syncback-request'
+import Actions from "./actions";
+import { APIError } from "./errors";
+import DatabaseStore from "./stores/database-store";
+import NylasAPIRequest from "./nylas-api-request";
+import * as NylasAPIHelpers from "./nylas-api-helpers";
+import ProviderSyncbackRequest from "./models/provider-syncback-request";
 
 /**
  * This API request is meant to be used for requests that create a
@@ -17,72 +17,82 @@ import ProviderSyncbackRequest from './models/provider-syncback-request'
  * listening to deltas for ProviderSyncbackRequests
  */
 class SyncbackTaskAPIRequest {
+	static listenForRequest(syncbackRequestId) {
+		return new Promise((resolve, reject) => {
+			const unsubscribe = Actions.didReceiveSyncbackRequestDeltas.listen(
+				(syncbackRequests) => {
+					const failed = syncbackRequests.find(
+						(r) => r.id === syncbackRequestId && r.status === "FAILED",
+					);
+					const succeeded = syncbackRequests.find(
+						(r) => r.id === syncbackRequestId && r.status === "SUCCEEDED",
+					);
+					if (failed) {
+						unsubscribe();
+						// TODO fix/standardize this error format with K2
+						const error = new APIError({
+							error: failed.error,
+							body: {
+								message: failed.error.message,
+								data: failed.error.data,
+							},
+							statusCode: failed.error.statusCode || 500,
+						});
+						reject(error);
+					} else if (succeeded) {
+						unsubscribe();
+						resolve(succeeded.responseJSON || {});
+					}
+				},
+			);
+		});
+	}
 
-  static listenForRequest(syncbackRequestId) {
-    return new Promise((resolve, reject) => {
-      const unsubscribe = Actions.didReceiveSyncbackRequestDeltas
-      .listen((syncbackRequests) => {
-        const failed = syncbackRequests.find(r => r.id === syncbackRequestId && r.status === 'FAILED')
-        const succeeded = syncbackRequests.find(r => r.id === syncbackRequestId && r.status === 'SUCCEEDED')
-        if (failed) {
-          unsubscribe()
-          // TODO fix/standardize this error format with K2
-          const error = new APIError({
-            error: failed.error,
-            body: {
-              message: failed.error.message,
-              data: failed.error.data,
-            },
-            statusCode: failed.error.statusCode || 500,
-          })
-          reject(error)
-        } else if (succeeded) {
-          unsubscribe()
-          resolve(succeeded.responseJSON || {})
-        }
-      });
-    })
-  }
+	static waitForQueuedRequest(syncbackRequestId) {
+		return new Promise(async (resolve, reject) => {
+			const syncbackRequest = await DatabaseStore.find(
+				ProviderSyncbackRequest,
+				syncbackRequestId,
+			);
 
-  static waitForQueuedRequest(syncbackRequestId) {
-    return new Promise(async (resolve, reject) => {
-      const syncbackRequest = await DatabaseStore.find(ProviderSyncbackRequest, syncbackRequestId);
+			if (syncbackRequest) {
+				if (syncbackRequest.status === "SUCCEEDED") {
+					return resolve(syncbackRequest.responseJSON);
+				} else if (syncbackRequest.status === "FAILED") {
+					return reject(syncbackRequest.error);
+				} // else continue so we listen for it on the delta
+			}
 
-      if (syncbackRequest) {
-        if (syncbackRequest.status === "SUCCEEDED") {
-          return resolve(syncbackRequest.responseJSON)
-        } else if (syncbackRequest.status === "FAILED") {
-          return reject(syncbackRequest.error)
-        } // else continue so we listen for it on the delta
-      }
+			return SyncbackTaskAPIRequest.listenForRequest(syncbackRequestId)
+				.then(resolve)
+				.catch(reject);
+		});
+	}
 
-      return SyncbackTaskAPIRequest.listenForRequest(syncbackRequestId)
-      .then(resolve).catch(reject)
-    })
-  }
+	constructor({ api, options }) {
+		this._request = new NylasAPIRequest({ api, options });
+		this._onSyncbackRequestCreated =
+			options.onSyncbackRequestCreated || (() => {});
+	}
 
-  constructor({api, options}) {
-    this._request = new NylasAPIRequest({api, options})
-    this._onSyncbackRequestCreated = options.onSyncbackRequestCreated || (() => {})
-  }
-
-  run() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const syncbackRequest = await this._request.run();
-        await NylasAPIHelpers.handleModelResponse(syncbackRequest)
-        await this._onSyncbackRequestCreated(syncbackRequest)
-        const syncbackRequestId = syncbackRequest.id
-        SyncbackTaskAPIRequest.listenForRequest(syncbackRequestId)
-        .then(resolve).catch(reject)
-      } catch (err) {
-        if (err.response && err.response.statusCode === 404) {
-          NylasAPIHelpers.handleModel404(this._request.options.url)
-        }
-        reject(err)
-      }
-    })
-  }
+	run() {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const syncbackRequest = await this._request.run();
+				await NylasAPIHelpers.handleModelResponse(syncbackRequest);
+				await this._onSyncbackRequestCreated(syncbackRequest);
+				const syncbackRequestId = syncbackRequest.id;
+				SyncbackTaskAPIRequest.listenForRequest(syncbackRequestId)
+					.then(resolve)
+					.catch(reject);
+			} catch (err) {
+				if (err.response && err.response.statusCode === 404) {
+					NylasAPIHelpers.handleModel404(this._request.options.url);
+				}
+				reject(err);
+			}
+		});
+	}
 }
 
-export default SyncbackTaskAPIRequest
+export default SyncbackTaskAPIRequest;

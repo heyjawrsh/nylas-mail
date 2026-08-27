@@ -1,8 +1,8 @@
-import _ from 'underscore'
-import React from 'react'
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom'
-import classNames from 'classnames'
+import _ from "underscore";
+import React from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
 
 /*
 Public: Easily respond to keyboard shortcuts
@@ -83,186 +83,196 @@ In `my-package/keymaps/my-package.cson`:
 ```
 */
 export default class KeyCommandsRegion extends React.Component {
-  static displayName = "KeyCommandsRegion";
+	static displayName = "KeyCommandsRegion";
 
-  static propTypes = {
-    className: PropTypes.string,
-    localHandlers: PropTypes.object,
-    globalHandlers: PropTypes.object,
-    globalMenuItems: PropTypes.array,
-    onFocusIn: PropTypes.func,
-    onFocusOut: PropTypes.func,
-  };
+	static propTypes = {
+		className: PropTypes.string,
+		localHandlers: PropTypes.object,
+		globalHandlers: PropTypes.object,
+		globalMenuItems: PropTypes.array,
+		onFocusIn: PropTypes.func,
+		onFocusOut: PropTypes.func,
+	};
 
-  static defaultProps = {
-    className: "",
-    localHandlers: null,
-    globalHandlers: null,
-    globalMenuItems: null,
-    onFocusIn: () => {},
-    onFocusOut: () => {},
-  };
+	static defaultProps = {
+		className: "",
+		localHandlers: null,
+		globalHandlers: null,
+		globalMenuItems: null,
+		onFocusIn: () => {},
+		onFocusOut: () => {},
+	};
 
-  constructor(props) {
-    super(props);
-    this._lostFocusToElement = null
-    this.state = {
-      focused: false,
-    };
-  }
+	constructor(props) {
+		super(props);
+		this._lostFocusToElement = null;
+		this.state = {
+			focused: false,
+		};
+	}
 
-  componentDidMount() {
-    this._setupListeners(this.props);
-    if (this.props.globalMenuItems) {
-      this._menuDisposable = NylasEnv.menu.add(this.props.globalMenuItems);
-    }
-  }
+	componentDidMount() {
+		this._setupListeners(this.props);
+		if (this.props.globalMenuItems) {
+			this._menuDisposable = NylasEnv.menu.add(this.props.globalMenuItems);
+		}
+	}
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    this._unmountListeners()
-    this._setupListeners(newProps)
+	UNSAFE_componentWillReceiveProps(newProps) {
+		this._unmountListeners();
+		this._setupListeners(newProps);
 
-    // Updating menus in particular is expensive, so avoid teardown / re-add if identical
-    if (!_.isEqual(newProps.globalMenuItems, this.props.globalMenuItems)) {
-      if (this._menuDisposable) {
-        this._menuDisposable.dispose();
-      }
-      this._menuDisposable = NylasEnv.menu.add(newProps.globalMenuItems);
-    }
-  }
+		// Updating menus in particular is expensive, so avoid teardown / re-add if identical
+		if (!_.isEqual(newProps.globalMenuItems, this.props.globalMenuItems)) {
+			if (this._menuDisposable) {
+				this._menuDisposable.dispose();
+			}
+			this._menuDisposable = NylasEnv.menu.add(newProps.globalMenuItems);
+		}
+	}
 
-  componentWillUnmount() {
-    this._losingFocusToElement = null;
-    this._unmountListeners();
-    if (this._menuDisposable) {
-      this._menuDisposable.dispose();
-    }
-    this._menuDisposable = null;
-  }
+	componentWillUnmount() {
+		this._losingFocusToElement = null;
+		this._unmountListeners();
+		if (this._menuDisposable) {
+			this._menuDisposable.dispose();
+		}
+		this._menuDisposable = null;
+	}
 
-  // When the {KeymapManager} finds a valid keymap in a `.cson` file, it
-  // will create a CustomEvent with the command name as its type. That
-  // custom event will be fired at the originating target and propogate
-  // updwards until it reaches the root window level.
+	// When the {KeymapManager} finds a valid keymap in a `.cson` file, it
+	// will create a CustomEvent with the command name as its type. That
+	// custom event will be fired at the originating target and propogate
+	// updwards until it reaches the root window level.
 
-    // An event is scoped in the `.cson` files. Since we use that to
-  // determine which keymappings can fire a particular command in a
-  // particular scope, we simply need to listen at the root window level
-  // here for all commands coming in.
-  _setupListeners(props) {
-    const $el = ReactDOM.findDOMNode(this);
-    $el.addEventListener('focusin', this._onFocusIn);
-    $el.addEventListener('focusout', this._onFocusOut);
+	// An event is scoped in the `.cson` files. Since we use that to
+	// determine which keymappings can fire a particular command in a
+	// particular scope, we simply need to listen at the root window level
+	// here for all commands coming in.
+	_setupListeners(props) {
+		const $el = ReactDOM.findDOMNode(this);
+		$el.addEventListener("focusin", this._onFocusIn);
+		$el.addEventListener("focusout", this._onFocusOut);
 
-    if (props.globalHandlers) {
-      this._globalDisposable = NylasEnv.commands.add(document.body, props.globalHandlers);
-    }
-    if (props.localHandlers) {
-      this._localDisposable = NylasEnv.commands.add($el, props.localHandlers);
-    }
+		if (props.globalHandlers) {
+			this._globalDisposable = NylasEnv.commands.add(
+				document.body,
+				props.globalHandlers,
+			);
+		}
+		if (props.localHandlers) {
+			this._localDisposable = NylasEnv.commands.add($el, props.localHandlers);
+		}
 
-    window.addEventListener('browser-window-blur', this._onWindowBlur);
-  }
+		window.addEventListener("browser-window-blur", this._onWindowBlur);
+	}
 
-  _unmountListeners() {
-    if (this._globalDisposable) {
-      this._globalDisposable.dispose();
-      this._globalDisposable = null;
-    }
-    if (this._localDisposable) {
-      this._localDisposable.dispose();
-      this._localDisposable = null;
-    }
-    const $el = ReactDOM.findDOMNode(this);
-    $el.removeEventListener('focusin', this._onFocusIn);
-    $el.removeEventListener('focusout', this._onDidFocusOut);
-    window.removeEventListener('browser-window-blur', this._onWindowBlur);
-    this._goingout = false;
-  }
+	_unmountListeners() {
+		if (this._globalDisposable) {
+			this._globalDisposable.dispose();
+			this._globalDisposable = null;
+		}
+		if (this._localDisposable) {
+			this._localDisposable.dispose();
+			this._localDisposable = null;
+		}
+		const $el = ReactDOM.findDOMNode(this);
+		$el.removeEventListener("focusin", this._onFocusIn);
+		$el.removeEventListener("focusout", this._onDidFocusOut);
+		window.removeEventListener("browser-window-blur", this._onWindowBlur);
+		this._goingout = false;
+	}
 
-  _onWindowBlur = () => {
-    this.setState({focused: false});
-  }
+	_onWindowBlur = () => {
+		this.setState({ focused: false });
+	};
 
-  _onFocusIn = (event) => {
-    this._lastFocusElement = event.target;
-    this._losingFocusToElement = null;
-    if (this.state.focused === false) {
-      this.props.onFocusIn(event);
-    }
-    this.setState({focused: true});
-  }
+	_onFocusIn = (event) => {
+		this._lastFocusElement = event.target;
+		this._losingFocusToElement = null;
+		if (this.state.focused === false) {
+			this.props.onFocusIn(event);
+		}
+		this.setState({ focused: true });
+	};
 
-  _onFocusOut = (event) => {
-    this._lastFocusElement = event.target;
-    this._losingFocusToElement = event.relatedTarget;
+	_onFocusOut = (event) => {
+		this._lastFocusElement = event.target;
+		this._losingFocusToElement = event.relatedTarget;
 
-    // Focus could be lost for a moment and programatically restored. To support
-    // old machines with slow CPUs, it's important we wait N frames rather than X
-    // msec to see if focus is restored before declaring it "out" for good.
-    const attempt = () => {
-      if (!this._losingFocusToElement) {
-        this._losingFocusFrames = 0;
-        return;
-      }
+		// Focus could be lost for a moment and programatically restored. To support
+		// old machines with slow CPUs, it's important we wait N frames rather than X
+		// msec to see if focus is restored before declaring it "out" for good.
+		const attempt = () => {
+			if (!this._losingFocusToElement) {
+				this._losingFocusFrames = 0;
+				return;
+			}
 
-      this._losingFocusFrames -= 1;
-      if (this._losingFocusFrames === 0) {
-        this._onDefinitelyFocusedOut();
-      } else {
-        window.requestAnimationFrame(attempt);
-      }
-    };
+			this._losingFocusFrames -= 1;
+			if (this._losingFocusFrames === 0) {
+				this._onDefinitelyFocusedOut();
+			} else {
+				window.requestAnimationFrame(attempt);
+			}
+		};
 
-    if (!this._losingFocusFrames) {
-      window.requestAnimationFrame(attempt);
-    }
-    this._losingFocusFrames = 10; // at 60fps, roughly 150ms
-  }
+		if (!this._losingFocusFrames) {
+			window.requestAnimationFrame(attempt);
+		}
+		this._losingFocusFrames = 10; // at 60fps, roughly 150ms
+	};
 
-  _onDefinitelyFocusedOut = () => {
-    if (!this._losingFocusToElement) {
-      return;
-    }
-    if (!this.state.focused) {
-      return;
-    }
+	_onDefinitelyFocusedOut = () => {
+		if (!this._losingFocusToElement) {
+			return;
+		}
+		if (!this.state.focused) {
+			return;
+		}
 
-    const sel = document.getSelection();
-    const activeEl = document.activeElement;
+		const sel = document.getSelection();
+		const activeEl = document.activeElement;
 
-    // This happens when component that used to have the focus is
-    // unmounted. An example is the url input field of the
-    // FloatingToolbar in the Composer's Contenteditable
-    if (ReactDOM.findDOMNode(this).contains(activeEl)) {
-      return;
-    }
+		// This happens when component that used to have the focus is
+		// unmounted. An example is the url input field of the
+		// FloatingToolbar in the Composer's Contenteditable
+		if (ReactDOM.findDOMNode(this).contains(activeEl)) {
+			return;
+		}
 
-    // In some scenarios, focus has left an element but it is still /selected/.
-    // This can be really confusing, so we guard against it here.
+		// In some scenarios, focus has left an element but it is still /selected/.
+		// This can be really confusing, so we guard against it here.
 
-    // To Repro: From the composer body, click the thread list column.
-    // Then keep typing. Notice how the blurred body still accepts the input.
-    if (sel && sel.focusNode && !activeEl.parentElement.contains(sel.focusNode)) {
-      document.getSelection().empty();
-    }
+		// To Repro: From the composer body, click the thread list column.
+		// Then keep typing. Notice how the blurred body still accepts the input.
+		if (
+			sel &&
+			sel.focusNode &&
+			!activeEl.parentElement.contains(sel.focusNode)
+		) {
+			document.getSelection().empty();
+		}
 
-    this.props.onFocusOut(this._lastFocusElement);
-    this.setState({focused: false});
-    this._losingFocusToElement = null;
-  }
+		this.props.onFocusOut(this._lastFocusElement);
+		this.setState({ focused: false });
+		this._losingFocusToElement = null;
+	};
 
-  render() {
-    const classname = classNames({
-      'key-commands-region': true,
-      'focused': this.state.focused,
-    });
-    const otherProps = _.omit(this.props, Object.keys(this.constructor.propTypes));
+	render() {
+		const classname = classNames({
+			"key-commands-region": true,
+			focused: this.state.focused,
+		});
+		const otherProps = _.omit(
+			this.props,
+			Object.keys(this.constructor.propTypes),
+		);
 
-    return (
-      <div className={`${classname} ${this.props.className}`} {...otherProps}>
-        {this.props.children}
-      </div>
-    );
-  }
+		return (
+			<div className={`${classname} ${this.props.className}`} {...otherProps}>
+				{this.props.children}
+			</div>
+		);
+	}
 }

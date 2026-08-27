@@ -7,111 +7,124 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let KeybaseUser;
-const {Utils, React, Actions} = require('nylas-exports');
-const {ParticipantsTextField} = require('nylas-component-kit');
-const PGPKeyStore = require('./pgp-key-store');
-const EmailPopover = require('./email-popover');
-const Identity = require('./identity');
-const kb = require('./keybase');
-const _ = require('underscore');
+const { Utils, React, Actions } = require("nylas-exports");
+const { ParticipantsTextField } = require("nylas-component-kit");
+const PGPKeyStore = require("./pgp-key-store");
+const EmailPopover = require("./email-popover");
+const Identity = require("./identity");
+const kb = require("./keybase");
+const _ = require("underscore");
 
-module.exports =
-(KeybaseUser = (function() {
-  KeybaseUser = class KeybaseUser extends React.Component {
-    static initClass() {
-      this.displayName = 'KeybaseUserProfile';
-  
-      this.propTypes = {
-        profile: PropTypes.instanceOf(Identity).isRequired,
-        actionButton: PropTypes.node,
-        displayEmailList: PropTypes.bool
-      };
-  
-      this.defaultProps = {
-        actionButton: false,
-        displayEmailList: true
-      };
-    }
+module.exports = KeybaseUser = (() => {
+	KeybaseUser = class KeybaseUser extends React.Component {
+		static initClass() {
+			KeybaseUser.displayName = "KeybaseUserProfile";
 
-    constructor(props) {
-      this._addEmail = this._addEmail.bind(this);
-      this._addEmailClick = this._addEmailClick.bind(this);
-      this._popoverDone = this._popoverDone.bind(this);
-      this._removeEmail = this._removeEmail.bind(this);
-      this.render = this.render.bind(this);
-      super(props);
-    }
+			KeybaseUser.propTypes = {
+				profile: PropTypes.instanceOf(Identity).isRequired,
+				actionButton: PropTypes.node,
+				displayEmailList: PropTypes.bool,
+			};
 
-    componentDidMount() {
-      return PGPKeyStore.getKeybaseData(this.props.profile);
-    }
+			KeybaseUser.defaultProps = {
+				actionButton: false,
+				displayEmailList: true,
+			};
+		}
 
-    _addEmail(email) {
-      return PGPKeyStore.addAddressToKey(this.props.profile, email);
-    }
+		constructor(props) {
+			this._addEmail = this._addEmail.bind(this);
+			this._addEmailClick = this._addEmailClick.bind(this);
+			this._popoverDone = this._popoverDone.bind(this);
+			this._removeEmail = this._removeEmail.bind(this);
+			this.render = this.render.bind(this);
+			super(props);
+		}
 
-    _addEmailClick(event) {
-      const popoverTarget = event.target.getBoundingClientRect();
+		componentDidMount() {
+			return PGPKeyStore.getKeybaseData(this.props.profile);
+		}
 
-      return Actions.openPopover(
-        <EmailPopover profile={this.props.profile} onPopoverDone={ this._popoverDone } />,
-        {originRect: popoverTarget, direction: 'left'}
-      );
-    }
+		_addEmail(email) {
+			return PGPKeyStore.addAddressToKey(this.props.profile, email);
+		}
 
-    _popoverDone(addresses, identity) {
-      if (addresses.length < 1) {
-        // no email addresses added, noop
-        return;
-      } else {
-        return _.each(addresses, address => {
-          return this._addEmail(address);
-      });
-      }
-    }
+		_addEmailClick(event) {
+			const popoverTarget = event.target.getBoundingClientRect();
 
-    _removeEmail(email) {
-      return PGPKeyStore.removeAddressFromKey(this.props.profile, email);
-    }
+			return Actions.openPopover(
+				<EmailPopover
+					profile={this.props.profile}
+					onPopoverDone={this._popoverDone}
+				/>,
+				{ originRect: popoverTarget, direction: "left" },
+			);
+		}
 
-    render() {
-      let abv, bgColor, hue, picture;
-      const {profile} = this.props;
+		_popoverDone(addresses, identity) {
+			if (addresses.length < 1) {
+				// no email addresses added, noop
+				return;
+			} else {
+				return _.each(addresses, (address) => {
+					return this._addEmail(address);
+				});
+			}
+		}
 
-      let keybaseDetails = <div className="details"></div>;
-      if (profile.keybase_profile != null) {
-        let fullname, keybase_string, username;
-        const keybase = profile.keybase_profile;
+		_removeEmail(email) {
+			return PGPKeyStore.removeAddressFromKey(this.props.profile, email);
+		}
 
-        // profile picture
-        if (keybase.thumbnail != null) {
-          picture = <img className="user-picture" src={ keybase.thumbnail }/>;
-        } else {
-          hue = Utils.hueForString("Keybase");
-          bgColor = `hsl(${hue}, 50%, 45%)`;
-          abv = "K";
-          picture = <div className="default-profile-image" style={{backgroundColor: bgColor}}>{abv}</div>;
-        }
+		render() {
+			let abv, bgColor, hue, picture;
+			const { profile } = this.props;
 
-        // full name
-        if ((keybase.components.full_name != null ? keybase.components.full_name.val : undefined) != null) {
-          fullname = keybase.components.full_name.val;
-        } else {
-          fullname = username;
-          username = false;
-        }
+			let keybaseDetails = <div className="details"></div>;
+			if (profile.keybase_profile != null) {
+				let fullname, keybase_string, username;
+				const keybase = profile.keybase_profile;
 
-        // link to keybase profile
-        const keybase_url = `keybase.io/${keybase.components.username.val}`;
-        if (keybase_url.length > 25) {
-          keybase_string = keybase_url.slice(0, 23).concat('...');
-        } else {
-          keybase_string = keybase_url;
-        }
-        username = <a href={`https://${keybase_url}`}>{keybase_string}</a>;
+				// profile picture
+				if (keybase.thumbnail != null) {
+					picture = <img className="user-picture" src={keybase.thumbnail} />;
+				} else {
+					hue = Utils.hueForString("Keybase");
+					bgColor = `hsl(${hue}, 50%, 45%)`;
+					abv = "K";
+					picture = (
+						<div
+							className="default-profile-image"
+							style={{ backgroundColor: bgColor }}
+						>
+							{abv}
+						</div>
+					);
+				}
 
-        // TODO: potentially display confirmation on keybase-user objects
-        /*
+				// full name
+				if (
+					(keybase.components.full_name != null
+						? keybase.components.full_name.val
+						: undefined) != null
+				) {
+					fullname = keybase.components.full_name.val;
+				} else {
+					fullname = username;
+					username = false;
+				}
+
+				// link to keybase profile
+				const keybase_url = `keybase.io/${keybase.components.username.val}`;
+				if (keybase_url.length > 25) {
+					keybase_string = keybase_url.slice(0, 23).concat("...");
+				} else {
+					keybase_string = keybase_url;
+				}
+				username = <a href={`https://${keybase_url}`}>{keybase_string}</a>;
+
+				// TODO: potentially display confirmation on keybase-user objects
+				/*
         possible_profiles = ["twitter", "github", "coinbase"]
         profiles = _.map(possible_profiles, (possible) =>
           if keybase.components[possible]?.val?
@@ -125,51 +138,71 @@ module.exports =
         profileList = (<span>{ profiles }</span>)
         */
 
-        keybaseDetails = (<div className="details">
-        <div className="profile-name">
-        { fullname }
-        </div>
-        <div className="profile-username">
-          { username }
-        </div>
-      </div>);
-      } else {
-        // if no keybase profile, default image is based on email address
-        hue = Utils.hueForString(this.props.profile.addresses[0]);
-        bgColor = `hsl(${hue}, 50%, 45%)`;
-        abv = this.props.profile.addresses[0][0].toUpperCase();
-        picture = <div className="default-profile-image" style={{backgroundColor: bgColor}}>{abv}</div>;
-      }
+				keybaseDetails = (
+					<div className="details">
+						<div className="profile-name">{fullname}</div>
+						<div className="profile-username">{username}</div>
+					</div>
+				);
+			} else {
+				// if no keybase profile, default image is based on email address
+				hue = Utils.hueForString(this.props.profile.addresses[0]);
+				bgColor = `hsl(${hue}, 50%, 45%)`;
+				abv = this.props.profile.addresses[0][0].toUpperCase();
+				picture = (
+					<div
+						className="default-profile-image"
+						style={{ backgroundColor: bgColor }}
+					>
+						{abv}
+					</div>
+				);
+			}
 
-      // email addresses
-      if ((profile.addresses != null ? profile.addresses.length : undefined) > 0) {
-        const emails = _.map(profile.addresses, email => {
-          // TODO make that remove button not terrible
-          return <li key={ email }>{ email } <small><a onClick={() => this._removeEmail(email) }>(X)</a></small></li>;
-      });
-        const emailList = (<ul> { emails }
-          <a ref="addEmail" onClick={ this._addEmailClick }>+ Add Email</a>
-          </ul>);
-      }
+			// email addresses
+			if (
+				(profile.addresses != null ? profile.addresses.length : undefined) > 0
+			) {
+				const emails = _.map(profile.addresses, (email) => {
+					// TODO make that remove button not terrible
+					return (
+						<li key={email}>
+							{email}{" "}
+							<small>
+								<a onClick={() => this._removeEmail(email)}>(X)</a>
+							</small>
+						</li>
+					);
+				});
+				const emailList = (
+					<ul>
+						{" "}
+						{emails}
+						<a ref="addEmail" onClick={this._addEmailClick}>
+							+ Add Email
+						</a>
+					</ul>
+				);
+			}
 
-      const emailListDiv = (<div className="email-list">
-        <ul>
-          { emailList }
-        </ul>
-      </div>);
+			const emailListDiv = (
+				<div className="email-list">
+					<ul>{emailList}</ul>
+				</div>
+			);
 
-      return <div className="keybase-profile">
-      <div className="profile-photo-wrap">
-        <div className="profile-photo">
-        { picture }
-        </div>
-      </div>
-      { keybaseDetails }
-      {this.props.displayEmailList ? emailListDiv : null}
-      { this.props.actionButton }
-    </div>;
-    }
-  };
-  KeybaseUser.initClass();
-  return KeybaseUser;
-})());
+			return (
+				<div className="keybase-profile">
+					<div className="profile-photo-wrap">
+						<div className="profile-photo">{picture}</div>
+					</div>
+					{keybaseDetails}
+					{this.props.displayEmailList ? emailListDiv : null}
+					{this.props.actionButton}
+				</div>
+			);
+		}
+	};
+	KeybaseUser.initClass();
+	return KeybaseUser;
+})();

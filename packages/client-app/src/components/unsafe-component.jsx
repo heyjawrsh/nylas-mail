@@ -6,10 +6,10 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const {Utils} = require('nylas-exports');
-const _ = require('underscore');
+const React = require("react");
+const ReactDOM = require("react-dom");
+const { Utils } = require("nylas-exports");
+const _ = require("underscore");
 
 /*
 Public: Renders a component provided via the `component` prop, and ensures that
@@ -34,130 +34,150 @@ class MyComponent extends React.Component
 Section: Component Kit
 */
 class UnsafeComponent extends React.Component {
-  constructor(...args) {
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.render = this.render.bind(this);
-    this.renderInjected = this.renderInjected.bind(this);
-    this.unmountInjected = this.unmountInjected.bind(this);
-    this.focus = this.focus.bind(this);
-    this.blur = this.blur.bind(this);
-    this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
-    super(...args);
-  }
+	constructor(...args) {
+		this.componentDidMount = this.componentDidMount.bind(this);
+		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
+		this.componentWillUnmount = this.componentWillUnmount.bind(this);
+		this.render = this.render.bind(this);
+		this.renderInjected = this.renderInjected.bind(this);
+		this.unmountInjected = this.unmountInjected.bind(this);
+		this.focus = this.focus.bind(this);
+		this.blur = this.blur.bind(this);
+		this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
+		super(...args);
+	}
 
-  static initClass() {
-    this.displayName = 'UnsafeComponent';
-  
-    /*
+	static initClass() {
+		UnsafeComponent.displayName = "UnsafeComponent";
+
+		/*
     Public: React `props` supported by UnsafeComponent:
   
      - `component` The {React.Component} to display. All other props will be
        passed on to this component.
     */
-    this.propTypes = {
-      component: PropTypes.func.isRequired,
-      onComponentDidRender: PropTypes.func
-    };
-  
-    this.defaultProps =
-      {onComponentDidRender() {}};
-  }
+		UnsafeComponent.propTypes = {
+			component: PropTypes.func.isRequired,
+			onComponentDidRender: PropTypes.func,
+		};
 
-  componentDidMount() {
-    return this.renderInjected();
-  }
+		UnsafeComponent.defaultProps = { onComponentDidRender() {} };
+	}
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !Utils.isEqualReact(nextProps, this.props) ||
-    !Utils.isEqualReact(nextState, this.state);
-  }
+	componentDidMount() {
+		return this.renderInjected();
+	}
 
-  componentDidUpdate() {
-    return this.renderInjected();
-  }
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			!Utils.isEqualReact(nextProps, this.props) ||
+			!Utils.isEqualReact(nextState, this.state)
+		);
+	}
 
-  componentWillUnmount() {
-    return this.unmountInjected();
-  }
+	componentDidUpdate() {
+		return this.renderInjected();
+	}
 
-  render() {
-    return React.createElement("div", {"name": "unsafe-component-wrapper", "style": (this.props.component != null ? this.props.component.containerStyles : undefined)});
-  }
+	componentWillUnmount() {
+		return this.unmountInjected();
+	}
 
-  renderInjected() {
-    let props;
-    const node = ReactDOM.findDOMNode(this);
-    let element = null;
-    try {
-      props = Utils.fastOmit(this.props, Object.keys(this.constructor.propTypes));
-      const Component = this.props.component;
-      element = React.createElement(Component, Object.assign({"key": (name)}, props ));
-      return this.injected = ReactDOM.render(element, node, this.props.onComponentDidRender);
-    } catch (err) {
-      if (NylasEnv.inDevMode()) {
-        let {
-          stack
-        } = err;
-        let stackEnd = stack.indexOf('react/lib/');
-        if (stackEnd > 0) {
-          stackEnd = stack.lastIndexOf('\n', stackEnd);
-          stack = stack.substr(0,stackEnd);
-        }
+	render() {
+		return React.createElement("div", {
+			name: "unsafe-component-wrapper",
+			style:
+				this.props.component != null
+					? this.props.component.containerStyles
+					: undefined,
+		});
+	}
 
-        element = (
-          React.createElement("div", {"className": "unsafe-component-exception"},
-            React.createElement("div", {"className": "message"}, (this.props.component.displayName), " could not be displayed."),
-            React.createElement("div", {"className": "trace"}, (stack))
-          )
-        );
-      } else {
-        //# TODO
-        // Add some sort of notification code here that lets us know when
-        // production builds are having issues!
-        //
-        element = React.createElement("div", null);
+	renderInjected() {
+		let props;
+		const node = ReactDOM.findDOMNode(this);
+		let element = null;
+		try {
+			props = Utils.fastOmit(
+				this.props,
+				Object.keys(this.constructor.propTypes),
+			);
+			const Component = this.props.component;
+			element = React.createElement(
+				Component,
+				Object.assign({ key: name }, props),
+			);
+			return (this.injected = ReactDOM.render(
+				element,
+				node,
+				this.props.onComponentDidRender,
+			));
+		} catch (err) {
+			if (NylasEnv.inDevMode()) {
+				let { stack } = err;
+				let stackEnd = stack.indexOf("react/lib/");
+				if (stackEnd > 0) {
+					stackEnd = stack.lastIndexOf("\n", stackEnd);
+					stack = stack.substr(0, stackEnd);
+				}
 
-        this.injected = ReactDOM.render(element, node);
-      }
-      return NylasEnv.reportError(err);
-    }
-  }
+				element = React.createElement(
+					"div",
+					{ className: "unsafe-component-exception" },
+					React.createElement(
+						"div",
+						{ className: "message" },
+						this.props.component.displayName,
+						" could not be displayed.",
+					),
+					React.createElement("div", { className: "trace" }, stack),
+				);
+			} else {
+				//# TODO
+				// Add some sort of notification code here that lets us know when
+				// production builds are having issues!
+				//
+				element = React.createElement("div", null);
 
-  unmountInjected() {
-    try {
-      const node = ReactDOM.findDOMNode(this);
-      return ReactDOM.unmountComponentAtNode(node);
-    } catch (err) {}
-  }
+				this.injected = ReactDOM.render(element, node);
+			}
+			return NylasEnv.reportError(err);
+		}
+	}
 
-  focus() {
-    return this._runInjectedDOMMethod('focus');
-  }
+	unmountInjected() {
+		try {
+			const node = ReactDOM.findDOMNode(this);
+			return ReactDOM.unmountComponentAtNode(node);
+		} catch (err) {}
+	}
 
-  blur() {
-    return this._runInjectedDOMMethod('blur');
-  }
+	focus() {
+		return this._runInjectedDOMMethod("focus");
+	}
 
-  // Private: Attempts to run the DOM method, ie 'focus', on
-  // 1. Any implementation provided by the inner component
-  // 2. Any native implementation provided by the DOM
-  // 3. Ourselves, so that the method always has /some/ effect.
-  //
-  _runInjectedDOMMethod(method) {
-    let target = null;
-    if (this.injected && this.injected[method]) {
-      target = this.injected;
-    } else if (this.injected) {
-      target = ReactDOM.findDOMNode(this.injected);
-    } else {
-      target = ReactDOM.findDOMNode(this);
-    }
+	blur() {
+		return this._runInjectedDOMMethod("blur");
+	}
 
-    return (typeof target[method] === 'function' ? target[method]() : undefined);
-  }
+	// Private: Attempts to run the DOM method, ie 'focus', on
+	// 1. Any implementation provided by the inner component
+	// 2. Any native implementation provided by the DOM
+	// 3. Ourselves, so that the method always has /some/ effect.
+	//
+	_runInjectedDOMMethod(method) {
+		let target = null;
+		if (this.injected && this.injected[method]) {
+			target = this.injected;
+		} else if (this.injected) {
+			target = ReactDOM.findDOMNode(this.injected);
+		} else {
+			target = ReactDOM.findDOMNode(this);
+		}
+
+		return typeof target[method] === "function" ? target[method]() : undefined;
+	}
 }
 UnsafeComponent.initClass();
 

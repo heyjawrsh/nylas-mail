@@ -1,32 +1,32 @@
-import Joi from 'joi'
+import Joi from "joi";
 
 function replacer(key, value) {
-  // force remove any disallowed keys here
-  return value;
+	// force remove any disallowed keys here
+	return value;
 }
 
 function jsonSchema(modelName) {
-  const models = ['Metadata']
+	const models = ["Metadata"];
 
-  if (models.includes(modelName)) {
-    return Joi.object();
-  }
-  if (modelName === 'Error') {
-    return Joi.object().keys({
-      message: Joi.string(),
-      type: Joi.string(),
-    })
-  }
-  return null;
+	if (models.includes(modelName)) {
+		return Joi.object();
+	}
+	if (modelName === "Error") {
+		return Joi.object().keys({
+			message: Joi.string(),
+			type: Joi.string(),
+		});
+	}
+	return null;
 }
 
 function jsonStringify(models) {
-  return JSON.stringify(models, replacer, 2);
+	return JSON.stringify(models, replacer, 2);
 }
 
 const Serialization = {
-  jsonSchema,
-  jsonStringify,
-}
-export {jsonSchema, jsonStringify}
-export default Serialization
+	jsonSchema,
+	jsonStringify,
+};
+export { jsonSchema, jsonStringify };
+export default Serialization;

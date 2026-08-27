@@ -1,4 +1,4 @@
-import {DataTypes} from 'sequelize';
+import { DataTypes } from "sequelize";
 
 export function JSONColumn(fieldName, options = {}) {
 	return Object.assign({}, options, {

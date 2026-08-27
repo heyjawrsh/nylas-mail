@@ -1,10 +1,7 @@
-import {
-  ComponentRegistry,
-  ExtensionRegistry,
-} from 'nylas-exports';
+import { ComponentRegistry, ExtensionRegistry } from "nylas-exports";
 
-import AutoloadImagesExtension from './autoload-images-extension';
-import AutoloadImagesHeader from './autoload-images-header';
+import AutoloadImagesExtension from "./autoload-images-extension";
+import AutoloadImagesHeader from "./autoload-images-header";
 
 /*
 All packages must export a basic object that has at least the following 3
@@ -22,16 +19,16 @@ before N1 quits. This gets passed back into `activate` next time N1 boots
 up or your package is manually activated.
 */
 export function activate() {
-  // Register Message List Actions we provide globally
-  ExtensionRegistry.MessageView.register(AutoloadImagesExtension);
-  ComponentRegistry.register(AutoloadImagesHeader, {
-    role: 'message:BodyHeader',
-  });
+	// Register Message List Actions we provide globally
+	ExtensionRegistry.MessageView.register(AutoloadImagesExtension);
+	ComponentRegistry.register(AutoloadImagesHeader, {
+		role: "message:BodyHeader",
+	});
 }
 
 export function serialize() {}
 
 export function deactivate() {
-  ExtensionRegistry.MessageView.unregister(AutoloadImagesExtension);
-  ComponentRegistry.unregister(AutoloadImagesHeader);
+	ExtensionRegistry.MessageView.unregister(AutoloadImagesExtension);
+	ComponentRegistry.unregister(AutoloadImagesHeader);
 }

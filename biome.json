@@ -1,30 +1,37 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  },
-  "files": {
-    "includes": [
-      "**",
-      "!**/node_modules/**",
-      "!**/coverage/**",
-      "!**/spec/fixtures/**",
-      "!**/blog-posts/**",
-      "!**/screenshot/**"
-    ]
-  },
-  "assist": {
-    "actions": {
-      "source": {
-        "organizeImports": {
-          "level": "off"
-        }
-      }
-    }
-  },
-  "javascript": {
-    "globals": ["atom", "NylasEnv", "jasmine"]
-  }
+	"$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/coverage",
+			"!**/spec/fixtures",
+			"!**/blog-posts",
+			"!**/screenshot",
+			"!**/*.html",
+			"!**/*.min.css",
+			"!**/static",
+			"!**/docs_templates",
+			"!**/dot-nylas",
+			"!**/assets",
+			"!**/src/views"
+		]
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "off"
+				}
+			}
+		}
+	},
+	"javascript": {
+		"globals": ["atom", "NylasEnv", "jasmine"]
+	}
 }

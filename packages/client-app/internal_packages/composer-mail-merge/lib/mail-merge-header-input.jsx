@@ -1,68 +1,70 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {pickHTMLProps} from 'pick-react-known-prop'
-import MailMergeToken from './mail-merge-token'
-
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { pickHTMLProps } from "pick-react-known-prop";
+import MailMergeToken from "./mail-merge-token";
 
 function getInputSize(value) {
-  return ((value || '').length || 1) + 1
+	return ((value || "").length || 1) + 1;
 }
 
 class MailMergeHeaderInput extends Component {
+	static propTypes = {
+		draftClientId: PropTypes.string,
+		colIdx: PropTypes.any,
+		tableDataSource: PropTypes.object,
+		defaultValue: PropTypes.string,
+		onBlur: PropTypes.func,
+	};
 
-  static propTypes = {
-    draftClientId: PropTypes.string,
-    colIdx: PropTypes.any,
-    tableDataSource: PropTypes.object,
-    defaultValue: PropTypes.string,
-    onBlur: PropTypes.func,
-  }
+	constructor(props) {
+		super(props);
+		this.state = { inputSize: getInputSize(props.defaultValue) };
+	}
 
-  constructor(props) {
-    super(props)
-    this.state = {inputSize: getInputSize(props.defaultValue)}
-  }
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.setState({ inputSize: getInputSize(nextProps.defaultValue) });
+	}
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({inputSize: getInputSize(nextProps.defaultValue)})
-  }
+	onInputBlur = (event) => {
+		const {
+			target: { value },
+		} = event;
+		this.setState({ inputSize: getInputSize(value) });
+		// Can't override the original onBlur handler
+		this.props.onBlur(event);
+	};
 
-  onInputBlur = (event) => {
-    const {target: {value}} = event
-    this.setState({inputSize: getInputSize(value)})
-    // Can't override the original onBlur handler
-    this.props.onBlur(event)
-  }
+	onInputChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		this.setState({ inputSize: getInputSize(value) });
+	};
 
-  onInputChange = (event) => {
-    const {target: {value}} = event
-    this.setState({inputSize: getInputSize(value)})
-  }
+	render() {
+		const { inputSize } = this.state;
+		const { draftClientId, tableDataSource, colIdx, ...props } = this.props;
+		const colName = tableDataSource.colAt(colIdx);
 
-  render() {
-    const {inputSize} = this.state
-    const {draftClientId, tableDataSource, colIdx, ...props} = this.props
-    const colName = tableDataSource.colAt(colIdx)
-
-    return (
-      <div className="header-cell">
-        <MailMergeToken
-          draggable
-          colIdx={colIdx}
-          colName={colName}
-          draftClientId={draftClientId}
-        >
-          <input
-            {...pickHTMLProps(props)}
-            size={inputSize}
-            onBlur={this.onInputBlur}
-            onChange={this.onInputChange}
-            defaultValue={props.defaultValue}
-          />
-        </MailMergeToken>
-      </div>
-    )
-  }
+		return (
+			<div className="header-cell">
+				<MailMergeToken
+					draggable
+					colIdx={colIdx}
+					colName={colName}
+					draftClientId={draftClientId}
+				>
+					<input
+						{...pickHTMLProps(props)}
+						size={inputSize}
+						onBlur={this.onInputBlur}
+						onChange={this.onInputChange}
+						defaultValue={props.defaultValue}
+					/>
+				</MailMergeToken>
+			</div>
+		);
+	}
 }
 
-export default MailMergeHeaderInput
+export default MailMergeHeaderInput;

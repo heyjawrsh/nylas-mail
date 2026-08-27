@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Utils, Event} from 'nylas-exports';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Utils, Event } from "nylas-exports";
 
-import SchedulerActions from '../scheduler-actions'
-import NewEventCard from './new-event-card'
-import NewEventPreview from './new-event-preview'
-import {PLUGIN_ID} from '../scheduler-constants'
-import NewEventHelper from './new-event-helper'
-import RemoveEventHelper from './remove-event-helper'
+import SchedulerActions from "../scheduler-actions";
+import NewEventCard from "./new-event-card";
+import NewEventPreview from "./new-event-preview";
+import { PLUGIN_ID } from "../scheduler-constants";
+import NewEventHelper from "./new-event-helper";
+import RemoveEventHelper from "./remove-event-helper";
 
 /**
  * When you're creating an event you can either be creating:
@@ -42,96 +42,98 @@ import RemoveEventHelper from './remove-event-helper'
  * remove the metadata on the draft.
  */
 export default class NewEventCardContainer extends Component {
-  static displayName = 'NewEventCardContainer';
+	static displayName = "NewEventCardContainer";
 
-  static propTypes = {
-    draft: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired,
-    style: PropTypes.object,
-    isPreview: PropTypes.bool,
-  }
+	static propTypes = {
+		draft: PropTypes.object.isRequired,
+		session: PropTypes.object.isRequired,
+		style: PropTypes.object,
+		isPreview: PropTypes.bool,
+	};
 
-  componentDidMount() {
-    this._unlisten = SchedulerActions.confirmChoices.listen(this._onConfirmChoices.bind(this));
-    NewEventHelper.restoreOrCreateEvent(this.props.session)
-  }
+	componentDidMount() {
+		this._unlisten = SchedulerActions.confirmChoices.listen(
+			this._onConfirmChoices.bind(this),
+		);
+		NewEventHelper.restoreOrCreateEvent(this.props.session);
+	}
 
-  componentWillUnmount() {
-    if (this._unlisten) {
-      this._unlisten();
-    }
-    RemoveEventHelper.hideEventData(this.props.session)
-  }
+	componentWillUnmount() {
+		if (this._unlisten) {
+			this._unlisten();
+		}
+		RemoveEventHelper.hideEventData(this.props.session);
+	}
 
-  _onConfirmChoices({proposals = [], draftClientId}) {
-    const {draft} = this.props;
+	_onConfirmChoices({ proposals = [], draftClientId }) {
+		const { draft } = this.props;
 
-    if (draft.clientId !== draftClientId) {
-      return;
-    }
+		if (draft.clientId !== draftClientId) {
+			return;
+		}
 
-    const metadata = draft.metadataForPluginId(PLUGIN_ID) || {};
-    if (proposals.length === 0) {
-      delete metadata.proposals;
-    } else {
-      metadata.proposals = proposals;
-    }
-    this.props.session.changes.addPluginMetadata(PLUGIN_ID, metadata);
-  }
+		const metadata = draft.metadataForPluginId(PLUGIN_ID) || {};
+		if (proposals.length === 0) {
+			delete metadata.proposals;
+		} else {
+			metadata.proposals = proposals;
+		}
+		this.props.session.changes.addPluginMetadata(PLUGIN_ID, metadata);
+	}
 
-  _getEvent() {
-    const metadata = this.props.draft.metadataForPluginId(PLUGIN_ID);
-    if (metadata && metadata.pendingEvent) {
-      return new Event().fromJSON(metadata.pendingEvent || {});
-    }
-    return null
-  }
+	_getEvent() {
+		const metadata = this.props.draft.metadataForPluginId(PLUGIN_ID);
+		if (metadata && metadata.pendingEvent) {
+			return new Event().fromJSON(metadata.pendingEvent || {});
+		}
+		return null;
+	}
 
-  _updateEvent = (newData) => {
-    const {draft, session} = this.props;
+	_updateEvent = (newData) => {
+		const { draft, session } = this.props;
 
-    const newEvent = Object.assign(this._getEvent().clone(), newData);
-    const newEventJSON = newEvent.toJSON();
+		const newEvent = Object.assign(this._getEvent().clone(), newData);
+		const newEventJSON = newEvent.toJSON();
 
-    const metadata = draft.metadataForPluginId(PLUGIN_ID);
-    if (!Utils.isEqual(metadata.pendingEvent, newEventJSON)) {
-      metadata.pendingEvent = newEventJSON;
-      session.changes.addPluginMetadata(PLUGIN_ID, metadata);
-    }
-  }
+		const metadata = draft.metadataForPluginId(PLUGIN_ID);
+		if (!Utils.isEqual(metadata.pendingEvent, newEventJSON)) {
+			metadata.pendingEvent = newEventJSON;
+			session.changes.addPluginMetadata(PLUGIN_ID, metadata);
+		}
+	};
 
-  _removeEvent = () => {
-    // This will delete the metadata, but it won't remove the anchor from
-    // the contenteditable. We also need to remove the event card.
-    RemoveEventHelper.deleteEventData(this.props.session);
-    SchedulerActions.removeEventCard();
-  }
+	_removeEvent = () => {
+		// This will delete the metadata, but it won't remove the anchor from
+		// the contenteditable. We also need to remove the event card.
+		RemoveEventHelper.deleteEventData(this.props.session);
+		SchedulerActions.removeEventCard();
+	};
 
-  render() {
-    const {style, isPreview} = this.props;
-    const event = this._getEvent();
-    let card = false;
+	render() {
+		const { style, isPreview } = this.props;
+		const event = this._getEvent();
+		let card = false;
 
-    if (isPreview) {
-      return <NewEventPreview draft={this.props.draft} />
-    }
+		if (isPreview) {
+			return <NewEventPreview draft={this.props.draft} />;
+		}
 
-    if (event) {
-      card = (
-        <NewEventCard
-          event={event}
-          ref="newEventCard"
-          draft={this.props.draft}
-          onRemove={this._removeEvent}
-          onChange={this._updateEvent}
-          onParticipantsClick={() => {}}
-        />
-      )
-    }
-    return (
-      <div className="new-event-card-container" style={style}>
-        {card}
-      </div>
-    )
-  }
+		if (event) {
+			card = (
+				<NewEventCard
+					event={event}
+					ref="newEventCard"
+					draft={this.props.draft}
+					onRemove={this._removeEvent}
+					onChange={this._updateEvent}
+					onParticipantsClick={() => {}}
+				/>
+			);
+		}
+		return (
+			<div className="new-event-card-container" style={style}>
+				{card}
+			</div>
+		);
+	}
 }

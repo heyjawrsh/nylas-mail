@@ -1,64 +1,71 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import {vi} from 'vitest';
-import LocalDatabaseConnector from '../src/shared/local-database-connector.js';
+import fs from "node:fs";
+import path from "node:path";
+import { vi } from "vitest";
+import LocalDatabaseConnector from "../src/shared/local-database-connector.js";
 
-const FIXTURES_PATH = path.join(__dirname, 'fixtures');
-const ACCOUNT_ID = 'test-account-id';
+const FIXTURES_PATH = path.join(__dirname, "fixtures");
+const ACCOUNT_ID = "test-account-id";
 
 function forEachJSONFixture(relativePath, callback) {
-  const fixturesDir = path.join(FIXTURES_PATH, relativePath);
-  const filenames = fs.readdirSync(fixturesDir).filter(f => f.endsWith('.json'));
-  filenames.forEach((filename) => {
-    const json = JSON.parse(fs.readFileSync(path.join(fixturesDir, filename)));
-    callback(filename, json);
-  });
+	const fixturesDir = path.join(FIXTURES_PATH, relativePath);
+	const filenames = fs
+		.readdirSync(fixturesDir)
+		.filter((f) => f.endsWith(".json"));
+	filenames.forEach((filename) => {
+		const json = JSON.parse(fs.readFileSync(path.join(fixturesDir, filename)));
+		callback(filename, json);
+	});
 }
 
 function forEachHTMLAndTXTFixture(relativePath, callback) {
-  const fixturesDir = path.join(FIXTURES_PATH, relativePath);
-  const filenames = fs.readdirSync(fixturesDir).filter(f => f.endsWith('.html'));
-  filenames.forEach((filename) => {
-    const html = fs.readFileSync(path.join(fixturesDir, filename)).toString();
-    const basename = path.parse(filename).name;
-    const txt = fs.readFileSync(path.join(fixturesDir, `${basename}.txt`)).toString().replace(/\n$/, '');
-    callback(filename, html, txt);
-  });
+	const fixturesDir = path.join(FIXTURES_PATH, relativePath);
+	const filenames = fs
+		.readdirSync(fixturesDir)
+		.filter((f) => f.endsWith(".html"));
+	filenames.forEach((filename) => {
+		const html = fs.readFileSync(path.join(fixturesDir, filename)).toString();
+		const basename = path.parse(filename).name;
+		const txt = fs
+			.readFileSync(path.join(fixturesDir, `${basename}.txt`))
+			.toString()
+			.replace(/\n$/, "");
+		callback(filename, html, txt);
+	});
 }
 
 async function getTestDatabase(accountId = ACCOUNT_ID) {
-  await LocalDatabaseConnector.ensureAccountDatabase(accountId)
-  return LocalDatabaseConnector.forAccount(accountId)
+	await LocalDatabaseConnector.ensureAccountDatabase(accountId);
+	return LocalDatabaseConnector.forAccount(accountId);
 }
 
 function destroyTestDatabase(accountId = ACCOUNT_ID) {
-  LocalDatabaseConnector.destroyAccountDatabase(accountId)
+	LocalDatabaseConnector.destroyAccountDatabase(accountId);
 }
 
 function mockImapBox() {
-  return {
-    setLabels: vi.fn(),
-    removeLabels: vi.fn(),
-  }
+	return {
+		setLabels: vi.fn(),
+		removeLabels: vi.fn(),
+	};
 }
 
 const silentLogger = {
-  info: () => {},
-  warn: () => {},
-  debug: () => {},
-  error: () => {},
-  log: () => {},
-  forAccount: () => silentLogger,
-  child: () => silentLogger,
-}
+	info: () => {},
+	warn: () => {},
+	debug: () => {},
+	error: () => {},
+	log: () => {},
+	forAccount: () => silentLogger,
+	child: () => silentLogger,
+};
 
 module.exports = {
-  FIXTURES_PATH,
-  ACCOUNT_ID,
-  silentLogger,
-  forEachJSONFixture,
-  forEachHTMLAndTXTFixture,
-  mockImapBox,
-  getTestDatabase,
-  destroyTestDatabase,
-}
+	FIXTURES_PATH,
+	ACCOUNT_ID,
+	silentLogger,
+	forEachJSONFixture,
+	forEachHTMLAndTXTFixture,
+	mockImapBox,
+	getTestDatabase,
+	destroyTestDatabase,
+};

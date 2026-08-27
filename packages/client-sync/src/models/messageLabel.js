@@ -10,16 +10,19 @@
  * sqlite_autoindex_messageLabels_1 (labelId, messageId)
  */
 export default (sequelize) => {
-  return sequelize.define('messageLabel', {
-  }, {
-    indexes: [
-      // NOTE: When SQLite sets up this table, it creates an auto index in
-      // the order ['labelId', 'messageId']. This is the correct index we
-      // need for queries requesting Messages for a certain Label.
-      //
-      // We need to create one more index to allow queries from the
-      // reverse direction requesting Labels for a certain Message.
-      {fields: ['messageId', 'labelId']},
-    ],
-  });
+	return sequelize.define(
+		"messageLabel",
+		{},
+		{
+			indexes: [
+				// NOTE: When SQLite sets up this table, it creates an auto index in
+				// the order ['labelId', 'messageId']. This is the correct index we
+				// need for queries requesting Messages for a certain Label.
+				//
+				// We need to create one more index to allow queries from the
+				// reverse direction requesting Labels for a certain Message.
+				{ fields: ["messageId", "labelId"] },
+			],
+		},
+	);
 };

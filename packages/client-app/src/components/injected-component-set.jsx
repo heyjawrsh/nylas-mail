@@ -6,16 +6,17 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require('react');
-const _ = require('underscore');
-const UnsafeComponent = require('./unsafe-component');
-const Flexbox = require('./flexbox').default;
-const InjectedComponentLabel = require('./injected-component-label').default;
-const {Utils,
- Actions,
- WorkspaceStore,
- ComponentRegistry} = require("nylas-exports");
-
+const React = require("react");
+const _ = require("underscore");
+const UnsafeComponent = require("./unsafe-component");
+const Flexbox = require("./flexbox").default;
+const InjectedComponentLabel = require("./injected-component-label").default;
+const {
+	Utils,
+	Actions,
+	WorkspaceStore,
+	ComponentRegistry,
+} = require("nylas-exports");
 
 /*
 Public: InjectedComponent makes it easy to include a set of dynamically registered
@@ -41,10 +42,10 @@ If no matching components is found, the InjectedComponent renders an empty span.
 Section: Component Kit
 */
 class InjectedComponentSet extends React.Component {
-  static initClass() {
-    this.displayName = 'InjectedComponentSet';
-  
-    /*
+	static initClass() {
+		InjectedComponentSet.displayName = "InjectedComponentSet";
+
+		/*
     Public: React `props` supported by InjectedComponentSet:
   
      - `matching` Pass an {Object} with ComponentRegistry descriptors
@@ -64,110 +65,155 @@ class InjectedComponentSet extends React.Component {
      -  Any other props you provide, such as `direction`, `data-column`, etc.
         will be applied to the {Flexbox} rendered by the InjectedComponentSet.
     */
-    this.propTypes = {
-      matching: PropTypes.object.isRequired,
-      children: PropTypes.array,
-      className: PropTypes.string,
-      matchLimit: PropTypes.number,
-      exposedProps: PropTypes.object,
-      containersRequired: PropTypes.bool,
-      onComponentsDidRender: PropTypes.func
-    };
-  
-    this.defaultProps = {
-      direction: 'row',
-      containersRequired: true,
-      onComponentsDidRender() {}
-    };
-  }
+		InjectedComponentSet.propTypes = {
+			matching: PropTypes.object.isRequired,
+			children: PropTypes.array,
+			className: PropTypes.string,
+			matchLimit: PropTypes.number,
+			exposedProps: PropTypes.object,
+			containersRequired: PropTypes.bool,
+			onComponentsDidRender: PropTypes.func,
+		};
 
-  constructor(props) {
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.render = this.render.bind(this);
-    this._onComponentDidRender = this._onComponentDidRender.bind(this);
-    this._getStateFromStores = this._getStateFromStores.bind(this);
-    this.props = props;
-    this.state = this._getStateFromStores();
-    this._renderedComponents = new Set();
-  }
+		InjectedComponentSet.defaultProps = {
+			direction: "row",
+			containersRequired: true,
+			onComponentsDidRender() {},
+		};
+	}
 
-  componentDidMount() {
-    this._componentUnlistener = ComponentRegistry.listen(() => {
-      return this.setState(this._getStateFromStores());
-    });
-    if (this.props.containersRequired === false) { return this.props.onComponentsDidRender(); }
-  }
+	constructor(props) {
+		this.componentDidMount = this.componentDidMount.bind(this);
+		this.componentWillUnmount = this.componentWillUnmount.bind(this);
+		this.UNSAFE_componentWillReceiveProps =
+			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
+		this.render = this.render.bind(this);
+		this._onComponentDidRender = this._onComponentDidRender.bind(this);
+		this._getStateFromStores = this._getStateFromStores.bind(this);
+		this.props = props;
+		this.state = this._getStateFromStores();
+		this._renderedComponents = new Set();
+	}
 
-  componentWillUnmount() {
-    if (this._componentUnlistener) { return this._componentUnlistener(); }
-  }
+	componentDidMount() {
+		this._componentUnlistener = ComponentRegistry.listen(() => {
+			return this.setState(this._getStateFromStores());
+		});
+		if (this.props.containersRequired === false) {
+			return this.props.onComponentsDidRender();
+		}
+	}
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (newProps.location !== (this.props != null ? this.props.location : undefined)) {
-      return this.setState(this._getStateFromStores(newProps));
-    }
-  }
+	componentWillUnmount() {
+		if (this._componentUnlistener) {
+			return this._componentUnlistener();
+		}
+	}
 
-  componentDidUpdate() {
-    if (this.props.containersRequired === false) { return this.props.onComponentsDidRender(); }
-  }
+	UNSAFE_componentWillReceiveProps(newProps) {
+		if (
+			newProps.location !==
+			(this.props != null ? this.props.location : undefined)
+		) {
+			return this.setState(this._getStateFromStores(newProps));
+		}
+	}
 
-  render() {
-    this._renderedComponents = new Set();
-    const flexboxProps = Utils.fastOmit(this.props, Object.keys(this.constructor.propTypes));
-    let flexboxClassName = this.props.className != null ? this.props.className : "";
-    const exposedProps = this.props.exposedProps != null ? this.props.exposedProps : {};
+	componentDidUpdate() {
+		if (this.props.containersRequired === false) {
+			return this.props.onComponentsDidRender();
+		}
+	}
 
-    const elements = this.state.components.map(Component => {
-      if ((this.props.containersRequired === false) || (Component.containerRequired === false)) {
-        return React.createElement(Component, Object.assign({"key": (Component.displayName)}, exposedProps ));
-      } else {
-        return (
-          React.createElement(UnsafeComponent, Object.assign({ 
-            "key": (Component.displayName),  
-            "component": (Component),  
-            "onComponentDidRender": (this._onComponentDidRender.bind(this, Component.displayName))
-            }, exposedProps ))
-        );
-      }
-    });
+	render() {
+		this._renderedComponents = new Set();
+		const flexboxProps = Utils.fastOmit(
+			this.props,
+			Object.keys(this.constructor.propTypes),
+		);
+		let flexboxClassName =
+			this.props.className != null ? this.props.className : "";
+		const exposedProps =
+			this.props.exposedProps != null ? this.props.exposedProps : {};
 
+		const elements = this.state.components.map((Component) => {
+			if (
+				this.props.containersRequired === false ||
+				Component.containerRequired === false
+			) {
+				return React.createElement(
+					Component,
+					Object.assign({ key: Component.displayName }, exposedProps),
+				);
+			} else {
+				return React.createElement(
+					UnsafeComponent,
+					Object.assign(
+						{
+							key: Component.displayName,
+							component: Component,
+							onComponentDidRender: this._onComponentDidRender.bind(
+								this,
+								Component.displayName,
+							),
+						},
+						exposedProps,
+					),
+				);
+			}
+		});
 
-    if (this.state.visible) {
-      flexboxClassName += " registered-region-visible";
-      elements.splice(0,0, React.createElement(InjectedComponentLabel, Object.assign({"key": "_label", "matching": (this.props.matching)}, exposedProps )));
-      elements.push(React.createElement("span", {"key": "_clear", "style": ({clear:'both'})}));
-    }
+		if (this.state.visible) {
+			flexboxClassName += " registered-region-visible";
+			elements.splice(
+				0,
+				0,
+				React.createElement(
+					InjectedComponentLabel,
+					Object.assign(
+						{ key: "_label", matching: this.props.matching },
+						exposedProps,
+					),
+				),
+			);
+			elements.push(
+				React.createElement("span", {
+					key: "_clear",
+					style: { clear: "both" },
+				}),
+			);
+		}
 
-    return React.createElement(Flexbox, Object.assign({"className": (flexboxClassName)}, flexboxProps),
-      (elements),
-      (this.props.children != null ? this.props.children : [])
-    );
-  }
+		return React.createElement(
+			Flexbox,
+			Object.assign({ className: flexboxClassName }, flexboxProps),
+			elements,
+			this.props.children != null ? this.props.children : [],
+		);
+	}
 
-  _onComponentDidRender(componentName) {
-    this._renderedComponents.add(componentName);
-    if (this._renderedComponents.size === this.state.components.length) {
-      return this.props.onComponentsDidRender();
-    }
-  }
+	_onComponentDidRender(componentName) {
+		this._renderedComponents.add(componentName);
+		if (this._renderedComponents.size === this.state.components.length) {
+			return this.props.onComponentsDidRender();
+		}
+	}
 
-  _getStateFromStores(props) {
-    if (props == null) { ({
-      props
-    } = this); }
-    const limit = props.matchLimit;
+	_getStateFromStores(props) {
+		if (props == null) {
+			({ props } = this);
+		}
+		const limit = props.matchLimit;
 
-    return {
-      components: ComponentRegistry.findComponentsMatching(this.props.matching).slice(0, limit),
-      visible: ComponentRegistry.showComponentRegions()
-    };
-  }
+		return {
+			components: ComponentRegistry.findComponentsMatching(
+				this.props.matching,
+			).slice(0, limit),
+			visible: ComponentRegistry.showComponentRegions(),
+		};
+	}
 }
 InjectedComponentSet.initClass();
-
 
 module.exports = InjectedComponentSet;

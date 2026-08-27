@@ -1,6 +1,4 @@
-import {
-  ComponentRegistry,
-} from "nylas-exports";
+import { ComponentRegistry } from "nylas-exports";
 
 import GithubContactCardSection from "./github-contact-card-section";
 
@@ -20,18 +18,18 @@ before N1 quits. This gets passed back into `activate` next time N1 boots
 up or your package is manually activated.
 */
 export function activate() {
-  // Register our sidebar so that it appears in the Message List sidebar.
-  // This sidebar is to the right of the Message List in both split pane mode
-  // and list mode.
-  ComponentRegistry.register(GithubContactCardSection, {
-    role: "MessageListSidebar:ContactCard",
-  });
+	// Register our sidebar so that it appears in the Message List sidebar.
+	// This sidebar is to the right of the Message List in both split pane mode
+	// and list mode.
+	ComponentRegistry.register(GithubContactCardSection, {
+		role: "MessageListSidebar:ContactCard",
+	});
 }
 
 export function serialize() {
-  return {};
+	return {};
 }
 
 export function deactivate() {
-  ComponentRegistry.unregister(GithubContactCardSection);
+	ComponentRegistry.unregister(GithubContactCardSection);
 }

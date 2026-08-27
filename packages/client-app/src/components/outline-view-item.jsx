@@ -1,15 +1,15 @@
 /* eslint global-require:0 */
 /* eslint jsx-a11y/tabindex-no-positive:0 */
 
-import _ from 'underscore';
-import {Utils} from 'nylas-exports'
-import classnames from 'classnames';
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import DisclosureTriangle from './disclosure-triangle';
-import DropZone from './drop-zone';
-import RetinaImg from './retina-img';
+import _ from "underscore";
+import { Utils } from "nylas-exports";
+import classnames from "classnames";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import DisclosureTriangle from "./disclosure-triangle";
+import DropZone from "./drop-zone";
+import RetinaImg from "./retina-img";
 
 /*
  * Enum for counter styles
@@ -17,10 +17,9 @@ import RetinaImg from './retina-img';
  * @enum {string}
  */
 const CounterStyles = {
-  Default: 'def',
-  Alt: 'alt',
+	Default: "def",
+	Alt: "alt",
 };
-
 
 /*
  * Renders an item that may contain more arbitrarily nested items
@@ -68,323 +67,337 @@ const CounterStyles = {
  * @class OutlineViewItem
  */
 class OutlineViewItem extends Component {
-  static displayName = 'OutlineView';
+	static displayName = "OutlineView";
 
-  /*
-   * If provided, this function will be called when receiving a drop. It must
-   * return true if it should accept it or false otherwise.
-   * @callback props.item.shouldAcceptDrop
-   * @param {object} item - The current item
-   * @param {object} event - The drag event
-   * @return {boolean}
-   */
-  /*
-   * If provided, this function will be called when the action to collapse or
-   * uncollapse the OutlineViewItem is executed.
-   * @callback props.item.onCollapseToggled
-   * @param {object} item - The current item
-   */
-  /*
-   * If provided, this function will be called when the editing input is cleared
-   * via Esc key, blurring, or submiting the edit.
-   * @callback props.item.onInputCleared
-   * @param {object} item - The current item
-   * @param {object} event - The associated event
-   */
-  /*
-   * If provided, this function will be called when an element is dropped in the
-   * item
-   * @callback props.item.onDrop
-   * @param {object} item - The current item
-   * @param {object} event - The associated event
-   */
-  /*
-   * If provided, this function will be called when the item is selected
-   * @callback props.item.onSelect
-   * @param {object} item - The current item
-   */
-  /*
-   * If provided, this function will be called when the the delete action is
-   * executed
-   * @callback props.item.onDelete
-   * @param {object} item - The current item
-   */
-  /*
-   * If provided, this function will be called when the item is edited
-   * @callback props.item.onEdited
-   * @param {object} item - The current item
-   * @param {string} value - The new value
-   */
-  static propTypes = {
-    item: PropTypes.shape({
-      className: PropTypes.string,
-      id: PropTypes.string.isRequired,
-      children: PropTypes.array.isRequired,
-      name: PropTypes.string.isRequired,
-      iconName: PropTypes.string.isRequired,
-      count: PropTypes.number,
-      counterStyle: PropTypes.string,
-      inputPlaceholder: PropTypes.string,
-      collapsed: PropTypes.bool,
-      editing: PropTypes.bool,
-      selected: PropTypes.bool,
-      shouldAcceptDrop: PropTypes.func,
-      onCollapseToggled: PropTypes.func,
-      onInputCleared: PropTypes.func,
-      onDrop: PropTypes.func,
-      onSelect: PropTypes.func,
-      onDelete: PropTypes.func,
-      onEdited: PropTypes.func,
-    }).isRequired,
-  };
+	/*
+	 * If provided, this function will be called when receiving a drop. It must
+	 * return true if it should accept it or false otherwise.
+	 * @callback props.item.shouldAcceptDrop
+	 * @param {object} item - The current item
+	 * @param {object} event - The drag event
+	 * @return {boolean}
+	 */
+	/*
+	 * If provided, this function will be called when the action to collapse or
+	 * uncollapse the OutlineViewItem is executed.
+	 * @callback props.item.onCollapseToggled
+	 * @param {object} item - The current item
+	 */
+	/*
+	 * If provided, this function will be called when the editing input is cleared
+	 * via Esc key, blurring, or submiting the edit.
+	 * @callback props.item.onInputCleared
+	 * @param {object} item - The current item
+	 * @param {object} event - The associated event
+	 */
+	/*
+	 * If provided, this function will be called when an element is dropped in the
+	 * item
+	 * @callback props.item.onDrop
+	 * @param {object} item - The current item
+	 * @param {object} event - The associated event
+	 */
+	/*
+	 * If provided, this function will be called when the item is selected
+	 * @callback props.item.onSelect
+	 * @param {object} item - The current item
+	 */
+	/*
+	 * If provided, this function will be called when the the delete action is
+	 * executed
+	 * @callback props.item.onDelete
+	 * @param {object} item - The current item
+	 */
+	/*
+	 * If provided, this function will be called when the item is edited
+	 * @callback props.item.onEdited
+	 * @param {object} item - The current item
+	 * @param {string} value - The new value
+	 */
+	static propTypes = {
+		item: PropTypes.shape({
+			className: PropTypes.string,
+			id: PropTypes.string.isRequired,
+			children: PropTypes.array.isRequired,
+			name: PropTypes.string.isRequired,
+			iconName: PropTypes.string.isRequired,
+			count: PropTypes.number,
+			counterStyle: PropTypes.string,
+			inputPlaceholder: PropTypes.string,
+			collapsed: PropTypes.bool,
+			editing: PropTypes.bool,
+			selected: PropTypes.bool,
+			shouldAcceptDrop: PropTypes.func,
+			onCollapseToggled: PropTypes.func,
+			onInputCleared: PropTypes.func,
+			onDrop: PropTypes.func,
+			onSelect: PropTypes.func,
+			onDelete: PropTypes.func,
+			onEdited: PropTypes.func,
+		}).isRequired,
+	};
 
-  static CounterStyles = CounterStyles;
+	static CounterStyles = CounterStyles;
 
-  constructor(props) {
-    super(props);
-    this._expandTimeout = null;
-    this.state = {
-      isDropping: false,
-      editing: props.item.editing || false,
-    }
-  }
+	constructor(props) {
+		super(props);
+		this._expandTimeout = null;
+		this.state = {
+			isDropping: false,
+			editing: props.item.editing || false,
+		};
+	}
 
-  componentDidMount() {
-    if (this._shouldShowContextMenu()) {
-      ReactDOM.findDOMNode(this).addEventListener('contextmenu', this._onShowContextMenu);
-    }
-  }
+	componentDidMount() {
+		if (this._shouldShowContextMenu()) {
+			ReactDOM.findDOMNode(this).addEventListener(
+				"contextmenu",
+				this._onShowContextMenu,
+			);
+		}
+	}
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (newProps.editing) {
-      this.setState({editing: newProps.editing});
-    }
-  }
+	UNSAFE_componentWillReceiveProps(newProps) {
+		if (newProps.editing) {
+			this.setState({ editing: newProps.editing });
+		}
+	}
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !Utils.isEqualReact(nextProps, this.props) ||
-      !Utils.isEqualReact(nextState, this.state);
-  }
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			!Utils.isEqualReact(nextProps, this.props) ||
+			!Utils.isEqualReact(nextState, this.state)
+		);
+	}
 
-  componentWillUnmount() {
-    clearTimeout(this._expandTimeout);
-    if (this._shouldShowContextMenu()) {
-      ReactDOM.findDOMNode(this).removeEventListener('contextmenu', this._onShowContextMenu);
-    }
-  }
+	componentWillUnmount() {
+		clearTimeout(this._expandTimeout);
+		if (this._shouldShowContextMenu()) {
+			ReactDOM.findDOMNode(this).removeEventListener(
+				"contextmenu",
+				this._onShowContextMenu,
+			);
+		}
+	}
 
-  // Helpers
+	// Helpers
 
-  _runCallback = (method, ...args) => {
-    const item = this.props.item;
-    if (item[method]) {
-      return item[method](item, ...args);
-    }
-    return undefined;
-  };
+	_runCallback = (method, ...args) => {
+		const item = this.props.item;
+		if (item[method]) {
+			return item[method](item, ...args);
+		}
+		return undefined;
+	};
 
-  _shouldShowContextMenu = () => {
-    return this.props.item.onDelete != null || this.props.item.onEdited != null;
-  };
+	_shouldShowContextMenu = () => {
+		return this.props.item.onDelete != null || this.props.item.onEdited != null;
+	};
 
-  _shouldAcceptDrop = (event) => {
-    return this._runCallback('shouldAcceptDrop', event);
-  };
+	_shouldAcceptDrop = (event) => {
+		return this._runCallback("shouldAcceptDrop", event);
+	};
 
-  _clearEditingState = (event) => {
-    this.setState({editing: false});
-    this._runCallback('onInputCleared', event);
-  };
+	_clearEditingState = (event) => {
+		this.setState({ editing: false });
+		this._runCallback("onInputCleared", event);
+	};
 
+	// Handlers
 
-  // Handlers
+	_onDragStateChange = ({ isDropping }) => {
+		this.setState({ isDropping });
 
-  _onDragStateChange = ({isDropping}) => {
-    this.setState({isDropping});
+		const { item } = this.props;
+		if (isDropping === true && item.children.length > 0 && item.collapsed) {
+			this._expandTimeout = setTimeout(this._onCollapseToggled, 650);
+		} else if (isDropping === false && this._expandTimeout) {
+			clearTimeout(this._expandTimeout);
+			this._expandTimeout = null;
+		}
+	};
 
-    const {item} = this.props;
-    if ((isDropping === true) && (item.children.length > 0) && (item.collapsed)) {
-      this._expandTimeout = setTimeout(this._onCollapseToggled, 650);
-    } else if (isDropping === false && this._expandTimeout) {
-      clearTimeout(this._expandTimeout);
-      this._expandTimeout = null;
-    }
-  };
+	_onDrop = (event) => {
+		this._runCallback("onDrop", event);
+	};
 
-  _onDrop = (event) => {
-    this._runCallback('onDrop', event);
-  };
+	_onCollapseToggled = () => {
+		this._runCallback("onCollapseToggled");
+	};
 
-  _onCollapseToggled = () => {
-    this._runCallback('onCollapseToggled');
-  };
+	_onClick = (event) => {
+		event.preventDefault();
+		this._runCallback("onSelect");
+	};
 
-  _onClick = (event) => {
-    event.preventDefault();
-    this._runCallback('onSelect');
-  };
+	_onDelete = () => {
+		this._runCallback("onDelete");
+	};
 
-  _onDelete = () => {
-    this._runCallback('onDelete');
-  };
+	_onEdited = (value) => {
+		this._runCallback("onEdited", value);
+	};
 
-  _onEdited = (value) => {
-    this._runCallback('onEdited', value);
-  };
+	_onEdit = () => {
+		if (this.props.item.onEdited) {
+			this.setState({ editing: true });
+		}
+	};
 
-  _onEdit = () => {
-    if (this.props.item.onEdited) {
-      this.setState({editing: true});
-    }
-  };
+	_onInputFocus = (event) => {
+		const input = event.target;
+		input.selectionStart = input.selectionEnd = input.value.length;
+	};
 
-  _onInputFocus = (event) => {
-    const input = event.target;
-    input.selectionStart = input.selectionEnd = input.value.length;
-  };
+	_onInputBlur = (event) => {
+		this._clearEditingState(event);
+	};
 
-  _onInputBlur = (event) => {
-    this._clearEditingState(event);
-  };
+	_onInputKeyDown = (event) => {
+		if (event.key === "Escape") {
+			this._clearEditingState(event);
+		}
+		if (_.includes(["Enter", "Return"], event.key)) {
+			this._onEdited(event.target.value);
+			this._clearEditingState(event);
+		}
+	};
 
-  _onInputKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      this._clearEditingState(event);
-    }
-    if (_.includes(['Enter', 'Return'], event.key)) {
-      this._onEdited(event.target.value);
-      this._clearEditingState(event);
-    }
-  };
+	_onShowContextMenu = (event) => {
+		event.stopPropagation();
+		const item = this.props.item;
+		const contextMenuLabel = item.contextMenuLabel || item.name;
+		const { remote } = require("electron");
+		const { Menu, MenuItem } = remote;
+		const menu = new Menu();
 
-  _onShowContextMenu = (event) => {
-    event.stopPropagation()
-    const item = this.props.item;
-    const contextMenuLabel = item.contextMenuLabel || item.name
-    const {remote} = require('electron');
-    const {Menu, MenuItem} = remote;
-    const menu = new Menu();
+		if (this.props.item.onEdited) {
+			menu.append(
+				new MenuItem({
+					label: `Rename ${contextMenuLabel}`,
+					click: this._onEdit,
+				}),
+			);
+		}
 
-    if (this.props.item.onEdited) {
-      menu.append(new MenuItem({
-        label: `Rename ${contextMenuLabel}`,
-        click: this._onEdit,
-      }));
-    }
+		if (this.props.item.onDelete) {
+			menu.append(
+				new MenuItem({
+					label: `Delete ${contextMenuLabel}`,
+					click: this._onDelete,
+				}),
+			);
+		}
+		menu.popup(remote.getCurrentWindow());
+	};
 
-    if (this.props.item.onDelete) {
-      menu.append(new MenuItem({
-        label: `Delete ${contextMenuLabel}`,
-        click: this._onDelete,
-      }));
-    }
-    menu.popup(remote.getCurrentWindow());
-  };
+	// Renderers
 
+	_renderCount(item = this.props.item) {
+		if (!item.count) {
+			return <span />;
+		}
+		const className = classnames({
+			"item-count-box": true,
+			"alt-count": item.counterStyle === CounterStyles.Alt,
+		});
+		return <div className={className}>{item.count}</div>;
+	}
 
-  // Renderers
+	_renderIcon(item = this.props.item) {
+		return (
+			<div className="icon">
+				<RetinaImg
+					name={item.iconName}
+					fallback={"folder.png"}
+					mode={RetinaImg.Mode.ContentIsMask}
+				/>
+			</div>
+		);
+	}
 
-  _renderCount(item = this.props.item) {
-    if (!item.count) {
-      return <span />;
-    }
-    const className = classnames({
-      'item-count-box': true,
-      'alt-count': item.counterStyle === CounterStyles.Alt,
-    });
-    return <div className={className}>{item.count}</div>;
-  }
+	_renderItemContent(item = this.props.item, state = this.state) {
+		if (state.editing) {
+			const placeholder = item.inputPlaceholder || "";
+			return (
+				<input
+					autoFocus
+					type="text"
+					tabIndex="1"
+					className="item-input"
+					placeholder={placeholder}
+					defaultValue={item.name}
+					onBlur={this._onInputBlur}
+					onFocus={this._onInputFocus}
+					onKeyDown={this._onInputKeyDown}
+				/>
+			);
+		}
+		return (
+			<div className="name" title={item.name}>
+				{item.name}
+			</div>
+		);
+	}
 
-  _renderIcon(item = this.props.item) {
-    return (
-      <div className="icon">
-        <RetinaImg
-          name={item.iconName}
-          fallback={'folder.png'}
-          mode={RetinaImg.Mode.ContentIsMask}
-        />
-      </div>
-    );
-  }
+	_renderItem(item = this.props.item, state = this.state) {
+		const containerClass = classnames({
+			item: true,
+			selected: item.selected,
+			editing: state.editing,
+			[item.className]: item.className,
+		});
 
-  _renderItemContent(item = this.props.item, state = this.state) {
-    if (state.editing) {
-      const placeholder = item.inputPlaceholder || '';
-      return (
-        <input
-          autoFocus
-          type="text"
-          tabIndex="1"
-          className="item-input"
-          placeholder={placeholder}
-          defaultValue={item.name}
-          onBlur={this._onInputBlur}
-          onFocus={this._onInputFocus}
-          onKeyDown={this._onInputKeyDown}
-        />
-      );
-    }
-    return <div className="name" title={item.name}>{item.name}</div>;
-  }
+		return (
+			<DropZone
+				id={item.id}
+				className={containerClass}
+				onDrop={this._onDrop}
+				onClick={this._onClick}
+				onDoubleClick={this._onEdit}
+				shouldAcceptDrop={this._shouldAcceptDrop}
+				onDragStateChange={this._onDragStateChange}
+			>
+				{this._renderCount()}
+				{this._renderIcon()}
+				{this._renderItemContent()}
+			</DropZone>
+		);
+	}
 
-  _renderItem(item = this.props.item, state = this.state) {
-    const containerClass = classnames({
-      item: true,
-      selected: item.selected,
-      editing: state.editing,
-      [item.className]: item.className,
-    });
+	_renderChildren(item = this.props.item) {
+		if (item.children.length > 0 && !item.collapsed) {
+			return (
+				<section className="item-children" key={`${item.id}-children`}>
+					{item.children.map((child) => (
+						<OutlineViewItem key={child.id} item={child} />
+					))}
+				</section>
+			);
+		}
+		return <span />;
+	}
 
-    return (
-      <DropZone
-        id={item.id}
-        className={containerClass}
-        onDrop={this._onDrop}
-        onClick={this._onClick}
-        onDoubleClick={this._onEdit}
-        shouldAcceptDrop={this._shouldAcceptDrop}
-        onDragStateChange={this._onDragStateChange}
-      >
-        {this._renderCount()}
-        {this._renderIcon()}
-        {this._renderItemContent()}
-      </DropZone>
-    );
-  }
-
-  _renderChildren(item = this.props.item) {
-    if (item.children.length > 0 && !item.collapsed) {
-      return (
-        <section className="item-children" key={`${item.id}-children`}>
-          {item.children.map(
-            child => <OutlineViewItem key={child.id} item={child} />
-          )}
-        </section>
-      );
-    }
-    return <span />;
-  }
-
-  render() {
-    const item = this.props.item;
-    const containerClasses = classnames({
-      'item-container': true,
-      'dropping': this.state.isDropping,
-    })
-    return (
-      <div>
-        <span className={containerClasses}>
-          <DisclosureTriangle
-            collapsed={item.collapsed}
-            visible={item.children.length > 0}
-            onCollapseToggled={this._onCollapseToggled}
-          />
-          {this._renderItem()}
-        </span>
-        {this._renderChildren()}
-      </div>
-    );
-  }
+	render() {
+		const item = this.props.item;
+		const containerClasses = classnames({
+			"item-container": true,
+			dropping: this.state.isDropping,
+		});
+		return (
+			<div>
+				<span className={containerClasses}>
+					<DisclosureTriangle
+						collapsed={item.collapsed}
+						visible={item.children.length > 0}
+						onCollapseToggled={this._onCollapseToggled}
+					/>
+					{this._renderItem()}
+				</span>
+				{this._renderChildren()}
+			</div>
+		);
+	}
 }
 
 export default OutlineViewItem;

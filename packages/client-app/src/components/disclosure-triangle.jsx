@@ -4,28 +4,35 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require('react');
+const React = require("react");
 
 class DisclosureTriangle extends React.Component {
-  static initClass() {
-    this.displayName = 'DisclosureTriangle';
-  
-    this.propTypes = {
-      collapsed: PropTypes.bool,
-      visible: PropTypes.bool,
-      onCollapseToggled: PropTypes.func
-    };
-  
-    this.defaultProps =
-      {onCollapseToggled() {}};
-  }
+	static initClass() {
+		DisclosureTriangle.displayName = "DisclosureTriangle";
 
-  render() {
-    let classnames = "disclosure-triangle";
-    if (this.props.visible) { classnames += " visible"; }
-    if (this.props.collapsed) { classnames += " collapsed"; }
-    return React.createElement("div", {"className": (classnames), "onClick": (this.props.onCollapseToggled)}, React.createElement("div", null));
-  }
+		DisclosureTriangle.propTypes = {
+			collapsed: PropTypes.bool,
+			visible: PropTypes.bool,
+			onCollapseToggled: PropTypes.func,
+		};
+
+		DisclosureTriangle.defaultProps = { onCollapseToggled() {} };
+	}
+
+	render() {
+		let classnames = "disclosure-triangle";
+		if (this.props.visible) {
+			classnames += " visible";
+		}
+		if (this.props.collapsed) {
+			classnames += " collapsed";
+		}
+		return React.createElement(
+			"div",
+			{ className: classnames, onClick: this.props.onCollapseToggled },
+			React.createElement("div", null),
+		);
+	}
 }
 DisclosureTriangle.initClass();
 

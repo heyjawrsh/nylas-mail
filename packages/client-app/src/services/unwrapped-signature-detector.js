@@ -1,20 +1,20 @@
-import DOMWalkers from '../dom-walkers'
-import Utils from '../flux/models/utils'
+import DOMWalkers from "../dom-walkers";
+import Utils from "../flux/models/utils";
 
 function textAndNodesAfterNode(node) {
-  let text = "";
-  let curNode = node;
-  const nodes = []
-  while (curNode) {
-    let sibling = curNode.nextSibling;
-    while (sibling) {
-      text += sibling.textContent;
-      nodes.push(sibling);
-      sibling = sibling.nextSibling;
-    }
-    curNode = curNode.parentNode;
-  }
-  return {text, nodes}
+	let text = "";
+	let curNode = node;
+	const nodes = [];
+	while (curNode) {
+		let sibling = curNode.nextSibling;
+		while (sibling) {
+			text += sibling.textContent;
+			nodes.push(sibling);
+			sibling = sibling.nextSibling;
+		}
+		curNode = curNode.parentNode;
+	}
+	return { text, nodes };
 }
 
 /**
@@ -26,27 +26,34 @@ function textAndNodesAfterNode(node) {
  * See email_18, email_20, email_21, and email_23 test cases for this.
  */
 export default function unwrappedSignatureDetector(doc, quoteElements) {
-  // Find the last quoteBlock
-  for (const node of DOMWalkers.walkBackwards(doc)) {
-    let textAndNodes;
-    let focusNode = node;
-    if (node && quoteElements.includes(node)) {
-      textAndNodes = textAndNodesAfterNode(node);
-    } else if (node.previousSibling && quoteElements.includes(node.previousSibling)) {
-      focusNode = node.previousSibling;
-      textAndNodes = textAndNodesAfterNode(node.previousSibling);
-    } else {
-      continue;
-    }
+	// Find the last quoteBlock
+	for (const node of DOMWalkers.walkBackwards(doc)) {
+		let textAndNodes;
+		let focusNode = node;
+		if (node && quoteElements.includes(node)) {
+			textAndNodes = textAndNodesAfterNode(node);
+		} else if (
+			node.previousSibling &&
+			quoteElements.includes(node.previousSibling)
+		) {
+			focusNode = node.previousSibling;
+			textAndNodes = textAndNodesAfterNode(node.previousSibling);
+		} else {
+			continue;
+		}
 
-    const {text, nodes} = textAndNodes;
-    const maybeSig = text.replace(/\s/g, "");
-    if (maybeSig.length > 0) {
-      if ((focusNode.textContent || "").replace(/\s/g, "").search(Utils.escapeRegExp(maybeSig)) >= 0) {
-        return nodes;
-      }
-    }
-    break;
-  }
-  return []
+		const { text, nodes } = textAndNodes;
+		const maybeSig = text.replace(/\s/g, "");
+		if (maybeSig.length > 0) {
+			if (
+				(focusNode.textContent || "")
+					.replace(/\s/g, "")
+					.search(Utils.escapeRegExp(maybeSig)) >= 0
+			) {
+				return nodes;
+			}
+		}
+		break;
+	}
+	return [];
 }

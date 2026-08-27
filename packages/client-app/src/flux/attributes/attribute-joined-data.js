@@ -1,4 +1,4 @@
-import Attribute from './attribute';
+import Attribute from "./attribute";
 
 const NullPlaceholder = "!NULLVALUE!";
 
@@ -31,44 +31,51 @@ JoinedData attributes cannot be `queryable`.
 Section: Database
 */
 export default class AttributeJoinedData extends Attribute {
-  static NullPlaceholder = NullPlaceholder;
+	static NullPlaceholder = NullPlaceholder;
 
-  constructor({modelKey, jsonKey, modelTable, queryable, serializeFn, deserializeFn}) {
-    super({modelKey, jsonKey, queryable});
-    this.modelTable = modelTable;
-    this.serializeFn = serializeFn;
-    this.deserializeFn = deserializeFn;
-  }
+	constructor({
+		modelKey,
+		jsonKey,
+		modelTable,
+		queryable,
+		serializeFn,
+		deserializeFn,
+	}) {
+		super({ modelKey, jsonKey, queryable });
+		this.modelTable = modelTable;
+		this.serializeFn = serializeFn;
+		this.deserializeFn = deserializeFn;
+	}
 
-  serialize(thisValue, val) {
-    if (this.serializeFn) {
-      return this.serializeFn.call(thisValue, val);
-    }
-    return val;
-  }
+	serialize(thisValue, val) {
+		if (this.serializeFn) {
+			return this.serializeFn.call(thisValue, val);
+		}
+		return val;
+	}
 
-  deserialize(thisValue, val) {
-    if (this.deserializeFn) {
-      return this.deserializeFn.call(thisValue, val);
-    }
-    return val;
-  }
+	deserialize(thisValue, val) {
+		if (this.deserializeFn) {
+			return this.deserializeFn.call(thisValue, val);
+		}
+		return val;
+	}
 
-  toJSON(val) {
-    return val;
-  }
+	toJSON(val) {
+		return val;
+	}
 
-  fromJSON(val) {
-    return (val === null || val === undefined || val === false) ? null : `${val}`;
-  }
+	fromJSON(val) {
+		return val === null || val === undefined || val === false ? null : `${val}`;
+	}
 
-  selectSQL() {
-    // NullPlaceholder is necessary because if the LEFT JOIN returns nothing, it leaves the field
-    // blank, and it comes through in the result row as "" rather than NULL
-    return `IFNULL(\`${this.modelTable}\`.\`value\`, '${NullPlaceholder}') AS \`${this.modelKey}\``;
-  }
+	selectSQL() {
+		// NullPlaceholder is necessary because if the LEFT JOIN returns nothing, it leaves the field
+		// blank, and it comes through in the result row as "" rather than NULL
+		return `IFNULL(\`${this.modelTable}\`.\`value\`, '${NullPlaceholder}') AS \`${this.modelKey}\``;
+	}
 
-  includeSQL(klass) {
-    return `LEFT OUTER JOIN \`${this.modelTable}\` ON \`${this.modelTable}\`.\`id\` = \`${klass.name}\`.\`id\``;
-  }
+	includeSQL(klass) {
+		return `LEFT OUTER JOIN \`${this.modelTable}\` ON \`${this.modelTable}\`.\`id\` = \`${klass.name}\`.\`id\``;
+	}
 }
