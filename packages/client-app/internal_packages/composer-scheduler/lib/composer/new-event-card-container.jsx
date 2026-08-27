@@ -51,7 +51,7 @@ export default class NewEventCardContainer extends Component {
   }
 
   componentDidMount() {
-    this._unlisten = SchedulerActions.confirmChoices.listen(::this._onConfirmChoices);
+    this._unlisten = SchedulerActions.confirmChoices.listen(this._onConfirmChoices.bind(this));
     NewEventHelper.restoreOrCreateEvent(this.props.session)
   }
 
