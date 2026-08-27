@@ -1,5 +1,11 @@
 packages:
-  - "packages/*"
+  # Ratchet: packages join the workspace as they are converted off the
+  # 2017 manifests (babel-node/jasmine/lerna). Legacy manifests stay
+  # unresolvable (github forks, node-6 native tarballs) until their
+  # conversion round, so they are NOT workspace members yet.
+  - "packages/isomorphic-core"
 
 onlyBuiltDependencies:
   - esbuild
+
+verifyDepsBeforeRun: false

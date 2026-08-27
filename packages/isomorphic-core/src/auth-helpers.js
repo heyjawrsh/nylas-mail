@@ -1,9 +1,8 @@
 /* eslint camelcase: 0 */
 import _ from 'underscore'
 import Joi from 'joi'
-import atob from 'atob';
 import nodemailer from 'nodemailer';
-import {CommonProviderSettings} from 'imap-provider-settings';
+import {CommonProviderSettings} from '../vendor/imap-provider-settings';
 import {INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS} from './tls-utils';
 import IMAPConnection from './imap-connection'
 import {RetryableError} from './errors'
@@ -55,7 +54,7 @@ export function generateXOAuth2Token(username, accessToken) {
   // See https://developers.google.com/gmail/xoauth2_protocol
   // for more details.
   const s = `user=${username}\x01auth=Bearer ${accessToken}\x01\x01`
-  return new Buffer(s).toString('base64');
+  return Buffer.from(s).toString('base64');
 }
 
 export function googleSettings(googleToken, email) {
@@ -155,7 +154,7 @@ function bearerToken(xoauth2) {
   // token because it is re-packed during the SMTP connection login.
   // https://github.com/nodemailer/smtp-connection/blob/master/lib/smtp-connection.js#L1418
   const bearer = "Bearer ";
-  const decoded = atob(xoauth2);
+  const decoded = Buffer.from(xoauth2, 'base64').toString('utf8');
   const tokenIndex = decoded.indexOf(bearer) + bearer.length;
   return decoded.substring(tokenIndex, decoded.length - 2);
 }

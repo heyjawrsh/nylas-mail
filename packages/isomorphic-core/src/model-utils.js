@@ -57,6 +57,8 @@ function isValidId(value) {
   return true
 }
 
+export {deepClone, isValidId, copyModelValues};
+
 export default {
   deepClone,
   isValidId,

@@ -4,26 +4,24 @@
   "description": "Packages use isomorphically on n1-cloud and client-sync",
   "main": "index.js",
   "scripts": {
-    "test": "babel-node spec/run.es6"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
-    "atob": "2.0.3",
-    "btoa": "1.1.2",
-    "imap": "github:jstejada/node-imap#fix-parse-body-list",
-    "imap-provider-settings": "github:nylas/imap-provider-settings#e9913d1",
-    "jasmine": "2.x.x",
-    "joi": "8.4.2",
-    "libhoney": "1.0.0-beta.2",
-    "nodemailer": "2.5.0",
-    "promise-props": "1.0.0",
-    "promise.prototype.finally": "1.0.1",
-    "rx-lite": "4.0.8",
-    "sequelize": "3.28.0",
-    "underscore": "1.8.3",
-    "xoauth2": "1.2.0",
-    "he": "1.1.0",
-    "iconv": "2.2.1",
-    "mimelib": "0.2.19"
+    "imap": "https://codeload.github.com/jstejada/node-imap/tar.gz/fix-parse-body-list",
+    "he": "^1.2.0",
+    "iconv-lite": "^0.7.0",
+    "joi": "^17.13.3",
+    "libmime": "^5.3.7",
+    "mkdirp": "^3.0.1",
+    "nodemailer": "^7.0.0",
+    "rxjs": "^7.8.0",
+    "sequelize": "^6.37.0",
+    "underscore": "^1.13.0",
+    "xoauth2": "^1.2.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "latest",
+    "vitest": "latest"
   },
   "author": "Nylas",
   "license": "ISC"

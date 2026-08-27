@@ -8,17 +8,14 @@ module.exports = (sequelize, Sequelize) => {
     indexes: [
       { fields: ['value'] },
     ],
-    classMethods: {
-      associate: ({Account}) => {
-        AccountToken.belongsTo(Account, {
-          onDelete: "CASCADE",
-          foreignKey: {
-            allowNull: false,
-          },
-        });
-      },
-    },
   });
+
+  AccountToken.associate = ({Account}) => {
+    AccountToken.belongsTo(Account, {
+      onDelete: "CASCADE",
+      foreignKey: {allowNull: false},
+    });
+  };
 
   return AccountToken;
 };

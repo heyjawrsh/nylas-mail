@@ -1,8 +1,8 @@
-const {JSONArrayColumn} = require('../database-types');
-const {MAX_INDEXABLE_LENGTH} = require('../db-utils');
+import {JSONArrayColumn} from '../database-types'
+import {MAX_INDEXABLE_LENGTH} from '../db-utils'
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('transaction', {
+  const Transaction = sequelize.define('transaction', {
     event: Sequelize.STRING(MAX_INDEXABLE_LENGTH),
     object: Sequelize.STRING(MAX_INDEXABLE_LENGTH),
     objectId: Sequelize.STRING(MAX_INDEXABLE_LENGTH),
@@ -12,15 +12,14 @@ module.exports = (sequelize, Sequelize) => {
     indexes: [
       { fields: ['accountId'] },
     ],
-    instanceMethods: {
-      toJSON: function toJSON() {
-        return {
-          id: `${this.id}`,
-          event: this.event,
-          object: this.object,
-          objectId: `${this.objectId}`,
-        }
-      },
-    },
   });
+  Transaction.prototype.toJSON = function toJSON() {
+    return {
+      id: `${this.id}`,
+      event: this.event,
+      object: this.object,
+      objectId: `${this.objectId}`,
+    };
+  };
+  return Transaction;
 }

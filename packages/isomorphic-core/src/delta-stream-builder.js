@@ -1,6 +1,7 @@
-const _ = require('underscore');
-const Rx = require('rx-lite')
-const stream = require('stream');
+import _ from 'underscore'
+import {interval, merge} from 'rxjs'
+import {map, mergeMap, timeout} from 'rxjs/operators'
+import stream from 'stream'
 const DELTA_CONNECTION_TIMEOUT_MS = 15 * 60000;
 const OBSERVABLE_TIMEOUT_MS = DELTA_CONNECTION_TIMEOUT_MS - (1 * 60000);
 
@@ -66,13 +67,13 @@ module.exports = {
   DELTA_CONNECTION_TIMEOUT_MS: DELTA_CONNECTION_TIMEOUT_MS,
   buildAPIStream(request, {databasePromise, cursor, accountId, deltasSource}) {
     return databasePromise.then((db) => {
-      const source = Rx.Observable.merge(
-        transactionsSinceCursor(db, cursor, accountId).flatMap((ts) =>
-          stringifyTransactions(db, accountId, ts, "initial")),
-        deltasSource.flatMap((t) =>
-          stringifyTransactions(db, accountId, [t], "new")),
-        Rx.Observable.interval(1000).map(() => "\n")
-      ).timeout(OBSERVABLE_TIMEOUT_MS);
+      const source = merge(
+        transactionsSinceCursor(db, cursor, accountId).pipe(mergeMap((ts) =>
+          stringifyTransactions(db, accountId, ts, "initial"))),
+        deltasSource.pipe(mergeMap((t) =>
+          stringifyTransactions(db, accountId, [t], "new"))),
+        interval(1000).pipe(map(() => "\n"))
+      ).pipe(timeout(OBSERVABLE_TIMEOUT_MS));
 
       const outputStream = stream.Readable();
       outputStream._read = () => { return };
@@ -85,19 +86,19 @@ module.exports = {
       // Hapi's disconnect event only fires on error or unexpected aborts: https://hapijs.com/api#response-events
       request.raw.req.on('error', (error) => {
         request.logger.error({err: error}, 'Delta connection stream errored')
-        disposable.dispose()
+        disposable.unsubscribe()
       })
       request.raw.req.on('close', () => {
         request.logger.info('Delta connection stream was closed')
-        disposable.dispose()
+        disposable.unsubscribe()
       })
       request.raw.req.on('end', () => {
         request.logger.info('Delta connection stream ended')
-        disposable.dispose()
+        disposable.unsubscribe()
       })
       request.on("disconnect", () => {
         request.logger.info('Delta connection request was disconnected')
-        disposable.dispose()
+        disposable.unsubscribe()
       });
 
       return outputStream;
@@ -105,11 +106,11 @@ module.exports = {
   },
 
   buildDeltaObservable({db, cursor, accountId, deltasSource}) {
-    return Rx.Observable.merge(
-      transactionsSinceCursor(db, cursor, accountId).flatMap((ts) =>
-        inflateTransactions(db, accountId, ts, "initial")),
-      deltasSource.flatMap((t) =>
-        inflateTransactions(db, accountId, [t], "new"))
+    return merge(
+      transactionsSinceCursor(db, cursor, accountId).pipe(mergeMap((ts) =>
+        inflateTransactions(db, accountId, ts, "initial"))),
+      deltasSource.pipe(mergeMap((t) =>
+        inflateTransactions(db, accountId, [t], "new")))
     )
   },
 

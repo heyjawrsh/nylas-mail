@@ -1,8 +1,6 @@
 /* eslint no-restricted-syntax: 0 */
 
-require('promise.prototype.finally')
-const props = require('promise-props');
-const _ = require('underscore')
+import _ from 'underscore'
 
 global.Promise.prototype.thenReturn = function thenReturn(value) {
   return this.then(function then() { return Promise.resolve(value); })
@@ -52,5 +50,13 @@ module.exports = {
   sleep,
   promisify,
   promisifyAll,
-  props: props,
+  props(object) {
+    const keys = Object.keys(object);
+    return Promise.all(keys.map(key => object[key])).then((values) => {
+      return keys.reduce((resolved, key, index) => {
+        resolved[key] = values[index];
+        return resolved;
+      }, {});
+    });
+  },
 }

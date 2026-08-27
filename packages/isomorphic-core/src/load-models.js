@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs'
+import path from 'path'
 
 
 function loadModels(Sequelize, sequelize, {loadShared = true, modelDirs = [], schema} = {}) {
@@ -11,8 +11,8 @@ function loadModels(Sequelize, sequelize, {loadShared = true, modelDirs = [], sc
 
   for (const modelsDir of modelDirs) {
     for (const filename of fs.readdirSync(modelsDir)) {
-      if (filename.endsWith('.js') || filename.endsWith('.es6')) {
-        let model = sequelize.import(path.join(modelsDir, filename));
+      if (filename.endsWith('.js')) {
+        let model = require(path.join(modelsDir, filename))(sequelize, Sequelize);
         if (schema) {
           model = model.schema(schema);
         }

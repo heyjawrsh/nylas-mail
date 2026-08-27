@@ -1,15 +1,16 @@
 /* eslint no-useless-escape: 0 */
-import mailcomposer from 'mailcomposer'
-const mimelib = require('mimelib');
-const encoding = require('encoding');
-const he = require('he');
-const os = require('os');
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const {APIError} = require('./errors');
-const {deepClone} = require('./model-utils').default;
-const TrackingUtils = require('./tracking-utils').default
+import MailComposer from 'nodemailer/lib/mail-composer/index.js'
+import libmime from 'libmime'
+import iconv from 'iconv-lite'
+import addressparser from 'nodemailer/lib/addressparser/index.js'
+import he from 'he'
+import os from 'os'
+import fs from 'fs'
+import path from 'path'
+import mkdirp from 'mkdirp'
+import {APIError} from './errors'
+import {deepClone} from './model-utils'
+import TrackingUtils from './tracking-utils'
 
 // Aiming for the former in length, but the latter is the hard db cutoff
 const SNIPPET_SIZE = 100;
@@ -25,7 +26,7 @@ function parseContacts(input) {
   }
   let contacts = [];
   for (const headerLine of input) {
-    const values = mimelib.parseAddresses(headerLine);
+    const values = addressparser(headerLine);
     if (!values || values.length === 0) {
       continue;
     }
@@ -145,9 +146,10 @@ function bodyFromParts(imapMessage, desiredParts) {
     let decoded = '';
     // see https://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html
     if ((/quot(ed)?[-/]print(ed|able)?/gi).test(transferEncoding)) {
-      decoded = mimelib.decodeQuotedPrintable(imapMessage.parts[id], charset);
+      const buffer = libmime.decodeQuotedPrintable(imapMessage.parts[id]);
+      decoded = iconv.decode(buffer, charset || 'utf-8');
     } else if ((/base64/gi).test(transferEncoding)) {
-      decoded = mimelib.decodeBase64(imapMessage.parts[id], charset);
+      decoded = iconv.decode(Buffer.from(imapMessage.parts[id].toString(), 'base64'), charset || 'utf-8');
     } else {
       // Treat this as having no encoding and decode based only on the charset
       //
@@ -160,7 +162,7 @@ function bodyFromParts(imapMessage, desiredParts) {
       // (This applies to decoding quoted-printable and base64 as well. The
       // mimelib library, if charset is null, will default to utf-8)
       //
-      decoded = encoding.convert(imapMessage.parts[id], 'utf-8', charset).toString('utf-8');
+      decoded = iconv.decode(Buffer.from(imapMessage.parts[id]), charset || 'utf-8');
     }
     // desiredParts are in order of the MIME tree walk, e.g. 1.1, 1.2, 2...,
     // and for multipart/alternative arrays, we have already pulled out the
@@ -197,7 +199,7 @@ async function parseFromImap(imapMessage, desiredParts, {db, accountId, folder})
   // dynamically look up the key instead
   const headerKey = Object.keys(imapMessage.parts).filter(k => k.startsWith('HEADER'))[0]
   const headers = imapMessage.parts[headerKey].toString('ascii')
-  const parsedHeaders = mimelib.parseHeaders(headers);
+  const parsedHeaders = libmime.decodeHeaders(headers);
   for (const key of ['x-gm-thrid', 'x-gm-msgid', 'x-gm-labels']) {
     parsedHeaders[key] = attributes[key];
   }
@@ -298,7 +300,7 @@ async function buildForSend(db, json) {
   let replyToMessage;
 
   if (json.thread_id != null) {
-    replyToThread = await Thread.find({
+    replyToThread = await Thread.findOne({
       where: {id: json.thread_id},
       include: [{
         model: Message,
@@ -309,7 +311,7 @@ async function buildForSend(db, json) {
   }
 
   if (json.reply_to_message_id != null) {
-    replyToMessage = await Message.findById(
+    replyToMessage = await Message.findByPk(
       json.reply_to_message_id,
       { include: [{model: Reference, as: 'references', attributes: ['id', 'rfc2822MessageId']}] }
     )
@@ -404,7 +406,7 @@ function getMailerPayload(message) {
   const uploads = message.uploads || []
   for (const upload of uploads) {
     msgData.attachments.push({
-      filename: mimelib.encodeMimeWord(upload.filename),
+      filename: libmime.encodeWord(upload.filename),
       content: fs.createReadStream(upload.targetPath),
       cid: upload.inline ? upload.id : null,
     })
@@ -426,19 +428,14 @@ function getMailerPayload(message) {
 
 async function buildMime(message, {includeBcc = false} = {}) {
   const payload = getMailerPayload(message)
-  const builder = mailcomposer(payload)
-  const mimeNode = await (new Promise((resolve, reject) => {
-    builder.build((error, result) => (
-      error ? reject(error) : resolve(result)
-    ))
-  }));
+  const mimeNode = await new MailComposer(payload).compile().build();
   if (!includeBcc || !message.bcc || message.bcc.length === 0) {
     return mimeNode.toString('ascii')
   }
   return `Bcc: ${formatParticipants(message.bcc)}\n${mimeNode.toString('ascii')}`
 }
 
-module.exports = {
+export {
   buildForSend,
   getReplyHeaders,
   parseFromImap,

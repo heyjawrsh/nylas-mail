@@ -1,4 +1,4 @@
-const _ = require('underscore');
+import _ from 'underscore'
 
 module.exports = (db) => {
   for (const modelName of Object.keys(db)) {
@@ -12,7 +12,7 @@ module.exports = (db) => {
       instance.version = 1;
     });
     model.beforeUpdate('increment-version-u', (instance) => {
-      if (!allIgnoredFields(Object.keys(instance._changed))) {
+      if (!allIgnoredFields(instance.changed() || [])) {
         instance.version = instance.version ? instance.version + 1 : 1;
       }
     });

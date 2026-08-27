@@ -1,4 +1,5 @@
 import {BackoffScheduler, ExponentialBackoffScheduler} from '../src/backoff-schedulers'
+import {vi} from 'vitest';
 
 
 describe('BackoffSchedulers', function describeBlock() {
@@ -22,7 +23,7 @@ describe('BackoffSchedulers', function describeBlock() {
     })
 
     it('calculates the next delay correctly with jitter', () => {
-      spyOn(Math, 'random').andReturn(0.5)
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
       const scheduler = new BackoffScheduler({
         jitter: true,
         baseDelay: 2,
@@ -54,7 +55,7 @@ describe('BackoffSchedulers', function describeBlock() {
     })
 
     it('calculates the next delay correctly with no jitter', () => {
-      spyOn(Math, 'random').andReturn(0.5)
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
       const scheduler = new ExponentialBackoffScheduler({
         jitter: true,
         baseDelay: 2,

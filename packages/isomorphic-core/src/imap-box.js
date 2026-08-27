@@ -1,6 +1,6 @@
-const _ = require('underscore');
-const {RetryableError} = require('./errors')
-const {IMAPConnectionNotReadyError} = require('./imap-errors');
+import _ from 'underscore'
+import {RetryableError} from './errors'
+import {IMAPConnectionNotReadyError} from './imap-errors'
 
 /*
 IMAPBox uses Proxy to wrap the "box" exposed by node-imap. It provides higher-level

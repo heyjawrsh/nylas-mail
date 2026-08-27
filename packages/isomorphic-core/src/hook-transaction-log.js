@@ -1,4 +1,4 @@
-const _ = require('underscore')
+import _ from 'underscore'
 
 module.exports = (db, sequelize, {only, onCreatedTransaction} = {}) => {
   if (!db.Transaction) {
@@ -13,8 +13,10 @@ module.exports = (db, sequelize, {only, onCreatedTransaction} = {}) => {
   }
 
   const transactionLogger = (event) => {
-    return ({dataValues, _changed, $modelOptions}) => {
-      let name = $modelOptions.name.singular;
+    return (hookValue) => {
+      const instance = Array.isArray(hookValue) ? hookValue[0] : hookValue;
+      const dataValues = instance.dataValues;
+      let name = instance.constructor.options.name.singular;
       if (name === 'metadatum') {
         name = 'metadata';
       }
@@ -29,11 +31,11 @@ module.exports = (db, sequelize, {only, onCreatedTransaction} = {}) => {
         return;
       }
 
-      if ((only && !only.includes(name)) || isTransaction($modelOptions)) {
+      if ((only && !only.includes(name)) || isTransaction(instance.constructor.options)) {
         return;
       }
 
-      const changedFields = Object.keys(_changed)
+      const changedFields = instance.changed() || [];
       if (event !== 'delete' && (changedFields.length === 0 || allIgnoredFields(changedFields))) {
         return;
       }

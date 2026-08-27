@@ -1,5 +1,5 @@
-const IMAPConnection = require('./imap-connection').default;
-const {inDevMode} = require('./env-helpers')
+import IMAPConnection from './imap-connection'
+import {inDevMode} from './env-helpers'
 
 const MAX_DEV_MODE_CONNECTIONS = 3
 const MAX_GMAIL_CONNECTIONS = 7;

@@ -1,7 +1,7 @@
-const fs = require('fs')
-const mkdirp = require('mkdirp')
-const path = require('path')
-const zlib = require('zlib')
+import fs from 'fs'
+import mkdirp from 'mkdirp'
+import path from 'path'
+import zlib from 'zlib'
 
 const MAX_PATH_DIRS = 5;
 const FILE_EXTENSION = 'nylasmail'
