@@ -121,3 +121,23 @@ Ringer ledger: 11 rounds, 30+ tasks; every failed lane's work salvaged + verifie
 
 ### Ringer ledger
 6 rounds, 21 tasks run; salvage pattern (verify worktree, import, fix inline) recovered 5 failed lanes' work. Post-mortems: worker sandboxes have NO network (specs must be edit-only); pnpm auto-inserts `allowBuilds` placeholders that poison worktrees — purge after every add; OAuth capacity limits max_parallel to 2.
+
+
+## Loop 13 — Electron 44 boot convergence (commit 5f81de083)
+
+Smoke (`pnpm --filter nylas-mail run smoke`) reaches renderer init: main process
+boots, config loads, sqlite opens (better-sqlite3 13 sync API), window manager
+starts, "App load time" logged. Sixteen boot crashes fixed in the loop (API
+ports + module-system unification; see commit message for the full list).
+
+### Remaining to `pnpm smoke` green
+Renderer module graph under React 19: the renderer loads the flux stores +
+component kit through the vendored reflux and 300 converted JSX components.
+Boot crashes now surface one-per-launch from the renderer require chain. This is
+the same converge-by-iteration pattern; each fix is one Electron launch away.
+
+### Remaining to full goal
+1. Renderer boot (above) -> smoke exit 0.
+2. client-app coverage 0.32% -> 60% (18,334-line UI surface; needs component
+   test authoring at scale — ringer swarm rounds over the component tree).
+3. Final `pnpm -r test` (blocked only by #2's gate).
