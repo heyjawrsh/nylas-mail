@@ -22,5 +22,6 @@ verifyDepsBeforeRun: false
 
 allowBuilds:
   '@scarf/scarf': set this to true or false
+  esbuild: set this to true or false
   sqlite3: set this to true or false
   unix-dgram: set this to true or false

@@ -1,0 +1,209 @@
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const React = require('react');
+const ReactDOM = require('react-dom');
+const _ = require('underscore');
+const {Utils,
+ Actions,
+ ComponentRegistry,
+ PriorityUICoordinator} = require("nylas-exports");
+
+const ResizableHandle = {
+  Top: {
+    axis: 'vertical',
+    className: 'flexbox-handle-vertical flexbox-handle-top',
+    transform(state, props, event) {
+      return {'height': Math.min(props.maxHeight != null ? props.maxHeight : 10000, Math.max(props.minHeight != null ? props.minHeight : 0, state.bcr.bottom - event.pageY))};
+    }
+  },
+  Bottom: {
+    axis: 'vertical',
+    className: 'flexbox-handle-vertical flexbox-handle-bottom',
+    transform(state, props, event) {
+      return {'height': Math.min(props.maxHeight != null ? props.maxHeight : 10000, Math.max(props.minHeight != null ? props.minHeight : 0, event.pageY - state.bcr.top))};
+    }
+  },
+  Left: {
+    axis: 'horizontal',
+    className: 'flexbox-handle-horizontal flexbox-handle-left',
+    transform(state, props, event) {
+      return {'width': Math.min(props.maxWidth != null ? props.maxWidth : 10000, Math.max(props.minWidth != null ? props.minWidth : 0, state.bcr.right - event.pageX))};
+    }
+  },
+  Right: {
+    axis: 'horizontal',
+    className: 'flexbox-handle-horizontal flexbox-handle-right',
+    transform(state, props, event) {
+      return {'width': Math.min(props.maxWidth != null ? props.maxWidth : 10000, Math.max(props.minWidth != null ? props.minWidth : 0, event.pageX - state.bcr.left))};
+    }
+  }
+};
+
+/*
+Public: ResizableRegion wraps it's `children` in a div with a fixed width or height, and a
+draggable edge. It is used throughout N1 to implement resizable columns, trays, etc.
+
+Section: Component Kit
+*/
+class ResizableRegion extends React.Component {
+  static initClass() {
+    this.displayName = 'ResizableRegion';
+  
+    /*
+    Public: React `props` supported by ResizableRegion:
+  
+     - `handle` Provide a {ResizableHandle} to indicate which edge of the
+       region should be draggable.
+     - `onResize` A {Function} that will be called continuously as the region is resized.
+     - `initialWidth` (optional) Initial width, if the handle indicates a horizontal resizing axis.
+     - `minWidth` (optional) Minimum width, if the handle indicates a horizontal resizing axis.
+     - `maxWidth` (optional) Maximum width, if the handle indicates a horizontal resizing axis.
+     - `initialHeight` (optional) Initial height, if the handle indicates a vertical resizing axis.
+     - `minHeight` (optional) Minimum height, if the handle indicates a vertical resizing axis.
+     - `maxHeight` (optional) Maximum height, if the handle indicates a vertical resizing axis.
+    */
+    this.propTypes = {
+      handle: React.PropTypes.object.isRequired,
+      onResize: React.PropTypes.func,
+  
+      initialWidth: React.PropTypes.number,
+      minWidth: React.PropTypes.number,
+      maxWidth: React.PropTypes.number,
+  
+      initialHeight: React.PropTypes.number,
+      minHeight: React.PropTypes.number,
+      maxHeight: React.PropTypes.number,
+  
+      style: React.PropTypes.object
+    };
+  }
+
+  constructor(props) {
+    this.render = this.render.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this._mouseDown = this._mouseDown.bind(this);
+    this._mouseUp = this._mouseUp.bind(this);
+    this._mouseMove = this._mouseMove.bind(this);
+    if (props == null) { props = {}; }
+    this.props = props;
+    if (this.props.handle == null) { this.props.handle = ResizableHandle.Right; }
+    this.state = {
+      dragging: false,
+      width: this.props.initialWidth,
+      height: this.props.initialHeight
+    };
+  }
+
+  render() {
+    let containerStyle;
+    if (this.props.handle.axis === 'horizontal') {
+      containerStyle = _.extend({}, this.props.style, {
+        'minWidth': this.props.minWidth,
+        'maxWidth': this.props.maxWidth,
+        'position': 'relative'
+      }
+      );
+
+      if (this.state.width != null) {
+        containerStyle.width = this.state.width;
+      } else {
+        containerStyle.flex = 1;
+      }
+
+    } else {
+      containerStyle = _.extend({}, this.props.style, {
+        'minHeight': this.props.minHeight,
+        'maxHeight': this.props.maxHeight,
+        'position': 'relative',
+        'width': '100%'
+      }
+      );
+
+      if (this.state.height != null) {
+        containerStyle.height = this.state.height;
+      } else {
+        containerStyle.flex = 1;
+      }
+    }
+
+    const otherProps = Utils.fastOmit(this.props, Object.keys(this.constructor.propTypes));
+
+    return React.createElement("div", Object.assign({"style": (containerStyle)}, otherProps),
+      (this.props.children),
+      React.createElement("div", {"className": (this.props.handle.className),  
+           "onMouseDown": (this._mouseDown)}, React.createElement("div", null)
+      )
+    );
+  }
+
+  componentDidUpdate(lastProps, lastState) {
+    if (lastState.dragging && !this.state.dragging) {
+      document.removeEventListener('mousemove', this._mouseMove);
+      return document.removeEventListener('mouseup', this._mouseUp);
+    } else if (!lastState.dragging && this.state.dragging) {
+      document.addEventListener('mousemove', this._mouseMove);
+      return document.addEventListener('mouseup', this._mouseUp);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ((nextProps.handle.axis === 'vertical') && (nextProps.initialHeight !== this.props.initialHeight)) {
+      this.setState({height: nextProps.initialHeight});
+    }
+    if ((nextProps.handle.axis === 'horizontal') && (nextProps.initialWidth !== this.props.initialWidth)) {
+      return this.setState({width: nextProps.initialWidth});
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._taskId) { PriorityUICoordinator.endPriorityTask(this._taskId); }
+    return this._taskId = null;
+  }
+
+  _mouseDown(event) {
+    if (event.button !== 0) { return; }
+    const bcr = ReactDOM.findDOMNode(this).getBoundingClientRect();
+    this.setState({
+      dragging: true,
+      bcr
+    });
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (this._taskId) { PriorityUICoordinator.endPriorityTask(this._taskId); }
+    return this._taskId = PriorityUICoordinator.beginPriorityTask();
+  }
+
+  _mouseUp(event) {
+    if (event.button !== 0) { return; }
+    this.setState({
+      dragging: false});
+    if (this.props.onResize) { this.props.onResize(this.state.height != null ? this.state.height : this.state.width); }
+    event.stopPropagation();
+    event.preventDefault();
+
+    PriorityUICoordinator.endPriorityTask(this._taskId);
+    return this._taskId = null;
+  }
+
+  _mouseMove(event) {
+    if (!this.state.dragging) { return; }
+    this.setState(this.props.handle.transform(this.state, this.props, event));
+    if (this.props.onResize) { this.props.onResize(this.state.height != null ? this.state.height : this.state.width); }
+    event.stopPropagation();
+    return event.preventDefault();
+  }
+}
+ResizableRegion.initClass();
+
+ResizableRegion.Handle = ResizableHandle;
+
+module.exports = ResizableRegion;

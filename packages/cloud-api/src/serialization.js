@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi'
 
 function replacer(key, value) {
   // force remove any disallowed keys here
@@ -24,7 +24,9 @@ function jsonStringify(models) {
   return JSON.stringify(models, replacer, 2);
 }
 
-module.exports = {
+const Serialization = {
   jsonSchema,
   jsonStringify,
 }
+export {jsonSchema, jsonStringify}
+export default Serialization
