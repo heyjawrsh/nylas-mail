@@ -26,7 +26,17 @@ Goal: revive the archived Nylas Mail monorepo on a current toolchain (Node LTS, 
 
 ## Allowlist (entries allowed in `pnpm outdated`)
 
-_None yet. Every entry needs: dep, reason, replacement candidates evaluated._
+`pnpm outdated -r` is CLEAN as of 2026-08-27 (commit 7308d9256). Entries below are
+vendored/dead-library records, not registry pins:
+
+| Dep | Disposition | Reason | Replacement evaluated |
+|---|---|---|---|
+| reflux 6.4.1 | vendored (client-app/src/vendor) | archived upstream, load-bearing store API (10 files) | zustand/mobx — deferred (would be a product-level state rewrite) |
+| fs-plus 3.1.1 | vendored | archived atom-era fs helpers (18 files) | node:fs + mkdirp — deferred (API-surface parity needed first) |
+| event-kit 2.5.3 | vendored | archived atom emitter API (10 files) | node:events — deferred (dispose semantics differ) |
+| emissary 1.3.3 | vendored | archived atom mixin API (4 files) | none exists; manual rewrite required |
+| imap-provider-settings | vendored dataset (isomorphic-core/vendor) | upstream repo+npm deleted 2023 | reconstructed from fork + 2026 provider docs |
+| decaffeinate 8.1.4 | tooling (ringer tools dir, not a manifest dep) | one-shot CS→JS migration | hand migration — inferior at 300+ files |
 
 ## Loop log
 
