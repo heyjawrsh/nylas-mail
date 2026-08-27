@@ -1,4 +1,7 @@
 /* eslint global-require: 0 */
+import { createRequire } from "node:module";
+
+const nodeRequire = createRequire(import.meta.url);
 import {
 	InlineStyleTransformer,
 	SanitizeTransformer,
@@ -36,9 +39,9 @@ export default class ClipboardService extends ContenteditableService {
 		const item = event.clipboardData.items[0];
 
 		if (item.kind === "file") {
-import temp from 'temp';
-import path from 'node:path';
-import fs from 'node:fs';
+			const temp = nodeRequire("temp");
+			const path = nodeRequire("node:path");
+			const fs = nodeRequire("node:fs");
 			const blob = item.getAsFile();
 			const ext =
 				{

@@ -5,6 +5,7 @@ import NylasAPIRequest from "./nylas-api-request.js";
 import DatabaseStore from "./stores/database-store.js";
 import Message from "./models/message.js";
 import Thread from "./models/thread.js";
+import url from "node:url";
 
 function attachMetadataToResponse(jsons, metadataToAttach) {
 	if (!metadataToAttach) return;
@@ -165,7 +166,6 @@ that could not be found and purges it from local cache.
 Handles: /account/<nid>/<collection>/<id>
 */
 export function handleModel404(modelUrl) {
-import url from 'node:url';
 	const { pathname } = url.parse(modelUrl, true);
 	const components = pathname.split("/");
 

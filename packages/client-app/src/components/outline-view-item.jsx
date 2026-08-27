@@ -1,7 +1,10 @@
 /* eslint global-require:0 */
 /* eslint jsx-a11y/tabindex-no-positive:0 */
 
+import { createRequire } from "node:module";
 import _ from "underscore";
+
+const nodeRequire = createRequire(import.meta.url);
 import { Utils } from "nylas-exports";
 import classnames from "classnames";
 import { Component } from "react";
@@ -267,7 +270,7 @@ class OutlineViewItem extends Component {
 		event.stopPropagation();
 		const item = this.props.item;
 		const contextMenuLabel = item.contextMenuLabel || item.name;
-import {remote} from 'electron';
+		const { remote } = nodeRequire("electron");
 		const { Menu, MenuItem } = remote;
 		const menu = new Menu();
 

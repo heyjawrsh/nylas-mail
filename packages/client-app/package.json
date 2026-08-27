@@ -1,65 +1,65 @@
 {
-  "name": "nylas-mail",
-  "productName": "Nylas Mail",
-  "version": "2.1.0",
-  "private": true,
-  "description": "The best email app for people and teams at work",
-  "license": "GPL-3.0",
-  "main": "./src/browser/main.js",
-  "scripts": {
-    "start": "electron . --dev --enable-logging",
-    "test": "vitest run --coverage",
-    "smoke": "node scripts/smoke.js"
-  },
-  "dependencies": {
-    "async": "^3.2.6",
-    "better-sqlite3": "^13.0.3",
-    "chrono-node": "^2.10.1",
-    "classnames": "^2.5.1",
-    "emissary": "file:src/vendor/emissary",
-    "event-kit": "file:src/vendor/event-kit",
-    "fs-plus": "file:src/vendor/fs-plus",
-    "getmac": "^6.6.0",
-    "iconv-lite": "^0.7.0",
-    "immutable": "^5.1.9",
-    "kbpgp": "^2.1.18",
-    "libmime": "^5.3.7",
-    "marked": "^18.0.11",
-    "minimist": "^1.2.8",
-    "mkdirp": "^3.0.1",
-    "moment": "^2.30.1",
-    "moment-round": "^1.0.1",
-    "moment-timezone": "^0.6.1",
-    "mousetrap": "^1.6.5",
-    "node-emoji": "^2.2.0",
-    "nslog": "^3.2.0",
-    "optimist": "^0.6.1",
-    "prop-types": "^15.8.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-transition-group": "^4.4.5",
-    "reflux": "file:src/vendor/reflux",
-    "rimraf": "^6.0.1",
-    "rxjs": "^7.8.0",
-    "sanitize-html": "^2.17.7",
-    "semver": "^7.8.5",
-    "source-map-support": "^0.5.21",
-    "underscore": "^1.13.7",
-    "uuid": "^14.0.2"
-  },
-  "devDependencies": {
-    "@testing-library/react": "^16.3.0",
-    "@vitest/coverage-v8": "latest",
-    "electron": "^44.0.0",
-    "jsdom": "^30.0.1",
-    "vitest": "latest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nylas/nylas-mail.git"
-  },
-  "author": "Nylas",
-  "engines": {
-    "node": ">=24"
-  }
+	"name": "nylas-mail",
+	"productName": "Nylas Mail",
+	"version": "2.1.0",
+	"private": true,
+	"description": "The best email app for people and teams at work",
+	"license": "GPL-3.0",
+	"main": "./src/browser/main.js",
+	"scripts": {
+		"start": "electron . --dev --enable-logging",
+		"test": "vitest run --coverage",
+		"smoke": "node scripts/smoke.js"
+	},
+	"dependencies": {
+		"async": "^3.2.6",
+		"better-sqlite3": "^13.0.3",
+		"chrono-node": "^2.10.1",
+		"classnames": "^2.5.1",
+		"emissary": "file:src/vendor/emissary",
+		"event-kit": "file:src/vendor/event-kit",
+		"fs-plus": "file:src/vendor/fs-plus",
+		"getmac": "^6.6.0",
+		"iconv-lite": "^0.7.0",
+		"immutable": "^5.1.9",
+		"kbpgp": "^2.1.18",
+		"libmime": "^5.3.7",
+		"marked": "^18.0.11",
+		"minimist": "^1.2.8",
+		"mkdirp": "^3.0.1",
+		"moment": "^2.30.1",
+		"moment-round": "^1.0.1",
+		"moment-timezone": "^0.6.1",
+		"mousetrap": "^1.6.5",
+		"node-emoji": "^2.2.0",
+		"nslog": "^3.2.0",
+		"optimist": "^0.6.1",
+		"prop-types": "^15.8.1",
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8",
+		"react-transition-group": "^4.4.5",
+		"reflux": "file:src/vendor/reflux",
+		"rimraf": "^6.0.1",
+		"rxjs": "^7.8.0",
+		"sanitize-html": "^2.17.7",
+		"semver": "^7.8.5",
+		"source-map-support": "^0.5.21",
+		"underscore": "^1.13.7",
+		"uuid": "^14.0.2"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^16.3.0",
+		"@vitest/coverage-v8": "latest",
+		"electron": "^44.0.0",
+		"jsdom": "^30.0.1",
+		"vitest": "latest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nylas/nylas-mail.git"
+	},
+	"author": "Nylas",
+	"engines": {
+		"node": ">=24"
+	}
 }

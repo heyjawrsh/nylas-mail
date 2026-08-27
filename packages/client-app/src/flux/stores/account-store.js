@@ -8,6 +8,8 @@ import Actions from "../actions.js";
 import Account from "../models/account.js";
 import Utils from "../models/utils.js";
 import DatabaseStore from "./database-store.js";
+import fs from "fs-plus";
+import path from "node:path";
 
 const configAccountsKey = "nylas.accounts";
 const configVersionKey = "nylas.accountsVersion";
@@ -416,8 +418,6 @@ class AccountStore extends NylasStore {
 
 	// Private: Load fake data from a directory for taking nice screenshots
 	_importFakeData = (dir) => {
-import fs from 'fs-plus';
-import path from 'node:path';
 		const Message = require("../models/message").default;
 		const Thread = require("../models/thread").default;
 

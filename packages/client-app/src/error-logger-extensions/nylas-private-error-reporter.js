@@ -10,10 +10,16 @@ try {
 } catch (_e) {
 	Raven = {
 		captureException(err, opts) {
-			console.error("[raven-unavailable]", err, opts && opts.extra);
+			console.error("[raven-unavailable]", err, opts?.extra);
 		},
 		disableConsoleAlerts() {},
-		config() { return {install() { return this }} },
+		config() {
+			return {
+				install() {
+					return this;
+				},
+			};
+		},
 		install() {},
 	};
 }
@@ -39,7 +45,10 @@ class ErrorReporter {
 
 		if (!this.inSpecMode) {
 			try {
-				Promise.resolve(typeof getMac === "function" ? getMac() : getmac.default()).then((macAddress) => { const err = null;
+				Promise.resolve(
+					typeof getMac === "function" ? getMac() : getmac.default(),
+				).then((macAddress) => {
+					const err = null;
 					if (!err && macAddress) {
 						this.deviceHash = crypto
 							.createHash("md5")

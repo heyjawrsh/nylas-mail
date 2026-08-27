@@ -1,3 +1,7 @@
+import { createRequire } from "node:module";
+
+const nodeRequire = createRequire(import.meta.url);
+
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 import TaskRegistry from "../registries/task-registry.js";
@@ -53,7 +57,7 @@ const lazyLoadAndRegisterTask = (klassName, path) => {
 };
 
 const lazyLoadDeprecated = (prop, path, { instead } = {}) => {
-import {deprecate} from '../deprecate-utils.js';
+	const { deprecate } = nodeRequire("../deprecate-utils.js");
 	Object.defineProperty(exports, prop, {
 		get: deprecate(prop, instead, exports, () => {
 			return resolveExport(require(`../${path}`));

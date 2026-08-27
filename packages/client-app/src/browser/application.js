@@ -11,7 +11,7 @@ import {
 } from "electron";
 
 import fs from "fs-plus";
-import {createRequire} from "node:module";
+import { createRequire } from "node:module";
 
 const nodeRequire = createRequire(import.meta.url);
 import url from "node:url";
@@ -87,7 +87,8 @@ export default class Application extends EventEmitter {
 			});
 			return;
 		}
-		const Config = nodeRequire("../config.js").default || nodeRequire("../config.js");
+		const Config =
+			nodeRequire("../config.js").default || nodeRequire("../config.js");
 		const config = new Config();
 		this.config = config;
 		this.configPersistenceManager = new ConfigPersistenceManager({
@@ -575,7 +576,7 @@ export default class Application extends EventEmitter {
 		});
 
 		ipcMain.on("inline-style-parse", (event, { html, key }) => {
-			const juice = nodeRequire('juice');
+			const juice = nodeRequire("juice");
 			let out = null;
 			try {
 				out = juice(html);

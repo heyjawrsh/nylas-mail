@@ -89,5 +89,6 @@ import _ from "underscore";
 	};
 
 	module.exports = plus;
-	export default plus;
 }).call(this);
+
+export default module.exports;
