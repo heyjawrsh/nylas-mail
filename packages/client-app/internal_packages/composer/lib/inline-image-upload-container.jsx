@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { Actions } from "nylas-exports";
 import { ImageAttachmentItem } from "nylas-component-kit";
 

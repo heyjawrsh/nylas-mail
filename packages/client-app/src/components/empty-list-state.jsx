@@ -12,7 +12,7 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const classNames = require("classnames");
 const RetinaImg = require("./retina-img").default;
-const EventedIFrame = require("./evented-iframe");
+const _EventedIFrame = require("./evented-iframe");
 const {
 	FolderSyncProgressStore,
 	FocusedPerspectiveStore,

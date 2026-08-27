@@ -7,7 +7,7 @@
 const { MessageStore, React } = require("nylas-exports");
 const { RetinaImg } = require("nylas-component-kit");
 const PGPKeyStore = require("./pgp-key-store");
-const pgp = require("kbpgp");
+const _pgp = require("kbpgp");
 const _ = require("underscore");
 
 // Sits next to recipient chips in the composer and turns them green/red
@@ -42,7 +42,7 @@ class RecipientKeyChip extends React.Component {
 		return {
 			// true if there is at least one loaded key for the account
 			keys: PGPKeyStore.pubKeys(this.props.contact.email).some(
-				(cv, ind, arr) => {
+				(cv, _ind, _arr) => {
 					return Object.hasOwn(cv, "key");
 				},
 			),

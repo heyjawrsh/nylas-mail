@@ -132,7 +132,7 @@ class DraftStore extends NylasStore {
 		// window.close() within on onbeforeunload could do weird things.
 		_.each(this._draftSessions, (session) => {
 			const draft = session.draft();
-			if (draft && draft.pristine) {
+			if (draft?.pristine) {
 				Actions.queueTask(new DestroyDraftTask(session.draftClientId));
 			} else {
 				promises.push(session.changes.commit());
@@ -334,7 +334,7 @@ class DraftStore extends NylasStore {
 		});
 	};
 
-	_onHandleMailtoLink = (event, urlString) => {
+	_onHandleMailtoLink = (_event, urlString) => {
 		// Actions.recordUserEvent("Draft Created", {type: "mailto"});
 		const timerId = Utils.generateTempId();
 		NylasEnv.timer.start(`open-composer-window-${timerId}`);
@@ -354,7 +354,7 @@ class DraftStore extends NylasStore {
 			});
 	};
 
-	_onHandleMailFiles = (event, paths) => {
+	_onHandleMailFiles = (_event, paths) => {
 		// Actions.recordUserEvent("Draft Created", {type: "dropped-file-in-dock"});
 		const timerId = Utils.generateTempId();
 		NylasEnv.timer.start(`open-composer-window-${timerId}`);

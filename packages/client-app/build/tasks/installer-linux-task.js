@@ -1,6 +1,6 @@
 /* eslint global-require:0 */
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const _ = require("underscore");
 
 module.exports = (grunt) => {
@@ -34,7 +34,7 @@ module.exports = (grunt) => {
 	const getInstalledSize = (dir, callback) => {
 		const cmd = "du";
 		const args = ["-sk", dir];
-		spawn({ cmd, args }, (error, { stdout }) => {
+		spawn({ cmd, args }, (_error, { stdout }) => {
 			const installedSize = stdout.split(/\s+/).shift() || "200000"; // default to 200MB
 			callback(null, installedSize);
 		});

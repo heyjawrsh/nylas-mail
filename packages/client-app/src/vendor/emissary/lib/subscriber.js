@@ -1,6 +1,6 @@
 (() => {
 	var Mixin,
-		Signal,
+		_Signal,
 		Subscriber,
 		Subscription,
 		WeakMap,
@@ -23,7 +23,7 @@
 
 	Mixin = require("mixto");
 
-	Signal = null;
+	_Signal = null;
 
 	WeakMap = (_ref = global.WeakMap) != null ? _ref : require("es6-weak-map");
 
@@ -133,7 +133,7 @@
 					}
 				}
 				return (_ref5 = this._subscriptionsByObject) != null
-					? _ref5["delete"](object)
+					? _ref5.delete(object)
 					: void 0;
 			} else {
 				_ref7 = (_ref6 = this._subscriptions) != null ? _ref6 : [];

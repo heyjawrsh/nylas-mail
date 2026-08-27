@@ -1,6 +1,6 @@
 import { app, protocol } from "electron";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 // Handles requests with 'nylas' protocol.
 //
@@ -37,7 +37,7 @@ export default class NylasProtocolHandler {
 			if (relativePath.indexOf("assets/") === 0) {
 				const assetsPath = path.join(this.dotNylasDirectory, relativePath);
 				const assetsStats = fs.statSyncNoException(assetsPath);
-				if (assetsStats.isFile && assetsStats.isFile()) {
+				if (assetsStats.isFile?.()) {
 					filePath = assetsPath;
 				}
 			}
@@ -46,7 +46,7 @@ export default class NylasProtocolHandler {
 				for (const loadPath of this.loadPaths) {
 					filePath = path.join(loadPath, relativePath);
 					const fileStats = fs.statSyncNoException(filePath);
-					if (fileStats.isFile && fileStats.isFile()) {
+					if (fileStats.isFile?.()) {
 						break;
 					}
 				}

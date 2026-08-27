@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { shell } from "electron";
 import { RetinaImg } from "nylas-component-kit";

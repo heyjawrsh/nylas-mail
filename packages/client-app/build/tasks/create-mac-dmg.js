@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const createDMG = require("electron-installer-dmg");
 
 module.exports = (grunt) => {

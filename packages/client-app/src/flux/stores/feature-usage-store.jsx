@@ -1,5 +1,4 @@
 import Rx from "rx-lite";
-import React from "react";
 import NylasStore from "nylas-store";
 import { FeatureUsedUpModal } from "nylas-component-kit";
 import Actions from "../actions";

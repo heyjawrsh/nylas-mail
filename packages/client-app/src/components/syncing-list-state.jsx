@@ -1,4 +1,4 @@
-import { Actions, React } from "nylas-exports";
+import { Actions } from "nylas-exports";
 import PropTypes from "prop-types";
 
 function SyncingListState(props) {

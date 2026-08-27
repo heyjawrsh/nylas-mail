@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { DropZone, TokenizingTextField } from "nylas-component-kit";
@@ -110,13 +110,11 @@ class MailMergeParticipantsTextField extends Component {
 			"mail-merge-participants-text-field": true,
 			[className]: true,
 		});
-		const tokens = tokenDataSource
-			.tokensForField(field)
-			.map((token) => ({
-				...token,
-				tableDataSource,
-				rowIdx: selection.rowIdx,
-			}));
+		const tokens = tokenDataSource.tokensForField(field).map((token) => ({
+			...token,
+			tableDataSource,
+			rowIdx: selection.rowIdx,
+		}));
 
 		return (
 			<DropZone onDrop={this.onDrop} shouldAcceptDrop={this.shouldAcceptDrop}>

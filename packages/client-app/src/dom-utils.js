@@ -104,7 +104,7 @@ var DOMUtils = {
 					if (el.parentNode) {
 						el.parentNode.removeChild(el);
 					}
-				} catch (error) {}
+				} catch (_error) {}
 			}
 			return elements;
 		},
@@ -347,7 +347,7 @@ var DOMUtils = {
 		}
 		try {
 			range = selection.getRangeAt(0);
-		} catch (error) {
+		} catch (_error) {
 			console.warn("Selection is not returning a range");
 			return document.createRange();
 		}
@@ -956,7 +956,7 @@ var DOMUtils = {
 		const newNode = document.createElement(nodeName);
 		try {
 			range.surroundContents(newNode);
-		} catch (error) {
+		} catch (_error) {
 			newNode.appendChild(range.extractContents());
 			range.insertNode(newNode);
 		}

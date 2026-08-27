@@ -11,9 +11,9 @@ const { React, Actions, AccountStore } = require("nylas-exports");
 const { remote } = require("electron");
 const Identity = require("./identity");
 const PGPKeyStore = require("./pgp-key-store");
-const PassphrasePopover = require("./passphrase-popover");
+const _PassphrasePopover = require("./passphrase-popover");
 const _ = require("underscore");
-const fs = require("fs");
+const fs = require("node:fs");
 const pgp = require("kbpgp");
 
 module.exports = PrivateKeyPopover = (() => {
@@ -66,7 +66,7 @@ module.exports = PrivateKeyPopover = (() => {
 			);
 
 			return (
-				<div className="private-key-popover" tabIndex={0}>
+				<div className="private-key-popover">
 					<span key="title" className="picker-title">
 						<b>
 							No PGP private key found.
@@ -163,7 +163,7 @@ module.exports = PrivateKeyPopover = (() => {
 			return Actions.openPreferences();
 		}
 
-		_onClickImport(event) {
+		_onClickImport(_event) {
 			return NylasEnv.showOpenDialog(
 				{
 					title: "Import PGP Key",
@@ -172,7 +172,7 @@ module.exports = PrivateKeyPopover = (() => {
 				},
 				(filepath) => {
 					if (filepath != null) {
-						return fs.readFile(filepath[0], (err, data) => {
+						return fs.readFile(filepath[0], (_err, data) => {
 							return pgp.KeyManager.import_from_armored_pgp(
 								{
 									armored: data,
@@ -205,7 +205,7 @@ module.exports = PrivateKeyPopover = (() => {
 			);
 		}
 
-		_onClickPaste(event) {
+		_onClickPaste(_event) {
 			return this.setState({
 				paste: !this.state.paste,
 				import: false,

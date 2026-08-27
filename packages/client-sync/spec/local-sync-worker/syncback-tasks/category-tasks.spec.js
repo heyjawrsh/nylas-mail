@@ -39,7 +39,6 @@ import RenameFolderIMAP from "../../../src/local-sync-worker/syncback-tasks/rena
 import DeleteFolderIMAP from "../../../src/local-sync-worker/syncback-tasks/delete-folder.imap.js";
 import CreateCategoryIMAP from "../../../src/local-sync-worker/syncback-tasks/create-category.imap.js";
 import SendMessageSMTP from "../../../src/local-sync-worker/syncback-tasks/send-message.smtp.js";
-import SyncbackTask from "../../../src/local-sync-worker/syncback-tasks/syncback-task.js";
 
 const account = {
 	id: "acct-1",

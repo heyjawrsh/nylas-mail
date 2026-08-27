@@ -35,11 +35,11 @@ class ThreadListScrollTooltip extends React.Component {
 		return this.setupForProps(newProps);
 	}
 
-	shouldComponentUpdate(newProps, newState) {
+	shouldComponentUpdate(_newProps, newState) {
 		return (this.state != null ? this.state.idx : undefined) !== newState.idx;
 	}
 
-	setupForProps(props) {
+	setupForProps(_props) {
 		const idx = Math.floor(
 			(ThreadListStore.dataSource().count() / this.props.totalHeight) *
 				this.props.viewportCenter,

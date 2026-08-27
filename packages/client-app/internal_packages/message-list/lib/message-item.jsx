@@ -21,7 +21,7 @@ const {
 	InjectedComponentSet,
 	InjectedComponent,
 } = require("nylas-component-kit");
-const TransparentPixel =
+const _TransparentPixel =
 	"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNikAQAACIAHF/uBd8AAAAASUVORK5CYII=";
 
 class MessageItem extends React.Component {
@@ -205,7 +205,7 @@ class MessageItem extends React.Component {
 			return [];
 		}
 		const acct = AccountStore.accountForId(this.props.message.accountId);
-		const acctUsesFolders = acct && acct.usesFolders();
+		const acctUsesFolders = acct?.usesFolders();
 		const folder =
 			this.props.message.categories != null
 				? this.props.message.categories[0]

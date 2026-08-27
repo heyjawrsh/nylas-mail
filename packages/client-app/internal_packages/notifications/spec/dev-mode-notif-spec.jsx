@@ -1,5 +1,4 @@
 import { mount } from "enzyme";
-import { React } from "nylas-exports";
 import DevModeNotification from "../lib/items/dev-mode-notif";
 
 describe("DevModeNotif", function DevModeNotifTests() {

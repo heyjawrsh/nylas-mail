@@ -39,7 +39,7 @@ export async function handleModelResponse(jsons) {
 	}
 
 	let response = jsons;
-	if (!(response instanceof Array)) {
+	if (!Array.isArray(response)) {
 		response = [response];
 	}
 	if (response.length === 0) {
@@ -70,7 +70,7 @@ export async function handleModelResponse(jsons) {
 	// deleted them moments ago).
 	const unlockedJSONs = _.filter(uniquedJSONs, (json) => {
 		if (NylasAPI.lockTracker.acceptRemoteChangesTo(Klass, json.id) === false) {
-			if (json && json._delta) {
+			if (json?._delta) {
 				json._delta.ignoredBecause =
 					"Model is locked, possibly because it's already been deleted.";
 			}
@@ -126,15 +126,15 @@ export async function handleModelResponse(jsons) {
 		let model = existingModels[json.id];
 
 		const isSameOrNewerVersion =
-			model && model.version && json.version && model.version >= json.version;
+			model?.version && json.version && model.version >= json.version;
 		const isAlreadySent = model && model.draft === false && json.draft === true;
 
 		if (isSameOrNewerVersion) {
-			if (json && json._delta) {
+			if (json?._delta) {
 				json._delta.ignoredBecause = `JSON v${json.version} <= model v${model.version}`;
 			}
 		} else if (isAlreadySent) {
-			if (json && json._delta) {
+			if (json?._delta) {
 				json._delta.ignoredBecause = `Model ${model.id} is already sent!`;
 			}
 		} else {
@@ -165,7 +165,7 @@ that could not be found and purges it from local cache.
 Handles: /account/<nid>/<collection>/<id>
 */
 export function handleModel404(modelUrl) {
-	const url = require("url");
+	const url = require("node:url");
 	const { pathname } = url.parse(modelUrl, true);
 	const components = pathname.split("/");
 

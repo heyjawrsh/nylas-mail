@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const { React, ReactTestUtils, DraftStore, Message } = require("nylas-exports");
-const pgp = require("kbpgp");
+const _pgp = require("kbpgp");
 
 const DecryptMessageButton = require("../lib/decrypt-button");
 const PGPKeyStore = require("../lib/pgp-key-store");
@@ -36,10 +36,10 @@ wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI
 
 	xit("should try to decrypt the message whenever a new key is unlocked", () => {
 		spyOn(PGPKeyStore, "decrypt");
-		spyOn(PGPKeyStore, "isDecrypted").andCallFake((message) => {
+		spyOn(PGPKeyStore, "isDecrypted").andCallFake((_message) => {
 			return false;
 		});
-		spyOn(PGPKeyStore, "hasEncryptedComponent").andCallFake((message) => {
+		spyOn(PGPKeyStore, "hasEncryptedComponent").andCallFake((_message) => {
 			return true;
 		});
 
@@ -50,10 +50,10 @@ wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI
 	xit(`should not try to decrypt the message whenever a new key is unlocked \
 if the message is already decrypted`, () => {
 		spyOn(PGPKeyStore, "decrypt");
-		spyOn(PGPKeyStore, "isDecrypted").andCallFake((message) => {
+		spyOn(PGPKeyStore, "isDecrypted").andCallFake((_message) => {
 			return true;
 		});
-		spyOn(PGPKeyStore, "hasEncryptedComponent").andCallFake((message) => {
+		spyOn(PGPKeyStore, "hasEncryptedComponent").andCallFake((_message) => {
 			return true;
 		});
 
@@ -81,7 +81,7 @@ if the message is already decrypted`, () => {
 	});
 
 	it("should indicate when a message has been decrypted", function () {
-		spyOn(PGPKeyStore, "isDecrypted").andCallFake((message) => {
+		spyOn(PGPKeyStore, "isDecrypted").andCallFake((_message) => {
 			return true;
 		});
 

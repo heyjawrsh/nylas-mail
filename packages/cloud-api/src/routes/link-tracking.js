@@ -12,7 +12,7 @@ function updateMetadata({ metadata, recipient, linkIdx }) {
 	const FIVE_MINUTES = 60 * 5; // in seconds
 	const timestamp = Date.now() / 1000;
 
-	if (!metadata.value || !metadata.value.links) {
+	if (!metadata.value?.links) {
 		throw new Error("Message metadata does not have links to track!");
 	}
 	const linkMetadata = metadata.value.links[linkIdx];

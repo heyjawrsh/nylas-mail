@@ -1,4 +1,3 @@
-import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 
 import { findDOMNode } from "react-dom";

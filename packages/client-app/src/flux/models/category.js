@@ -110,7 +110,7 @@ export default class Category extends Model {
 	fromJSON(json) {
 		super.fromJSON(json);
 
-		if (this.displayName && this.displayName.startsWith("INBOX.")) {
+		if (this.displayName?.startsWith("INBOX.")) {
 			this.displayName = this.displayName.substr(6);
 		}
 		if (this.displayName && this.displayName === "INBOX") {

@@ -11,10 +11,10 @@ import {
 } from "electron";
 
 import fs from "fs-plus";
-import url from "url";
-import path from "path";
-import proc from "child_process";
-import { EventEmitter } from "events";
+import url from "node:url";
+import path from "node:path";
+import proc from "node:child_process";
+import { EventEmitter } from "node:events";
 
 import GlobalTimer from "./global-timer";
 import WindowManager from "./window-manager";
@@ -67,7 +67,7 @@ export default class Application extends EventEmitter {
 		this.databaseReader = new DatabaseReader({ configDirPath, specMode });
 		try {
 			await this.databaseReader.open();
-		} catch (err) {
+		} catch (_err) {
 			// We need to manually handle errors here because
 			// `handleUnrecoverableDatabaseError` will fail because global.app hasn't
 			// been defined at this point
@@ -190,10 +190,10 @@ export default class Application extends EventEmitter {
 
 		this.openWindowsForTokenState();
 
-		if (pathsToOpen instanceof Array && pathsToOpen.length > 0) {
+		if (Array.isArray(pathsToOpen) && pathsToOpen.length > 0) {
 			this.openComposerWithFiles(pathsToOpen);
 		}
-		if (urlsToOpen instanceof Array) {
+		if (Array.isArray(urlsToOpen)) {
 			for (const urlToOpen of urlsToOpen) {
 				this.openUrl(urlToOpen);
 			}
@@ -350,7 +350,7 @@ export default class Application extends EventEmitter {
 				exitWhenDone: false,
 				showSpecsInWindow: true,
 				resourcePath: this.resourcePath,
-				safeMode: win && win.safeMode,
+				safeMode: win?.safeMode,
 			});
 		});
 
@@ -542,19 +542,19 @@ export default class Application extends EventEmitter {
 		});
 
 		// System Tray
-		ipcMain.on("update-system-tray", (event, ...args) => {
+		ipcMain.on("update-system-tray", (_event, ...args) => {
 			this.systemTrayManager.updateTraySettings(...args);
 		});
 
-		ipcMain.on("set-badge-value", (event, value) => {
-			if (app.dock && app.dock.setBadge) {
+		ipcMain.on("set-badge-value", (_event, value) => {
+			if (app.dock?.setBadge) {
 				app.dock.setBadge(value);
 			} else if (app.setBadgeCount) {
 				app.setBadgeCount(value.length ? value.replace("+", "") / 1 : 0);
 			}
 		});
 
-		ipcMain.on("new-window", (event, options) => {
+		ipcMain.on("new-window", (_event, options) => {
 			const win = options.windowKey
 				? this.windowManager.get(options.windowKey)
 				: null;
@@ -575,7 +575,7 @@ export default class Application extends EventEmitter {
 			let out = null;
 			try {
 				out = juice(html);
-			} catch (e) {
+			} catch (_e) {
 				// If the juicer fails (because of malformed CSS or some other
 				// reason), then just return the body. We will still push it
 				// through the HTML sanitizer which will strip the style tags. Oh
@@ -601,7 +601,7 @@ export default class Application extends EventEmitter {
 			},
 		);
 
-		ipcMain.on("command", (event, command, ...args) => {
+		ipcMain.on("command", (_event, command, ...args) => {
 			this.emit(command, ...args);
 		});
 
@@ -643,7 +643,7 @@ export default class Application extends EventEmitter {
 
 		ipcMain.on("action-bridge-rebroadcast-to-work", (event, ...args) => {
 			const workWindow = this.windowManager.get(WindowManager.WORK_WINDOW);
-			if (!workWindow || !workWindow.browserWindow.webContents) {
+			if (!workWindow?.browserWindow.webContents) {
 				return;
 			}
 			if (BrowserWindow.fromWebContents(event.sender) === workWindow) {
@@ -655,7 +655,7 @@ export default class Application extends EventEmitter {
 			);
 		});
 
-		ipcMain.on("write-text-to-selection-clipboard", (event, selectedText) => {
+		ipcMain.on("write-text-to-selection-clipboard", (_event, selectedText) => {
 			clipboard = require("electron").clipboard;
 			clipboard.writeText(selectedText, "selection");
 		});
@@ -689,13 +689,13 @@ export default class Application extends EventEmitter {
 			}
 
 			const targetWindow = this.windowManager.get(targetWindowKey);
-			if (!targetWindow || !targetWindow.browserWindow.webContents) {
+			if (!targetWindow?.browserWindow.webContents) {
 				return;
 			}
 			targetWindow.browserWindow.webContents.send("run-in-window", params);
 		});
 
-		ipcMain.on("remote-run-results", (event, params) => {
+		ipcMain.on("remote-run-results", (_event, params) => {
 			const sourceWindow = this._sourceWindows[params.taskId];
 			sourceWindow.webContents.send("remote-run-results", params);
 			delete this._sourceWindows[params.taskId];
@@ -765,7 +765,7 @@ export default class Application extends EventEmitter {
 			let move = `mv`;
 			try {
 				fs.accessSync(appPath, fs.W_OK);
-			} catch (e) {
+			} catch (_e) {
 				move = `cp -r`;
 			}
 			const cmd = `rm -rf ${newAppDest}; ${move} ${escapedPath} ${newAppDest}; sleep 0.5; open ${newAppDest}`;
@@ -945,7 +945,7 @@ export default class Application extends EventEmitter {
 					"spec-bootstrap",
 				),
 			);
-		} catch (error) {
+		} catch (_error) {
 			bootstrapScript = require.resolve(
 				path.resolve(
 					__dirname,

@@ -15,7 +15,7 @@ const {
 	ProviderSyncbackRequest,
 	DeltaConnectionStore,
 } = require("nylas-exports");
-const qs = require("querystring");
+const qs = require("node:querystring");
 const _ = require("underscore");
 const moment = require("moment");
 
@@ -74,8 +74,8 @@ class DeveloperBarCurlRequest {
 		}
 
 		const baseCommand = `curl -X ${request.method} ${headers}${data}`;
-		this.command = baseCommand + ` "${url}"`;
-		this.commandWithAuth = baseCommand + ` "${urlWithAuth}"`;
+		this.command = `${baseCommand} "${url}"`;
+		this.commandWithAuth = `${baseCommand} "${urlWithAuth}"`;
 		this.statusCode =
 			(left =
 				statusCode != null

@@ -1,4 +1,3 @@
-import React from "react";
 import FixedPopover from "../../src/components/fixed-popover";
 import { renderIntoDocument } from "../nylas-test-utils";
 

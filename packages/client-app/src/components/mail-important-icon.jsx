@@ -108,7 +108,7 @@ class MailImportantIcon extends React.Component {
 		return this.subscription != null ? this.subscription.dispose() : undefined;
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(_nextProps, nextState) {
 		return !_.isEqual(nextState, this.state);
 	}
 

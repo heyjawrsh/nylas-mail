@@ -7,7 +7,7 @@ export class Comparator {
 	}
 
 	evaluate({ actual, desired }) {
-		if (actual instanceof Array) {
+		if (Array.isArray(actual)) {
 			return actual.some((item) => this.fn({ actual: item, desired }));
 		}
 		return this.fn({ actual, desired });

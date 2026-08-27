@@ -8,7 +8,7 @@
  */
 let APMWrapper;
 const _ = require("underscore");
-const Q = require("q");
+const _Q = require("q");
 const semver = require("semver");
 
 const BufferedProcess = require("./buffered-process");
@@ -37,7 +37,7 @@ module.exports = APMWrapper = class APMWrapper {
 		};
 
 		if (process.platform === "win32") {
-			options.env["ProgramFiles"] = process.env.ProgramFiles;
+			options.env.ProgramFiles = process.env.ProgramFiles;
 		}
 
 		args.push("--no-color");
@@ -282,7 +282,7 @@ module.exports = APMWrapper = class APMWrapper {
 		return handleProcessErrors(apmProcess, errorMessage, onError);
 	}
 
-	unload(packageName) {
+	unload(_packageName) {
 		if (NylasEnv.packages.isPackageLoaded(name)) {
 			if (NylasEnv.packages.isPackageActive(name)) {
 				NylasEnv.packages.deactivatePackage(name);
@@ -405,7 +405,7 @@ module.exports = APMWrapper = class APMWrapper {
 		const apmProcess = this.runCommand(
 			["install", "--check"],
 			null,
-			(code, stdout, stderr) => {
+			(code, _stdout, _stderr) => {
 				if (code === 0) {
 					return deferred.resolve();
 				} else {

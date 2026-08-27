@@ -39,11 +39,11 @@ export default class ConfigPropContainer extends React.Component {
 			},
 			contains: (key, val) => {
 				const vals = NylasEnv.config.get(key);
-				return vals && vals instanceof Array ? vals.includes(val) : false;
+				return vals && Array.isArray(vals) ? vals.includes(val) : false;
 			},
 			toggleContains: (key, val) => {
 				let vals = NylasEnv.config.get(key);
-				if (!vals || !(vals instanceof Array)) {
+				if (!vals || !Array.isArray(vals)) {
 					vals = [];
 				}
 				if (vals.includes(val)) {

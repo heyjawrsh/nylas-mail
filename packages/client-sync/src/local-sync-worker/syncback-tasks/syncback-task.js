@@ -75,7 +75,7 @@ class SyncbackTask {
 				provider: this._account.provider,
 			});
 			clearTimeout(timeout);
-		} catch (err) {
+		} catch (_err) {
 			// Don't throw
 		}
 		return response;

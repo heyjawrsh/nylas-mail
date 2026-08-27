@@ -15,7 +15,7 @@ function updateMetadata({ metadata, recipient }) {
 	const FIVE_MINUTES = 60 * 5; // in seconds
 	const timestamp = Date.now() / 1000;
 
-	if (!metadata.value || !metadata.value.open_data) {
+	if (!metadata.value?.open_data) {
 		metadata.value = {
 			open_count: 0,
 			open_data: [],

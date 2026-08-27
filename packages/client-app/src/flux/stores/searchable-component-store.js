@@ -202,7 +202,7 @@ class SearchableComponentStore extends NylasStore {
 	}
 
 	_scrollIntoView() {
-		if (!this.currentMatch || !this.currentMatch.node || !this.scrollAncestor) {
+		if (!this.currentMatch?.node || !this.scrollAncestor) {
 			return;
 		}
 

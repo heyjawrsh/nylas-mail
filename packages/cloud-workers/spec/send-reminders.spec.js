@@ -57,7 +57,7 @@ function makeDb() {
 
 const boxWith = (searchResult, fetchBehavior) => ({
 	search: vi.fn(async () => searchResult),
-	fetchEach: async (uids, opts, cb) => {
+	fetchEach: async (uids, _opts, cb) => {
 		for (const msg of fetchBehavior(uids)) {
 			cb(msg);
 		}

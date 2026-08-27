@@ -1,5 +1,5 @@
 import * as IsomorphicCore from "isomorphic-core";
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 const { Errors } = IsomorphicCore;
 
 /**

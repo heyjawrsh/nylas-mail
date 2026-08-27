@@ -1,7 +1,7 @@
 import { ImapFlow } from "imapflow";
 import _ from "underscore";
 import xoauth2 from "xoauth2";
-import EventEmitter from "events";
+import EventEmitter from "node:events";
 import IMAPBox from "./imap-box.js";
 import { INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS } from "./tls-utils.js";
 import { RetryableError } from "./errors.js";
@@ -324,7 +324,7 @@ export default class IMAPConnection extends EventEmitter {
 		if (this._openBoxPath !== undefined) {
 			return this._openBoxPath;
 		}
-		return this._imap && this._imap.mailbox ? this._imap.mailbox.path : null;
+		return this._imap?.mailbox ? this._imap.mailbox.path : null;
 	}
 
 	serverSupports(capability) {
@@ -436,7 +436,7 @@ export default class IMAPConnection extends EventEmitter {
 	 * from imapflow's flat list() output.
 	 */
 	_boxesToTree(boxes) {
-		const delimiter = (boxes.find((b) => b.delimiter) || {}).delimiter || "/";
+		const delimiter = boxes.find((b) => b.delimiter)?.delimiter || "/";
 		const root = { attribs: [], delimiter, children: {} };
 		for (const box of boxes) {
 			const segments = box.path.split(box.delimiter || delimiter);

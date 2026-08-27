@@ -60,7 +60,7 @@ const users = [1, 2, 3, 4, 5].map(
 			email: `user${i}@nylas.com`,
 		}),
 );
-const [user_1, user_2, user_3, user_4, user_5] = users;
+const [user_1, user_2, user_3, user_4, _user_5] = users;
 const MessageItem = proxyquire("../lib/message-item", {
 	"./message-item-body": MessageItemBody,
 });

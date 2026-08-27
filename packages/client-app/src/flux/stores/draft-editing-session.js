@@ -7,7 +7,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const Message = require("../models/message").default;
-const Actions = require("../actions").default;
+const _Actions = require("../actions").default;
 const NylasAPIHelpers = require("../nylas-api-helpers");
 const AccountStore = require("./account-store").default;
 const ContactStore = require("./contact-store");
@@ -373,7 +373,7 @@ class DraftEditingSession {
 		if (nextDraft) {
 			const nextValues = {};
 			for (var key in Message.attributes) {
-				var attr = Message.attributes[key];
+				var _attr = Message.attributes[key];
 				if (key === "id") {
 					continue;
 				}

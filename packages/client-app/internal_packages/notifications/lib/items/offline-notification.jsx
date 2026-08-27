@@ -1,4 +1,4 @@
-import { OnlineStatusStore, React, Actions } from "nylas-exports";
+import { OnlineStatusStore, Actions } from "nylas-exports";
 import PropTypes from "prop-types";
 import { Notification, ListensToFluxStore } from "nylas-component-kit";
 

@@ -21,7 +21,6 @@ const sendCustom = vi.fn(async () => {});
 
 vi.mock("isomorphic-core", () => ({
 	SendmailClient: class {
-		constructor() {}
 		sendCustom(...a) {
 			return sendCustom(...a);
 		}

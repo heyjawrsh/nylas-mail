@@ -6,8 +6,8 @@
  */
 const _ = require("underscore");
 const React = require("react");
-const classNames = require("classnames");
-const moment = require("moment");
+const _classNames = require("classnames");
+const _moment = require("moment");
 
 const {
 	ListTabular,
@@ -31,7 +31,7 @@ const {
 } = require("./thread-list-quick-actions");
 
 const ThreadListParticipants = require("./thread-list-participants");
-const ThreadListStore = require("./thread-list-store");
+const _ThreadListStore = require("./thread-list-store");
 const ThreadListIcon = require("./thread-list-icon");
 
 // Get and format either last sent or last received timestamp depending on thread-list being viewed

@@ -7,7 +7,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const path = require("path");
+const _path = require("node:path");
 const React = require("react");
 const { RetinaImg } = require("nylas-component-kit");
 const {

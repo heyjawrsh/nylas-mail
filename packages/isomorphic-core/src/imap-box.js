@@ -172,7 +172,7 @@ class IMAPBox {
 			)) {
 				const stream = message.source;
 				if (onFetchComplete) {
-					stream.on && stream.on("end", onFetchComplete);
+					stream.on?.("end", onFetchComplete);
 				}
 				return stream;
 			}
@@ -203,7 +203,7 @@ class IMAPBox {
 				query.bodyStructure = true;
 			}
 			const options = { uid: true };
-			if (fetchOptions.modifiers && fetchOptions.modifiers.changedsince) {
+			if (fetchOptions.modifiers?.changedsince) {
 				options.changedSince = fetchOptions.modifiers.changedsince;
 			}
 			for await (const message of imap.fetch(

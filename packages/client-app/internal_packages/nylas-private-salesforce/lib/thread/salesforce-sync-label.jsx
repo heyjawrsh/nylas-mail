@@ -32,7 +32,7 @@ class SalesforceSyncLabel extends React.Component {
 
 	componentWillUnmount() {
 		this._mounted = false;
-		if (this.disposable && this.disposable.dispose) {
+		if (this.disposable?.dispose) {
 			this.disposable.dispose();
 		}
 	}
@@ -44,7 +44,7 @@ class SalesforceSyncLabel extends React.Component {
 	}
 
 	_setupDataSource() {
-		if (this.disposable && this.disposable.dispose) {
+		if (this.disposable?.dispose) {
 			this.disposable.dispose();
 		}
 		clearTimeout(this.observableTimeout);

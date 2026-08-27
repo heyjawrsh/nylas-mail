@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import _str from "underscore.string";
 import { Switch } from "nylas-component-kit";

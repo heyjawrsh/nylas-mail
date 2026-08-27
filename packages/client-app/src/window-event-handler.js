@@ -6,12 +6,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let WindowEventHandler;
-const path = require("path");
+const _path = require("node:path");
 const _ = require("underscore");
 const { Disposable } = require("event-kit");
 let { shell, ipcRenderer, remote } = require("electron");
-const fs = require("fs-plus");
-const url = require("url");
+const _fs = require("fs-plus");
+const url = require("node:url");
 
 // Handles low-level events related to the window.
 module.exports = WindowEventHandler = class WindowEventHandler {
@@ -32,7 +32,7 @@ module.exports = WindowEventHandler = class WindowEventHandler {
 			return window.dispatchEvent(new Event("browser-window-blur"));
 		});
 
-		ipcRenderer.on("command", (event, command, ...args) =>
+		ipcRenderer.on("command", (_event, command, ...args) =>
 			NylasEnv.commands.dispatch(command, args[0]),
 		);
 

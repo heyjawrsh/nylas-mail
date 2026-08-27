@@ -1,7 +1,7 @@
 import { remote } from "electron";
 import { SpellCheckHandler } from "electron-spellchecker";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const MenuItem = remote.MenuItem;
 const customDictFilePath = path.join(

@@ -4,8 +4,8 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const { exec } = require("child_process");
-const fs = require("fs");
+const { exec } = require("node:child_process");
+const fs = require("node:fs");
 const { remote, shell } = require("electron");
 
 const bundleIdentifier = "com.nylas.nylas-mail";
@@ -19,15 +19,15 @@ class Windows {
 		if (!callback) {
 			throw new Error("isRegisteredForURLScheme is async, provide a callback");
 		}
-		let output = "";
+		let _output = "";
 		return exec(
 			`reg.exe query HKCU\\SOFTWARE\\Microsoft\\Windows\\Roaming\\OpenWith\\UrlAssociations\\${scheme}\\UserChoice`,
-			(err, stdout, stderr) => {
-				output += stdout.toString();
+			(_err, stdout, _stderr) => {
+				_output += stdout.toString();
 				return exec(
 					`reg.exe query HKCU\\SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\${scheme}\\UserChoice`,
-					(err, stdout, stderr) => {
-						output += stdout.toString();
+					(err, stdout, _stderr) => {
+						_output += stdout.toString();
 						if (callback && err) {
 							return callback(err);
 						}
@@ -38,7 +38,7 @@ class Windows {
 		);
 	}
 
-	resetURLScheme(scheme, callback) {
+	resetURLScheme(_scheme, _callback) {
 		return remote.dialog.showMessageBox(
 			null,
 			{
@@ -55,7 +55,7 @@ class Windows {
 		);
 	}
 
-	registerForURLScheme(scheme, callback) {
+	registerForURLScheme(_scheme, callback) {
 		// Ensure that our registry entires are present
 		const WindowsUpdater = remote.require("./windows-updater");
 		return WindowsUpdater.createRegistryEntries(
@@ -111,7 +111,7 @@ class Linux {
 		}
 		return exec(
 			`xdg-mime query default x-scheme-handler/${scheme}`,
-			(err, stdout, stderr) => {
+			(err, stdout, _stderr) => {
 				if (err) {
 					return callback(err);
 				}
@@ -123,7 +123,7 @@ class Linux {
 	resetURLScheme(scheme, callback) {
 		return exec(
 			`xdg-mime default thunderbird.desktop x-scheme-handler/${scheme}`,
-			(err, stdout, stderr) => {
+			(err, _stdout, _stderr) => {
 				if (callback && err) {
 					return callback(err);
 				}
@@ -137,7 +137,7 @@ class Linux {
 	registerForURLScheme(scheme, callback) {
 		return exec(
 			`xdg-mime default nylas.desktop x-scheme-handler/${scheme}`,
-			(err, stdout, stderr) => {
+			(err, _stdout, _stderr) => {
 				if (callback && err) {
 					return callback(err);
 				}
@@ -176,7 +176,7 @@ class Mac {
 			const tmpPath = `${plistPath}.${Math.random()}`;
 			return exec(
 				`plutil -convert json "${plistPath}" -o "${tmpPath}"`,
-				(err, stdout, stderr) => {
+				(err, _stdout, _stderr) => {
 					if (callback && err) {
 						return callback(err);
 					}
@@ -186,7 +186,7 @@ class Mac {
 						}
 						try {
 							data = JSON.parse(data);
-							callback(data["LSHandlers"], data);
+							callback(data.LSHandlers, data);
 							return fs.unlink(tmpPath);
 						} catch (e) {
 							if (callback && err) {
@@ -204,14 +204,14 @@ class Mac {
 			const tmpPath = `${plistPath}.${Math.random()}`;
 			return exec(
 				`plutil -convert json "${plistPath}" -o "${tmpPath}"`,
-				(err, stdout, stderr) => {
+				(err, _stdout, _stderr) => {
 					if (callback && err) {
 						return callback(err);
 					}
 					try {
 						let data = fs.readFileSync(tmpPath);
 						data = JSON.parse(data);
-						data["LSHandlers"] = defaults;
+						data.LSHandlers = defaults;
 						data = JSON.stringify(data);
 						fs.writeFileSync(tmpPath, data);
 					} catch (error) {
@@ -226,7 +226,7 @@ class Mac {
 							fs.unlink(tmpPath);
 							return exec(
 								"/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user",
-								(err, stdout, stderr) => {
+								(err, _stdout, _stderr) => {
 									if (callback) {
 										return callback(err);
 									}

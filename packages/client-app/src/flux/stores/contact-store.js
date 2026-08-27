@@ -9,13 +9,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const fs = require("fs");
-const path = require("path");
-const Reflux = require("reflux");
-const Rx = require("rx-lite");
-const Actions = require("../actions").default;
+const _fs = require("node:fs");
+const _path = require("node:path");
+const _Reflux = require("reflux");
+const _Rx = require("rx-lite");
+const _Actions = require("../actions").default;
 const Contact = require("../models/contact").default;
-const Utils = require("../models/utils");
+const _Utils = require("../models/utils");
 const NylasStore = require("nylas-store");
 const RegExpUtils = require("../../regexp-utils");
 const DatabaseStore = require("./database-store").default;
@@ -24,7 +24,7 @@ const ComponentRegistry = require("../../registries/component-registry");
 const ContactRankingStore = require("./contact-ranking-store");
 const _ = require("underscore");
 
-const WindowBridge = require("../../window-bridge");
+const _WindowBridge = require("../../window-bridge");
 
 /*
 Public: ContactStore provides convenience methods for searching contacts and
@@ -264,7 +264,7 @@ class ContactStore extends NylasStore {
 			}
 			var key = contact.email.toLowerCase();
 			var existing = uniq[key];
-			if (!existing || !existing.name || existing.name === existing.email) {
+			if (!existing?.name || existing.name === existing.email) {
 				uniq[key] = contact;
 			}
 		}

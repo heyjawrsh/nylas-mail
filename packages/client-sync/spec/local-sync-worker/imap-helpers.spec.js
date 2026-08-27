@@ -7,7 +7,7 @@ import {
 import IMAPHelpers from "../../src/local-sync-worker/imap-helpers";
 
 describe("IMAPHelpers", function describeBlock() {
-	let db, sentLabel, l1, l2, l3, m1, m2, m3, messages, box;
+	let db, sentLabel, _l1, _l2, _l3, m1, m2, m3, messages, box;
 	describe("setLabelsForMessages", () => {
 		beforeEach(async () => {
 			destroyTestDatabase();
@@ -18,17 +18,17 @@ describe("IMAPHelpers", function describeBlock() {
 				name: "\\Sent",
 				role: "sent",
 			});
-			l1 = await db.Label.create({
+			_l1 = await db.Label.create({
 				id: "l1",
 				name: "l1",
 				accountId: ACCOUNT_ID,
 			});
-			l2 = await db.Label.create({
+			_l2 = await db.Label.create({
 				id: "l2",
 				name: "l2",
 				accountId: ACCOUNT_ID,
 			});
-			l3 = await db.Label.create({
+			_l3 = await db.Label.create({
 				id: "l3",
 				name: "l3",
 				accountId: ACCOUNT_ID,

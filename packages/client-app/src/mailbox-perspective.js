@@ -18,12 +18,12 @@ const CategoryStore = require("./flux/stores/category-store");
 const DatabaseStore = require("./flux/stores/database-store").default;
 const OutboxStore = require("./flux/stores/outbox-store").default;
 const ThreadCountsStore = require("./flux/stores/thread-counts-store");
-const RecentlyReadStore = require("./flux/stores/recently-read-store").default;
+const _RecentlyReadStore = require("./flux/stores/recently-read-store").default;
 const MutableQuerySubscription =
 	require("./flux/models/mutable-query-subscription").default;
 const UnreadQuerySubscription =
 	require("./flux/models/unread-query-subscription").default;
-const Matcher = require("./flux/attributes/matcher").default;
+const _Matcher = require("./flux/attributes/matcher").default;
 const Thread = require("./flux/models/thread").default;
 const Category = require("./flux/models/category").default;
 const Actions = require("./flux/actions").default;
@@ -138,7 +138,7 @@ class MailboxPerspective {
 		this.tasksForRemovingItems = this.tasksForRemovingItems.bind(this);
 		this.accountIds = accountIds;
 		if (
-			!(this.accountIds instanceof Array) ||
+			!Array.isArray(this.accountIds) ||
 			!_.every(this.accountIds, (aid) => {
 				return typeof aid === "string" || typeof aid === "number";
 			})
@@ -248,7 +248,7 @@ class MailboxPerspective {
 		return areIncomingIdsInCurrent;
 	}
 
-	receiveThreads(threadIds) {
+	receiveThreads(_threadIds) {
 		throw new Error("receiveThreads: Not implemented in base class.");
 	}
 
@@ -276,7 +276,7 @@ class MailboxPerspective {
 	}
 
 	tasksForRemovingItems(threads) {
-		if (!(threads instanceof Array)) {
+		if (!Array.isArray(threads)) {
 			throw new Error(
 				"tasksForRemovingItems: you must pass an array of threads or thread ids",
 			);
@@ -363,7 +363,7 @@ class StarredMailboxPerspective extends MailboxPerspective {
 		return Actions.queueTask(task);
 	}
 
-	tasksForRemovingItems(threads, ruleset, source) {
+	tasksForRemovingItems(threads, _ruleset, source) {
 		const task = TaskFactory.taskForInvertingStarred({
 			threads,
 			source: source || "Removed From List",

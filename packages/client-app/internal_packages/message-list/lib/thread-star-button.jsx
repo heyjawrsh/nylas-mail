@@ -15,7 +15,7 @@ class StarButton extends React.Component {
 	}
 
 	render() {
-		const selected = this.props.thread != null && this.props.thread.starred;
+		const selected = this.props.thread?.starred;
 		return (
 			<button
 				className="btn btn-toolbar"

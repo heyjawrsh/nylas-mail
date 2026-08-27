@@ -137,7 +137,7 @@ class ButtonDropdown extends React.Component {
 		}
 	}
 
-	_onMenuClick(event) {
+	_onMenuClick(_event) {
 		if (this.props.closeOnMenuClick) {
 			return this.setState({ open: false });
 		}

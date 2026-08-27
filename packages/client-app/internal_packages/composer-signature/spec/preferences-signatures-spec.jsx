@@ -1,6 +1,5 @@
 /* eslint quote-props: 0 */
 import ReactTestUtils from "react-addons-test-utils";
-import React from "react";
 import { SignatureStore, Actions } from "nylas-exports";
 import PreferencesSignatures from "../lib/preferences-signatures";
 

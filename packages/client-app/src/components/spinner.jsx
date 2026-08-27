@@ -7,7 +7,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const React = require("react");
-const ReactDOM = require("react-dom");
+const _ReactDOM = require("react-dom");
 const _ = require("underscore");
 const classNames = require("classnames");
 

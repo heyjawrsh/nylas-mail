@@ -9,7 +9,7 @@
 const NylasStore = require("nylas-store");
 const _ = require("underscore");
 const Rx = require("rx-lite");
-const AccountStore = require("./account-store").default;
+const _AccountStore = require("./account-store").default;
 const DatabaseStore = require("./database-store").default;
 const TaskQueueStatusStore = require("./task-queue-status-store");
 const ReprocessMailRulesTask =
@@ -59,7 +59,7 @@ class MailRulesStore extends NylasStore {
 		return this._rules.filter((f) => f.accountId === accountId);
 	}
 
-	disabledRules(accountId) {
+	disabledRules(_accountId) {
 		return this._rules.filter((f) => f.disabled);
 	}
 

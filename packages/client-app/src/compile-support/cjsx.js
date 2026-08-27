@@ -6,7 +6,7 @@ CoffeeScript = require("coffee-react");
 // https://github.com/BenoitZugmeyer/chwitt-react/blob/2d62184986c7c183955dcb607dba5ceda70a2221/bootstrap-jsx.js
 
 var hotCompile = (() => {
-	var fs = require("fs");
+	var _fs = require("node:fs");
 	var React = require("react");
 	var ReactMount = require("react/lib/ReactMount");
 	var reactHotReload;
@@ -14,7 +14,7 @@ var hotCompile = (() => {
 		reactHotReload = require("react-hot-api")(
 			() => ReactMount._instancesByReactRootID,
 		);
-	} catch (e) {
+	} catch (_e) {
 		console.log("Not using react hot reload");
 	}
 
@@ -43,7 +43,7 @@ var hotCompile = (() => {
 					clearTimeout(timeout);
 					timeout = setTimeout(() => {
 						hotCompile(module, module.filename, true);
-						console.log("hot reloaded " + module.filename);
+						console.log(`hot reloaded ${module.filename}`);
 					}, 100);
 				},
 			);
@@ -114,7 +114,7 @@ var hotCompile = (() => {
 		try {
 			result = compile(module, filename);
 		} catch (e) {
-			console.log("Error while compiling " + filename);
+			console.log(`Error while compiling ${filename}`);
 			console.log(e.stack);
 			failed = true;
 		}
@@ -146,7 +146,7 @@ function registerHotCompile() {
 	require.extensions[".cjsx"] = hotCompile;
 
 	if (process.mainModule === module) {
-		var path = require("path");
+		var path = require("node:path");
 		require(path.resolve(process.argv[2]));
 	}
 }

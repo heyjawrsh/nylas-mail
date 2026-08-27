@@ -1,6 +1,6 @@
 const proxyquire = require("proxyquire");
 const React = require("react");
-const ReactDOM = require("react-dom");
+const _ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 const {
 	Contact,

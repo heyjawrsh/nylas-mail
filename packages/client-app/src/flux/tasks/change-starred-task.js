@@ -64,7 +64,7 @@ export default class ChangeStarredTask extends ChangeMailTask {
 		});
 	}
 
-	changesToModel(model) {
+	changesToModel(_model) {
 		return { starred: this.starred };
 	}
 

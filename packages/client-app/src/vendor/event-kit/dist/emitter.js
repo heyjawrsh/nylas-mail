@@ -259,8 +259,7 @@ var Emitter =
 			{
 				key: "emit",
 				value: function emit(eventName, value) {
-					var handlers =
-						this.handlersByEventName && this.handlersByEventName[eventName];
+					var handlers = this.handlersByEventName?.[eventName];
 
 					if (handlers) {
 						// create a copy of `handlers` so that if any handler mutates `handlers`
@@ -277,8 +276,7 @@ var Emitter =
 			{
 				key: "emitAsync",
 				value: function emitAsync(eventName, value) {
-					var handlers =
-						this.handlersByEventName && this.handlersByEventName[eventName];
+					var handlers = this.handlersByEventName?.[eventName];
 
 					if (handlers) {
 						var promises = handlers.map((handler) =>

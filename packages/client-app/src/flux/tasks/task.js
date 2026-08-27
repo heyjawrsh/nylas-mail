@@ -229,7 +229,7 @@ export default class Task {
 		try {
 			return this.performRemote()
 				.then((compositeStatus) => {
-					const [status, err] = this._compositeStatus(compositeStatus);
+					const [status, _err] = this._compositeStatus(compositeStatus);
 
 					if (status === Task.Status.Failed) {
 						// We reject here to end up on the same path as people who may
@@ -495,7 +495,7 @@ export default class Task {
 	// dependencies.
 	//
 	// Returns `true` (is dependent on) or `false` (is not dependent on)
-	isDependentOnTask(other) {
+	isDependentOnTask(_other) {
 		return false;
 	}
 
@@ -513,7 +513,7 @@ export default class Task {
 	// process the latest one.
 	//
 	// Returns `true` (should dequeue) or `false` (should not dequeue)
-	shouldDequeueOtherTask(other) {
+	shouldDequeueOtherTask(_other) {
 		return false;
 	}
 
@@ -525,7 +525,7 @@ export default class Task {
 		return true;
 	}
 
-	onDependentTaskError(other, error) {}
+	onDependentTaskError(_other, _error) {}
 
 	// Public: It's up to you to determine how you want to indicate whether
 	// or not you have an instance of an "Undo Task". We commonly use a

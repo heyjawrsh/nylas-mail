@@ -75,7 +75,7 @@ class AccountStore extends NylasStore {
 		return false;
 	}
 
-	_onAPIAuthError = (apiError, apiOptions, apiName) => {
+	_onAPIAuthError = (_apiError, apiOptions, apiName) => {
 		// Prevent /auth errors from presenting auth failure notices
 		const apiToken = apiOptions.auth.user;
 		if (!apiToken) {
@@ -198,7 +198,7 @@ class AccountStore extends NylasStore {
 
 	_trigger() {
 		for (const account of this._accounts) {
-			if (!account || !account.id) {
+			if (!account?.id) {
 				const err = new Error(
 					"An invalid account was added to `this._accounts`",
 				);
@@ -417,7 +417,7 @@ class AccountStore extends NylasStore {
 	// Private: Load fake data from a directory for taking nice screenshots
 	_importFakeData = (dir) => {
 		const fs = require("fs-plus");
-		const path = require("path");
+		const path = require("node:path");
 		const Message = require("../models/message").default;
 		const Thread = require("../models/thread").default;
 

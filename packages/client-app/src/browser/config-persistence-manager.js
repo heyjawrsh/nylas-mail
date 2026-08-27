@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import fs from "fs-plus";
 import { BrowserWindow, dialog, app } from "electron";
 import { atomicWriteFileSync } from "../fs-utils";
@@ -78,7 +78,7 @@ export default class ConfigPersistenceManager {
 
 		try {
 			const json = JSON.parse(fs.readFileSync(this.configFilePath));
-			if (!json || !json["*"]) {
+			if (!json?.["*"]) {
 				throw new Error("config json appears empty");
 			}
 			this.settings = json["*"];

@@ -1,5 +1,5 @@
 import _ from "underscore";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { DateUtils, Actions } from "nylas-exports";
 import { RetinaImg, DateInput } from "nylas-component-kit";

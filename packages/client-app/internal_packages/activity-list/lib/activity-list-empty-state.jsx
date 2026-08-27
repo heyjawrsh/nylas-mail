@@ -1,4 +1,3 @@
-import React from "react";
 import { RetinaImg } from "nylas-component-kit";
 
 const ActivityListEmptyState = function ActivityListEmptyState() {

@@ -120,7 +120,7 @@ export default function registerAuthRoutes(server) {
 			let account = {};
 
 			// See onboarding-helpers:buildGmailSessionKey()
-			const nylasId = n1Key.split("-----")[0];
+			const _nylasId = n1Key.split("-----")[0];
 
 			try {
 				const client = GAuth.newOAuthClient();
@@ -221,7 +221,7 @@ export default function registerAuthRoutes(server) {
 				if (!tokenData) {
 					return Boom.notFound();
 				}
-			} catch (err) {
+			} catch (_err) {
 				return Boom.notFound();
 			}
 			if (!tokenData.response) {

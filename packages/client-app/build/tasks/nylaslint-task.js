@@ -1,5 +1,5 @@
 /* eslint no-cond-assign: 0 */
-const path = require("path");
+const path = require("node:path");
 const fs = require("fs-plus");
 
 function normalizeRequirePath(requirePath, fPath) {

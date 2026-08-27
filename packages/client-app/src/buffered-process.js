@@ -7,9 +7,9 @@
  */
 let BufferedProcess;
 const _ = require("underscore");
-const ChildProcess = require("child_process");
+const ChildProcess = require("node:child_process");
 const { Emitter } = require("event-kit");
-const path = require("path");
+const path = require("node:path");
 
 // Extended: A wrapper which provides standard error/output line buffering for
 // Node's ChildProcess.
@@ -175,7 +175,7 @@ module.exports = BufferedProcess = class BufferedProcess {
 
 		try {
 			wmicProcess = ChildProcess.spawn(cmd, args);
-		} catch (spawnError) {
+		} catch (_spawnError) {
 			this.killProcess();
 			return;
 		}
@@ -187,13 +187,13 @@ module.exports = BufferedProcess = class BufferedProcess {
 			const pidsToKill = output
 				.split(/\s+/)
 				.filter((pid) => /^\d+$/.test(pid))
-				.map((pid) => parseInt(pid))
+				.map((pid) => parseInt(pid, 10))
 				.filter((pid) => pid !== parentPid && 0 < pid && pid < Infinity);
 
 			for (var pid of Array.from(pidsToKill)) {
 				try {
 					process.kill(pid);
-				} catch (error) {}
+				} catch (_error) {}
 			}
 			return this.killProcess();
 		});

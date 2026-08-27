@@ -50,7 +50,7 @@ class SendmailClient {
 
 		let userMessage = "Sending failed";
 		let statusCode = 500;
-		if (error && error.userMessage && error.statusCode) {
+		if (error?.userMessage && error.statusCode) {
 			userMessage = `Sending failed - ${error.userMessage}`;
 			statusCode = error.statusCode;
 		}

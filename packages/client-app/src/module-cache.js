@@ -10,8 +10,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let isAbsolute;
-const Module = require("module");
-const path = require("path");
+const Module = require("node:module");
+const path = require("node:path");
 const semver = require("semver");
 
 // Extend semver.Range to memoize matched versions for speed
@@ -99,7 +99,7 @@ var loadDependencies = (modulePath, rootPath, rootMetadata, moduleCache) => {
 			var mainPath;
 			try {
 				mainPath = require.resolve(childPath);
-			} catch (error) {
+			} catch (_error) {
 				mainPath = null;
 			}
 
@@ -142,7 +142,7 @@ var loadFolderCompatibility = (
 		var version = dependencies[name];
 		try {
 			new Range(version);
-		} catch (error) {
+		} catch (_error) {
 			delete dependencies[name];
 		}
 	}
@@ -191,7 +191,7 @@ var loadFolderCompatibility = (
 	}
 };
 
-const loadExtensions = (modulePath, rootPath, rootMetadata, moduleCache) => {
+const loadExtensions = (_modulePath, rootPath, rootMetadata, moduleCache) => {
 	const fs = require("fs-plus");
 	const extensions = [".js", ".coffee", ".json", ".node"];
 	const nodeModulesPath = path.join(rootPath, "node_modules");
@@ -349,7 +349,7 @@ const resolveModulePath = (relativePath, parentModule) => {
 	}
 };
 
-const registerBuiltins = (devMode) => {
+const registerBuiltins = (_devMode) => {
 	let builtin;
 	const electronRoot = path.join(process.resourcesPath, "atom.asar");
 
@@ -468,7 +468,7 @@ exports.add = (directoryPath, metadata) => {
 	if (metadata == null) {
 		try {
 			metadata = require(`${directoryPath}${path.sep}package.json`);
-		} catch (error) {
+		} catch (_error) {
 			return;
 		}
 	}

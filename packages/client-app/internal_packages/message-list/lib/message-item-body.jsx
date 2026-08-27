@@ -139,7 +139,7 @@ class MessageItemBody extends React.Component {
 				const cidRegexp = new RegExp(`cid:${file.contentId}(['"])`, "gi");
 				body = body.replace(
 					cidRegexp,
-					(text, quoteCharacter) =>
+					(_text, quoteCharacter) =>
 						`file://${FileDownloadStore.pathForFile(file)}${quoteCharacter} data-nylas-file="${encodedAttributeForFile(file)}" `,
 				);
 			}

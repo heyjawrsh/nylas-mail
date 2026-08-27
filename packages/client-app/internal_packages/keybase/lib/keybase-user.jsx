@@ -12,7 +12,7 @@ const { ParticipantsTextField } = require("nylas-component-kit");
 const PGPKeyStore = require("./pgp-key-store");
 const EmailPopover = require("./email-popover");
 const Identity = require("./identity");
-const kb = require("./keybase");
+const _kb = require("./keybase");
 const _ = require("underscore");
 
 module.exports = KeybaseUser = (() => {
@@ -61,7 +61,7 @@ module.exports = KeybaseUser = (() => {
 			);
 		}
 
-		_popoverDone(addresses, identity) {
+		_popoverDone(addresses, _identity) {
 			if (addresses.length < 1) {
 				// no email addresses added, noop
 				return;
@@ -174,7 +174,7 @@ module.exports = KeybaseUser = (() => {
 						</li>
 					);
 				});
-				const emailList = (
+				const _emailList = (
 					<ul>
 						{" "}
 						{emails}

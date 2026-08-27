@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { Modal } from "nylas-component-kit";
 import NylasStore from "nylas-store";

@@ -34,7 +34,7 @@ class KeybaseAPI {
 
 		return this._keybaseRequest(
 			`/_/api/1.0/user/lookup.json?${keyType}=${key}`,
-			(err, resp, obj) => {
+			(err, _resp, obj) => {
 				if (err) {
 					return callback(err, null);
 				}
@@ -55,10 +55,10 @@ class KeybaseAPI {
 	getKey(username, callback) {
 		return request(
 			{
-				url: this.baseUrl + `/${username}/key.asc`,
+				url: `${this.baseUrl}/${username}/key.asc`,
 				headers: { "User-Agent": "request" },
 			},
-			(err, resp, obj) => {
+			(err, _resp, obj) => {
 				if (err) {
 					return callback(err, null);
 				}
@@ -85,7 +85,7 @@ class KeybaseAPI {
 				headers: { "User-Agent": "request" },
 				json: true,
 			},
-			(err, resp, obj) => {
+			(err, _resp, obj) => {
 				if (err) {
 					return callback(err, null);
 				}

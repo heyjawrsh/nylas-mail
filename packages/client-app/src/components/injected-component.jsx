@@ -131,7 +131,7 @@ class InjectedComponent extends React.Component {
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(_prevProps, prevState) {
 		this._setRequiredMethods(this.props.requiredMethods);
 		if (
 			(this.state.component != null

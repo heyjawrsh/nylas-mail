@@ -5,7 +5,7 @@ const getIpcRenderer = () => {
 		// Outside the real Electron runtime (tests, node), the module resolves
 		// to its path-string export — fall back to a no-op transport.
 		return ipc && typeof ipc.on === "function" ? ipc : { on() {}, send() {} };
-	} catch (error) {
+	} catch (_error) {
 		return { on() {}, send() {} };
 	}
 };
@@ -84,7 +84,7 @@ class SyncProcessManager {
 			try {
 				await Promise.race([
 					Promise.all(this.workers().map((w) => w.destroy())),
-					new Promise((resolve, reject) =>
+					new Promise((_resolve, reject) =>
 						setTimeout(
 							() => reject(new Error("Timed out while trying to stop sync")),
 							500,
@@ -120,7 +120,7 @@ class SyncProcessManager {
 		const { time, activity } =
 			SyncActivity.getLastSyncActivityForAccount(accountId);
 		if (time < Date.now() - this.MAX_WORKER_SILENCE_MS) {
-			const duration = Date.now() - time;
+			const _duration = Date.now() - time;
 			const { Account } = await LocalDatabaseConnector.forShared();
 			const account = await Account.findByPk(accountId);
 			const logger = global.Logger.forAccount(account);

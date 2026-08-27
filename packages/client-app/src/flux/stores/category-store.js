@@ -8,7 +8,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const Rx = require("rx-lite");
+const _Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
 const AccountStore = require("./account-store").default;
 const Account = require("../models/account").default;
@@ -245,7 +245,7 @@ class CategoryStore extends NylasStore {
 
 		// Ensure standard categories are always sorted in the correct order
 		for (var accountId in this._standardCategories) {
-			var items = this._standardCategories[accountId];
+			var _items = this._standardCategories[accountId];
 			this._standardCategories[accountId].sort(
 				(a, b) =>
 					StandardCategoryNames.indexOf(a.name) -

@@ -2,7 +2,7 @@ import Rx from "rx-lite";
 import NylasStore from "nylas-store";
 import { ipcRenderer, remote } from "electron";
 import request from "request";
-import url from "url";
+import url from "node:url";
 
 import Utils from "../models/utils";
 import Actions from "../actions";
@@ -49,12 +49,12 @@ class IdentityStore extends NylasStore {
 	}
 
 	identity() {
-		if (!this._identity || !this._identity.id) return null;
+		if (!this._identity?.id) return null;
 		return Utils.deepClone(this._identity);
 	}
 
 	hasProAccess() {
-		return this._identity && this._identity.has_pro_access;
+		return this._identity?.has_pro_access;
 	}
 
 	identityId() {
@@ -83,7 +83,7 @@ class IdentityStore extends NylasStore {
 	 * once the database change comes back through
 	 */
 	async saveIdentity(identity) {
-		if (identity && identity.token) {
+		if (identity?.token) {
 			KeyManager.replacePassword(KEYCHAIN_NAME, identity.token);
 			delete identity.token;
 		}
@@ -101,9 +101,9 @@ class IdentityStore extends NylasStore {
 	 * cache and set the token from the keychain.
 	 */
 	_onIdentityChanged = (newIdentity) => {
-		const oldId = (this._identity || {}).id;
+		const oldId = this._identity?.id;
 		this._identity = newIdentity;
-		if (this._identity && this._identity.id) {
+		if (this._identity?.id) {
 			if (!this._identity.token) {
 				this._identity.token = KeyManager.getPassword(KEYCHAIN_NAME);
 			}
@@ -112,7 +112,7 @@ class IdentityStore extends NylasStore {
 			// object looks blank, set the identity to null.
 			this._identity = null;
 		}
-		const newId = (this._identity || {}).id;
+		const newId = this._identity?.id;
 		if (oldId !== newId) {
 			ipcRenderer.send("command", "onIdentityChanged");
 		}
@@ -196,7 +196,7 @@ class IdentityStore extends NylasStore {
 						account_token: this._identity.token,
 					},
 				},
-				(error, response = {}, body) => {
+				(error, _response = {}, body) => {
 					if (error || !body.startsWith("http")) {
 						// Single-sign on attempt failed. Rather than churn the user right here,
 						// at least try to open the page directly in the browser.
@@ -215,11 +215,11 @@ class IdentityStore extends NylasStore {
 	}
 
 	async _fetchIdentity() {
-		if (!this._identity || !this._identity.token) {
+		if (!this._identity?.token) {
 			return Promise.resolve();
 		}
 		const json = await this.fetchPath("/n1/user");
-		if (!json || !json.id || json.id !== this._identity.id) {
+		if (!json?.id || json.id !== this._identity.id) {
 			console.error(json);
 			NylasEnv.reportError(
 				new Error("Remote Identity returned invalid json"),

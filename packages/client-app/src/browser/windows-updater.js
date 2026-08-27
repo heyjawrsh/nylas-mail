@@ -21,10 +21,10 @@
  * We also expect Squirrel Windows to have a file called `nylas.exe` at:
  * C:\Users\<USERNAME>\AppData\Local\NylasMail\nylas.exe
  */
-const ChildProcess = require("child_process");
+const ChildProcess = require("node:child_process");
 const fs = require("fs-plus");
-const path = require("path");
-const os = require("os");
+const path = require("node:path");
+const os = require("node:os");
 
 // C:\Users\<USERNAME>\AppData\Local\NylasMail\app-x.x.x
 const appFolder = path.resolve(process.execPath, "..");
@@ -48,7 +48,7 @@ function spawn(command, args, callback, options = {}) {
 		spawnedProcess = ChildProcess.spawn(command, args, options);
 	} catch (error) {
 		// Spawn can throw an error
-		setTimeout(() => callback && callback(error, stdout), 0);
+		setTimeout(() => callback?.(error, stdout), 0);
 		return;
 	}
 

@@ -38,7 +38,7 @@ class ThreadListIcon extends React.Component {
 			.filter((ext) => ext.cssClassNamesForThreadListIcon != null)
 			.reduce(
 				(prev, ext) =>
-					prev + " " + ext.cssClassNamesForThreadListIcon(this.props.thread),
+					`${prev} ${ext.cssClassNamesForThreadListIcon(this.props.thread)}`,
 				"",
 			)
 			.trim();
@@ -81,7 +81,7 @@ class ThreadListIcon extends React.Component {
 
 	_nonDraftMessages() {
 		let msgs = this.props.thread.__messages;
-		if (!msgs || !(msgs instanceof Array)) {
+		if (!msgs || !Array.isArray(msgs)) {
 			return [];
 		}
 		msgs = _.filter(msgs, (m) => m.serverId && !m.draft);

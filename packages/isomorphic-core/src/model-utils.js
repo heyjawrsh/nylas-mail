@@ -60,7 +60,7 @@ function isValidId(value) {
 	if (value == null) {
 		return false;
 	}
-	if (isNaN(parseInt(value, 36))) {
+	if (Number.isNaN(parseInt(value, 36))) {
 		return false;
 	}
 	return true;

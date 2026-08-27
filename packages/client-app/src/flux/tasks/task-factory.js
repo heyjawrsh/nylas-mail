@@ -43,12 +43,12 @@ const TaskFactory = {
 			const catsToRemove = data.categoriesToRemove;
 			const threadsToUpdate = data.threadsToUpdate;
 			const account = AccountStore.accountForId(accountId);
-			if (!(catsToAdd instanceof Array)) {
+			if (!Array.isArray(catsToAdd)) {
 				throw new Error(
 					"tasksForApplyingCategories: `categoriesToAdd` must return an array of Categories",
 				);
 			}
-			if (!(catsToRemove instanceof Array)) {
+			if (!Array.isArray(catsToRemove)) {
 				throw new Error(
 					"tasksForApplyingCategories: `categoriesToRemove` must return an array of Categories",
 				);

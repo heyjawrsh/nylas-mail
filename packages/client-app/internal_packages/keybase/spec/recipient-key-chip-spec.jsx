@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const { React, ReactTestUtils, DraftStore, Contact } = require("nylas-exports");
-const pgp = require("kbpgp");
+const _pgp = require("kbpgp");
 
 const RecipientKeyChip = require("../lib/recipient-key-chip");
 const PGPKeyStore = require("../lib/pgp-key-store");
@@ -25,7 +25,7 @@ describe("DecryptMessageButton", () => {
 		expect(RecipientKeyChip.displayName).toBe("RecipientKeyChip"));
 
 	xit("should indicate when a recipient has a PGP key available", function () {
-		spyOn(PGPKeyStore, "pubKeys").andCallFake((address) => {
+		spyOn(PGPKeyStore, "pubKeys").andCallFake((_address) => {
 			return [{ key: 0 }];
 		});
 		const key = PGPKeyStore.pubKeys(this.contact.email);

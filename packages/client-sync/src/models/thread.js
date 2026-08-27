@@ -145,10 +145,7 @@ export default (sequelize, Sequelize) => {
 					recompute,
 					transaction,
 				} = {}) {
-					if (
-						!(this.folders instanceof Array) ||
-						!(this.labels instanceof Array)
-					) {
+					if (!Array.isArray(this.folders) || !Array.isArray(this.labels)) {
 						throw new Error(
 							"Thread.updateFromMessages() expected .folders and .labels to be inflated arrays",
 						);
@@ -184,7 +181,7 @@ export default (sequelize, Sequelize) => {
 					} else {
 						// If we're not recomputing from all of the thread's messages, we need
 						// to know which messages to update from
-						if (!(_messages instanceof Array)) {
+						if (!Array.isArray(_messages)) {
 							throw new Error(
 								"Thread.updateFromMessages() expected an array of messages",
 							);
@@ -198,7 +195,7 @@ export default (sequelize, Sequelize) => {
 					);
 
 					for (const message of _messages) {
-						if (!(message.labels instanceof Array)) {
+						if (!Array.isArray(message.labels)) {
 							throw new Error(
 								"Expected message.labels to be an inflated array.",
 							);
@@ -224,7 +221,7 @@ export default (sequelize, Sequelize) => {
 						// message.files only needs to be inflated if we're recomputing
 						// the thread. Otherwise, .hasAttachments is set after we run
 						// extractFiles on each message.
-						if (!this.hasAttachments && message.files instanceof Array) {
+						if (!this.hasAttachments && Array.isArray(message.files)) {
 							this.hasAttachments = message.files.some((f) => !f.contentId);
 						}
 					}
@@ -240,17 +237,17 @@ export default (sequelize, Sequelize) => {
 				},
 
 				toJSON() {
-					if (!(this.labels instanceof Array)) {
+					if (!Array.isArray(this.labels)) {
 						throw new Error(
 							"Thread.toJSON called on a thread where labels were not eagerly loaded.",
 						);
 					}
-					if (!(this.folders instanceof Array)) {
+					if (!Array.isArray(this.folders)) {
 						throw new Error(
 							"Thread.toJSON called on a thread where folders were not eagerly loaded.",
 						);
 					}
-					if (!(this.messages instanceof Array)) {
+					if (!Array.isArray(this.messages)) {
 						throw new Error(
 							"Thread.toJSON called on a thread where messages were not eagerly loaded. (Only need the IDs!)",
 						);

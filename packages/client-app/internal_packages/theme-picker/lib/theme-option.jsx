@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import fs from "fs-plus";
-import path from "path";
+import path from "node:path";
 
 import { EventedIFrame } from "nylas-component-kit";
 import LessCompileCache from "../../../src/less-compile-cache";

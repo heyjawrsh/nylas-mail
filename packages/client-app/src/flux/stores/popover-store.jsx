@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import NylasStore from "nylas-store";
 import Actions from "../actions";

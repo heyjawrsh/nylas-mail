@@ -110,7 +110,7 @@ export default class ModelQuery {
 
 		if (matchers instanceof Matcher) {
 			this._matchers.push(matchers);
-		} else if (matchers instanceof Array) {
+		} else if (Array.isArray(matchers)) {
 			for (const m of matchers) {
 				if (!(m instanceof Matcher)) {
 					throw new Error("You must provide instances of `Matcher`");
@@ -127,7 +127,7 @@ export default class ModelQuery {
 					throw new Error(msg);
 				}
 
-				if (value instanceof Array) {
+				if (Array.isArray(value)) {
 					this._matchers.push(attr.in(value));
 				} else {
 					this._matchers.push(attr.equal(value));
@@ -196,8 +196,9 @@ export default class ModelQuery {
 	//
 	order(ordersOrOrder) {
 		this._assertNotFinalized();
-		const orders =
-			ordersOrOrder instanceof Array ? ordersOrOrder : [ordersOrOrder];
+		const orders = Array.isArray(ordersOrOrder)
+			? ordersOrOrder
+			: [ordersOrOrder];
 		this._orders = this._orders.concat(orders);
 		return this;
 	}
@@ -529,7 +530,7 @@ export default class ModelQuery {
 	matchersFlattened() {
 		const all = [];
 		const traverse = (matchers) => {
-			if (!(matchers instanceof Array)) {
+			if (!Array.isArray(matchers)) {
 				return;
 			}
 			for (const m of matchers) {

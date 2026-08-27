@@ -39,7 +39,7 @@ class SnoozeStore {
 				label: label,
 				numItems: threads.length,
 			});
-		} catch (e) {
+		} catch (_e) {
 			// Do nothing
 		}
 	}

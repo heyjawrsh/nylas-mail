@@ -1,5 +1,5 @@
 import _ from "underscore";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { FocusedPerspectiveStore } from "nylas-exports";
 import { RetinaImg, MailLabel } from "nylas-component-kit";

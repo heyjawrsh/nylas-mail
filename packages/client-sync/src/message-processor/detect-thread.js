@@ -52,7 +52,7 @@ async function findOrBuildByRemoteThreadId(db, remoteThreadId) {
 }
 
 async function detectThread({ db, messageValues }) {
-	if (!(messageValues.labels instanceof Array)) {
+	if (!Array.isArray(messageValues.labels)) {
 		throw new Error("detectThread expects labels to be an inflated array.");
 	}
 	if (!messageValues.folder) {
@@ -66,12 +66,12 @@ async function detectThread({ db, messageValues }) {
 		thread = await findOrBuildByReferences(db, messageValues);
 	}
 
-	if (!(thread.labels instanceof Array)) {
+	if (!Array.isArray(thread.labels)) {
 		throw new Error(
 			"detectThread expects thread.labels to be an inflated array.",
 		);
 	}
-	if (!(thread.folders instanceof Array)) {
+	if (!Array.isArray(thread.folders)) {
 		throw new Error(
 			"detectThread expects thread.folders to be an inflated array.",
 		);

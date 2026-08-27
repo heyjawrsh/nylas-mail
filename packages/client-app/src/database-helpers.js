@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import Sqlite3 from "better-sqlite3";
 
 let app;

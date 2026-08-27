@@ -56,7 +56,7 @@ function isPastDate(inputDateObj, currentDate) {
 
 // chrono-node v2: user refiners are plain classes with refine(text, results)
 class EnforceFutureDate {
-	refine(text, results) {
+	refine(_text, results) {
 		results.forEach((result) => {
 			const current = _.extend(
 				{},
@@ -279,20 +279,20 @@ const DateUtils = {
 		const use24HourClock = NylasEnv.config.get("core.workspace.use24HourClock");
 		let timeFormat = use24HourClock ? "HH:mm" : "h:mm";
 
-		if (opts && opts.seconds) {
+		if (opts?.seconds) {
 			timeFormat += ":ss";
 		}
 
 		// Append meridian if not using 24 hour clock
 		if (!use24HourClock) {
-			if (opts && opts.upperCase) {
+			if (opts?.upperCase) {
 				timeFormat += " A";
 			} else {
 				timeFormat += " a";
 			}
 		}
 
-		if (opts && opts.timeZone) {
+		if (opts?.timeZone) {
 			timeFormat += " z";
 		}
 

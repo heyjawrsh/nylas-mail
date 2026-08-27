@@ -1,5 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
-import React, { Component } from "react";
+import { Component } from "react";
 
 function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 	return class extends Component {

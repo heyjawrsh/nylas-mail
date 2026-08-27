@@ -51,7 +51,7 @@ class LinkEditor extends React.Component {
 
 	componentDidMount() {
 		if (this.props.focusOnMount) {
-			return ReactDOM.findDOMNode(this.refs["urlInput"]).focus();
+			return ReactDOM.findDOMNode(this.refs.urlInput).focus();
 		}
 	}
 
@@ -116,11 +116,11 @@ class LinkEditor extends React.Component {
 	// bluring the field.
 	_onBlur(event) {
 		const targets = [];
-		if (this.refs["saveBtn"]) {
-			targets.push(ReactDOM.findDOMNode(this.refs["saveBtn"]));
+		if (this.refs.saveBtn) {
+			targets.push(ReactDOM.findDOMNode(this.refs.saveBtn));
 		}
-		if (this.refs["removeBtn"]) {
-			targets.push(ReactDOM.findDOMNode(this.refs["removeBtn"]));
+		if (this.refs.removeBtn) {
+			targets.push(ReactDOM.findDOMNode(this.refs.removeBtn));
 		}
 
 		if (Array.from(targets).includes(event.relatedTarget)) {

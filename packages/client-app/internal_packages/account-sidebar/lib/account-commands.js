@@ -13,7 +13,7 @@ class AccountCommands {
 	static initClass() {
 		AccountCommands._isSelected = (account, sidebarAccountIds) => {
 			if (sidebarAccountIds.length > 1) {
-				return account instanceof Array;
+				return Array.isArray(account);
 			} else if (sidebarAccountIds.length === 1) {
 				return (
 					(account != null ? account.id : undefined) === sidebarAccountIds[0]
@@ -38,7 +38,7 @@ class AccountCommands {
 				item.checked = true;
 			}
 			if (clickHandlers) {
-				const accounts = account instanceof Array ? account : [account];
+				const accounts = Array.isArray(account) ? account : [account];
 				item.click = AccountCommands._focusAccounts.bind(
 					AccountCommands,
 					accounts,

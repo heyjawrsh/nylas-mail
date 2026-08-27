@@ -52,7 +52,7 @@ export default class DatabaseWriter {
 			.then(() => {
 				this._opened = true;
 				const transactionReturn = fn(this);
-				if (!transactionReturn || !transactionReturn.then) {
+				if (!transactionReturn?.then) {
 					console.error(fn);
 					throw new Error(
 						"The Database Transaction function shown above must return a Promise. It Returned:",
@@ -447,7 +447,7 @@ export default class DatabaseWriter {
 				return query.markNotBackgroundable();
 			}
 			return query;
-		} catch (error) {
+		} catch (_error) {
 			throw new Error(
 				`DatabaseWriter: Error trying to perform ${operation} on database. Is it defined?`,
 			);

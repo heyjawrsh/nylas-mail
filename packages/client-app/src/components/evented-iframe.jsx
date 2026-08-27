@@ -18,7 +18,7 @@ const {
 } = require("nylas-exports");
 const IFrameSearcher =
 	require("../searchable-components/iframe-searcher").default;
-const url = require("url");
+const url = require("node:url");
 const _ = require("underscore");
 
 /*
@@ -224,12 +224,12 @@ class EventedIFrame extends React.Component {
 		return null;
 	}
 
-	_onIFrameBlur(event) {
+	_onIFrameBlur(_event) {
 		const node = ReactDOM.findDOMNode(this);
 		return node.contentWindow.getSelection().empty();
 	}
 
-	_onIFrameFocus(event) {
+	_onIFrameFocus(_event) {
 		return window.getSelection().empty();
 	}
 
@@ -367,8 +367,8 @@ class EventedIFrame extends React.Component {
 
 		const { remote, clipboard, shell, nativeImage } = require("electron");
 		const { Menu, MenuItem } = remote;
-		const path = require("path");
-		const fs = require("fs");
+		const path = require("node:path");
+		const fs = require("node:fs");
 		const menu = new Menu();
 
 		// Menu actions for links
@@ -433,7 +433,7 @@ class EventedIFrame extends React.Component {
 								oReq.responseType = "arraybuffer";
 								oReq.onload = () => {
 									const buffer = new Buffer(new Uint8Array(oReq.response));
-									return fs.writeFile(path, buffer, (err) =>
+									return fs.writeFile(path, buffer, (_err) =>
 										shell.showItemInFolder(path),
 									);
 								};
@@ -483,7 +483,7 @@ class EventedIFrame extends React.Component {
 		if (text.length > 0) {
 			let textPreview;
 			if (text.length > 45) {
-				textPreview = text.substr(0, 42) + "...";
+				textPreview = `${text.substr(0, 42)}...`;
 			} else {
 				textPreview = text;
 			}

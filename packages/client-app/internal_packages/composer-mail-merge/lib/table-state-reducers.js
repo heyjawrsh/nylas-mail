@@ -19,7 +19,7 @@ export function initialState(savedState) {
 	if (savedState && savedState.tableDataSource instanceof TableDataSource) {
 		if (savedState.failedDraftRowIdxs) {
 			const failedRowIdxs = new Set(savedState.failedDraftRowIdxs);
-			const dataSource = savedState.tableDataSource.filterRows((row, idx) =>
+			const dataSource = savedState.tableDataSource.filterRows((_row, idx) =>
 				failedRowIdxs.has(idx),
 			);
 			return {

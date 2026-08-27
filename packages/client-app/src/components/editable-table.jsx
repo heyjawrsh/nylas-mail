@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
 import ReactDOM from "react-dom";
@@ -147,7 +147,7 @@ export class EditableTableCell extends Component {
 
 		return (
 			<SelectableTableCell ref="cell" {...this.props}>
-				<div ref="inputContainer" tabIndex="0">
+				<div ref="inputContainer">
 					<InputRenderer
 						type="text"
 						rowIdx={rowIdx}

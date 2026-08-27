@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 import { ipcRenderer } from "electron";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import _ from "underscore";
 
 import RegExpUtils from "../regexp-utils";
@@ -30,7 +30,7 @@ class InlineStyleTransformer {
 		// https://regex101.com/r/bZ5tX4/1
 		let styled = html.replace(
 			/<style[^>]*>[\n\r]*<!--([^</]*)-->[\n\r]*<\/style/g,
-			(full, content) => `<style>${content}</style`,
+			(_full, content) => `<style>${content}</style`,
 		);
 
 		styled = this._injectUserAgentStyles(styled);
@@ -59,7 +59,7 @@ class InlineStyleTransformer {
 		return `${body.slice(0, i)}<style>${userAgentDefault}</style>${body.slice(i)}`;
 	}
 
-	_onInlineStylesResult(event, { html, key }) {
+	_onInlineStylesResult(_event, { html, key }) {
 		delete this._inlineStylePromises[key];
 		this._inlineStyleResolvers[key](html);
 		delete this._inlineStyleResolvers[key];

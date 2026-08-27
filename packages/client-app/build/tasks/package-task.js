@@ -1,9 +1,9 @@
 /* eslint global-require: 0 */ /* eslint prefer-template: 0 */
 /* eslint quote-props: 0 */
 const packager = require("electron-packager");
-const path = require("path");
-const util = require("util");
-const tmpdir = path.resolve(require("os").tmpdir(), "nylas-build");
+const path = require("node:path");
+const util = require("node:util");
+const tmpdir = path.resolve(require("node:os").tmpdir(), "nylas-build");
 const fs = require("fs-plus");
 const coffeereact = require("coffee-react");
 const glob = require("glob");
@@ -15,7 +15,7 @@ module.exports = (grunt) => {
 	const babelPath = path.join(grunt.config("rootDir"), ".babelrc");
 	const babelOptions = JSON.parse(fs.readFileSync(babelPath));
 
-	function runCopyAPM(buildPath, electronVersion, platform, arch, callback) {
+	function runCopyAPM(buildPath, _electronVersion, _platform, _arch, callback) {
 		// Move APM up out of the /app folder which will be inside the ASAR
 		const apmTargetDir = path.resolve(buildPath, "..", "apm");
 		fs.moveSync(path.join(buildPath, "apm"), apmTargetDir);
@@ -46,9 +46,9 @@ module.exports = (grunt) => {
 
 	function runCopyPlatformSpecificResources(
 		buildPath,
-		electronVersion,
+		_electronVersion,
 		platform,
-		arch,
+		_arch,
 		callback,
 	) {
 		// these files (like nylas-mailto-default.reg) go alongside the ASAR,
@@ -93,9 +93,9 @@ module.exports = (grunt) => {
 
 	function runCopySymlinkedPackages(
 		buildPath,
-		electronVersion,
-		platform,
-		arch,
+		_electronVersion,
+		_platform,
+		_arch,
 		callback,
 	) {
 		console.log(
@@ -120,9 +120,9 @@ module.exports = (grunt) => {
 	 */
 	function removeUnnecessaryFiles(
 		buildPath,
-		electronVersion,
-		platform,
-		arch,
+		_electronVersion,
+		_platform,
+		_arch,
 		callback,
 	) {
 		fs.removeSync(path.join(buildPath, "src", "K2"));
@@ -131,9 +131,9 @@ module.exports = (grunt) => {
 
 	function runTranspilers(
 		buildPath,
-		electronVersion,
-		platform,
-		arch,
+		_electronVersion,
+		_platform,
+		_arch,
 		callback,
 	) {
 		console.log("---> Running babel and coffeescript transpilers");

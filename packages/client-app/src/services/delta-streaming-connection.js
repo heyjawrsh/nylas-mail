@@ -147,14 +147,14 @@ class DeltaStreamingConnection {
 		this._backoffScheduler.reset();
 
 		const last = _.last(deltas);
-		if (last && last.cursor) {
+		if (last?.cursor) {
 			this._setCursor(last.cursor);
 		}
 		DeltaProcessor.process(deltas, { source: "n1Cloud" });
 	};
 
 	_onError = (err = {}) => {
-		if (err.message && err.message.includes("Invalid cursor")) {
+		if (err.message?.includes("Invalid cursor")) {
 			// TODO is this still necessary?
 			const error = new Error(
 				"DeltaStreamingConnection: Cursor is invalid. Need to blow away local cache.",

@@ -261,8 +261,8 @@ class Contenteditable extends React.Component {
 		}
 		this.innerState = _.extend(this.innerState, innerState);
 		if (this._broadcastInnerStateToToolbar) {
-			if (this.refs["toolbarController"] != null) {
-				this.refs["toolbarController"].componentWillReceiveInnerProps(
+			if (this.refs.toolbarController != null) {
+				this.refs.toolbarController.componentWillReceiveInnerProps(
 					this.innerState,
 				);
 			}
@@ -613,8 +613,8 @@ class Contenteditable extends React.Component {
 	}
 
 	_onShowContextMenu(event) {
-		if (this.refs["toolbarController"] != null) {
-			this.refs["toolbarController"].forceClose();
+		if (this.refs.toolbarController != null) {
+			this.refs.toolbarController.forceClose();
 		}
 		event.preventDefault();
 

@@ -49,7 +49,7 @@ export default class AttributeCollection extends Attribute {
 			return [];
 		}
 
-		if (!(vals instanceof Array)) {
+		if (!Array.isArray(vals)) {
 			throw new Error(
 				`AttributeCollection::toJSON: ${this.modelKey} is not an array.`,
 			);
@@ -72,7 +72,7 @@ export default class AttributeCollection extends Attribute {
 	}
 
 	fromJSON(json) {
-		if (!json || !(json instanceof Array)) {
+		if (!json || !Array.isArray(json)) {
 			return [];
 		}
 		const objs = [];

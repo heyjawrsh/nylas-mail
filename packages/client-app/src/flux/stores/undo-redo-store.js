@@ -23,7 +23,7 @@ class UndoRedoStore extends NylasStore {
 			return;
 		}
 		let tasks = taskArg;
-		if (!(tasks instanceof Array)) {
+		if (!Array.isArray(tasks)) {
 			tasks = [tasks];
 		}
 		if (tasks.length <= 0) {

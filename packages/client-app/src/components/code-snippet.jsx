@@ -1,4 +1,3 @@
-import { React } from "nylas-exports";
 import PropTypes from "prop-types";
 
 export default function CodeSnippet(props) {

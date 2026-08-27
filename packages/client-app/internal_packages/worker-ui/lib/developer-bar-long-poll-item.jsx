@@ -55,7 +55,7 @@ class DeveloperBarLongPollItem extends React.Component {
 
 		if (this.props.ignoredBecause) {
 			classname += " ignored";
-			right = this.props.ignoredBecause + " - " + right;
+			right = `${this.props.ignoredBecause} - ${right}`;
 		}
 
 		return (

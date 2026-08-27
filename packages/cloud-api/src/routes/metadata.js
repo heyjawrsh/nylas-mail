@@ -166,7 +166,7 @@ export default function registerMetadataRoutes(server) {
 				const { pluginId, objectId } = request.params;
 				try {
 					value = JSON.parse(value);
-				} catch (e) {
+				} catch (_e) {
 					throw new Error(
 						"Invalid Request: `value` is not a parseable JSON string",
 					);
@@ -174,7 +174,7 @@ export default function registerMetadataRoutes(server) {
 				let expiration = null;
 				if (value.expiration) {
 					expiration = new Date(value.expiration);
-					if (isNaN(expiration.valueOf())) {
+					if (Number.isNaN(expiration.valueOf())) {
 						throw new Error(
 							"Invalid Request: `expiration` is not a parseable date",
 						);

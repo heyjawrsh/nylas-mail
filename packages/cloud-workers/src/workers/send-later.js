@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import {
@@ -170,7 +169,7 @@ export default class SendLaterWorker extends CloudWorker {
 		return { failedRecipients };
 	}
 
-	async cleanupSentMessages(account, conn, sender, logger, message) {
+	async cleanupSentMessages(account, conn, _sender, logger, message) {
 		await conn.connect();
 
 		const boxes = await conn.getBoxes();
@@ -270,7 +269,7 @@ export default class SendLaterWorker extends CloudWorker {
 		return baseMessage;
 	}
 
-	async cleanupAttachments(logger, baseMessage, accountId) {
+	async cleanupAttachments(_logger, baseMessage, accountId) {
 		if (!baseMessage.uploads) {
 			return;
 		}

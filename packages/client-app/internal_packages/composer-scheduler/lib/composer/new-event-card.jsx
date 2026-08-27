@@ -166,7 +166,7 @@ export default class NewEventCard extends React.Component {
 
 	_renderTimePicker() {
 		const metadata = this.props.draft.metadataForPluginId(PLUGIN_ID);
-		if (metadata && metadata.proposals) {
+		if (metadata?.proposals) {
 			return (
 				<ProposedTimeList
 					event={this.props.event}
@@ -201,7 +201,7 @@ export default class NewEventCard extends React.Component {
 
 	_renderSuggestPrompt() {
 		const metadata = this.props.draft.metadataForPluginId(PLUGIN_ID);
-		if (metadata && metadata.proposals) {
+		if (metadata?.proposals) {
 			return (
 				<div className="suggest-times">
 					<a onClick={this._onProposeTimes}>Select different times…</a>

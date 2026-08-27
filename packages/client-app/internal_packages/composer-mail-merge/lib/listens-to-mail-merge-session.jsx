@@ -1,5 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { mailMergeSessionForDraft } from "./mail-merge-draft-editing-session";
 

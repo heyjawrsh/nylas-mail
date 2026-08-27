@@ -43,7 +43,7 @@ export async function removeDuplicateAccountsWithOldSettings() {
 				accountsByEmail.set(email, [account]);
 			}
 		}
-		for (const [email, accounts] of accountsByEmail) {
+		for (const [_email, accounts] of accountsByEmail) {
 			// eslint-disable-line
 			if (accounts.length <= 1) {
 				continue;

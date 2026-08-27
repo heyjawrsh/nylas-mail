@@ -1,5 +1,5 @@
 /* eslint global-require: 0 */
-import path from "path";
+import path from "node:path";
 import Model from "./model";
 import Attributes from "../attributes";
 let RegExpUtils = null;
@@ -60,7 +60,7 @@ export default class File extends Model {
 			"image/jpg": "Unnamed Image.jpg",
 			"image/jpeg": "Unnamed Image.jpg",
 		};
-		if (this.filename && this.filename.length) {
+		if (this.filename?.length) {
 			return this.filename;
 		}
 		if (defaultNames[this.contentType]) {

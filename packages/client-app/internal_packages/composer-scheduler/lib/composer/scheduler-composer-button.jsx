@@ -38,7 +38,7 @@ export default class SchedulerComposerButton extends React.Component {
 
 	_hasPendingEvent(props) {
 		const metadata = props.draft.metadataForPluginId(PLUGIN_ID);
-		return metadata && metadata.pendingEvent;
+		return metadata?.pendingEvent;
 	}
 
 	// Helper method that will render the contents of our popover.

@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import classnames from "classnames";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { DateUtils } from "nylas-exports";
 
@@ -86,7 +86,7 @@ class DateInput extends Component {
 		return (
 			<div className={classes}>
 				<input
-					tabIndex="1"
+					tabIndex="0"
 					type="text"
 					value={inputValue}
 					placeholder="Or, 'next Monday at 2PM'"

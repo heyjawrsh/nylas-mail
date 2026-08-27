@@ -134,7 +134,7 @@ class DeveloperBar extends React.Component {
 					<div
 						title={`Account ${accountId} - Cloud State: ${status}`}
 						key={`${accountId}-n1Cloud`}
-						className={"activity-status-bubble state-" + status}
+						className={`activity-status-bubble state-${status}`}
 					></div>
 				</div>
 			);
@@ -193,7 +193,7 @@ class DeveloperBar extends React.Component {
 				</div>
 			));
 		} else if (this.state.section === "queue") {
-			const queue = this.state.queue.filter(matchingFilter);
+			const _queue = this.state.queue.filter(matchingFilter);
 			const queueDivs = (() => {
 				const result = [];
 				for (i = this.state.queue.length - 1; i >= 0; i--) {
@@ -215,7 +215,7 @@ class DeveloperBar extends React.Component {
 				return result;
 			})();
 
-			const queueCompleted = this.state.completed.filter(matchingFilter);
+			const _queueCompleted = this.state.completed.filter(matchingFilter);
 			const queueCompletedDivs = (() => {
 				const result1 = [];
 				for (i = this.state.completed.length - 1; i >= 0; i--) {

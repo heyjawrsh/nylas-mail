@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const marked = require("marked");
-const Utils = require("./utils");
+const _Utils = require("./utils");
 const { ComposerExtension } = require("nylas-exports");
 
 const rawBodies = {};

@@ -14,7 +14,7 @@ const _ = require("underscore");
 
 const { Utils, Actions } = require("nylas-exports");
 const InjectedComponentSet = require("./injected-component-set");
-const Flexbox = require("./flexbox").default;
+const _Flexbox = require("./flexbox").default;
 
 /*
 Public: MultiselectActionBar is a simple component that can be placed in a {Sheet} Toolbar.

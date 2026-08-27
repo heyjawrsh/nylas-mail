@@ -61,7 +61,7 @@ export default class NylasAPIRequest {
 
 			const req = request(options, (error, response, body) => {
 				this.response = response;
-				const statusCode = (response || {}).statusCode;
+				const statusCode = response?.statusCode;
 
 				if (statusCode >= 200 && statusCode <= 299) {
 					if (!options.blob) {

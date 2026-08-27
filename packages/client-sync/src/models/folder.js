@@ -1,5 +1,5 @@
 import _ from "underscore";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { DatabaseTypes } from "isomorphic-core";
 import { formatImapPath } from "../shared/imap-paths-utils";
 import defineModel from "./define-model";

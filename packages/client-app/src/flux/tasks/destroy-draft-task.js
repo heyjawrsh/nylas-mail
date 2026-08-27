@@ -61,7 +61,7 @@ export default class DestroyDraftTask extends BaseDraftTask {
 				.catch(APIError, (err) => {
 					NylasAPI.decrementRemoteChangeLock(Message, this.draft.serverId);
 
-					const inboxMsg = err.body && err.body.message ? err.body.message : "";
+					const inboxMsg = err.body?.message ? err.body.message : "";
 
 					// Draft has already been deleted, this is not really an error
 					if ([404, 409].includes(err.statusCode)) {

@@ -48,7 +48,7 @@ class MessageListScrollTooltip extends React.Component {
 	UNSAFE_componentWillReceiveProps(newProps) {
 		return this.setupForProps(newProps);
 	}
-	shouldComponentUpdate(newProps, newState) {
+	shouldComponentUpdate(_newProps, newState) {
 		return !_.isEqual(this.state, newState);
 	}
 	setupForProps(props) {
@@ -132,7 +132,7 @@ class MessageList extends React.Component {
 			!Utils.isEqualReact(nextState, this.state)
 		);
 	}
-	componentDidUpdate(prevProps, prevState) {}
+	componentDidUpdate(_prevProps, _prevState) {}
 
 	_globalMenuItems() {
 		const toggleExpandedLabel = this.state.hasCollapsedItems

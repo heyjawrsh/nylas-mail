@@ -9,7 +9,7 @@
 // contenteditable-component-spec.cjsx
 //
 const _ = require("underscore");
-const React = require("react");
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 

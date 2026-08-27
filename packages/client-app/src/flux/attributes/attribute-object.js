@@ -11,7 +11,7 @@ export default class AttributeObject extends Attribute {
 	}
 
 	toJSON(val) {
-		return val && val.toJSON ? val.toJSON() : val;
+		return val?.toJSON ? val.toJSON() : val;
 	}
 
 	fromJSON(val) {

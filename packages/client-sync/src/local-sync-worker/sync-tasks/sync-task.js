@@ -69,7 +69,7 @@ class SyncTask extends Interruptible {
 	 * }
 	 * ```
 	 */
-	*runTask(db, imap, syncWorker) {
+	*runTask(_db, _imap, _syncWorker) {
 		// eslint-disable-line
 		throw new Error("Must implement `SyncTask::runTask`");
 	}

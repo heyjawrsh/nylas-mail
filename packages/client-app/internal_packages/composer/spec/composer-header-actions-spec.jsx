@@ -4,7 +4,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require("react");
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ComposerHeaderActions = require("../lib/composer-header-actions").default;
 const Fields = require("../lib/fields").default;
@@ -40,7 +40,7 @@ describe("ComposerHeaderActions", () => {
 			this.component,
 			"show-bcc",
 		);
-		const showSubject = ReactTestUtils.findRenderedDOMComponentWithClass(
+		const _showSubject = ReactTestUtils.findRenderedDOMComponentWithClass(
 			this.component,
 			"show-subject",
 		);
@@ -61,7 +61,7 @@ describe("ComposerHeaderActions", () => {
 			this.component,
 			"show-bcc",
 		);
-		const showSubject = ReactTestUtils.scryRenderedDOMComponentsWithClass(
+		const _showSubject = ReactTestUtils.scryRenderedDOMComponentsWithClass(
 			this.component,
 			"show-subject",
 		);

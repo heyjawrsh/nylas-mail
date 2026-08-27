@@ -10,7 +10,7 @@
 const React = require("react");
 const _ = require("underscore");
 const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
-const RetinaImg = require("./components/retina-img").default;
+const _RetinaImg = require("./components/retina-img").default;
 const Flexbox = require("./components/flexbox").default;
 const InjectedComponentSet = require("./components/injected-component-set");
 const ResizableRegion = require("./components/resizable-region");
@@ -56,12 +56,12 @@ class Sheet extends React.Component {
 			this.unlisteners = [];
 		}
 		this.unlisteners.push(
-			ComponentRegistry.listen((event) => {
+			ComponentRegistry.listen((_event) => {
 				return this.setState(this._getStateFromStores());
 			}),
 		);
 		return this.unlisteners.push(
-			WorkspaceStore.listen((event) => {
+			WorkspaceStore.listen((_event) => {
 				return this.setState(this._getStateFromStores());
 			}),
 		);

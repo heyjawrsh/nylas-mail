@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 import { JSONColumn, JSONArrayColumn } from "../database-types.js";
 import {
@@ -136,7 +136,7 @@ export default (sequelize, Sequelize) => {
 		}
 		try {
 			return JSON.parse(dec);
-		} catch (err) {
+		} catch (_err) {
 			return null;
 		}
 	};

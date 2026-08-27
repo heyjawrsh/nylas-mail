@@ -93,7 +93,7 @@ class SalesforceWindowLauncher {
 		const objName = _str.titleize(_str.humanize(objectType));
 		let title = `Create New ${objName}`;
 		if (objectId) {
-			title = `Update ${(objectInitialData || {}).Name || objName}`;
+			title = `Update ${objectInitialData?.Name || objName}`;
 		}
 
 		NylasEnv.newWindow({

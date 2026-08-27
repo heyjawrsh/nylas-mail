@@ -6,10 +6,10 @@
  */
 const _ = require("underscore");
 const _str = require("underscore.string");
-const { EventEmitter } = require("events");
+const { EventEmitter } = require("node:events");
 
 const callbackName = (string) =>
-	"on" + string.charAt(0).toUpperCase() + string.slice(1);
+	`on${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 
 /**
  * Extract child listenables from a parent from their
@@ -68,10 +68,7 @@ module.exports = {
 				j = 0;
 				while (j < listenables.length) {
 					listener = listenables[j];
-					if (
-						listener === listenable ||
-						(listener.hasListener && listener.hasListener(listenable))
-					) {
+					if (listener === listenable || listener.hasListener?.(listenable)) {
 						return true;
 					}
 					j++;
@@ -90,8 +87,8 @@ module.exports = {
 					this.listenTo(
 						allListenables[key],
 						localname,
-						this[cbname + "Default"] ||
-							this[localname + "Default"] ||
+						this[`${cbname}Default`] ||
+							this[`${localname}Default`] ||
 							localname,
 					);
 				}
@@ -103,11 +100,11 @@ module.exports = {
 				return "Listener is not able to listen to itself";
 			}
 			if (!_.isFunction(listenable.listen)) {
-				console.log(require("util").inspect(listenable));
+				console.log(require("node:util").inspect(listenable));
 				console.log(new Error().stack);
-				return listenable + " is missing a listen method";
+				return `${listenable} is missing a listen method`;
 			}
-			if (listenable.hasListener && listenable.hasListener(this)) {
+			if (listenable.hasListener?.(this)) {
 				return "Listener cannot listen to this listenable because of circular loop";
 			}
 		},

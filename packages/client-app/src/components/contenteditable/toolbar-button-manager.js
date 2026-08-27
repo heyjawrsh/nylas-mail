@@ -29,7 +29,7 @@ export default class ToolbarButtonManager extends ContenteditableExtension {
 		const buttonConfigs =
 			ToolbarButtonManager._toolbarButtonConfigs(toolbarState);
 		const range = DOMUtils.getRangeInScope(toolbarState.editableNode);
-		if (!range || !range.startContainer) {
+		if (!range?.startContainer) {
 			return null;
 		}
 

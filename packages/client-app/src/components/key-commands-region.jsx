@@ -246,11 +246,7 @@ export default class KeyCommandsRegion extends React.Component {
 
 		// To Repro: From the composer body, click the thread list column.
 		// Then keep typing. Notice how the blurred body still accepts the input.
-		if (
-			sel &&
-			sel.focusNode &&
-			!activeEl.parentElement.contains(sel.focusNode)
-		) {
+		if (sel?.focusNode && !activeEl.parentElement.contains(sel.focusNode)) {
 			document.getSelection().empty();
 		}
 

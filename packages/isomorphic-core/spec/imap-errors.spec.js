@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { RetryableError } from "../src/errors";
 import {
 	convertImapError,
-	IMAPRetryableError,
 	IMAPSocketError,
 	IMAPConnectionTimeoutError,
 	IMAPAuthenticationError,

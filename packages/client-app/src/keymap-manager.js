@@ -1,5 +1,5 @@
 import fs from "fs-plus";
-import path from "path";
+import path from "node:path";
 import mousetrap from "mousetrap";
 import { ipcRenderer } from "electron";
 import { Emitter, Disposable } from "event-kit";
@@ -12,7 +12,7 @@ By default, Mousetrap stops all hotkeys within text inputs. Override this to
 more specifically block only hotkeys that have no modifier keys (things like
 Gmail's "x", while allowing standard hotkeys.)
 */
-mousetrap.prototype.stopCallback = (e, element, combo) => {
+mousetrap.prototype.stopCallback = (_e, element, combo) => {
 	if (suspended) {
 		return true;
 	}
@@ -58,7 +58,7 @@ class KeymapFile {
 		this._bindings = {};
 		Object.keys(keymaps).forEach((command) => {
 			let keystrokesArray = keymaps[command];
-			if (!(keystrokesArray instanceof Array)) {
+			if (!Array.isArray(keystrokesArray)) {
 				keystrokesArray = [keystrokesArray];
 			}
 			for (const keystrokes of keystrokesArray) {

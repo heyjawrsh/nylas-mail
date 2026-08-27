@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
-const path = require("path");
+const path = require("node:path");
 
 module.exports = (grunt) => {
 	if (!grunt.option("platform")) {

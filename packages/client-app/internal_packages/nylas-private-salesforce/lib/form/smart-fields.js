@@ -212,7 +212,7 @@ class SmartFields {
 			ids.push(rawValue);
 		} else if (_.isArray(rawValue)) {
 			for (const val of rawValue) {
-				if (typeof val == "string") ids.push(val);
+				if (typeof val === "string") ids.push(val);
 				if (val.pendingSalesforceObject) pendingJSON.push(val);
 				if (val instanceof SalesforceObject) outValue.push(val);
 				if (val instanceof PendingSalesforceObject) outValue.push(val);
@@ -363,7 +363,7 @@ class SmartFields {
 			Account: companyMapping,
 			Opportunity: companyMapping,
 		};
-		const lookupPath = (mapping[objectType] || {})[formItemName];
+		const lookupPath = mapping[objectType]?.[formItemName];
 		return Utils.resolvePath(lookupPath, contact);
 	}
 }

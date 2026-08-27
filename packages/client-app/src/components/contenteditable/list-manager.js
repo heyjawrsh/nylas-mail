@@ -52,7 +52,7 @@ export default class ListManager extends ContenteditableExtension {
 	}
 
 	static hasListStartSignature(selection) {
-		if (!selection || !selection.anchorNode) {
+		if (!selection?.anchorNode) {
 			return false;
 		}
 		if (!selection.isCollapsed) {

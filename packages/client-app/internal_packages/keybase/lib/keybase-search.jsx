@@ -73,7 +73,7 @@ module.exports = KeybaseSearch = (() => {
 			const oldquery = this.state.query;
 			if (this.state.query !== "" && this.state.loading === false) {
 				this.setState({ loading: true });
-				return kb.autocomplete(this.state.query, (error, profiles) => {
+				return kb.autocomplete(this.state.query, (_error, profiles) => {
 					if (profiles != null) {
 						profiles = _.map(
 							profiles,

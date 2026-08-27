@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const fs = require("fs");
+const fs = require("node:fs");
 
 let style = null;
 
@@ -32,7 +32,7 @@ module.exports = {
 	},
 
 	deactivate() {
-		if (style && style.parentElement) {
+		if (style?.parentElement) {
 			return document.body.removeChild(style);
 		}
 	},

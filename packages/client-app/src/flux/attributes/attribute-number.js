@@ -12,7 +12,7 @@ export default class AttributeNumber extends Attribute {
 	}
 
 	fromJSON(val) {
-		return isNaN(val) ? null : Number(val);
+		return Number.isNaN(val) ? null : Number(val);
 	}
 
 	columnSQL() {

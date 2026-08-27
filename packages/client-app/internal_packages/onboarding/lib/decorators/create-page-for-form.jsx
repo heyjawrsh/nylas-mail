@@ -150,8 +150,7 @@ const CreatePageForForm = (FormComponent) => {
 							"The IMAP/SMTP servers for this account do not match our records. Please verify that any server names you entered are correct. If your IMAP/SMTP server has changed, first remove this account from Nylas Mail, then try logging in again.";
 					}
 					if (
-						err.errorType &&
-						err.errorType.includes("autodiscover") &&
+						err.errorType?.includes("autodiscover") &&
 						accountInfo.type === "exchange"
 					) {
 						errorFieldNames.push("eas_server_host");

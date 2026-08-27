@@ -1,4 +1,3 @@
-import { Actions } from "nylas-exports";
 import { Op } from "sequelize";
 import SyncbackTask from "./syncback-tasks/syncback-task";
 import SyncbackTaskFactory from "./syncback-task-factory";

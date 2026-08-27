@@ -1,8 +1,8 @@
 import * as IsomorphicCore from "isomorphic-core";
 import _ from "underscore";
-import os from "os";
-import fs from "fs";
-import path from "path";
+import os from "node:os";
+import fs from "node:fs";
+import path from "node:path";
 import mkdirp from "mkdirp";
 import detectThread from "./detect-thread.js";
 import extractFiles from "./extract-files.js";
@@ -188,7 +188,7 @@ class MessageProcessor {
 
 			// Inflate the serialized oldestProcessedDate value, if it exists
 			let oldestProcessedDate;
-			if (folder.syncState && folder.syncState.oldestProcessedDate) {
+			if (folder.syncState?.oldestProcessedDate) {
 				oldestProcessedDate = new Date(folder.syncState.oldestProcessedDate);
 			}
 			const justProcessedDate = messageValues.date

@@ -237,7 +237,7 @@ class ThreadList extends React.Component {
 		classes += ExtensionRegistry.ThreadList.extensions()
 			.filter((ext) => ext.cssClassNamesForThreadListItem != null)
 			.reduce(
-				(prev, ext) => prev + " " + ext.cssClassNamesForThreadListItem(item),
+				(prev, ext) => `${prev} ${ext.cssClassNamesForThreadListItem(item)}`,
 				" ",
 			);
 
@@ -391,9 +391,9 @@ class ThreadList extends React.Component {
 		);
 	}
 
-	_onDragEnd(event) {}
+	_onDragEnd(_event) {}
 
-	_onResize(event) {
+	_onResize(_event) {
 		const current = this.state.style;
 		const desired =
 			ReactDOM.findDOMNode(this).offsetWidth < 540 ? "narrow" : "wide";
@@ -470,7 +470,7 @@ class ThreadList extends React.Component {
 			tasks = TaskFactory.tasksForApplyingCategories({
 				source: "Keyboard Shortcut",
 				threads,
-				categoriesToRemove(accountId) {
+				categoriesToRemove(_accountId) {
 					return [];
 				},
 				categoriesToAdd(accountId) {

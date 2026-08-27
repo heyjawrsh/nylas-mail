@@ -6,8 +6,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const React = require("react");
-const path = require("path");
-const fs = require("fs");
+const path = require("node:path");
+const fs = require("node:fs");
 const _ = require("underscore");
 const {
 	RetinaImg,
@@ -15,7 +15,7 @@ const {
 	ConfigPropContainer,
 } = require("nylas-component-kit");
 const { AccountStore } = require("nylas-exports");
-const OnboardingActions = require("./onboarding-actions").default;
+const _OnboardingActions = require("./onboarding-actions").default;
 
 // NOTE: Temporarily copied from preferences module
 class AppearanceModeOption extends React.Component {
@@ -77,8 +77,8 @@ class InitialPreferencesOptions extends React.Component {
 			"keymaps",
 			"templates",
 		);
-		return fs.readdir(templatesDir, (err, files) => {
-			if (!files || !(files instanceof Array)) {
+		return fs.readdir(templatesDir, (_err, files) => {
+			if (!files || !Array.isArray(files)) {
 				return;
 			}
 			let templates = files.filter((filename) => {

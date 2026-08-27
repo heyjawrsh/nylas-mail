@@ -7,7 +7,7 @@
  */
 const _ = require("underscore");
 const { DOMUtils } = require("nylas-exports");
-const React = require("react");
+const _React = require("react");
 const ExtendedSelection = require("./extended-selection");
 let OverlaidComponents = null;
 

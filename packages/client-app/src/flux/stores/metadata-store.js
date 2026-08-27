@@ -11,8 +11,9 @@ class MetadataStore extends NylasStore {
 	}
 
 	_onSetMetadata(modelOrModels, pluginId, metadataValue) {
-		const models =
-			modelOrModels instanceof Array ? modelOrModels : [modelOrModels];
+		const models = Array.isArray(modelOrModels)
+			? modelOrModels
+			: [modelOrModels];
 		const modelClass = models[0].constructor;
 		if (!models.every((m) => m.constructor === modelClass)) {
 			throw new Error(

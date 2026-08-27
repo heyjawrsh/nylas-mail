@@ -1,5 +1,5 @@
 /* eslint global-require: 0 */
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { EditableList } from "nylas-component-kit";
 import { RegExpUtils, Account } from "nylas-exports";

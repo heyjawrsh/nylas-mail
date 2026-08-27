@@ -164,7 +164,7 @@ class SearchStore extends NylasStore {
 			const parsedQuery = SearchQueryParser.parse(this._searchQuery);
 			// console.info('Successfully parsed and codegened search query', parsedQuery);
 			dbQuery = dbQuery.structuredSearch(parsedQuery);
-		} catch (e) {
+		} catch (_e) {
 			// console.info('Failed to parse local search query, falling back to generic query', e);
 			dbQuery = dbQuery.search(this._searchQuery);
 		}

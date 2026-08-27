@@ -73,7 +73,7 @@ export default class DatabaseSetupQueryBuilder {
 			);
 		});
 
-		if (klass.additionalSQLiteConfig && klass.additionalSQLiteConfig.setup) {
+		if (klass.additionalSQLiteConfig?.setup) {
 			queries = queries.concat(klass.additionalSQLiteConfig.setup());
 		}
 

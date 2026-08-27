@@ -56,8 +56,7 @@ export default class RelatedThreads extends React.Component {
 		const shownThreads = this.props.contactThreads.slice(0, limit);
 		const threads = shownThreads.map((thread) => {
 			const { snippet, subject, lastMessageReceivedTimestamp } = thread;
-			const snippetStyles =
-				subject && subject.length ? { marginLeft: "1em" } : {};
+			const snippetStyles = subject?.length ? { marginLeft: "1em" } : {};
 			const onClick = () => {
 				this._onClick(thread);
 			};

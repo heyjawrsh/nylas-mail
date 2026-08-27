@@ -10,10 +10,10 @@ const { Utils, React, Actions } = require("nylas-exports");
 const PGPKeyStore = require("./pgp-key-store");
 const KeybaseUser = require("./keybase-user");
 const PassphrasePopover = require("./passphrase-popover");
-const kb = require("./keybase");
+const _kb = require("./keybase");
 const _ = require("underscore");
 const pgp = require("kbpgp");
-const fs = require("fs");
+const fs = require("node:fs");
 
 module.exports = KeyManager = (() => {
 	KeyManager = class KeyManager extends React.Component {
@@ -34,7 +34,7 @@ module.exports = KeyManager = (() => {
 
 		_exportPopoverDone(passphrase, identity) {
 			// check the passphrase before opening the save dialog
-			return fs.readFile(identity.keyPath, (err, data) => {
+			return fs.readFile(identity.keyPath, (_err, data) => {
 				return pgp.KeyManager.import_from_armored_pgp(
 					{
 						armored: data,

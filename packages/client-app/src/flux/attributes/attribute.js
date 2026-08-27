@@ -44,7 +44,7 @@ export default class Attribute {
 	in(val, { notIn } = {}) {
 		this._assertPresentAndQueryable("in", val);
 
-		if (!(val instanceof Array)) {
+		if (!Array.isArray(val)) {
 			throw new Error(`Attribute.in: you must pass an array of values.`);
 		}
 		if (val.length === 0) {

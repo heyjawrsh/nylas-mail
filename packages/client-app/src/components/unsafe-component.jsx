@@ -150,7 +150,7 @@ class UnsafeComponent extends React.Component {
 		try {
 			const node = ReactDOM.findDOMNode(this);
 			return ReactDOM.unmountComponentAtNode(node);
-		} catch (err) {}
+		} catch (_err) {}
 	}
 
 	focus() {
@@ -168,7 +168,7 @@ class UnsafeComponent extends React.Component {
 	//
 	_runInjectedDOMMethod(method) {
 		let target = null;
-		if (this.injected && this.injected[method]) {
+		if (this.injected?.[method]) {
 			target = this.injected;
 		} else if (this.injected) {
 			target = ReactDOM.findDOMNode(this.injected);

@@ -49,7 +49,7 @@ const SnoozeUtils = {
 			return DatabaseStore.findBy(Category, {
 				clientId: category.clientId,
 			}).then((updatedCat) => {
-				if (updatedCat && updatedCat.isSavedRemotely()) {
+				if (updatedCat?.isSavedRemotely()) {
 					return Promise.resolve(updatedCat);
 				}
 				return Promise.reject(new Error("Could not create Snooze category"));

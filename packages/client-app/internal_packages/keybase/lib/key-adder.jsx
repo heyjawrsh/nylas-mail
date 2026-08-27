@@ -11,10 +11,10 @@ const { Utils, React, RegExpUtils } = require("nylas-exports");
 const { RetinaImg } = require("nylas-component-kit");
 const PGPKeyStore = require("./pgp-key-store");
 const Identity = require("./identity");
-const kb = require("./keybase");
+const _kb = require("./keybase");
 const pgp = require("kbpgp");
 const _ = require("underscore");
-const fs = require("fs");
+const fs = require("node:fs");
 
 module.exports = KeyAdder = (() => {
 	KeyAdder = class KeyAdder extends React.Component {
@@ -22,7 +22,7 @@ module.exports = KeyAdder = (() => {
 			KeyAdder.displayName = "KeyAdder";
 		}
 
-		constructor(props) {
+		constructor(_props) {
 			this._onPasteButtonClick = this._onPasteButtonClick.bind(this);
 			this._onGenerateButtonClick = this._onGenerateButtonClick.bind(this);
 			this._onImportButtonClick = this._onImportButtonClick.bind(this);
@@ -50,7 +50,7 @@ module.exports = KeyAdder = (() => {
 			};
 		}
 
-		_onPasteButtonClick(event) {
+		_onPasteButtonClick(_event) {
 			return this.setState({
 				generate: false,
 				paste: !this.state.paste,
@@ -61,7 +61,7 @@ module.exports = KeyAdder = (() => {
 			});
 		}
 
-		_onGenerateButtonClick(event) {
+		_onGenerateButtonClick(_event) {
 			return this.setState({
 				generate: !this.state.generate,
 				paste: false,
@@ -73,7 +73,7 @@ module.exports = KeyAdder = (() => {
 			});
 		}
 
-		_onImportButtonClick(event) {
+		_onImportButtonClick(_event) {
 			return NylasEnv.showOpenDialog(
 				{
 					title: "Import PGP Key",
@@ -90,7 +90,7 @@ module.exports = KeyAdder = (() => {
 							validAddress: false,
 							passphrase: "",
 						});
-						return fs.readFile(filepath[0], (err, data) => {
+						return fs.readFile(filepath[0], (_err, data) => {
 							return pgp.KeyManager.import_from_armored_pgp(
 								{
 									armored: data,
@@ -120,7 +120,7 @@ module.exports = KeyAdder = (() => {
 			);
 		}
 
-		_onInnerGenerateButtonClick(event) {
+		_onInnerGenerateButtonClick(_event) {
 			this.setState({
 				loading: true,
 			});
@@ -130,14 +130,14 @@ module.exports = KeyAdder = (() => {
 		_generateKeypair() {
 			return pgp.KeyManager.generate_rsa(
 				{ userid: this.state.address },
-				(err, km) => {
+				(_err, km) => {
 					return km.sign({}, (err) => {
 						if (err) {
 							console.warn(err);
 						}
 						km.export_pgp_private(
 							{ passphrase: this.state.passphrase },
-							(err, pgp_private) => {
+							(_err, pgp_private) => {
 								const ident = new Identity({
 									addresses: [this.state.address],
 									isPriv: true,
@@ -145,7 +145,7 @@ module.exports = KeyAdder = (() => {
 								return PGPKeyStore.saveNewKey(ident, pgp_private);
 							},
 						);
-						return km.export_pgp_public({}, (err, pgp_public) => {
+						return km.export_pgp_public({}, (_err, pgp_public) => {
 							const ident = new Identity({
 								addresses: [this.state.address],
 								isPriv: false,
@@ -201,7 +201,7 @@ module.exports = KeyAdder = (() => {
 				{
 					armored: event.target.value,
 				},
-				(err, km) => {
+				(err, _km) => {
 					let valid;
 					if (err) {
 						valid = false;

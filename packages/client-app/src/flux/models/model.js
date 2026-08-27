@@ -89,13 +89,13 @@ class Model {
 		if (values == null) {
 			values = {};
 		}
-		if (values["id"] && Utils.isTempId(values["id"])) {
-			if (values["clientId"] == null) {
-				values["clientId"] = values["id"];
+		if (values.id && Utils.isTempId(values.id)) {
+			if (values.clientId == null) {
+				values.clientId = values.id;
 			}
 		} else {
-			if (values["serverId"] == null) {
-				values["serverId"] = values["id"];
+			if (values.serverId == null) {
+				values.serverId = values.id;
 			}
 		}
 
@@ -127,7 +127,7 @@ class Model {
 	//
 	attributes() {
 		const attrs = _.clone(this.constructor.attributes);
-		delete attrs["id"];
+		delete attrs.id;
 		return attrs;
 	}
 
@@ -143,8 +143,8 @@ class Model {
 		// Note: The loop in this function has been optimized for the V8 'fast case'
 		// https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
 		//
-		if (json["id"] && !Utils.isTempId(json["id"])) {
-			this.serverId = json["id"];
+		if (json.id && !Utils.isTempId(json.id)) {
+			this.serverId = json.id;
 		}
 		for (var key of Array.from(Object.keys(this.constructor.attributes))) {
 			if (key === "id") {
@@ -192,7 +192,7 @@ class Model {
 			}
 			json[attr.jsonKey] = attr.toJSON(attrValue);
 		}
-		json["id"] = this.id;
+		json.id = this.id;
 		return json;
 	}
 
@@ -207,7 +207,7 @@ class Model {
 	// Returns true if the model matches the criteria.
 	//
 	matches(criteria) {
-		if (!(criteria instanceof Array)) {
+		if (!Array.isArray(criteria)) {
 			return false;
 		}
 		for (var matcher of Array.from(criteria)) {

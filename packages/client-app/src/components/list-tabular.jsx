@@ -1,5 +1,5 @@
 import _ from "underscore";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Utils } from "nylas-exports";
 import ReactDOM from "react-dom";

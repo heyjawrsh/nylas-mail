@@ -42,7 +42,7 @@ class SendMessagePerRecipientSMTP extends SyncbackSMTPTask {
 				usesOpenTracking,
 				usesLinkTracking,
 			});
-		} catch (err) {
+		} catch (_err) {
 			throw new APIError(
 				"SendMessagePerRecipient: Sending failed for all recipients",
 				500,

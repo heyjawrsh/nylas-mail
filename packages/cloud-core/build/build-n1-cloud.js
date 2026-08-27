@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 const glob = require("glob");
-const path = require("path");
+const path = require("node:path");
 const babel = require("babel-core");
 
 // This moves us out of /packages/cloud-core/build to the nylas-mail-all root

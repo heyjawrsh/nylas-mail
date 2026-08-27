@@ -10,7 +10,7 @@ const Task = require("./flux/tasks/task").default;
 const Actions = require("./flux/actions").default;
 const Category = require("./flux/models/category").default;
 const Thread = require("./flux/models/thread").default;
-const Message = require("./flux/models/message").default;
+const _Message = require("./flux/models/message").default;
 const AccountStore = require("./flux/stores/account-store").default;
 const DatabaseStore = require("./flux/stores/database-store").default;
 const TaskQueueStatusStore = require("./flux/stores/task-queue-status-store");
@@ -29,7 +29,7 @@ TaskFactory. Unfortunately, the TaskFactory uses the CategoryStore and other
 information about the current view. Maybe after the unified inbox refactor...
 */
 var MailRulesActions = {
-	markAsImportant(message, thread) {
+	markAsImportant(_message, thread) {
 		return DatabaseStore.findBy(Category, {
 			name: "important",
 			accountId: thread.accountId,
@@ -65,7 +65,7 @@ var MailRulesActions = {
 		}
 	},
 
-	markAsRead(message, thread) {
+	markAsRead(_message, thread) {
 		return new ChangeUnreadTask({
 			unread: false,
 			threads: [thread.id],
@@ -73,7 +73,7 @@ var MailRulesActions = {
 		});
 	},
 
-	star(message, thread) {
+	star(_message, thread) {
 		return new ChangeStarredTask({
 			starred: true,
 			threads: [thread.id],
@@ -81,7 +81,7 @@ var MailRulesActions = {
 		});
 	},
 
-	changeFolder(message, thread, value) {
+	changeFolder(_message, thread, value) {
 		if (!value) {
 			return Promise.reject(new Error("A folder is required."));
 		}
@@ -100,7 +100,7 @@ var MailRulesActions = {
 		});
 	},
 
-	applyLabel(message, thread, value) {
+	applyLabel(_message, thread, value) {
 		if (!value) {
 			return Promise.reject(new Error("A label is required."));
 		}
@@ -124,7 +124,7 @@ var MailRulesActions = {
 		return MailRulesActions.moveToLabel(message, thread, "all");
 	},
 
-	moveToLabel(message, thread, nameOrId) {
+	moveToLabel(_message, thread, nameOrId) {
 		if (!nameOrId) {
 			return Promise.reject(new Error("A label is required."));
 		}

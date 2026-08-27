@@ -6,7 +6,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const path = require("path");
+const path = require("node:path");
 
 const { FileDownloadStore } = require("nylas-exports");
 
@@ -20,8 +20,8 @@ const FocusedPerspectiveStore = require("./focused-perspective-store").default;
 let DraftStore = null;
 const DraftHelpers = require("./draft-helpers").default;
 
-const Thread = require("../models/thread").default;
-const Contact = require("../models/contact").default;
+const _Thread = require("../models/thread").default;
+const _Contact = require("../models/contact").default;
 const Message = require("../models/message").default;
 const Utils = require("../models/utils");
 
@@ -67,11 +67,11 @@ class DraftFactory {
 	}
 
 	createDraftForMailto(urlString) {
-		const account = this._accountForNewDraft();
+		const _account = this._accountForNewDraft();
 
 		try {
 			urlString = decodeURI(urlString);
-		} catch (error) {}
+		} catch (_error) {}
 
 		let match = /mailto:\/*([^?&]*)((.|\n|\r)*)/.exec(urlString);
 		if (!match) {
@@ -80,7 +80,7 @@ class DraftFactory {
 			);
 		}
 
-		let [whole, to, queryString] = Array.from(match);
+		let [_whole, to, queryString] = Array.from(match);
 
 		if (to.length > 0 && to.indexOf("@") === -1) {
 			to = decodeURIComponent(to);
@@ -120,7 +120,7 @@ class DraftFactory {
 					if (!valueIsntEscaped) {
 						value = decodeURIComponent(value);
 					}
-				} catch (error1) {}
+				} catch (_error1) {}
 				query[openKey] = value;
 			}
 

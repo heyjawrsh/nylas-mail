@@ -1,14 +1,14 @@
 /* eslint dot-notation: 0 */
 /* eslint global-require: 0 */
 global.shellStartTime = Date.now();
-var util = require("util");
+var util = require("node:util");
 
 console.inspect = function consoleInspect(val) {
 	console.log(util.inspect(val, true, (depth = 7), (colorize = true)));
 };
 
 const app = require("electron").app;
-const path = require("path");
+const path = require("node:path");
 const mkdirp = require("mkdirp");
 
 if (typeof process.setFdLimit === "function") {
@@ -133,16 +133,16 @@ const parseCommandLine = (argv) => {
 		process.exit(0);
 	}
 	if (args.version) {
-		process.stdout.write(version + "\n");
+		process.stdout.write(`${version}\n`);
 		process.exit(0);
 	}
-	const devMode = args["dev"] || args["test"] || args["benchmark"];
-	const benchmarkMode = args["benchmark"];
+	const devMode = args.dev || args.test || args.benchmark;
+	const benchmarkMode = args.benchmark;
 	const logFile = args["log-file"];
-	const specMode = args["test"];
+	const specMode = args.test;
 	const jUnitXmlPath = args["junit-xml"];
-	const safeMode = args["safe"];
-	const background = args["background"];
+	const safeMode = args.safe;
+	const background = args.background;
 	const configDirPath = args["config-dir-path"];
 	const specDirectory = args["spec-directory"];
 	const specFilePattern = args["spec-file-pattern"];
@@ -285,9 +285,7 @@ const start = () => {
 		global.application = new Application();
 		global.application.start(options);
 		if (!options.specMode) {
-			console.log(
-				"App load time: " + (Date.now() - global.shellStartTime) + "ms",
-			);
+			console.log(`App load time: ${Date.now() - global.shellStartTime}ms`);
 		}
 	});
 };

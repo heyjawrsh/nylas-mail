@@ -1,6 +1,6 @@
-var crypto = require("crypto");
-var path = require("path");
-var fs = require("fs");
+var crypto = require("node:crypto");
+var path = require("node:path");
+var fs = require("node:fs");
 
 var babel = null;
 var babelVersionDirectory = null;
@@ -22,7 +22,7 @@ defaultOptions.plugins = (defaultOptions.plugins || []).map((modulename) =>
 	require.resolve(`babel-plugin-${modulename}`),
 );
 
-exports.shouldCompile = (sourceCode, filePath) =>
+exports.shouldCompile = (_sourceCode, filePath) =>
 	filePath.endsWith(".es6") || filePath.endsWith(".jsx");
 
 exports.getCachePath = (sourceCode) => {
@@ -37,7 +37,7 @@ exports.getCachePath = (sourceCode) => {
 
 	return path.join(
 		babelVersionDirectory,
-		crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex") + ".js",
+		`${crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex")}.js`,
 	);
 };
 

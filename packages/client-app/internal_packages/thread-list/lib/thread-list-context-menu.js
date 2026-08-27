@@ -4,7 +4,6 @@ import {
 	Thread,
 	Actions,
 	Message,
-	TaskFactory,
 	DatabaseStore,
 	FocusedPerspectiveStore,
 } from "nylas-exports";
@@ -73,7 +72,7 @@ export default class ThreadListContextMenu {
 			.order(Message.attributes.date.descending())
 			.limit(1)
 			.then((message) => {
-				if (message && message.canReplyAll()) {
+				if (message?.canReplyAll()) {
 					return {
 						label: "Reply All",
 						click: () => {

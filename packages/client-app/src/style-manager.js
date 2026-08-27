@@ -7,8 +7,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let StyleManager;
-const fs = require("fs-plus");
-const path = require("path");
+const _fs = require("fs-plus");
+const _path = require("node:path");
 const { Emitter, Disposable } = require("event-kit");
 
 // Extended: A singleton instance of this class available via `NylasEnv.styles`,

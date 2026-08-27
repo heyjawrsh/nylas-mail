@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Toast from "./toast";
 import RetinaImg from "./retina-img";

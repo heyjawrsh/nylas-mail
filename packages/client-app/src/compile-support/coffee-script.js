@@ -1,5 +1,5 @@
-var crypto = require("crypto");
-var path = require("path");
+var crypto = require("node:crypto");
+var path = require("node:path");
 var CoffeeScript = null;
 
 exports.shouldCompile = () => true;
@@ -7,7 +7,7 @@ exports.shouldCompile = () => true;
 exports.getCachePath = (sourceCode) =>
 	path.join(
 		"coffee",
-		crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex") + ".js",
+		`${crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex")}.js`,
 	);
 
 exports.compile = (sourceCode, filePath) => {
@@ -22,7 +22,7 @@ exports.compile = (sourceCode, filePath) => {
 	}
 
 	if (process.platform === "win32") {
-		filePath = "file:///" + path.resolve(filePath).replace(/\\/g, "/");
+		filePath = `file:///${path.resolve(filePath).replace(/\\/g, "/")}`;
 	}
 
 	var output = CoffeeScript.compile(sourceCode, {

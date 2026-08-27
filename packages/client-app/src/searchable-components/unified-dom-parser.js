@@ -87,7 +87,7 @@ export default class UnifiedDOMParser {
 			} else {
 				re = new RegExp(Utils.escapeRegExp(searchTerm), "ig");
 			}
-		} catch (e) {
+		} catch (_e) {
 			return null;
 		}
 		return re;

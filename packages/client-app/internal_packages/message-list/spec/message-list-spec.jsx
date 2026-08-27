@@ -1,7 +1,7 @@
 const _ = require("underscore");
-const moment = require("moment");
-const proxyquire = require("proxyquire").noPreserveCache();
-const React = require("react");
+const _moment = require("moment");
+const _proxyquire = require("proxyquire").noPreserveCache();
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 const {

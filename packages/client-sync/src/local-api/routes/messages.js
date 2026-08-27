@@ -2,7 +2,6 @@ import * as IsomorphicCore from "isomorphic-core";
 import Joi from "joi";
 const { Provider } = IsomorphicCore;
 import Serialization from "../serialization.js";
-import { createAndReplyWithSyncbackRequest } from "../route-helpers.js";
 
 export default (server) => {
 	server.route({

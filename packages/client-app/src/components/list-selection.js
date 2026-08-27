@@ -98,7 +98,7 @@ export default class ListSelection {
 		}
 
 		let items = itemOrItems;
-		if (!(items instanceof Array)) {
+		if (!Array.isArray(items)) {
 			items = [items];
 		}
 
@@ -149,7 +149,7 @@ export default class ListSelection {
 			const count = Math.abs(startIdx - endIdx) + 1;
 			const indexes = new Array(count)
 				.fill(0)
-				.map((val, idx) =>
+				.map((_val, idx) =>
 					startIdx > endIdx ? startIdx - idx : startIdx + idx,
 				);
 			indexes.forEach((idx) => {

@@ -1,7 +1,7 @@
 /* eslint prefer-template: 0 */
 /* eslint global-require: 0 */
 /* eslint quote-props: 0 */
-const path = require("path");
+const path = require("node:path");
 
 module.exports = (grunt) => {
 	const { spawn } = grunt.config("taskHelpers");

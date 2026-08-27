@@ -20,11 +20,11 @@
 		_,
 		__slice = [].slice;
 
-	fs = require("fs");
+	fs = require("node:fs");
 
-	Module = require("module");
+	Module = require("node:module");
 
-	path = require("path");
+	path = require("node:path");
 
 	_ = require("underscore-plus");
 
@@ -44,7 +44,7 @@
 			}
 		},
 		absolute: (relativePath) => {
-			var e;
+			var _e;
 			if (relativePath == null) {
 				return null;
 			}
@@ -52,7 +52,7 @@
 			try {
 				return fs.realpathSync(relativePath);
 			} catch (_error) {
-				e = _error;
+				_e = _error;
 				return relativePath;
 			}
 		},
@@ -65,8 +65,8 @@
 		resolveHome: (relativePath) => {
 			if (relativePath === "~") {
 				return fsPlus.getHomeDirectory();
-			} else if (relativePath.indexOf("~" + path.sep) === 0) {
-				return "" + fsPlus.getHomeDirectory() + relativePath.substring(1);
+			} else if (relativePath.indexOf(`~${path.sep}`) === 0) {
+				return `${fsPlus.getHomeDirectory()}${relativePath.substring(1)}`;
 			}
 			return relativePath;
 		},
@@ -167,9 +167,9 @@
 		},
 		isSymbolicLink: (symlinkPath, callback) => {
 			if (isPathValid(symlinkPath)) {
-				return fs.lstat(symlinkPath, (error, stat) =>
+				return fs.lstat(symlinkPath, (_error, stat) =>
 					typeof callback === "function"
-						? callback(stat != null && stat.isSymbolicLink())
+						? callback(stat?.isSymbolicLink())
 						: void 0,
 				);
 			} else {
@@ -242,7 +242,7 @@
 				if (ext === "") {
 					return ext;
 				} else {
-					return "." + ext.replace(/^\./, "");
+					return `.${ext.replace(/^\./, "")}`;
 				}
 			});
 			return paths.filter((pathToCheck) =>
@@ -270,7 +270,7 @@
 						return;
 					}
 					if (!isTargetValid) {
-						error = new Error("'" + target + "' already exists.");
+						error = new Error(`'${target}' already exists.`);
 						error.code = "EEXIST";
 						callback(error);
 						return;
@@ -294,7 +294,7 @@
 		moveSync: (source, target) => {
 			var error, targetParentPath;
 			if (!isMoveTargetValidSync(source, target)) {
-				error = new Error("'" + target + "' already exists.");
+				error = new Error(`'${target}' already exists.`);
 				error.code = "EEXIST";
 				throw error;
 			}
@@ -500,7 +500,10 @@
 		md5ForPath: (pathToDigest) => {
 			var contents;
 			contents = fs.readFileSync(pathToDigest);
-			return require("crypto").createHash("md5").update(contents).digest("hex");
+			return require("node:crypto")
+				.createHash("md5")
+				.update(contents)
+				.digest("hex");
 		},
 		resolve: function () {
 			var args,
@@ -577,8 +580,7 @@
 						return fsPlus.absolute(pathToResolve);
 					}
 				} else {
-					pathWithExtension =
-						pathToResolve + "." + extension.replace(/^\./, "");
+					pathWithExtension = `${pathToResolve}.${extension.replace(/^\./, "")}`;
 					if (fsPlus.existsSync(pathWithExtension)) {
 						return fsPlus.absolute(pathWithExtension);
 					}
@@ -655,7 +657,7 @@
 		if (isElectron2OrLower === null) {
 			isElectron2OrLower =
 				process.versions.electron &&
-				parseInt(process.versions.electron.split(".")[0]) <= 2;
+				parseInt(process.versions.electron.split(".")[0], 10) <= 2;
 		}
 		return isElectron2OrLower;
 	};
@@ -785,11 +787,11 @@
 	module.exports = new Proxy(
 		{},
 		{
-			get: (target, key) => {
+			get: (_target, key) => {
 				var _ref;
 				return (_ref = fsPlus[key]) != null ? _ref : fs[key];
 			},
-			set: (target, key, value) => (fsPlus[key] = value),
+			set: (_target, key, value) => (fsPlus[key] = value),
 		},
 	);
 }).call(this);

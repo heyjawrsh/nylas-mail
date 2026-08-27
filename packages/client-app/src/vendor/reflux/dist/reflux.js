@@ -17,15 +17,15 @@
 		g.Reflux = f();
 	}
 })(() => {
-	var define, module, exports;
+	var _define, _module, _exports;
 	return (function e(t, n, r) {
 		function s(o, u) {
 			if (!n[o]) {
 				if (!t[o]) {
-					var a = typeof require == "function" && require;
+					var a = typeof require === "function" && require;
 					if (!u && a) return a(o, !0);
 					if (i) return i(o, !0);
-					var f = new Error("Cannot find module '" + o + "'");
+					var f = new Error(`Cannot find module '${o}'`);
 					throw ((f.code = "MODULE_NOT_FOUND"), f);
 				}
 				var l = (n[o] = { exports: {} });
@@ -45,13 +45,13 @@
 			}
 			return n[o].exports;
 		}
-		var i = typeof require == "function" && require;
+		var i = typeof require === "function" && require;
 		for (var o = 0; o < r.length; o++) s(r[o]);
 		return s;
 	})(
 		{
 			1: [
-				(require, module, exports) => {
+				(_require, module, _exports) => {
 					var has = Object.prototype.hasOwnProperty;
 
 					//
@@ -133,7 +133,7 @@
 					 */
 					EventEmitter.prototype.listeners = function listeners(event, exists) {
 						var evt = prefix ? prefix + event : event,
-							available = this._events && this._events[evt];
+							available = this._events?.[evt];
 
 						if (exists) return !!available;
 						if (!available) return [];
@@ -167,7 +167,7 @@
 					) {
 						var evt = prefix ? prefix + event : event;
 
-						if (!this._events || !this._events[evt]) return false;
+						if (!this._events?.[evt]) return false;
 
 						var listeners = this._events[evt],
 							len = arguments.length,
@@ -296,7 +296,7 @@
 					) {
 						var evt = prefix ? prefix + event : event;
 
-						if (!this._events || !this._events[evt]) return this;
+						if (!this._events?.[evt]) return this;
 
 						var listeners = this._events[evt],
 							events = [];
@@ -379,7 +379,7 @@
 				{},
 			],
 			2: [
-				(require, module, exports) => {
+				(_require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -387,7 +387,7 @@
 				{},
 			],
 			3: [
-				(require, module, exports) => {
+				(_require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -439,7 +439,7 @@
 				{},
 			],
 			4: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -463,7 +463,7 @@
 					var _joins = require("./joins");
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -528,7 +528,7 @@
 					 * @param {Action|Store} listenable The listenable we want to search for
 					 * @returns {Boolean} The result of a recursive search among `this.subscriptions`
 					 */
-					var hasListener = (exports.hasListener = function hasListener(
+					var _hasListener = (exports.hasListener = function hasListener(
 						listenable,
 					) {
 						var i = 0,
@@ -541,7 +541,7 @@
 								listener = listenables[j];
 								if (
 									listener === listenable ||
-									(listener.hasListener && listener.hasListener(listenable))
+									listener.hasListener?.(listenable)
 								) {
 									return true;
 								}
@@ -555,7 +555,7 @@
 					 *
 					 * @param {Object} listenables An object of listenables. Keys will be used as callback method names.
 					 */
-					var listenToMany = (exports.listenToMany = function listenToMany(
+					var _listenToMany = (exports.listenToMany = function listenToMany(
 						listenables,
 					) {
 						var allListenables = flattenListenables(listenables);
@@ -566,8 +566,8 @@
 								this.listenTo(
 									allListenables[key],
 									localname,
-									this[cbname + "Default"] ||
-										this[localname + "Default"] ||
+									this[`${cbname}Default`] ||
+										this[`${localname}Default`] ||
 										localname,
 								);
 							}
@@ -581,15 +581,15 @@
 					 *  listened to.
 					 * @returns {String|Undefined} An error message, or undefined if there was no problem.
 					 */
-					var validateListening = (exports.validateListening =
+					var _validateListening = (exports.validateListening =
 						function validateListening(listenable) {
 							if (listenable === this) {
 								return "Listener is not able to listen to itself";
 							}
 							if (!_.isFunction(listenable.listen)) {
-								return listenable + " is missing a listen method";
+								return `${listenable} is missing a listen method`;
 							}
-							if (listenable.hasListener && listenable.hasListener(this)) {
+							if (listenable.hasListener?.(this)) {
 								return "Listener cannot listen to this listenable because of circular loop";
 							}
 						});
@@ -603,7 +603,7 @@
 					 * @param {Function|String} defaultCallback The callback to register as default handler
 					 * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is the object being listened to
 					 */
-					var listenTo = (exports.listenTo = function listenTo(
+					var _listenTo = (exports.listenTo = function listenTo(
 						listenable,
 						callback,
 						defaultCallback,
@@ -638,7 +638,7 @@
 					 * @param {Action|Store} listenable The action or store we no longer want to listen to
 					 * @returns {Boolean} True if a subscription was found and removed, otherwise false.
 					 */
-					var stopListeningTo = (exports.stopListeningTo =
+					var _stopListeningTo = (exports.stopListeningTo =
 						function stopListeningTo(listenable) {
 							var sub,
 								i = 0,
@@ -660,7 +660,7 @@
 					/**
 					 * Stops all subscriptions and empties subscriptions array
 					 */
-					var stopListeningToAll = (exports.stopListeningToAll =
+					var _stopListeningToAll = (exports.stopListeningToAll =
 						function stopListeningToAll() {
 							var remaining,
 								subs = this.subscriptions || [];
@@ -678,7 +678,7 @@
 					 * @param {Action|Store} listenable The publisher we want to get initial state from
 					 * @param {Function|String} defaultCallback The method to receive the data
 					 */
-					var fetchInitialState = (exports.fetchInitialState =
+					var _fetchInitialState = (exports.fetchInitialState =
 						function fetchInitialState(listenable, defaultCallback) {
 							defaultCallback =
 								(defaultCallback && this[defaultCallback]) || defaultCallback;
@@ -705,7 +705,7 @@
 					 * @param {Function|String} callback The method to call when all publishers have emitted
 					 * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
 					 */
-					var joinTrailing = (exports.joinTrailing = (0,
+					var _joinTrailing = (exports.joinTrailing = (0,
 					_joins.instanceJoinCreator)("last"));
 
 					/**
@@ -715,7 +715,7 @@
 					 * @param {Function|String} callback The method to call when all publishers have emitted
 					 * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
 					 */
-					var joinLeading = (exports.joinLeading = (0,
+					var _joinLeading = (exports.joinLeading = (0,
 					_joins.instanceJoinCreator)("first"));
 
 					/**
@@ -725,7 +725,7 @@
 					 * @param {Function|String} callback The method to call when all publishers have emitted
 					 * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
 					 */
-					var joinConcat = (exports.joinConcat = (0,
+					var _joinConcat = (exports.joinConcat = (0,
 					_joins.instanceJoinCreator)("all"));
 
 					/**
@@ -735,13 +735,13 @@
 					 * @param {Function|String} callback The method to call when all publishers have emitted
 					 * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
 					 */
-					var joinStrict = (exports.joinStrict = (0,
+					var _joinStrict = (exports.joinStrict = (0,
 					_joins.instanceJoinCreator)("strict"));
 				},
 				{ "./joins": 11, "./utils": 13 },
 			],
 			5: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -758,7 +758,7 @@
 					var _ = _interopRequireWildcard(_utils);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -784,7 +784,7 @@
 					 * undefined, that will be passed on as arguments for shouldEmit and
 					 * emission.
 					 */
-					var preEmit = (exports.preEmit = function preEmit() {});
+					var _preEmit = (exports.preEmit = function preEmit() {});
 
 					/**
 					 * Hook used by the publisher after `preEmit` to determine if the
@@ -793,7 +793,7 @@
 					 *
 					 * @returns {Boolean} true if event should be emitted
 					 */
-					var shouldEmit = (exports.shouldEmit = function shouldEmit() {
+					var _shouldEmit = (exports.shouldEmit = function shouldEmit() {
 						return true;
 					});
 
@@ -804,7 +804,7 @@
 					 * @param {Mixed} [optional] bindContext The context to bind the callback with
 					 * @returns {Function} Callback that unsubscribes the registered event handler
 					 */
-					var listen = (exports.listen = function listen(
+					var _listen = (exports.listen = function listen(
 						callback,
 						bindContext,
 					) {
@@ -826,7 +826,7 @@
 					/**
 					 * Publishes an event using `this.emitter` (if `shouldEmit` agrees)
 					 */
-					var trigger = (exports.trigger = function trigger() {
+					var _trigger = (exports.trigger = function trigger() {
 						var args = arguments,
 							pre = this.preEmit.apply(this, args);
 						args =
@@ -843,7 +843,7 @@
 					/**
 					 * Tries to publish the event on the next tick
 					 */
-					var triggerAsync = (exports.triggerAsync = function triggerAsync() {
+					var _triggerAsync = (exports.triggerAsync = function triggerAsync() {
 						var args = arguments;
 						_.nextTick(() => {
 							this.trigger.apply(this, args);
@@ -858,7 +858,7 @@
 					 *        rest are the arguments provided from the previous
 					 *        trigger invocation
 					 */
-					var deferWith = (exports.deferWith = function deferWith(callback) {
+					var _deferWith = (exports.deferWith = function deferWith(callback) {
 						var oldTrigger = this.trigger,
 							ctx = this,
 							resolver = function resolver() {
@@ -875,13 +875,13 @@
 				{ "./utils": 13 },
 			],
 			6: [
-				function (require, module, exports) {
+				function (_require, _module, exports) {
 					arguments[4][2][0].apply(exports, arguments);
 				},
 				{ dup: 2 },
 			],
 			7: [
-				(require, module, exports) => {
+				(_require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -923,7 +923,7 @@
 				{},
 			],
 			8: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -946,7 +946,7 @@
 					var Keep = _interopRequireWildcard(_Keep);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -1025,7 +1025,7 @@
 						var functor = function functor() {
 							var hasChildActions = false;
 							/* eslint no-unused-vars:0 */
-							for (var ignore in functor.childActions) {
+							for (var _ignore in functor.childActions) {
 								hasChildActions = true;
 								break;
 							}
@@ -1051,7 +1051,7 @@
 				},
 			],
 			9: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -1082,7 +1082,7 @@
 					var ListenerMethods = _interopRequireWildcard(_ListenerMethods);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -1174,7 +1174,7 @@
 				},
 			],
 			10: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -1229,7 +1229,7 @@
 					var __keep = _interopRequireWildcard(_Keep);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -1271,7 +1271,7 @@
 
 						return (definitions) => {
 							var actions = {};
-							if (definitions instanceof Array) {
+							if (Array.isArray(definitions)) {
 								definitions.forEach((val) => {
 									if (_.isObject(val)) {
 										reducer(val, actions);
@@ -1362,7 +1362,7 @@
 				},
 			],
 			11: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -1376,7 +1376,7 @@
 					var _ = _interopRequireWildcard(_utils);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -1517,7 +1517,7 @@
 				{ "./createStore": 9, "./utils": 13 },
 			],
 			12: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -1528,7 +1528,7 @@
 					var _ = _interopRequireWildcard(_utils);
 
 					function _interopRequireWildcard(obj) {
-						if (obj && obj.__esModule) {
+						if (obj?.__esModule) {
 							return obj;
 						} else {
 							var newObj = {};
@@ -1604,7 +1604,7 @@
 				{ "./utils": 13 },
 			],
 			13: [
-				(require, module, exports) => {
+				(require, _module, exports) => {
 					Object.defineProperty(exports, "__esModule", {
 						value: true,
 					});
@@ -1708,7 +1708,7 @@
 				{ eventemitter3: 1 },
 			],
 			14: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var _ = require("reflux-core/lib/utils"),
 						ListenerMethods = require("reflux-core/lib/ListenerMethods");
 
@@ -1731,7 +1731,7 @@
 				{ "reflux-core/lib/ListenerMethods": 4, "reflux-core/lib/utils": 13 },
 			],
 			15: [
-				(require, module, exports) => {
+				(require, _module, _exports) => {
 					/* globals React: false */
 
 					var Reflux = require("reflux-core");
@@ -1745,17 +1745,14 @@
 									typeof superClass,
 							);
 						}
-						subClass.prototype = Object.create(
-							superClass && superClass.prototype,
-							{
-								constructor: {
-									value: subClass,
-									enumerable: false,
-									writable: true,
-									configurable: true,
-								},
+						subClass.prototype = Object.create(superClass?.prototype, {
+							constructor: {
+								value: subClass,
+								enumerable: false,
+								writable: true,
+								configurable: true,
 							},
-						);
+						});
 						if (superClass) {
 							if (Object.setPrototypeOf) {
 								Object.setPrototypeOf(subClass, superClass);
@@ -1774,13 +1771,13 @@
 						try {
 							var R = require("react"); // we ignore this in browserify manually (see grunt file), so it's more of a doublecheck for in node
 							Reflux.defineReact(R);
-						} catch (e) {}
+						} catch (_e) {}
 					}
 				},
 				{ "./defineReact": 18, react: undefined, "reflux-core": 10 },
 			],
 			16: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var ListenerMethods = require("reflux-core/lib/ListenerMethods"),
 						ListenerMixin = require("./ListenerMixin"),
 						_ = require("reflux-core/lib/utils");
@@ -1817,7 +1814,7 @@
 				},
 			],
 			17: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var ListenerMethods = require("reflux-core/lib/ListenerMethods"),
 						ListenerMixin = require("./ListenerMixin"),
 						_ = require("reflux-core/lib/utils");
@@ -1864,7 +1861,7 @@
 				},
 			],
 			18: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					/* globals React: false */
 
 					var Reflux = require("reflux-core");
@@ -1878,14 +1875,14 @@
 					 */
 					var _react,
 						_defined = false;
-					function defineReact(react, noLongerUsed, extend) {
+					function defineReact(react, _noLongerUsed, extend) {
 						var proto, _extend;
 
 						// if no Reflux object is yet available then return and just wait until defineReact is called manually with it
 						try {
 							_react = react || _react || React;
 							_extend = extend || _react.Component;
-						} catch (e) {
+						} catch (_e) {
 							return;
 						}
 
@@ -2054,7 +2051,7 @@
 								// check if the update actually has any mapped props
 								/*jshint unused: false */
 								var hasProps = false;
-								for (var check in update) {
+								for (var _check in update) {
 									hasProps = true;
 									break;
 								}
@@ -2353,7 +2350,7 @@
 				{ "reflux-core": 10 },
 			],
 			19: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var Reflux = require("reflux-core");
 
 					Reflux.serverMode = typeof window !== "object";
@@ -2383,7 +2380,7 @@
 				},
 			],
 			20: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var ListenerMethods = require("reflux-core/lib/ListenerMethods");
 
 					/**
@@ -2425,7 +2422,7 @@
 				{ "reflux-core/lib/ListenerMethods": 4 },
 			],
 			21: [
-				(require, module, exports) => {
+				(require, module, _exports) => {
 					var ListenerMethods = require("reflux-core/lib/ListenerMethods");
 
 					/**

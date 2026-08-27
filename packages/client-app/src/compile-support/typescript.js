@@ -1,6 +1,6 @@
 var _ = require("underscore");
-var crypto = require("crypto");
-var path = require("path");
+var crypto = require("node:crypto");
+var path = require("node:path");
 
 var defaultOptions = {
 	target: 1,
@@ -24,7 +24,7 @@ exports.getCachePath = (sourceCode) => {
 
 	return path.join(
 		typescriptVersionDir,
-		crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex") + ".js",
+		`${crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex")}.js`,
 	);
 };
 

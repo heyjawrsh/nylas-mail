@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Event, DatabaseStore } from "nylas-exports";
 import SearchBar from "../search-bar";

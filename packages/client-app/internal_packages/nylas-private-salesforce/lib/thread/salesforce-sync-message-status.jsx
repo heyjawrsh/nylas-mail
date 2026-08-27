@@ -59,8 +59,7 @@ export default class SalesforceSyncMessageStatus extends React.Component {
 	}
 
 	_isPendingSync() {
-		return (this.props.message.metadataForPluginId(PLUGIN_ID) || {})
-			.pendingSync;
+		return this.props.message.metadataForPluginId(PLUGIN_ID)?.pendingSync;
 	}
 
 	_renderPendingSync() {

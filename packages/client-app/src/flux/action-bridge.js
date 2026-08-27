@@ -109,10 +109,10 @@ class ActionBridge {
 
 	_globalExtensionAction(broadcastName) {
 		const [scope, name] = broadcastName.split("::");
-		return (_.findWhere(this.globalActions, { scope, name }) || {}).actionFn;
+		return _.findWhere(this.globalActions, { scope, name })?.actionFn;
 	}
 
-	onIPCMessage(event, initiatorId, name, json) {
+	onIPCMessage(_event, _initiatorId, name, json) {
 		if (NylasEnv.isEmptyWindow()) {
 			throw new Error("Empty windows shouldn't receive IPC messages");
 		}
@@ -153,13 +153,13 @@ class ActionBridge {
 	}
 
 	onRebroadcast(target, name, args) {
-		if (Actions[name] && Actions[name].firing) {
+		if (Actions[name]?.firing) {
 			Actions[name].firing = false;
 			return;
 		}
 
 		const globalExtAction = this._globalExtensionAction(name);
-		if (globalExtAction && globalExtAction.firing) {
+		if (globalExtAction?.firing) {
 			globalExtAction.firing = false;
 			return;
 		}

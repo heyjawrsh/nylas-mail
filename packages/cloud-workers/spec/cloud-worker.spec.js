@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("isomorphic-core", () => {
 	class RetryableError extends Error {}
 	class NylasError extends Error {}
-	const withConnectionsForAccount = vi.fn(async (account, { onConnected }) => {
+	const withConnectionsForAccount = vi.fn(async (_account, { onConnected }) => {
 		const connection = {
 			openBox: vi.fn(),
 			search: vi.fn(async () => [5]),

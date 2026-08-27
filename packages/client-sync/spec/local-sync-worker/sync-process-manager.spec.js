@@ -1,4 +1,4 @@
-import { Actions, IdentityStore } from "nylas-exports";
+import { IdentityStore } from "nylas-exports";
 import { createLogger } from "../../src/shared/logger";
 import LocalDatabaseConnector from "../../src/shared/local-database-connector";
 import SyncProcessManager from "../../src/local-sync-worker/sync-process-manager";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Rx, ComponentRegistry, WorkspaceStore } from "nylas-exports";
 
 // Worker to fetch new Salesforce objects

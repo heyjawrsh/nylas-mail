@@ -1,7 +1,7 @@
-import fs from "fs";
+import fs from "node:fs";
 import { mkdirp } from "mkdirp";
-import path from "path";
-import zlib from "zlib";
+import path from "node:path";
+import zlib from "node:zlib";
 
 const MAX_PATH_DIRS = 5;
 const FILE_EXTENSION = "nylasmail";
@@ -13,13 +13,13 @@ function baseMessagePath() {
 export function tryReadBody(val) {
 	try {
 		const parsed = JSON.parse(val);
-		if (parsed && parsed.path && parsed.path.startsWith(baseMessagePath())) {
+		if (parsed?.path?.startsWith(baseMessagePath())) {
 			if (parsed.compressed) {
 				return zlib.gunzipSync(fs.readFileSync(parsed.path)).toString();
 			}
 			return fs.readFileSync(parsed.path, { encoding: "utf8" });
 		}
-	} catch (err) {
+	} catch (_err) {
 		// ignore. this is valid. JSON parse should fail if the body isn't
 		// metadata about the flat zipped file, but rather a plain text
 	}
@@ -74,7 +74,7 @@ export function writeBody({ msgId, body } = {}) {
 
 		fs.writeFileSync(bodyPath, bodyToWrite);
 		return result;
-	} catch (err) {
+	} catch (_err) {
 		// If anything bad happens while trying to write to disk just store the
 		// body in the database.
 		return body;

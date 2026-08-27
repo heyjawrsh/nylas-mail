@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const Handlebars = require("handlebars");
 const marked = require("meta-marked");
 const fs = require("fs-plus");
@@ -44,7 +44,7 @@ const thirdPartyClasses = {
 module.exports = (grunt) => {
 	const { cp, mkdir, rm } = grunt.config("taskHelpers");
 
-	const relativePathForClass = (classname) => classname + ".html";
+	const relativePathForClass = (classname) => `${classname}.html`;
 
 	const outputPathFor = (relativePath) => {
 		const classDocsOutputDir = grunt.config.get("classDocsOutputDir");
@@ -59,7 +59,7 @@ module.exports = (grunt) => {
 		if (tasks == null) {
 			tasks = [];
 		}
-		if (json instanceof Array) {
+		if (Array.isArray(json)) {
 			return (() => {
 				const result = [];
 				for (val of Array.from(json)) {
@@ -94,10 +94,10 @@ module.exports = (grunt) => {
 		"Builds html from the API docs",
 		() => {
 			let documentation,
-				filename,
-				html,
+				_filename,
+				_html,
 				match,
-				meta,
+				_meta,
 				name,
 				result,
 				section,
@@ -140,7 +140,7 @@ module.exports = (grunt) => {
 			const sidebar = {};
 			for (var i = 0; i < classes.length; i++) {
 				var current_class = classes[i];
-				console.log(current_class.name + " " + current_class.section);
+				console.log(`${current_class.name} ${current_class.section}`);
 
 				if (!(current_class.section in sidebar)) {
 					sidebar[current_class.section] = [];
@@ -153,7 +153,7 @@ module.exports = (grunt) => {
 				grunt.config("buildDir"),
 				"docs_templates",
 			);
-			grunt.file.recurse(templatesPath, (abspath, root, subdir, filename) => {
+			grunt.file.recurse(templatesPath, (abspath, _root, _subdir, filename) => {
 				if (filename[0] === "_" && path.extname(filename) === ".html") {
 					return Handlebars.registerPartial(filename, grunt.file.read(abspath));
 				}
@@ -179,7 +179,7 @@ module.exports = (grunt) => {
 						url = thirdPartyClasses[term];
 					} else if (knownClassnames[term]) {
 						url = relativePathForClass(knownClassnames[term].name);
-						grunt.log.ok("Found: " + term);
+						grunt.log.ok(`Found: ${term}`);
 					} else {
 						console.warn(`Cannot find class named ${term}`);
 					}
@@ -227,7 +227,7 @@ module.exports = (grunt) => {
 				processFields(documentation, ["type"], [expandTypeReferences]);
 
 				result = classTemplate({ name, documentation, section });
-				grunt.file.write(outputPathFor(name + ".md"), result);
+				grunt.file.write(outputPathFor(`${name}.md`), result);
 			}
 
 			const sidebarTemplatePath = path.join(templatesPath, "sidebar.md");

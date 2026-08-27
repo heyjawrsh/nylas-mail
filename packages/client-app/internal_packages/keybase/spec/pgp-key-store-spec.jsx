@@ -7,7 +7,7 @@
 const { React, ReactTestUtils, DraftStore, Message } = require("nylas-exports");
 const pgp = require("kbpgp");
 const _ = require("underscore");
-const fs = require("fs");
+const _fs = require("node:fs");
 
 const Identity = require("../lib/identity");
 const PGPKeyStore = require("../lib/pgp-key-store");
@@ -134,7 +134,7 @@ wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI
 	describe("when handling private keys", () => {
 		it("should be able to retrieve and unlock a private key", () => {
 			expect(
-				PGPKeyStore.privKeys().some((cv, index, array) => {
+				PGPKeyStore.privKeys().some((cv, _index, _array) => {
 					return Object.hasOwn(cv, "key");
 				}),
 			).toBeFalsey;
@@ -147,9 +147,11 @@ wcBMA5nwa6GWVDOUAQf+MjiVRIBWJyM6The6/h2MgSJTDyrN9teFFJTizOvgHNnD W4EpEmmhShNyERI
 				passphrase: "",
 				callback: () => {
 					return expect(
-						PGPKeyStore.privKeys({ timed: false }).some((cv, index, array) => {
-							return Object.hasOwn(cv, "key");
-						}),
+						PGPKeyStore.privKeys({ timed: false }).some(
+							(cv, _index, _array) => {
+								return Object.hasOwn(cv, "key");
+							},
+						),
 					).toBeTruthy;
 				},
 			});

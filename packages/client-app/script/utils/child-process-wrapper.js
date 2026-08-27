@@ -1,4 +1,4 @@
-var childProcess = require("child_process");
+var childProcess = require("node:child_process");
 
 // Exit the process if the command failed and only call the callback if the
 // command succeed, output of the command would also be piped.
@@ -14,7 +14,7 @@ exports.safeExec = (command, options, callback) => {
 	options.maxBuffer = 1024 * 1024;
 
 	options.stdio = "inherit";
-	var child = childProcess.exec(command, options, (error, stdout, stderr) => {
+	var child = childProcess.exec(command, options, (error, _stdout, _stderr) => {
 		if (error && !options.ignoreStderr) process.exit(error.code || 1);
 		else callback(null);
 	});
@@ -31,10 +31,10 @@ exports.safeSpawn = (command, args, options, callback) => {
 	options.stdio = "inherit";
 	var child = childProcess.spawn(command, args, options);
 	child.on("error", (error) => {
-		console.error("Command '" + command + "' failed: " + error.message);
+		console.error(`Command '${command}' failed: ${error.message}`);
 	});
 	child.on("exit", (code) => {
-		if (code != 0) process.exit(code);
+		if (code !== 0) process.exit(code);
 		else callback(null);
 	});
 };

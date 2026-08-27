@@ -9,7 +9,7 @@
 
 let Identity;
 const { Utils } = require("nylas-exports");
-const path = require("path");
+const path = require("node:path");
 
 module.exports = Identity = class Identity {
 	constructor({ key, addresses, isPriv, keybase_profile }) {

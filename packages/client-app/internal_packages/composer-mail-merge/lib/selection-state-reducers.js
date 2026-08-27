@@ -2,7 +2,7 @@ import _ from "underscore";
 import { MAX_ROWS } from "./mail-merge-constants";
 
 export function initialState(savedState) {
-	if (savedState && savedState.tableDataSource) {
+	if (savedState?.tableDataSource) {
 		return {
 			selection: {
 				rowIdx: 0,

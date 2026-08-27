@@ -51,7 +51,7 @@ class PreferencesAccounts extends React.Component {
 		});
 	}
 
-	_onReorderAccount(account, oldIdx, newIdx) {
+	_onReorderAccount(account, _oldIdx, newIdx) {
 		Actions.reorderAccount(account.id, newIdx);
 	}
 

@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import Utils from "./flux/models/utils";
 
 export function atomicWriteFileSync(filepath, content) {

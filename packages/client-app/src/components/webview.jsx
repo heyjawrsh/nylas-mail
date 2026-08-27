@@ -1,4 +1,4 @@
-import url from "url";
+import url from "node:url";
 import React from "react";
 import PropTypes from "prop-types";
 import { shell } from "electron";

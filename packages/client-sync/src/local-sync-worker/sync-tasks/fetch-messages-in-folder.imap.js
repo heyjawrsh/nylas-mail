@@ -186,9 +186,9 @@ class FetchMessagesInFolderIMAP extends SyncTask {
 		// away the rest.
 		while (unseen.length > 0) {
 			const part = unseen.shift();
-			if (part instanceof Array && part[0].type !== "alternative") {
+			if (Array.isArray(part) && part[0].type !== "alternative") {
 				unseen.unshift(...part);
-			} else if (part instanceof Array && part[0].type === "alternative") {
+			} else if (Array.isArray(part) && part[0].type === "alternative") {
 				// Picking our desired alternative part(s) here vastly simplifies
 				// later parsing of the body, since we can then completely ignore
 				// mime structure without making any terrible mistakes. We assume
@@ -434,8 +434,7 @@ class FetchMessagesInFolderIMAP extends SyncTask {
 			this._folder.syncState.gmailInitialUIDsRemaining ||
 			this._folder.syncState.gmailInboxUIDsRemaining;
 		const gmailInitialUIDsUnset = !gmailInitialUIDsRemaining;
-		const hasGmailInboxUIDsRemaining =
-			gmailInitialUIDsRemaining && gmailInitialUIDsRemaining.length;
+		const hasGmailInboxUIDsRemaining = gmailInitialUIDsRemaining?.length;
 		let totalProcessedMessages = 0;
 		if (
 			provider === "gmail" &&

@@ -295,7 +295,7 @@ export function imapAuthHandler(upsertAccount) {
 			return smtpTransport
 				.verify()
 				.then((c) => {
-					if (c && c.end) c.end();
+					if (c?.end) c.end();
 				})
 				.catch((error) => {
 					throw convertSmtpError(error, { connectionSettings: smtpConfig });
@@ -308,7 +308,7 @@ export function imapAuthHandler(upsertAccount) {
 				logger: request.logger,
 				db: {}, // stub DB
 			}).then((c) => {
-				if (c && c.end) c.end();
+				if (c?.end) c.end();
 			});
 		};
 

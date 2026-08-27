@@ -24,7 +24,7 @@ class RefreshingJSONCache {
 
 		// Look up existing data from db
 		return DatabaseStore.findJSONBlob(this.key).then((json) => {
-			if (json != null && json.refreshInterval) {
+			if (json?.refreshInterval) {
 				this.refreshInterval = json.refreshInterval;
 			}
 
@@ -76,7 +76,7 @@ class RefreshingJSONCache {
 		});
 	}
 
-	fetchData(callback) {
+	fetchData(_callback) {
 		throw new Error("Subclasses should override this method.");
 	}
 }

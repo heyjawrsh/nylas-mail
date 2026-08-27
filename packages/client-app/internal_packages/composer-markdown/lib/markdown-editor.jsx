@@ -11,7 +11,7 @@ const { React, ReactDOM, QuotedHTMLTransformer } = require("nylas-exports");
 // Keep a file-scope variable containing the contents of the markdown stylesheet.
 // This will be embedded in the markdown preview iFrame, as well as the email body.
 // The stylesheet is loaded when a preview component is first mounted.
-const markdownStylesheet = null;
+const _markdownStylesheet = null;
 
 const splitContents = (contents) => {
 	const quoteStart = contents.search(/(<div class="gmail_quote|<signature)/i);
@@ -145,7 +145,7 @@ class MarkdownEditor extends React.Component {
 		// TODO sorry
 		// Add style tag to disable incompatible plugins
 		return (
-			<div tabIndex="1" className="markdown-editor" onFocus={this.focus}>
+			<div className="markdown-editor" onFocus={this.focus}>
 				<style>
 					{".btn-mail-merge { display:none; }"}
 					{".btn-emoji { display:none; }"}

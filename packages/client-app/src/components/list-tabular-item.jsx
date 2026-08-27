@@ -36,7 +36,7 @@ class ListTabularItem extends React.Component {
 	// DO NOT DELETE unless you know what you're doing! This method cuts
 	// React.Perf.wasted-time from ~300msec to 20msec by doing a deep
 	// comparison of props before triggering a re-render.
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps, _nextState) {
 		if (
 			!Utils.isEqualReact(this.props.item, nextProps.item) ||
 			this.props.columns !== nextProps.columns

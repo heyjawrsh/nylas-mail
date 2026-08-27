@@ -9,7 +9,7 @@
  */
 let Task;
 const _ = require("underscore");
-const ChildProcess = require("child_process");
+const ChildProcess = require("node:child_process");
 const { Emitter } = require("event-kit");
 
 // Extended: Run a node script in a separate process.

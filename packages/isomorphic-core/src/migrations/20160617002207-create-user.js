@@ -28,7 +28,7 @@ export default {
 			},
 		});
 	},
-	down: function down(queryInterface, Sequelize) {
+	down: function down(queryInterface, _Sequelize) {
 		return queryInterface.dropTable("Users");
 	},
 };

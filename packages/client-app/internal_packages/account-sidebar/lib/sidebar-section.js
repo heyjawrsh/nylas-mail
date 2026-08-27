@@ -180,7 +180,7 @@ class SidebarSection {
 					children: accounts.map((acc) => {
 						const subItem = ext.sidebarItem([acc.id]);
 						return SidebarItem.forPerspective(
-							subItem.id + `-${acc.id}`,
+							`${subItem.id}-${acc.id}`,
 							subItem.perspective,
 							{ name: acc.label, iconName: subItem.iconName },
 						);

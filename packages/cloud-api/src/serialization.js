@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-function replacer(key, value) {
+function replacer(_key, value) {
 	// force remove any disallowed keys here
 	return value;
 }

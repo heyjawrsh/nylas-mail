@@ -97,7 +97,6 @@ export default class DatePicker extends React.Component {
 
 		return (
 			<div
-				tabIndex={0}
 				className="date-picker"
 				onKeyDown={this._onKeyDown}
 				onFocus={this._onFocus}

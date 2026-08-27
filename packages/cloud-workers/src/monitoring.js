@@ -20,13 +20,13 @@ export function buildMonitoringServer(logger) {
 		method: "GET",
 		path: "/ping",
 		options: { auth: false },
-		handler: async (request, h) => {
+		handler: async (_request, h) => {
 			logger.info("---> Ping DB");
 			try {
 				const db = await DatabaseConnector.forShared();
 				await db.sequelize.query("SELECT 1");
 
-				if (new Date() - global.lastRun >= MAX_TIME_BETWEEN_ITERATIONS) {
+				if (Date.now() - global.lastRun >= MAX_TIME_BETWEEN_ITERATIONS) {
 					throw Boom.badImplementation("Main loop seems to be stuck.");
 				}
 				return h.response("DB Okay");

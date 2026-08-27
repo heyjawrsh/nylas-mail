@@ -43,7 +43,7 @@ class SearchIndexScheduler {
 		return models[0];
 	}
 
-	_getNewUnindexed(modelClass, indexSize, cutoff) {
+	_getNewUnindexed(modelClass, _indexSize, cutoff) {
 		const whereConds = [modelClass.attributes.isSearchIndexed.equal(false)];
 		if (cutoff) {
 			whereConds.push(

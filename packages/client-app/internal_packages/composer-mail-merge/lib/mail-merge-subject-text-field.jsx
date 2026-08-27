@@ -1,5 +1,5 @@
 /* eslint react/no-danger: 0 */
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import { EditorAPI } from "nylas-exports";
@@ -45,7 +45,7 @@ class MailMergeSubjectTextField extends Component {
 
 		if (isWorkspaceOpen) {
 			this.editor = new EditorAPI(findDOMNode(this.refs.contenteditable));
-			if (this.savedSelection && this.savedSelection.rawSelection.anchorNode) {
+			if (this.savedSelection?.rawSelection.anchorNode) {
 				this.editor.select(this.savedSelection);
 				this.savedSelection = null;
 			}

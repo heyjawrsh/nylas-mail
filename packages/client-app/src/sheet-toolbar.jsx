@@ -10,7 +10,7 @@
  */
 const React = require("react");
 const ReactDOM = require("react-dom");
-const Sheet = require("./sheet");
+const _Sheet = require("./sheet");
 const Flexbox = require("./components/flexbox").default;
 const RetinaImg = require("./components/retina-img").default;
 const Utils = require("./flux/models/utils");
@@ -54,7 +54,7 @@ class WindowTitle extends React.Component {
 	}
 
 	componentDidMount() {
-		return (this.unlisten = NylasEnv.onWindowPropsReceived((windowProps) => {
+		return (this.unlisten = NylasEnv.onWindowPropsReceived((_windowProps) => {
 			return this.setState(NylasEnv.getLoadSettings());
 		}));
 	}
@@ -292,12 +292,12 @@ class Toolbar extends React.Component {
 		this.mounted = true;
 		this.unlisteners = [];
 		this.unlisteners.push(
-			WorkspaceStore.listen((event) => {
+			WorkspaceStore.listen((_event) => {
 				return this.setState(this._getStateFromStores());
 			}),
 		);
 		this.unlisteners.push(
-			ComponentRegistry.listen((event) => {
+			ComponentRegistry.listen((_event) => {
 				return this.setState(this._getStateFromStores());
 			}),
 		);

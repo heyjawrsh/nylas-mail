@@ -14,7 +14,7 @@ const {
 const pgp = require("kbpgp");
 
 const EncryptMessageButton = require("../lib/encrypt-button");
-const PGPKeyStore = require("../lib/pgp-key-store");
+const _PGPKeyStore = require("../lib/pgp-key-store");
 
 describe("EncryptMessageButton", () => {
 	beforeEach(function () {
@@ -81,7 +81,7 @@ VsVlQKtXimFLpck1z0BPQ0NmRdEzRHQwP2WNYfxdNCeFAGDL4tpblBzw/vp/CFTO
 			{
 				armored: key,
 			},
-			(err, km) => {
+			(_err, km) => {
 				return (this.km = km);
 			},
 		);
@@ -106,8 +106,8 @@ VsVlQKtXimFLpck1z0BPQ0NmRdEzRHQwP2WNYfxdNCeFAGDL4tpblBzw/vp/CFTO
 
 		this.output = null;
 
-		const add = jasmine.createSpy("add");
-		spyOn(DraftStore, "sessionForClientId").andCallFake((draftClientId) => {
+		const _add = jasmine.createSpy("add");
+		spyOn(DraftStore, "sessionForClientId").andCallFake((_draftClientId) => {
 			return Promise.resolve(this.session);
 		});
 

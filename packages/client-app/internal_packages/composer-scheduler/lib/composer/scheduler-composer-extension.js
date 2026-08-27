@@ -63,7 +63,7 @@ export default class SchedulerComposerExtension extends ComposerExtension {
 
 	static applyTransformsForSending({ draft }) {
 		const metadata = draft.metadataForPluginId(PLUGIN_ID);
-		if (metadata && metadata.pendingEvent) {
+		if (metadata?.pendingEvent) {
 			if (metadata.proposals && metadata.proposals.length > 0) {
 				Actions.recordUserEvent("Meeting Times Proposed", {
 					numItems: metadata.proposals.length,

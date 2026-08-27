@@ -55,7 +55,7 @@ class DeveloperBarCurlItem extends React.Component {
 		if (this.props.item.statusCode === "pending") {
 			return false;
 		}
-		return !(parseInt(this.props.item.statusCode) <= 399);
+		return !(parseInt(this.props.item.statusCode, 10) <= 399);
 	}
 
 	_errorMessage() {

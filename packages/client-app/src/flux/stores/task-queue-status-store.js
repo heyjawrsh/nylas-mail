@@ -9,7 +9,7 @@ const _ = require("underscore");
 const Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
 const DatabaseStore = require("./database-store").default;
-const AccountStore = require("./account-store").default;
+const _AccountStore = require("./account-store").default;
 const TaskQueue = require("./task-queue");
 
 // Public: The TaskQueueStatusStore allows you to inspect the task queue from
@@ -53,13 +53,13 @@ class TaskQueueStatusStore extends NylasStore {
 	}
 
 	waitForPerformLocal(task) {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, _reject) => {
 			return this._waitingLocals.push({ task, resolve });
 		});
 	}
 
 	waitForPerformRemote(task) {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, _reject) => {
 			return this._waitingRemotes.push({ task, resolve });
 		});
 	}

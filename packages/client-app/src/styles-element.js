@@ -41,7 +41,7 @@ class StylesElement extends HTMLElement {
 		return (this.subscriptions = null);
 	}
 
-	attributeChangedCallback(attrName, oldVal, newVal) {
+	attributeChangedCallback(attrName, _oldVal, _newVal) {
 		if (attrName === "context") {
 			return this.contextChanged();
 		}

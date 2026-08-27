@@ -18,7 +18,7 @@ export default class TabManager extends ContenteditableExtension {
 	static _onTabDownDefaultBehavior(editor, event) {
 		const selection = editor.currentSelection();
 
-		if (selection && selection.isCollapsed) {
+		if (selection?.isCollapsed) {
 			if (event.shiftKey) {
 				if (DOMUtils.isAtTabChar(selection)) {
 					TabManager._removeLastCharacter(editor);

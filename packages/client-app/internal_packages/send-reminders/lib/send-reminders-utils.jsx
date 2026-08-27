@@ -195,7 +195,7 @@ function reminderThreadIdsFromMessages(messages) {
 			messages
 				.filter(
 					(message) =>
-						(message.metadataForPluginId(PLUGIN_ID) || {}).expiration != null,
+						message.metadataForPluginId(PLUGIN_ID)?.expiration != null,
 				)
 				.map(({ threadId }) => threadId)
 				.filter((threadId) => threadId != null),

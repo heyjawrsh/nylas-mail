@@ -1,7 +1,7 @@
-import path from "path";
-import fs from "fs";
-import os from "os";
-import { exec } from "child_process";
+import path from "node:path";
+import fs from "node:fs";
+import os from "node:os";
+import { exec } from "node:child_process";
 import ws from "windows-shortcuts";
 
 class SystemStartServiceBase {
@@ -180,7 +180,7 @@ class SystemStartServiceLinux extends SystemStartServiceBase {
 	}
 
 	configureToLaunchOnSystemStart() {
-		fs.readFile(this._launcherPath(), "utf8", (error, data) => {
+		fs.readFile(this._launcherPath(), "utf8", (_error, data) => {
 			// Append the --background flag before the Exec key
 			const parsedData = data.replace("%U", "--background %U");
 

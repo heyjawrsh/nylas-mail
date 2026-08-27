@@ -1,5 +1,4 @@
 import { shell, remote } from "electron";
-import React from "react";
 import { Actions, NylasAPIRequest } from "nylas-exports";
 import SalesforceActions from "./salesforce-actions";
 import SalesforceOAuth from "./salesforce-oauth";
@@ -104,7 +103,7 @@ class SalesforceAPI {
 			);
 		Actions.openModal({
 			component: (
-				<div className="salesforce-welcome" tabIndex="0">
+				<div className="salesforce-welcome">
 					<h2>We can&rsquo;t connect to your Salesforce environment</h2>
 					<p>
 						Your Salesforce environment does not have API access enabled. If you

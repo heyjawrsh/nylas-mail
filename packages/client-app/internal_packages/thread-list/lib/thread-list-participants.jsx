@@ -166,7 +166,7 @@ class ThreadListParticipants extends React.Component {
 
 	getTokens() {
 		let list;
-		if (this.props.thread.__messages instanceof Array) {
+		if (Array.isArray(this.props.thread.__messages)) {
 			list = this.getTokensFromMessages();
 		} else {
 			list = this.getTokensFromParticipants();

@@ -70,7 +70,7 @@ export default class EmailFrame extends React.Component {
 	_getFrameHeight = (doc) => {
 		let height = 0;
 
-		if (doc && doc.body) {
+		if (doc?.body) {
 			// Why reset the height? body.scrollHeight will always be 0 if the height
 			// of the body is dependent on the iframe height e.g. if height ===
 			// 100% in inline styles or an email stylesheet
@@ -81,7 +81,7 @@ export default class EmailFrame extends React.Component {
 			height = doc.body.scrollHeight;
 		}
 
-		if (doc && doc.documentElement) {
+		if (doc?.documentElement) {
 			height = doc.documentElement.scrollHeight;
 		}
 

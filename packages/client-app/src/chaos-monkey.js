@@ -37,16 +37,16 @@ class ChaosMonkey {
 			numTimes = numMonkeys;
 		}
 
-		nGet = nGet.filteringPath((path) => "/*").get("/*");
+		nGet = nGet.filteringPath((_path) => "/*").get("/*");
 
 		nPut = nPut
-			.filteringRequestBody((body) => "*")
-			.filteringPath((path) => "/*")
+			.filteringRequestBody((_body) => "*")
+			.filteringPath((_path) => "/*")
 			.put("/*", "*");
 
 		nPost = nPost
-			.filteringRequestBody((body) => "*")
-			.filteringPath((path) => "/*")
+			.filteringRequestBody((_body) => "*")
+			.filteringPath((_path) => "/*")
 			.post("/*", "*");
 
 		[nGet, nPut, nPost] = Array.from(

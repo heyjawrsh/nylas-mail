@@ -36,7 +36,7 @@ class WindowBridge {
 		return this.runInWindow("work", ...Array.from(args));
 	}
 
-	_onResults(event, param) {
+	_onResults(_event, param) {
 		if (param == null) {
 			param = {};
 		}
@@ -46,7 +46,7 @@ class WindowBridge {
 		return delete this._tasks[taskId];
 	}
 
-	_onRunInWindow(event, param) {
+	_onRunInWindow(_event, param) {
 		if (param == null) {
 			param = {};
 		}

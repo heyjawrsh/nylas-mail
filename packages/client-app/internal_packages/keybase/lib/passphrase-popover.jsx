@@ -12,7 +12,7 @@ const { React, Actions } = require("nylas-exports");
 const Identity = require("./identity");
 const PGPKeyStore = require("./pgp-key-store");
 const _ = require("underscore");
-const fs = require("fs");
+const fs = require("node:fs");
 const pgp = require("kbpgp");
 
 module.exports = PassphrasePopover = (() => {
@@ -99,7 +99,7 @@ module.exports = PassphrasePopover = (() => {
 								// check to see if the password unlocks the key
 								var key = privateKeys[keyIndex];
 								result1.push(
-									fs.readFile(key.keyPath, (err, data) => {
+									fs.readFile(key.keyPath, (_err, data) => {
 										return pgp.KeyManager.import_from_armored_pgp(
 											{
 												armored: data,

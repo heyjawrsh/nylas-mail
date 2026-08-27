@@ -1,7 +1,6 @@
 /* eslint jsx-a11y/label-has-for: 0 */
 import _ from "underscore";
 import classnames from "classnames";
-import React from "react";
 import PropTypes from "prop-types";
 import { calcColor } from "./calendar-helpers";
 

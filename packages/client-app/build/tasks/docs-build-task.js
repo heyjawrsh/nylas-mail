@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const cjsxtransform = require("coffee-react-transform");
 const rimraf = require("rimraf");
 
@@ -84,7 +84,7 @@ module.exports = (grunt) => {
 
 				fs.traverseTreeSync(srcPath, (file) => {
 					if (in_blacklist(file)) {
-						console.log("Skipping " + file);
+						console.log(`Skipping ${file}`);
 						// Skip K2
 					}
 
@@ -95,18 +95,18 @@ module.exports = (grunt) => {
 						// Only attempt to parse this file as documentation if it contains
 						// real Coffeescript classes.
 						if (transformed.indexOf("\nclass ") > 0) {
-							grunt.log.writeln("Found class in file: " + file);
+							grunt.log.writeln(`Found class in file: ${file}`);
 
 							grunt.file.write(
 								path.join(
 									cjsxOutputDir,
-									path.basename(file).slice(0, -5 + 1 || undefined) + "coffee",
+									`${path.basename(file).slice(0, -5 + 1 || undefined)}coffee`,
 								),
 								transformed,
 							);
 						}
 					} else if (path.extname(file) === ".jsx") {
-						console.log("Transforming " + file);
+						console.log(`Transforming ${file}`);
 
 						const fileStr = grunt.file.read(file);
 
@@ -118,11 +118,11 @@ module.exports = (grunt) => {
 						grunt.file.write(
 							path.join(
 								cjsxOutputDir,
-								path.basename(file).slice(0, -3 || undefined) + "js",
+								`${path.basename(file).slice(0, -3 || undefined)}js`,
 							),
 							transformed.code,
 						);
-					} else if (path.extname(file) == ".es6") {
+					} else if (path.extname(file) === ".es6") {
 						console.log(file);
 
 						const fileStr = grunt.file.read(file);
@@ -136,29 +136,29 @@ module.exports = (grunt) => {
 						});
 
 						if (transformed.code.indexOf("class ") > 0) {
-							grunt.log.writeln("Found class in file: " + file);
+							grunt.log.writeln(`Found class in file: ${file}`);
 
 							grunt.file.write(
 								path.join(
 									cjsxOutputDir,
-									path.basename(file).slice(0, -3 || undefined) + "js",
+									`${path.basename(file).slice(0, -3 || undefined)}js`,
 								),
 								transformed.code,
 							);
 						}
 					} else if (
-						path.extname(file) == ".coffee" ||
-						path.extname(file) == ".js"
+						path.extname(file) === ".coffee" ||
+						path.extname(file) === ".js"
 					) {
 						const dest_path = path.join(cjsxOutputDir, path.basename(file));
-						console.log("Copying " + file + " to " + dest_path);
+						console.log(`Copying ${file} to ${dest_path}`);
 						fs_extra.copySync(file, dest_path);
 					}
 					return true;
 				});
 
 				grunt.log.ok("Done transforming, starting donna extraction");
-				grunt.log.writeln("cjsxOutputDir: " + cjsxOutputDir);
+				grunt.log.writeln(`cjsxOutputDir: ${cjsxOutputDir}`);
 
 				// Process coffeescript source
 				const metadata = donna.generateMetadata([cjsxOutputDir]);
@@ -166,12 +166,12 @@ module.exports = (grunt) => {
 
 				// DEBUG
 				// Use to check individual files
-				var js_files = [];
+				var _js_files = [];
 				fs.traverseTreeSync(cjsxOutputDir, (file) => {
 					if (path.extname(file) === ".js") {
-						console.log("testing joanna on " + file);
+						console.log(`testing joanna on ${file}`);
 						const meta = joanna([file]);
-						console.log("testing tello on " + file);
+						console.log(`testing tello on ${file}`);
 						tello.digest(meta);
 						console.log("passed");
 					}

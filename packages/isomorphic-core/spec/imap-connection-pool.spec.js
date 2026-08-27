@@ -174,7 +174,7 @@ describe("IMAPConnectionPool", function describeBlock() {
 					return false;
 				},
 			});
-		} catch (err) {
+		} catch (_err) {
 			errorCount += 1;
 		}
 

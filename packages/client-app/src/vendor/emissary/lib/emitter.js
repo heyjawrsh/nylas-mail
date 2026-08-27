@@ -64,12 +64,9 @@
 				(_ref2 = eventName.split(".")),
 					(eventName = _ref2[0]),
 					(namespace = _ref2[1]);
-				this.emit("" + eventName + "-subscription-will-be-added", handler);
+				this.emit(`${eventName}-subscription-will-be-added`, handler);
 				if (this.incrementSubscriptionCount(eventName) === 1) {
-					this.emit(
-						"first-" + eventName + "-subscription-will-be-added",
-						handler,
-					);
+					this.emit(`first-${eventName}-subscription-will-be-added`, handler);
 				}
 				if (this.eventHandlersByEventName == null) {
 					this.eventHandlersByEventName = {};
@@ -93,7 +90,7 @@
 					}
 					this.eventHandlersByNamespace[namespace][eventName].push(handler);
 				}
-				this.emit("" + eventName + "-subscription-added", handler);
+				this.emit(`${eventName}-subscription-added`, handler);
 			}
 			if (Subscription == null) {
 				Subscription = require("./subscription");
@@ -154,7 +151,7 @@
 							handler = _ref3[_i];
 							handler(payload);
 						}
-						return this.emit("after-" + eventName, payload);
+						return this.emit(`after-${eventName}`, payload);
 					}
 				}
 			}
@@ -190,7 +187,7 @@
 								: void 0)
 					) {
 						return queuedEvents.push(
-							["" + eventName + "." + namespace].concat(__slice.call(args)),
+							[`${eventName}.${namespace}`].concat(__slice.call(args)),
 						);
 					} else if (
 						(handlers =
@@ -210,7 +207,7 @@
 						);
 						return this.emit.apply(
 							this,
-							["after-" + eventName].concat(__slice.call(args)),
+							[`after-${eventName}`].concat(__slice.call(args)),
 						);
 					}
 				} else {
@@ -237,7 +234,7 @@
 						);
 						return this.emit.apply(
 							this,
-							["after-" + eventName].concat(__slice.call(args)),
+							[`after-${eventName}`].concat(__slice.call(args)),
 						);
 					}
 				}
@@ -356,12 +353,9 @@
 						}
 						if (removeFromArray(eventHandlers, handler)) {
 							this.decrementSubscriptionCount(eventName);
-							this.emit("" + eventName + "-subscription-removed", handler);
+							this.emit(`${eventName}-subscription-removed`, handler);
 							if (this.getSubscriptionCount(eventName) === 0) {
-								this.emit(
-									"last-" + eventName + "-subscription-removed",
-									handler,
-								);
+								this.emit(`last-${eventName}-subscription-removed`, handler);
 								delete this.eventHandlersByEventName[eventName];
 							}
 						}

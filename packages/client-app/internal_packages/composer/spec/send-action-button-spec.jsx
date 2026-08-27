@@ -1,4 +1,3 @@
-import React from "react";
 import { mount } from "enzyme";
 import { ButtonDropdown, RetinaImg } from "nylas-component-kit";
 import { Actions, Message, SendActionsStore } from "nylas-exports";

@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import _ from "underscore";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import {
 	Menu,
@@ -13,7 +13,6 @@ import {
 	Actions,
 	TaskQueueStatusStore,
 	DatabaseStore,
-	TaskFactory,
 	Category,
 	SyncbackCategoryTask,
 	CategoryStore,
@@ -351,7 +350,7 @@ export default class CategoryPickerPopover extends Component {
 		const headerComponents = [
 			<input
 				type="text"
-				tabIndex="1"
+				tabIndex="0"
 				key="textfield"
 				className="search"
 				placeholder={placeholder}

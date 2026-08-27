@@ -1,9 +1,9 @@
-import { Transform } from "stream";
+import { Transform } from "node:stream";
 import { Libmime } from "libmime";
 import libqp from "libqp";
 import iconv from "iconv-lite";
 
-const libmime = new Libmime();
+const _libmime = new Libmime();
 const decodeQuotedPrintable = (text, charset) =>
 	iconv.decode(libqp.decode(text), charset || "utf-8");
 
@@ -19,7 +19,7 @@ export class QuotedPrintableStreamDecoder extends Transform {
 	 *
 	 * We can't decode quoted-printable in chunks, so we buffer it.
 	 */
-	_transform = (chunk, encoding, cb) => {
+	_transform = (chunk, _encoding, cb) => {
 		this._text += chunk.toString();
 		cb();
 	};

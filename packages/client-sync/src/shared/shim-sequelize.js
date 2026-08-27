@@ -28,7 +28,7 @@ const shimObject = (obj) => {
 			if (result && _.isFunction(result.then)) {
 				return Promise.race([
 					Promise.resolve(result),
-					new Promise((resolve, reject) =>
+					new Promise((_resolve, reject) =>
 						setTimeout(
 							() => reject(new Error(`${key} timed out`)),
 							DEFAULT_SEQUELIZE_SHIM_TIMEOUT,

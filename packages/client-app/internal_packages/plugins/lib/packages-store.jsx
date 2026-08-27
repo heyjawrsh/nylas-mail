@@ -1,6 +1,6 @@
 import _ from "underscore";
 import Reflux from "reflux";
-import path from "path";
+import path from "node:path";
 import fs from "fs-plus";
 import { APMWrapper } from "nylas-exports";
 import { ipcRenderer, shell, remote } from "electron";

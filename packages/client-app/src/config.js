@@ -12,7 +12,7 @@ let app, Config, errorLogger, webContentsId;
 let _ = require("underscore");
 _ = _.extend(_, require("./config-utils"));
 const { remote } = require("electron");
-const fs = require("fs-plus");
+const _fs = require("fs-plus");
 const EmitterMixin = require("emissary").Emitter;
 const { CompositeDisposable, Disposable, Emitter } = require("event-kit");
 
@@ -383,7 +383,7 @@ module.exports = Config = (() => {
 				// If new Config() has already been called, unmount it's listener when
 				// we attach ourselves. This is only done during specs, Config is a singleton.
 				ipcRenderer.removeAllListeners("on-config-reloaded");
-				ipcRenderer.on("on-config-reloaded", (event, settings) => {
+				ipcRenderer.on("on-config-reloaded", (_event, settings) => {
 					return this.updateSettings(settings);
 				});
 			}
@@ -569,7 +569,7 @@ module.exports = Config = (() => {
 		pushAtKeyPath(keyPath, value) {
 			let left;
 			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-			if (!(arrayValue instanceof Array)) {
+			if (!Array.isArray(arrayValue)) {
 				throw new Error(
 					`Config.pushAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
 				);
@@ -582,7 +582,7 @@ module.exports = Config = (() => {
 		unshiftAtKeyPath(keyPath, value) {
 			let left;
 			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-			if (!(arrayValue instanceof Array)) {
+			if (!Array.isArray(arrayValue)) {
 				throw new Error(
 					`Config.unshiftAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
 				);
@@ -595,7 +595,7 @@ module.exports = Config = (() => {
 		removeAtKeyPath(keyPath, value) {
 			let left;
 			const arrayValue = (left = this.get(keyPath)) != null ? left : [];
-			if (!(arrayValue instanceof Array)) {
+			if (!Array.isArray(arrayValue)) {
 				throw new Error(
 					`Config.removeAtKeyPath is intended for array values. Value ${JSON.stringify(arrayValue)} is not an array.`,
 				);
@@ -817,9 +817,9 @@ module.exports = Config = (() => {
 // specification.
 Config.addSchemaEnforcers({
 	integer: {
-		coerce(keyPath, value, schema) {
-			value = parseInt(value);
-			if (isNaN(value) || !isFinite(value)) {
+		coerce(keyPath, value, _schema) {
+			value = parseInt(value, 10);
+			if (Number.isNaN(value) || !Number.isFinite(value)) {
 				throw new Error(
 					`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into an int`,
 				);
@@ -829,9 +829,9 @@ Config.addSchemaEnforcers({
 	},
 
 	number: {
-		coerce(keyPath, value, schema) {
+		coerce(keyPath, value, _schema) {
 			value = parseFloat(value);
-			if (isNaN(value) || !isFinite(value)) {
+			if (Number.isNaN(value) || !Number.isFinite(value)) {
 				throw new Error(
 					`Validation failed at ${keyPath}, ${JSON.stringify(value)} cannot be coerced into a number`,
 				);
@@ -841,7 +841,7 @@ Config.addSchemaEnforcers({
 	},
 
 	boolean: {
-		coerce(keyPath, value, schema) {
+		coerce(keyPath, value, _schema) {
 			switch (typeof value) {
 				case "string":
 					if (value.toLowerCase() === "true") {
@@ -864,7 +864,7 @@ Config.addSchemaEnforcers({
 	},
 
 	string: {
-		validate(keyPath, value, schema) {
+		validate(keyPath, value, _schema) {
 			if (typeof value !== "string") {
 				throw new Error(
 					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be a string`,
@@ -876,7 +876,7 @@ Config.addSchemaEnforcers({
 
 	null: {
 		// null sort of isnt supported. It will just unset in this case
-		coerce(keyPath, value, schema) {
+		coerce(keyPath, value, _schema) {
 			if (![undefined, null].includes(value)) {
 				throw new Error(
 					`Validation failed at ${keyPath}, ${JSON.stringify(value)} must be null`,
@@ -948,7 +948,7 @@ Config.addSchemaEnforcers({
 	},
 
 	color: {
-		coerce(keyPath, value, schema) {
+		coerce(keyPath, value, _schema) {
 			const color = Color.parse(value);
 			if (color == null) {
 				throw new Error(
@@ -960,7 +960,7 @@ Config.addSchemaEnforcers({
 	},
 
 	"*": {
-		coerceMinimumAndMaximum(keyPath, value, schema) {
+		coerceMinimumAndMaximum(_keyPath, value, schema) {
 			if (typeof value !== "number") {
 				return value;
 			}
@@ -1021,12 +1021,12 @@ var splitKeyPath = (keyPath) => {
 	return keyPathArray;
 };
 
-var withoutEmptyObjects = (object) => {
+var _withoutEmptyObjects = (object) => {
 	let resultObject;
 	if (isPlainObject(object)) {
 		for (var key in object) {
 			var value = object[key];
-			var newValue = withoutEmptyObjects(value);
+			var newValue = _withoutEmptyObjects(value);
 			if (newValue != null) {
 				if (resultObject == null) {
 					resultObject = {};

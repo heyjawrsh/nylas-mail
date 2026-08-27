@@ -109,7 +109,7 @@ class Token extends React.Component {
 		this.setState({ editingValue: props.item.toString() });
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(_prevProps, prevState) {
 		if (this.state.editing && !prevState.editing) {
 			this.refs.input.select();
 		}

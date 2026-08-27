@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const cjsxtransform = require("coffee-react-transform");
 const rimraf = require("rimraf");
 
@@ -46,7 +46,7 @@ module.exports = (grunt) => {
 		return sortedClasses;
 	};
 
-	var processFields = (json, fields, tasks) => {
+	var _processFields = (json, fields, tasks) => {
 		let val;
 		if (fields == null) {
 			fields = [];
@@ -54,11 +54,11 @@ module.exports = (grunt) => {
 		if (tasks == null) {
 			tasks = [];
 		}
-		if (json instanceof Array) {
+		if (Array.isArray(json)) {
 			return (() => {
 				const result = [];
 				for (val of Array.from(json)) {
-					result.push(processFields(val, fields, tasks));
+					result.push(_processFields(val, fields, tasks));
 				}
 				return result;
 			})();
@@ -75,7 +75,7 @@ module.exports = (grunt) => {
 						json[key] = val;
 					}
 					if (_.isObject(val)) {
-						item = processFields(val, fields, tasks);
+						item = _processFields(val, fields, tasks);
 					}
 					result1.push(item);
 				}
@@ -112,18 +112,18 @@ module.exports = (grunt) => {
 					// Only attempt to parse this file as documentation if it contains
 					// real Coffeescript classes.
 					if (transformed.indexOf("\nclass ") > 0) {
-						grunt.log.writeln("Found class in file: " + file);
+						grunt.log.writeln(`Found class in file: ${file}`);
 
 						grunt.file.write(
 							path.join(
 								cjsxOutputDir,
-								path.basename(file).slice(0, -5 + 1 || undefined) + "coffee",
+								`${path.basename(file).slice(0, -5 + 1 || undefined)}coffee`,
 							),
 							transformed,
 						);
 					}
 				} else if (path.extname(file) === ".jsx") {
-					console.log("Transforming " + file);
+					console.log(`Transforming ${file}`);
 
 					const fileStr = grunt.file.read(file);
 
@@ -133,12 +133,12 @@ module.exports = (grunt) => {
 					});
 
 					if (transformed.code.indexOf("class ") > 0) {
-						grunt.log.writeln("Found class in file: " + file);
+						grunt.log.writeln(`Found class in file: ${file}`);
 
 						grunt.file.write(
 							path.join(
 								cjsxOutputDir,
-								path.basename(file).slice(0, -3 || undefined) + "js",
+								`${path.basename(file).slice(0, -3 || undefined)}js`,
 							),
 							transformed.code,
 						);
@@ -148,7 +148,7 @@ module.exports = (grunt) => {
 			});
 
 			grunt.log.ok("Done transforming, starting donna extraction");
-			grunt.log.writeln("cjsxOutputDir: " + cjsxOutputDir);
+			grunt.log.writeln(`cjsxOutputDir: ${cjsxOutputDir}`);
 
 			// Process coffeescript source
 			const metadata = donna.generateMetadata([cjsxOutputDir]);

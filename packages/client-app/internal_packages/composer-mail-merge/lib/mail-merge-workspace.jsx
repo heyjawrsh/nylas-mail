@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { RetinaImg, DropZone } from "nylas-component-kit";
-import fs from "fs";
+import fs from "node:fs";
 
 import { parseCSV } from "./mail-merge-utils";
 import MailMergeTable from "./mail-merge-table";
@@ -37,7 +37,7 @@ class MailMergeWorkspace extends Component {
 					return;
 				}
 
-				fs.readFile(pathsToOpen[0], (err, contents) => {
+				fs.readFile(pathsToOpen[0], (_err, contents) => {
 					parseCSV(contents.toString()).then((tableData) => {
 						this.loadCSV(tableData);
 					});

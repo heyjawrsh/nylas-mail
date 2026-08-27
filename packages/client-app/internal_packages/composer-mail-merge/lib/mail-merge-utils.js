@@ -176,7 +176,7 @@ export function sendMailMerge(draftClientId) {
 
 	const recipientDrafts = tableDataSource
 		.rows()
-		.map((row, rowIdx) =>
+		.map((_row, rowIdx) =>
 			buildDraft(baseDraft, { tableDataSource, tokenDataSource, rowIdx }),
 		)
 		.filter((draft) => draft != null);

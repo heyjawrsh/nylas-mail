@@ -101,9 +101,8 @@ export default class LinkManager extends ContenteditableExtension {
 
 	static _linkAttributeHref(linkToModify) {
 		return (
-			(linkToModify && linkToModify.getAttribute
-				? linkToModify.getAttribute("href")
-				: null) || ""
+			(linkToModify?.getAttribute ? linkToModify.getAttribute("href") : null) ||
+			""
 		);
 	}
 

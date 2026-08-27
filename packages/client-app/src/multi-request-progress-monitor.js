@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 
 export default class MultiRequestProgressMonitor {
 	constructor() {
@@ -25,7 +25,7 @@ export default class MultiRequestProgressMonitor {
 		let expected = 1;
 		for (const filepath of Object.keys(this._requests)) {
 			const request = this._requests[filepath];
-			if (request.req && request.req.connection) {
+			if (request.req?.connection) {
 				sent += request.req.connection._bytesDispatched || 0;
 			}
 			expected += this._expected[filepath];

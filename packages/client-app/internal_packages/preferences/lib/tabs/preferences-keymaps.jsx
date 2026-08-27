@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 import { remote } from "electron";
 import { Flexbox } from "nylas-component-kit";
 
@@ -51,8 +51,8 @@ class PreferencesKeymaps extends React.Component {
 			"keymaps",
 			"templates",
 		);
-		fs.readdir(templatesDir, (err, files) => {
-			if (!files || !(files instanceof Array)) return;
+		fs.readdir(templatesDir, (_err, files) => {
+			if (!files || !Array.isArray(files)) return;
 			let templates = files.filter((filename) => {
 				return path.extname(filename) === ".json";
 			});

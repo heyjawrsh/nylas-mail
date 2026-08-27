@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { UndoRedoStore } from "nylas-exports";
 import { UndoToast, ListensToFluxStore } from "nylas-component-kit";

@@ -1,6 +1,6 @@
 import _ from "underscore";
 import moment from "moment";
-import querystring from "querystring";
+import querystring from "node:querystring";
 import { DatabaseStore } from "nylas-exports";
 
 import SalesforceEnv from "./salesforce-env";
@@ -171,7 +171,7 @@ export function loadFullObject({ objectType, objectId }) {
 		id: objectId,
 		type: objectType,
 	}).then((object = {}) => {
-		if (object && object.rawData && _.size(object.rawData) > 0) {
+		if (object?.rawData && _.size(object.rawData) > 0) {
 			return object;
 		}
 		return requestFullObjectFromAPI({ objectType, objectId });

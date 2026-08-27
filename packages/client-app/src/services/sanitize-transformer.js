@@ -416,7 +416,7 @@ class SanitizeTransformer {
 	Preset = Preset;
 
 	run(body, settings = Preset.Strict) {
-		if (settings.allowedAttributes instanceof Array) {
+		if (Array.isArray(settings.allowedAttributes)) {
 			const attrMap = {};
 			for (const tag of settings.allowedTags) {
 				attrMap[tag] = settings.allowedAttributes;

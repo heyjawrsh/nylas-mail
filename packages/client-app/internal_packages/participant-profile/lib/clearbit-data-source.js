@@ -9,7 +9,7 @@
 let ClearbitDataSource;
 const { AccountStore } = require("nylas-exports");
 
-const MAX_RETRY = 10;
+const _MAX_RETRY = 10;
 
 module.exports = ClearbitDataSource = class ClearbitDataSource {
 	constructor() {

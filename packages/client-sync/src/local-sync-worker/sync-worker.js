@@ -702,7 +702,7 @@ class SyncWorker {
 				if (timeout) {
 					promise = Promise.race([
 						promise,
-						new Promise((resolve, reject) =>
+						new Promise((_resolve, reject) =>
 							setTimeout(
 								() =>
 									reject(

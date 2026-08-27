@@ -1,5 +1,5 @@
-import url from "url";
-import querystring from "querystring";
+import url from "node:url";
+import querystring from "node:querystring";
 import { ipcRenderer } from "electron";
 import { DatabaseStore, Thread, Matcher, Actions } from "nylas-exports";
 
@@ -39,7 +39,7 @@ const findCorrespondingThread = (
 	]);
 };
 
-const _openExternalThread = (event, nylasUrl) => {
+const _openExternalThread = (_event, nylasUrl) => {
 	const { subject, lastDate } = parseOpenThreadUrl(nylasUrl);
 
 	findCorrespondingThread({ subject, lastDate })

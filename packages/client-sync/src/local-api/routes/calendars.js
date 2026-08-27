@@ -20,7 +20,7 @@ export default (server) => {
 				schema: Joi.array(),
 			},
 		},
-		handler: (request, reply) => {
+		handler: (_request, reply) => {
 			reply("[]");
 		},
 	});

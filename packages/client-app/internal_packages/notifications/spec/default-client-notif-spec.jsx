@@ -1,6 +1,5 @@
 import { mount } from "enzyme";
 import proxyquire from "proxyquire";
-import { React } from "nylas-exports";
 
 let stubIsRegistered = null;
 let stubRegister = () => {};
@@ -8,7 +7,7 @@ const patched = proxyquire("../lib/items/default-client-notif", {
 	"nylas-exports": {
 		DefaultClientHelper: class {
 			constructor() {
-				this.isRegisteredForURLScheme = (urlScheme, callback) => {
+				this.isRegisteredForURLScheme = (_urlScheme, callback) => {
 					callback(stubIsRegistered);
 				};
 				this.registerForURLScheme = (urlScheme) => {

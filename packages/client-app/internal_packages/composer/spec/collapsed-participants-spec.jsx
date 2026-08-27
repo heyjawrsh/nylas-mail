@@ -5,11 +5,11 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const React = require("react");
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 
-const Fields = require("../lib/fields").default;
+const _Fields = require("../lib/fields").default;
 const CollapsedParticipants = require("../lib/collapsed-participants").default;
 
 const { Contact } = require("nylas-exports");

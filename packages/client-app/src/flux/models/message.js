@@ -227,7 +227,7 @@ Message(date DESC) WHERE draft = 1`,
 			json.object = "draft";
 		}
 
-		if (this.events && this.events.length) {
+		if (this.events?.length) {
 			json.event_id = this.events[0].serverId;
 		}
 
@@ -266,7 +266,7 @@ Message(date DESC) WHERE draft = 1`,
 
 		for (const attr of ["to", "from", "cc", "bcc", "files", "categories"]) {
 			const values = this[attr];
-			if (!(values && values instanceof Array)) {
+			if (!(values && Array.isArray(values))) {
 				continue;
 			}
 			for (const item of values) {

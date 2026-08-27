@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import _ from "underscore";
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 import { Utils } from "nylas-exports";
 
 // This is a stripped down version of
@@ -37,7 +37,7 @@ const Phase = {
 let SwipeInverted = false;
 
 if (process.platform === "darwin") {
-	exec("defaults read -g com.apple.swipescrolldirection", (err, stdout) => {
+	exec("defaults read -g com.apple.swipescrolldirection", (_err, stdout) => {
 		SwipeInverted = stdout.toString().trim() !== "0";
 	});
 } else if (process.platform === "win32") {

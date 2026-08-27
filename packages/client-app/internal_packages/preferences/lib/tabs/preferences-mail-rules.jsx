@@ -47,10 +47,9 @@ class PreferencesMailRules extends React.Component {
 			currentAccount = accounts[0];
 		}
 		const rules = MailRulesStore.rulesForAccountId(currentAccount.id);
-		const selectedRule =
-			this.state && this.state.selectedRule
-				? _.findWhere(rules, { id: this.state.selectedRule.id })
-				: rules[0];
+		const selectedRule = this.state?.selectedRule
+			? _.findWhere(rules, { id: this.state.selectedRule.id })
+			: rules[0];
 
 		return {
 			accounts: accounts,
@@ -103,7 +102,7 @@ class PreferencesMailRules extends React.Component {
 		this.setState({ selectedRule: rule });
 	};
 
-	_onReorderRule = (rule, startIdx, endIdx) => {
+	_onReorderRule = (rule, _startIdx, endIdx) => {
 		Actions.reorderMailRule(rule.id, endIdx);
 	};
 

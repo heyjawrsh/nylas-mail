@@ -20,7 +20,7 @@ const PGPKeyStore = require("./pgp-key-store");
 const { remote } = require("electron");
 const PassphrasePopover = require("./passphrase-popover");
 const PrivateKeyPopover = require("./private-key-popover");
-const pgp = require("kbpgp");
+const _pgp = require("kbpgp");
 const _ = require("underscore");
 
 class DecryptMessageButton extends React.Component {
@@ -258,7 +258,7 @@ class DecryptMessageButton extends React.Component {
 		}
 
 		if (decryptAttachments || decryptBody) {
-			const decryptionInterface = (
+			const _decryptionInterface = (
 				<div className="decryption-interface">
 					{decryptBody}
 					{decryptAttachments}

@@ -162,7 +162,7 @@ class ScenarioEditorRow extends React.Component {
 		);
 	}
 
-	_renderTemplateSelect(template) {
+	_renderTemplateSelect(_template) {
 		const options = this.props.templates.map(({ key, name }) => {
 			return React.createElement("option", { value: key, key: key }, name);
 		});
@@ -248,7 +248,7 @@ class ScenarioEditorRow extends React.Component {
 	_onChangeTemplate(event) {
 		let instance = _.clone(this.props.instance);
 
-		const existingTemplate = _.findWhere(this.props.templates, {
+		const _existingTemplate = _.findWhere(this.props.templates, {
 			key: instance.key,
 		});
 		const newTemplate = _.findWhere(this.props.templates, {

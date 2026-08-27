@@ -20,7 +20,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 	return Constructor;
 }
 
-var CompositeDisposable;
+var _CompositeDisposable;
 var Disposable; // Essential: An object that aggregates multiple {Disposable} instances together
 // into a single disposable, so they can all be disposed as a group.
 //

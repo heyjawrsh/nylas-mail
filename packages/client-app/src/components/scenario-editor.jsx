@@ -98,7 +98,7 @@ class ScenarioEditor extends React.Component {
 		});
 	}
 
-	_onInsertRule(idx) {
+	_onInsertRule(_idx) {
 		return this._performChange((instances) => {
 			return instances.push(this.props.templates[0].createDefaultInstance());
 		});

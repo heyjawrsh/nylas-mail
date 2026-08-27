@@ -1,5 +1,4 @@
 import _ from "underscore";
-import React from "react";
 import { findDOMNode } from "react-dom";
 
 const FOCUSABLE_SELECTOR = "input, textarea, [contenteditable], [tabIndex]";

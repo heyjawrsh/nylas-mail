@@ -68,7 +68,7 @@ class Matcher {
 		// Given an array of strings or models, and a string or model search value,
 		// will find if a match exists.
 		const modelArrayContainsValue = (array, searchItem) => {
-			const asId = (v) => (v && v.id ? v.id : v);
+			const asId = (v) => (v?.id ? v.id : v);
 			const search = asId(searchItem);
 			for (const item of array) {
 				if (asId(item) === search) {
@@ -139,7 +139,7 @@ class Matcher {
 			escaped = 0;
 		} else if (val instanceof Date) {
 			escaped = val.getTime() / 1000;
-		} else if (val instanceof Array) {
+		} else if (Array.isArray(val)) {
 			const escapedVals = [];
 			for (const v of val) {
 				if (typeof v !== "string") {

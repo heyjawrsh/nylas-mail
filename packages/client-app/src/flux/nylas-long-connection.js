@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 import _ from "underscore";
-import url from "url";
+import url from "node:url";
 import { Emitter } from "event-kit";
 import { IdentityStore, APIError } from "nylas-exports";
 
@@ -127,7 +127,7 @@ class NylasLongConnection {
 
 		try {
 			const accountToken = this._api.accessTokenForAccountId(this._accountId);
-			const identityToken = (IdentityStore.identity() || {}).token || "";
+			const identityToken = IdentityStore.identity()?.token || "";
 			if (!accountToken) {
 				throw new APIError({
 					statusCode: 401,
@@ -140,9 +140,9 @@ class NylasLongConnection {
 
 			let lib;
 			if (this._api.APIRoot.indexOf("https") === -1) {
-				lib = require("http");
+				lib = require("node:http");
 			} else {
-				lib = require("https");
+				lib = require("node:https");
 			}
 
 			this._req = lib.request(options, (responseStream) => {

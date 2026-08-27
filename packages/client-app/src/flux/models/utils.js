@@ -10,8 +10,8 @@
 let Utils;
 const _ = require("underscore");
 const fs = require("fs-plus");
-const path = require("path");
-const moment = require("moment-timezone");
+const path = require("node:path");
+const _moment = require("moment-timezone");
 
 let DefaultResourcePath = null;
 const TaskRegistry = require("../../registries/task-registry").default;
@@ -46,7 +46,7 @@ module.exports = Utils = {
 	},
 
 	showIconForAttachments(files) {
-		if (!(files instanceof Array)) {
+		if (!Array.isArray(files)) {
 			return false;
 		}
 		return files.find((f) => !f.contentId || f.size > 12 * 1024);
@@ -66,7 +66,7 @@ module.exports = Utils = {
 		return new DOMParser().parseFromString(html, "text/html").body.innerText;
 	},
 
-	registeredObjectReviver(k, v) {
+	registeredObjectReviver(_k, v) {
 		const type = v != null ? v.__constructorName : undefined;
 		if (!type) {
 			return v;
@@ -238,12 +238,12 @@ module.exports = Utils = {
 		const pairFix = (value) => {
 			const hi = value.charCodeAt(0);
 			const low = value.charCodeAt(1);
-			return "&#" + ((hi - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000) + ";";
+			return `&#${(hi - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000};`;
 		};
 
 		// Match everything outside of normal chars and " (quote character)
 		const NON_ALPHANUMERIC_REGEXP = /([^#-~| |!])/g;
-		const alphaFix = (value) => "&#" + value.charCodeAt(0) + ";";
+		const alphaFix = (value) => `&#${value.charCodeAt(0)};`;
 
 		return value
 			.replace(/&/g, "&amp;")
@@ -268,7 +268,7 @@ module.exports = Utils = {
 			Math.floor((1 + Math.random()) * 0x10000)
 				.toString(16)
 				.substring(1);
-		return "local-" + s4() + s4() + "-" + s4();
+		return `local-${s4()}${s4()}-${s4()}`;
 	},
 
 	generateFakeServerId() {
@@ -327,7 +327,7 @@ module.exports = Utils = {
 				// Chromium doesn't accept the backward slashes. Convert to
 				// C:/images/compose.png
 				file = file.replace(/\\/g, "/");
-				var basename = path.basename(file);
+				var _basename = path.basename(file);
 				Utils.images[resourcePath][path.basename(file)] = file;
 			}
 			NylasEnv.fileListCache().imageData = JSON.stringify(Utils.images);
@@ -406,7 +406,7 @@ module.exports = Utils = {
 	// to match an email address. We'd rather let false positives through.
 	toEquivalentEmailForm(email) {
 		// https://regex101.com/r/iS7kD5/3
-		const [ignored, user, domain] = Array.from(
+		const [_ignored, user, domain] = Array.from(
 			/^([^+]+).*@(.+)$/gi.exec(email) || [null, "", ""],
 		);
 		return `${user}@${domain}`.trim().toLowerCase();
@@ -510,7 +510,7 @@ module.exports = Utils = {
 			case "[object String]":
 				// Primitives and their corresponding object wrappers are equivalent;
 				// thus, `"5"` is equivalent to `new String("5")`.
-				return "" + a === "" + b;
+				return `${a}` === `${b}`;
 				break;
 			case "[object Number]":
 				// `NaN`s are equivalent, but non-reflexive.
@@ -637,20 +637,15 @@ module.exports = Utils = {
 		"att.net": true,
 		"comcast.net": true,
 		"facebook.com": true,
-		"gmail.com": true,
 		"gmx.com": true,
 		"googlemail.com": true,
 		"google.com": true,
-		"hotmail.com": true,
 		"hotmail.co.uk": true,
 		"mac.com": true,
 		"me.com": true,
 		"mail.com": true,
-		"msn.com": true,
-		"live.com": true,
 		"sbcglobal.net": true,
 		"verizon.net": true,
-		"yahoo.com": true,
 		"yahoo.co.uk": true,
 		"email.com": true,
 		"games.com": true,

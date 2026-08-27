@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
 import MailMergeToken from "./mail-merge-token";

@@ -258,7 +258,7 @@ class Thread extends ModelWithMetadata {
 
 		["participants"].forEach((attr) => {
 			const value = this[attr];
-			if (!(value && value instanceof Array)) {
+			if (!(value && Array.isArray(value))) {
 				return;
 			}
 			value.forEach((item) => {

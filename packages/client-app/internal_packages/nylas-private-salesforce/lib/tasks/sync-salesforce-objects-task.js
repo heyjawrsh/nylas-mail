@@ -1,6 +1,6 @@
 import _ from "underscore";
 import moment from "moment";
-import querystring from "querystring";
+import querystring from "node:querystring";
 import { Task, TaskQueue, DatabaseStore } from "nylas-exports";
 import SalesforceActions from "../salesforce-actions";
 import SalesforceAPI from "../salesforce-api";

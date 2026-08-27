@@ -63,11 +63,7 @@ export default class Dropdown extends React.Component {
 		}
 
 		return (
-			<div
-				className="dropdown-wrapper"
-				tabIndex="0"
-				onBlur={() => this.close.call(this)}
-			>
+			<div className="dropdown-wrapper" onBlur={() => this.close.call(this)}>
 				{optionsWrapper}
 				{selected}
 			</div>

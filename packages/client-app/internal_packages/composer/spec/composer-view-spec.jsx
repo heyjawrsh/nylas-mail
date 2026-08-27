@@ -5,7 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const React = require("react");
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 
@@ -119,7 +119,7 @@ describe("ComposerView", () => {
 		spyOn(ContactStore, "searchContacts").andCallFake((email) => {
 			return _.filter(users, u(u.email.toLowerCase() === email.toLowerCase()));
 		});
-		return spyOn(Contact.prototype, "isValid").andCallFake(function (contact) {
+		return spyOn(Contact.prototype, "isValid").andCallFake(function (_contact) {
 			return this.email.indexOf("@") > 0;
 		});
 	});

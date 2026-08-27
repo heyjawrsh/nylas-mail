@@ -34,7 +34,7 @@ GROUP BY \`ThreadCategory\`.\`value\`;\
 `;
 
 const UpdateCountsQuery = (objectIds, operator) => {
-	const objectIdsString = "'" + objectIds.join("','") + "'";
+	const objectIdsString = `'${objectIds.join("','")}'`;
 	return `\
 REPLACE INTO \`ThreadCounts\` (category_id, unread, total)
 SELECT
@@ -66,7 +66,7 @@ class CategoryDatabaseMutationObserver {
 	afterDatabaseChange(
 		query,
 		{ type, objects, objectIds, objectClass },
-		beforeResolveValue,
+		_beforeResolveValue,
 	) {
 		if (objectClass === Thread.name) {
 			return query(UpdateCountsQuery(objectIds, "+"));
@@ -112,7 +112,7 @@ class ThreadCountsStore extends NylasStore {
 
 	reset() {
 		let countsStartTime = null;
-		return DatabaseStore.inTransaction((t) => {
+		return DatabaseStore.inTransaction((_t) => {
 			countsStartTime = Date.now();
 			return DatabaseStore._query(SetCountsQuery());
 		}).then(() => {
@@ -154,14 +154,14 @@ class ThreadCountsStore extends NylasStore {
 		if (this._counts[catId] === undefined) {
 			return null;
 		}
-		return this._counts[catId]["unread"];
+		return this._counts[catId].unread;
 	}
 
 	totalCountForCategoryId(catId) {
 		if (this._counts[catId] === undefined) {
 			return null;
 		}
-		return this._counts[catId]["total"];
+		return this._counts[catId].total;
 	}
 }
 ThreadCountsStore.initClass();

@@ -72,7 +72,7 @@ class DraftListStore extends NylasStore {
 			);
 			$resultSet = Rx.Observable.combineLatest(
 				[$resultSet, Rx.Observable.fromStore(OutboxStore)],
-				(resultSet, outbox) => {
+				(resultSet, _outbox) => {
 					// Generate a new result set that includes additional information on
 					// the draft objects. This is similar to what we do in the thread-list,
 					// where we set thread.__messages to the message array.

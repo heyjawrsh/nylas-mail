@@ -19,7 +19,7 @@ export default class TemplatesComposerExtension extends ComposerExtension {
 	static unapplyTransformsForSending = ({ draftBodyRootNode }) => {
 		draftBodyRootNode.innerHTML = draftBodyRootNode.innerHTML.replace(
 			/<!-- (<\/?code[^>]*>) -->/g,
-			(match, node) => node,
+			(_match, node) => node,
 		);
 	};
 

@@ -1,5 +1,5 @@
 import { remote } from "electron";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";
 import { sendMailMerge } from "./mail-merge-utils";

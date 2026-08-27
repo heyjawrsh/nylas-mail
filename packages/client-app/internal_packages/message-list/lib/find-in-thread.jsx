@@ -85,7 +85,7 @@ export default class FindInThread extends React.Component {
 
 	_focusSearch = (event) => {
 		const cw = ReactDOM.findDOMNode(this.refs.controlsWrap);
-		if (!event || !(cw && cw.contains(event.target))) {
+		if (!event || !cw?.contains(event.target)) {
 			ReactDOM.findDOMNode(this.refs.searchBox).focus();
 		}
 	};

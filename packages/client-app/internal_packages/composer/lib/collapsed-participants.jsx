@@ -171,11 +171,7 @@ export default class CollapsedParticipants extends React.Component {
 				onDragStateChange={this.props.onDragChange}
 				onDrop={this.props.onDrop}
 			>
-				<div
-					tabIndex={0}
-					ref="participantsWrap"
-					className="collapsed-composer-participants"
-				>
+				<div ref="participantsWrap" className="collapsed-composer-participants">
 					{this._renderNumRemaining()}
 					{toDisplay}
 				</div>

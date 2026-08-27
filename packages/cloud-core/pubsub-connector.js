@@ -57,7 +57,7 @@ class PubsubConnector {
 						return;
 					}
 					sub = client;
-					client.on("message", (channel, transactionJSONString) => {
+					client.on("message", (_channel, transactionJSONString) => {
 						observer.next(JSON.parse(transactionJSONString));
 					});
 					client.subscribe(`deltas-${accountId}`);

@@ -10,16 +10,16 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const fs = require("fs-plus");
-const path = require("path");
+const _fs = require("fs-plus");
+const _path = require("node:path");
 
 const { Listener, Publisher } = require("../modules/reflux-coffee");
 const CoffeeHelpers = require("../coffee-helpers");
 
 const Task = require("../tasks/task").default;
 const TaskRegistry = require("../../registries/task-registry").default;
-const Utils = require("../models/utils");
-const Reflux = require("reflux");
+const _Utils = require("../models/utils");
+const _Reflux = require("reflux");
 const Actions = require("../actions").default;
 const DatabaseStore = require("./database-store").default;
 
@@ -345,7 +345,7 @@ Section: Stores
 				}
 				return val;
 			});
-			taskData = _.omit(taskData, (val, key) => {
+			taskData = _.omit(taskData, (_val, key) => {
 				if (
 					[
 						"thread",
@@ -522,8 +522,8 @@ Section: Stores
 						task.queueState = {};
 					}
 					task.queueState.isProcessing = false;
-					delete task.queueState["retryAfter"];
-					delete task.queueState["retryDelay"];
+					delete task.queueState.retryAfter;
+					delete task.queueState.retryDelay;
 				}
 
 				// The Task queue is completely wrecked if an item in the queue is not a

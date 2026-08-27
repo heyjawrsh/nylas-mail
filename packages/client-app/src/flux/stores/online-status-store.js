@@ -64,7 +64,7 @@ class OnlineStatusStore extends NylasStore {
 		try {
 			await this._countdownRetryingInSeconds(nextDelayMs);
 			this._checkOnlineStatus();
-		} catch (err) {
+		} catch (_err) {
 			// This means the retry countdown was cleared, in which case we don't
 			// want to do anything
 		}

@@ -18,7 +18,7 @@ function collectFilesFromStruct({
 			);
 		} else {
 			const disposition = part.disposition || {};
-			const filename = libmime.decodeWords((disposition.params || {}).filename);
+			const filename = libmime.decodeWords(disposition.params?.filename);
 
 			// Note that the contentId is stored in part.id, while the MIME part id
 			// is stored in part.partID

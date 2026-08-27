@@ -1,5 +1,5 @@
 const _ = require("underscore");
-const React = require("react");
+const _React = require("react");
 const ReactDOM = require("react-dom");
 const ReactTestUtils = require("react-addons-test-utils");
 const { Contact, Message, DOMUtils } = require("nylas-exports");
@@ -20,12 +20,12 @@ const test_message = new Message().fromJSON({
 	cc: [user_3, user_4],
 	bcc: [user_5],
 });
-const big_test_message = new Message().fromJSON({
+const _big_test_message = new Message().fromJSON({
 	id: "222",
 	from: [user_1],
 	to: many_users,
 });
-const many_thread_users = [user_1].concat(many_users);
+const _many_thread_users = [user_1].concat(many_users);
 
 describe("MessageParticipants", () => {
 	describe("when collapsed", () => {

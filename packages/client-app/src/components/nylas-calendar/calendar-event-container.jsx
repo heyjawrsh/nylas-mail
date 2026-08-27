@@ -72,7 +72,7 @@ export default class CalendarEventContainer extends React.Component {
 		let width = null;
 		let height = null;
 		let time = null;
-		if (!event.target || !event.target.closest) {
+		if (!event.target?.closest) {
 			return { x, y, width, height, time };
 		}
 		const eventColumn =

@@ -159,7 +159,7 @@ class SearchQuerySubscription extends MutableQuerySubscription {
 	onFocusedContentChanged = () => {
 		const thread = FocusedContentStore.focused("thread");
 		const shouldRecordChange =
-			thread && (this._lastFocusedThread || {}).id !== thread.id;
+			thread && this._lastFocusedThread?.id !== thread.id;
 		if (shouldRecordChange) {
 			if (this._focusedThreadCount === 0) {
 				this._firstThreadSelectedAt = Date.now();

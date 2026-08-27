@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import EventEmitter from "events";
+import EventEmitter from "node:events";
 
 class TransactionConnector extends EventEmitter {
 	notifyDelta(accountId, transaction) {

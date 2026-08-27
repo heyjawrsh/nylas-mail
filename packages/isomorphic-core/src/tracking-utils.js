@@ -12,7 +12,7 @@
  *
  * Open/Link tracking is a multi-step process.
  */
-import url from "url";
+import url from "node:url";
 
 class TrackingUtils {
 	/**
@@ -72,7 +72,7 @@ class TrackingUtils {
 			// This adds a `recipient` param to the open tracking src url.
 			body = body.replace(
 				/<img class="n1-open".*?src="(.*?)">/g,
-				(match, src) => {
+				(_match, src) => {
 					const newSrc = this._addRecipientToUrl(src, recipient.email);
 					return `<img class="n1-open" width="0" height="0" style="border:0; width:0; height:0;" src="${newSrc}">`;
 				},
@@ -83,7 +83,7 @@ class TrackingUtils {
 			// This adds a `recipient` param to the link tracking tracking href url.
 			body = body.replace(
 				this._urlLinkTagRegex(),
-				(match, prefix, href, suffix, content, closingTag) => {
+				(_match, prefix, href, suffix, content, closingTag) => {
 					const newHref = this._addRecipientToUrl(href, recipient.email);
 					return `${prefix}${newHref}${suffix}${content}${closingTag}`;
 				},
@@ -117,7 +117,7 @@ class TrackingUtils {
 			this._urlLinkTagRegex(),
 			(match, prefix, href, suffix, content, closingTag) => {
 				if (!/nylas\.com/.test(href)) return match;
-				const originalUrl = (url.parse(href, true).query || {}).redirect;
+				const originalUrl = url.parse(href, true).query?.redirect;
 				if (!originalUrl) return match;
 				return `${prefix}${originalUrl}${suffix}${content}${closingTag}`;
 			},

@@ -1,6 +1,6 @@
 import NylasStore from "nylas-store";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { Utils, MessageBodyProcessor } from "nylas-exports";
 import AutoloadImagesActions from "./autoload-images-actions";
 

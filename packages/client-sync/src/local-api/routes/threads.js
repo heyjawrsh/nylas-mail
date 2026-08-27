@@ -1,5 +1,5 @@
 import Joi from "joi";
-import stream from "stream";
+import stream from "node:stream";
 import _ from "underscore";
 import Serialization from "../serialization.js";
 import { createAndReplyWithSyncbackRequest } from "../route-helpers.js";

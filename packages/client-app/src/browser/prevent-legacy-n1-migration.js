@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 // This function prevents old N1 from destroying its own config and copying the
 // one from Nylas Mail 2.0. The expected workflow now is to migrate from old

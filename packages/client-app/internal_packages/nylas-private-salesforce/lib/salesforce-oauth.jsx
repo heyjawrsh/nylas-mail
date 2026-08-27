@@ -1,6 +1,6 @@
 import { shell } from "electron";
-import crypto from "crypto";
-import { Actions, NylasAPIRequest, React, KeyManager } from "nylas-exports";
+import crypto from "node:crypto";
+import { Actions, NylasAPIRequest, KeyManager } from "nylas-exports";
 
 const ACCESS_TOKEN_KEY_NAME = "Nylas Salesforce Token";
 const REFRESH_TOKEN_KEY_NAME = "Nylas Salesforce Refresh Token";
@@ -105,7 +105,7 @@ class SalesforceOAuth {
 		NylasEnv.show();
 		Actions.openModal({
 			component: (
-				<div className="salesforce-welcome" tabIndex="0">
+				<div className="salesforce-welcome">
 					<h2>Success! Nylas Mail and Salesforce are now connected.</h2>
 					<p>
 						Select a message to create or edit contact and lead records or to

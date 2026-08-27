@@ -2,8 +2,8 @@
 
 import { DraftStore, Actions, QuotedHTMLTransformer } from "nylas-exports";
 import NylasStore from "nylas-store";
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 
 class TemplateStore extends NylasStore {
 	// Support accented characters in template names
@@ -47,7 +47,7 @@ class TemplateStore extends NylasStore {
 				this.watch();
 			} else {
 				fs.mkdir(this._templatesDir, () => {
-					fs.readFile(this._welcomePath, (err, welcome) => {
+					fs.readFile(this._welcomePath, (_err, welcome) => {
 						fs.writeFile(
 							path.join(this._templatesDir, this._welcomeName),
 							welcome,
@@ -322,7 +322,7 @@ class TemplateStore extends NylasStore {
 			return;
 		}
 
-		fs.readFile(template.path, (err, data) => {
+		fs.readFile(template.path, (_err, data) => {
 			const body = data.toString();
 			callback(body);
 		});

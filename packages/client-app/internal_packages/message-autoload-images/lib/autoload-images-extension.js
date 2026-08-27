@@ -6,7 +6,7 @@ export default class AutoloadImagesExtension extends MessageViewExtension {
 		if (AutoloadImagesStore.shouldBlockImagesIn(message)) {
 			message.body = message.body.replace(
 				AutoloadImagesStore.ImagesRegexp,
-				(match, prefix) => {
+				(_match, prefix) => {
 					return `${prefix}#`;
 				},
 			);

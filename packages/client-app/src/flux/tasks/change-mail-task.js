@@ -307,11 +307,11 @@ export default class ChangeMailTask extends Task {
 	}
 
 	objectClass() {
-		return this.threads && this.threads.length ? Thread : Message;
+		return this.threads?.length ? Thread : Message;
 	}
 
 	objectArray() {
-		return this.threads && this.threads.length ? this.threads : this.messages;
+		return this.threads?.length ? this.threads : this.messages;
 	}
 
 	numberOfImpactedItems() {

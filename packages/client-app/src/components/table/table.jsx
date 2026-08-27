@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
 import LazyRenderedList from "../lazy-rendered-list";
@@ -119,7 +119,7 @@ export class TableRow extends Component {
 						{isHeader ? "" : rowIdx + 1}
 					</TableCell>
 				) : null}
-				{tableDataSource.columns().map((colName, colIdx) => {
+				{tableDataSource.columns().map((_colName, colIdx) => {
 					const cellProps = { tableDataSource, rowIdx, colIdx, ...extraProps };
 					return (
 						<CellRenderer key={`cell-${rowIdx}-${colIdx}`} {...cellProps}>

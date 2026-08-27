@@ -1,4 +1,3 @@
-import React from "react";
 import { renderIntoDocument } from "react-addons-test-utils";
 import { Account } from "nylas-exports";
 

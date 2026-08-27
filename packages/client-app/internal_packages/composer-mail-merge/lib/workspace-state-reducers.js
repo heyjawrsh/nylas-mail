@@ -1,5 +1,5 @@
 export function initialState(savedData) {
-	if (savedData && savedData.tokenDataSource && savedData.tableDataSource) {
+	if (savedData?.tokenDataSource && savedData.tableDataSource) {
 		return {
 			isWorkspaceOpen: true,
 		};

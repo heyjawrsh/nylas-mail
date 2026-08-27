@@ -484,9 +484,7 @@ export default class ComposerView extends React.Component {
 	};
 
 	_inFooterRegion(el) {
-		return (
-			el.closest && el.closest(".composer-footer-region, .overlaid-components")
-		);
+		return el.closest?.(".composer-footer-region, .overlaid-components");
 	}
 
 	_onMouseUpComposerBody = (event) => {

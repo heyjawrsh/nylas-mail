@@ -1,5 +1,5 @@
 import * as IsomorphicCore from "isomorphic-core";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import defineModel from "./define-model.js";
 const {
 	ExponentialBackoffScheduler,
@@ -17,7 +17,7 @@ import { Actions } from "nylas-exports";
 
 const MAX_IMAP_TIMEOUT_ERRORS = 5;
 
-function validateRecipientsPresent(message) {
+function _validateRecipientsPresent(message) {
 	if (message.getRecipients().length === 0) {
 		throw new APIError(`No recipients specified`, 400);
 	}

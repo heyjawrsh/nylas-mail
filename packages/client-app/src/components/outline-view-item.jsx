@@ -4,7 +4,7 @@
 import _ from "underscore";
 import { Utils } from "nylas-exports";
 import classnames from "classnames";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import DisclosureTriangle from "./disclosure-triangle";
@@ -321,9 +321,8 @@ class OutlineViewItem extends Component {
 			const placeholder = item.inputPlaceholder || "";
 			return (
 				<input
-					autoFocus
 					type="text"
-					tabIndex="1"
+					tabIndex="0"
 					className="item-input"
 					placeholder={placeholder}
 					defaultValue={item.name}

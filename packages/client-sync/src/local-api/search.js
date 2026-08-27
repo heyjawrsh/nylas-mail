@@ -43,7 +43,7 @@ class SearchFolder {
 		return "IMAP folder search";
 	}
 
-	run(db, imap) {
+	run(_db, imap) {
 		return imap.openBox(this.folder.name).then((box) => {
 			return box.search(this.criteria);
 		});

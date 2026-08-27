@@ -48,7 +48,7 @@ class RelatedObjectsForThread extends React.Component {
 	}
 
 	componentWillUnmount() {
-		if (this.disposable && this.disposable.dispose) {
+		if (this.disposable?.dispose) {
 			this.disposable.dispose();
 		}
 		this._usub();
@@ -72,7 +72,7 @@ class RelatedObjectsForThread extends React.Component {
 	};
 
 	_setupDataSource(props) {
-		if (this.disposable && this.disposable.dispose) {
+		if (this.disposable?.dispose) {
 			this.disposable.dispose();
 		}
 		this.setState(this._initialState());

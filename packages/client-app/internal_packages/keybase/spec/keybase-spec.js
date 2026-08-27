@@ -11,7 +11,7 @@ xdescribe("keybase lib", () => {
 	it("should be able to fetch an account by username", function () {
 		this.them = null;
 		runs(() => {
-			return kb.getUser("dakota", "usernames", (err, them) => {
+			return kb.getUser("dakota", "usernames", (_err, them) => {
 				return (this.them = them);
 			});
 		});
@@ -29,7 +29,7 @@ xdescribe("keybase lib", () => {
 			return kb.getUser(
 				"7FA5A43BBF2BAD1845C8D0E8145FCCD989968E3B",
 				"key_fingerprint",
-				(err, them) => {
+				(_err, them) => {
 					return (this.them = them);
 				},
 			);
@@ -45,7 +45,7 @@ xdescribe("keybase lib", () => {
 	it("should be able to fetch a user's key", function () {
 		this.key = null;
 		runs(() => {
-			return kb.getKey("dakota", (error, key) => {
+			return kb.getKey("dakota", (_error, key) => {
 				return (this.key = key);
 			});
 		});
@@ -62,7 +62,7 @@ xdescribe("keybase lib", () => {
 	return it("should be able to return an autocomplete query", function () {
 		this.completions = null;
 		runs(() => {
-			return kb.autocomplete("dakota", (error, completions) => {
+			return kb.autocomplete("dakota", (_error, completions) => {
 				return (this.completions = completions);
 			});
 		});

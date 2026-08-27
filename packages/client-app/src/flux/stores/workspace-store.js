@@ -9,9 +9,9 @@
  */
 const _ = require("underscore");
 const Actions = require("../actions").default;
-const AccountStore = require("./account-store").default;
-const CategoryStore = require("./category-store");
-const MailboxPerspective = require("../../mailbox-perspective");
+const _AccountStore = require("./account-store").default;
+const _CategoryStore = require("./category-store");
+const _MailboxPerspective = require("../../mailbox-perspective");
 const NylasStore = require("nylas-store");
 
 let Sheet = {};

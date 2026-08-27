@@ -1,10 +1,4 @@
-import {
-	Actions,
-	Thread,
-	DatabaseStore,
-	TaskFactory,
-	SendDraftTask,
-} from "nylas-exports";
+import { Actions, Thread, DatabaseStore, SendDraftTask } from "nylas-exports";
 
 export const name = "SendAndArchiveExtension";
 

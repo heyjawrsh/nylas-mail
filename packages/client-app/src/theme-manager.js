@@ -9,7 +9,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let ThemeManager;
-const path = require("path");
+const path = require("node:path");
 
 const _ = require("underscore");
 const EmitterMixin = require("emissary").Emitter;
@@ -18,7 +18,7 @@ const { File } = require("pathwatcher");
 const fs = require("fs-plus");
 const Q = require("q");
 
-const Package = require("./package");
+const _Package = require("./package");
 
 // Extended: Handles loading and activating available themes.
 //

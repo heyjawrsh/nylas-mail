@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require("react");
+const _React = require("react");
 const AccountSidebar = require("./components/account-sidebar");
 const { ComponentRegistry, WorkspaceStore } = require("nylas-exports");
 

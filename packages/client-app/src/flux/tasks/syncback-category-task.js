@@ -109,7 +109,7 @@ export default class SyncbackCategoryTask extends Task {
 							`Could not ${action} ${type}. Your mail provider has placed restrictions on this ${type}.`,
 						);
 					}
-				} catch (e) {
+				} catch (_e) {
 					// If notifying the user fails, just move on and mark the task as failed.
 				}
 				return [Task.Status.Failed, err];

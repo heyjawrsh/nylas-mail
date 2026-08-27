@@ -120,7 +120,7 @@ export default class ThreadSharingPopover extends React.Component {
 
 		// tabIndex is necessary for the popover's onBlur events to work properly
 		return (
-			<div tabIndex="1" className={classes}>
+			<div className={classes}>
 				<div className="share-toggle">
 					<label htmlFor="shareCheckbox">
 						{control}

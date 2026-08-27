@@ -1,6 +1,5 @@
 /* eslint quote-props: 0 */
 
-import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import { SignatureStore } from "nylas-exports";
 import SignatureComposerDropdown from "../lib/signature-composer-dropdown";

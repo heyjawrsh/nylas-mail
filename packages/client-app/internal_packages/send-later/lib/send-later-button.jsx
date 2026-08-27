@@ -1,5 +1,5 @@
-import fs from "fs";
-import React, { Component } from "react";
+import fs from "node:fs";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import {
@@ -9,7 +9,7 @@ import {
 	DraftHelpers,
 	FeatureUsageStore,
 } from "nylas-exports";
-import { RetinaImg, FeatureUsedUpModal } from "nylas-component-kit";
+import { RetinaImg } from "nylas-component-kit";
 import SendLaterPopover from "./send-later-popover";
 import { PLUGIN_ID, PLUGIN_NAME } from "./send-later-constants";
 const { NylasAPIRequest, NylasAPI, N1CloudAPI } = require("nylas-exports");

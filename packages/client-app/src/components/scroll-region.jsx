@@ -366,7 +366,7 @@ class ScrollRegion extends React.Component {
 		);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, _prevState) {
 		if (!this.state.scrolling && this.props.children !== prevProps.children) {
 			return this.recomputeDimensions();
 		}
@@ -383,7 +383,7 @@ class ScrollRegion extends React.Component {
 		return (this._mounted = false);
 	}
 
-	shouldComponentUpdate(newProps, newState) {
+	shouldComponentUpdate(_newProps, _newState) {
 		// Because this component renders @props.children, it needs to update
 		// on props.children changes. Unfortunately, computing isEqual on the
 		// @props.children tree extremely expensive. Just let React's algorithm do it's work.
@@ -609,7 +609,7 @@ class ScrollRegion extends React.Component {
 				this.state.totalHeight != null
 					? this.state.totalHeight
 					: contentNode.scrollHeight;
-			const trackHeight =
+			const _trackHeight =
 				this.state.trackHeight != null
 					? this.state.trackHeight
 					: contentNode.scrollHeight;

@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 const getMac = require("getmac").getMac;
-const crypto = require("crypto");
+const crypto = require("node:crypto");
 const Raven = require("raven");
 //
 // NOTE: This file is manually copied over from the K2 repo into Nylas Mail.
@@ -40,7 +40,7 @@ class ErrorReporter {
 		}
 	}
 
-	onDidLogAPIError(error, statusCode, message) {
+	onDidLogAPIError(_error, _statusCode, _message) {
 		// eslint-disable-line
 	}
 
@@ -71,7 +71,7 @@ class ErrorReporter {
 		}
 
 		const errData = {};
-		if (typeof app !== "undefined" && app && app.databaseReader) {
+		if (app?.databaseReader) {
 			const fullIdent = app.databaseReader.getJSONBlob("NylasID");
 			// We may not have an identity available yet
 			if (fullIdent) {
@@ -147,16 +147,12 @@ class ErrorReporter {
 
 	_prepareSentryCaptureObjects(error, extra) {
 		// Never send user auth tokens
-		if (error.requestOptions && error.requestOptions.auth) {
+		if (error.requestOptions?.auth) {
 			delete error.requestOptions.auth;
 		}
 
 		// Never send message bodies
-		if (
-			error.requestOptions &&
-			error.requestOptions.body &&
-			error.requestOptions.body.body
-		) {
+		if (error.requestOptions?.body?.body) {
 			delete error.requestOptions.body.body;
 		}
 
@@ -175,7 +171,7 @@ class ErrorReporter {
 		// Sentry-specific.
 		if (extra.fingerprint) delete extra.fingerprint;
 
-		if (extra && extra.pluginIds && extra.pluginIds.length > 0) {
+		if (extra?.pluginIds && extra.pluginIds.length > 0) {
 			const captureObjects = [];
 			for (const pluginId of extra.pluginIds) {
 				const obj = {

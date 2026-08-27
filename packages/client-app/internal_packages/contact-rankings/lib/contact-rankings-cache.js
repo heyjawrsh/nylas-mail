@@ -51,7 +51,7 @@ class ContactRankingsCache extends RefreshingJSONCache {
 		request
 			.run()
 			.then((json) => {
-				if (!json || !(json instanceof Array)) return;
+				if (!json || !Array.isArray(json)) return;
 
 				// Convert rankings into the format needed for quick lookup
 				const rankings = {};

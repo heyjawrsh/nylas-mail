@@ -1,4 +1,3 @@
-import React from "react";
 import { Actions, WorkspaceStore } from "nylas-exports";
 
 import ThemePicker from "./theme-picker";

@@ -9,11 +9,11 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-let error, Package, packagesCache;
-const path = require("path");
+let _error, Package, packagesCache;
+const path = require("node:path");
 
 const _ = require("underscore");
-const async = require("async");
+const _async = require("async");
 const fs = require("fs-plus");
 const EmitterMixin = require("emissary").Emitter;
 const { Emitter, CompositeDisposable } = require("event-kit");
@@ -32,7 +32,7 @@ try {
 			? left
 			: {};
 } catch (error1) {
-	error = error1;
+	_error = error1;
 	packagesCache = {};
 }
 
@@ -350,12 +350,12 @@ module.exports = Package = (() => {
 				);
 			}
 			return (() => {
-				let menuPath;
+				let _menuPath;
 				const result = [];
-				for ([menuPath, map] of Array.from(this.menus)) {
-					if (map["menu"] != null) {
+				for ([_menuPath, map] of Array.from(this.menus)) {
+					if (map.menu != null) {
 						result.push(
-							this.activationDisposables.add(NylasEnv.menu.add(map["menu"])),
+							this.activationDisposables.add(NylasEnv.menu.add(map.menu)),
 						);
 					}
 				}
@@ -555,7 +555,7 @@ module.exports = Package = (() => {
 		}
 
 		reloadStylesheets() {
-			const oldSheets = _.clone(this.stylesheets);
+			const _oldSheets = _.clone(this.stylesheets);
 			this.loadStylesheets();
 			if (this.stylesheetDisposables != null) {
 				this.stylesheetDisposables.dispose();
@@ -616,7 +616,7 @@ Run \`apm rebuild\` in the package directory to resolve.\
 					fs.listSync(path.join(modulePath, "build", "Release"), [".node"])
 						.length > 0
 				);
-			} catch (error) {
+			} catch (_error) {
 				return false;
 			}
 		}
@@ -638,7 +638,7 @@ Run \`apm rebuild\` in the package directory to resolve.\
 						}
 						return result;
 					})();
-				} catch (error2) {}
+				} catch (_error2) {}
 			};
 
 			traversePath(path.join(this.path, "node_modules"));
@@ -663,7 +663,7 @@ Run \`apm rebuild\` in the package directory to resolve.\
 						)) != null
 							? left1
 							: {});
-				} catch (error2) {}
+				} catch (_error2) {}
 				if (incompatibleNativeModules != null) {
 					return incompatibleNativeModules;
 				}
@@ -679,7 +679,7 @@ Run \`apm rebuild\` in the package directory to resolve.\
 				} catch (error) {
 					try {
 						({ version } = require(`${nativeModulePath}/package.json`));
-					} catch (error3) {}
+					} catch (_error3) {}
 					incompatibleNativeModules.push({
 						path: nativeModulePath,
 						name: path.basename(nativeModulePath),

@@ -99,7 +99,7 @@ class SendActionsStore extends NylasStore {
 		}
 
 		let preferred = _.findWhere(this._sendActions, { configKey: preferredKey });
-		if (!preferred || !preferred.isAvailableForDraft({ draft })) {
+		if (!preferred?.isAvailableForDraft({ draft })) {
 			preferred = DefaultSendAction;
 		}
 		const rest = _.without(this._sendActions, preferred).filter((sendAction) =>

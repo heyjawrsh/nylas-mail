@@ -14,9 +14,9 @@ const decodeQuotedPrintable = (text, charset) => {
 import iconv from "iconv-lite";
 import addressparser from "nodemailer/lib/addressparser/index.js";
 import he from "he";
-import os from "os";
-import fs from "fs";
-import path from "path";
+import os from "node:os";
+import fs from "node:fs";
+import path from "node:path";
 import { mkdirp } from "mkdirp";
 import { APIError } from "./errors.js";
 import { deepClone } from "./model-utils.js";
@@ -128,7 +128,7 @@ function parseSnippet(body) {
 // these days most all text in In-Reply-To, Message-Id, and References headers
 // actually conforms to the spec.
 function parseReferences(input) {
-	if (!input || !input.length || !input[0]) {
+	if (!input?.length || !input[0]) {
 		return [];
 	}
 	const references = new Set();

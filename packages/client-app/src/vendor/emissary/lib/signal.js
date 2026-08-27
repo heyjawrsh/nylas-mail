@@ -182,7 +182,7 @@
 			});
 		};
 
-		Signal.prototype["switch"] = function (fn) {
+		Signal.prototype.switch = function (fn) {
 			var source;
 			source = this.map(fn);
 			return new this.constructor(function () {

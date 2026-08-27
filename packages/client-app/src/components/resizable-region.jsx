@@ -190,7 +190,7 @@ class ResizableRegion extends React.Component {
 		);
 	}
 
-	componentDidUpdate(lastProps, lastState) {
+	componentDidUpdate(_lastProps, lastState) {
 		if (lastState.dragging && !this.state.dragging) {
 			document.removeEventListener("mousemove", this._mouseMove);
 			return document.removeEventListener("mouseup", this._mouseUp);

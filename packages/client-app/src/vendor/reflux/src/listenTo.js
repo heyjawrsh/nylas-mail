@@ -19,9 +19,7 @@ module.exports = (listenable, callback, initial) => ({
 		for (var m in ListenerMethods) {
 			if (this[m] !== ListenerMethods[m]) {
 				if (this[m]) {
-					throw (
-						"Can't have other property '" + m + "' when using Reflux.listenTo!"
-					);
+					throw `Can't have other property '${m}' when using Reflux.listenTo!`;
 				}
 				this[m] = ListenerMethods[m];
 			}

@@ -11,7 +11,7 @@ Reflux.utils.inherits = (subClass, superClass) => {
 				typeof superClass,
 		);
 	}
-	subClass.prototype = Object.create(superClass && superClass.prototype, {
+	subClass.prototype = Object.create(superClass?.prototype, {
 		constructor: {
 			value: subClass,
 			enumerable: false,
@@ -37,5 +37,5 @@ if (typeof React !== "undefined" && React) {
 	try {
 		var R = require("react"); // we ignore this in browserify manually (see grunt file), so it's more of a doublecheck for in node
 		Reflux.defineReact(R);
-	} catch (e) {}
+	} catch (_e) {}
 }

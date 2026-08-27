@@ -82,7 +82,7 @@ class DraftHelpers {
 			clientId: clientId,
 		}).include(Message.attributes.body);
 
-		if (!message || !message.draft) {
+		if (!message?.draft) {
 			throw new this.DraftNotFoundError();
 		}
 
@@ -90,7 +90,7 @@ class DraftHelpers {
 	}
 
 	async removeStaleUploads(draft) {
-		if (!(draft.uploads instanceof Array) || draft.uploads.length === 0) {
+		if (!Array.isArray(draft.uploads) || draft.uploads.length === 0) {
 			// The async keyword makes it so this is returned as a promise, which
 			// allows us to always treat the return value of this function as a
 			// promise-like object.

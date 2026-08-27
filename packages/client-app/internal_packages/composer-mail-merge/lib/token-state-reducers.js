@@ -49,7 +49,7 @@ export function fromJSON({ tokenDataSource }) {
 }
 
 export function initialState(savedData) {
-	if (savedData && savedData.tokenDataSource) {
+	if (savedData?.tokenDataSource) {
 		return {
 			tokenDataSource: savedData.tokenDataSource,
 		};

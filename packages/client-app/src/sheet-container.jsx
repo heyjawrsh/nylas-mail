@@ -11,17 +11,17 @@ const ReactCSSTransitionGroup = require("./components/css-transition-group-compa
 const Sheet = require("./sheet");
 const Toolbar = require("./sheet-toolbar");
 const Flexbox = require("./components/flexbox").default;
-const RetinaImg = require("./components/retina-img").default;
+const _RetinaImg = require("./components/retina-img").default;
 const InjectedComponentSet = require("./components/injected-component-set");
 const _ = require("underscore");
 
 const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
 
 var SheetContainer = (() => {
-	let displayName;
+	let _displayName;
 	SheetContainer = class SheetContainer extends React.Component {
 		static initClass() {
-			displayName = "SheetContainer";
+			_displayName = "SheetContainer";
 		}
 
 		constructor(props) {

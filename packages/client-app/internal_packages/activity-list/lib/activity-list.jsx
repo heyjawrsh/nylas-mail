@@ -32,7 +32,7 @@ class ActivityList extends React.Component {
 		const actions = ActivityListStore.actions();
 		return {
 			actions: actions,
-			empty: actions instanceof Array && actions.length === 0,
+			empty: Array.isArray(actions) && actions.length === 0,
 			collapsedToggles: this.state ? this.state.collapsedToggles : {},
 		};
 	}

@@ -37,8 +37,8 @@ export default class ClipboardService extends ContenteditableService {
 
 		if (item.kind === "file") {
 			const temp = require("temp");
-			const path = require("path");
-			const fs = require("fs");
+			const path = require("node:path");
+			const fs = require("node:fs");
 			const blob = item.getAsFile();
 			const ext =
 				{
@@ -98,7 +98,7 @@ export default class ClipboardService extends ContenteditableService {
 		// Check if we are pasting any of our tracked links
 		const withoutTracking = rawInput.replace(
 			RegExpUtils.trackedLinkRegex(),
-			(match, p1) => decodeURIComponent(p1),
+			(_match, p1) => decodeURIComponent(p1),
 		);
 
 		return InlineStyleTransformer.run(withoutTracking).then((inlined) => {

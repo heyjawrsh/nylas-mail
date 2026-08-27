@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
-import path from "path";
+import path from "node:path";
 
 import { ipcRenderer, remote, shell } from "electron";
 
@@ -18,7 +18,7 @@ import Utils from "./flux/models/utils";
 
 function ensureInteger(f, fallback) {
 	let int = f;
-	if (isNaN(f) || f === undefined || f === null) {
+	if (Number.isNaN(f) || f === undefined || f === null) {
 		int = fallback;
 	}
 	return Math.round(int);
@@ -204,7 +204,7 @@ export default class NylasEnvConstructor {
 
 		// Add 'src/global' to module search path.
 		const globalPath = path.join(resourcePath, "src", "global");
-		require("module").globalPaths.push(globalPath);
+		require("node:module").globalPaths.push(globalPath);
 
 		// Our client-private-plugins get sym-linked into internal_packages.
 		// However, when we require anything from those files, the require chain is
@@ -213,7 +213,9 @@ export default class NylasEnvConstructor {
 		// they should see aren't actually there due to the symlink. We manually add
 		// node_modules to the global require path (even though it's already there
 		// by default) to support these symlinked modules
-		require("module").globalPaths.push(path.join(resourcePath, "node_modules"));
+		require("node:module").globalPaths.push(
+			path.join(resourcePath, "node_modules"),
+		);
 
 		// Still set NODE_PATH since tasks may need it.
 		process.env.NODE_PATH = globalPath;
@@ -305,7 +307,7 @@ export default class NylasEnvConstructor {
 		const sourceMapCache = {};
 
 		// https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror
-		window.onerror = (message, url, line, column, originalError) => {
+		window.onerror = (_message, url, line, column, originalError) => {
 			if (!this.inDevMode()) {
 				return this.reportError(originalError, { url, line, column });
 			}
@@ -349,7 +351,7 @@ export default class NylasEnvConstructor {
 				this._onUnhandledRejection(error, sourceMapCache);
 				return;
 			}
-			if (e.detail && e.detail.reason) {
+			if (e.detail?.reason) {
 				const error = e.detail.reason;
 				this._onUnhandledRejection(error, sourceMapCache);
 				return;
@@ -1013,7 +1015,7 @@ export default class NylasEnvConstructor {
 	//
 	// This also means that the windowType has changed and a different set of
 	// plugins needs to be loaded.
-	populateHotWindow(event, loadSettings) {
+	populateHotWindow(_event, loadSettings) {
 		if (/composer/.test(loadSettings.windowType)) {
 			NylasEnv.timer.split("open-composer-window");
 		}

@@ -386,7 +386,7 @@ export default class Contact extends Model {
 
 		// The email regexp must match the /entire/ email address
 		const result = RegExpUtils.emailRegex().exec(this.email);
-		return result && result instanceof Array ? result[0] === this.email : false;
+		return result && Array.isArray(result) ? result[0] === this.email : false;
 	}
 
 	// Public: Returns true if the contact is the current user, false otherwise.

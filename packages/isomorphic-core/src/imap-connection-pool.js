@@ -17,7 +17,7 @@ class AccountConnectionPool {
 		const settings = account.connectionSettings;
 		const credentials = account.decryptedCredentials();
 
-		if (!settings || !settings.imap_host) {
+		if (!settings?.imap_host) {
 			throw new Error(
 				"_genConnection: There are no IMAP connection settings for this account.",
 			);

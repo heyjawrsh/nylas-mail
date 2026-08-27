@@ -1,5 +1,5 @@
 import _ from "underscore";
-import path from "path";
+import path from "node:path";
 import LessCache from "less-cache";
 
 // {LessCache} wrapper used by {ThemeManager} to read stylesheets.

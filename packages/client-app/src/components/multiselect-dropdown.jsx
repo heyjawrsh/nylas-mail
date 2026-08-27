@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { ButtonDropdown, Menu } from "nylas-component-kit";
 import ReactDOM from "react-dom";

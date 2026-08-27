@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: 0 */
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 import ListSelection from "./list-selection";
 
 export default class ListDataSource {
@@ -49,15 +49,15 @@ export default class ListDataSource {
 		throw new Error("ListDataSource base class does not implement empty()");
 	}
 
-	get(idx) {
+	get(_idx) {
 		throw new Error("ListDataSource base class does not implement get()");
 	}
 
-	getById(id) {
+	getById(_id) {
 		throw new Error("ListDataSource base class does not implement getById()");
 	}
 
-	indexOfId(id) {
+	indexOfId(_id) {
 		throw new Error("ListDataSource base class does not implement indexOfId()");
 	}
 
@@ -65,7 +65,7 @@ export default class ListDataSource {
 		throw new Error("ListDataSource base class does not implement count()");
 	}
 
-	itemsCurrentlyInViewMatching(matchFn) {
+	itemsCurrentlyInViewMatching(_matchFn) {
 		throw new Error(
 			"ListDataSource base class does not implement itemsCurrentlyInViewMatching()",
 		);

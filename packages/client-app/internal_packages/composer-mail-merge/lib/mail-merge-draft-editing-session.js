@@ -76,9 +76,7 @@ export class MailMergeDraftEditingSession extends NylasStore {
 	initializeState(draft = this._session.draft()) {
 		const savedMetadata = draft.metadataForPluginId(PLUGIN_ID);
 		const shouldLoadSavedData =
-			savedMetadata &&
-			savedMetadata.tableDataSource &&
-			savedMetadata.tokenDataSource;
+			savedMetadata?.tableDataSource && savedMetadata.tokenDataSource;
 		const action = { name: "initialState" };
 		if (shouldLoadSavedData) {
 			const loadedState = this.dispatch({ name: "fromJSON" }, savedMetadata);

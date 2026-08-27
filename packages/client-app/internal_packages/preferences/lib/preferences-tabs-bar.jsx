@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import fs from "fs";
+import fs from "node:fs";
 import Immutable from "immutable";
 import classNames from "classnames";
 

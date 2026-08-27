@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { DateUtils, Actions } from "nylas-exports";
@@ -24,7 +24,7 @@ export default class SendLaterStatus extends Component {
 	render() {
 		const { draft } = this.props;
 		const metadata = draft.metadataForPluginId(PLUGIN_ID);
-		if (metadata && metadata.expiration) {
+		if (metadata?.expiration) {
 			const { expiration } = metadata;
 			const formatted = DateUtils.format(moment(expiration), DATE_FORMAT_SHORT);
 			return (

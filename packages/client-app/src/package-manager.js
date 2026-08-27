@@ -11,8 +11,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let PackageManager;
-const path = require("path");
-const url = require("url");
+const path = require("node:path");
+const url = require("node:url");
 
 const _ = require("underscore");
 const { ipcRenderer, remote } = require("electron");
@@ -107,7 +107,7 @@ module.exports = PackageManager = (() => {
 			return this.cachedPackagePluginIds[cacheKey];
 		}
 
-		_onChangePluginState(event, urlToOpen) {
+		_onChangePluginState(_event, urlToOpen) {
 			let left;
 			if (urlToOpen == null) {
 				urlToOpen = "";
@@ -167,7 +167,7 @@ module.exports = PackageManager = (() => {
 			}, 500);
 		}
 
-		_resolvePluginIdFor(packageName, env) {
+		_resolvePluginIdFor(packageName, _env) {
 			let metadata =
 				this.loadedPackages[packageName] != null
 					? this.loadedPackages[packageName].metadata
@@ -516,14 +516,12 @@ module.exports = PackageManager = (() => {
 
 						const { windowTypes } = metadata;
 						if (windowTypes) {
-							return (
-								windowTypes[windowType] != null || windowTypes["all"] != null
-							);
+							return windowTypes[windowType] != null || windowTypes.all != null;
 						} else if (loadPackagesWhenNoTypesSpecified) {
 							return true;
 						}
 						return false;
-					} catch (error) {
+					} catch (_error) {
 						return false;
 					}
 				});
@@ -532,7 +530,7 @@ module.exports = PackageManager = (() => {
 			const packagesPath = path.join(this.resourcePath, "node_modules");
 			const object = this.getPackageDependencies();
 			for (var packageName in object) {
-				var packageVersion = object[packageName];
+				var _packageVersion = object[packageName];
 				packagePath = path.join(packagesPath, packageName);
 				if (fs.isDirectorySync(packagePath)) {
 					packagePaths.push(packagePath);
@@ -650,7 +648,7 @@ module.exports = PackageManager = (() => {
 						(left = JSON.parse(fs.readFileSync(metadataPath))) != null
 							? left
 							: {});
-				} catch (error) {}
+				} catch (_error) {}
 				if (this.packageDependencies == null) {
 					this.packageDependencies = {};
 				}

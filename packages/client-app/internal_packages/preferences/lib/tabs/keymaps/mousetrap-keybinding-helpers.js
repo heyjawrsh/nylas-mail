@@ -124,7 +124,7 @@ for (var key of Object.keys(_SHIFT_MAP)) {
  * programatically
  */
 for (var i = 1; i < 20; ++i) {
-	_MAP[111 + i] = "f" + i;
+	_MAP[111 + i] = `f${i}`;
 }
 
 /**
@@ -136,7 +136,7 @@ for (i = 0; i <= 9; ++i) {
 
 function characterFromEvent(e) {
 	// for keypress events we should return the character as is
-	if (e.type == "keypress") {
+	if (e.type === "keypress") {
 		var character = String.fromCharCode(e.which);
 
 		// if the shift key is not pressed then it is safe to assume

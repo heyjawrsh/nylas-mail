@@ -182,7 +182,7 @@ class ActivityListStore extends NylasStore {
 		const linkMetadata = message.metadataForPluginId(linkTrackingId);
 		const recipients = message.to.concat(message.cc, message.bcc);
 		const actions = [];
-		if (linkMetadata && linkMetadata.links) {
+		if (linkMetadata?.links) {
 			for (const link of linkMetadata.links) {
 				for (const click of link.click_data) {
 					const recipient = this.getRecipient(click.recipient, recipients);

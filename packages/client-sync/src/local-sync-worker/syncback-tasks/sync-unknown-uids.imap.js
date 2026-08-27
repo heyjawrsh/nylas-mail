@@ -25,7 +25,7 @@ class SyncUnknownUIDs extends SyncbackIMAPTask {
 		this._db = db;
 		const { Folder } = db;
 		const { uids, folderId } = this.syncbackRequestObject().props;
-		if (!uids || !uids.length) {
+		if (!uids?.length) {
 			throw new APIError("uids are required");
 		}
 

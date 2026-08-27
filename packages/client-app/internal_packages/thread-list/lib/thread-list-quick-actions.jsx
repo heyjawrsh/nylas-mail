@@ -44,7 +44,7 @@ class ThreadArchiveQuickAction extends React.Component {
 		});
 	}
 
-	shouldComponentUpdate(newProps, newState) {
+	shouldComponentUpdate(newProps, _newState) {
 		return (
 			newProps.thread.id !==
 			(this.props != null ? this.props.thread.id : undefined)
@@ -92,7 +92,7 @@ class ThreadTrashQuickAction extends React.Component {
 		});
 	}
 
-	shouldComponentUpdate(newProps, newState) {
+	shouldComponentUpdate(newProps, _newState) {
 		return (
 			newProps.thread.id !==
 			(this.props != null ? this.props.thread.id : undefined)

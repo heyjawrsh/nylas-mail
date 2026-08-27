@@ -151,8 +151,8 @@ class MessageControls extends React.Component {
 	}
 
 	_onShowOriginal() {
-		const fs = require("fs");
-		const path = require("path");
+		const fs = require("node:fs");
+		const path = require("node:path");
 		const BrowserWindow = remote.BrowserWindow;
 		const app = remote.app;
 		const tmpfile = path.join(app.getPath("temp"), this.props.message.id);
@@ -172,7 +172,7 @@ class MessageControls extends React.Component {
 					height: 600,
 					title: `${this.props.message.subject} - RFC822`,
 				});
-				return window.loadURL("file://" + tmpfile);
+				return window.loadURL(`file://${tmpfile}`);
 			}),
 		);
 	}

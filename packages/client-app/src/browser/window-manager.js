@@ -189,7 +189,7 @@ export default class WindowManager {
 						win.isVisible(),
 					);
 					const mainWindow = this.get(WindowManager.MAIN_WINDOW);
-					const noMainWindowLoaded = !mainWindow || !mainWindow.isLoaded();
+					const noMainWindowLoaded = !mainWindow?.isLoaded();
 					if (visibleWindows.length === 0 && noMainWindowLoaded) {
 						app.quit();
 					}

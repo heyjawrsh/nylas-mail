@@ -22,9 +22,9 @@ const Identity = require("./identity");
 const kb = require("./keybase");
 const pgp = require("kbpgp");
 const _ = require("underscore");
-const path = require("path");
-const fs = require("fs");
-const os = require("os");
+const path = require("node:path");
+const fs = require("node:fs");
+const os = require("node:os");
 
 class PGPKeyStore extends NylasStore {
 	constructor() {
@@ -154,8 +154,8 @@ class PGPKeyStore extends NylasStore {
 		// add identity elements to later be populated with keys from disk
 		// TODO if this function is called multiple times in quick succession it
 		// will duplicate keys - need to do deduplication on add
-		return fs.readdir(this._pubKeyDir, (err, pubFilenames) => {
-			return fs.readdir(this._privKeyDir, (err, privFilenames) => {
+		return fs.readdir(this._pubKeyDir, (_err, pubFilenames) => {
+			return fs.readdir(this._privKeyDir, (_err, privFilenames) => {
 				this._identities = {};
 				return _.each(
 					[
@@ -197,7 +197,7 @@ class PGPKeyStore extends NylasStore {
 			console.error("Identity has no path for key!", key);
 			return;
 		}
-		return fs.readFile(key.keyPath, (err, data) => {
+		return fs.readFile(key.keyPath, (_err, data) => {
 			return pgp.KeyManager.import_from_armored_pgp(
 				{
 					armored: data,
@@ -335,7 +335,7 @@ class PGPKeyStore extends NylasStore {
 								},
 							);
 						} else {
-							return identity.key.export_pgp_public({}, (err, pgp_public) => {
+							return identity.key.export_pgp_public({}, (_err, pgp_public) => {
 								return fs.writeFile(keyPath, pgp_public, (err) => {
 									if (err) {
 										this._displayError(err);
@@ -626,7 +626,7 @@ class PGPKeyStore extends NylasStore {
 
 						// <pre> tag for consistent styling
 						if (plaintext.indexOf("<pre>") === -1) {
-							plaintext = "<pre>\n" + plaintext + "\n</pre>";
+							plaintext = `<pre>\n${plaintext}\n</pre>`;
 						}
 
 						// can't use _.template :(
@@ -679,7 +679,7 @@ class PGPKeyStore extends NylasStore {
 				filepaths, // open, decrypt, and resave each of the newly-downloaded files in place
 			) =>
 				_.each(filepaths, (filepath) => {
-					return fs.readFile(filepath, (err, data) => {
+					return fs.readFile(filepath, (_err, data) => {
 						// find a PGP block
 						const pgpStart = "-----BEGIN PGP MESSAGE-----";
 						const blockStart = data.indexOf(pgpStart);
@@ -697,7 +697,7 @@ class PGPKeyStore extends NylasStore {
 						// decrypt the file
 						return pgp.unbox(
 							{ keyfetch: keyring, armored: pgpMsg },
-							(err, literals, warnings, subkey) => {
+							(err, literals, warnings, _subkey) => {
 								if (err) {
 									console.warn(err);
 								} else {

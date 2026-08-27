@@ -216,7 +216,7 @@ export default class SidebarParticipantProfile extends React.Component {
 		}
 		const anchor = DOMUtils.findFirstTextNode(el);
 		const focus = DOMUtils.findLastTextNode(el);
-		if (anchor && focus && focus.data) {
+		if (anchor && focus?.data) {
 			sel.setBaseAndExtent(anchor, 0, focus, focus.data.length);
 		}
 	}

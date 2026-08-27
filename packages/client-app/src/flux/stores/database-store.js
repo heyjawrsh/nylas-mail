@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
-import path from "path";
+import path from "node:path";
 import createDebug from "debug";
-import childProcess from "child_process";
+import childProcess from "node:child_process";
 import PromiseQueue from "promise-queue";
 import { remote, ipcRenderer } from "electron";
 import LRU from "lru-cache";
@@ -351,7 +351,7 @@ class DatabaseStore extends NylasStore {
 		const schemaChangedStr = "database schema has changed";
 
 		const retryableRegexp = new RegExp(
-			`(database is locked)||` + `(${schemaChangedStr})`,
+			`(database is locked)||(${schemaChangedStr})`,
 			"i",
 		);
 
@@ -555,7 +555,7 @@ class DatabaseStore extends NylasStore {
 	// - 'arr' An {Array} with a mix of string model IDs and/or models.
 	//
 	modelify(klass, arr) {
-		if (!(arr instanceof Array) || arr.length === 0) {
+		if (!Array.isArray(arr) || arr.length === 0) {
 			return Promise.resolve([]);
 		}
 

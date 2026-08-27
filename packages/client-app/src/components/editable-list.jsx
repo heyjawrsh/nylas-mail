@@ -222,11 +222,11 @@ class EditableList extends Component {
 		}
 	};
 
-	_onItemClick = (event, item, idx) => {
+	_onItemClick = (_event, item, idx) => {
 		this._selectItem(item, idx);
 	};
 
-	_onItemEdit = (event, item, idx) => {
+	_onItemEdit = (_event, _item, idx) => {
 		this.setState({ editingIndex: idx });
 	};
 
@@ -361,7 +361,6 @@ class EditableList extends Component {
 
 		return (
 			<input
-				autoFocus
 				type="text"
 				placeholder={itemContent}
 				defaultValue={itemContent}
@@ -477,7 +476,7 @@ class EditableList extends Component {
 
 		return (
 			<KeyCommandsRegion
-				tabIndex="1"
+				tabIndex="0"
 				localHandlers={this._listKeymapHandlers()}
 				className={`nylas-editable-list ${this.props.className}`}
 			>

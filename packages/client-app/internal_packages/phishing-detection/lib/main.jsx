@@ -49,7 +49,7 @@ class PhishingIndicator extends React.Component {
 		}
 
 		const { replyTo, from } = message;
-		if (!replyTo || !replyTo.length || !from || !from.length) {
+		if (!replyTo?.length || !from?.length) {
 			return <span />;
 		}
 

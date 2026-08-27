@@ -1,7 +1,7 @@
 import _ from "underscore";
-import os from "os";
-import fs from "fs";
-import path from "path";
+import os from "node:os";
+import fs from "node:fs";
+import path from "node:path";
 import { ShellUtils } from "isomorphic-core";
 import { remote, shell } from "electron";
 import mkdirp from "mkdirp";

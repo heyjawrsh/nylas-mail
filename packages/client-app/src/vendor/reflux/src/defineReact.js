@@ -11,14 +11,14 @@ var Reflux = require("reflux-core");
  */
 var _react,
 	_defined = false;
-function defineReact(react, noLongerUsed, extend) {
+function defineReact(react, _noLongerUsed, extend) {
 	var proto, _extend;
 
 	// if no Reflux object is yet available then return and just wait until defineReact is called manually with it
 	try {
 		_react = react || _react || React;
 		_extend = extend || _react.Component;
-	} catch (e) {
+	} catch (_e) {
 		return;
 	}
 
@@ -183,7 +183,7 @@ function defineReact(react, noLongerUsed, extend) {
 			// check if the update actually has any mapped props
 			/*jshint unused: false */
 			var hasProps = false;
-			for (var check in update) {
+			for (var _check in update) {
 				hasProps = true;
 				break;
 			}

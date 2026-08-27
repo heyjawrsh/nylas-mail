@@ -24,7 +24,7 @@ for models by clientId work once models are loaded.
 */
 export default class QueryResultSet {
 	static setByApplyingModels(set, models) {
-		if (models instanceof Array) {
+		if (Array.isArray(models)) {
 			throw new Error("setByApplyingModels: A hash of models is required.");
 		}
 		const out = set.clone();

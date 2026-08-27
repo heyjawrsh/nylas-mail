@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu, SearchBar, ListensToFluxStore } from "nylas-component-kit";
 import { FocusedPerspectiveStore } from "nylas-exports";
@@ -78,9 +78,7 @@ class ThreadSearchBar extends Component {
 				suggestions={suggestions}
 				isSearching={isSearching}
 				suggestionKey={(suggestion) =>
-					suggestion.label ||
-					(suggestion.contact || {}).id ||
-					(suggestion.thread || {}).id
+					suggestion.label || suggestion.contact?.id || suggestion.thread?.id
 				}
 				suggestionRenderer={this._renderSuggestion}
 				onSelectSuggestion={this._onSelectSuggestion}

@@ -21,7 +21,7 @@ const {
 	AccountStore,
 } = require("nylas-exports");
 const { KeyCommandsRegion } = require("nylas-component-kit");
-const { EventEmitter } = require("events");
+const { EventEmitter } = require("node:events");
 
 const MultiselectListInteractionHandler = require("./multiselect-list-interaction-handler");
 const MultiselectSplitInteractionHandler = require("./multiselect-split-interaction-handler");
@@ -88,7 +88,7 @@ class MultiselectList extends React.Component {
 		return this.setState(this._getStateFromStores(newProps));
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, _prevState) {
 		if (this.props.onComponentDidUpdate) {
 			this.props.onComponentDidUpdate();
 		}
@@ -118,7 +118,7 @@ class MultiselectList extends React.Component {
 		return Array.from(this.unsubscribers).map((unsubscribe) => unsubscribe());
 	}
 
-	setupForProps(props) {
+	setupForProps(_props) {
 		this.unsubscribers = [];
 		return this.unsubscribers.push(WorkspaceStore.listen(this._onChange));
 	}
@@ -154,7 +154,7 @@ class MultiselectList extends React.Component {
 
 		let { className } = this.props;
 		if (this.props.dataSource && this.state.handler) {
-			className += " " + this.state.handler.cssClass();
+			className += ` ${this.state.handler.cssClass()}`;
 
 			if (this.itemPropsProvider == null) {
 				this.itemPropsProvider = (item, idx) => {

@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'vitest';
-import {createRequire} from 'module';
+import {createRequire} from 'node:module';
 const require = createRequire(import.meta.url);
 const {createLogger} = require('../logger');
 const {testStream} = require('../log-streams');

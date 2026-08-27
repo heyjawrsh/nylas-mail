@@ -62,7 +62,7 @@ class GithubUserStore extends NylasStore {
 		this._loading = true;
 		this._githubRequest(
 			`https://api.github.com/search/users?q=${email}`,
-			(err, resp, data) => {
+			(err, _resp, data) => {
 				if (err || !data) {
 					return;
 				}
@@ -74,7 +74,7 @@ class GithubUserStore extends NylasStore {
 				// Sometimes we get rate limit errors, etc., so we need to check and make
 				// sure we've gotten items before pulling the first one.
 				let profile = false;
-				if (data && data.items && data.items[0]) {
+				if (data?.items?.[0]) {
 					profile = data.items[0];
 				}
 
@@ -84,7 +84,7 @@ class GithubUserStore extends NylasStore {
 					profile.repos = [];
 					this._githubRequest(
 						`https://api.github.com/search/repositories?q=user:${profile.login}&sort=stars&order=desc`,
-						(reposErr, reposResp, repos) => {
+						(_reposErr, _reposResp, repos) => {
 							// Sort the repositories by their stars (`-` for descending order)
 							profile.repos = _.sortBy(
 								repos.items,

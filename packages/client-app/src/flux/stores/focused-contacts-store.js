@@ -54,7 +54,7 @@ class FocusedContactsStore extends NylasStore {
 		// important because the FocusedContactStore powers tons of third-party extensions,
 		// which could do /horrible/ things when we trigger.
 		const thread = MessageStore.itemsLoading() ? null : MessageStore.thread();
-		if (thread && thread.id !== (this._currentThread || {}).id) {
+		if (thread && thread.id !== this._currentThread?.id) {
 			this._currentThread = thread;
 			this._populateCurrentParticipants();
 		}
@@ -149,7 +149,7 @@ class FocusedContactsStore extends NylasStore {
 
 	// Self always gets a score of 0
 	_assignScore(contact, score = 0) {
-		if (!contact || !contact.email) {
+		if (!contact?.email) {
 			return;
 		}
 		if (contact.email.trim().length === 0) {
@@ -170,7 +170,7 @@ class FocusedContactsStore extends NylasStore {
 		let penalties = 0;
 		const email = contact.email.toLowerCase().trim();
 
-		const accountId = (this._currentThread || {}).accountId;
+		const accountId = this._currentThread?.accountId;
 		const account = AccountStore.accountForId(accountId) || {};
 		const myEmail = account.emailAddress;
 

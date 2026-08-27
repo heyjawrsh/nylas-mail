@@ -319,7 +319,7 @@ export default class SalesforceSchemaAdapter {
 	static pathForDefaultLayout(layoutDescription = {}) {
 		const recordType =
 			SalesforceSchemaAdapter.defaultRecordType(layoutDescription) || {};
-		const path = (recordType.urls || {}).layout;
+		const path = recordType.urls?.layout;
 		if (!path) {
 			throw new Error(
 				"Unsupported Salesforce layout: No url for default record type",

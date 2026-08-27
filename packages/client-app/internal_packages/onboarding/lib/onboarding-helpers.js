@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { CommonProviderSettings } from "isomorphic-core";
 import {
 	N1CloudAPI,

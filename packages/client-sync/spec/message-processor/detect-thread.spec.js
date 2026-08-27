@@ -1,6 +1,3 @@
-/* eslint global-require: 0 */
-/* eslint import/no-dynamic-require: 0 */
-import fs from "node:fs";
 import detectThread from "../../src/message-processor/detect-thread.js";
 import {
 	FIXTURES_PATH,

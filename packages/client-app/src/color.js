@@ -33,7 +33,7 @@ module.exports = Color = class Color {
 
 		try {
 			parsedColor = new ParsedColor(value);
-		} catch (error) {
+		} catch (_error) {
 			return null;
 		}
 
@@ -129,8 +129,8 @@ module.exports = Color = class Color {
 };
 
 var parseColor = (color) => {
-	color = parseInt(color);
-	if (isNaN(color)) {
+	color = parseInt(color, 10);
+	if (Number.isNaN(color)) {
 		color = 0;
 	}
 	color = Math.max(color, 0);
@@ -140,7 +140,7 @@ var parseColor = (color) => {
 
 var parseAlpha = (alpha) => {
 	alpha = parseFloat(alpha);
-	if (isNaN(alpha)) {
+	if (Number.isNaN(alpha)) {
 		alpha = 1;
 	}
 	alpha = Math.max(alpha, 0);

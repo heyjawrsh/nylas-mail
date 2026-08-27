@@ -110,9 +110,9 @@ export default class EmailFrame extends React.Component {
 
 		// If documentElement has a scroll height, prioritize that as height
 		// If not, fall back to body scroll height by setting it to auto
-		if (doc && doc.documentElement && doc.documentElement.scrollHeight > 0) {
+		if (doc?.documentElement && doc.documentElement.scrollHeight > 0) {
 			height = doc.documentElement.scrollHeight;
-		} else if (doc && doc.body) {
+		} else if (doc?.body) {
 			const style = window.getComputedStyle(doc.body);
 			if (style.height === "0px") {
 				doc.body.style.height = "auto";

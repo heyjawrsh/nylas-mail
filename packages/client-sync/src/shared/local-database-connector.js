@@ -2,8 +2,8 @@ import * as IsomorphicCore from "isomorphic-core";
 import "../../../isomorphic-core/src/database-extensions.js"; // streamAll — relative so spec mocks of the package don't strip the side effect
 import createDebug from "debug";
 import Sequelize from "sequelize";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 const {
 	StringUtils,
 	loadModels,
@@ -117,7 +117,7 @@ class LocalDatabaseConnector {
 			if (!err) {
 				fs.unlinkSync(dbpath);
 			}
-		} catch (err) {
+		} catch (_err) {
 			// Ignored
 		}
 

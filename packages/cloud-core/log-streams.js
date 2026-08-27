@@ -1,4 +1,4 @@
-const stream = require("stream");
+const stream = require("node:stream");
 
 class StringStream extends stream.Writable {
 	constructor() {
@@ -6,7 +6,7 @@ class StringStream extends stream.Writable {
 		this.chunks = [];
 	}
 
-	_write(chunk, enc, next) {
+	_write(chunk, _enc, next) {
 		this.chunks.push(chunk);
 		next();
 	}
@@ -29,7 +29,7 @@ const testStream = {
  * @returns {{level: string, stream?: object, transport?: object}}
  * pino destination description for the given environment.
  */
-const getLogDestination = (name, env) => {
+const getLogDestination = (_name, env) => {
 	switch (env) {
 		case "development": {
 			return {

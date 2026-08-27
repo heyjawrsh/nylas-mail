@@ -1,5 +1,5 @@
 /* eslint no-cond-assign: 0 */
-const path = require("path");
+const path = require("node:path");
 const fs = require("fs-plus");
 
 const babelCompiler = require("./compile-support/babel");
@@ -22,7 +22,7 @@ function readCachedJavascript(relativeCachePath) {
 	if (fs.isFileSync(cachePath)) {
 		try {
 			return fs.readFileSync(cachePath, "utf8");
-		} catch (error) {
+		} catch (_error) {
 			//
 		}
 	}

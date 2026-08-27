@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { AccountStore } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
@@ -12,7 +11,7 @@ const PageTopBar = (props) => {
 		pageDepth > 1 ? "onboarding-back.png" : "onboarding-close.png";
 	const closeAction = () => {
 		const webview = document.querySelector("webview");
-		if (webview && webview.canGoBack()) {
+		if (webview?.canGoBack()) {
 			webview.goBack();
 		} else if (pageDepth > 1) {
 			OnboardingActions.moveToPreviousPage();

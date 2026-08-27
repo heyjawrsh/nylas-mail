@@ -210,8 +210,7 @@ class EmojiComposerExtension extends ComposerExtension {
 
 	static _findEmojiOptions(sel) {
 		if (
-			sel.anchorNode &&
-			sel.anchorNode.nodeValue &&
+			sel.anchorNode?.nodeValue &&
 			sel.anchorNode.nodeValue.length > 0 &&
 			sel.isCollapsed
 		) {
@@ -249,8 +248,7 @@ class EmojiComposerExtension extends ComposerExtension {
 		if (replaceSelection) {
 			const sel = editor.currentSelection();
 			if (
-				sel.anchorNode &&
-				sel.anchorNode.nodeValue &&
+				sel.anchorNode?.nodeValue &&
 				sel.anchorNode.nodeValue.length > 0 &&
 				sel.isCollapsed
 			) {

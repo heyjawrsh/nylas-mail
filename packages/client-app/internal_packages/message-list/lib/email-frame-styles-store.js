@@ -22,7 +22,7 @@ class EmailFrameStylesStore extends NylasStore {
 		for (const sheet of document.querySelectorAll(
 			'[source-path*="email-frame.less"]',
 		)) {
-			this._styles += "\n" + sheet.innerText;
+			this._styles += `\n${sheet.innerText}`;
 		}
 		this._styles = this._styles.replace(/.ignore-in-parent-frame/g, "");
 		return this.trigger();

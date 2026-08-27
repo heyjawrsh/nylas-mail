@@ -7,7 +7,7 @@ class MetricsReporter {
 		return Promise.resolve();
 	}
 
-	async reportEvent(data) {
+	async reportEvent(_data) {
 		//eslint-disable-line
 		// noop
 	}

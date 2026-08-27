@@ -11,14 +11,14 @@ const NylasStore = require("nylas-store");
 const Actions = require("../actions").default;
 const Message = require("../models/message").default;
 const Thread = require("../models/thread").default;
-const Utils = require("../models/utils");
+const _Utils = require("../models/utils");
 const DatabaseStore = require("./database-store").default;
 const FocusedPerspectiveStore = require("./focused-perspective-store").default;
 const FocusedContentStore = require("./focused-content-store");
 const NylasAPIHelpers = require("../nylas-api-helpers");
 const ExtensionRegistry = require("../../registries/extension-registry");
 const { deprecate } = require("../../deprecate-utils");
-const async = require("async");
+const _async = require("async");
 const _ = require("underscore");
 
 const CategoryNamesHiddenByDefault = ["spam", "trash"];
@@ -133,7 +133,7 @@ class MessageStore extends NylasStore {
 		return ExtensionRegistry.MessageView.unregister(ext);
 	}
 
-	_onExtensionsChanged(role) {
+	_onExtensionsChanged(_role) {
 		const MessageBodyProcessor = require("./message-body-processor").default;
 		return MessageBodyProcessor.resetCache();
 	}

@@ -85,13 +85,13 @@ module.exports =
 		}
 
 		onShift(delta, options) {
-			let action, id, selection;
+			let action, id, _selection;
 			if (options.select) {
 				this._turnFocusIntoSelection();
 			}
 
 			if (this.props.dataSource.selection.count() > 0) {
-				({ selection } = this.props.dataSource);
+				({ _selection } = this.props.dataSource);
 				const keyboardId = this.props.keyboardCursorId;
 				id =
 					keyboardId != null

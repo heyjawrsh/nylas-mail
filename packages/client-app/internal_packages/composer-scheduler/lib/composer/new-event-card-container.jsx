@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Utils, Event } from "nylas-exports";
 
@@ -83,7 +83,7 @@ export default class NewEventCardContainer extends Component {
 
 	_getEvent() {
 		const metadata = this.props.draft.metadataForPluginId(PLUGIN_ID);
-		if (metadata && metadata.pendingEvent) {
+		if (metadata?.pendingEvent) {
 			return new Event().fromJSON(metadata.pendingEvent || {});
 		}
 		return null;

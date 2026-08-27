@@ -1,4 +1,3 @@
-import React from "react";
 import { mount, shallow } from "enzyme";
 import {
 	Table,
@@ -123,12 +122,10 @@ describe("SelectableTable Components", function describeBlock() {
 				nextRows[0] = ["new", "row"];
 				const nextDataSource = testDataSource.setRows(nextRows);
 				const row = renderRow();
-				const shouldUpdate = row
-					.instance()
-					.shouldComponentUpdate({
-						...rowProps,
-						tableDataSource: nextDataSource,
-					});
+				const shouldUpdate = row.instance().shouldComponentUpdate({
+					...rowProps,
+					tableDataSource: nextDataSource,
+				});
 				expect(shouldUpdate).toBe(true);
 			});
 

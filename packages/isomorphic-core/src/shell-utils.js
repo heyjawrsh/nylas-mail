@@ -1,4 +1,4 @@
-import childProcess from "child_process";
+import childProcess from "node:child_process";
 
 export async function spawn(cmd, args, opts = {}) {
 	return new Promise((resolve, reject) => {

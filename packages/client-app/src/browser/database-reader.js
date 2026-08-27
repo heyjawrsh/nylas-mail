@@ -13,9 +13,9 @@ export default class DatabaseReader {
 		const q = `SELECT * FROM JSONBlob WHERE id = '${key}'`;
 		try {
 			const row = this.database.prepare(q).get();
-			if (!row || !row.data) return null;
-			return (JSON.parse(row.data) || {}).json;
-		} catch (err) {
+			if (!row?.data) return null;
+			return JSON.parse(row.data)?.json;
+		} catch (_err) {
 			return null;
 		}
 	}

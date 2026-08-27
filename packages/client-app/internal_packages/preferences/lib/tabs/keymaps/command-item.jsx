@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import _ from "underscore";
 import { Flexbox } from "nylas-component-kit";
-import fs from "fs";
+import fs from "node:fs";
 
 import { keyAndModifiersForEvent } from "./mousetrap-keybinding-helpers";
 

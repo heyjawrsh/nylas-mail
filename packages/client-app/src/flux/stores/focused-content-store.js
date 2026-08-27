@@ -7,14 +7,14 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const Reflux = require("reflux");
+const _Reflux = require("reflux");
 const AccountStore = require("./account-store").default;
 const WorkspaceStore = require("./workspace-store");
 const DatabaseStore = require("./database-store").default;
-const FocusedPerspectiveStore = require("./focused-perspective-store").default;
-const MailboxPerspective = require("../../mailbox-perspective");
+const _FocusedPerspectiveStore = require("./focused-perspective-store").default;
+const _MailboxPerspective = require("../../mailbox-perspective");
 const Actions = require("../actions").default;
-const Thread = require("../models/thread").default;
+const _Thread = require("../models/thread").default;
 const Model = require("../models/model");
 
 const { Listener, Publisher } = require("../modules/reflux-coffee");
@@ -116,11 +116,7 @@ class FocusedContentStore {
 		for (var dict of [this._focused, this._keyboardCursor]) {
 			for (var collection in dict) {
 				var item = dict[collection];
-				if (
-					item &&
-					item.accountId &&
-					!AccountStore.accountForId(item.accountId)
-				) {
+				if (item?.accountId && !AccountStore.accountForId(item.accountId)) {
 					delete dict[collection];
 					changed.push(collection);
 				}
@@ -222,7 +218,7 @@ class FocusedContentStore {
 		// If one of the objects we're storing in our focused or keyboard cursor
 		// dictionaries has changed, we need to let our observers know, since they
 		// may now be holding on to outdated data.
-		if (!change || !change.objectClass) {
+		if (!change?.objectClass) {
 			return;
 		}
 

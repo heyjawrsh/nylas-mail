@@ -38,7 +38,7 @@ const plugins = [
 
 let sharedDb = null;
 
-const validate = async (request, username, password) => {
+const validate = async (request, username, _password) => {
 	let db;
 	if (sharedDb) {
 		db = sharedDb;

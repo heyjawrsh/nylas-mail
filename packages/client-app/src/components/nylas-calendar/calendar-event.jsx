@@ -110,7 +110,6 @@ export default class CalendarEvent extends React.Component {
 		return (
 			<div
 				id={event.id}
-				tabIndex={0}
 				style={this._getStyles()}
 				className={`calendar-event ${direction} ${selected ? "selected" : null}`}
 				onClick={(e) => onClick(e, event)}

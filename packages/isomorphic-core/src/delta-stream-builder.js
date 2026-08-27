@@ -1,7 +1,7 @@
 import _ from "underscore";
 import { interval, merge } from "rxjs";
 import { map, mergeMap, timeout } from "rxjs/operators";
-import stream from "stream";
+import stream from "node:stream";
 const DELTA_CONNECTION_TIMEOUT_MS = 15 * 60000;
 const OBSERVABLE_TIMEOUT_MS = DELTA_CONNECTION_TIMEOUT_MS - 1 * 60000;
 

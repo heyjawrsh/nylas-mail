@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
-import path from "path";
+import path from "node:path";
 import fs from "fs-plus";
 import { ipcRenderer } from "electron";
 import { Disposable } from "event-kit";

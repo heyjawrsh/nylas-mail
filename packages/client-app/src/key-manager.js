@@ -68,7 +68,7 @@ class KeyManager {
 		const raw = keytar.getPassword(this.SERVICE_NAME, this.KEY_NAME) || "{}";
 		try {
 			return JSON.parse(raw);
-		} catch (err) {
+		} catch (_err) {
 			return {};
 		}
 	}

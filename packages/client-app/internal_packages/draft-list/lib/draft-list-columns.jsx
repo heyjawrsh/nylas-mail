@@ -5,7 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const React = require("react");
+const _React = require("react");
 const { Actions, Utils } = require("nylas-exports");
 const { InjectedComponentSet, ListTabular } = require("nylas-component-kit");
 
@@ -16,7 +16,7 @@ const snippet = (html) => {
 	try {
 		const text = Utils.extractTextFromHtml(html, { maxLength: 400 });
 		return text.slice(0, 201);
-	} catch (error) {
+	} catch (_error) {
 		return "";
 	}
 };

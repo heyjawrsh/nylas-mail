@@ -3,9 +3,9 @@
 // renderer processes.
 
 var ErrorLogger, _, fs, path, app, os, remote;
-os = require("os");
+os = require("node:os");
 fs = require("fs-plus");
-path = require("path");
+path = require("node:path");
 let ipcRenderer = null;
 if (process.type === "renderer") {
 	ipcRenderer = require("electron").ipcRenderer;
@@ -75,7 +75,7 @@ module.exports = ErrorLogger = (() => {
 			var errorJSON = "{}";
 			try {
 				errorJSON = JSON.stringify(error);
-			} catch (err) {
+			} catch (_err) {
 				var recoveredError = new Error();
 				recoveredError.stack = error.stack;
 				recoveredError.message = `Recovered Error: ${error.message}`;
@@ -85,7 +85,7 @@ module.exports = ErrorLogger = (() => {
 			var extraJSON;
 			try {
 				extraJSON = JSON.stringify(extra);
-			} catch (err) {
+			} catch (_err) {
 				extraJSON = "{}";
 			}
 
@@ -124,7 +124,7 @@ module.exports = ErrorLogger = (() => {
 	////////////////////////// PRIVATE METHODS //////////////////////////
 	/////////////////////////////////////////////////////////////////////
 
-	ErrorLogger.prototype._startCrashReporter = (args) => {
+	ErrorLogger.prototype._startCrashReporter = (_args) => {
 		crashReporter.start({
 			productName: "Nylas Mail",
 			companyName: "Nylas",
@@ -133,7 +133,7 @@ module.exports = ErrorLogger = (() => {
 		});
 	};
 
-	ErrorLogger.prototype._extendNativeConsole = function (args) {
+	ErrorLogger.prototype._extendNativeConsole = function (_args) {
 		console.debug = this._consoleDebug.bind(this);
 
 		if (process.type === "browser" && process.platform === "darwin") {
@@ -146,7 +146,7 @@ module.exports = ErrorLogger = (() => {
 	// globally define Error.toJSON. This allows us to pass errors via IPC
 	// and through the Action Bridge. Note:they are not re-inflated into
 	// Error objects automatically.
-	ErrorLogger.prototype._extendErrorObject = (args) => {
+	ErrorLogger.prototype._extendErrorObject = (_args) => {
 		Object.defineProperty(Error.prototype, "toJSON", {
 			value: function () {
 				var alt = {};
@@ -206,9 +206,9 @@ module.exports = ErrorLogger = (() => {
 
 		var logpid = process.pid;
 		if (process.type === "renderer") {
-			logpid = remote.process.pid + "." + process.pid;
+			logpid = `${remote.process.pid}.${process.pid}`;
 		}
-		return path.join(tmpPath, "Nylas-Mail-" + logpid + ".log");
+		return path.join(tmpPath, `Nylas-Mail-${logpid}.log`);
 	};
 
 	// If we're the browser process, remove log files that are more than
@@ -229,7 +229,7 @@ module.exports = ErrorLogger = (() => {
 						var filepath = path.join(tmpPath, file);
 						fs.stat(filepath, (err, stats) => {
 							if (!err && stats) {
-								var lastModified = new Date(stats["mtime"]);
+								var lastModified = new Date(stats.mtime);
 								var fileAge = Date.now() - lastModified.getTime();
 								if (fileAge > 1000 * 60 * 60 * 24 * 2) {
 									// two days
@@ -245,7 +245,7 @@ module.exports = ErrorLogger = (() => {
 
 	ErrorLogger.prototype._setupNewLogFile = function () {
 		// Open a file write stream to log output from this process
-		console.log("Streaming log data to " + this._logPath());
+		console.log(`Streaming log data to ${this._logPath()}`);
 
 		this.loghost = os.hostname();
 		this.logstream = fs.createWriteStream(this._logPath(), {
@@ -273,10 +273,10 @@ module.exports = ErrorLogger = (() => {
 			};
 		}
 
-		hook_process_output("stdout", (string, encoding, fd) => {
+		hook_process_output("stdout", (string, _encoding, _fd) => {
 			this._appendLog.apply(this, [string]);
 		});
-		hook_process_output("stderr", (string, encoding, fd) => {
+		hook_process_output("stderr", (string, _encoding, _fd) => {
 			this._appendLog.apply(this, [string]);
 		});
 	};
@@ -314,23 +314,22 @@ module.exports = ErrorLogger = (() => {
 		}
 
 		try {
-			var message =
-				JSON.stringify({
-					host: this.loghost,
-					timestamp: new Date().toISOString(),
-					payload: obj,
-				}) + "\n";
+			var message = `${JSON.stringify({
+				host: this.loghost,
+				timestamp: new Date().toISOString(),
+				payload: obj,
+			})}\n`;
 
 			this.logstream.write(message, "utf8", (err) => {
 				if (err) {
 					console.error(
-						"ErrorLogger: Unable to write to the log stream!" + err.toString(),
+						`ErrorLogger: Unable to write to the log stream!${err.toString()}`,
 					);
 				}
 			});
 		} catch (err) {
 			console.error(
-				"ErrorLogger: Unable to write to the log stream." + err.toString(),
+				`ErrorLogger: Unable to write to the log stream.${err.toString()}`,
 			);
 		}
 	};

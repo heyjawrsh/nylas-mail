@@ -13,7 +13,7 @@ export default class LocalSyncDeltaEmitter {
 	}
 
 	async activate() {
-		if (this._disposable && this._disposable.unsubscribe) {
+		if (this._disposable?.unsubscribe) {
 			this._disposable.unsubscribe();
 		}
 		if (!this._state) {
@@ -34,7 +34,7 @@ export default class LocalSyncDeltaEmitter {
 
 	deactivate() {
 		this._state = null;
-		if (this._disposable && this._disposable.unsubscribe) {
+		if (this._disposable?.unsubscribe) {
 			this._disposable.unsubscribe();
 		}
 	}
