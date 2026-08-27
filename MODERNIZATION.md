@@ -141,3 +141,51 @@ the same converge-by-iteration pattern; each fix is one Electron launch away.
 2. client-app coverage 0.32% -> 60% (18,334-line UI surface; needs component
    test authoring at scale — ringer swarm rounds over the component tree).
 3. Final `pnpm -r test` (blocked only by #2's gate).
+
+
+## Loop 14 — Renderer bundling + SMOKE_PASS (commit b531b707d)
+
+`pnpm --filter nylas-mail run smoke` exits **0** with `SMOKE_PASS: app booted,
+window ready, sync backend initialized`. The Electron 44 app boots end-to-end:
+main process → config → sqlite (better-sqlite3 13) → window manager → bundled
+renderer (flux layer + stores + component kit) → clean exit.
+
+### Renderer pipeline (replaces 2017 babel/coffee JIT)
+- `scripts/build-renderer.js`: esbuild bundles both window bootstraps to
+  `static/*.bundle.js` (CJS, chrome130, electron/.node externals, optional
+  natives stubbed). `smoke` = build + launch.
+- Bundle banner seeds a URL-backed `NylasEnv` shim (load-time store singletons
+  read config/inDevMode/getResourcePath before the real env exists);
+  `bootstrap-assign-env.js` swaps in the real env as the first import.
+- `requireFromSrc` in nylas-exports/component-kit: module-context-aware lazy
+  resolution (nodeRequire first, resourcePath fallback for bundled contexts).
+- 187+ decaffeinate constructors gained missing `super()` (V8 hard error).
+  A sweep bug briefly corrupted third-party .pnpm files (joi, sequelize,
+  nodemailer, imapflow, libmime, rxjs, hapi, vitest) — restored by deleting the
+  affected .pnpm dirs and reinstalling from the intact store; all suites
+  re-verified green afterward.
+- Electron API ports: `electron.remote` → `@electron/remote` (per-window
+  `enable()`), `document.registerElement` → `customElements` v1,
+  nodeIntegration/contextIsolation restored (legacy renderer requires Node).
+- `.es6` files renamed to `.js` (32 runtime + spec); chrono-node v2 namespace
+  import; lru-cache 11 `LRUCache`; `request` → fetch-based `request-compat.js`;
+  q/raven-js dropped (unused).
+
+### Verification snapshot (2026-08-27)
+| Check | Result |
+|---|---|
+| isomorphic-core | 138 tests GREEN (81.7% lines gate) |
+| cloud-core | 1 test GREEN (91.3%) |
+| cloud-workers | 33 tests GREEN (86.3%) |
+| cloud-api | 44 tests GREEN (94.3%) |
+| client-sync | 197 tests GREEN (60.35% stmts gate) |
+| client-app tests | 11 GREEN (threshold gate RED: 0.32% vs 60%) |
+| pnpm lint | GREEN |
+| pnpm outdated -r | CLEAN |
+| pnpm smoke | SMOKE_PASS, exit 0 |
+
+### Remaining
+client-app coverage: 11 tests / 0.32% vs enforced 60/45 gate — the only red
+item. ~18.3k source lines; needs component + store spec authoring at scale
+(@testing-library/react patterns proven in `spec/toast.spec.jsx`; store specs
+per the client-sync rounds). This is the final goal criterion.
