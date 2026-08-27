@@ -8,371 +8,470 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let NylasWindow;
-const {BrowserWindow, app, dialog} = require('electron');
-const path = require('path');
-const fs = require('fs');
-const url = require('url');
-const _ = require('underscore');
-const {EventEmitter} = require('events');
+const { BrowserWindow, app, dialog } = require("electron");
+const path = require("node:path");
+const fs = require("node:fs");
+const url = require("node:url");
+const _ = require("underscore");
+const { EventEmitter } = require("node:events");
 
 let WindowIconPath = null;
 let idNum = 0;
 
-module.exports =
-(NylasWindow = (function() {
-  NylasWindow = class NylasWindow {
-    static initClass() {
-      _.extend(this.prototype, EventEmitter.prototype);
-  
-      this.includeShellLoadTime = true;
-  
-      this.prototype.browserWindow = null;
-      this.prototype.loaded = null;
-      this.prototype.isSpec = null;
-    }
+module.exports = NylasWindow = (() => {
+	NylasWindow = class NylasWindow {
+		static initClass() {
+			_.extend(NylasWindow.prototype, EventEmitter.prototype);
 
-    constructor(settings) {
-      let frame, height, pathToOpen, resizable, title, toolbar, width;
-      this.updateLoadSettings = this.updateLoadSettings.bind(this);
-      if (settings == null) { settings = {}; }
-      ({frame,
-       title,
-       width,
-       height,
-       toolbar,
-       resizable,
-       pathToOpen,
-       isSpec: this.isSpec,
-       devMode: this.devMode,
-       benchmarkMode: this.benchmarkMode,
-       windowKey: this.windowKey,
-       safeMode: this.safeMode,
-       neverClose: this.neverClose,
-       mainWindow: this.mainWindow,
-       windowType: this.windowType,
-       resourcePath: this.resourcePath,
-       exitWhenDone: this.exitWhenDone,
-       configDirPath: this.configDirPath} = settings);
+			NylasWindow.includeShellLoadTime = true;
 
-      if (!this.windowKey) {
-        this.windowKey = `${this.windowType}-${idNum}`;
-        idNum += 1;
-      }
+			NylasWindow.prototype.browserWindow = null;
+			NylasWindow.prototype.loaded = null;
+			NylasWindow.prototype.isSpec = null;
+		}
 
-      // Normalize to make sure drive letter case is consistent on Windows
-      if (this.resourcePath) { this.resourcePath = path.normalize(this.resourcePath); }
+		constructor(settings) {
+			let frame, height, pathToOpen, resizable, title, toolbar, width;
+			this.updateLoadSettings = this.updateLoadSettings.bind(this);
+			if (settings == null) {
+				settings = {};
+			}
+			({
+				frame,
+				title,
+				width,
+				height,
+				toolbar,
+				resizable,
+				pathToOpen,
+				isSpec: this.isSpec,
+				devMode: this.devMode,
+				benchmarkMode: this.benchmarkMode,
+				windowKey: this.windowKey,
+				safeMode: this.safeMode,
+				neverClose: this.neverClose,
+				mainWindow: this.mainWindow,
+				windowType: this.windowType,
+				resourcePath: this.resourcePath,
+				exitWhenDone: this.exitWhenDone,
+				configDirPath: this.configDirPath,
+			} = settings);
 
-      const browserWindowOptions = {
-        show: false,
-        title: title != null ? title : 'Nylas Mail',
-        frame,
-        width,
-        height,
-        resizable,
-        webPreferences: {
-          directWrite: true
-        },
-        autoHideMenuBar: true
-      };
+			if (!this.windowKey) {
+				this.windowKey = `${this.windowType}-${idNum}`;
+				idNum += 1;
+			}
 
-      if (this.neverClose) {
-        // Prevents DOM timers from being suspended when the main window is hidden.
-        // Means there's not an awkward catch-up when you re-show the main window.
-        // TODO
-        // This option is no longer working according to
-        // https://github.com/atom/electron/issues/3225
-        // Look into using option --disable-renderer-backgrounding
-        browserWindowOptions.webPreferences.pageVisibility = true;
-      }
+			// Normalize to make sure drive letter case is consistent on Windows
+			if (this.resourcePath) {
+				this.resourcePath = path.normalize(this.resourcePath);
+			}
 
-      // Don't set icon on Windows so the exe's ico will be used as window and
-      // taskbar's icon. See https://github.com/atom/atom/issues/4811 for more.
-      if (process.platform === 'linux') {
-        if (!WindowIconPath) {
-          WindowIconPath = path.resolve(__dirname, '..', '..', 'nylas.png');
-          if (!fs.existsSync(WindowIconPath)) {
-            WindowIconPath = path.resolve(__dirname, '..', '..', 'build', 'resources', 'nylas.png');
-          }
-        }
-        browserWindowOptions.icon = WindowIconPath;
-      }
+			const browserWindowOptions = {
+				show: false,
+				title: title != null ? title : "Nylas Mail",
+				frame,
+				width,
+				height,
+				resizable,
+				webPreferences: {
+					directWrite: true,
+				},
+				autoHideMenuBar: true,
+			};
 
-      this.browserWindow = new BrowserWindow(browserWindowOptions);
-      this.browserWindow.updateLoadSettings = this.updateLoadSettings;
+			if (this.neverClose) {
+				// Prevents DOM timers from being suspended when the main window is hidden.
+				// Means there's not an awkward catch-up when you re-show the main window.
+				// TODO
+				// This option is no longer working according to
+				// https://github.com/atom/electron/issues/3225
+				// Look into using option --disable-renderer-backgrounding
+				browserWindowOptions.webPreferences.pageVisibility = true;
+			}
 
-      this.handleEvents();
+			// Don't set icon on Windows so the exe's ico will be used as window and
+			// taskbar's icon. See https://github.com/atom/atom/issues/4811 for more.
+			if (process.platform === "linux") {
+				if (!WindowIconPath) {
+					WindowIconPath = path.resolve(__dirname, "..", "..", "nylas.png");
+					if (!fs.existsSync(WindowIconPath)) {
+						WindowIconPath = path.resolve(
+							__dirname,
+							"..",
+							"..",
+							"build",
+							"resources",
+							"nylas.png",
+						);
+					}
+				}
+				browserWindowOptions.icon = WindowIconPath;
+			}
 
-      const loadSettings = _.extend({}, settings);
-      if (loadSettings.windowState == null) { loadSettings.windowState = '{}'; }
-      loadSettings.appVersion = app.getVersion();
-      loadSettings.resourcePath = this.resourcePath;
-      if (loadSettings.devMode == null) { loadSettings.devMode = false; }
-      if (loadSettings.benchmarkMode == null) { loadSettings.benchmarkMode = false; }
-      if (loadSettings.safeMode == null) { loadSettings.safeMode = false; }
-      if (loadSettings.mainWindow == null) { loadSettings.mainWindow = this.mainWindow; }
-      if (loadSettings.windowType == null) { loadSettings.windowType = "default"; }
+			this.browserWindow = new BrowserWindow(browserWindowOptions);
+			this.browserWindow.updateLoadSettings = this.updateLoadSettings;
 
-      // Only send to the first non-spec window created
-      if (this.constructor.includeShellLoadTime && !this.isSpec) {
-        this.constructor.includeShellLoadTime = false;
-        if (loadSettings.shellLoadTime == null) { loadSettings.shellLoadTime = Date.now() - global.shellStartTime; }
-      }
+			this.handleEvents();
 
-      loadSettings.initialPath = pathToOpen;
-      if (__guardMethod__(fs.statSyncNoException(pathToOpen), 'isFile', o => o.isFile())) {
-        loadSettings.initialPath = path.dirname(pathToOpen);
-      }
+			const loadSettings = _.extend({}, settings);
+			if (loadSettings.windowState == null) {
+				loadSettings.windowState = "{}";
+			}
+			loadSettings.appVersion = app.getVersion();
+			loadSettings.resourcePath = this.resourcePath;
+			if (loadSettings.devMode == null) {
+				loadSettings.devMode = false;
+			}
+			if (loadSettings.benchmarkMode == null) {
+				loadSettings.benchmarkMode = false;
+			}
+			if (loadSettings.safeMode == null) {
+				loadSettings.safeMode = false;
+			}
+			if (loadSettings.mainWindow == null) {
+				loadSettings.mainWindow = this.mainWindow;
+			}
+			if (loadSettings.windowType == null) {
+				loadSettings.windowType = "default";
+			}
 
-      this.browserWindow.loadSettings = loadSettings;
+			// Only send to the first non-spec window created
+			if (this.constructor.includeShellLoadTime && !this.isSpec) {
+				this.constructor.includeShellLoadTime = false;
+				if (loadSettings.shellLoadTime == null) {
+					loadSettings.shellLoadTime = Date.now() - global.shellStartTime;
+				}
+			}
 
-      this.browserWindow.once('window:loaded', () => {
-        this.loaded = true;
-        if (this.mainWindow) {
-          this.browserWindow.setResizable(true);
-        }
-        if (this.browserWindow.loadSettingsChangedSinceGetURL) {
-          this.browserWindow.webContents.send('load-settings-changed', this.browserWindow.loadSettings);
-        }
-        return this.emit('window:loaded');
-      });
+			loadSettings.initialPath = pathToOpen;
+			if (
+				__guardMethod__(fs.statSyncNoException(pathToOpen), "isFile", (o) =>
+					o.isFile(),
+				)
+			) {
+				loadSettings.initialPath = path.dirname(pathToOpen);
+			}
 
-      this.browserWindow.loadURL(this.getURL(loadSettings));
-      if (this.isSpec) { this.browserWindow.focusOnWebView(); }
-    }
+			this.browserWindow.loadSettings = loadSettings;
 
-    updateLoadSettings(newSettings) {
-      if (newSettings == null) { newSettings = {}; }
-      this.loaded = true;
-      return this.setLoadSettings(Object.assign({}, this.browserWindow.loadSettings, newSettings));
-    }
+			this.browserWindow.once("window:loaded", () => {
+				this.loaded = true;
+				if (this.mainWindow) {
+					this.browserWindow.setResizable(true);
+				}
+				if (this.browserWindow.loadSettingsChangedSinceGetURL) {
+					this.browserWindow.webContents.send(
+						"load-settings-changed",
+						this.browserWindow.loadSettings,
+					);
+				}
+				return this.emit("window:loaded");
+			});
 
-    loadSettings() {
-      return this.browserWindow.loadSettings;
-    }
+			this.browserWindow.loadURL(this.getURL(loadSettings));
+			if (this.isSpec) {
+				this.browserWindow.focusOnWebView();
+			}
+		}
 
-    // This gets called when we want to turn a WindowLauncher.EMPTY_WINDOW
-    // into a new kind of custom popout window.
-    //
-    // The windowType will change which will cause a new set of plugins to
-    // load.
-    setLoadSettings(loadSettings) {
-      this.browserWindow.loadSettings = loadSettings;
-      this.browserWindow.loadSettingsChangedSinceGetURL = true;
-      return this.browserWindow.webContents.send('load-settings-changed', loadSettings);
-    }
+		updateLoadSettings(newSettings) {
+			if (newSettings == null) {
+				newSettings = {};
+			}
+			this.loaded = true;
+			return this.setLoadSettings(
+				Object.assign({}, this.browserWindow.loadSettings, newSettings),
+			);
+		}
 
-    getURL(loadSettingsObj) {
-      // Ignore the windowState when passing loadSettings via URL, since it could
-      // be quite large.
-      const loadSettings = _.clone(loadSettingsObj);
-      delete loadSettings['windowState'];
+		loadSettings() {
+			return this.browserWindow.loadSettings;
+		}
 
-      this.browserWindow.loadSettingsChangedSinceGetURL = false;
+		// This gets called when we want to turn a WindowLauncher.EMPTY_WINDOW
+		// into a new kind of custom popout window.
+		//
+		// The windowType will change which will cause a new set of plugins to
+		// load.
+		setLoadSettings(loadSettings) {
+			this.browserWindow.loadSettings = loadSettings;
+			this.browserWindow.loadSettingsChangedSinceGetURL = true;
+			return this.browserWindow.webContents.send(
+				"load-settings-changed",
+				loadSettings,
+			);
+		}
 
-      return url.format({
-        protocol: 'file',
-        pathname: `${this.resourcePath}/static/index.html`,
-        slashes: true,
-        query: {loadSettings: JSON.stringify(loadSettings)}});
-    }
+		getURL(loadSettingsObj) {
+			// Ignore the windowState when passing loadSettings via URL, since it could
+			// be quite large.
+			const loadSettings = _.clone(loadSettingsObj);
+			delete loadSettings["windowState"];
 
-    handleEvents() {
-      // Also see logic in `NylasEnv::onBeforeUnload` and
-      // `WindowEventHandler::AddUnloadCallback`. Classes like the DraftStore
-      // and ActionBridge intercept the closing of windows and perform
-      // action.
-      //
-      // This uses the DOM's `beforeunload` event.
-      this.browserWindow.on('close', event => {
-        if (this.neverClose && !global.application.isQuitting()) {
-          // For neverClose windows (like the main window) simply hide and
-          // take out of full screen.
-          event.preventDefault();
-          if (this.browserWindow.isFullScreen()) {
-            this.browserWindow.once('leave-full-screen', () => {
-              return this.browserWindow.hide();
-            });
-            this.browserWindow.setFullScreen(false);
-          } else {
-            this.browserWindow.hide();
-          }
+			this.browserWindow.loadSettingsChangedSinceGetURL = false;
 
-          // HOWEVER! If the neverClose window is the last window open, and
-          // it looks like there's no windows actually quit the application
-          // on Linux & Windows.
-          if (!this.isSpec) {
-            return global.application.windowManager.quitWinLinuxIfNoWindows();
-          }
-        }
-      });
+			return url.format({
+				protocol: "file",
+				pathname: `${this.resourcePath}/static/index.html`,
+				slashes: true,
+				query: { loadSettings: JSON.stringify(loadSettings) },
+			});
+		}
 
-      this.browserWindow.on('scroll-touch-begin', () => {
-        return this.browserWindow.webContents.send('scroll-touch-begin');
-      });
+		handleEvents() {
+			// Also see logic in `NylasEnv::onBeforeUnload` and
+			// `WindowEventHandler::AddUnloadCallback`. Classes like the DraftStore
+			// and ActionBridge intercept the closing of windows and perform
+			// action.
+			//
+			// This uses the DOM's `beforeunload` event.
+			this.browserWindow.on("close", (event) => {
+				if (this.neverClose && !global.application.isQuitting()) {
+					// For neverClose windows (like the main window) simply hide and
+					// take out of full screen.
+					event.preventDefault();
+					if (this.browserWindow.isFullScreen()) {
+						this.browserWindow.once("leave-full-screen", () => {
+							return this.browserWindow.hide();
+						});
+						this.browserWindow.setFullScreen(false);
+					} else {
+						this.browserWindow.hide();
+					}
 
-      this.browserWindow.on('scroll-touch-end', () => {
-        return this.browserWindow.webContents.send('scroll-touch-end');
-      });
+					// HOWEVER! If the neverClose window is the last window open, and
+					// it looks like there's no windows actually quit the application
+					// on Linux & Windows.
+					if (!this.isSpec) {
+						return global.application.windowManager.quitWinLinuxIfNoWindows();
+					}
+				}
+			});
 
-      this.browserWindow.on('focus', () => {
-        return this.browserWindow.webContents.send('browser-window-focus');
-      });
+			this.browserWindow.on("scroll-touch-begin", () => {
+				return this.browserWindow.webContents.send("scroll-touch-begin");
+			});
 
-      this.browserWindow.on('blur', () => {
-        return this.browserWindow.webContents.send('browser-window-blur');
-      });
+			this.browserWindow.on("scroll-touch-end", () => {
+				return this.browserWindow.webContents.send("scroll-touch-end");
+			});
 
-      this.browserWindow.webContents.on('will-navigate', (event, url) => {
-        return event.preventDefault();
-      });
+			this.browserWindow.on("focus", () => {
+				return this.browserWindow.webContents.send("browser-window-focus");
+			});
 
-      this.browserWindow.webContents.on('new-window', (event, url, frameName, disposition) => {
-        return event.preventDefault();
-      });
+			this.browserWindow.on("blur", () => {
+				return this.browserWindow.webContents.send("browser-window-blur");
+			});
 
-      this.browserWindow.on('unresponsive', () => {
-        if (this.isSpec) { return; }
-        if (!this.loaded) { return; }
+			this.browserWindow.webContents.on("will-navigate", (event, url) => {
+				return event.preventDefault();
+			});
 
-        const chosen = dialog.showMessageBox(this.browserWindow, {
-          type: 'warning',
-          buttons: ['Close', 'Keep Waiting'],
-          message: 'Nylas Mail is not responding',
-          detail: 'Would you like to force close it or keep waiting?'
-        }
-        );
-        if (chosen === 0) { return this.browserWindow.destroy(); }
-      });
+			this.browserWindow.webContents.on(
+				"new-window",
+				(event, url, frameName, disposition) => {
+					return event.preventDefault();
+				},
+			);
 
-      this.browserWindow.webContents.on('crashed', (event, killed) => {
-        if (killed) {
-          // Killed means that the app is exiting and the browser window is being
-          // forceably cleaned up. Carry on, do not try to reload the window.
-          this.browserWindow.destroy();
-          return;
-        }
+			this.browserWindow.on("unresponsive", () => {
+				if (this.isSpec) {
+					return;
+				}
+				if (!this.loaded) {
+					return;
+				}
 
-        if (this.exitWhenDone) { app.exit(100); }
+				const chosen = dialog.showMessageBox(this.browserWindow, {
+					type: "warning",
+					buttons: ["Close", "Keep Waiting"],
+					message: "Nylas Mail is not responding",
+					detail: "Would you like to force close it or keep waiting?",
+				});
+				if (chosen === 0) {
+					return this.browserWindow.destroy();
+				}
+			});
 
-        if (this.neverClose) {
-          return this.browserWindow.reload();
-        } else {
-          const chosen = dialog.showMessageBox(this.browserWindow, {
-            type: 'warning',
-            buttons: ['Close Window', 'Reload', 'Keep It Open'],
-            message: 'Nylas Mail has crashed',
-            detail: 'Please restart Nylas Mail.'
-          }
-          );
-          switch (chosen) {
-            case 0: return this.browserWindow.destroy();
-            case 1: return this.browserWindow.reload();
-          }
-        }
-      });
+			this.browserWindow.webContents.on("crashed", (event, killed) => {
+				if (killed) {
+					// Killed means that the app is exiting and the browser window is being
+					// forceably cleaned up. Carry on, do not try to reload the window.
+					this.browserWindow.destroy();
+					return;
+				}
 
-      if (this.isSpec) {
-        // Workaround for https://github.com/atom/electron/issues/380
-        // Don't focus the window when it is being blurred during close or
-        // else the app will crash on Windows.
-        if (process.platform === 'win32') {
-          this.browserWindow.on('close', () => { return this.isWindowClosing = true; });
-        }
+				if (this.exitWhenDone) {
+					app.exit(100);
+				}
 
-        // Spec window's web view should always have focus
-        return this.browserWindow.on('blur', () => {
-          if (!this.isWindowClosing) { return this.browserWindow.focusOnWebView(); }
-        });
-      }
-    }
+				if (this.neverClose) {
+					return this.browserWindow.reload();
+				} else {
+					const chosen = dialog.showMessageBox(this.browserWindow, {
+						type: "warning",
+						buttons: ["Close Window", "Reload", "Keep It Open"],
+						message: "Nylas Mail has crashed",
+						detail: "Please restart Nylas Mail.",
+					});
+					switch (chosen) {
+						case 0:
+							return this.browserWindow.destroy();
+						case 1:
+							return this.browserWindow.reload();
+					}
+				}
+			});
 
-    sendMessage(message, detail) {
-      return this.waitForLoad(() => {
-        return this.browserWindow.webContents.send(message, detail);
-      });
-    }
+			if (this.isSpec) {
+				// Workaround for https://github.com/atom/electron/issues/380
+				// Don't focus the window when it is being blurred during close or
+				// else the app will crash on Windows.
+				if (process.platform === "win32") {
+					this.browserWindow.on("close", () => {
+						return (this.isWindowClosing = true);
+					});
+				}
 
-    sendCommand(command, ...args) {
-      if (this.isSpecWindow()) {
-        if (!global.application.sendCommandToFirstResponder(command)) {
-          switch (command) {
-            case 'window:reload': return this.reload();
-            case 'window:toggle-dev-tools': return this.toggleDevTools();
-            case 'window:close': return this.close();
-          }
-        }
-      } else if (this.isWebViewFocused()) {
-        return this.sendCommandToBrowserWindow(command, ...Array.from(args));
-      } else {
-        if (!global.application.sendCommandToFirstResponder(command)) {
-          return this.sendCommandToBrowserWindow(command, ...Array.from(args));
-        }
-      }
-    }
+				// Spec window's web view should always have focus
+				return this.browserWindow.on("blur", () => {
+					if (!this.isWindowClosing) {
+						return this.browserWindow.focusOnWebView();
+					}
+				});
+			}
+		}
 
-    sendCommandToBrowserWindow(command, ...args) {
-      return this.browserWindow.webContents.send('command', command, ...Array.from(args));
-    }
+		sendMessage(message, detail) {
+			return this.waitForLoad(() => {
+				return this.browserWindow.webContents.send(message, detail);
+			});
+		}
 
-    getDimensions() {
-      const [x, y] = Array.from(this.browserWindow.getPosition());
-      const [width, height] = Array.from(this.browserWindow.getSize());
-      return {x, y, width, height};
-    }
+		sendCommand(command, ...args) {
+			if (this.isSpecWindow()) {
+				if (!global.application.sendCommandToFirstResponder(command)) {
+					switch (command) {
+						case "window:reload":
+							return this.reload();
+						case "window:toggle-dev-tools":
+							return this.toggleDevTools();
+						case "window:close":
+							return this.close();
+					}
+				}
+			} else if (this.isWebViewFocused()) {
+				return this.sendCommandToBrowserWindow(command, ...Array.from(args));
+			} else {
+				if (!global.application.sendCommandToFirstResponder(command)) {
+					return this.sendCommandToBrowserWindow(command, ...Array.from(args));
+				}
+			}
+		}
 
-    close() { return this.browserWindow.close(); }
+		sendCommandToBrowserWindow(command, ...args) {
+			return this.browserWindow.webContents.send(
+				"command",
+				command,
+				...Array.from(args),
+			);
+		}
 
-    hide() { return this.browserWindow.hide(); }
+		getDimensions() {
+			const [x, y] = Array.from(this.browserWindow.getPosition());
+			const [width, height] = Array.from(this.browserWindow.getSize());
+			return { x, y, width, height };
+		}
 
-    show() { return this.browserWindow.show(); }
+		close() {
+			return this.browserWindow.close();
+		}
 
-    showWhenLoaded() {
-      return this.waitForLoad(() => {
-        this.show();
-        return this.focus();
-      });
-    }
+		hide() {
+			return this.browserWindow.hide();
+		}
 
-    waitForLoad(fn) {
-      if (this.loaded) {
-        return fn();
-      } else {
-        return this.once('window:loaded', fn);
-      }
-    }
+		show() {
+			return this.browserWindow.show();
+		}
 
-    focus() { return this.browserWindow.focus(); }
+		showWhenLoaded() {
+			return this.waitForLoad(() => {
+				this.show();
+				return this.focus();
+			});
+		}
 
-    minimize() { return this.browserWindow.minimize(); }
+		waitForLoad(fn) {
+			if (this.loaded) {
+				return fn();
+			} else {
+				return this.once("window:loaded", fn);
+			}
+		}
 
-    maximize() { return this.browserWindow.maximize(); }
+		focus() {
+			return this.browserWindow.focus();
+		}
 
-    restore() { return this.browserWindow.restore(); }
+		minimize() {
+			return this.browserWindow.minimize();
+		}
 
-    isFocused() { return this.browserWindow.isFocused(); }
+		maximize() {
+			return this.browserWindow.maximize();
+		}
 
-    isMinimized() { return this.browserWindow.isMinimized(); }
+		restore() {
+			return this.browserWindow.restore();
+		}
 
-    isVisible() { return this.browserWindow.isVisible(); }
+		isFocused() {
+			return this.browserWindow.isFocused();
+		}
 
-    isLoaded() { return this.loaded; }
+		isMinimized() {
+			return this.browserWindow.isMinimized();
+		}
 
-    isWebViewFocused() { return this.browserWindow.isWebViewFocused(); }
+		isVisible() {
+			return this.browserWindow.isVisible();
+		}
 
-    isSpecWindow() { return this.isSpec; }
+		isLoaded() {
+			return this.loaded;
+		}
 
-    reload() { return this.browserWindow.reload(); }
+		isWebViewFocused() {
+			return this.browserWindow.isWebViewFocused();
+		}
 
-    toggleDevTools() { return this.browserWindow.toggleDevTools(); }
-  };
-  NylasWindow.initClass();
-  return NylasWindow;
-})());
+		isSpecWindow() {
+			return this.isSpec;
+		}
+
+		reload() {
+			return this.browserWindow.reload();
+		}
+
+		toggleDevTools() {
+			return this.browserWindow.toggleDevTools();
+		}
+	};
+	NylasWindow.initClass();
+	return NylasWindow;
+})();
 
 function __guardMethod__(obj, methodName, transform) {
-  if (typeof obj !== 'undefined' && obj !== null && typeof obj[methodName] === 'function') {
-    return transform(obj, methodName);
-  } else {
-    return undefined;
-  }
+	if (
+		typeof obj !== "undefined" &&
+		obj !== null &&
+		typeof obj[methodName] === "function"
+	) {
+		return transform(obj, methodName);
+	} else {
+		return undefined;
+	}
 }

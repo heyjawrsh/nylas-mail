@@ -32,9 +32,8 @@ register a {ComposerExtension}
 Section: Extensions
 */
 class ContenteditableExtension {
-  static initClass() {
-  
-    /*
+	static initClass() {
+		/*
     Public: Override `keyCommandHandlers` to declaratively map keyboard
     commands to callbacks.
   
@@ -46,10 +45,10 @@ class ContenteditableExtension {
   
     New commands are defined in keymap.cson files.
     */
-    this.keyCommandHandlers = () => {};
-  }
+		ContenteditableExtension.keyCommandHandlers = () => {};
+	}
 
-  /*
+	/*
   Public: Gets called anytime any atomic change is made to the DOM of the
   contenteditable.
 
@@ -99,11 +98,11 @@ class ContenteditableExtension {
         codeTag.classList.remove('empty')
   ```
   */
-  static onContentChanged({editor, mutations}) {}
+	static onContentChanged({ editor, mutations }) {}
 
-  static onContentStoppedChanging({editor, mutations}) {}
+	static onContentStoppedChanging({ editor, mutations }) {}
 
-  /*
+	/*
   Public: Override onBlur to mutate the contenteditable DOM node whenever the
   onBlur event is fired on it. You may mutate the contenteditable in place, we
   not expect any return value from this method.
@@ -112,9 +111,9 @@ class ContenteditableExtension {
   methods for manipulating the selection and DOM
   - event: DOM event fired on the contenteditable
   */
-  static onBlur({editor, event}) {}
+	static onBlur({ editor, event }) {}
 
-  /*
+	/*
   Public: Override onFocus to mutate the contenteditable DOM node whenever the
   onFocus event is fired on it. You may mutate the contenteditable in place, we
   not expect any return value from this method.
@@ -123,9 +122,9 @@ class ContenteditableExtension {
   methods for manipulating the selection and DOM
   - event: DOM event fired on the contenteditable
   */
-  static onFocus({editor, event}) {}
+	static onFocus({ editor, event }) {}
 
-  /*
+	/*
   Public: Override onClick to mutate the contenteditable DOM node whenever the
   onClick event is fired on it. You may mutate the contenteditable in place, we
   not expect any return value from this method.
@@ -134,9 +133,9 @@ class ContenteditableExtension {
   methods for manipulating the selection and DOM
   - event: DOM event fired on the contenteditable
   */
-  static onClick({editor, event}) {}
+	static onClick({ editor, event }) {}
 
-  /*
+	/*
   Public: Override onKeyDown to mutate the contenteditable DOM node whenever the
   onKeyDown event is fired on it.
   Public: Called when the user presses a key while focused on the contenteditable's body field.
@@ -154,13 +153,13 @@ class ContenteditableExtension {
   methods for manipulating the selection and DOM
   - event: DOM event fired on the contenteditable
   */
-  static onKeyDown({editor, event}) {}
+	static onKeyDown({ editor, event }) {}
 
-  static onDrop({editor, event}) {}
+	static onDrop({ editor, event }) {}
 
-  static onDragOver({editor, event}) {}
+	static onDragOver({ editor, event }) {}
 
-  /*
+	/*
   Public: Override onShowContextMenu to add new menu items to the right click menu
   inside the contenteditable.
 
@@ -171,9 +170,9 @@ class ContenteditableExtension {
   object you can mutate in order to add new [MenuItems](https://github.com/atom/electron/blob/master/docs/api/menu-item.md)
   to the context menu that will be displayed when you right click the contenteditable.
   */
-  static onShowContextMenu({editor, event, menu}) {}
+	static onShowContextMenu({ editor, event, menu }) {}
 
-  /*
+	/*
   Public: Override `toolbarButtons` to declaratively add your own button
   to the composer's toolbar.
 
@@ -190,9 +189,9 @@ class ContenteditableExtension {
     - tooltip: A string to display when users hover over your button
     - iconUrl: A url for the icon.
   */
-  static toolbarButtons({toolbarState}) {}
+	static toolbarButtons({ toolbarState }) {}
 
-  /*
+	/*
   Public: Override `toolbarComponentConfig` to declaratively show your own
   toolbar when certain conditions are met.
 
@@ -229,7 +228,7 @@ class ContenteditableExtension {
     reason listed above; the position of the toolbar will be determined
     by the absolute height given.
   */
-  static toolbarComponentConfig({toolbarState}) {}
+	static toolbarComponentConfig({ toolbarState }) {}
 }
 ContenteditableExtension.initClass();
 

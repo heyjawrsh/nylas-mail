@@ -69,7 +69,10 @@
 			"complexity": {
 				"noArguments": "off",
 				"noCommaOperator": "off",
-				"noStaticOnlyClass": "off"
+				"noStaticOnlyClass": "off",
+				"noThisInStatic": "off",
+				"useArrowFunction": "off",
+				"useLiteralKeys": "off"
 			},
 			"a11y": {
 				"noStaticElementInteractions": "off",

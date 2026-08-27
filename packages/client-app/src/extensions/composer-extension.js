@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const ContenteditableExtension = require('./contenteditable-extension');
+const ContenteditableExtension = require("./contenteditable-extension");
 /*
 Public: To create ComposerExtensions that enhance the composer experience,
 you should create objects that implement the interface defined at
@@ -41,8 +41,7 @@ API, please let us know.
 Section: Extensions
 */
 class ComposerExtension extends ContenteditableExtension {
-
-  /*
+	/*
   Public: Allows the addition of new types of send actions such as "Send
   Later"
 
@@ -70,11 +69,11 @@ class ComposerExtension extends ContenteditableExtension {
     - `iconUrl`: A custom icon to be placed in the Send button. SendAction
     extensions have the form "Send + {ICON}"
   */
-  static sendActions() {
-    return [];
-  }
+	static sendActions() {
+		return [];
+	}
 
-  /*
+	/*
   Public: Inspect the draft, and return any warnings that need to be
   displayed before the draft is sent. Warnings should be string phrases,
   such as "without an attachment" that fit into a message of the form:
@@ -85,36 +84,36 @@ class ComposerExtension extends ContenteditableExtension {
   Returns a list of warning strings, or an empty array if no warnings need
   to be displayed.
   */
-  static warningsForSending({draft}) {
-    return [];
-  }
+	static warningsForSending({ draft }) {
+		return [];
+	}
 
-  // ###
-  // Public: declare an icon to be displayed in the composer's toolbar (where
-  // bold, italic, underline, etc are).
-  //
-  // You must return an object that contains the following properties:
-  //
-  // - `mutator`: A function that's called when your toolbar button is
-  // clicked. The mutator will be passed: `(contenteditableDOM, selection,
-  // event)`.  It will be executed in a wrapped transaction block where it is
-  // safe to mutate the DOM and the selection object.
-  //
-  // - `className`: The button will already have the `btn` and `toolbar-btn`
-  // classes.
-  //
-  // - `tooltip`: A one or two word description of what your icon does
-  //
-  // - `iconUrl`: The url of your icon. It should be in the `nylas://`
-  // scheme.  For example: `nylas://your-package-name/assets/my-icon@2x.png`.
-  // Note, we will downsample your image by 2x (for Retina screens), so make
-  // sure it's twice the resolution. The icon should be black and white. We
-  // will directly pass the `url` prop of a {RetinaImg}
-  // ###
-  // @composerToolbar: ->
-  //   return
+	// ###
+	// Public: declare an icon to be displayed in the composer's toolbar (where
+	// bold, italic, underline, etc are).
+	//
+	// You must return an object that contains the following properties:
+	//
+	// - `mutator`: A function that's called when your toolbar button is
+	// clicked. The mutator will be passed: `(contenteditableDOM, selection,
+	// event)`.  It will be executed in a wrapped transaction block where it is
+	// safe to mutate the DOM and the selection object.
+	//
+	// - `className`: The button will already have the `btn` and `toolbar-btn`
+	// classes.
+	//
+	// - `tooltip`: A one or two word description of what your icon does
+	//
+	// - `iconUrl`: The url of your icon. It should be in the `nylas://`
+	// scheme.  For example: `nylas://your-package-name/assets/my-icon@2x.png`.
+	// Note, we will downsample your image by 2x (for Retina screens), so make
+	// sure it's twice the resolution. The icon should be black and white. We
+	// will directly pass the `url` prop of a {RetinaImg}
+	// ###
+	// @composerToolbar: ->
+	//   return
 
-  /*
+	/*
   Public: Override prepareNewDraft to modify a brand new draft before it
   is displayed in a composer. This is one of the only places in the
   application where it's safe to modify the draft object you're given
@@ -126,10 +125,9 @@ class ComposerExtension extends ContenteditableExtension {
   valuable way, you should set `draft.pristine = false` so the draft
   saves, even if no further changes are made.
   */
-  static prepareNewDraft({draft}) {
-  }
+	static prepareNewDraft({ draft }) {}
 
-  /*
+	/*
   Public: applyTransformsToDraft is called when a draft the user is editing
   is saved to the server and/or sent. This method gives you an opportunity to
   remove any annotations you've inserted into the draft body, apply final changes
@@ -152,16 +150,14 @@ class ComposerExtension extends ContenteditableExtension {
 
   - `draft`: A {Message} the user is about to finish editing.
   */
-  static applyTransformsForSending({draft, draftBodyRootNode}) {
-  }
+	static applyTransformsForSending({ draft, draftBodyRootNode }) {}
 
-  /*
+	/*
   Public: unapplyTransformsToDraft should revert the changes made in
   `applyTransformsToDraft`. See the documentation for that method for more
   information.
   */
-  static unapplyTransformsForSending({draft, draftBodyRootNode}) {
-  }
+	static unapplyTransformsForSending({ draft, draftBodyRootNode }) {}
 }
 
 module.exports = ComposerExtension;

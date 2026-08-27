@@ -23,19 +23,18 @@ is not possible with the current API, please let us know.
 Section: Extensions
 */
 class MessageViewExtension {
-
-  /*
+	/*
   Public: Modify the body of the message provided. Note that you're provided
   the entire message object, but you can only change `message.body`.
   */
-  static formatMessageBody({message}) {}
+	static formatMessageBody({ message }) {}
 
-  /*
+	/*
   Public: Modify the rendered message body using the DOM.
   Runs after messages goes through `formatMessageBody` and is placed
   into the DOM.
   */
-  static renderedMessageBodyIntoDocument({document, message, iframe}) {}
+	static renderedMessageBodyIntoDocument({ document, message, iframe }) {}
 }
 
 module.exports = MessageViewExtension;
