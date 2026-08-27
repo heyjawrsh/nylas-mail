@@ -72,3 +72,28 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 3. Import graph: `nylas-exports` bridge stays app-provided; specs stub it.
 4. React 15 → 19 codemods: createClass→ES classes, PropTypes→prop-types, react-addons-* → react-transition-group/testing-library; legacy lifecycles.
 5. Reflux: no maintained npm equivalent — vendor it (MIT, tiny) with an allowlist entry; new state code uses modern approaches. If React 19 migration degrades into product-level UI redesign, that tripwires stop-condition (d) and surfaces to the user instead.
+
+
+## Status after loop 9 (2026-08-27, deep session)
+
+### Green with enforced coverage gates (individually verified)
+| Package | Tests | Line coverage | Gate |
+|---|---|---|---|
+| isomorphic-core | 138/138 | 81.7% | 80/60 ✓ |
+| cloud-core | 1/1 | 91.3% | 80/60 ✓ |
+| cloud-workers | 33/33 | 86.3% | 80/60 ✓ |
+| cloud-api | 44/44 | 94.3% | 80/60 ✓ |
+
+### In progress
+- client-sync: fully ESM (`type: module`), all requires converted, async loadModels restructure; 1/6 suites green — spec harness integration (defineModel export fallout, sync ordering, imap-helpers Transaction harness) is the remaining work. Root `pnpm -r test` aborts here.
+- client-app: runtime 100% JS/JSX (CoffeeScript + .es6 all migrated, parse-verified); modern manifest (react 19/electron 44/vitest+jsdom), atom-era libs vendored (reflux/fs-plus/event-kit/emissary — allowlist), vitest aliases for nylas-* bridges. NOT yet on the workspace ratchet; first proof spec + React 19 component migration remain.
+
+### Remaining to goal completion
+1. client-sync suite green (fix 5 failing spec harnesses).
+2. client-app: ratchet + first specs; React 15→19 component migration (createClass→classes codemod); enzyme/react-addons replacement; smoke script (electron boot).
+3. Legacy spec/*.coffee port (73 files) or documented removal decision.
+4. Root: pm2 ymls off babel-node; scripts cleanup; .github workflow; `pnpm outdated` sweep to allowlist (client-app vendored + any stragglers); full `pnpm -r test` green; `pnpm lint` clean.
+5. Allowlist finalization in this file (vendored: reflux, fs-plus, event-kit, emissary, imap-provider-settings dataset).
+
+### Ringer ledger
+6 rounds, 21 tasks run; salvage pattern (verify worktree, import, fix inline) recovered 5 failed lanes' work. Post-mortems: worker sandboxes have NO network (specs must be edit-only); pnpm auto-inserts `allowBuilds` placeholders that poison worktrees — purge after every add; OAuth capacity limits max_parallel to 2.
