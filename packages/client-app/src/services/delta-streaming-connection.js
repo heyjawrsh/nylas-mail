@@ -1,14 +1,14 @@
 import _ from "underscore";
 import { ExponentialBackoffScheduler } from "isomorphic-core";
-import N1CloudAPI from "../n1-cloud-api";
-import Actions from "../flux/actions";
-import { APIError } from "../flux/errors";
-import Account from "../flux/models/account";
-import DeltaProcessor from "./delta-processor";
-import DatabaseStore from "../flux/stores/database-store";
-import IdentityStore from "../flux/stores/identity-store";
-import OnlineStatusStore from "../flux/stores/online-status-store";
-import NylasLongConnection from "../flux/nylas-long-connection";
+import N1CloudAPI from "../n1-cloud-api.js";
+import Actions from "../flux/actions.js";
+import { APIError } from "../flux/errors.js";
+import Account from "../flux/models/account.js";
+import DeltaProcessor from "./delta-processor.js";
+import DatabaseStore from "../flux/stores/database-store.js";
+import IdentityStore from "../flux/stores/identity-store.js";
+import OnlineStatusStore from "../flux/stores/online-status-store.js";
+import NylasLongConnection from "../flux/nylas-long-connection.js";
 
 const MAX_RETRY_DELAY = 10 * 60 * 1000;
 const BASE_RETRY_DELAY = 1000;

@@ -2,8 +2,8 @@ import _ from "underscore";
 import React from "react";
 import { VirtualDOMUtils } from "nylas-exports";
 
-import SearchMatch from "./search-match";
-import UnifiedDOMParser from "./unified-dom-parser";
+import SearchMatch from "./search-match.jsx";
+import UnifiedDOMParser from "./unified-dom-parser.js";
 
 export default class VirtualDOMParser extends UnifiedDOMParser {
 	getWalker(dom) {

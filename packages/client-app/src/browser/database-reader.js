@@ -1,4 +1,4 @@
-import { openDatabase, databasePath } from "../database-helpers";
+import { openDatabase, databasePath } from "../database-helpers.js";
 
 export default class DatabaseReader {
 	constructor({ configDirPath, specMode }) {

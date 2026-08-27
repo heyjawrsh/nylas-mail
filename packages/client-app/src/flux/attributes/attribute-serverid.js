@@ -1,5 +1,5 @@
-import AttributeString from "./attribute-string";
-import Utils from "../models/utils";
+import AttributeString from "./attribute-string.js";
+import Utils from "../models/utils.js";
 
 /*
 Public: The value of this attribute is always a string or `null`.

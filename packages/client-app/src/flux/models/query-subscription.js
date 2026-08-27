@@ -1,7 +1,7 @@
 import _ from "underscore";
-import DatabaseStore from "../stores/database-store";
-import QueryRange from "./query-range";
-import MutableQueryResultSet from "./mutable-query-result-set";
+import DatabaseStore from "../stores/database-store.js";
+import QueryRange from "./query-range.js";
+import MutableQueryResultSet from "./mutable-query-result-set.js";
 
 export default class QuerySubscription {
 	constructor(query, options = {}) {

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { shell } from "electron";
-import Actions from "../flux/actions";
-import RetinaImg from "./retina-img";
-import BillingModal from "./billing-modal";
-import IdentityStore from "../flux/stores/identity-store";
+import Actions from "../flux/actions.js";
+import RetinaImg from "./retina-img.jsx";
+import BillingModal from "./billing-modal.jsx";
+import IdentityStore from "../flux/stores/identity-store.js";
 
 export default class FeatureUsedUpModal extends React.Component {
 	static propTypes = {

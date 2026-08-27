@@ -2,14 +2,14 @@ import _ from "underscore";
 import moment from "moment";
 import { MessageBodyUtils } from "isomorphic-core";
 
-import File from "./file";
-import Utils from "./utils";
-import Event from "./event";
-import Contact from "./contact";
-import Category from "./category";
-import Attributes from "../attributes";
-import ModelWithMetadata from "./model-with-metadata";
-import QuotedHTMLTransformer from "../../services/quoted-html-transformer";
+import File from "./file.js";
+import Utils from "./utils.js";
+import Event from "./event.js";
+import Contact from "./contact.js";
+import Category from "./category.js";
+import Attributes from "../attributes.js";
+import ModelWithMetadata from "./model-with-metadata.js";
+import QuotedHTMLTransformer from "../../services/quoted-html-transformer.js";
 
 /*
 Public: The Message model represents a Message object served by the Nylas Platform API.

@@ -1,8 +1,8 @@
-import Task from "./task";
-import Actions from "../actions";
-import BaseDraftTask from "./base-draft-task";
-import TaskQueue from "../stores/task-queue";
-import SendActionsStore from "../stores/send-actions-store";
+import Task from "./task.js";
+import Actions from "../actions.js";
+import BaseDraftTask from "./base-draft-task.js";
+import TaskQueue from "../stores/task-queue.js";
+import SendActionsStore from "../stores/send-actions-store.js";
 
 class PerformSendActionTask extends BaseDraftTask {
 	constructor(draftClientId, sendActionKey) {

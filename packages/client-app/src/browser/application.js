@@ -11,23 +11,26 @@ import {
 } from "electron";
 
 import fs from "fs-plus";
+import {createRequire} from "node:module";
+
+const nodeRequire = createRequire(import.meta.url);
 import url from "node:url";
 import path from "node:path";
 import proc from "node:child_process";
 import { EventEmitter } from "node:events";
 
-import GlobalTimer from "./global-timer";
-import WindowManager from "./window-manager";
-import FileListCache from "./file-list-cache";
-import DatabaseReader from "./database-reader";
-import ConfigMigrator from "./config-migrator";
-import ApplicationMenu from "./application-menu";
-import SystemTrayManager from "./system-tray-manager";
-import DefaultClientHelper from "../default-client-helper";
-import NylasProtocolHandler from "./nylas-protocol-handler";
-import PackageMigrationManager from "./package-migration-manager";
-import ConfigPersistenceManager from "./config-persistence-manager";
-import preventLegacyN1Migration from "./prevent-legacy-n1-migration";
+import GlobalTimer from "./global-timer.js";
+import WindowManager from "./window-manager.js";
+import FileListCache from "./file-list-cache.js";
+import DatabaseReader from "./database-reader.js";
+import ConfigMigrator from "./config-migrator.js";
+import ApplicationMenu from "./application-menu.js";
+import SystemTrayManager from "./system-tray-manager.js";
+import DefaultClientHelper from "../default-client-helper.js";
+import NylasProtocolHandler from "./nylas-protocol-handler.js";
+import PackageMigrationManager from "./package-migration-manager.js";
+import ConfigPersistenceManager from "./config-persistence-manager.js";
+import preventLegacyN1Migration from "./prevent-legacy-n1-migration.js";
 
 let clipboard = null;
 
@@ -84,8 +87,7 @@ export default class Application extends EventEmitter {
 			});
 			return;
 		}
-
-		const Config = require("../config");
+		const Config = nodeRequire("../config.js").default || nodeRequire("../config.js");
 		const config = new Config();
 		this.config = config;
 		this.configPersistenceManager = new ConfigPersistenceManager({
@@ -435,7 +437,7 @@ export default class Application extends EventEmitter {
 		this.on("application:view-help", () => {
 			const helpUrl =
 				"https://support.nylas.com/hc/en-us/categories/200419318-Help-for-N1-users";
-			require("electron").shell.openExternal(helpUrl);
+			nodeRequire("electron").shell.openExternal(helpUrl);
 		});
 
 		this.on("application:open-preferences", () => {
@@ -573,7 +575,7 @@ export default class Application extends EventEmitter {
 		});
 
 		ipcMain.on("inline-style-parse", (event, { html, key }) => {
-			const juice = require("juice");
+			const juice = nodeRequire('juice');
 			let out = null;
 			try {
 				out = juice(html);
@@ -658,7 +660,7 @@ export default class Application extends EventEmitter {
 		});
 
 		ipcMain.on("write-text-to-selection-clipboard", (_event, selectedText) => {
-			clipboard = require("electron").clipboard;
+			clipboard = nodeRequire("electron").clipboard;
 			clipboard.writeText(selectedText, "selection");
 		});
 

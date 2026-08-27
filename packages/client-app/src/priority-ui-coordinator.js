@@ -1,4 +1,4 @@
-import { generateTempId } from "./flux/models/utils";
+import { generateTempId } from "./flux/models/utils.js";
 
 // A small object that keeps track of the current animation state of the
 // application. You can use it to defer work until animations have finished.

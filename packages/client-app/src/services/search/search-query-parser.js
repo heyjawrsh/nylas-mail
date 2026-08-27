@@ -11,7 +11,7 @@ import {
 	StarredStatusQueryExpression,
 	InQueryExpression,
 	HasAttachmentQueryExpression,
-} from "./search-query-ast";
+} from "./search-query-ast.js";
 
 const nextStringToken = (text) => {
 	if (text[0] !== '"') {

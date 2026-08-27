@@ -1,9 +1,9 @@
 import { Utils } from "nylas-exports";
 import { Component } from "react";
 import PropTypes from "prop-types";
-import DropZone from "./drop-zone";
-import RetinaImg from "./retina-img";
-import OutlineViewItem from "./outline-view-item";
+import DropZone from "./drop-zone.jsx";
+import RetinaImg from "./retina-img.jsx";
+import OutlineViewItem from "./outline-view-item.jsx";
 
 /*
  * Renders a section that contains a list of {@link OutlineViewItem}s. These items can

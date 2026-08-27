@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Webview from "./webview";
-import Actions from "../flux/actions";
-import IdentityStore from "../flux/stores/identity-store";
+import Webview from "./webview.jsx";
+import Actions from "../flux/actions.js";
+import IdentityStore from "../flux/stores/identity-store.js";
 
 export default class BillingModal extends React.Component {
 	static propTypes = {

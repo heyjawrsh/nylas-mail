@@ -1,4 +1,4 @@
-import RegExpUtils from "../regexp-utils";
+import RegExpUtils from "../regexp-utils.js";
 
 export function getFunctionArgs(func) {
 	const match = func.toString().match(RegExpUtils.functionArgs());

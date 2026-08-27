@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RetinaImg from "./retina-img";
+import RetinaImg from "./retina-img.jsx";
 
 export const LabelColorizer = {
 	color(label) {

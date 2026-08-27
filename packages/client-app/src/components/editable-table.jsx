@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
 import ReactDOM from "react-dom";
 
-import RetinaImg from "./retina-img";
-import SelectableTable, { SelectableTableCell } from "./selectable-table";
+import RetinaImg from "./retina-img.jsx";
+import SelectableTable, { SelectableTableCell } from "./selectable-table.jsx";
 
 /*
  * EditableTable component which renders a {SelectableTable} that supports

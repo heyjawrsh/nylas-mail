@@ -1,10 +1,10 @@
 /* eslint global-require: 0 */
 import _str from "underscore.string";
-import Model from "./model";
-import Attributes from "../attributes";
-import Utils from "./utils";
-import RegExpUtils from "../../regexp-utils";
-import AccountStore from "../stores/account-store";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
+import Utils from "./utils.js";
+import RegExpUtils from "../../regexp-utils.js";
+import AccountStore from "../stores/account-store.js";
 
 let FocusedPerspectiveStore = null; // Circular Dependency
 

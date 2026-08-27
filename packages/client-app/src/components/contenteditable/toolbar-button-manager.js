@@ -1,5 +1,5 @@
 import { DOMUtils, ContenteditableExtension } from "nylas-exports";
-import ToolbarButtons from "./toolbar-buttons";
+import ToolbarButtons from "./toolbar-buttons.jsx";
 
 // This contains the logic to declaratively render the core
 // <ToolbarButtons> component in a <FloatingToolbar>

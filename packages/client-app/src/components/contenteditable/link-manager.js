@@ -1,5 +1,5 @@
 import { RegExpUtils, DOMUtils, ContenteditableExtension } from "nylas-exports";
-import LinkEditor from "./link-editor";
+import LinkEditor from "./link-editor.jsx";
 
 export default class LinkManager extends ContenteditableExtension {
 	static keyCommandHandlers() {

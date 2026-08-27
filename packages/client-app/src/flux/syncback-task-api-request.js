@@ -1,9 +1,9 @@
-import Actions from "./actions";
-import { APIError } from "./errors";
-import DatabaseStore from "./stores/database-store";
-import NylasAPIRequest from "./nylas-api-request";
-import * as NylasAPIHelpers from "./nylas-api-helpers";
-import ProviderSyncbackRequest from "./models/provider-syncback-request";
+import Actions from "./actions.js";
+import { APIError } from "./errors.js";
+import DatabaseStore from "./stores/database-store.js";
+import NylasAPIRequest from "./nylas-api-request.js";
+import * as NylasAPIHelpers from "./nylas-api-helpers.js";
+import ProviderSyncbackRequest from "./models/provider-syncback-request.js";
 
 /**
  * This API request is meant to be used for requests that create a

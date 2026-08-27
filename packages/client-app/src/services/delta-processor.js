@@ -1,9 +1,9 @@
 import _ from "underscore";
-import Actions from "../flux/actions";
-import Thread from "../flux/models/thread";
-import Message from "../flux/models/message";
-import DatabaseStore from "../flux/stores/database-store";
-import * as NylasAPIHelpers from "../flux/nylas-api-helpers";
+import Actions from "../flux/actions.js";
+import Thread from "../flux/models/thread.js";
+import Message from "../flux/models/message.js";
+import DatabaseStore from "../flux/stores/database-store.js";
+import * as NylasAPIHelpers from "../flux/nylas-api-helpers.js";
 
 /**
  * This injests deltas from multiple sources. One is from local-sync, the

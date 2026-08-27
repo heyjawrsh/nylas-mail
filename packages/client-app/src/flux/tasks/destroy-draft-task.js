@@ -1,10 +1,10 @@
-import Task from "./task";
-import { APIError } from "../errors";
-import Message from "../models/message";
-import DatabaseStore from "../stores/database-store";
-import NylasAPI from "../nylas-api";
-import NylasAPIRequest from "../nylas-api-request";
-import BaseDraftTask from "./base-draft-task";
+import Task from "./task.js";
+import { APIError } from "../errors.js";
+import Message from "../models/message.js";
+import DatabaseStore from "../stores/database-store.js";
+import NylasAPI from "../nylas-api.js";
+import NylasAPIRequest from "../nylas-api-request.js";
+import BaseDraftTask from "./base-draft-task.js";
 
 export default class DestroyDraftTask extends BaseDraftTask {
 	shouldDequeueOtherTask(other) {

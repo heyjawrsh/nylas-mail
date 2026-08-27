@@ -1,12 +1,12 @@
 import _ from "underscore";
-import ChangeFolderTask from "./change-folder-task";
-import ChangeLabelsTask from "./change-labels-task";
-import ChangeUnreadTask from "./change-unread-task";
-import ChangeStarredTask from "./change-starred-task";
-import AccountStore from "../stores/account-store";
-import CategoryStore from "../stores/category-store";
-import Thread from "../models/thread";
-import Category from "../models/category";
+import ChangeFolderTask from "./change-folder-task.js";
+import ChangeLabelsTask from "./change-labels-task.js";
+import ChangeUnreadTask from "./change-unread-task.js";
+import ChangeStarredTask from "./change-starred-task.js";
+import AccountStore from "../stores/account-store.js";
+import CategoryStore from "../stores/category-store.js";
+import Thread from "../models/thread.js";
+import Category from "../models/category.js";
 
 const TaskFactory = {
 	tasksForApplyingCategories({

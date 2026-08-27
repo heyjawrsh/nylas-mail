@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { Event } from "nylas-exports";
 import { InjectedComponentSet } from "nylas-component-kit";
-import { calcColor } from "./calendar-helpers";
+import { calcColor } from "./calendar-helpers.jsx";
 
 export default class CalendarEvent extends React.Component {
 	static displayName = "CalendarEvent";

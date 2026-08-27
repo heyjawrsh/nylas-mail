@@ -1,8 +1,8 @@
 /* eslint global-require:0 */
 import NylasStore from "nylas-store";
 import FocusedPerspectiveStore from "./focused-perspective-store";
-import ThreadCountsStore from "./thread-counts-store";
-import CategoryStore from "./category-store";
+import ThreadCountsStore from "./thread-counts-store.js";
+import CategoryStore from "./category-store.js";
 
 class BadgeStore extends NylasStore {
 	constructor() {

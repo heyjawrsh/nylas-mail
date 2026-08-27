@@ -1,5 +1,5 @@
-import DOMWalkers from "../dom-walkers";
-import Utils from "../flux/models/utils";
+import DOMWalkers from "../dom-walkers.js";
+import Utils from "../flux/models/utils.js";
 
 function textAndNodesAfterNode(node) {
 	let text = "";

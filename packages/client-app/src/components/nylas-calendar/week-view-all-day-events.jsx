@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Utils } from "nylas-exports";
-import CalendarEvent from "./calendar-event";
+import CalendarEvent from "./calendar-event.jsx";
 
 /*
  * Displays the all day events across the top bar of the week event view.

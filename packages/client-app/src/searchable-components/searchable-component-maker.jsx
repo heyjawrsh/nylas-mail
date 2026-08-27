@@ -1,8 +1,8 @@
 import _ from "underscore";
 import ReactDOM from "react-dom";
-import Utils from "../flux/models/utils";
-import VirtualDOMParser from "./virtual-dom-parser";
-import SearchableComponentStore from "../flux/stores/searchable-component-store";
+import Utils from "../flux/models/utils.js";
+import VirtualDOMParser from "./virtual-dom-parser.js";
+import SearchableComponentStore from "../flux/stores/searchable-component-store.js";
 
 class SearchableComponent {
 	componentDidMount(superMethod, ...args) {

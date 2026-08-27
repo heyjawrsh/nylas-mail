@@ -1,4 +1,4 @@
-import SerializableRegistry from "./serializable-registry";
+import SerializableRegistry from "./serializable-registry.js";
 
 class DatabaseObjectRegistry extends SerializableRegistry {}
 

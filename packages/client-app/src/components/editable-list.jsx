@@ -6,9 +6,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 
-import ScrollRegion from "./scroll-region";
-import KeyCommandsRegion from "./key-commands-region";
-import RetinaImg from "./retina-img";
+import ScrollRegion from "./scroll-region.jsx";
+import KeyCommandsRegion from "./key-commands-region.jsx";
+import RetinaImg from "./retina-img.jsx";
 
 /*
 Renders a list of items and renders controls to add/edit/remove items.

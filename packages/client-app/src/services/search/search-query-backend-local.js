@@ -6,7 +6,7 @@ import {
 	StarredStatusQueryExpression,
 	HasAttachmentQueryExpression,
 	MatchQueryExpression,
-} from "./search-query-ast";
+} from "./search-query-ast.js";
 
 /*
  * This class visits a match-compatible subtree and condenses it into a single

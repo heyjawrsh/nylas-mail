@@ -3,10 +3,10 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import classnames from "classnames";
-import compose from "./decorators/compose";
-import AutoFocuses from "./decorators/auto-focuses";
-import ListensToMovementKeys from "./decorators/listens-to-movement-keys";
-import Table, { TableRow, TableCell } from "./table/table";
+import compose from "./decorators/compose.js";
+import AutoFocuses from "./decorators/auto-focuses.jsx";
+import ListensToMovementKeys from "./decorators/listens-to-movement-keys.jsx";
+import Table, { TableRow, TableCell } from "./table/table.jsx";
 
 /*
 SelectableTable component which renders a {Table} that supports selecting

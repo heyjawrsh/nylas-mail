@@ -6,7 +6,7 @@ import {
 	Utils,
 } from "nylas-exports";
 
-import ContenteditableService from "./contenteditable-service";
+import ContenteditableService from "./contenteditable-service.js";
 
 export default class ClipboardService extends ContenteditableService {
 	constructor(...args) {
@@ -36,9 +36,9 @@ export default class ClipboardService extends ContenteditableService {
 		const item = event.clipboardData.items[0];
 
 		if (item.kind === "file") {
-			const temp = require("temp");
-			const path = require("node:path");
-			const fs = require("node:fs");
+import temp from 'temp';
+import path from 'node:path';
+import fs from 'node:fs';
 			const blob = item.getAsFile();
 			const ext =
 				{

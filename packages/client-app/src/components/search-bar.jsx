@@ -2,9 +2,9 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import classnames from "classnames";
-import Menu from "./menu";
-import RetinaImg from "./retina-img";
-import KeyCommandsRegion from "./key-commands-region";
+import Menu from "./menu.jsx";
+import RetinaImg from "./retina-img.jsx";
+import KeyCommandsRegion from "./key-commands-region.jsx";
 
 class SearchBar extends Component {
 	static displayName = "SearchBar";

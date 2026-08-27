@@ -7,9 +7,9 @@ import { remote, shell } from "electron";
 import mkdirp from "mkdirp";
 import progress from "request-progress";
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import NylasAPI from "../nylas-api";
-import NylasAPIRequest from "../nylas-api-request";
+import Actions from "../actions.js";
+import NylasAPI from "../nylas-api.js";
+import NylasAPIRequest from "../nylas-api-request.js";
 
 Promise.promisifyAll(fs);
 const mkdirpAsync = Promise.promisify(mkdirp);

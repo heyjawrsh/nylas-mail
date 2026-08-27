@@ -1,5 +1,5 @@
-import { tableNameForJoin } from "../models/utils";
-import LocalSearchQueryBackend from "../../services/search/search-query-backend-local";
+import { tableNameForJoin } from "../models/utils.js";
+import LocalSearchQueryBackend from "../../services/search/search-query-backend-local.js";
 
 // https://www.sqlite.org/faq.html#q14
 // That's right. Two single quotes in a row…

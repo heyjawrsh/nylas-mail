@@ -1,8 +1,8 @@
 /* eslint no-unused-vars: 0*/
 import _ from "underscore";
-import Thread from "../models/thread";
-import DatabaseStore from "../stores/database-store";
-import ChangeMailTask from "./change-mail-task";
+import Thread from "../models/thread.js";
+import DatabaseStore from "../stores/database-store.js";
+import ChangeMailTask from "./change-mail-task.js";
 
 export default class ChangeUnreadTask extends ChangeMailTask {
 	constructor(options = {}) {

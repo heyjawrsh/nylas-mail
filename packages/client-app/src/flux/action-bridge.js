@@ -1,9 +1,9 @@
 import _ from "underscore";
-import Actions from "./actions";
-import DatabaseStore from "./stores/database-store";
-import DatabaseChangeRecord from "./stores/database-change-record";
+import Actions from "./actions.js";
+import DatabaseStore from "./stores/database-store.js";
+import DatabaseChangeRecord from "./stores/database-change-record.js";
 
-import Utils from "./models/utils";
+import Utils from "./models/utils.js";
 
 const Role = {
 	WORK: "work",

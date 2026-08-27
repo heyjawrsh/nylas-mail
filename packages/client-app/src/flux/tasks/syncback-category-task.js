@@ -1,9 +1,9 @@
-import DatabaseStore from "../stores/database-store";
-import AccountStore from "../stores/account-store";
-import Task from "./task";
-import NylasAPI from "../nylas-api";
-import SyncbackTaskAPIRequest from "../syncback-task-api-request";
-import { APIError } from "../errors";
+import DatabaseStore from "../stores/database-store.js";
+import AccountStore from "../stores/account-store.js";
+import Task from "./task.js";
+import NylasAPI from "../nylas-api.js";
+import SyncbackTaskAPIRequest from "../syncback-task-api-request.js";
+import { APIError } from "../errors.js";
 
 export default class SyncbackCategoryTask extends Task {
 	constructor({ category, displayName } = {}) {

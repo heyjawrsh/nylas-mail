@@ -1,9 +1,9 @@
 import request from "request";
 
-import Utils from "./models/utils";
-import Actions from "./actions";
-import { APIError } from "./errors";
-import IdentityStore from "./stores/identity-store";
+import Utils from "./models/utils.js";
+import Actions from "./actions.js";
+import { APIError } from "./errors.js";
+import IdentityStore from "./stores/identity-store.js";
 
 export default class NylasAPIRequest {
 	constructor({ api, options }) {

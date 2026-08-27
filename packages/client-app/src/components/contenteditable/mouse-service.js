@@ -1,5 +1,5 @@
 import { DOMUtils } from "nylas-exports";
-import ContenteditableService from "./contenteditable-service";
+import ContenteditableService from "./contenteditable-service.js";
 
 class MouseService extends ContenteditableService {
 	constructor(...args) {

@@ -1,7 +1,7 @@
-import SyncbackModelTask from "./syncback-model-task";
-import DatabaseObjectRegistry from "../../registries/database-object-registry";
-import N1CloudAPI from "../../n1-cloud-api";
-import NylasAPIRequest from "../nylas-api-request";
+import SyncbackModelTask from "./syncback-model-task.js";
+import DatabaseObjectRegistry from "../../registries/database-object-registry.js";
+import N1CloudAPI from "../../n1-cloud-api.js";
+import NylasAPIRequest from "../nylas-api-request.js";
 
 export default class SyncbackMetadataTask extends SyncbackModelTask {
 	constructor(modelClientId, modelClassName, pluginId) {

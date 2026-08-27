@@ -14,7 +14,7 @@ import {
 	TabGroupRegion,
 	TimePicker,
 } from "nylas-component-kit";
-import EventParticipantsInput from "./event-participants-input";
+import EventParticipantsInput from "./event-participants-input.jsx";
 
 export default class CalendarEventPopover extends React.Component {
 	static propTypes = {

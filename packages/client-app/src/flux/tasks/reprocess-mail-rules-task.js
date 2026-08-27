@@ -1,12 +1,12 @@
 import _ from "underscore";
 import async from "async";
 
-import Task from "./task";
-import Thread from "../models/thread";
-import Message from "../models/message";
-import DatabaseStore from "../stores/database-store";
-import CategoryStore from "../stores/category-store";
-import MailRulesProcessor from "../../mail-rules-processor";
+import Task from "./task.js";
+import Thread from "../models/thread.js";
+import Message from "../models/message.js";
+import DatabaseStore from "../stores/database-store.js";
+import CategoryStore from "../stores/category-store.js";
+import MailRulesProcessor from "../../mail-rules-processor.js";
 
 export default class ReprocessMailRulesTask extends Task {
 	constructor(accountId) {

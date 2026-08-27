@@ -1,9 +1,9 @@
 /* eslint global-require:0 */
-import Model from "../models/model";
-import ModelQuery from "../models/query";
-import { tableNameForJoin, registeredObjectReplacer } from "../models/utils";
+import Model from "../models/model.js";
+import ModelQuery from "../models/query.js";
+import { tableNameForJoin, registeredObjectReplacer } from "../models/utils.js";
 
-import Attributes from "../attributes";
+import Attributes from "../attributes.js";
 
 const { AttributeCollection, AttributeJoinedData } = Attributes;
 

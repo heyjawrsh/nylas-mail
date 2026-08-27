@@ -2,13 +2,13 @@ import _ from "underscore";
 import Rx from "rx-lite";
 import NylasStore from "nylas-store";
 
-import Utils from "../models/utils";
-import Thread from "../models/thread";
-import Actions from "../actions";
-import Contact from "../models/contact";
-import MessageStore from "./message-store";
-import AccountStore from "./account-store";
-import DatabaseStore from "./database-store";
+import Utils from "../models/utils.js";
+import Thread from "../models/thread.js";
+import Actions from "../actions.js";
+import Contact from "../models/contact.js";
+import MessageStore from "./message-store.js";
+import AccountStore from "./account-store.js";
+import DatabaseStore from "./database-store.js";
 
 // A store that handles the focuses collections of and individual contacts
 class FocusedContactsStore extends NylasStore {

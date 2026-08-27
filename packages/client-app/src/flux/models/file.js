@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
 import path from "node:path";
-import Model from "./model";
-import Attributes from "../attributes";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
 let RegExpUtils = null;
 
 /**

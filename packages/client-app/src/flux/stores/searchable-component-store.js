@@ -1,12 +1,12 @@
 import _ from "underscore";
 import NylasStore from "nylas-store";
-import DOMUtils from "../../dom-utils";
-import Actions from "../actions";
+import DOMUtils from "../../dom-utils.js";
+import Actions from "../actions.js";
 import {
 	MAX_MATCHES,
 	CHAR_THRESHOLD,
-} from "../../searchable-components/search-constants";
-import FocusedContentStore from "./focused-content-store";
+} from "../../searchable-components/search-constants.js";
+import FocusedContentStore from "./focused-content-store.js";
 
 class SearchableComponentStore extends NylasStore {
 	constructor() {

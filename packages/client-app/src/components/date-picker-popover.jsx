@@ -1,8 +1,8 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { Actions, DateUtils } from "nylas-exports";
-import DateInput from "./date-input";
-import Menu from "./menu";
+import DateInput from "./date-input.jsx";
+import Menu from "./menu.jsx";
 
 const { DATE_FORMAT_SHORT, DATE_FORMAT_LONG } = DateUtils;
 

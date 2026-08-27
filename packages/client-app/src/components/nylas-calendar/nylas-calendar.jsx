@@ -8,12 +8,12 @@ import {
 	ResizableRegion,
 	MiniMonthView,
 } from "nylas-component-kit";
-import WeekView from "./week-view";
-import MonthView from "./month-view";
-import EventSearchBar from "./event-search-bar";
-import CalendarToggles from "./calendar-toggles";
-import CalendarDataSource from "./calendar-data-source";
-import { WEEK_VIEW, MONTH_VIEW } from "./calendar-constants";
+import WeekView from "./week-view.jsx";
+import MonthView from "./month-view.jsx";
+import EventSearchBar from "./event-search-bar.jsx";
+import CalendarToggles from "./calendar-toggles.jsx";
+import CalendarDataSource from "./calendar-data-source.js";
+import { WEEK_VIEW, MONTH_VIEW } from "./calendar-constants.js";
 
 const DISABLED_CALENDARS = "nylas.disabledCalendars";
 

@@ -19,7 +19,7 @@ Promise.setScheduler((fn) => timeout(fn, 0));
 
 import "./window";
 
-import NylasEnvConstructor from "./nylas-env";
+import NylasEnvConstructor from "./nylas-env.js";
 window.NylasEnv = window.atom = NylasEnvConstructor.loadOrCreate();
 
 NylasEnv.initialize();

@@ -4,11 +4,11 @@ import path from "node:path";
 import rimraf from "rimraf";
 import mkdirp from "mkdirp";
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import Utils from "../models/utils";
-import Message from "../models/message";
-import DraftStore from "./draft-store";
-import DatabaseStore from "./database-store";
+import Actions from "../actions.js";
+import Utils from "../models/utils.js";
+import Message from "../models/message.js";
+import DraftStore from "./draft-store.js";
+import DatabaseStore from "./database-store.js";
 
 Promise.promisifyAll(fs);
 const mkdirpAsync = Promise.promisify(mkdirp);

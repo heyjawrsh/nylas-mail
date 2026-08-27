@@ -1,6 +1,6 @@
 import _ from "underscore";
 import { DOMUtils } from "nylas-exports";
-import UnifiedDOMParser from "./unified-dom-parser";
+import UnifiedDOMParser from "./unified-dom-parser.js";
 
 export default class RealDOMParser extends UnifiedDOMParser {
 	*_pruningDOMWalker({ node, pruneFn, filterFn }) {

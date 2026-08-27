@@ -2,7 +2,7 @@ import _ from "underscore";
 import {
 	AndQueryExpression,
 	SearchQueryExpressionVisitor,
-} from "./search-query-ast";
+} from "./search-query-ast.js";
 
 const TOP = "top";
 

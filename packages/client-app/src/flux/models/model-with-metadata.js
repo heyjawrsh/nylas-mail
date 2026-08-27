@@ -1,5 +1,5 @@
-import Model from "./model";
-import Attributes from "../attributes";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
 
 /**
  Cloud-persisted data that is associated with a single Nylas API object

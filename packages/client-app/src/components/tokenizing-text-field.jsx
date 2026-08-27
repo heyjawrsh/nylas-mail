@@ -7,8 +7,8 @@ import { remote } from "electron";
 import { Utils, RegExpUtils } from "nylas-exports";
 import { Menu } from "nylas-component-kit";
 
-import RetinaImg from "./retina-img";
-import KeyCommandsRegion from "./key-commands-region";
+import RetinaImg from "./retina-img.jsx";
+import KeyCommandsRegion from "./key-commands-region.jsx";
 
 class SizeToFitInput extends React.Component {
 	static propTypes = {

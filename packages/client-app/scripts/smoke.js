@@ -19,7 +19,7 @@ const proc = spawn(
 	{
 		env: {
 			...process.env,
-			NYLAS_SMoke: "1",
+			NYLAS_SMOKE: "1",
 			NYLAS_HOME: path.join(appDir, "..", "..", ".nylas-smoke-home"),
 			NODE_ENV: "development",
 		},

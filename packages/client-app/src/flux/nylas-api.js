@@ -1,5 +1,5 @@
 import { AccountStore } from "nylas-exports";
-import NylasLongConnection from "./nylas-long-connection";
+import NylasLongConnection from "./nylas-long-connection.js";
 
 // A 0 code is when an error returns without a status code, like "ESOCKETTIMEDOUT"
 const TimeoutErrorCodes = [

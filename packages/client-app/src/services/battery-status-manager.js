@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import Actions from "../flux/actions";
+import Actions from "../flux/actions.js";
 
 class BatteryStatusManager {
 	constructor() {

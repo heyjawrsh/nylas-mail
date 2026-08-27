@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import classnames from "classnames";
 import { Utils } from "nylas-exports";
-import CalendarEvent from "./calendar-event";
+import CalendarEvent from "./calendar-event.jsx";
 
 /*
  * This display a single column of events in the Week View.

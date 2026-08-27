@@ -1,9 +1,9 @@
 import _ from "underscore";
 import Rx from "rx-lite";
 import NylasStore from "nylas-store";
-import AccountStore from "./account-store";
-import DatabaseStore from "./database-store";
-import DeltaStreamingConnection from "../../services/delta-streaming-connection";
+import AccountStore from "./account-store.js";
+import DatabaseStore from "./database-store.js";
+import DeltaStreamingConnection from "../../services/delta-streaming-connection.js";
 
 /**
  * DeltaConnectionStore manages delta connections and

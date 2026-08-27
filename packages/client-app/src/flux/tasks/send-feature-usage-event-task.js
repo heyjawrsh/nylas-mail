@@ -1,7 +1,7 @@
-import Task from "./task";
-import NylasAPI from "../nylas-api";
-import { APIError } from "../errors";
-import IdentityStore from "../stores/identity-store";
+import Task from "./task.js";
+import NylasAPI from "../nylas-api.js";
+import { APIError } from "../errors.js";
+import IdentityStore from "../stores/identity-store.js";
 
 export default class SendFeatureUsageEventTask extends Task {
 	constructor(featureName) {

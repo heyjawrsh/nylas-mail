@@ -1,13 +1,13 @@
-import DatabaseStore from "../stores/database-store";
-import AccountStore from "../stores/account-store";
-import Task from "./task";
-import Category from "../models/category";
-import ChangeFolderTask from "./change-folder-task";
-import ChangeLabelTask from "./change-labels-task";
-import SyncbackCategoryTask from "./syncback-category-task";
-import NylasAPI from "../nylas-api";
-import SyncbackTaskAPIRequest from "../syncback-task-api-request";
-import { APIError } from "../errors";
+import DatabaseStore from "../stores/database-store.js";
+import AccountStore from "../stores/account-store.js";
+import Task from "./task.js";
+import Category from "../models/category.js";
+import ChangeFolderTask from "./change-folder-task.js";
+import ChangeLabelTask from "./change-labels-task.js";
+import SyncbackCategoryTask from "./syncback-category-task.js";
+import NylasAPI from "../nylas-api.js";
+import SyncbackTaskAPIRequest from "../syncback-task-api-request.js";
+import { APIError } from "../errors.js";
 
 export default class DestroyCategoryTask extends Task {
 	constructor({ category } = {}) {

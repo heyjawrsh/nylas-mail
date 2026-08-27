@@ -1,4 +1,4 @@
-import Utils from "../models/utils";
+import Utils from "../models/utils.js";
 
 /*
 DatabaseChangeRecord is the object emitted from the DatabaseStore when it triggers.

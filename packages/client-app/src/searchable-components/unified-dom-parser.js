@@ -1,5 +1,5 @@
 import { Utils } from "nylas-exports";
-import { MAX_MATCHES, CHAR_THRESHOLD } from "./search-constants";
+import { MAX_MATCHES, CHAR_THRESHOLD } from "./search-constants.js";
 
 export default class UnifiedDOMParser {
 	constructor(regionId) {

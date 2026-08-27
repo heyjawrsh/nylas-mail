@@ -1,4 +1,4 @@
-import KeyCommandsRegion from "../key-commands-region";
+import KeyCommandsRegion from "../key-commands-region.jsx";
 
 function ListensToMovementKeys(ComposedComponent) {
 	return class extends ComposedComponent {

@@ -1,3 +1,5 @@
+import _ from "underscore";
+
 (() => {
 	var isPlainObject, plus, splitKeyPath;
 
@@ -87,4 +89,5 @@
 	};
 
 	module.exports = plus;
+	export default plus;
 }).call(this);

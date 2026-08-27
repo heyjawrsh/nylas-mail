@@ -1,8 +1,8 @@
 /* eslint global-require:0 */
-import DatabaseObjectRegistry from "../../registries/database-object-registry";
-import { tableNameForJoin } from "../models/utils";
+import DatabaseObjectRegistry from "../../registries/database-object-registry.js";
+import { tableNameForJoin } from "../models/utils.js";
 
-import Attributes from "../attributes";
+import Attributes from "../attributes.js";
 const { AttributeCollection, AttributeJoinedData } = Attributes;
 
 // The DatabaseConnection dispatches queries to the Browser process via IPC and listens

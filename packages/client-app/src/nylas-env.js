@@ -10,11 +10,11 @@ import fs from "fs-plus";
 import { convertStackTrace } from "coffeestack";
 import { mapSourcePosition } from "source-map-support";
 
-import WindowEventHandler from "./window-event-handler";
-import StylesElement from "./styles-element";
-import StoreRegistry from "./registries/store-registry";
+import WindowEventHandler from "./window-event-handler.js";
+import StylesElement from "./styles-element.js";
+import StoreRegistry from "./registries/store-registry.js";
 
-import Utils from "./flux/models/utils";
+import Utils from "./flux/models/utils.js";
 
 function ensureInteger(f, fallback) {
 	let int = f;
@@ -180,13 +180,12 @@ export default class NylasEnvConstructor {
 		this.setupErrorLogger();
 
 		this.loadTime = null;
-
-		const Config = require("./config");
+import Config from './config.js';
 		const KeymapManager = require("./keymap-manager").default;
 		const CommandRegistry = require("./registries/command-registry").default;
-		const PackageManager = require("./package-manager");
-		const ThemeManager = require("./theme-manager");
-		const StyleManager = require("./style-manager");
+import PackageManager from './package-manager.js';
+import ThemeManager from './theme-manager.js';
+import StyleManager from './style-manager.js';
 		const ActionBridge = require("./flux/action-bridge").default;
 		const MenuManager = require("./menu-manager").default;
 
@@ -279,8 +278,7 @@ export default class NylasEnvConstructor {
 		//
 		// We initialize all of the stores loaded into the StoreRegistry once
 		// the window starts loading.
-		require("nylas-exports");
-
+import 'nylas-exports';
 		process.title = `Nylas Mail ${this.getWindowType()}`;
 		return this.onWindowPropsReceived(() => {
 			process.title = `Nylas Mail ${this.getWindowType()}`;
@@ -297,7 +295,7 @@ export default class NylasEnvConstructor {
 	// to the window and the Bluebird Promise library, converting things
 	// back through the sourcemap as necessary.
 	setupErrorLogger() {
-		const ErrorLogger = require("./error-logger");
+import ErrorLogger from './error-logger.js';
 		this.errorLogger = new ErrorLogger({
 			inSpecMode: this.inSpecMode(),
 			inDevMode: this.inDevMode(),
@@ -990,7 +988,7 @@ export default class NylasEnvConstructor {
 	// bar, stoplights, etc. This saves ~100ms when populating the hot
 	// windows.
 	initializeBasicSheet() {
-		const WorkspaceStore = require("../src/flux/stores/workspace-store");
+import WorkspaceStore from '../src/flux/stores/workspace-store.js';
 		if (!WorkspaceStore.Sheet.Main) {
 			WorkspaceStore.defineSheet(
 				"Main",
@@ -1167,10 +1165,9 @@ export default class NylasEnvConstructor {
 		this.item.setAttribute("id", "sheet-container");
 		this.item.setAttribute("class", "sheet-container");
 		this.item.setAttribute("tabIndex", "-1");
-
-		const React = require("react");
-		const ReactDOM = require("react-dom");
-		const SheetContainer = require("./sheet-container");
+import React from 'react';
+import ReactDOM from 'react-dom';
+import SheetContainer from './sheet-container.js';
 		ReactDOM.render(React.createElement(SheetContainer), this.item);
 		return document
 			.querySelector(this.workspaceViewParentSelector)
@@ -1261,8 +1258,8 @@ export default class NylasEnvConstructor {
 			},
 			(buttonIndex) => {
 				if (buttonIndex === 1) {
-					const { Actions } = require("nylas-exports");
-					const { CodeSnippet } = require("nylas-component-kit");
+import {Actions} from 'nylas-exports';
+import {CodeSnippet} from 'nylas-component-kit';
 					Actions.openModal({
 						component: CodeSnippet({
 							intro: message,

@@ -1,10 +1,10 @@
 import _ from "underscore";
-import Message from "./message";
-import Contact from "./contact";
-import Category from "./category";
-import Attributes from "../attributes";
-import DatabaseStore from "../stores/database-store";
-import ModelWithMetadata from "./model-with-metadata";
+import Message from "./message.js";
+import Contact from "./contact.js";
+import Category from "./category.js";
+import Attributes from "../attributes.js";
+import DatabaseStore from "../stores/database-store.js";
+import ModelWithMetadata from "./model-with-metadata.js";
 
 /*
 Public: The Thread model represents a Thread object served by the Nylas Platform API.

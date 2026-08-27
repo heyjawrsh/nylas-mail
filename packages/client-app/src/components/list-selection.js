@@ -1,7 +1,7 @@
 import _ from "underscore";
 
-import Model from "../flux/models/model";
-import DatabaseStore from "../flux/stores/database-store";
+import Model from "../flux/models/model.js";
+import DatabaseStore from "../flux/stores/database-store.js";
 
 export default class ListSelection {
 	constructor(_view, callback) {

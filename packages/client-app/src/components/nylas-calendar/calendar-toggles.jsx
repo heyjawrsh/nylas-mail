@@ -2,7 +2,7 @@
 import _ from "underscore";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import { calcColor } from "./calendar-helpers";
+import { calcColor } from "./calendar-helpers.jsx";
 
 const DISABLED_CALENDARS = "nylas.disabledCalendars";
 

@@ -1,10 +1,10 @@
 import Rx from "rx-lite";
 import NylasStore from "nylas-store";
 import { FeatureUsedUpModal } from "nylas-component-kit";
-import Actions from "../actions";
-import IdentityStore from "./identity-store";
-import TaskQueueStatusStore from "./task-queue-status-store";
-import SendFeatureUsageEventTask from "../tasks/send-feature-usage-event-task";
+import Actions from "../actions.js";
+import IdentityStore from "./identity-store.js";
+import TaskQueueStatusStore from "./task-queue-status-store.js";
+import SendFeatureUsageEventTask from "../tasks/send-feature-usage-event-task.js";
 
 class NoProAccess extends Error {}
 

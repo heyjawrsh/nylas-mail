@@ -1,6 +1,6 @@
-import Model from "./model";
-import Query from "./query";
-import Attributes from "../attributes";
+import Model from "./model.js";
+import Query from "./query.js";
+import Attributes from "../attributes.js";
 
 class JSONBlobQuery extends Query {
 	formatResult(objects) {

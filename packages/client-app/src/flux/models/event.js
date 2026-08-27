@@ -1,9 +1,9 @@
 import chrono from "chrono-node";
 import moment from "moment";
 
-import Model from "./model";
-import Attributes from "../attributes";
-import Contact from "./contact";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
+import Contact from "./contact.js";
 
 export default class Event extends Model {
 	static attributes = Object.assign({}, Model.attributes, {

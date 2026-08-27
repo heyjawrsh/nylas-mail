@@ -4,11 +4,11 @@ import { ipcRenderer, remote } from "electron";
 import request from "request";
 import url from "node:url";
 
-import Utils from "../models/utils";
-import Actions from "../actions";
-import { APIError } from "../errors";
-import KeyManager from "../../key-manager";
-import DatabaseStore from "./database-store";
+import Utils from "../models/utils.js";
+import Actions from "../actions.js";
+import { APIError } from "../errors.js";
+import KeyManager from "../../key-manager.js";
+import DatabaseStore from "./database-store.js";
 
 // Note this key name is used when migrating to Nylas Pro accounts from
 // old N1.

@@ -1,5 +1,5 @@
-import Model from "./model";
-import Attributes from "../attributes";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
 
 export default class ProviderSyncbackRequest extends Model {
 	static attributes = Object.assign({}, Model.attributes, {

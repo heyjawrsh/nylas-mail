@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import { Modal } from "nylas-component-kit";
 import NylasStore from "nylas-store";
 
-import Actions from "../actions";
+import Actions from "../actions.js";
 
 const CONTAINER_ID = "nylas-modal-container";
 

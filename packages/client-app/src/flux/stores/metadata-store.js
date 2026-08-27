@@ -1,8 +1,8 @@
 import _ from "underscore";
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import DatabaseStore from "./database-store";
-import SyncbackMetadataTask from "../tasks/syncback-metadata-task";
+import Actions from "../actions.js";
+import DatabaseStore from "./database-store.js";
+import SyncbackMetadataTask from "../tasks/syncback-metadata-task.js";
 
 class MetadataStore extends NylasStore {
 	constructor() {

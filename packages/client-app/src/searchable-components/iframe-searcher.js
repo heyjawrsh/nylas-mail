@@ -1,4 +1,4 @@
-import RealDOMParser from "./real-dom-parser";
+import RealDOMParser from "./real-dom-parser.js";
 
 export default class IFrameSearcher {
 	/**

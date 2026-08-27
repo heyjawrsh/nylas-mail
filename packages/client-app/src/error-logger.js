@@ -137,9 +137,15 @@ module.exports = ErrorLogger = (() => {
 		console.debug = this._consoleDebug.bind(this);
 
 		if (process.type === "browser" && process.platform === "darwin") {
-			var nslog = require("nslog");
-			console.log = nslog;
-			console.error = nslog;
+			// The native nslog binding is optional: when the prebuilt binary
+			// is unavailable (fresh checkouts, smoke runs), keep stdout.
+			try {
+				var nslog = require("nslog");
+				console.log = nslog;
+				console.error = nslog;
+			} catch (_e) {
+				/* native log sink unavailable — console stays on stdout */
+			}
 		}
 	};
 

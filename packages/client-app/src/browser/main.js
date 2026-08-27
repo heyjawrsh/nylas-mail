@@ -147,6 +147,7 @@ const parseCommandLine = (argv) => {
 	const benchmarkMode = args.benchmark;
 	const logFile = args["log-file"];
 	const specMode = args.test;
+	const smokeMode = args.smoke || process.env.NYLAS_SMOKE === "1";
 	const jUnitXmlPath = args["junit-xml"];
 	const safeMode = args.safe;
 	const background = args.background;
@@ -192,6 +193,7 @@ const parseCommandLine = (argv) => {
 		background,
 		logFile,
 		specMode,
+		smokeMode,
 		benchmarkMode,
 		jUnitXmlPath,
 		safeMode,
@@ -253,12 +255,16 @@ const start = () => {
 	const options = parseCommandLine(process.argv);
 
 	if (!options.devMode) {
-		const otherInstanceRunning = app.makeSingleInstance((commandLine) => {
+		// Electron 4+: makeSingleInstance -> requestSingleInstanceLock
+		const gotLock = app.requestSingleInstanceLock();
+		app.on("second-instance", (_event, commandLine) => {
 			const otherOpts = parseCommandLine(commandLine);
-			global.application.handleLaunchOptions(otherOpts);
+			if (global.application) {
+				global.application.handleLaunchOptions(otherOpts);
+			}
 		});
 
-		if (otherInstanceRunning) {
+		if (!gotLock) {
 			console.log(
 				"Exiting because another instance of the app is already running.",
 			);
@@ -291,6 +297,17 @@ const start = () => {
 		).default;
 		global.application = new Application();
 		global.application.start(options);
+		if (options.smokeMode) {
+			const quitWhenReady = () => {
+				// Give the window + sync backend a moment to settle, then exit 0.
+				setTimeout(() => {
+					console.log("SMOKE_PASS: app booted");
+					app.exit(0);
+				}, 5_000);
+			};
+			global.application.once("window-load", quitWhenReady) ||
+				setTimeout(quitWhenReady, 15_000);
+		}
 		if (!options.specMode) {
 			console.log(`App load time: ${Date.now() - global.shellStartTime}ms`);
 		}

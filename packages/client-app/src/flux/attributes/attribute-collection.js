@@ -1,5 +1,5 @@
-import Attribute from "./attribute";
-import Matcher from "./matcher";
+import Attribute from "./attribute.js";
+import Matcher from "./matcher.js";
 
 /*
 Public: Collection attributes provide basic support for one-to-many relationships.

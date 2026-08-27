@@ -9,7 +9,7 @@ Promise.setScheduler((fn) => timeout(fn, 0));
 // Like sands through the hourglass, so are the days of our lives.
 import "./window";
 
-import NylasEnvConstructor from "./nylas-env";
+import NylasEnvConstructor from "./nylas-env.js";
 window.NylasEnv = NylasEnvConstructor.loadOrCreate();
 NylasEnv.initialize();
 NylasEnv.startRootWindow();

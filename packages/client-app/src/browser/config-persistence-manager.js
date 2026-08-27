@@ -1,10 +1,10 @@
 import path from "node:path";
 import fs from "fs-plus";
 import { BrowserWindow, dialog, app } from "electron";
-import { atomicWriteFileSync } from "../fs-utils";
+import { atomicWriteFileSync } from "../fs-utils.js";
+import * as __ns from 'underscore';
+const _ = __ns;
 
-let _ = require("underscore");
-_ = _.extend(_, require("../config-utils"));
 
 const RETRY_SAVES = 3;
 

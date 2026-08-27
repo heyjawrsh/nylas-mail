@@ -3,12 +3,12 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import { Utils } from "nylas-exports";
 import ReactDOM from "react-dom";
-import ScrollRegion from "./scroll-region";
-import Spinner from "./spinner";
+import ScrollRegion from "./scroll-region.jsx";
+import Spinner from "./spinner.jsx";
 
-import ListDataSource from "./list-data-source";
-import ListSelection from "./list-selection";
-import ListTabularItem from "./list-tabular-item";
+import ListDataSource from "./list-data-source.js";
+import ListSelection from "./list-selection.js";
+import ListTabularItem from "./list-tabular-item.jsx";
 
 class ListColumn {
 	constructor({ name, resolver, flex, width }) {

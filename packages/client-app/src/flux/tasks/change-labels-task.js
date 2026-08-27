@@ -1,12 +1,12 @@
 import _ from "underscore";
-import Thread from "../models/thread";
-import Message from "../models/message";
-import Category from "../models/category";
-import DatabaseStore from "../stores/database-store";
-import CategoryStore from "../stores/category-store";
-import AccountStore from "../stores/account-store";
-import ChangeMailTask from "./change-mail-task";
-import SyncbackCategoryTask from "./syncback-category-task";
+import Thread from "../models/thread.js";
+import Message from "../models/message.js";
+import Category from "../models/category.js";
+import DatabaseStore from "../stores/database-store.js";
+import CategoryStore from "../stores/category-store.js";
+import AccountStore from "../stores/account-store.js";
+import ChangeMailTask from "./change-mail-task.js";
+import SyncbackCategoryTask from "./syncback-category-task.js";
 
 // Public: Create a new task to apply labels to a message or thread.
 //

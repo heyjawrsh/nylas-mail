@@ -1,6 +1,6 @@
 import NylasStore from "nylas-store";
-import SendDraftTask from "../tasks/send-draft-task";
-import TaskQueueStatusStore from "./task-queue-status-store";
+import SendDraftTask from "../tasks/send-draft-task.js";
+import TaskQueueStatusStore from "./task-queue-status-store.js";
 
 class OutboxStore extends NylasStore {
 	constructor() {

@@ -2,10 +2,10 @@ import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import Utils from "../../flux/models/utils";
-import CustomContenteditableComponents from "./custom-contenteditable-components";
-import { IgnoreMutationClassName } from "../contenteditable/contenteditable";
-import { ANCHOR_CLASS, IMG_SRC } from "./anchor-constants";
+import Utils from "../../flux/models/utils.js";
+import CustomContenteditableComponents from "./custom-contenteditable-components.js";
+import { IgnoreMutationClassName } from "../contenteditable/contenteditable.jsx";
+import { ANCHOR_CLASS, IMG_SRC } from "./anchor-constants.js";
 
 const MUTATION_CONFIG = {
 	subtree: true,

@@ -1,4 +1,4 @@
-import QueryRange from "./query-range";
+import QueryRange from "./query-range.js";
 
 /*
 Public: Instances of QueryResultSet hold a set of models retrieved

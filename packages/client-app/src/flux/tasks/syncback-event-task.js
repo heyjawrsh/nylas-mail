@@ -1,5 +1,5 @@
 import { Event } from "nylas-exports";
-import SyncbackModelTask from "./syncback-model-task";
+import SyncbackModelTask from "./syncback-model-task.js";
 
 const EVENTS_ENDPOINT = "/events";
 

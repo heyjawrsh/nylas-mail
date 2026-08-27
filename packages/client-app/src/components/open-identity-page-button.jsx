@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { shell } from "electron";
 import classnames from "classnames";
-import RetinaImg from "./retina-img";
-import IdentityStore from "../flux/stores/identity-store";
+import RetinaImg from "./retina-img.jsx";
+import IdentityStore from "../flux/stores/identity-store.js";
 
 export default class OpenIdentityPageButton extends React.Component {
 	static propTypes = {

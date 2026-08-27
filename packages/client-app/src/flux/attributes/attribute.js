@@ -1,5 +1,5 @@
-import Matcher from "./matcher";
-import SortOrder from "./sort-order";
+import Matcher from "./matcher.js";
+import SortOrder from "./sort-order.js";
 
 /*
 Public: The Attribute class represents a single model attribute, like 'account_id'.

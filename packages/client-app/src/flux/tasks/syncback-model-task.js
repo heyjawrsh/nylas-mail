@@ -1,9 +1,9 @@
 import _ from "underscore";
-import Task from "./task";
-import NylasAPI from "../nylas-api";
-import NylasAPIRequest from "../nylas-api-request";
-import { APIError } from "../errors";
-import DatabaseStore from "../stores/database-store";
+import Task from "./task.js";
+import NylasAPI from "../nylas-api.js";
+import NylasAPIRequest from "../nylas-api-request.js";
+import { APIError } from "../errors.js";
+import DatabaseStore from "../stores/database-store.js";
 
 export default class SyncbackModelTask extends Task {
 	constructor({ clientId, endpoint } = {}) {

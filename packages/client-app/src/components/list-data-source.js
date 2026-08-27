@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: 0 */
 import { EventEmitter } from "node:events";
-import ListSelection from "./list-selection";
+import ListSelection from "./list-selection.js";
 
 export default class ListDataSource {
 	constructor() {

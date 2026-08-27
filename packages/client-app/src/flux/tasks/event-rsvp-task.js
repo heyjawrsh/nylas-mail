@@ -1,10 +1,10 @@
-import Task from "./task";
-import Event from "../models/event";
-import { APIError } from "../errors";
-import Utils from "../models/utils";
-import DatabaseStore from "../stores/database-store";
-import NylasAPI from "../nylas-api";
-import NylasAPIRequest from "../nylas-api-request";
+import Task from "./task.js";
+import Event from "../models/event.js";
+import { APIError } from "../errors.js";
+import Utils from "../models/utils.js";
+import DatabaseStore from "../stores/database-store.js";
+import NylasAPI from "../nylas-api.js";
+import NylasAPIRequest from "../nylas-api-request.js";
 
 export default class EventRSVPTask extends Task {
 	constructor(event, RSVPEmail, RSVPResponse) {

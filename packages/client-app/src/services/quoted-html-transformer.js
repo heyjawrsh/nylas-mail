@@ -1,7 +1,7 @@
 import _ from "underscore";
-import DOMUtils from "../dom-utils";
-import quoteStringDetector from "./quote-string-detector";
-import unwrappedSignatureDetector from "./unwrapped-signature-detector";
+import DOMUtils from "../dom-utils.js";
+import quoteStringDetector from "./quote-string-detector.js";
+import unwrappedSignatureDetector from "./unwrapped-signature-detector.js";
 
 class QuotedHTMLTransformer {
 	annotationClass = "nylas-quoted-text-segment";

@@ -1,8 +1,8 @@
 /* eslint no-unused-vars: 0*/
 import _ from "underscore";
-import { generateTempId } from "../models/utils";
-import { PermanentErrorCodes } from "../nylas-api";
-import { APIError } from "../errors";
+import { generateTempId } from "../models/utils.js";
+import { PermanentErrorCodes } from "../nylas-api.js";
+import { APIError } from "../errors.js";
 
 const TaskStatus = {
 	Retry: "RETRY",

@@ -1,5 +1,5 @@
-import QueryResultSet from "./query-result-set";
-import AttributeJoinedData from "../attributes/attribute-joined-data";
+import QueryResultSet from "./query-result-set.js";
+import AttributeJoinedData from "../attributes/attribute-joined-data.js";
 
 // TODO: Make mutator methods QueryResultSet.join(), QueryResultSet.clip...
 export default class MutableQueryResultSet extends QueryResultSet {

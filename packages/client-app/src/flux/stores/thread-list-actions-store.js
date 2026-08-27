@@ -1,8 +1,8 @@
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import Utils from "../models/utils";
-import TaskFactory from "../tasks/task-factory";
-import AccountStore from "../stores/account-store";
+import Actions from "../actions.js";
+import Utils from "../models/utils.js";
+import TaskFactory from "../tasks/task-factory.js";
+import AccountStore from "../stores/account-store.js";
 import FocusedPerspectiveStore from "../stores/focused-perspective-store";
 
 class ThreadListActionsStore extends NylasStore {

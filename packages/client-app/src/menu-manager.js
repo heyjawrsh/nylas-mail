@@ -4,9 +4,9 @@ import path from "node:path";
 import fs from "fs-plus";
 import { ipcRenderer } from "electron";
 import { Disposable } from "event-kit";
-import Utils from "./flux/models/utils";
+import Utils from "./flux/models/utils.js";
 
-import MenuHelpers from "./menu-helpers";
+import MenuHelpers from "./menu-helpers.js";
 
 export default class MenuManager {
 	constructor({ resourcePath }) {

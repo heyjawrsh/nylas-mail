@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import Toast from "./toast";
-import RetinaImg from "./retina-img";
+import Toast from "./toast.jsx";
+import RetinaImg from "./retina-img.jsx";
 
 function UndoToast(props) {
 	const { className, onUndo, undoMessage, ...toastProps } = props;

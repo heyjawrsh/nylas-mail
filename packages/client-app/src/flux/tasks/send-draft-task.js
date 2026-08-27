@@ -1,16 +1,16 @@
 /* eslint global-require: 0 */
-import Task from "./task";
-import Actions from "../actions";
-import Message from "../models/message";
-import Account from "../models/account";
-import * as NylasAPIHelpers from "../nylas-api-helpers";
-import { APIError, RequestEnsureOnceError } from "../errors";
-import SoundRegistry from "../../registries/sound-registry";
-import DatabaseStore from "../stores/database-store";
-import AccountStore from "../stores/account-store";
-import BaseDraftTask from "./base-draft-task";
-import SyncbackMetadataTask from "./syncback-metadata-task";
-import EnsureMessageInSentFolderTask from "./ensure-message-in-sent-folder-task";
+import Task from "./task.js";
+import Actions from "../actions.js";
+import Message from "../models/message.js";
+import Account from "../models/account.js";
+import * as NylasAPIHelpers from "../nylas-api-helpers.js";
+import { APIError, RequestEnsureOnceError } from "../errors.js";
+import SoundRegistry from "../../registries/sound-registry.js";
+import DatabaseStore from "../stores/database-store.js";
+import AccountStore from "../stores/account-store.js";
+import BaseDraftTask from "./base-draft-task.js";
+import SyncbackMetadataTask from "./syncback-metadata-task.js";
+import EnsureMessageInSentFolderTask from "./ensure-message-in-sent-folder-task.js";
 
 const OPEN_TRACKING_ID = NylasEnv.packages.pluginIdFor("open-tracking");
 const LINK_TRACKING_ID = NylasEnv.packages.pluginIdFor("link-tracking");

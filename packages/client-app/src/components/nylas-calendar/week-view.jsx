@@ -7,15 +7,15 @@ import moment from "moment-timezone";
 import classnames from "classnames";
 import { Utils } from "nylas-exports";
 import { ScrollRegion } from "nylas-component-kit";
-import TopBanner from "./top-banner";
-import HeaderControls from "./header-controls";
-import FooterControls from "./footer-controls";
-import CalendarDataSource from "./calendar-data-source";
-import EventGridBackground from "./event-grid-background";
-import WeekViewEventColumn from "./week-view-event-column";
-import WeekViewAllDayEvents from "./week-view-all-day-events";
-import CalendarEventContainer from "./calendar-event-container";
-import CurrentTimeIndicator from "./current-time-indicator";
+import TopBanner from "./top-banner.jsx";
+import HeaderControls from "./header-controls.jsx";
+import FooterControls from "./footer-controls.jsx";
+import CalendarDataSource from "./calendar-data-source.js";
+import EventGridBackground from "./event-grid-background.jsx";
+import WeekViewEventColumn from "./week-view-event-column.jsx";
+import WeekViewAllDayEvents from "./week-view-all-day-events.jsx";
+import CalendarEventContainer from "./calendar-event-container.jsx";
+import CurrentTimeIndicator from "./current-time-indicator.jsx";
 
 const BUFFER_DAYS = 7; // in each direction
 const DAYS_IN_VIEW = 7;

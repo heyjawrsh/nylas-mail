@@ -1,8 +1,8 @@
-import MutableQuerySubscription from "./mutable-query-subscription";
-import DatabaseStore from "../stores/database-store";
-import RecentlyReadStore from "../stores/recently-read-store";
-import Matcher from "../attributes/matcher";
-import Thread from "../models/thread";
+import MutableQuerySubscription from "./mutable-query-subscription.js";
+import DatabaseStore from "../stores/database-store.js";
+import RecentlyReadStore from "../stores/recently-read-store.js";
+import Matcher from "../attributes/matcher.js";
+import Thread from "../models/thread.js";
 
 const buildQuery = (categoryIds) => {
 	const unreadMatchers = new Matcher.And([

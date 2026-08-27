@@ -1,7 +1,22 @@
 /* eslint global-require: 0 */
-const getMac = require("getmac").getMac;
+const getmac = require("getmac");
+const getMac = getmac.default || getmac;
 const crypto = require("node:crypto");
-const Raven = require("raven");
+// Optional crash-reporter sink (Nylas private build). When raven is absent
+// the extension reports to the console instead of crashing the boot.
+let Raven = null;
+try {
+	Raven = require("raven");
+} catch (_e) {
+	Raven = {
+		captureException(err, opts) {
+			console.error("[raven-unavailable]", err, opts && opts.extra);
+		},
+		disableConsoleAlerts() {},
+		config() { return {install() { return this }} },
+		install() {},
+	};
+}
 //
 // NOTE: This file is manually copied over from the K2 repo into Nylas Mail.
 // You must manually update both files. We can't use a sym-link because require
@@ -24,7 +39,7 @@ class ErrorReporter {
 
 		if (!this.inSpecMode) {
 			try {
-				getMac((err, macAddress) => {
+				Promise.resolve(typeof getMac === "function" ? getMac() : getmac.default()).then((macAddress) => { const err = null;
 					if (!err && macAddress) {
 						this.deviceHash = crypto
 							.createHash("md5")

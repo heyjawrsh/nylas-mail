@@ -1,5 +1,5 @@
-import Task from "./task";
-import DraftHelpers from "../stores/draft-helpers";
+import Task from "./task.js";
+import DraftHelpers from "../stores/draft-helpers.js";
 
 export default class BaseDraftTask extends Task {
 	static DraftNotFoundError = DraftHelpers.DraftNotFoundError;

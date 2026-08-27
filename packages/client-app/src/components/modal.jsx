@@ -2,8 +2,8 @@ import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import Actions from "../flux/actions";
-import RetinaImg from "./retina-img";
+import Actions from "../flux/actions.js";
+import RetinaImg from "./retina-img.jsx";
 
 class Modal extends React.Component {
 	static propTypes = {

@@ -2,9 +2,9 @@ import _ from "underscore";
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
-import Actions from "../flux/actions";
-import compose from "./decorators/compose";
-import AutoFocuses from "./decorators/auto-focuses";
+import Actions from "../flux/actions.js";
+import compose from "./decorators/compose.js";
+import AutoFocuses from "./decorators/auto-focuses.jsx";
 
 const Directions = {
 	Up: "up",

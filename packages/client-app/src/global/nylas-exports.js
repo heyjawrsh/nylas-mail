@@ -1,8 +1,8 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
-import TaskRegistry from "../registries/task-registry";
-import StoreRegistry from "../registries/store-registry";
-import DatabaseObjectRegistry from "../registries/database-object-registry";
+import TaskRegistry from "../registries/task-registry.js";
+import StoreRegistry from "../registries/store-registry.js";
+import DatabaseObjectRegistry from "../registries/database-object-registry.js";
 
 const resolveExport = (requireValue) => {
 	return requireValue.default || requireValue;
@@ -53,7 +53,7 @@ const lazyLoadAndRegisterTask = (klassName, path) => {
 };
 
 const lazyLoadDeprecated = (prop, path, { instead } = {}) => {
-	const { deprecate } = require("../deprecate-utils");
+import {deprecate} from '../deprecate-utils.js';
 	Object.defineProperty(exports, prop, {
 		get: deprecate(prop, instead, exports, () => {
 			return resolveExport(require(`../${path}`));

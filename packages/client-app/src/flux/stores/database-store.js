@@ -7,17 +7,17 @@ import { remote, ipcRenderer } from "electron";
 import LRU from "lru-cache";
 import { StringUtils, ExponentialBackoffScheduler } from "isomorphic-core";
 
-import NylasStore from "../../global/nylas-store";
-import Utils from "../models/utils";
-import Query from "../models/query";
-import DatabaseChangeRecord from "./database-change-record";
-import DatabaseWriter from "./database-writer";
-import DatabaseSetupQueryBuilder from "./database-setup-query-builder";
+import NylasStore from "../../global/nylas-store.js";
+import Utils from "../models/utils.js";
+import Query from "../models/query.js";
+import DatabaseChangeRecord from "./database-change-record.js";
+import DatabaseWriter from "./database-writer.js";
+import DatabaseSetupQueryBuilder from "./database-setup-query-builder.js";
 import {
 	openDatabase,
 	handleUnrecoverableDatabaseError,
 	databasePath,
-} from "../../database-helpers";
+} from "../../database-helpers.js";
 
 const debug = createDebug("app:RxDB");
 const debugVerbose = createDebug("app:RxDB:all");

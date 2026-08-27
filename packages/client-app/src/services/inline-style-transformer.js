@@ -3,7 +3,7 @@ import { ipcRenderer } from "electron";
 import crypto from "node:crypto";
 import _ from "underscore";
 
-import RegExpUtils from "../regexp-utils";
+import RegExpUtils from "../regexp-utils.js";
 
 let userAgentDefault = null;
 

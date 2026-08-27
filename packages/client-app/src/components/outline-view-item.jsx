@@ -7,9 +7,9 @@ import classnames from "classnames";
 import { Component } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import DisclosureTriangle from "./disclosure-triangle";
-import DropZone from "./drop-zone";
-import RetinaImg from "./retina-img";
+import DisclosureTriangle from "./disclosure-triangle.jsx";
+import DropZone from "./drop-zone.jsx";
+import RetinaImg from "./retina-img.jsx";
 
 /*
  * Enum for counter styles
@@ -267,7 +267,7 @@ class OutlineViewItem extends Component {
 		event.stopPropagation();
 		const item = this.props.item;
 		const contextMenuLabel = item.contextMenuLabel || item.name;
-		const { remote } = require("electron");
+import {remote} from 'electron';
 		const { Menu, MenuItem } = remote;
 		const menu = new Menu();
 

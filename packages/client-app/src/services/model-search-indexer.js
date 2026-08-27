@@ -1,5 +1,5 @@
-import DatabaseStore from "../flux/stores/database-store";
-import SearchIndexScheduler from "./search-index-scheduler";
+import DatabaseStore from "../flux/stores/database-store.js";
+import SearchIndexScheduler from "./search-index-scheduler.js";
 
 const INDEXING_PAGE_SIZE = 1000;
 const INDEXING_PAGE_DELAY = 1000;

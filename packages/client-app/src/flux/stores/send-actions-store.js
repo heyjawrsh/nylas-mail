@@ -1,9 +1,9 @@
 import _ from "underscore";
 import _str from "underscore.string";
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import SendDraftTask from "../tasks/send-draft-task";
-import * as ExtensionRegistry from "../../registries/extension-registry";
+import Actions from "../actions.js";
+import SendDraftTask from "../tasks/send-draft-task.js";
+import * as ExtensionRegistry from "../../registries/extension-registry.js";
 
 const ACTION_CONFIG_KEY = "core.sending.defaultSendType";
 const DefaultSendActionKey = "send";

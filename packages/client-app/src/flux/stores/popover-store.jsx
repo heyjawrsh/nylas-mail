@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import NylasStore from "nylas-store";
-import Actions from "../actions";
-import FixedPopover from "../../components/fixed-popover";
+import Actions from "../actions.js";
+import FixedPopover from "../../components/fixed-popover.jsx";
 
 const CONTAINER_ID = "nylas-popover-container";
 

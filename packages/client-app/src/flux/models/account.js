@@ -1,6 +1,6 @@
 /* eslint global-require:0 */
-import Attributes from "../attributes";
-import ModelWithMetadata from "./model-with-metadata";
+import Attributes from "../attributes.js";
+import ModelWithMetadata from "./model-with-metadata.js";
 
 let CategoryStore = null;
 let Contact = null;

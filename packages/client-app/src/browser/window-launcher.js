@@ -1,4 +1,4 @@
-import NylasWindow from "./nylas-window";
+import NylasWindow from "./nylas-window.js";
 
 const DEBUG_SHOW_HOT_WINDOW = process.env.SHOW_HOT_WINDOW || false;
 let winNum = 0;

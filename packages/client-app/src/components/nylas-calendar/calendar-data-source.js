@@ -1,7 +1,7 @@
 import Rx from "rx-lite";
-import Event from "../../flux/models/event";
-import Matcher from "../../flux/attributes/matcher";
-import DatabaseStore from "../../flux/stores/database-store";
+import Event from "../../flux/models/event.js";
+import Matcher from "../../flux/attributes/matcher.js";
+import DatabaseStore from "../../flux/stores/database-store.js";
 
 export default class CalendarDataSource {
 	buildObservable({ startTime, endTime, disabledCalendars }) {

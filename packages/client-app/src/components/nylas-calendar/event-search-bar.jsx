@@ -1,7 +1,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { Event, DatabaseStore } from "nylas-exports";
-import SearchBar from "../search-bar";
+import SearchBar from "../search-bar.jsx";
 
 class EventSearchBar extends Component {
 	static displayName = "EventSearchBar";

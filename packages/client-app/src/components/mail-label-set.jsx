@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FocusedPerspectiveStore from "../flux/stores/focused-perspective-store";
-import CategoryStore from "../flux/stores/category-store";
-import MessageStore from "../flux/stores/message-store";
-import AccountStore from "../flux/stores/account-store";
-import { MailLabel } from "./mail-label";
-import Actions from "../flux/actions";
-import InjectedComponentSet from "./injected-component-set";
+import CategoryStore from "../flux/stores/category-store.js";
+import MessageStore from "../flux/stores/message-store.js";
+import AccountStore from "../flux/stores/account-store.js";
+import { MailLabel } from "./mail-label.jsx";
+import Actions from "../flux/actions.js";
+import InjectedComponentSet from "./injected-component-set.jsx";
 
 const LabelComponentCache = {};
 

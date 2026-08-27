@@ -1,4 +1,4 @@
-import DOMWalkers from "../dom-walkers";
+import DOMWalkers from "../dom-walkers.js";
 
 /*
  * There are semi-common cases where immediately before a blockquote, we

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import ComposerExtension from "../../extensions/composer-extension";
-import OverlaidComponents from "./overlaid-components";
-import CustomContenteditableComponents from "./custom-contenteditable-components";
+import ComposerExtension from "../../extensions/composer-extension.js";
+import OverlaidComponents from "./overlaid-components.jsx";
+import CustomContenteditableComponents from "./custom-contenteditable-components.js";
 
 // In this code, "anchor" refers to the "img" tag used in the draft while the
 // user is editing it.

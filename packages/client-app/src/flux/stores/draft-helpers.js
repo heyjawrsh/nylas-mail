@@ -1,12 +1,12 @@
 import { DatabaseStore } from "nylas-exports";
-import Message from "../models/message";
-import * as ExtensionRegistry from "../../registries/extension-registry";
-import DOMUtils from "../../dom-utils";
+import Message from "../models/message.js";
+import * as ExtensionRegistry from "../../registries/extension-registry.js";
+import DOMUtils from "../../dom-utils.js";
 
-import QuotedHTMLTransformer from "../../services/quoted-html-transformer";
-import InlineStyleTransformer from "../../services/inline-style-transformer";
-import SanitizeTransformer from "../../services/sanitize-transformer";
-import MessageUtils from "../models/message-utils";
+import QuotedHTMLTransformer from "../../services/quoted-html-transformer.js";
+import InlineStyleTransformer from "../../services/inline-style-transformer.js";
+import SanitizeTransformer from "../../services/sanitize-transformer.js";
+import MessageUtils from "../models/message-utils.js";
 
 class DraftHelpers {
 	AllowedTransformFields = ["to", "from", "cc", "bcc", "subject", "body"];

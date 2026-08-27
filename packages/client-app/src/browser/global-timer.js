@@ -1,4 +1,4 @@
-import Utils from "../../src/flux/models/utils";
+import Utils from "../../src/flux/models/utils.js";
 const BUFFER_SIZE = 100;
 
 /**

@@ -1,8 +1,8 @@
 import _ from "underscore";
-import Message from "../models/message";
-import MessageStore from "./message-store";
-import DatabaseStore from "./database-store";
-import SanitizeTransformer from "../../services/sanitize-transformer";
+import Message from "../models/message.js";
+import MessageStore from "./message-store.js";
+import DatabaseStore from "./database-store.js";
+import SanitizeTransformer from "../../services/sanitize-transformer.js";
 
 const SanitizeSettings = Object.assign(
 	{},

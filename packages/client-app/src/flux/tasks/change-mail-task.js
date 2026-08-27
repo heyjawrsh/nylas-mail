@@ -1,13 +1,13 @@
 import _ from "underscore";
-import Task from "./task";
-import Thread from "../models/thread";
-import Message from "../models/message";
-import NylasAPI from "../nylas-api";
-import SyncbackTaskAPIRequest from "../syncback-task-api-request";
-import DatabaseStore from "../stores/database-store";
-import { APIError } from "../errors";
-import EnsureMessageInSentFolderTask from "./ensure-message-in-sent-folder-task";
-import BaseDraftTask from "./base-draft-task";
+import Task from "./task.js";
+import Thread from "../models/thread.js";
+import Message from "../models/message.js";
+import NylasAPI from "../nylas-api.js";
+import SyncbackTaskAPIRequest from "../syncback-task-api-request.js";
+import DatabaseStore from "../stores/database-store.js";
+import { APIError } from "../errors.js";
+import EnsureMessageInSentFolderTask from "./ensure-message-in-sent-folder-task.js";
+import BaseDraftTask from "./base-draft-task.js";
 
 /*
 Public: The ChangeMailTask is a base class for all tasks that modify sets

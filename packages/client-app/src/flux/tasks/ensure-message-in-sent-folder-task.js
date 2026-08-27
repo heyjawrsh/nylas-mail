@@ -1,9 +1,9 @@
-import Task from "./task";
-import { APIError } from "../errors";
-import Actions from "../actions";
-import NylasAPI from "../nylas-api";
-import SyncbackTaskAPIRequest from "../syncback-task-api-request";
-import SendDraftTask from "./send-draft-task";
+import Task from "./task.js";
+import { APIError } from "../errors.js";
+import Actions from "../actions.js";
+import NylasAPI from "../nylas-api.js";
+import SyncbackTaskAPIRequest from "../syncback-task-api-request.js";
+import SendDraftTask from "./send-draft-task.js";
 
 export default class EnsureMessageInSentFolderTask extends Task {
 	constructor(opts = {}) {

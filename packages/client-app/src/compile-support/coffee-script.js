@@ -1,40 +1,4 @@
-var crypto = require("node:crypto");
-var path = require("node:path");
-var CoffeeScript = null;
-
-exports.shouldCompile = () => true;
-
-exports.getCachePath = (sourceCode) =>
-	path.join(
-		"coffee",
-		`${crypto.createHash("sha1").update(sourceCode, "utf8").digest("hex")}.js`,
-	);
-
-exports.compile = (sourceCode, filePath) => {
-	if (!CoffeeScript) {
-		var previousPrepareStackTrace = Error.prepareStackTrace;
-		CoffeeScript = require("coffee-react");
-
-		// When it loads, coffee-script reassigns Error.prepareStackTrace. We have
-		// already reassigned it via the 'source-map-support' module, so we need
-		// to set it back.
-		Error.prepareStackTrace = previousPrepareStackTrace;
-	}
-
-	if (process.platform === "win32") {
-		filePath = `file:///${path.resolve(filePath).replace(/\\/g, "/")}`;
-	}
-
-	var output = CoffeeScript.compile(sourceCode, {
-		filename: filePath,
-		sourceFiles: [filePath],
-		sourceMap: true,
-	});
-
-	var js = output.js;
-	js += "\n";
-	js += "//# sourceMappingURL=data:application/json;base64,";
-	js += new Buffer(output.v3SourceMap).toString("base64");
-	js += "\n";
-	return js;
-};
+// CoffeeScript/CJSX/TS sources were fully migrated to native JS in the 2026
+// modernization. Identity "compiler" retained for compile-cache compatibility.
+exports.shouldCompile = () => false;
+exports.compile = (sourceCode) => sourceCode;

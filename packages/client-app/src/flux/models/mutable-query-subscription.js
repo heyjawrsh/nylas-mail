@@ -1,4 +1,4 @@
-import QuerySubscription from "./query-subscription";
+import QuerySubscription from "./query-subscription.js";
 
 class MutableQuerySubscription extends QuerySubscription {
 	replaceQuery(nextQuery) {

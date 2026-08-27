@@ -2,9 +2,9 @@ import { ipcRenderer } from "electron";
 import _ from "underscore";
 import NylasStore from "nylas-store";
 import Immutable from "immutable";
-import WorkspaceStore from "./workspace-store";
+import WorkspaceStore from "./workspace-store.js";
 import FocusedPerspectiveStore from "./focused-perspective-store";
-import Actions from "../actions";
+import Actions from "../actions.js";
 
 const MAIN_TAB_ITEM_ID = "General";
 

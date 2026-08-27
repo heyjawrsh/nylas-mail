@@ -1,7 +1,7 @@
 import _ from "underscore";
 import NylasStore from "nylas-store";
-import AccountStore from "./account-store";
-import CategoryStore from "./category-store";
+import AccountStore from "./account-store.js";
+import CategoryStore from "./category-store.js";
 
 /**
  * FolderSyncProgressStore keeps track of the sync state per account, and will

@@ -3,11 +3,11 @@
 import _ from "underscore";
 
 import NylasStore from "nylas-store";
-import KeyManager from "../../key-manager";
-import Actions from "../actions";
-import Account from "../models/account";
-import Utils from "../models/utils";
-import DatabaseStore from "./database-store";
+import KeyManager from "../../key-manager.js";
+import Actions from "../actions.js";
+import Account from "../models/account.js";
+import Utils from "../models/utils.js";
+import DatabaseStore from "./database-store.js";
 
 const configAccountsKey = "nylas.accounts";
 const configVersionKey = "nylas.accountsVersion";
@@ -416,8 +416,8 @@ class AccountStore extends NylasStore {
 
 	// Private: Load fake data from a directory for taking nice screenshots
 	_importFakeData = (dir) => {
-		const fs = require("fs-plus");
-		const path = require("node:path");
+import fs from 'fs-plus';
+import path from 'node:path';
 		const Message = require("../models/message").default;
 		const Thread = require("../models/thread").default;
 

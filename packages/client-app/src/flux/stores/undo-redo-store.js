@@ -1,7 +1,7 @@
 import _ from "underscore";
 import NylasStore from "nylas-store";
 
-import Actions from "../actions";
+import Actions from "../actions.js";
 
 class UndoRedoStore extends NylasStore {
 	constructor() {

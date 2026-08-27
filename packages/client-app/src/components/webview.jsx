@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import classnames from "classnames";
 import networkErrors from "chromium-net-errors";
 
-import RetinaImg from "./retina-img";
+import RetinaImg from "./retina-img.jsx";
 
 class InitialLoadingCover extends React.Component {
 	static propTypes = {

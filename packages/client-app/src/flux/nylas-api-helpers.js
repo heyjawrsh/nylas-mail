@@ -1,10 +1,10 @@
 /* eslint global-require: 0 */
 import _ from "underscore";
-import NylasAPI from "./nylas-api";
-import NylasAPIRequest from "./nylas-api-request";
-import DatabaseStore from "./stores/database-store";
-import Message from "./models/message";
-import Thread from "./models/thread";
+import NylasAPI from "./nylas-api.js";
+import NylasAPIRequest from "./nylas-api-request.js";
+import DatabaseStore from "./stores/database-store.js";
+import Message from "./models/message.js";
+import Thread from "./models/thread.js";
 
 function attachMetadataToResponse(jsons, metadataToAttach) {
 	if (!metadataToAttach) return;
@@ -165,7 +165,7 @@ that could not be found and purges it from local cache.
 Handles: /account/<nid>/<collection>/<id>
 */
 export function handleModel404(modelUrl) {
-	const url = require("node:url");
+import url from 'node:url';
 	const { pathname } = url.parse(modelUrl, true);
 	const components = pathname.split("/");
 

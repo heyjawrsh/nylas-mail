@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
 import { FolderSyncProgressStore } from "nylas-exports";
-import Model from "./model";
-import Attributes from "../attributes";
+import Model from "./model.js";
+import Attributes from "../attributes.js";
 let AccountStore = null;
 
 // We look for a few standard categories and display them in the Mailboxes

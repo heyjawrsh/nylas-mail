@@ -1,4 +1,4 @@
-import Attribute from "./attribute";
+import Attribute from "./attribute.js";
 
 /*
 Public: The value of this attribute is always a boolean. Null values are coerced to false.
