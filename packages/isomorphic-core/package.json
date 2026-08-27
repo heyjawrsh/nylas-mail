@@ -7,9 +7,9 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
-    "imap": "https://codeload.github.com/jstejada/node-imap/tar.gz/fix-parse-body-list",
     "he": "^1.2.0",
     "iconv-lite": "^0.7.0",
+    "imapflow": "^1.7.6",
     "joi": "^17.13.3",
     "libmime": "^5.3.7",
     "mkdirp": "^3.0.1",

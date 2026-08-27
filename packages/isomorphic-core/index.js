@@ -4,7 +4,7 @@ module.exports = {
     Gmail: 'gmail',
     IMAP: 'imap',
   },
-  Imap: require('imap'),
+  Imap: require('imapflow').ImapFlow,
   Errors: require('./src/errors'),
   IMAPErrors: require('./src/imap-errors'),
   SMTPErrors: require('./src/smtp-errors'),

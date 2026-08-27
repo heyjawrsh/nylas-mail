@@ -1,15 +1,20 @@
-import constants from 'constants';
+// TLS policy for all mail connections.
+//
+// 2026 modernization: the old options pinned `SSLv23_method` plus a pile of
+// secureOptions flags. Node's TLS stack now does the right thing by default;
+// the only floor we enforce is a minimum of TLS 1.2 (TLS 1.3 negotiated
+// automatically when the server supports it).
+//
+// SECURE_TLS_OPTIONS is the default: certificates are verified.
+// INSECURE_TLS_OPTIONS exists ONLY for providers with self-signed
+// certificates, and must be an explicit opt-in (imap_allow_insecure_ssl).
 
-const INSECURE_TLS_OPTIONS = {
-  secureProtocol: 'SSLv23_method',
+export const SECURE_TLS_OPTIONS = {
+  minVersion: 'TLSv1.2',
+  rejectUnauthorized: true,
+}
+
+export const INSECURE_TLS_OPTIONS = {
+  minVersion: 'TLSv1.2',
   rejectUnauthorized: false,
 }
-
-const SECURE_TLS_OPTIONS = {
-  secureProtocol: 'SSLv23_method',
-  // See similar code in cloud-core for explanation of each flag:
-  // https://github.com/nylas/cloud-core/blob/e70f9e023b880090564b62fca8532f56ec77bfc3/sync-engine/inbox/auth/generic.py#L397-L435
-  secureOptions: constants.SSL_OP_NO_SSLv3 | constants.SSL_OP_NO_SSLv2 | constants.SSL_OP_NO_COMPRESSION | constants.SSL_OP_CIPHER_SERVER_PREFERENCE | constants.SSL_OP_SINGLE_DH_USE | constants.SSL_OP_SINGLE_ECDH_USE,
-}
-
-export {SECURE_TLS_OPTIONS, INSECURE_TLS_OPTIONS};
