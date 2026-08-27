@@ -6,7 +6,7 @@
  */
 let ThemePackage;
 const Q = require("q");
-const Package = require("./package");
+const Package = require("./package.js");
 
 module.exports = ThemePackage = class ThemePackage extends Package {
 	getType() {

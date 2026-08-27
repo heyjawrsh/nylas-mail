@@ -2,9 +2,9 @@
 const path = require("node:path");
 const fs = require("fs-plus");
 
-const babelCompiler = require("./compile-support/babel");
-const coffeeCompiler = require("./compile-support/coffee-script");
-const typescriptCompiler = require("./compile-support/typescript");
+const babelCompiler = require("./compile-support/babel.js");
+const coffeeCompiler = require("./compile-support/coffee-script.js");
+const typescriptCompiler = require("./compile-support/typescript.js");
 
 const COMPILERS = {
 	".jsx": babelCompiler,

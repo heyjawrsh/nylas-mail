@@ -5,7 +5,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const NylasAPI = require("./flux/nylas-api").default;
+const NylasAPI = require("./flux/nylas-api.js").default;
 const nock = require("nock");
 
 // We be wrecking havok in your code

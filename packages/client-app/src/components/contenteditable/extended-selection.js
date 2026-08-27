@@ -8,7 +8,7 @@
  */
 const _ = require("underscore");
 const { DOMUtils } = require("nylas-exports");
-const ExportedSelection = require("./exported-selection").default;
+const ExportedSelection = require("./exported-selection.js").default;
 
 // Convenience methods over the DOM's Selection object
 // https://developer.mozilla.org/en-US/docs/Web/API/Selection

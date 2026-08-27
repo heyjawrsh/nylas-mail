@@ -5,6 +5,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 let KeyManager;
 const { Utils, React, Actions } = require("nylas-exports");
 const PGPKeyStore = require("./pgp-key-store");

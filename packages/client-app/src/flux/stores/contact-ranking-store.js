@@ -7,8 +7,8 @@
  */
 const Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
-const DatabaseStore = require("./database-store").default;
-const AccountStore = require("./account-store").default;
+const DatabaseStore = require("./database-store.js").default;
+const AccountStore = require("./account-store.js").default;
 
 class ContactRankingStore extends NylasStore {
 	constructor() {

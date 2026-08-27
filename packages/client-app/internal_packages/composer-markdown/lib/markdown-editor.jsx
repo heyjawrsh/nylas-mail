@@ -4,6 +4,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const Utils = require("./utils");
 const SimpleMDE = require("simplemde");
 const { React, ReactDOM, QuotedHTMLTransformer } = require("nylas-exports");

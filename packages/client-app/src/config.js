@@ -10,7 +10,7 @@
  */
 let app, Config, webContentsId, getErrorLogger;
 let _ = require("underscore");
-const _configUtils = require("./config-utils");
+const _configUtils = require("./config-utils.js");
 _ = _.extend(_, _configUtils.default || _configUtils);
 let remote = null;
 if (process.type === "renderer") {
@@ -22,7 +22,7 @@ const _fs = require("fs-plus");
 const EmitterMixin = require("emissary").Emitter;
 const { CompositeDisposable, Disposable, Emitter } = require("event-kit");
 
-const Color = require("./color");
+const Color = require("./color.js");
 
 if (process.type === "renderer") {
 	app = remote.getGlobal("application");

@@ -6,9 +6,10 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
-const SwipeContainer = require("./swipe-container").default;
+const SwipeContainer = require("./swipe-container.jsx").default;
 const { Utils } = require("nylas-exports");
 
 class ListTabularItem extends React.Component {

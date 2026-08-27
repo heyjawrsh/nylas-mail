@@ -3,8 +3,11 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const { Listener, Publisher } = require("../flux/modules/reflux-coffee");
-const CoffeeHelpers = require("../flux/coffee-helpers");
+import RefluxCoffee from "../flux/modules/reflux-coffee.js";
+
+const Listener = RefluxCoffee?.Listener ?? RefluxCoffee?.default?.Listener;
+const Publisher = RefluxCoffee?.Publisher ?? RefluxCoffee?.default?.Publisher;
+import CoffeeHelpers from "../flux/coffee-helpers.js";
 
 // A simple Flux implementation
 class NylasStore {
@@ -17,4 +20,4 @@ class NylasStore {
 }
 NylasStore.initClass();
 
-module.exports = NylasStore;
+export default NylasStore;

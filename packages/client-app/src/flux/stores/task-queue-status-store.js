@@ -8,9 +8,9 @@
 const _ = require("underscore");
 const Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
-const DatabaseStore = require("./database-store").default;
-const _AccountStore = require("./account-store").default;
-const TaskQueue = require("./task-queue");
+const DatabaseStore = require("./database-store.js").default;
+const _AccountStore = require("./account-store.js").default;
+const TaskQueue = require("./task-queue.js");
 
 // Public: The TaskQueueStatusStore allows you to inspect the task queue from
 // any window, even though the queue itself only runs in the work window.

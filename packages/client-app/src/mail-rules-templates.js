@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const NylasObservables = require("nylas-observables");
-const { Template } = require("./components/scenario-editor-models");
+const { Template } = require("./components/scenario-editor-models.js");
 
 const ConditionTemplates = [
 	new Template("from", Template.Type.String, {

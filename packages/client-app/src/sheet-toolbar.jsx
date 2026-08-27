@@ -8,12 +8,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const React = require("react");
 const ReactDOM = require("react-dom");
-const _Sheet = require("./sheet");
-const Flexbox = require("./components/flexbox").default;
-const RetinaImg = require("./components/retina-img").default;
-const Utils = require("./flux/models/utils");
+const _Sheet = require("./sheet.jsx");
+const Flexbox = require("./components/flexbox.jsx").default;
+const RetinaImg = require("./components/retina-img.jsx").default;
+const Utils = require("./flux/models/utils.js");
 const { remote } = require("electron");
 const _str = require("underscore.string");
 const _ = require("underscore");
@@ -89,11 +90,11 @@ class ToolbarBack extends React.Component {
 		this._onClick = this._onClick.bind(this);
 		this.props = props;
 		if (Category == null) {
-			Category = require("./flux/models/category").default;
+			Category = require("./flux/models/category.js").default;
 		}
 		if (FocusedPerspectiveStore == null) {
 			FocusedPerspectiveStore =
-				require("./flux/stores/focused-perspective-store").default;
+				require("./flux/stores/focused-perspective-store.js").default;
 		}
 		this.state = { categoryName: FocusedPerspectiveStore.current().name };
 	}

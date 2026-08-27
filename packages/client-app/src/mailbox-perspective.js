@@ -11,22 +11,23 @@
  */
 const _ = require("underscore");
 
-const Utils = require("./flux/models/utils");
-const TaskFactory = require("./flux/tasks/task-factory").default;
-const AccountStore = require("./flux/stores/account-store").default;
-const CategoryStore = require("./flux/stores/category-store");
-const DatabaseStore = require("./flux/stores/database-store").default;
-const OutboxStore = require("./flux/stores/outbox-store").default;
-const ThreadCountsStore = require("./flux/stores/thread-counts-store");
-const _RecentlyReadStore = require("./flux/stores/recently-read-store").default;
+const Utils = require("./flux/models/utils.js");
+const TaskFactory = require("./flux/tasks/task-factory.js").default;
+const AccountStore = require("./flux/stores/account-store.js").default;
+const CategoryStore = require("./flux/stores/category-store.js");
+const DatabaseStore = require("./flux/stores/database-store.js").default;
+const OutboxStore = require("./flux/stores/outbox-store.js").default;
+const ThreadCountsStore = require("./flux/stores/thread-counts-store.js");
+const _RecentlyReadStore =
+	require("./flux/stores/recently-read-store.js").default;
 const MutableQuerySubscription =
-	require("./flux/models/mutable-query-subscription").default;
+	require("./flux/models/mutable-query-subscription.js").default;
 const UnreadQuerySubscription =
-	require("./flux/models/unread-query-subscription").default;
-const _Matcher = require("./flux/attributes/matcher").default;
-const Thread = require("./flux/models/thread").default;
-const Category = require("./flux/models/category").default;
-const Actions = require("./flux/actions").default;
+	require("./flux/models/unread-query-subscription.js").default;
+const _Matcher = require("./flux/attributes/matcher.js").default;
+const Thread = require("./flux/models/thread.js").default;
+const Category = require("./flux/models/category.js").default;
+const Actions = require("./flux/actions.js").default;
 let ChangeUnreadTask = null;
 
 // This is a class cluster. Subclasses are not for external use!
@@ -354,7 +355,7 @@ class StarredMailboxPerspective extends MailboxPerspective {
 
 	receiveThreads(threadIds) {
 		const ChangeStarredTask =
-			require("./flux/tasks/change-starred-task").default;
+			require("./flux/tasks/change-starred-task.js").default;
 		const task = new ChangeStarredTask({
 			threads: threadIds,
 			starred: true,
@@ -521,7 +522,7 @@ class CategoryMailboxPerspective extends MailboxPerspective {
 
 	receiveThreads(threadIds) {
 		const FocusedPerspectiveStore =
-			require("./flux/stores/focused-perspective-store").default;
+			require("./flux/stores/focused-perspective-store.js").default;
 		const current = FocusedPerspectiveStore.current();
 
 		// This assumes that the we don't have more than one category per accountId
@@ -646,7 +647,7 @@ class UnreadMailboxPerspective extends CategoryMailboxPerspective {
 	receiveThreads(threadIds) {
 		super.receiveThreads(threadIds);
 		if (ChangeUnreadTask == null) {
-			ChangeUnreadTask = require("./flux/tasks/change-unread-task").default;
+			ChangeUnreadTask = require("./flux/tasks/change-unread-task.js").default;
 		}
 		const task = new ChangeUnreadTask({
 			threads: threadIds,
@@ -658,7 +659,7 @@ class UnreadMailboxPerspective extends CategoryMailboxPerspective {
 
 	tasksForRemovingItems(threads, ruleset, source) {
 		if (ChangeUnreadTask == null) {
-			ChangeUnreadTask = require("./flux/tasks/change-unread-task").default;
+			ChangeUnreadTask = require("./flux/tasks/change-unread-task.js").default;
 		}
 		const tasks = super.tasksForRemovingItems(threads, ruleset);
 		tasks.push(

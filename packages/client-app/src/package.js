@@ -19,11 +19,11 @@ const EmitterMixin = require("emissary").Emitter;
 const { Emitter, CompositeDisposable } = require("event-kit");
 const Q = require("q");
 
-const ModuleCache = require("./module-cache");
+const ModuleCache = require("./module-cache.js");
 
-const TaskRegistry = require("./registries/task-registry").default;
+const TaskRegistry = require("./registries/task-registry.js").default;
 const DatabaseObjectRegistry =
-	require("./registries/database-object-registry").default;
+	require("./registries/database-object-registry.js").default;
 
 try {
 	let left;

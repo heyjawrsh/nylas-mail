@@ -8,13 +8,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const React = require("react");
 const ReactCSSTransitionGroup = require("./css-transition-group-compat.jsx");
 const _ = require("underscore");
 
 const { Utils, Actions } = require("nylas-exports");
-const InjectedComponentSet = require("./injected-component-set");
-const _Flexbox = require("./flexbox").default;
+const InjectedComponentSet = require("./injected-component-set.jsx");
+const _Flexbox = require("./flexbox.jsx").default;
 
 /*
 Public: MultiselectActionBar is a simple component that can be placed in a {Sheet} Toolbar.

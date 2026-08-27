@@ -11,7 +11,7 @@ const _ = require("underscore");
 const _Q = require("q");
 const semver = require("semver");
 
-const BufferedProcess = require("./buffered-process");
+const BufferedProcess = require("./buffered-process.js");
 
 module.exports = APMWrapper = class APMWrapper {
 	constructor() {

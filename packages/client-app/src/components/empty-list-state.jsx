@@ -7,12 +7,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
 const ReactDOM = require("react-dom");
 const classNames = require("classnames");
-const RetinaImg = require("./retina-img").default;
-const _EventedIFrame = require("./evented-iframe");
+const RetinaImg = require("./retina-img.jsx").default;
+const _EventedIFrame = require("./evented-iframe.jsx");
 const {
 	FolderSyncProgressStore,
 	FocusedPerspectiveStore,

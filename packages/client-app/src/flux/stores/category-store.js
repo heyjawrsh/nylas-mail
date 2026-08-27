@@ -10,9 +10,9 @@
 const _ = require("underscore");
 const _Rx = require("rx-lite");
 const NylasStore = require("nylas-store");
-const AccountStore = require("./account-store").default;
-const Account = require("../models/account").default;
-const { StandardCategoryNames } = require("../models/category").default;
+const AccountStore = require("./account-store.js").default;
+const Account = require("../models/account.js").default;
+const { StandardCategoryNames } = require("../models/category.js").default;
 const { Categories } = require("nylas-observables");
 
 const asAccount = (a) => {

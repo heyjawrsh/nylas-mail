@@ -9,19 +9,19 @@
 const NylasStore = require("nylas-store");
 const _ = require("underscore");
 const Rx = require("rx-lite");
-const _AccountStore = require("./account-store").default;
-const DatabaseStore = require("./database-store").default;
-const TaskQueueStatusStore = require("./task-queue-status-store");
+const _AccountStore = require("./account-store.js").default;
+const DatabaseStore = require("./database-store.js").default;
+const TaskQueueStatusStore = require("./task-queue-status-store.js");
 const ReprocessMailRulesTask =
-	require("../tasks/reprocess-mail-rules-task").default;
-const Utils = require("../models/utils");
-const Actions = require("../actions").default;
+	require("../tasks/reprocess-mail-rules-task.js").default;
+const Utils = require("../models/utils.js");
+const Actions = require("../actions.js").default;
 
 const {
 	ConditionMode,
 	ConditionTemplates,
 	ActionTemplates,
-} = require("../../mail-rules-templates");
+} = require("../../mail-rules-templates.js");
 
 const RulesJSONBlobKey = "MailRules-V2";
 

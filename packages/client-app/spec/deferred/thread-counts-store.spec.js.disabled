@@ -1,0 +1,131 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const mocks = vi.hoisted(() => ({
+	addMutationHook: vi.fn(),
+	listen: vi.fn(),
+	inTransaction: vi.fn(),
+	query: vi.fn(() => Promise.resolve([])),
+}));
+
+vi.mock("../src/flux/stores/database-store.js", () => ({
+	default: {
+		addMutationHook: mocks.addMutationHook,
+		listen: mocks.listen,
+		inTransaction: mocks.inTransaction,
+		_query: mocks.query,
+	},
+}));
+vi.mock("../src/flux/models/thread.js", () => ({
+	default: class Thread {},
+}));
+
+import threadCountsStore from "../src/flux/stores/thread-counts-store.js";
+
+describe("ThreadCountsStore", () => {
+	let store;
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		mocks.query.mockResolvedValue([]);
+		NylasEnv.isMainWindow.mockReturnValue(false);
+		NylasEnv.isWorkWindow.mockReturnValue(false);
+		store = new threadCountsStore.constructor();
+		store.trigger = vi.fn();
+		store.reset = vi.fn();
+	});
+
+	it("returns null when a category has no unread count", () => {
+		expect(store.unreadCountForCategoryId("missing")).toBeNull();
+	});
+
+	it("returns null when a category has no total count", () => {
+		expect(store.totalCountForCategoryId("missing")).toBeNull();
+	});
+
+	it("returns the unread count for a category", () => {
+		store._counts.inbox = { unread: 3, total: 8 };
+		expect(store.unreadCountForCategoryId("inbox")).toBe(3);
+	});
+
+	it("returns the total count for a category", () => {
+		store._counts.inbox = { unread: 3, total: 8 };
+		expect(store.totalCountForCategoryId("inbox")).toBe(8);
+	});
+
+	it("preserves zero unread counts", () => {
+		store._counts.inbox = { unread: 0, total: 2 };
+		expect(store.unreadCountForCategoryId("inbox")).toBe(0);
+	});
+
+	it("preserves zero total counts", () => {
+		store._counts.inbox = { unread: 0, total: 0 };
+		expect(store.totalCountForCategoryId("inbox")).toBe(0);
+	});
+
+	it("derives counts from database rows", async () => {
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: 2, total: 5 }]);
+		await store._onCountsChanged();
+		expect(store._counts).toEqual({ inbox: { unread: 2, total: 5 } });
+	});
+
+	it("derives counts for multiple categories", async () => {
+		mocks.query.mockResolvedValue([
+			{ category_id: "inbox", unread: 2, total: 5 },
+			{ category_id: "sent", unread: 0, total: 7 },
+		]);
+		await store._onCountsChanged();
+		expect(store._counts.sent).toEqual({ unread: 0, total: 7 });
+	});
+
+	it("queries the ThreadCounts table", async () => {
+		mocks.query.mockResolvedValue([]);
+		await store._onCountsChanged();
+		expect(mocks.query).toHaveBeenCalledWith("SELECT * FROM `ThreadCounts`");
+	});
+
+	it("triggers subscribers after counts change", async () => {
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: 1, total: 1 }]);
+		await store._onCountsChanged();
+		expect(store.trigger).toHaveBeenCalledOnce();
+	});
+
+	it("does not trigger when counts are unchanged", async () => {
+		store._counts = { inbox: { unread: 1, total: 2 } };
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: 1, total: 2 }]);
+		await store._onCountsChanged();
+		expect(store.trigger).not.toHaveBeenCalled();
+	});
+
+	it("removes categories absent from the latest rows", async () => {
+		store._counts = { inbox: { unread: 1, total: 2 } };
+		mocks.query.mockResolvedValue([]);
+		await store._onCountsChanged();
+		expect(store._counts).toEqual({});
+	});
+
+	it("reports a negative unread count", async () => {
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: -1, total: 2 }]);
+		await store._onCountsChanged();
+		expect(NylasEnv.reportError).toHaveBeenCalledWith(expect.objectContaining({ message: "Assertion Failure: Negative Count" }));
+	});
+
+	it("reports a negative total count", async () => {
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: 0, total: -1 }]);
+		await store._onCountsChanged();
+		expect(NylasEnv.reportError).toHaveBeenCalledOnce();
+	});
+
+	it("resets counts after detecting a negative value", async () => {
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: -1, total: 2 }]);
+		await store._onCountsChanged();
+		expect(store.reset).toHaveBeenCalledOnce();
+	});
+
+	it("does not publish invalid negative counts", async () => {
+		store._counts = { inbox: { unread: 1, total: 2 } };
+		mocks.query.mockResolvedValue([{ category_id: "inbox", unread: -1, total: 2 }]);
+		await store._onCountsChanged();
+		expect(store._counts).toEqual({ inbox: { unread: 1, total: 2 } });
+		expect(store.trigger).not.toHaveBeenCalled();
+	});
+});

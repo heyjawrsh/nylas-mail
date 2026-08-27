@@ -8,11 +8,11 @@
  */
 const React = require("react");
 const ReactCSSTransitionGroup = require("./components/css-transition-group-compat.jsx");
-const Sheet = require("./sheet");
-const Toolbar = require("./sheet-toolbar");
-const Flexbox = require("./components/flexbox").default;
-const _RetinaImg = require("./components/retina-img").default;
-const InjectedComponentSet = require("./components/injected-component-set");
+const Sheet = require("./sheet.jsx");
+const Toolbar = require("./sheet-toolbar.jsx");
+const Flexbox = require("./components/flexbox.jsx").default;
+const _RetinaImg = require("./components/retina-img.jsx").default;
+const InjectedComponentSet = require("./components/injected-component-set.jsx");
 const _ = require("underscore");
 
 const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");

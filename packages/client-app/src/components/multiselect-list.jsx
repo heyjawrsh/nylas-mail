@@ -8,12 +8,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
 const ReactDOM = require("react-dom");
 const classNames = require("classnames");
-const ListTabular = require("./list-tabular").default;
-const Spinner = require("./spinner");
+const ListTabular = require("./list-tabular.jsx").default;
+const Spinner = require("./spinner.jsx");
 const {
 	Actions,
 	Utils,
@@ -23,8 +24,8 @@ const {
 const { KeyCommandsRegion } = require("nylas-component-kit");
 const { EventEmitter } = require("node:events");
 
-const MultiselectListInteractionHandler = require("./multiselect-list-interaction-handler");
-const MultiselectSplitInteractionHandler = require("./multiselect-split-interaction-handler");
+const MultiselectListInteractionHandler = require("./multiselect-list-interaction-handler.js");
+const MultiselectSplitInteractionHandler = require("./multiselect-split-interaction-handler.js");
 
 /*
 Public: MultiselectList wraps {ListTabular} and makes it easy to present a

@@ -7,8 +7,8 @@
  */
 const _ = require("underscore");
 
-const { Listener, Publisher } = require("../flux/modules/reflux-coffee");
-const CoffeeHelpers = require("../flux/coffee-helpers");
+const { Listener, Publisher } = require("../flux/modules/reflux-coffee.js");
+const CoffeeHelpers = require("../flux/coffee-helpers.js");
 
 const DeprecatedRoles = {
 	"thread:BulkAction": "ThreadActionsToolbarButton",

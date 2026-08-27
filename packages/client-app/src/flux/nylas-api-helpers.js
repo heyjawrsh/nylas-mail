@@ -23,17 +23,17 @@ function attachMetadataToResponse(jsons, metadataToAttach) {
 }
 
 export const apiObjectToClassMap = {
-	file: require("./models/file").default,
-	event: require("./models/event").default,
-	label: require("./models/label").default,
-	folder: require("./models/folder").default,
-	thread: require("./models/thread").default,
-	draft: require("./models/message").default,
-	account: require("./models/account").default,
-	message: require("./models/message").default,
-	contact: require("./models/contact").default,
-	calendar: require("./models/calendar").default,
-	syncbackRequest: require("./models/provider-syncback-request").default,
+	file: nodeRequire("./models/file.js").default,
+	event: nodeRequire("./models/event.js").default,
+	label: nodeRequire("./models/label.js").default,
+	folder: nodeRequire("./models/folder.js").default,
+	thread: nodeRequire("./models/thread.js").default,
+	draft: nodeRequire("./models/message.js").default,
+	account: nodeRequire("./models/account.js").default,
+	message: nodeRequire("./models/message.js").default,
+	contact: nodeRequire("./models/contact.js").default,
+	calendar: nodeRequire("./models/calendar.js").default,
+	syncbackRequest: nodeRequire("./models/provider-syncback-request.js").default,
 };
 
 /*

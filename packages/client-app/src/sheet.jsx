@@ -7,13 +7,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const React = require("react");
 const _ = require("underscore");
 const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
-const _RetinaImg = require("./components/retina-img").default;
-const Flexbox = require("./components/flexbox").default;
-const InjectedComponentSet = require("./components/injected-component-set");
-const ResizableRegion = require("./components/resizable-region");
+const _RetinaImg = require("./components/retina-img.jsx").default;
+const Flexbox = require("./components/flexbox.jsx").default;
+const InjectedComponentSet = require("./components/injected-component-set.jsx");
+const ResizableRegion = require("./components/resizable-region.jsx");
 
 const FLEX = 10000;
 

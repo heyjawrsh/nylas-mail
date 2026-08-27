@@ -10,23 +10,24 @@ const path = require("node:path");
 
 const { FileDownloadStore } = require("nylas-exports");
 
-const Actions = require("../actions").default;
-const DatabaseStore = require("./database-store").default;
-const AccountStore = require("./account-store").default;
-const ContactStore = require("./contact-store");
-const MessageStore = require("./message-store");
-const FocusedPerspectiveStore = require("./focused-perspective-store").default;
+const Actions = require("../actions.js").default;
+const DatabaseStore = require("./database-store.js").default;
+const AccountStore = require("./account-store.js").default;
+const ContactStore = require("./contact-store.js");
+const MessageStore = require("./message-store.js");
+const FocusedPerspectiveStore =
+	require("./focused-perspective-store.js").default;
 
 let DraftStore = null;
-const DraftHelpers = require("./draft-helpers").default;
+const DraftHelpers = require("./draft-helpers.js").default;
 
-const _Thread = require("../models/thread").default;
-const _Contact = require("../models/contact").default;
-const Message = require("../models/message").default;
-const Utils = require("../models/utils");
+const _Thread = require("../models/thread.js").default;
+const _Contact = require("../models/contact.js").default;
+const Message = require("../models/message.js").default;
+const Utils = require("../models/utils.js");
 
-const { subjectWithPrefix } = require("../models/utils");
-const DOMUtils = require("../../dom-utils");
+const { subjectWithPrefix } = require("../models/utils.js");
+const DOMUtils = require("../../dom-utils.js");
 
 class DraftFactory {
 	constructor() {
@@ -269,7 +270,7 @@ class DraftFactory {
 				return Promise.resolve(candidateDrafts.pop());
 			} else if (behavior === "prefer-existing-if-pristine") {
 				if (DraftStore == null) {
-					DraftStore = require("./draft-store").default;
+					DraftStore = require("./draft-store.js").default;
 				}
 				return Promise.all(
 					candidateDrafts.map((candidateDraft) => {

@@ -8,17 +8,18 @@
  */
 const _ = require("underscore");
 const _Reflux = require("reflux");
-const AccountStore = require("./account-store").default;
-const WorkspaceStore = require("./workspace-store");
-const DatabaseStore = require("./database-store").default;
-const _FocusedPerspectiveStore = require("./focused-perspective-store").default;
-const _MailboxPerspective = require("../../mailbox-perspective");
-const Actions = require("../actions").default;
-const _Thread = require("../models/thread").default;
-const Model = require("../models/model");
+const AccountStore = require("./account-store.js").default;
+const WorkspaceStore = require("./workspace-store.js");
+const DatabaseStore = require("./database-store.js").default;
+const _FocusedPerspectiveStore =
+	require("./focused-perspective-store.js").default;
+const _MailboxPerspective = require("../../mailbox-perspective.js");
+const Actions = require("../actions.js").default;
+const _Thread = require("../models/thread.js").default;
+const Model = require("../models/model.js");
 
-const { Listener, Publisher } = require("../modules/reflux-coffee");
-const CoffeeHelpers = require("../coffee-helpers");
+const { Listener, Publisher } = require("../modules/reflux-coffee.js");
+const CoffeeHelpers = require("../coffee-helpers.js");
 
 /*
 Public: The FocusedContentStore provides access to the objects currently selected

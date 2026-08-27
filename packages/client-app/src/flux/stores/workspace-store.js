@@ -8,10 +8,10 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const Actions = require("../actions").default;
-const _AccountStore = require("./account-store").default;
-const _CategoryStore = require("./category-store");
-const _MailboxPerspective = require("../../mailbox-perspective");
+const Actions = require("../actions.js").default;
+const _AccountStore = require("./account-store.js").default;
+const _CategoryStore = require("./category-store.js");
+const _MailboxPerspective = require("../../mailbox-perspective.js");
 const NylasStore = require("nylas-store");
 
 let Sheet = {};

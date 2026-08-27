@@ -6,7 +6,7 @@ const nodeRequire =
 		? createRequire(import.meta.url)
 		: require;
 import NylasStore from "nylas-store";
-import FocusedPerspectiveStore from "./focused-perspective-store";
+import FocusedPerspectiveStore from "./focused-perspective-store.js";
 import ThreadCountsStore from "./thread-counts-store.js";
 import CategoryStore from "./category-store.js";
 
@@ -82,7 +82,7 @@ class BadgeStore extends NylasStore {
 	};
 
 	_setBadge = (val) => {
-		require("electron").ipcRenderer.send("set-badge-value", val);
+		nodeRequire("electron").ipcRenderer.send("set-badge-value", val);
 	};
 }
 

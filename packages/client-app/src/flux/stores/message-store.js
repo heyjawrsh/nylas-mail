@@ -8,14 +8,15 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const NylasStore = require("nylas-store");
-const Actions = require("../actions").default;
-const Message = require("../models/message").default;
-const Thread = require("../models/thread").default;
-const _Utils = require("../models/utils");
-const DatabaseStore = require("./database-store").default;
-const FocusedPerspectiveStore = require("./focused-perspective-store").default;
-const FocusedContentStore = require("./focused-content-store");
-const NylasAPIHelpers = require("../nylas-api-helpers");
+const Actions = require("../actions.js").default;
+const Message = require("../models/message.js").default;
+const Thread = require("../models/thread.js").default;
+const _Utils = require("../models/utils.js");
+const DatabaseStore = require("./database-store.js").default;
+const FocusedPerspectiveStore =
+	require("./focused-perspective-store.js").default;
+const FocusedContentStore = require("./focused-content-store.js");
+const NylasAPIHelpers = require("../nylas-api-helpers.js");
 const ExtensionRegistry = require("../../registries/extension-registry.js");
 const { deprecate } = require("../../deprecate-utils.js");
 const _async = require("async");
@@ -135,7 +136,7 @@ class MessageStore extends NylasStore {
 	}
 
 	_onExtensionsChanged(_role) {
-		const MessageBodyProcessor = require("./message-body-processor").default;
+		const MessageBodyProcessor = require("./message-body-processor.js").default;
 		return MessageBodyProcessor.resetCache();
 	}
 

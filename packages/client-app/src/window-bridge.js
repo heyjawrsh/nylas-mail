@@ -7,7 +7,7 @@
  */
 const _ = require("underscore");
 const { ipcRenderer } = require("electron");
-const Utils = require("./flux/models/utils");
+const Utils = require("./flux/models/utils.js");
 
 class WindowBridge {
 	constructor() {

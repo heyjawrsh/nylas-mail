@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
 const classnames = require("classnames");

@@ -1,10 +1,10 @@
 import _ from "underscore";
 import NylasStore from "nylas-store";
-import AccountStore from "./account-store";
-import WorkspaceStore from "./workspace-store";
-import MailboxPerspective from "../../mailbox-perspective";
-import CategoryStore from "./category-store";
-import Actions from "../actions";
+import AccountStore from "./account-store.js";
+import WorkspaceStore from "./workspace-store.js";
+import MailboxPerspective from "../../mailbox-perspective.js";
+import CategoryStore from "./category-store.js";
+import Actions from "../actions.js";
 
 class FocusedPerspectiveStore extends NylasStore {
 	constructor() {

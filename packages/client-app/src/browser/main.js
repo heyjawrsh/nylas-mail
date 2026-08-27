@@ -40,12 +40,12 @@ const setupConfigDir = (args) => {
 };
 
 const setupCompileCache = (configDirPath) => {
-	const compileCache = require("../compile-cache");
+	const compileCache = require("../compile-cache.js");
 	return compileCache.setHomeDirectory(configDirPath);
 };
 
 const setupErrorLogger = (args = {}) => {
-	const ErrorLogger = require("../error-logger");
+	const ErrorLogger = require("../error-logger.js");
 	const errorLogger = new ErrorLogger({
 		inSpecMode: args.specMode,
 		inDevMode: args.devMode,
@@ -223,7 +223,7 @@ const handleStartupEventWithSquirrel = () => {
 		registerDefaultIfPossible: false,
 	};
 
-	const WindowsUpdater = require("./windows-updater");
+	const WindowsUpdater = require("./windows-updater.js");
 	const squirrelCommand = process.argv[1];
 
 	switch (squirrelCommand) {

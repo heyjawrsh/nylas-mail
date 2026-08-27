@@ -10,7 +10,7 @@
 let ApplicationMenu;
 const { BrowserWindow, Menu, MenuItem, app } = require("electron");
 const _ = require("underscore");
-const Utils = require("../flux/models/utils");
+const Utils = require("../flux/models/utils.js");
 
 // Used to manage the global application menu.
 //

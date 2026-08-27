@@ -285,17 +285,17 @@ lazyLoad(
 lazyLoad(`BatteryStatusManager`, "services/battery-status-manager");
 
 // Errors
-lazyLoadWithGetter(`APIError`, () => require("../flux/errors").APIError);
+lazyLoadWithGetter(`APIError`, () => require("../flux/errors.js").APIError);
 
 // Process Internals
 lazyLoad(`DefaultClientHelper`, "default-client-helper");
 lazyLoad(`BufferedProcess`, "buffered-process");
 lazyLoad(`SystemStartService`, "system-start-service");
-lazyLoadWithGetter(`APMWrapper`, () => require("../apm-wrapper"));
+lazyLoadWithGetter(`APMWrapper`, () => require("../apm-wrapper.js"));
 
 // Testing
 lazyLoadWithGetter(`NylasTestUtils`, () =>
-	require("../../spec/nylas-test-utils"),
+	require("../../spec/nylas-test-utils.js"),
 );
 
 // Deprecated

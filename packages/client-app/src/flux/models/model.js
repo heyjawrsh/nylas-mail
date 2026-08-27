@@ -7,8 +7,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const Utils = require("./utils");
-const Attributes = require("../attributes").default;
+const Utils = require("./utils.js");
+const Attributes = require("../attributes.js").default;
 
 /*
 Public: A base class for API objects that provides abstract support for

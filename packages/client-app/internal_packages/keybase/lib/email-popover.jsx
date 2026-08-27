@@ -5,6 +5,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 let EmailPopover;
 const { React, Actions } = require("nylas-exports");
 const { ParticipantsTextField } = require("nylas-component-kit");

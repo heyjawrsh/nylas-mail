@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const { RetinaImg } = require("nylas-component-kit");
 const {
 	Actions,

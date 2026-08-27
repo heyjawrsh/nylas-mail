@@ -3,7 +3,7 @@ import _ from "underscore";
 import NylasStore from "nylas-store";
 import Immutable from "immutable";
 import WorkspaceStore from "./workspace-store.js";
-import FocusedPerspectiveStore from "./focused-perspective-store";
+import FocusedPerspectiveStore from "./focused-perspective-store.js";
 import Actions from "../actions.js";
 
 const MAIN_TAB_ITEM_ID = "General";

@@ -6,6 +6,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const _path = require("node:path");
 const React = require("react");

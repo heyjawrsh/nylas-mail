@@ -4,6 +4,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const { MessageStore, React } = require("nylas-exports");
 const { RetinaImg } = require("nylas-component-kit");
 const PGPKeyStore = require("./pgp-key-store");

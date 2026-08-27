@@ -85,7 +85,7 @@ module.exports = WindowEventHandler = class WindowEventHandler {
 			document.body,
 			"window:toggle-component-regions",
 			() => {
-				const ComponentRegistry = require("./registries/component-registry");
+				const ComponentRegistry = require("./registries/component-registry.js");
 				return ComponentRegistry.toggleComponentRegions();
 			},
 		);
@@ -286,7 +286,7 @@ module.exports = WindowEventHandler = class WindowEventHandler {
 		const { Menu, MenuItem } = remote;
 		const menu = new Menu();
 
-		const Spellchecker = require("./spellchecker").default;
+		const Spellchecker = require("./spellchecker.js").default;
 		Spellchecker.appendSpellingItemsToMenu({
 			menu,
 			word,

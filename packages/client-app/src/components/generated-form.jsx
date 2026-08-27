@@ -8,13 +8,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const classNames = require("classnames");
 const React = require("react");
 const ReactDOM = require("react-dom");
 const { Utils } = require("nylas-exports");
-const DatePicker = require("./date-picker").default;
-const TabGroupRegion = require("./tab-group-region");
+const DatePicker = require("./date-picker.jsx").default;
+const TabGroupRegion = require("./tab-group-region.jsx");
 
 const idPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 

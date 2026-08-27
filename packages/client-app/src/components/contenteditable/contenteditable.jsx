@@ -10,29 +10,30 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
 const ReactDOM = require("react-dom");
 
 const { Utils, DOMUtils } = require("nylas-exports");
 const { KeyCommandsRegion } = require("nylas-component-kit");
-const FloatingToolbar = require("./floating-toolbar");
+const FloatingToolbar = require("./floating-toolbar.jsx");
 
-const EditorAPI = require("./editor-api");
-const ExtendedSelection = require("./extended-selection");
+const EditorAPI = require("./editor-api.js");
+const ExtendedSelection = require("./extended-selection.js");
 
-const TabManager = require("./tab-manager").default;
-const LinkManager = require("./link-manager").default;
-const ListManager = require("./list-manager").default;
-const MouseService = require("./mouse-service").default;
-const DOMNormalizer = require("./dom-normalizer");
-const ClipboardService = require("./clipboard-service").default;
-const BlockquoteManager = require("./blockquote-manager").default;
-const ToolbarButtonManager = require("./toolbar-button-manager").default;
+const TabManager = require("./tab-manager.js").default;
+const LinkManager = require("./link-manager.js").default;
+const ListManager = require("./list-manager.js").default;
+const MouseService = require("./mouse-service.js").default;
+const DOMNormalizer = require("./dom-normalizer.js");
+const ClipboardService = require("./clipboard-service.js").default;
+const BlockquoteManager = require("./blockquote-manager.js").default;
+const ToolbarButtonManager = require("./toolbar-button-manager.js").default;
 const EmphasisFormattingExtension =
-	require("./emphasis-formatting-extension").default;
+	require("./emphasis-formatting-extension.js").default;
 const ParagraphFormattingExtension =
-	require("./paragraph-formatting-extension").default;
+	require("./paragraph-formatting-extension.js").default;
 
 /*
 Public: A modern React-compatible contenteditable

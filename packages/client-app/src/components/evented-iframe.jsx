@@ -7,6 +7,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const React = require("react");
 const ReactDOM = require("react-dom");
 const {
@@ -17,7 +18,7 @@ const {
 	SearchableComponentStore,
 } = require("nylas-exports");
 const IFrameSearcher =
-	require("../searchable-components/iframe-searcher").default;
+	require("../searchable-components/iframe-searcher.js").default;
 const url = require("node:url");
 const _ = require("underscore");
 

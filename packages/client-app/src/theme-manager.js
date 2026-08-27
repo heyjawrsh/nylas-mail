@@ -23,7 +23,7 @@ try {
 const fs = require("fs-plus");
 const Q = require("q");
 
-const _Package = require("./package");
+const _Package = require("./package.js");
 
 // Extended: Handles loading and activating available themes.
 //
@@ -303,7 +303,7 @@ module.exports = ThemeManager = (() => {
 				importFallbackVariables = false;
 			}
 			if (this.lessCache == null) {
-				const LessCompileCache = require("./less-compile-cache").default;
+				const LessCompileCache = require("./less-compile-cache.js").default;
 				this.lessCache = new LessCompileCache({
 					configDirPath: this.configDirPath,
 					resourcePath: this.resourcePath,

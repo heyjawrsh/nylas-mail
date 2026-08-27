@@ -6,7 +6,8 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const RetinaImg = require("./retina-img").default;
+import PropTypes from "prop-types";
+const RetinaImg = require("./retina-img.jsx").default;
 const { Utils } = require("nylas-exports");
 const classnames = require("classnames");
 

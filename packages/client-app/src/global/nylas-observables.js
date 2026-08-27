@@ -6,10 +6,10 @@
  */
 const Rx = require("rx-lite");
 const _ = require("underscore");
-const Category = require("../flux/models/category").default;
+const Category = require("../flux/models/category.js").default;
 const QuerySubscriptionPool =
-	require("../flux/models/query-subscription-pool").default;
-const DatabaseStore = require("../flux/stores/database-store").default;
+	require("../flux/models/query-subscription-pool.js").default;
+const DatabaseStore = require("../flux/stores/database-store.js").default;
 
 var CategoryOperators = {
 	sort() {

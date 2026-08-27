@@ -14,9 +14,9 @@ const path = require("node:path");
 const _moment = require("moment-timezone");
 
 let DefaultResourcePath = null;
-const TaskRegistry = require("../../registries/task-registry").default;
+const TaskRegistry = require("../../registries/task-registry.js").default;
 const DatabaseObjectRegistry =
-	require("../../registries/database-object-registry").default;
+	require("../../registries/database-object-registry.js").default;
 
 let imageData = null;
 

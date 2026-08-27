@@ -8,8 +8,8 @@
  */
 const _ = require("underscore");
 const NylasStore = require("nylas-store");
-const DatabaseStore = require("./database-store").default;
-const Thread = require("../models/thread").default;
+const DatabaseStore = require("./database-store.js").default;
+const Thread = require("../models/thread.js").default;
 
 /*
 Are running two nested SELECT statements really the best option? Yup.
@@ -83,6 +83,7 @@ class ThreadCountsStore extends NylasStore {
 	}
 
 	constructor() {
+		super();
 		this.reset = this.reset.bind(this);
 		this._onCountsChanged = this._onCountsChanged.bind(this);
 		this.unreadCountForCategoryId = this.unreadCountForCategoryId.bind(this);

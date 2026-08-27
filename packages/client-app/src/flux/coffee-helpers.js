@@ -4,10 +4,9 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-let CoffeeHelpers;
-const _ = require("underscore");
+import _ from "underscore";
 
-module.exports = CoffeeHelpers = {
+const CoffeeHelpers = {
 	// This copied out CoffeeScript
 	includeModule(mixin) {
 		let tmpSuper;
@@ -123,3 +122,6 @@ module.exports = CoffeeHelpers = {
 		return this;
 	},
 };
+
+export const includeModule = CoffeeHelpers.includeModule;
+export default CoffeeHelpers;

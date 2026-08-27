@@ -21,11 +21,11 @@ const { Emitter } = require("event-kit");
 const fs = require("fs-plus");
 const Q = require("q");
 
-const Actions = require("./flux/actions").default;
-const Package = require("./package");
-const ThemePackage = require("./theme-package");
-const DatabaseStore = require("./flux/stores/database-store").default;
-const APMWrapper = require("./apm-wrapper");
+const Actions = require("./flux/actions.js").default;
+const Package = require("./package.js");
+const ThemePackage = require("./theme-package.js");
+const DatabaseStore = require("./flux/stores/database-store.js").default;
+const APMWrapper = require("./apm-wrapper.js");
 
 let basePackagePaths = null;
 

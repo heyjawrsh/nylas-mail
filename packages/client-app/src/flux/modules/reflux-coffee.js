@@ -4,9 +4,9 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const _str = require("underscore.string");
-const { EventEmitter } = require("node:events");
+import _ from "underscore";
+import _str from "underscore.string";
+import { EventEmitter } from "node:events";
 
 const callbackName = (string) =>
 	`on${string.charAt(0).toUpperCase()}${string.slice(1)}`;
@@ -56,7 +56,7 @@ var flattenListenables = (listenables) => {
 	return flattened;
 };
 
-module.exports = {
+const RefluxCoffeeExports = {
 	Listener: {
 		hasListener(listenable) {
 			let i = 0;
@@ -234,3 +234,49 @@ module.exports = {
 		},
 	},
 };
+
+const moduleExportsHolder = { exports: RefluxCoffeeExports };
+
+// Publisher was lost in an earlier decaffeinate-era truncation; restored from
+// the original reflux-coffee.coffee (git a6ec21617).
+const Publisher = {
+	setupEmitter() {
+		if (this._emitter) {
+			return;
+		}
+		this._emitter = new EventEmitter();
+		this._emitter.setMaxListeners(50);
+	},
+
+	listen(callback, bindContext) {
+		if (!callback) {
+			throw new Error("@listen called with undefined callback");
+		}
+		this.setupEmitter();
+		if (bindContext == null) {
+			bindContext = this;
+		}
+		let aborted = false;
+		const eventHandler = (args) => {
+			if (aborted) {
+				return;
+			}
+			callback.apply(bindContext, args);
+		};
+		this._emitter.addListener("trigger", eventHandler);
+		return () => {
+			aborted = true;
+			this._emitter.removeListener("trigger", eventHandler);
+		};
+	},
+
+	trigger(...args) {
+		this.setupEmitter();
+		this._emitter.emit("trigger", args);
+	},
+};
+RefluxCoffeeExports.Publisher = Publisher;
+
+const __Listener = RefluxCoffeeExports.Listener;
+export { __Listener as Listener, Publisher };
+export default RefluxCoffeeExports;

@@ -13,17 +13,17 @@ const _ = require("underscore");
 const _fs = require("fs-plus");
 const _path = require("node:path");
 
-const { Listener, Publisher } = require("../modules/reflux-coffee");
-const CoffeeHelpers = require("../coffee-helpers");
+const { Listener, Publisher } = require("../modules/reflux-coffee.js");
+const CoffeeHelpers = require("../coffee-helpers.js");
 
-const Task = require("../tasks/task").default;
-const TaskRegistry = require("../../registries/task-registry").default;
-const _Utils = require("../models/utils");
+const Task = require("../tasks/task.js").default;
+const TaskRegistry = require("../../registries/task-registry.js").default;
+const _Utils = require("../models/utils.js");
 const _Reflux = require("reflux");
-const Actions = require("../actions").default;
-const DatabaseStore = require("./database-store").default;
+const Actions = require("../actions.js").default;
+const DatabaseStore = require("./database-store.js").default;
 
-const { APIError } = require("../errors");
+const { APIError } = require("../errors.js");
 
 const JSONBlobStorageKey = "task-queue";
 

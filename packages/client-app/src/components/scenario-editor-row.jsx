@@ -6,13 +6,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 const React = require("react");
 const _ = require("underscore");
 const Rx = require("rx-lite");
 const { RetinaImg, Flexbox } = require("nylas-component-kit");
 const { CategoryStore, Actions, Utils } = require("nylas-exports");
 
-const { Comparator, Template } = require("./scenario-editor-models");
+const { Comparator, Template } = require("./scenario-editor-models.js");
 
 const SOURCE_SELECT_NULL = "NULL";
 

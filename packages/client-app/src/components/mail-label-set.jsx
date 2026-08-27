@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FocusedPerspectiveStore from "../flux/stores/focused-perspective-store";
+import FocusedPerspectiveStore from "../flux/stores/focused-perspective-store.js";
 import CategoryStore from "../flux/stores/category-store.js";
 import MessageStore from "../flux/stores/message-store.js";
 import AccountStore from "../flux/stores/account-store.js";

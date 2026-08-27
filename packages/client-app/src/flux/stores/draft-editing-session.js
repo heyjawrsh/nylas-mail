@@ -6,17 +6,17 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Message = require("../models/message").default;
-const _Actions = require("../actions").default;
-const NylasAPIHelpers = require("../nylas-api-helpers");
-const AccountStore = require("./account-store").default;
-const ContactStore = require("./contact-store");
-const DatabaseStore = require("./database-store").default;
-const UndoStack = require("../../undo-stack").default;
-const DraftHelpers = require("../stores/draft-helpers").default;
-const ExtensionRegistry = require("../../registries/extension-registry");
-const { Listener, Publisher } = require("../modules/reflux-coffee");
-const CoffeeHelpers = require("../coffee-helpers");
+const Message = require("../models/message.js").default;
+const _Actions = require("../actions.js").default;
+const NylasAPIHelpers = require("../nylas-api-helpers.js");
+const AccountStore = require("./account-store.js").default;
+const ContactStore = require("./contact-store.js");
+const DatabaseStore = require("./database-store.js").default;
+const UndoStack = require("../../undo-stack.js").default;
+const DraftHelpers = require("../stores/draft-helpers.js").default;
+const ExtensionRegistry = require("../../registries/extension-registry.js");
+const { Listener, Publisher } = require("../modules/reflux-coffee.js");
+const CoffeeHelpers = require("../coffee-helpers.js");
 let DraftStore = null;
 const _ = require("underscore");
 
@@ -157,7 +157,7 @@ class DraftEditingSession {
 		this._snapshot = this._snapshot.bind(this);
 		this.draftClientId = draftClientId;
 		if (DraftStore == null) {
-			DraftStore = require("./draft-store").default;
+			DraftStore = require("./draft-store.js").default;
 		}
 		this.listenTo(DraftStore, this._onDraftChanged);
 

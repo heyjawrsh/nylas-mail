@@ -13,18 +13,18 @@ const _fs = require("node:fs");
 const _path = require("node:path");
 const _Reflux = require("reflux");
 const _Rx = require("rx-lite");
-const _Actions = require("../actions").default;
-const Contact = require("../models/contact").default;
-const _Utils = require("../models/utils");
+const _Actions = require("../actions.js").default;
+const Contact = require("../models/contact.js").default;
+const _Utils = require("../models/utils.js");
 const NylasStore = require("nylas-store");
-const RegExpUtils = require("../../regexp-utils");
-const DatabaseStore = require("./database-store").default;
-const AccountStore = require("./account-store").default;
-const ComponentRegistry = require("../../registries/component-registry");
-const ContactRankingStore = require("./contact-ranking-store");
+const RegExpUtils = require("../../regexp-utils.js");
+const DatabaseStore = require("./database-store.js").default;
+const AccountStore = require("./account-store.js").default;
+const ComponentRegistry = require("../../registries/component-registry.js");
+const ContactRankingStore = require("./contact-ranking-store.js");
 const _ = require("underscore");
 
-const _WindowBridge = require("../../window-bridge");
+const _WindowBridge = require("../../window-bridge.js");
 
 /*
 Public: ContactStore provides convenience methods for searching contacts and

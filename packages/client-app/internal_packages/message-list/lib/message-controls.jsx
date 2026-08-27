@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const React = require("react");
 const { remote } = require("electron");
 const {

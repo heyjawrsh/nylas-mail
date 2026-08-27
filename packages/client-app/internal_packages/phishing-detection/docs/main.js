@@ -7,6 +7,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import PropTypes from "prop-types";
 // # Phishing Detection
 //
 // This is a simple package to notify N1 users if an email is a potential

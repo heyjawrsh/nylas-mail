@@ -8,7 +8,7 @@
  */
 const { EventEmitter } = require("node:events");
 const _ = require("underscore");
-const WindowsUpdater = require("./windows-updater");
+const WindowsUpdater = require("./windows-updater.js");
 
 class WindowsUpdaterSquirrelAdapter {
 	static initClass() {

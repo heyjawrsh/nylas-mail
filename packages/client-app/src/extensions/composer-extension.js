@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const ContenteditableExtension = require("./contenteditable-extension");
+const ContenteditableExtension = require("./contenteditable-extension.js");
 /*
 Public: To create ComposerExtensions that enhance the composer experience,
 you should create objects that implement the interface defined at

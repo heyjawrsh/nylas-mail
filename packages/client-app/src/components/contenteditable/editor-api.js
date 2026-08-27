@@ -8,7 +8,7 @@
 const _ = require("underscore");
 const { DOMUtils } = require("nylas-exports");
 const _React = require("react");
-const ExtendedSelection = require("./extended-selection");
+const ExtendedSelection = require("./extended-selection.js");
 let OverlaidComponents = null;
 
 // An extended interface of execCommand
@@ -119,7 +119,7 @@ class EditorAPI {
 		}
 		if (OverlaidComponents == null) {
 			OverlaidComponents =
-				require("../overlaid-components/overlaid-components").default;
+				require("../overlaid-components/overlaid-components.jsx").default;
 		}
 		const { anchorId, anchorTag } = OverlaidComponents.buildAnchorTag(
 			componentKey,

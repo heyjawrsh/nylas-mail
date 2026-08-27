@@ -78,7 +78,8 @@ module.exports = Task = (() => {
 			this.emitter = new Emitter();
 
 			const compileCacheRequire = `require('${require.resolve("./compile-cache")}')`;
-			const compileCachePath = require("./compile-cache").getCacheDirectory();
+			const compileCachePath =
+				require("./compile-cache.js").getCacheDirectory();
 			const taskBootstrapRequire = `require('${require.resolve("./task-bootstrap")}');`;
 			let bootstrap = `\
 ${compileCacheRequire}.setCacheDirectory('${compileCachePath}');

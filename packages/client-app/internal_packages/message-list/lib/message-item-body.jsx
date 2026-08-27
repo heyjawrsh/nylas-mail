@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const React = require("react");
 const _ = require("underscore");
 const EmailFrame = require("./email-frame").default;
