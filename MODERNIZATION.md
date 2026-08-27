@@ -51,3 +51,13 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 - TLS: `minVersion: TLSv1.2` both modes; cert verification default-on; insecure is explicit opt-in only. XOAUTH2: refresh-token and backend-token flows → imapflow accessToken.
 - 48/48 tests green (32 new). Coverage 27% — hardening round queued. Allowlist: `imap` fork entry CLOSED (dep deleted).
 - Coffee lane: sandbox has no network → decaffeinate + esbuild staged at absolute paths (`~/.ringer/tools/decaffeinate`); lane relaunched.
+
+### Loop 5 — message-list CoffeeScript migration (commit 2b13b1a04)
+- Ringer round 2 passed after staging decaffeinate + esbuild at absolute paths (worker sandboxes have no network). 19 files migrated, esbuild-parse-verified, applied after review.
+
+### Loop 6 — cloud-core modernized (commit 82e7e85be)
+- pino (sync writes; pino-pretty dev; in-memory test stream), redis 5 (async clients; broadcastClient/notifyDelta now async), rxjs 7, mysql2, sqlite3 5.x, googleapis 152, umzug 3 with self-contained sequelize storage. Phantom deps (aws-sdk, signalfx, request, raven) deleted — never imported. 91.3% lines.
+
+### Loop 7 — cloud-workers modernized (commit 3e2b4f6a)
+- @hapi/hapi 21 (inject-testable monitoring server), @aws-sdk/client-s3 v3, hot-shots, @sentry/node, Sequelize.Op, findByPk/findOne, native promises. 33 tests, 86.9% lines.
+- Round 3 in flight: 7 coffee lanes (src/components, src/flux, src root, keybase, thread-list, misc, category-picker explore lane on free nemotron) + isomorphic-core coverage hardening (check = package test gate itself).
