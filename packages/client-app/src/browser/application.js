@@ -43,7 +43,9 @@ export default class Application extends EventEmitter {
 			specMode,
 			benchmarkMode,
 			safeMode,
+			smokeMode,
 		} = options;
+		this.smokeMode = smokeMode;
 
 		// Initialize GlobalTimer and start timing app boot time
 		this.timer = new GlobalTimer();

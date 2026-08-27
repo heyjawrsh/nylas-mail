@@ -74,6 +74,10 @@ const declareOptions = (argv) => {
 		.boolean("b")
 		.describe("b", "Run in benchmark mode.");
 	options
+		.alias("S", "smoke")
+		.boolean("S")
+		.describe("S", "Boot, wait for the main window + sync backend, then exit 0.");
+	options
 		.alias("t", "test")
 		.boolean("t")
 		.describe(
