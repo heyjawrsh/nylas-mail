@@ -34,7 +34,7 @@ export class Registry {
     this._registry = new Map();
   }
 
-  triggerDebounced = _.debounce(::this.trigger, 1);
+  triggerDebounced = _.debounce(this.trigger.bind(this), 1);
 
   validateExtension(extension, method) {
     if (!extension || Array.isArray(extension) || !_.isObject(extension)) {
