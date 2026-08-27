@@ -1,21 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-  const AccountToken = sequelize.define('accountToken', {
-    value: {
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
-    },
-  }, {
-    indexes: [
-      { fields: ['value'] },
-    ],
-  });
+	const AccountToken = sequelize.define(
+		"accountToken",
+		{
+			value: {
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUIDV4,
+			},
+		},
+		{
+			indexes: [{ fields: ["value"] }],
+		},
+	);
 
-  AccountToken.associate = ({Account}) => {
-    AccountToken.belongsTo(Account, {
-      onDelete: "CASCADE",
-      foreignKey: {allowNull: false},
-    });
-  };
+	AccountToken.associate = ({ Account }) => {
+		AccountToken.belongsTo(Account, {
+			onDelete: "CASCADE",
+			foreignKey: { allowNull: false },
+		});
+	};
 
-  return AccountToken;
+	return AccountToken;
 };

@@ -1,47 +1,49 @@
-import {NylasError, RetryableError} from './errors'
+import { NylasError, RetryableError } from "./errors";
 
 export class IMAPRetryableError extends RetryableError {
-  constructor(msg) {
-    super(msg)
-    this.userMessage = "We were unable to reach your IMAP provider. Please try again.";
-    this.statusCode = 408;
-  }
+	constructor(msg) {
+		super(msg);
+		this.userMessage =
+			"We were unable to reach your IMAP provider. Please try again.";
+		this.statusCode = 408;
+	}
 }
 
 /**
  * IMAPErrors that originate from NodeIMAP. See `convertImapError` for
  * documentation on underlying causes
  */
-export class IMAPSocketError extends IMAPRetryableError { }
-export class IMAPConnectionTimeoutError extends IMAPRetryableError { }
-export class IMAPAuthenticationTimeoutError extends IMAPRetryableError { }
-export class IMAPTransientAuthenticationError extends IMAPRetryableError { }
+export class IMAPSocketError extends IMAPRetryableError {}
+export class IMAPConnectionTimeoutError extends IMAPRetryableError {}
+export class IMAPAuthenticationTimeoutError extends IMAPRetryableError {}
+export class IMAPTransientAuthenticationError extends IMAPRetryableError {}
 
 export class IMAPProtocolError extends NylasError {
-  constructor(msg) {
-    super(msg)
-    this.userMessage = "IMAP protocol error. Try to first remove your account from Nylas Mail, then re-add it and try again."
-    this.statusCode = 401
-  }
+	constructor(msg) {
+		super(msg);
+		this.userMessage =
+			"IMAP protocol error. Try to first remove your account from Nylas Mail, then re-add it and try again.";
+		this.statusCode = 401;
+	}
 }
 export class IMAPAuthenticationError extends NylasError {
-  constructor(msg) {
-    super(msg)
-    this.userMessage = "Incorrect IMAP username or password.";
-    this.statusCode = 401;
-  }
+	constructor(msg) {
+		super(msg);
+		this.userMessage = "Incorrect IMAP username or password.";
+		this.statusCode = 401;
+	}
 }
 
 export class IMAPConnectionNotReadyError extends IMAPRetryableError {
-  constructor(funcName) {
-    super(`${funcName} - You must call connect() first.`);
-  }
+	constructor(funcName) {
+		super(`${funcName} - You must call connect() first.`);
+	}
 }
 
 export class IMAPConnectionEndedError extends IMAPRetryableError {
-  constructor(msg = "The IMAP Connection was ended.") {
-    super(msg);
-  }
+	constructor(msg = "The IMAP Connection was ended.") {
+		super(msg);
+	}
 }
 
 /**
@@ -50,12 +52,12 @@ export class IMAPConnectionEndedError extends IMAPRetryableError {
  * for us to retry.
  */
 export class IMAPCertificateError extends NylasError {
-  constructor(msg, host) {
-    super(msg)
-    const hostStr = host ? ` "${host}"` : ''
-    this.userMessage = `Certificate Error: We couldn't verify the identity of the IMAP server${hostStr}.`
-    this.statusCode = 495
-  }
+	constructor(msg, host) {
+		super(msg);
+		const hostStr = host ? ` "${host}"` : "";
+		this.userMessage = `Certificate Error: We couldn't verify the identity of the IMAP server${hostStr}.`;
+		this.statusCode = 495;
+	}
 }
 
 /**
@@ -97,61 +99,66 @@ export class IMAPCertificateError extends NylasError {
  *     Message: 'Timed out while authenticating with server'
  *
  */
-export function convertImapError(imapError, {connectionSettings = {}} = {}) {
-  let error = imapError;
+export function convertImapError(imapError, { connectionSettings = {} } = {}) {
+	let error = imapError;
 
-  if (/try again/i.test(imapError.message)) {
-    error = new RetryableError(imapError)
-    error.source = imapError.source
-    return error
-  }
-  if (/system error/i.test(imapError.message)) {
-    // System Errors encountered in the wild so far have been retryable.
-    error = new RetryableError(imapError)
-    error.source = imapError.source
-    return error
-  }
-  if (/user is authenticated but not connected/i.test(imapError.message)) {
-    // We need to treat this type of error as retryable
-    // See https://github.com/mscdex/node-imap/issues/523 for more details
-    error = new RetryableError(imapError)
-    error.source = imapError.source
-    return error
-  }
-  if (/server unavailable/i.test(imapError.message)) {
-    // Server Unavailable encountered in the wild so far have been retryable.
-    error = new RetryableError(imapError)
-    error.source = imapError.source
-    return error
-  }
+	if (/try again/i.test(imapError.message)) {
+		error = new RetryableError(imapError);
+		error.source = imapError.source;
+		return error;
+	}
+	if (/system error/i.test(imapError.message)) {
+		// System Errors encountered in the wild so far have been retryable.
+		error = new RetryableError(imapError);
+		error.source = imapError.source;
+		return error;
+	}
+	if (/user is authenticated but not connected/i.test(imapError.message)) {
+		// We need to treat this type of error as retryable
+		// See https://github.com/mscdex/node-imap/issues/523 for more details
+		error = new RetryableError(imapError);
+		error.source = imapError.source;
+		return error;
+	}
+	if (/server unavailable/i.test(imapError.message)) {
+		// Server Unavailable encountered in the wild so far have been retryable.
+		error = new RetryableError(imapError);
+		error.source = imapError.source;
+		return error;
+	}
 
-  const isCertificateError = (
-    imapError.code === "UNABLE_TO_VERIFY_LEAF_SIGNATURE" ||
-    imapError.code === "SELF_SIGNED_CERT_IN_CHAIN" ||
-    /certificate/i.test(imapError.message)
-  )
-  if (isCertificateError) {
-    error = new IMAPCertificateError(imapError, connectionSettings.host);
-    error.source = imapError.source
-    return error
-  }
+	const isCertificateError =
+		imapError.code === "UNABLE_TO_VERIFY_LEAF_SIGNATURE" ||
+		imapError.code === "SELF_SIGNED_CERT_IN_CHAIN" ||
+		/certificate/i.test(imapError.message);
+	if (isCertificateError) {
+		error = new IMAPCertificateError(imapError, connectionSettings.host);
+		error.source = imapError.source;
+		return error;
+	}
 
-  switch (imapError.source) {
-    case "socket-timeout":
-      error = new IMAPConnectionTimeoutError(imapError); break;
-    case "timeout":
-      error = new IMAPConnectionTimeoutError(imapError); break;
-    case "socket":
-      error = new IMAPSocketError(imapError); break;
-    case "protocol":
-      error = new IMAPProtocolError(imapError); break;
-    case "authentication":
-      error = new IMAPAuthenticationError(imapError); break;
-    case "timeout-auth":
-      error = new IMAPAuthenticationTimeoutError(imapError); break;
-    default:
-      break;
-  }
-  error.source = imapError.source
-  return error
+	switch (imapError.source) {
+		case "socket-timeout":
+			error = new IMAPConnectionTimeoutError(imapError);
+			break;
+		case "timeout":
+			error = new IMAPConnectionTimeoutError(imapError);
+			break;
+		case "socket":
+			error = new IMAPSocketError(imapError);
+			break;
+		case "protocol":
+			error = new IMAPProtocolError(imapError);
+			break;
+		case "authentication":
+			error = new IMAPAuthenticationError(imapError);
+			break;
+		case "timeout-auth":
+			error = new IMAPAuthenticationTimeoutError(imapError);
+			break;
+		default:
+			break;
+	}
+	error.source = imapError.source;
+	return error;
 }

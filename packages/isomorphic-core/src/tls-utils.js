@@ -10,11 +10,11 @@
 // certificates, and must be an explicit opt-in (imap_allow_insecure_ssl).
 
 export const SECURE_TLS_OPTIONS = {
-  minVersion: 'TLSv1.2',
-  rejectUnauthorized: true,
-}
+	minVersion: "TLSv1.2",
+	rejectUnauthorized: true,
+};
 
 export const INSECURE_TLS_OPTIONS = {
-  minVersion: 'TLSv1.2',
-  rejectUnauthorized: false,
-}
+	minVersion: "TLSv1.2",
+	rejectUnauthorized: false,
+};

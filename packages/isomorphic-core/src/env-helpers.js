@@ -1,15 +1,16 @@
-
 export function isClientEnv() {
-  return typeof window !== 'undefined' && typeof window.NylasEnv !== 'undefined'
+	return (
+		typeof window !== "undefined" && typeof window.NylasEnv !== "undefined"
+	);
 }
 
 export function isCloudEnv() {
-  return !isClientEnv()
+	return !isClientEnv();
 }
 
 export function inDevMode() {
-  if (isClientEnv()) {
-    return window.NylasEnv.inDevMode();
-  }
-  return process.env.NODE_ENV !== 'production';
+	if (isClientEnv()) {
+		return window.NylasEnv.inDevMode();
+	}
+	return process.env.NODE_ENV !== "production";
 }

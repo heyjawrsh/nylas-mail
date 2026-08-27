@@ -1,9 +1,9 @@
-import _ from 'underscore'
-import {interval, merge} from 'rxjs'
-import {map, mergeMap, timeout} from 'rxjs/operators'
-import stream from 'stream'
+import _ from "underscore";
+import { interval, merge } from "rxjs";
+import { map, mergeMap, timeout } from "rxjs/operators";
+import stream from "stream";
 const DELTA_CONNECTION_TIMEOUT_MS = 15 * 60000;
-const OBSERVABLE_TIMEOUT_MS = DELTA_CONNECTION_TIMEOUT_MS - (1 * 60000);
+const OBSERVABLE_TIMEOUT_MS = DELTA_CONNECTION_TIMEOUT_MS - 1 * 60000;
 
 /**
  * A Transaction references objects that changed. This finds and inflates
@@ -13,112 +13,137 @@ const OBSERVABLE_TIMEOUT_MS = DELTA_CONNECTION_TIMEOUT_MS - (1 * 60000);
  * the inflated model they reference.
  */
 function inflateTransactions(db, accountId, transactions = [], sourceName) {
-  const transactionJSONs = transactions.map((t) => (t.toJSON ? t.toJSON() : t))
+	const transactionJSONs = transactions.map((t) => (t.toJSON ? t.toJSON() : t));
 
-  transactionJSONs.forEach((t) => {
-    t.cursor = t.id;
-    t.accountId = accountId;
-  });
+	transactionJSONs.forEach((t) => {
+		t.cursor = t.id;
+		t.accountId = accountId;
+	});
 
-  const byModel = _.groupBy(transactionJSONs, "object");
-  const byObjectIds = _.groupBy(transactionJSONs, "objectId");
+	const byModel = _.groupBy(transactionJSONs, "object");
+	const byObjectIds = _.groupBy(transactionJSONs, "objectId");
 
-  return Promise.all(Object.keys(byModel).map((modelName) => {
-    const modelIds = byModel[modelName].filter(t => t.event !== 'delete').map(t => t.objectId);
-    const modelConstructorName = modelName.charAt(0).toUpperCase() + modelName.slice(1);
-    const ModelKlass = db[modelConstructorName]
+	return Promise.all(
+		Object.keys(byModel).map((modelName) => {
+			const modelIds = byModel[modelName]
+				.filter((t) => t.event !== "delete")
+				.map((t) => t.objectId);
+			const modelConstructorName =
+				modelName.charAt(0).toUpperCase() + modelName.slice(1);
+			const ModelKlass = db[modelConstructorName];
 
-    let includes = [];
-    if (ModelKlass.requiredAssociationsForJSON) {
-      includes = ModelKlass.requiredAssociationsForJSON(db)
-    }
-    return ModelKlass.findAll({
-      where: {id: modelIds},
-      include: includes,
-    }).then((models) => {
-      const remaining = _.difference(modelIds, models.map(m => `${m.id}`))
-      if (remaining.length !== 0) {
-        const badTrans = byModel[modelName].filter(t =>
-          remaining.includes(t.objectId))
-        console.error(`While inflating ${sourceName} transactions, we couldn't find models for some ${modelName} IDs`, remaining, badTrans)
-      }
-      for (const model of models) {
-        const transactionsForModel = byObjectIds[model.id];
-        for (const t of transactionsForModel) {
-          t.attributes = model.toJSON();
-        }
-      }
-    });
-  })).then(() => transactionJSONs)
+			let includes = [];
+			if (ModelKlass.requiredAssociationsForJSON) {
+				includes = ModelKlass.requiredAssociationsForJSON(db);
+			}
+			return ModelKlass.findAll({
+				where: { id: modelIds },
+				include: includes,
+			}).then((models) => {
+				const remaining = _.difference(
+					modelIds,
+					models.map((m) => `${m.id}`),
+				);
+				if (remaining.length !== 0) {
+					const badTrans = byModel[modelName].filter((t) =>
+						remaining.includes(t.objectId),
+					);
+					console.error(
+						`While inflating ${sourceName} transactions, we couldn't find models for some ${modelName} IDs`,
+						remaining,
+						badTrans,
+					);
+				}
+				for (const model of models) {
+					const transactionsForModel = byObjectIds[model.id];
+					for (const t of transactionsForModel) {
+						t.attributes = model.toJSON();
+					}
+				}
+			});
+		}),
+	).then(() => transactionJSONs);
 }
 
 function stringifyTransactions(db, accountId, transactions = [], sourceName) {
-  return inflateTransactions(db, accountId, transactions, sourceName)
-  .then((transactionJSONs) => {
-    return `${transactionJSONs.map(JSON.stringify).join("\n")}\n`;
-  });
+	return inflateTransactions(db, accountId, transactions, sourceName).then(
+		(transactionJSONs) => {
+			return `${transactionJSONs.map(JSON.stringify).join("\n")}\n`;
+		},
+	);
 }
 
 function transactionsSinceCursor(db, cursor, accountId) {
-  return db.Transaction.streamAll({where: { id: {$gt: cursor || 0}, accountId }});
+	return db.Transaction.streamAll({
+		where: { id: { $gt: cursor || 0 }, accountId },
+	});
 }
 
 module.exports = {
-  DELTA_CONNECTION_TIMEOUT_MS: DELTA_CONNECTION_TIMEOUT_MS,
-  buildAPIStream(request, {databasePromise, cursor, accountId, deltasSource}) {
-    return databasePromise.then((db) => {
-      const source = merge(
-        transactionsSinceCursor(db, cursor, accountId).pipe(mergeMap((ts) =>
-          stringifyTransactions(db, accountId, ts, "initial"))),
-        deltasSource.pipe(mergeMap((t) =>
-          stringifyTransactions(db, accountId, [t], "new"))),
-        interval(1000).pipe(map(() => "\n"))
-      ).pipe(timeout(OBSERVABLE_TIMEOUT_MS));
+	DELTA_CONNECTION_TIMEOUT_MS: DELTA_CONNECTION_TIMEOUT_MS,
+	buildAPIStream(
+		request,
+		{ databasePromise, cursor, accountId, deltasSource },
+	) {
+		return databasePromise.then((db) => {
+			const source = merge(
+				transactionsSinceCursor(db, cursor, accountId).pipe(
+					mergeMap((ts) => stringifyTransactions(db, accountId, ts, "initial")),
+				),
+				deltasSource.pipe(
+					mergeMap((t) => stringifyTransactions(db, accountId, [t], "new")),
+				),
+				interval(1000).pipe(map(() => "\n")),
+			).pipe(timeout(OBSERVABLE_TIMEOUT_MS));
 
-      const outputStream = stream.Readable();
-      outputStream._read = () => { return };
-      const disposable = source.subscribe((str) => outputStream.push(str))
-      // See the following for why we need to set up the listeners on the raw
-      // stream.
-      // http://stackoverflow.com/questions/26221000/detecting-when-a-long-request-has-ended-in-nodejs-express
-      // https://github.com/hapijs/discuss/issues/322#issuecomment-235999544
-      //
-      // Hapi's disconnect event only fires on error or unexpected aborts: https://hapijs.com/api#response-events
-      request.raw.req.on('error', (error) => {
-        request.logger.error({err: error}, 'Delta connection stream errored')
-        disposable.unsubscribe()
-      })
-      request.raw.req.on('close', () => {
-        request.logger.info('Delta connection stream was closed')
-        disposable.unsubscribe()
-      })
-      request.raw.req.on('end', () => {
-        request.logger.info('Delta connection stream ended')
-        disposable.unsubscribe()
-      })
-      request.on("disconnect", () => {
-        request.logger.info('Delta connection request was disconnected')
-        disposable.unsubscribe()
-      });
+			const outputStream = stream.Readable();
+			outputStream._read = () => {
+				return;
+			};
+			const disposable = source.subscribe((str) => outputStream.push(str));
+			// See the following for why we need to set up the listeners on the raw
+			// stream.
+			// http://stackoverflow.com/questions/26221000/detecting-when-a-long-request-has-ended-in-nodejs-express
+			// https://github.com/hapijs/discuss/issues/322#issuecomment-235999544
+			//
+			// Hapi's disconnect event only fires on error or unexpected aborts: https://hapijs.com/api#response-events
+			request.raw.req.on("error", (error) => {
+				request.logger.error({ err: error }, "Delta connection stream errored");
+				disposable.unsubscribe();
+			});
+			request.raw.req.on("close", () => {
+				request.logger.info("Delta connection stream was closed");
+				disposable.unsubscribe();
+			});
+			request.raw.req.on("end", () => {
+				request.logger.info("Delta connection stream ended");
+				disposable.unsubscribe();
+			});
+			request.on("disconnect", () => {
+				request.logger.info("Delta connection request was disconnected");
+				disposable.unsubscribe();
+			});
 
-      return outputStream;
-    });
-  },
+			return outputStream;
+		});
+	},
 
-  buildDeltaObservable({db, cursor, accountId, deltasSource}) {
-    return merge(
-      transactionsSinceCursor(db, cursor, accountId).pipe(mergeMap((ts) =>
-        inflateTransactions(db, accountId, ts, "initial"))),
-      deltasSource.pipe(mergeMap((t) =>
-        inflateTransactions(db, accountId, [t], "new")))
-    )
-  },
+	buildDeltaObservable({ db, cursor, accountId, deltasSource }) {
+		return merge(
+			transactionsSinceCursor(db, cursor, accountId).pipe(
+				mergeMap((ts) => inflateTransactions(db, accountId, ts, "initial")),
+			),
+			deltasSource.pipe(
+				mergeMap((t) => inflateTransactions(db, accountId, [t], "new")),
+			),
+		);
+	},
 
-  buildCursor({databasePromise}) {
-    return databasePromise.then(({Transaction}) => {
-      return Transaction.findOne({order: [['id', 'DESC']]}).then((t) => {
-        return t ? t.id : 0;
-      });
-    });
-  },
-}
+	buildCursor({ databasePromise }) {
+		return databasePromise.then(({ Transaction }) => {
+			return Transaction.findOne({ order: [["id", "DESC"]] }).then((t) => {
+				return t ? t.id : 0;
+			});
+		});
+	},
+};

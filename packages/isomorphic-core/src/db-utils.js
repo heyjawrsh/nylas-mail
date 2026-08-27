@@ -8,4 +8,4 @@
 // (or, without sql_mode = TRADITIONAL - getting silently truncated!)
 const MAX_INDEXABLE_LENGTH = 191;
 
-export {MAX_INDEXABLE_LENGTH};
+export { MAX_INDEXABLE_LENGTH };

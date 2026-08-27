@@ -3,14 +3,14 @@
  * sync performance data to a service like Honeycomb.
  */
 class MetricsReporter {
+	async collectCPUUsage() {
+		return Promise.resolve();
+	}
 
-  async collectCPUUsage() {
-    return Promise.resolve();
-  }
-
-  async reportEvent(data) { //eslint-disable-line
-    // noop
-  }
+	async reportEvent(data) {
+		//eslint-disable-line
+		// noop
+	}
 }
 
 export default new MetricsReporter();
