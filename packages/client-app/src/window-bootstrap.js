@@ -7,10 +7,9 @@ const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
 // Like sands through the hourglass, so are the days of our lives.
+import "./bootstrap-assign-env.js";
 import "./window";
 
-import NylasEnvConstructor from "./nylas-env.js";
-window.NylasEnv = NylasEnvConstructor.loadOrCreate();
 NylasEnv.initialize();
 NylasEnv.startRootWindow();
 

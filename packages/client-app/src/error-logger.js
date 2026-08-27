@@ -9,7 +9,7 @@ path = require("node:path");
 let ipcRenderer = null;
 if (process.type === "renderer") {
 	ipcRenderer = require("electron").ipcRenderer;
-	remote = require("electron").remote;
+	remote = require("@electron/remote");
 	app = remote.app;
 } else {
 	app = require("electron").app;

@@ -1,5 +1,16 @@
-import { remote } from "electron";
-import keytar from "keytar";
+import { remote } from "@electron/remote";
+
+// Optional native secret storage; the renderer bundle runs against a stub.
+let keytar = null;
+try {
+	keytar = require("keytar");
+} catch (_e) {
+	keytar = {
+		getPassword: async () => null,
+		setPassword: async () => {},
+		deletePassword: async () => {},
+	};
+}
 
 /**
  * A basic wrap around keytar's secure key management. Consolidates all of

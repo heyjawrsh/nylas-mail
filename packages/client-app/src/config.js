@@ -8,10 +8,16 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-let app, Config, errorLogger, webContentsId;
+let app, Config, webContentsId, getErrorLogger;
 let _ = require("underscore");
-_ = _.extend(_, require("./config-utils"));
-const { remote } = require("electron");
+const _configUtils = require("./config-utils");
+_ = _.extend(_, _configUtils.default || _configUtils);
+let remote = null;
+if (process.type === "renderer") {
+	// Only the renderer may use the remote bridge; the main process uses
+	// global.application directly.
+	remote = require("@electron/remote");
+}
 const _fs = require("fs-plus");
 const EmitterMixin = require("emissary").Emitter;
 const { CompositeDisposable, Disposable, Emitter } = require("event-kit");
@@ -20,12 +26,17 @@ const Color = require("./color");
 
 if (process.type === "renderer") {
 	app = remote.getGlobal("application");
-	webContentsId = remote.getCurrentWebContents().getId();
-	({ errorLogger } = NylasEnv);
+	webContentsId =
+			remote.getCurrentWebContents()?.getId?.() ??
+			remote.getCurrentWebContents()?.id ??
+			-1;
+	// Deferred: NylasEnv is assigned by the window bootstrap after this module
+	// loads; resolve the error logger lazily at first use.
+	getErrorLogger = () => NylasEnv.errorLogger;
 } else {
 	app = global.application;
 	webContentsId = null;
-	({ errorLogger } = global);
+	getErrorLogger = () => global.errorLogger;
 }
 
 // Essential: Used to access all of N1's configuration details.
@@ -392,7 +403,7 @@ module.exports = Config = (() => {
 		_logError(prefix, error) {
 			error.message = `${prefix}: ${error.message}`;
 			console.error(error.message);
-			return errorLogger.reportError(error);
+			return getErrorLogger().reportError(error);
 		}
 
 		load() {

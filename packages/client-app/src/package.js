@@ -678,7 +678,7 @@ Run \`apm rebuild\` in the package directory to resolve.\
 					require(nativeModulePath);
 				} catch (error) {
 					try {
-						({ version } = require(`${nativeModulePath}/package.json`));
+						({ version } = nodeRequire(`${nativeModulePath}/package.json`));
 					} catch (_error3) {}
 					incompatibleNativeModules.push({
 						path: nativeModulePath,

@@ -56,6 +56,7 @@ class ScenarioEditor extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.render = this.render.bind(this);
 		this._performChange = this._performChange.bind(this);
 		this._onRemoveRule = this._onRemoveRule.bind(this);

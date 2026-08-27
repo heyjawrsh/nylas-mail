@@ -10,7 +10,7 @@
 let NylasWindow;
 const { BrowserWindow, app, dialog } = require("electron");
 const path = require("node:path");
-const fs = require("node:fs");
+const fs = require("fs-plus");
 const url = require("node:url");
 const _ = require("underscore");
 const { EventEmitter } = require("node:events");
@@ -76,6 +76,12 @@ module.exports = NylasWindow = (() => {
 				resizable,
 				webPreferences: {
 					directWrite: true,
+					// Legacy architecture: the renderer requires full Node access
+					// (flux stores load sqlite, fs, child_process). Restoring the
+					// pre-Electron-12 defaults for this codebase.
+					nodeIntegration: true,
+					contextIsolation: false,
+					sandbox: false,
 				},
 				autoHideMenuBar: true,
 			};
@@ -110,6 +116,8 @@ module.exports = NylasWindow = (() => {
 			}
 
 			this.browserWindow = new BrowserWindow(browserWindowOptions);
+			// The renderer uses the @electron/remote bridge (getGlobal etc.)
+			require("@electron/remote/main").enable(this.browserWindow.webContents);
 			this.browserWindow.updateLoadSettings = this.updateLoadSettings;
 
 			this.handleEvents();

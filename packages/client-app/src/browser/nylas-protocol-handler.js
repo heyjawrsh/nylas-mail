@@ -1,5 +1,5 @@
 import { app, protocol } from "electron";
-import fs from "node:fs";
+import fs from "fs-plus";
 import path from "node:path";
 
 // Handles requests with 'nylas' protocol.

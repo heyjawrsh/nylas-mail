@@ -17,10 +17,9 @@ global.Promise = require("bluebird");
 const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
+import "./bootstrap-assign-env.js";
 import "./window";
 
-import NylasEnvConstructor from "./nylas-env.js";
-window.NylasEnv = window.atom = NylasEnvConstructor.loadOrCreate();
 
 NylasEnv.initialize();
 NylasEnv.startSecondaryWindow();

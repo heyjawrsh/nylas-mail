@@ -28,6 +28,7 @@ class CategoryPicker extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this._onOpenCategoryPopover = this._onOpenCategoryPopover.bind(this);
 		this.render = this.render.bind(this);
 		this.props = props;

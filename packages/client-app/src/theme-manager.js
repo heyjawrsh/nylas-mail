@@ -14,7 +14,8 @@ const path = require("node:path");
 const _ = require("underscore");
 const EmitterMixin = require("emissary").Emitter;
 const { Emitter, Disposable, CompositeDisposable } = require("event-kit");
-const { File } = require("pathwatcher");
+let File = null;
+try { ({ File } = require("pathwatcher")); } catch (_e) { /* optional native */ }
 const fs = require("fs-plus");
 const Q = require("q");
 
@@ -59,7 +60,8 @@ module.exports = ThemeManager = (() => {
 			console.log("Watching /static and /internal_packages for LESS changes");
 			const watchStylesIn = (folder) => {
 				const stylePaths = fs.listTreeSync(folder);
-				const PathWatcher = require("pathwatcher");
+				let PathWatcher = null;
+				try { PathWatcher = require("pathwatcher"); } catch (_e) { return null; }
 				return (() => {
 					const result = [];
 					for (var stylePath of Array.from(stylePaths)) {

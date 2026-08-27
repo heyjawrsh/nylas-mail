@@ -26,6 +26,7 @@ const ThreadListDataSource = require("./thread-list-data-source").default;
 
 class ThreadListStore extends NylasStore {
 	constructor() {
+		super();
 		this.dataSource = this.dataSource.bind(this);
 		this.createListDataSource = this.createListDataSource.bind(this);
 		this.selectionObservable = this.selectionObservable.bind(this);

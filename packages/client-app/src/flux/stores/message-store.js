@@ -16,8 +16,8 @@ const DatabaseStore = require("./database-store").default;
 const FocusedPerspectiveStore = require("./focused-perspective-store").default;
 const FocusedContentStore = require("./focused-content-store");
 const NylasAPIHelpers = require("../nylas-api-helpers");
-const ExtensionRegistry = require("../../registries/extension-registry");
-const { deprecate } = require("../../deprecate-utils");
+const ExtensionRegistry = require("../../registries/extension-registry.js");
+const { deprecate } = require("../../deprecate-utils.js");
 const _async = require("async");
 const _ = require("underscore");
 
@@ -25,6 +25,7 @@ const CategoryNamesHiddenByDefault = ["spam", "trash"];
 
 class MessageStore extends NylasStore {
 	constructor() {
+		super();
 		this.itemsExpandedState = this.itemsExpandedState.bind(this);
 		this.extensions = this.extensions.bind(this);
 		this.registerExtension = this.registerExtension.bind(this);

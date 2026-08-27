@@ -25,6 +25,7 @@ class AccountSidebar extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);

@@ -5,9 +5,16 @@ let app;
 let errorLogger;
 
 if (process.type === "renderer") {
-	const remote = require("electron").remote; // eslint-disable-line
+	const remote = require("@electron/remote");
 	app = remote.getGlobal("application");
-	errorLogger = NylasEnv.errorLogger;
+	// NylasEnv is assigned by the window bootstrap after module init.
+	errorLogger = new Proxy(
+		{},
+		{
+			get: (_t, prop) =>
+				(...args) => NylasEnv.errorLogger[prop](...args),
+		},
+	);
 } else {
 	app = global.application;
 	errorLogger = global.errorLogger;

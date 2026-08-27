@@ -27,6 +27,7 @@ const RulesJSONBlobKey = "MailRules-V2";
 
 class MailRulesStore extends NylasStore {
 	constructor() {
+		super();
 		this.rules = this.rules.bind(this);
 		this.rulesForAccountId = this.rulesForAccountId.bind(this);
 		this.disabledRules = this.disabledRules.bind(this);

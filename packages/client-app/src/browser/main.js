@@ -289,6 +289,8 @@ const start = () => {
 
 	app.on("open-url", onOpenUrlBeforeReady);
 	app.on("open-file", onOpenFileBeforeReady);
+	// Enable the @electron/remote bridge (renderer uses remote.getGlobal)
+	require("@electron/remote/main").initialize();
 	app.on("ready", () => {
 		app.removeListener("open-file", onOpenFileBeforeReady);
 		app.removeListener("open-url", onOpenUrlBeforeReady);
@@ -305,8 +307,10 @@ const start = () => {
 					app.exit(0);
 				}, 5_000);
 			};
-			global.application.once("window-load", quitWhenReady) ||
-				setTimeout(quitWhenReady, 15_000);
+			// Arm both paths: window-load when the renderer finishes, or a
+			// hard fallback so headless runs always terminate.
+			global.application.once("window-load", quitWhenReady);
+			setTimeout(quitWhenReady, 15_000);
 		}
 		if (!options.specMode) {
 			console.log(`App load time: ${Date.now() - global.shellStartTime}ms`);

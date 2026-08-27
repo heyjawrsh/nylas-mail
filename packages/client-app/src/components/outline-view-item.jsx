@@ -4,7 +4,10 @@
 import { createRequire } from "node:module";
 import _ from "underscore";
 
-const nodeRequire = createRequire(import.meta.url);
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import { Utils } from "nylas-exports";
 import classnames from "classnames";
 import { Component } from "react";

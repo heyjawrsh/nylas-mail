@@ -1,6 +1,9 @@
 import { createRequire } from "node:module";
 
-const nodeRequire = createRequire(import.meta.url);
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
@@ -10,6 +13,26 @@ import DatabaseObjectRegistry from "../registries/database-object-registry.js";
 
 const resolveExport = (requireValue) => {
 	return requireValue.default || requireValue;
+};
+
+// Resolve a path relative to src/ in both module contexts:
+// - Node ESM / unbundled: relative to this file (src/global/../x = src/x)
+// - Renderer bundle: this file lives in static/, so fall back to the app
+//   resource root (loadSettings.resourcePath) + /src/<path>.
+const requireFromSrc = (rel) => {
+	try {
+		return nodeRequire(rel);
+	} catch (_e) {
+		let root = global.NylasEnv?.getResourcePath?.();
+		if (!root && typeof document !== "undefined") {
+			// Bundled context: this file executes from <root>/static/, so the
+			// app root is the parent of the current document's directory.
+			const here = new URL(".", document.baseURI).pathname;
+			root = here.replace(/\/$/, "").replace(/\/static$/, "");
+		}
+		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
+		return require(`${root}/src/${stripped}`);
+	}
 };
 
 // This module exports an empty object, with a ton of defined properties that
@@ -38,7 +61,7 @@ const lazyLoadWithGetter = (prop, getter) => {
 };
 
 const lazyLoad = (prop, path) => {
-	lazyLoadWithGetter(prop, () => resolveExport(require(`../${path}`)));
+	lazyLoadWithGetter(prop, () => resolveExport(requireFromSrc(`../${path}`)));
 };
 
 const lazyLoadAndRegisterStore = (klassName, path) => {
@@ -57,10 +80,10 @@ const lazyLoadAndRegisterTask = (klassName, path) => {
 };
 
 const lazyLoadDeprecated = (prop, path, { instead } = {}) => {
-	const { deprecate } = nodeRequire("../deprecate-utils.js");
+	const { deprecate } = requireFromSrc("../deprecate-utils.js");
 	Object.defineProperty(exports, prop, {
 		get: deprecate(prop, instead, exports, () => {
-			return resolveExport(require(`../${path}`));
+			return resolveExport(requireFromSrc(`../${path}`));
 		}),
 		enumerable: true,
 	});

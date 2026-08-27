@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import _ from "underscore";
-import uuid from "node-uuid";
+import uuid from "uuid";
 import classNames from "classnames";
 import React, { Component } from "react";
 import PropTypes from "prop-types";

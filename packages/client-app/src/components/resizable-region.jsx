@@ -119,6 +119,7 @@ class ResizableRegion extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.render = this.render.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.UNSAFE_componentWillReceiveProps =

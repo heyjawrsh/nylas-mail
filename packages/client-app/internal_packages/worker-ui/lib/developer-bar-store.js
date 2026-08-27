@@ -98,6 +98,7 @@ class DeveloperBarCurlRequest {
 
 class DeveloperBarStore extends NylasStore {
 	constructor() {
+		super();
 		this._onSyncbackRequestChange = this._onSyncbackRequestChange.bind(this);
 		this._onWillMakeAPIRequest = this._onWillMakeAPIRequest.bind(this);
 		this._onDidMakeAPIRequest = this._onDidMakeAPIRequest.bind(this);

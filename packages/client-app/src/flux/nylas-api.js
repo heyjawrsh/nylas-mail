@@ -11,7 +11,7 @@ const TimeoutErrorCodes = [
 	"ENETDOWN",
 	"ENETUNREACH",
 ];
-const PermanentErrorCodes = [
+export const PermanentErrorCodes = [
 	400,
 	401,
 	402,

@@ -28,6 +28,7 @@ class SourceSelect extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
 			this.UNSAFE_componentWillReceiveProps.bind(this);

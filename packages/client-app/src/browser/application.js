@@ -13,7 +13,10 @@ import {
 import fs from "fs-plus";
 import { createRequire } from "node:module";
 
-const nodeRequire = createRequire(import.meta.url);
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import url from "node:url";
 import path from "node:path";
 import proc from "node:child_process";

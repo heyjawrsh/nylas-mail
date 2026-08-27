@@ -2,10 +2,14 @@
 /* eslint import/no-dynamic-require: 0 */
 import { createRequire } from "node:module";
 
-const nodeRequire = createRequire(import.meta.url);
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import path from "node:path";
 
-import { ipcRenderer, remote, shell } from "electron";
+import { ipcRenderer, shell } from "electron";
+import { remote } from "@electron/remote";
 
 import _ from "underscore";
 import { Emitter } from "event-kit";
@@ -19,14 +23,17 @@ import StoreRegistry from "./registries/store-registry.js";
 
 import Utils from "./flux/models/utils.js";
 import Config from "./config.js";
-import PackageManager from "./package-manager.js";
+// PackageManager transitively instantiates the flux layer (DatabaseStore
+// singleton at module scope), which reads NylasEnv during construction.
+// Deferred to first access so the environment global exists first.
+let PackageManager = null;
 import ThemeManager from "./theme-manager.js";
 import StyleManager from "./style-manager.js";
 import ErrorLogger from "./error-logger.js";
 import WorkspaceStore from "../src/flux/stores/workspace-store.js";
 import React from "react";
 import ReactDOM from "react-dom";
-import SheetContainer from "./sheet-container.js";
+import SheetContainer from "./sheet-container.jsx";
 import { Actions } from "nylas-exports";
 import { CodeSnippet } from "nylas-component-kit";
 
@@ -244,7 +251,7 @@ export default class NylasEnvConstructor {
 		const specMode = this.inSpecMode();
 
 		this.commands = new CommandRegistry();
-		this.packages = new PackageManager({
+		this.packages = new (PackageManager || (PackageManager = nodeRequire("../package-manager.js").default))({
 			devMode,
 			benchmarkMode,
 			configDirPath,

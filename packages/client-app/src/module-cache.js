@@ -467,7 +467,7 @@ exports.add = (directoryPath, metadata) => {
 
 	if (metadata == null) {
 		try {
-			metadata = require(`${directoryPath}${path.sep}package.json`);
+			metadata = nodeRequire(`${directoryPath}${path.sep}package.json`);
 		} catch (_error) {
 			return;
 		}

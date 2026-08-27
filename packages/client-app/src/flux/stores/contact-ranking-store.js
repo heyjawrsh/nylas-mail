@@ -12,6 +12,7 @@ const AccountStore = require("./account-store").default;
 
 class ContactRankingStore extends NylasStore {
 	constructor() {
+		super();
 		this._registerObservables = this._registerObservables.bind(this);
 		this._onRankingsChanged = this._onRankingsChanged.bind(this);
 		this._onAccountsChanged = this._onAccountsChanged.bind(this);

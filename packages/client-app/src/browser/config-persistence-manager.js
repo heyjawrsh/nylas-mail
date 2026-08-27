@@ -2,8 +2,9 @@ import path from "node:path";
 import fs from "fs-plus";
 import { BrowserWindow, dialog, app } from "electron";
 import { atomicWriteFileSync } from "../fs-utils.js";
-import * as __ns from "underscore";
-const _ = __ns;
+import _underscore from "underscore";
+import _configUtils from "../config-utils.js";
+const _ = _underscore.extend(_underscore, _configUtils);
 
 const RETRY_SAVES = 3;
 

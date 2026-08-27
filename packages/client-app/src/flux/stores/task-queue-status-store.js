@@ -17,6 +17,7 @@ const TaskQueue = require("./task-queue");
 //
 class TaskQueueStatusStore extends NylasStore {
 	constructor() {
+		super();
 		this.waitForPerformLocal = this.waitForPerformLocal.bind(this);
 		this.waitForPerformRemote = this.waitForPerformRemote.bind(this);
 		this._queue = [];

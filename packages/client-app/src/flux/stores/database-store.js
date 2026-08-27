@@ -3,8 +3,9 @@ import path from "node:path";
 import createDebug from "debug";
 import childProcess from "node:child_process";
 import PromiseQueue from "promise-queue";
-import { remote, ipcRenderer } from "electron";
-import LRU from "lru-cache";
+import { ipcRenderer } from "electron";
+import { remote } from "@electron/remote";
+import { LRUCache } from "lru-cache";
 import { StringUtils, ExponentialBackoffScheduler } from "isomorphic-core";
 
 import NylasStore from "../../global/nylas-store.js";
@@ -29,7 +30,7 @@ const DatabasePhase = {
 	Close: "close",
 };
 
-const DEBUG_QUERY_PLANS = NylasEnv.inDevMode();
+const DEBUG_QUERY_PLANS = typeof NylasEnv !== "undefined" && NylasEnv?.inDevMode?.();
 
 const BASE_RETRY_LOCK_DELAY = 50;
 const MAX_RETRY_LOCK_DELAY = 500;
@@ -91,7 +92,7 @@ class DatabaseStore extends NylasStore {
 		this._open = false;
 		this._waiting = [];
 
-		this._preparedStatementCache = LRU({ max: 500 });
+		this._preparedStatementCache = new LRUCache({ max: 500 });
 
 		this.setupEmitter();
 		this._emitter.setMaxListeners(100);

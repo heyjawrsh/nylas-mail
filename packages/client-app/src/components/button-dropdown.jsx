@@ -28,6 +28,7 @@ class ButtonDropdown extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.render = this.render.bind(this);
 		this.toggleDropdown = this.toggleDropdown.bind(this);
 		this._onMenuClick = this._onMenuClick.bind(this);

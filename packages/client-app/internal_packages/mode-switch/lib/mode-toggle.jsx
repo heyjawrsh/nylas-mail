@@ -16,6 +16,7 @@ class ModeToggle extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.render = this.render.bind(this);

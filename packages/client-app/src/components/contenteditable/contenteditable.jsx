@@ -155,6 +155,7 @@ class Contenteditable extends React.Component {
 	//#####################################################################
 
 	constructor(props) {
+		super();
 		this.atomicEdit = this.atomicEdit.bind(this);
 		this.focus = this.focus.bind(this);
 		this.setSelection = this.setSelection.bind(this);

@@ -1,7 +1,8 @@
 import _ from "underscore";
 
+let plus;
 (() => {
-	var isPlainObject, plus, splitKeyPath;
+	var isPlainObject, splitKeyPath;
 
 	splitKeyPath = (keyPath) => {
 		var char, i, keyPathArray, startIndex, _i, _len;
@@ -88,7 +89,6 @@ import _ from "underscore";
 		},
 	};
 
-	module.exports = plus;
 }).call(this);
 
-export default module.exports;
+export default plus;

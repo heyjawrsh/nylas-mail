@@ -16,6 +16,7 @@ class DeveloperBarLongPollItem extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this.props = props;

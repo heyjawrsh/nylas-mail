@@ -1,5 +1,12 @@
-import { remote } from "electron";
-import { SpellCheckHandler } from "electron-spellchecker";
+import { remote } from "@electron/remote";
+import {createRequire} from "node:module";
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
+// Optional native dependency (spellcheck); unavailable in the renderer bundle.
+let SpellCheckHandler = null;
+try { ({ SpellCheckHandler } = nodeRequire("electron-spellchecker")); } catch (_e) { /* stubbed */ }
 import fs from "node:fs";
 import path from "node:path";
 

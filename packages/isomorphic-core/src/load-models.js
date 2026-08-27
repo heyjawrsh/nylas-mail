@@ -2,7 +2,17 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-const __dirname = path.dirname(new URL(".", import.meta.url).pathname);
+// Works in Node ESM, CJS require(esm), and esbuild renderer bundles (where
+// import.meta.url is empty): fall back to require-based resolution.
+let __dirname;
+try {
+	__dirname = path.dirname(new URL(".", import.meta.url).pathname);
+} catch (_e) {
+	__dirname = path.dirname(
+		(typeof require !== "undefined" ? require : (() => null))?.main?.filename ||
+			process.cwd(),
+	);
+}
 
 export default async function loadModels(
 	Sequelize,

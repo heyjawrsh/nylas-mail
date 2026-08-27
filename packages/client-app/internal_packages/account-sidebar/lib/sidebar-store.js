@@ -29,6 +29,7 @@ const Sections = {
 
 class SidebarStore extends NylasStore {
 	constructor() {
+		super();
 		this._onSetCollapsedByKey = this._onSetCollapsedByKey.bind(this);
 		this._onSetCollapsedByName = this._onSetCollapsedByName.bind(this);
 		this._registerCommands = this._registerCommands.bind(this);

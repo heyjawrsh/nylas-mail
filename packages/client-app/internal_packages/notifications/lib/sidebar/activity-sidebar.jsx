@@ -41,6 +41,7 @@ class ActivitySidebar extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);

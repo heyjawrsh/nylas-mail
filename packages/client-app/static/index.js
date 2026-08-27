@@ -5,7 +5,7 @@ window.eval = global.eval = function() {
 var util = require('util')
 var path = require('path');
 var electron = require('electron');
-var remote = electron.remote;
+var remote = require('@electron/remote');
 var ipcRenderer = electron.ipcRenderer;
 
 console.inspect = function consoleInspect(val) {
@@ -38,7 +38,7 @@ function handleSetupError (error) {
 
 function copyEnvFromMainProcess() {
   var _ = require('underscore');
-  var remote = require('electron').remote;
+  var remote = require('@electron/remote');
   var newEnv = _.extend({}, process.env, remote.process.env);
   process.env = newEnv;
 }

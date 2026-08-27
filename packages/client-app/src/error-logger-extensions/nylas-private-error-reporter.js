@@ -89,7 +89,7 @@ class ErrorReporter {
 		const captureObjects = this._prepareSentryCaptureObjects(err, extra);
 
 		if (process.type === "renderer") {
-			app = require("electron").remote.getGlobal("application");
+			app = require("@electron/remote").getGlobal("application");
 		} else {
 			app = global.application;
 		}

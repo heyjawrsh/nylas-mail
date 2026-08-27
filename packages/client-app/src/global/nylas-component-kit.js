@@ -1,4 +1,20 @@
-/*
+
+
+const requireFromSrc = (rel) => {
+	try {
+		return nodeRequire(rel);
+	} catch (_e) {
+		let root = global.NylasEnv?.getResourcePath?.();
+		if (!root && typeof document !== "undefined") {
+			// Bundled context: this file executes from <root>/static/, so the
+			// app root is the parent of the current document's directory.
+			const here = new URL(".", document.baseURI).pathname;
+			root = here.replace(/\/$/, "").replace(/\/static$/, "");
+		}
+		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
+		return require(`${root}/src/${stripped}`);
+	}
+};/*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
  * DS206: Consider reworking classes to avoid initClass
@@ -137,7 +153,7 @@ class NylasComponentKit {
 	static load(prop, path) {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
-				return NylasComponentKit.default(require(`../components/${path}`));
+				return NylasComponentKit.default(requireFromSrc(`../components/${path}`));
 			},
 		});
 	}
@@ -150,7 +166,7 @@ class NylasComponentKit {
 	// if it was lazy loaded
 	static require(prop, path) {
 		const exported = NylasComponentKit.default(
-			require(`../components/${path}`),
+			requireFromSrc(`../components/${path}`),
 		);
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
@@ -160,7 +176,7 @@ class NylasComponentKit {
 	}
 
 	static requireFrom(prop, path) {
-		const exported = require(`../components/${path}`);
+		const exported = requireFromSrc(`../components/${path}`);
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
 				return exported[prop];
@@ -171,7 +187,7 @@ class NylasComponentKit {
 	static loadFrom(prop, path) {
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get() {
-				const exported = require(`../components/${path}`);
+				const exported = requireFromSrc(`../components/${path}`);
 				return exported[prop];
 			},
 		});
@@ -182,11 +198,11 @@ class NylasComponentKit {
 			param = {};
 		}
 		const { instead } = param;
-		const { deprecate } = require("../deprecate-utils");
+		const { deprecate } = requireFromSrc("../deprecate-utils.js");
 		return Object.defineProperty(NylasComponentKit.prototype, prop, {
 			get: deprecate(prop, instead, NylasComponentKit, () => {
 				const exported = NylasComponentKit.default(
-					require(`../components/${path}`),
+					requireFromSrc(`../components/${path}`),
 				);
 				return exported;
 			}),

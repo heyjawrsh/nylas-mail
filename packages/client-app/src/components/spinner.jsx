@@ -34,6 +34,7 @@ class Spinner extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =

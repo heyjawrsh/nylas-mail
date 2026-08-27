@@ -33,6 +33,7 @@ class Scrollbar extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.recomputeDimensions = this.recomputeDimensions.bind(this);

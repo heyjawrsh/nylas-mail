@@ -161,7 +161,7 @@ class DeltaStreamingConnection {
 			);
 			NylasEnv.reportError(error);
 			this._setCursor(0);
-			const app = require("electron").remote.getGlobal("application"); // eslint-disable-line
+			const app = require("@electron/remote").getGlobal("application"); // eslint-disable-line
 			app.rebuildDatabase({ showErrorDialog: false });
 			return;
 		}

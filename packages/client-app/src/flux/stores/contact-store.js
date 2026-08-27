@@ -35,6 +35,7 @@ Section: Stores
 */
 class ContactStore extends NylasStore {
 	constructor() {
+		super();
 		this.searchContacts = this.searchContacts.bind(this);
 		this.isValidContact = this.isValidContact.bind(this);
 		this.parseContactsInString = this.parseContactsInString.bind(this);

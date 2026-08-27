@@ -17,6 +17,7 @@ class SendingCancelButton extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.render = this.render.bind(this);
 		this._onClick = this._onClick.bind(this);
 		this.props = props;

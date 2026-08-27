@@ -32,6 +32,7 @@ class MailImportantIcon extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.getState = this.getState.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =

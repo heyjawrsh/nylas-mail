@@ -32,6 +32,7 @@ class WorkspaceStore extends NylasStore {
 		}, 1);
 	}
 	constructor() {
+		super();
 		this._rebuildMenu = this._rebuildMenu.bind(this);
 		this._resetInstanceVars = this._resetInstanceVars.bind(this);
 		this._onSelectRootSheet = this._onSelectRootSheet.bind(this);

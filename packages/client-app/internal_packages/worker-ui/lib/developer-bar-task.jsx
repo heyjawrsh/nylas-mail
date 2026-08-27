@@ -18,6 +18,7 @@ class DeveloperBarTask extends React.Component {
 	}
 
 	constructor(props) {
+		super();
 		this.render = this.render.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this._taskSummary = this._taskSummary.bind(this);

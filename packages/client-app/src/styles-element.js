@@ -27,16 +27,17 @@ class StylesElement extends HTMLElement {
 		return this.emitter.on("did-update-style-element", callback);
 	}
 
-	createdCallback() {
+	constructor() {
+		super();
 		this.emitter = new Emitter();
-		return (this.styleElementClonesByOriginalElement = new WeakMap());
+		this.styleElementClonesByOriginalElement = new WeakMap();
 	}
 
-	attachedCallback() {
+	connectedCallback() {
 		return this.initialize();
 	}
 
-	detachedCallback() {
+	disconnectedCallback() {
 		this.subscriptions.dispose();
 		return (this.subscriptions = null);
 	}
@@ -147,6 +148,8 @@ class StylesElement extends HTMLElement {
 }
 StylesElement.initClass();
 
-module.exports = StylesElement = document.registerElement("nylas-styles", {
+customElements.define("nylas-styles", StylesElement);
+
+module.exports = StylesElement = customElements.get("nylas-styles") || {
 	prototype: StylesElement.prototype,
-});
+};

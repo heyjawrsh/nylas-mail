@@ -39,6 +39,7 @@ const asAccountId = (a) => {
 
 class CategoryStore extends NylasStore {
 	constructor() {
+		super();
 		this.getStandardCategory = this.getStandardCategory.bind(this);
 		this.getStandardCategories = this.getStandardCategories.bind(this);
 		this.getArchiveCategory = this.getArchiveCategory.bind(this);

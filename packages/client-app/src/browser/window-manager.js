@@ -1,4 +1,10 @@
+import {createRequire} from "node:module";
 import _ from "underscore";
+
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 import { app } from "electron";
 import WindowLauncher from "./window-launcher.js";
 
@@ -209,7 +215,7 @@ export default class WindowManager {
 			windowType: WindowManager.MAIN_WINDOW,
 			title: "Message Viewer",
 			neverClose: true,
-			bootstrapScript: require.resolve("../window-bootstrap"),
+			bootstrapScript: nodeRequire.resolve("../../static/window-bootstrap.bundle.js"),
 			mainWindow: true,
 			width: 640, // Gets reset once app boots up
 			height: 396, // Gets reset once app boots up

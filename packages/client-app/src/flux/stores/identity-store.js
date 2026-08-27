@@ -1,6 +1,7 @@
 import Rx from "rx-lite";
 import NylasStore from "nylas-store";
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer } from "electron";
+import { remote } from "@electron/remote";
 import request from "request";
 import url from "node:url";
 

@@ -21,6 +21,7 @@ const { ListTabular } = require("nylas-component-kit");
 
 class DraftListStore extends NylasStore {
 	constructor() {
+		super();
 		this.dataSource = this.dataSource.bind(this);
 		this.selectionObservable = this.selectionObservable.bind(this);
 		this._onPerspectiveChanged = this._onPerspectiveChanged.bind(this);
