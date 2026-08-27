@@ -319,3 +319,22 @@ menu.jsx, React 19 findDOMNode removal honored in two retired tests.
 
 **Consequence**: all component families are now reachable by specs. Swarm
 rounds 4+ can target any directory without per-file interop work.
+
+
+## Loop 19 — Coverage round 4 + a real bug (commit c34652b20)
+
+client-app: 15.76% → **18.18% lines** (818 tests, 37/37 files green). Ten new
+spec files from swarm round-15.
+
+**Worker spec caught a production bug**: `preferences-ui-store` sorted tabs
+with a boolean comparator (`a.order > b.order` — never negative), so tabs
+registered out of order displayed unsorted. Fixed to `a.order - b.order`.
+
+Interop lessons banked: ESM-ify sources for vi.mock interception (category
+store, multiselect handlers); keep dual-context modules CJS when the renderer
+bundle loads them natively (deprecate-utils reverted — ESM `export` breaks
+`require()` in the packaged app).
+
+Cumulative session arcs: 12.10% (loop 17 start) → 18.18% through wall
+demolition + two swarm rounds. Remaining mass: components (~2.5k lines),
+stores remainder, browser/ (1.4k), services.
