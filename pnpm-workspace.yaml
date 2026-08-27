@@ -23,6 +23,3 @@ neverBuiltDependencies:
 
 verifyDepsBeforeRun: false
 
-allowBuilds:
-  '@scarf/scarf': set this to true or false
-  unix-dgram: set this to true or false

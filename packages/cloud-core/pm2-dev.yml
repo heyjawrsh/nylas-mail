@@ -1,6 +1,6 @@
 apps:
-  - script   : packages/cloud-api/app.es6
-    interpreter : node_modules/.bin/babel-node
+  - script   : packages/cloud-api/app.js
+    interpreter : node_modules/.bin/tsx
     watch    : ["packages"]
     name     : api
     env      :
@@ -20,8 +20,8 @@ apps:
     # you're also making changes to the billing service & are running it locally.
     env_billing_local:
       BILLING_URL: 'http://billing.lvh.me:5555'
-  - script   : packages/cloud-workers/app.es6
-    interpreter : node_modules/.bin/babel-node
+  - script   : packages/cloud-workers/app.js
+    interpreter : node_modules/.bin/tsx
     watch    : ["packages"]
     name     : workers
     env      :

@@ -1,6 +1,6 @@
 apps:
-  - script   : packages/cloud-api/app.es6
-    interpreter : node_modules/.bin/babel-node
+  - script   : packages/cloud-api/app.js
+    interpreter : node_modules/.bin/tsx
     interpreter_args: "--inspect"
     watch    : ["packages"]
     name     : api
@@ -14,8 +14,8 @@ apps:
       NODE_ENV: 'development'
       HONEY_DATASET: 'n1-cloud-staging'
       HONEY_WRITE_KEY: 'XXXXXXXXXXXXX'
-  - script   : packages/cloud-workers/app.es6
-    interpreter : node_modules/.bin/babel-node
+  - script   : packages/cloud-workers/app.js
+    interpreter : node_modules/.bin/tsx
     interpreter_args: "--inspect"
     watch    : ["packages"]
     name     : workers

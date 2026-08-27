@@ -16,7 +16,7 @@
     "debug": "^4.4.3",
     "iconv-lite": "^0.7.3",
     "isomorphic-core": "workspace:*",
-    "joi": "^17.13.3",
+    "joi": "^18.2.5",
     "libmime": "^5.3.7",
     "libqp": "^2.1.1",
     "mkdirp": "^3.0.1",

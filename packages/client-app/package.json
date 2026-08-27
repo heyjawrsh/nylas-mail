@@ -42,7 +42,7 @@
     "@testing-library/react": "^16.3.0",
     "@vitest/coverage-v8": "latest",
     "electron": "^44.0.0",
-    "jsdom": "^27.0.0",
+    "jsdom": "^30.0.1",
     "vitest": "latest"
   },
   "repository": {
