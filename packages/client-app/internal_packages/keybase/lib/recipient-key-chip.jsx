@@ -18,7 +18,7 @@ class RecipientKeyChip extends React.Component {
     this.displayName = 'RecipientKeyChip';
   
     this.propTypes =
-      {contact: React.PropTypes.object.isRequired};
+      {contact: PropTypes.object.isRequired};
   }
 
   constructor(props) {

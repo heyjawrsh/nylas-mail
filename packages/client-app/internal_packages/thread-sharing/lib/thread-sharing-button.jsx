@@ -1,4 +1,5 @@
 import {Actions, React, ReactDOM} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit';
 import ThreadSharingPopover from './thread-sharing-popover';
 
@@ -8,8 +9,8 @@ export default class ThreadSharingButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array,
-    thread: React.PropTypes.object,
+    items: PropTypes.array,
+    thread: PropTypes.object,
   };
 
   componentWillReceiveProps(nextProps) {

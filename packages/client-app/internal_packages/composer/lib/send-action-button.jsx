@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Actions, SendActionsStore} from 'nylas-exports'
 import {Menu, RetinaImg, ButtonDropdown, ListensToFluxStore} from 'nylas-component-kit'
 
@@ -9,10 +10,10 @@ class SendActionButton extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    draft: React.PropTypes.object,
-    isValidDraft: React.PropTypes.func,
-    sendActions: React.PropTypes.array,
-    orderedSendActions: React.PropTypes.object,
+    draft: PropTypes.object,
+    isValidDraft: PropTypes.func,
+    sendActions: PropTypes.array,
+    orderedSendActions: PropTypes.object,
   };
 
   primarySend() {

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
 import {exec} from 'child_process';
@@ -52,18 +53,18 @@ export default class SwipeContainer extends Component {
 
   static propTypes = {
     children: PropTypes.object.isRequired,
-    shouldEnableSwipe: React.PropTypes.func,
-    onSwipeLeft: React.PropTypes.func,
-    onSwipeLeftClass: React.PropTypes.oneOfType([
+    shouldEnableSwipe: PropTypes.func,
+    onSwipeLeft: PropTypes.func,
+    onSwipeLeftClass: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
     ]),
-    onSwipeRight: React.PropTypes.func,
-    onSwipeRightClass: React.PropTypes.oneOfType([
+    onSwipeRight: PropTypes.func,
+    onSwipeRightClass: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
     ]),
-    onSwipeCenter: React.PropTypes.func,
+    onSwipeCenter: PropTypes.func,
   };
 
   static defaultProps = {

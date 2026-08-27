@@ -22,8 +22,8 @@ module.exports =
       this.displayName = 'KeyManager';
   
       this.propTypes = {
-        pubKeys: React.PropTypes.array.isRequired,
-        privKeys: React.PropTypes.array.isRequired
+        pubKeys: PropTypes.array.isRequired,
+        privKeys: PropTypes.array.isRequired
       };
     }
 

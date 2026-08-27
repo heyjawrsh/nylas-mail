@@ -58,8 +58,8 @@ class UnsafeComponent extends React.Component {
        passed on to this component.
     */
     this.propTypes = {
-      component: React.PropTypes.func.isRequired,
-      onComponentDidRender: React.PropTypes.func
+      component: PropTypes.func.isRequired,
+      onComponentDidRender: PropTypes.func
     };
   
     this.defaultProps =

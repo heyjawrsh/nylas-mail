@@ -26,7 +26,7 @@ class ThreadListParticipants extends React.Component {
     this.displayName = 'ThreadListParticipants';
   
     this.propTypes =
-      {thread: React.PropTypes.object.isRequired};
+      {thread: PropTypes.object.isRequired};
   }
 
   shouldComponentUpdate(nextProps) {

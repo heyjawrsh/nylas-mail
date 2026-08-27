@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Utils} from 'nylas-exports';
 
 class FluxContainer extends React.Component {
   static displayName = 'FluxContainer';
   static propTypes = {
-    children: React.PropTypes.element,
-    stores: React.PropTypes.array.isRequired,
-    getStateFromStores: React.PropTypes.func.isRequired,
+    children: PropTypes.element,
+    stores: PropTypes.array.isRequired,
+    getStateFromStores: PropTypes.func.isRequired,
   };
 
   constructor(props) {

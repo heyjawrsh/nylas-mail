@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import MailMergeWorkspace from './mail-merge-workspace'
 import ListensToMailMergeSession from './listens-to-mail-merge-session'
 

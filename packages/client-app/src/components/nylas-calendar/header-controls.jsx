@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Utils} from 'nylas-exports'
 import {RetinaImg} from 'nylas-component-kit'
 
@@ -6,10 +7,10 @@ export default class HeaderControls extends React.Component {
   static displayName = "HeaderControls";
 
   static propTypes = {
-    title: React.PropTypes.string,
-    headerComponents: React.PropTypes.node,
-    nextAction: React.PropTypes.func,
-    prevAction: React.PropTypes.func,
+    title: PropTypes.string,
+    headerComponents: PropTypes.node,
+    nextAction: PropTypes.func,
+    prevAction: PropTypes.func,
   }
 
   static defaultProps = {

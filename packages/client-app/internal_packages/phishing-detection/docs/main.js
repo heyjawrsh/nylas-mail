@@ -38,7 +38,7 @@ class PhishingIndicator extends React.Component {
     // @propTypes is an object which validates the datatypes of properties that
     // this React component can receive.
     this.propTypes =
-      {thread: React.PropTypes.object.isRequired};
+      {thread: PropTypes.object.isRequired};
   }
 
   // A React component's `render` method returns a virtual DOM element described

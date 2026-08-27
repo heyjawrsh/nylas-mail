@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Rx, DatabaseStore} from 'nylas-exports'
 
 import SalesforceIcon from '../shared-components/salesforce-icon'
@@ -10,8 +11,8 @@ export default class ParticipantDecorator extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    contact: React.PropTypes.object,
-    collapsed: React.PropTypes.bool,
+    contact: PropTypes.object,
+    collapsed: PropTypes.bool,
   }
 
   constructor(props) {

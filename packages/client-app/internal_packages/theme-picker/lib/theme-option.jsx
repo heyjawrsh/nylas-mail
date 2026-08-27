@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import fs from 'fs-plus';
 import path from 'path';
@@ -9,9 +10,9 @@ import LessCompileCache from '../../../src/less-compile-cache'
 
 class ThemeOption extends React.Component {
   static propTypes = {
-    theme: React.PropTypes.object.isRequired,
-    active: React.PropTypes.bool.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
+    theme: PropTypes.object.isRequired,
+    active: PropTypes.bool.isRequired,
+    onSelect: PropTypes.func.isRequired,
   }
 
   constructor(props) {

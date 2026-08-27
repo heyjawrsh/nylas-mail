@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {Utils} from 'nylas-exports';
 import {DropZone, InjectedComponentSet} from 'nylas-component-kit';
@@ -10,11 +11,11 @@ export default class CollapsedParticipants extends React.Component {
 
   static propTypes = {
     // Arrays of Contact objects.
-    to: React.PropTypes.array,
-    cc: React.PropTypes.array,
-    bcc: React.PropTypes.array,
-    onDrop: React.PropTypes.func,
-    onDragChange: React.PropTypes.func,
+    to: PropTypes.array,
+    cc: PropTypes.array,
+    bcc: PropTypes.array,
+    onDrop: PropTypes.func,
+    onDragChange: PropTypes.func,
   }
 
   static defaultProps = {

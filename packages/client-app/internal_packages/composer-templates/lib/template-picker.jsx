@@ -1,5 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import {Actions, React, ReactDOM} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import {Menu, RetinaImg} from 'nylas-component-kit';
 import TemplateStore from './template-store';
 
@@ -7,7 +8,7 @@ class TemplatePopover extends React.Component {
   static displayName = 'TemplatePopover';
 
   static propTypes = {
-    draftClientId: React.PropTypes.string,
+    draftClientId: PropTypes.string,
   };
 
   constructor() {
@@ -103,7 +104,7 @@ class TemplatePicker extends React.Component {
   static displayName = 'TemplatePicker';
 
   static propTypes = {
-    draftClientId: React.PropTypes.string,
+    draftClientId: PropTypes.string,
   };
 
   _onClickButton = () => {

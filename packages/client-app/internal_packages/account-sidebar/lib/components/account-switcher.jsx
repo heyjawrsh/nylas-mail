@@ -24,8 +24,8 @@ class AccountSwitcher extends React.Component {
     this.displayName = 'AccountSwitcher';
   
     this.propTypes = {
-      accounts: React.PropTypes.array.isRequired,
-      sidebarAccountIds: React.PropTypes.array.isRequired
+      accounts: PropTypes.array.isRequired,
+      sidebarAccountIds: PropTypes.array.isRequired
     };
   }
 

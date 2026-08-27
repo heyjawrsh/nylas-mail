@@ -24,8 +24,8 @@ class MailImportantIcon extends React.Component {
   static initClass() {
     this.displayName = 'MailImportantIcon';
     this.propTypes = {
-      thread: React.PropTypes.object,
-      showIfAvailableForAnyAccount: React.PropTypes.bool
+      thread: PropTypes.object,
+      showIfAvailableForAnyAccount: PropTypes.bool
     };
   }
 

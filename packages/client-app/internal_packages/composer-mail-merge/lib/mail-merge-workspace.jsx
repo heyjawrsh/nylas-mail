@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg, DropZone} from 'nylas-component-kit'
 import fs from 'fs';
 

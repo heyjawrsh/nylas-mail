@@ -7,7 +7,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const React = require('react');
-const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+const ReactCSSTransitionGroup = require('./components/css-transition-group-compat.jsx');
 const Sheet = require('./sheet');
 const Toolbar = require('./sheet-toolbar');
 const Flexbox = require('./components/flexbox').default;

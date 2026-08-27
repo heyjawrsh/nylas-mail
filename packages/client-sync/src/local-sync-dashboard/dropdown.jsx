@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 export default class Dropdown extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export default class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  options: React.PropTypes.arrayOf(React.PropTypes.string),
-  defaultOption: React.PropTypes.string,
-  onSelect: React.PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.string),
+  defaultOption: PropTypes.string,
+  onSelect: PropTypes.func,
 }

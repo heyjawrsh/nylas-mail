@@ -69,18 +69,18 @@ class ResizableRegion extends React.Component {
      - `maxHeight` (optional) Maximum height, if the handle indicates a vertical resizing axis.
     */
     this.propTypes = {
-      handle: React.PropTypes.object.isRequired,
-      onResize: React.PropTypes.func,
+      handle: PropTypes.object.isRequired,
+      onResize: PropTypes.func,
   
-      initialWidth: React.PropTypes.number,
-      minWidth: React.PropTypes.number,
-      maxWidth: React.PropTypes.number,
+      initialWidth: PropTypes.number,
+      minWidth: PropTypes.number,
+      maxWidth: PropTypes.number,
   
-      initialHeight: React.PropTypes.number,
-      minHeight: React.PropTypes.number,
-      maxHeight: React.PropTypes.number,
+      initialHeight: PropTypes.number,
+      minHeight: PropTypes.number,
+      maxHeight: PropTypes.number,
   
-      style: React.PropTypes.object
+      style: PropTypes.object
     };
   }
 

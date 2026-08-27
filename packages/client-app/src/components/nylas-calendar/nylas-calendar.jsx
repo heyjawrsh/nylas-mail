@@ -1,5 +1,6 @@
 import Rx from 'rx-lite'
 import React from 'react'
+import PropTypes from 'prop-types';
 import moment from 'moment'
 import {DatabaseStore, AccountStore, Calendar} from 'nylas-exports'
 import {ScrollRegion, ResizableRegion, MiniMonthView} from 'nylas-component-kit'
@@ -22,41 +23,41 @@ export default class NylasCalendar extends React.Component {
     /*
      * The data source that powers all of the views of the NylasCalendar
      */
-    dataSource: React.PropTypes.instanceOf(CalendarDataSource).isRequired,
+    dataSource: PropTypes.instanceOf(CalendarDataSource).isRequired,
 
-    currentMoment: React.PropTypes.instanceOf(moment),
+    currentMoment: PropTypes.instanceOf(moment),
 
     /*
      * Any extra info you want to display on the top banner of calendar
      * components
      */
-    bannerComponents: React.PropTypes.shape({
-      day: React.PropTypes.node,
-      week: React.PropTypes.node,
-      month: React.PropTypes.node,
-      year: React.PropTypes.node,
+    bannerComponents: PropTypes.shape({
+      day: PropTypes.node,
+      week: PropTypes.node,
+      month: PropTypes.node,
+      year: PropTypes.node,
     }),
 
     /*
      * Any extra header components for each of the supported View types of
      * the NylasCalendar
      */
-    headerComponents: React.PropTypes.shape({
-      day: React.PropTypes.node,
-      week: React.PropTypes.node,
-      month: React.PropTypes.node,
-      year: React.PropTypes.node,
+    headerComponents: PropTypes.shape({
+      day: PropTypes.node,
+      week: PropTypes.node,
+      month: PropTypes.node,
+      year: PropTypes.node,
     }),
 
     /*
      * Any extra footer components for each of the supported View types of
      * the NylasCalendar
      */
-    footerComponents: React.PropTypes.shape({
-      day: React.PropTypes.node,
-      week: React.PropTypes.node,
-      month: React.PropTypes.node,
-      year: React.PropTypes.node,
+    footerComponents: PropTypes.shape({
+      day: PropTypes.node,
+      week: PropTypes.node,
+      month: PropTypes.node,
+      year: PropTypes.node,
     }),
 
     /*
@@ -66,15 +67,15 @@ export default class NylasCalendar extends React.Component {
      * includes the `currentView` as well as things like the `time` at the
      * click coordinate.
      */
-    onCalendarMouseUp: React.PropTypes.func,
-    onCalendarMouseDown: React.PropTypes.func,
-    onCalendarMouseMove: React.PropTypes.func,
+    onCalendarMouseUp: PropTypes.func,
+    onCalendarMouseDown: PropTypes.func,
+    onCalendarMouseMove: PropTypes.func,
 
-    onEventClick: React.PropTypes.func,
-    onEventDoubleClick: React.PropTypes.func,
-    onEventFocused: React.PropTypes.func,
+    onEventClick: PropTypes.func,
+    onEventDoubleClick: PropTypes.func,
+    onEventFocused: PropTypes.func,
 
-    selectedEvents: React.PropTypes.arrayOf(React.PropTypes.object),
+    selectedEvents: PropTypes.arrayOf(PropTypes.object),
   }
 
   static defaultProps = {

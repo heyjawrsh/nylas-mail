@@ -1,5 +1,6 @@
 import url from 'url'
 import React from 'react'
+import PropTypes from 'prop-types';
 import {shell} from 'electron'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames';
@@ -9,9 +10,9 @@ import RetinaImg from './retina-img'
 
 class InitialLoadingCover extends React.Component {
   static propTypes = {
-    ready: React.PropTypes.bool,
-    error: React.PropTypes.string,
-    onTryAgain: React.PropTypes.func,
+    ready: PropTypes.bool,
+    error: PropTypes.string,
+    onTryAgain: PropTypes.func,
   }
 
   constructor(props) {
@@ -69,8 +70,8 @@ export default class Webview extends React.Component {
   static displayName = "Webview";
 
   static propTypes = {
-    src: React.PropTypes.string,
-    onDidFinishLoad: React.PropTypes.func,
+    src: PropTypes.string,
+    onDidFinishLoad: PropTypes.func,
   }
 
   constructor(props) {

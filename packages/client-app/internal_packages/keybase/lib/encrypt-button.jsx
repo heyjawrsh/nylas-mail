@@ -23,8 +23,8 @@ class EncryptMessageButton extends React.Component {
   
     // require that we have a draft object available
     this.propTypes = {
-      draft: React.PropTypes.object.isRequired,
-      session: React.PropTypes.object.isRequired
+      draft: PropTypes.object.isRequired,
+      session: PropTypes.object.isRequired
     };
   }
 

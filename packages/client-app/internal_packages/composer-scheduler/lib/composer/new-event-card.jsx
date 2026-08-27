@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment-timezone'
 import {
   RetinaImg,
@@ -21,11 +22,11 @@ export default class NewEventCard extends React.Component {
   static displayName = 'NewEventCard';
 
   static propTypes = {
-    event: React.PropTypes.object.isRequired,
-    draft: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onRemove: React.PropTypes.func.isRequired,
-    onParticipantsClick: React.PropTypes.func.isRequired,
+    event: PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
+    onParticipantsClick: PropTypes.func.isRequired,
   };
 
   constructor(props) {

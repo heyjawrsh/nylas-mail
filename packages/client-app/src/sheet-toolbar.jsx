@@ -31,7 +31,7 @@ class ToolbarSpacer extends React.Component {
   static initClass() {
     this.displayName = 'ToolbarSpacer';
     this.propTypes =
-      {order: React.PropTypes.number};
+      {order: PropTypes.number};
   }
 
   render() {
@@ -207,12 +207,12 @@ class Toolbar extends React.Component {
     this.displayName = 'Toolbar';
   
     this.propTypes = {
-      data: React.PropTypes.object,
-      depth: React.PropTypes.number
+      data: PropTypes.object,
+      depth: PropTypes.number
     };
   
     this.childContextTypes =
-      {sheetDepth: React.PropTypes.number};
+      {sheetDepth: PropTypes.number};
   }
   getChildContext() {
     return {sheetDepth: this.props.depth};

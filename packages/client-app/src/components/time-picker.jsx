@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import classnames from 'classnames'
@@ -11,13 +12,13 @@ export default class TimePicker extends React.Component {
   static displayName = "TimePicker";
 
   static propTypes = {
-    value: React.PropTypes.number,
-    onChange: React.PropTypes.func,
-    relativeTo: React.PropTypes.number, // TODO For `renderTimeOptions`
+    value: PropTypes.number,
+    onChange: PropTypes.func,
+    relativeTo: PropTypes.number, // TODO For `renderTimeOptions`
   }
 
   static contextTypes = {
-    parentTabGroup: React.PropTypes.object,
+    parentTabGroup: PropTypes.object,
   }
 
   static defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import {remote} from 'electron'
 import {
@@ -32,15 +33,15 @@ export default class ComposerView extends React.Component {
   static displayName = 'ComposerView';
 
   static propTypes = {
-    session: React.PropTypes.object.isRequired,
-    draft: React.PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
 
     // Sometimes when changes in the composer happens it's desirable to
     // have the parent scroll to a certain location. A parent component can
     // pass a callback that gets called when this composer wants to be
     // scrolled to.
-    scrollTo: React.PropTypes.func,
-    className: React.PropTypes.string,
+    scrollTo: PropTypes.func,
+    className: PropTypes.string,
   }
 
   constructor(props) {

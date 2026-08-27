@@ -11,7 +11,7 @@ const {Spinner, RetinaImg, MailLabelSet, ScrollRegion, MailImportantIcon, Inject
 
 class MessageListScrollTooltip extends React.Component {
   static displayName = 'MessageListScrollTooltip';
-  static propTypes = {viewportCenter: React.PropTypes.number.isRequired, totalHeight: React.PropTypes.number.isRequired};
+  static propTypes = {viewportCenter: PropTypes.number.isRequired, totalHeight: PropTypes.number.isRequired};
   constructor() {
     super(...arguments);
     this.componentWillMount = this.componentWillMount.bind(this);

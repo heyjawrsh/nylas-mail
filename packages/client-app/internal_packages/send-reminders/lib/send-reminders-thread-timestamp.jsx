@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit';
 import {Rx, Message, DatabaseStore, FocusedPerspectiveStore} from 'nylas-exports';
 import {getReminderLabel, getLatestMessageWithReminder, setMessageReminder} from './send-reminders-utils'

@@ -22,7 +22,7 @@ class DecryptMessageButton extends React.Component {
     this.displayName = 'DecryptMessageButton';
   
     this.propTypes =
-      {message: React.PropTypes.object.isRequired};
+      {message: PropTypes.object.isRequired};
   }
 
   constructor(props) {

@@ -7,7 +7,7 @@ const {Utils, DraftStore, ComponentRegistry, MessageStore} = require('nylas-expo
 
 class MessageItemContainer extends React.Component {
   static displayName = 'MessageItemContainer';
-  static propTypes = {thread: React.PropTypes.object.isRequired, message: React.PropTypes.object.isRequired, messages: React.PropTypes.array.isRequired, collapsed: React.PropTypes.bool, isLastMsg: React.PropTypes.bool, isBeforeReplyArea: React.PropTypes.bool, scrollTo: React.PropTypes.func, onLoad: React.PropTypes.func};
+  static propTypes = {thread: PropTypes.object.isRequired, message: PropTypes.object.isRequired, messages: PropTypes.array.isRequired, collapsed: PropTypes.bool, isLastMsg: PropTypes.bool, isBeforeReplyArea: PropTypes.bool, scrollTo: PropTypes.func, onLoad: PropTypes.func};
 
   constructor(props) {
     super(props);

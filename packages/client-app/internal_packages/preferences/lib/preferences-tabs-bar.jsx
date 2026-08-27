@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import fs from 'fs'
 import Immutable from 'immutable';
 import classNames from 'classnames';
@@ -11,8 +12,8 @@ class PreferencesTabItem extends React.Component {
   static displayName = 'PreferencesTabItem';
 
   static propTypes = {
-    selection: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    tabItem: React.PropTypes.instanceOf(PreferencesUIStore.TabItem).isRequired,
+    selection: PropTypes.instanceOf(Immutable.Map).isRequired,
+    tabItem: PropTypes.instanceOf(PreferencesUIStore.TabItem).isRequired,
   }
 
   _onClick = () => {
@@ -59,8 +60,8 @@ class PreferencesTabsBar extends React.Component {
   static displayName = 'PreferencesTabsBar';
 
   static propTypes = {
-    tabs: React.PropTypes.instanceOf(Immutable.List).isRequired,
-    selection: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    tabs: PropTypes.instanceOf(Immutable.List).isRequired,
+    selection: PropTypes.instanceOf(Immutable.Map).isRequired,
   }
 
   renderTabs() {

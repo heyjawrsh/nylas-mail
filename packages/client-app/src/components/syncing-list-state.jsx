@@ -1,4 +1,5 @@
 import {Actions, React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 function SyncingListState(props) {
   let message = "Looking for more messages"
@@ -17,7 +18,7 @@ function SyncingListState(props) {
 }
 
 SyncingListState.propTypes = {
-  empty: React.PropTypes.bool,
+  empty: PropTypes.bool,
 }
 
 export default SyncingListState;

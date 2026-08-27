@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Message} from 'nylas-exports';
 
 import AutoloadImagesStore from './autoload-images-store';
@@ -8,7 +9,7 @@ export default class AutoloadImagesHeader extends React.Component {
   static displayName = 'AutoloadImagesHeader';
 
   static propTypes = {
-    message: React.PropTypes.instanceOf(Message).isRequired,
+    message: PropTypes.instanceOf(Message).isRequired,
   }
 
   constructor(props) {

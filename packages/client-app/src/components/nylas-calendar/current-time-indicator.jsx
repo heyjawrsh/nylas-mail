@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Moment from 'moment';
 import classNames from 'classnames';
 
 export default class CurrentTimeIndicator extends React.Component {
   static propTypes = {
-    gridHeight: React.PropTypes.number,
-    numColumns: React.PropTypes.number,
-    todayColumnIdx: React.PropTypes.number,
-    visible: React.PropTypes.bool,
+    gridHeight: PropTypes.number,
+    numColumns: PropTypes.number,
+    todayColumnIdx: PropTypes.number,
+    visible: PropTypes.bool,
   }
 
   constructor(props) {

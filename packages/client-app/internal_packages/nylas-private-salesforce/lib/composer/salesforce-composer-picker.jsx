@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Popover, RetinaImg} from 'nylas-component-kit'
 import SalesforceObjectPicker from '../form/salesforce-object-picker'
 
@@ -9,8 +10,8 @@ class SalesforceComposerPicker extends React.Component {
   // Inline composers will have threadIds.
   // Popout composers will not and the threadId will be null.
   static propTypes= {
-    threadId: React.PropTypes.string,
-    draftClientId: React.PropTypes.string.isRequired,
+    threadId: PropTypes.string,
+    draftClientId: PropTypes.string.isRequired,
   }
 
   static containerStyles = {

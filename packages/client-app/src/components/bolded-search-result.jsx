@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import Utils from '../flux/models/utils'
 
 export default function BoldedSearchResult({query = "", value = ""} = {}) {
@@ -22,6 +23,6 @@ export default function BoldedSearchResult({query = "", value = ""} = {}) {
   return <span className="search-result">{parts}</span>;
 }
 BoldedSearchResult.propTypes = {
-  query: React.PropTypes.string,
-  value: React.PropTypes.string,
+  query: PropTypes.string,
+  value: PropTypes.string,
 }

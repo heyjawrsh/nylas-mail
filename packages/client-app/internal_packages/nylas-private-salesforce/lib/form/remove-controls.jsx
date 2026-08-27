@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import _str from 'underscore.string'
 import {Actions} from 'nylas-exports'
 import OpenInSalesforceBtn from '../shared-components/open-in-salesforce-btn'
@@ -6,8 +7,8 @@ import DestroySalesforceObjectTask from '../tasks/destroy-salesforce-object-task
 
 export default class RemoveControls extends React.Component {
   static propTypes = {
-    objectId: React.PropTypes.string,
-    objectType: React.PropTypes.string,
+    objectId: PropTypes.string,
+    objectType: PropTypes.string,
   }
 
   constructor(props) {

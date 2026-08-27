@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {Utils, DraftHelpers, Actions, AccountStore} from 'nylas-exports';
 import {
@@ -30,16 +31,16 @@ export default class ComposerHeader extends React.Component {
   static displayName = "ComposerHeader";
 
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
-    initiallyFocused: React.PropTypes.bool,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
+    initiallyFocused: PropTypes.bool,
     // Subject text field injected component needs to call this function
     // when it is rendered with a new header component
-    onNewHeaderComponents: React.PropTypes.func,
+    onNewHeaderComponents: PropTypes.func,
   }
 
   static contextTypes = {
-    parentTabGroup: React.PropTypes.object,
+    parentTabGroup: PropTypes.object,
   }
 
   constructor(props = {}) {

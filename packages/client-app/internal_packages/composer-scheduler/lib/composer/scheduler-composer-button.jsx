@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import {
   Actions,
@@ -23,8 +24,8 @@ export default class SchedulerComposerButton extends React.Component {
   static displayName = "SchedulerComposerButton";
 
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
   };
 
   constructor(props) {

@@ -1,12 +1,13 @@
 import {React, ReactDOM} from 'nylas-exports'
+import PropTypes from 'prop-types';
 import {Menu} from 'nylas-component-kit'
 
 export default class DropdownMenu extends React.Component {
   static propTypes = {
-    intitialSelectionItem: React.PropTypes.object,
-    onSelect: React.PropTypes.func,
-    itemContent: React.PropTypes.fun,
-    headerComponents: React.PropTypes.element,
+    intitialSelectionItem: PropTypes.object,
+    onSelect: PropTypes.func,
+    itemContent: PropTypes.fun,
+    headerComponents: PropTypes.element,
   }
 
   constructor(props) {

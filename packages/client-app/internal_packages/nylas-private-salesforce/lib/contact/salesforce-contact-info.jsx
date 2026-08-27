@@ -1,6 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
-
+import PropTypes from 'prop-types';
 import {FocusedContentStore} from 'nylas-exports'
 
 import SalesforceIcon from '../shared-components/salesforce-icon'
@@ -17,7 +17,7 @@ class SalesforceContactInfo extends React.Component {
   }
 
   static propTypes = {
-    contact: React.PropTypes.object.isRequired,
+    contact: PropTypes.object.isRequired,
   }
 
   constructor(props) {

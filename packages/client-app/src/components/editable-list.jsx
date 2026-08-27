@@ -2,7 +2,8 @@
 import _ from 'underscore';
 import uuid from 'node-uuid';
 import classNames from 'classnames';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 import ScrollRegion from './scroll-region';

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit'
 
 export default function SalesforceIcon(props = {}) {
@@ -35,9 +36,9 @@ export default function SalesforceIcon(props = {}) {
   )
 }
 SalesforceIcon.propTypes = {
-  title: React.PropTypes.string,
-  pending: React.PropTypes.bool,
-  onClick: React.PropTypes.func,
-  className: React.PropTypes.string,
-  objectType: React.PropTypes.string.isRequired,
+  title: PropTypes.string,
+  pending: PropTypes.bool,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  objectType: PropTypes.string.isRequired,
 }

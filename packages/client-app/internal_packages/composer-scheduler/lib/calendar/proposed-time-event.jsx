@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import classnames from 'classnames'
 import SchedulerActions from '../scheduler-actions'
 import {CALENDAR_ID} from '../scheduler-constants'
@@ -10,7 +11,7 @@ export default class ProposedTimeEvent extends React.Component {
   static displayName = "ProposedTimeEvent";
 
   static propTypes = {
-    event: React.PropTypes.object,
+    event: PropTypes.object,
   }
 
   // Since ProposedTimeEvent is part of an Injected Component set, by

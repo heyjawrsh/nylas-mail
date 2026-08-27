@@ -1,5 +1,6 @@
 import moment from 'moment-timezone'
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Event, DateUtils} from 'nylas-exports'
 import b64Imgs from './email-images.json'
 import {PLUGIN_ID} from '../scheduler-constants'
@@ -10,7 +11,7 @@ const TZ = moment.tz(DateUtils.timeZone).format("z");
 
 export default class NewEventPreview extends React.Component {
   static propTypes = {
-    draft: React.PropTypes.object,
+    draft: PropTypes.object,
   }
 
   static defaultProps = {

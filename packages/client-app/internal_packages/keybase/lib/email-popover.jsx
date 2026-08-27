@@ -17,7 +17,7 @@ module.exports =
     static initClass() {
   
       this.propTypes =
-        {profile: React.PropTypes.instanceOf(Identity).isRequired};
+        {profile: PropTypes.instanceOf(Identity).isRequired};
     }
     constructor() {
       this._onRecipientFieldChange = this._onRecipientFieldChange.bind(this);

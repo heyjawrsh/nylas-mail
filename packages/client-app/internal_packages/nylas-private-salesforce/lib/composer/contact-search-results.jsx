@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Menu} from 'nylas-component-kit'
 import {Contact, DatabaseStore} from 'nylas-exports'
 
@@ -14,7 +15,7 @@ export function ContactSearchResult({token}) {
   )
 }
 ContactSearchResult.propTypes = {
-  token: React.PropTypes.instanceOf(Contact),
+  token: PropTypes.instanceOf(Contact),
 }
 
 /**
@@ -26,7 +27,7 @@ export default class ContactSearchResults extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    token: React.PropTypes.instanceOf(SalesforceObject),
+    token: PropTypes.instanceOf(SalesforceObject),
   }
 
   /**

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit';
 import OnboardingActions from './onboarding-actions';
 import AccountTypes from './account-types';
@@ -7,7 +8,7 @@ export default class AccountChoosePage extends React.Component {
   static displayName = "AccountChoosePage";
 
   static propTypes = {
-    accountInfo: React.PropTypes.object,
+    accountInfo: PropTypes.object,
   }
 
   _renderAccountTypes() {

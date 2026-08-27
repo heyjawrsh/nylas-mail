@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 export default function CodeSnippet(props) {
   return (
@@ -11,7 +12,7 @@ export default function CodeSnippet(props) {
 }
 
 CodeSnippet.propTypes = {
-  intro: React.PropTypes.string,
-  code: React.PropTypes.string,
-  className: React.PropTypes.string,
+  intro: PropTypes.string,
+  code: PropTypes.string,
+  className: PropTypes.string,
 }

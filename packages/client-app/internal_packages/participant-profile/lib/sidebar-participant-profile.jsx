@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import {DOMUtils, RegExpUtils, Utils} from 'nylas-exports'
 import {RetinaImg} from 'nylas-component-kit'
 import ParticipantProfileStore from './participant-profile-store'
@@ -8,8 +9,8 @@ export default class SidebarParticipantProfile extends React.Component {
   static displayName = "SidebarParticipantProfile";
 
   static propTypes = {
-    contact: React.PropTypes.object,
-    contactThreads: React.PropTypes.array,
+    contact: PropTypes.object,
+    contactThreads: PropTypes.array,
   }
 
   static containerStyles = {

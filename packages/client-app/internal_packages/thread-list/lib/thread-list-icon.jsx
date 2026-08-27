@@ -29,7 +29,7 @@ class ThreadListIcon extends React.Component {
   static initClass() {
     this.displayName = 'ThreadListIcon';
     this.propTypes =
-      {thread: React.PropTypes.object};
+      {thread: PropTypes.object};
   }
 
   _extensionsIconClassNames() {

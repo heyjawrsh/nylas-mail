@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import moment from 'moment'
 import classnames from 'classnames'
 import {Utils} from 'nylas-exports'
@@ -14,15 +15,15 @@ export default class WeekViewEventColumn extends React.Component {
   static displayName = "WeekViewEventColumn";
 
   static propTypes = {
-    events: React.PropTypes.array.isRequired,
-    day: React.PropTypes.instanceOf(moment),
-    dayEnd: React.PropTypes.number,
-    focusedEvent: React.PropTypes.object,
-    eventOverlap: React.PropTypes.object,
-    onEventClick: React.PropTypes.func,
-    onEventDoubleClick: React.PropTypes.func,
-    onEventFocused: React.PropTypes.func,
-    selectedEvents: React.PropTypes.arrayOf(React.PropTypes.object),
+    events: PropTypes.array.isRequired,
+    day: PropTypes.instanceOf(moment),
+    dayEnd: PropTypes.number,
+    focusedEvent: PropTypes.object,
+    eventOverlap: PropTypes.object,
+    onEventClick: PropTypes.func,
+    onEventDoubleClick: PropTypes.func,
+    onEventFocused: PropTypes.func,
+    selectedEvents: PropTypes.arrayOf(PropTypes.object),
   }
 
   shouldComponentUpdate(nextProps, nextState) {

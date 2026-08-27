@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {AccountStore, SendActionsStore} from 'nylas-exports';
 import {ListensToFluxStore} from 'nylas-component-kit';
 import ConfigSchemaItem from './config-schema-item';
@@ -45,9 +46,9 @@ function SendingSection(props) {
 
 SendingSection.displayName = 'SendingSection';
 SendingSection.propTypes = {
-  config: React.PropTypes.object,
-  configSchema: React.PropTypes.object,
-  sendingConfigSchema: React.PropTypes.object,
+  config: PropTypes.object,
+  configSchema: PropTypes.object,
+  sendingConfigSchema: PropTypes.object,
 }
 
 export default ListensToFluxStore(SendingSection, {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import classnames from 'classnames'
 import {ComponentRegistry} from 'nylas-exports'
 import {InjectedComponentSet} from 'nylas-component-kit'
@@ -9,9 +10,9 @@ export default class ActionBarPlugins extends React.Component {
   static displayName = "ActionBarPlugins";
 
   static propTypes = {
-    draft: React.PropTypes.object,
-    session: React.PropTypes.object,
-    isValidDraft: React.PropTypes.func,
+    draft: PropTypes.object,
+    session: PropTypes.object,
+    isValidDraft: PropTypes.func,
   }
 
   constructor(props) {

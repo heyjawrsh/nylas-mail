@@ -24,9 +24,9 @@ module.exports =
       this.displayName = 'ModalKeyRecommender';
   
       this.propTypes = {
-        contacts: React.PropTypes.array.isRequired,
-        emails: React.PropTypes.array,
-        callback: React.PropTypes.func
+        contacts: PropTypes.array.isRequired,
+        emails: PropTypes.array,
+        callback: PropTypes.func
       };
   
       this.defaultProps =

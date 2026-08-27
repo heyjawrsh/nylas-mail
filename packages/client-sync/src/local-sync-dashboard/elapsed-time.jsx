@@ -1,4 +1,5 @@
 import {React, ReactDOM} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 setInterval(() => {
   const event = new Event('tick');
@@ -32,6 +33,6 @@ export default class ElapsedTime extends React.Component {
 }
 
 ElapsedTime.propTypes = {
-  refTimestamp: React.PropTypes.number, // milliseconds
-  formatTime: React.PropTypes.func,
+  refTimestamp: PropTypes.number, // milliseconds
+  formatTime: PropTypes.func,
 }

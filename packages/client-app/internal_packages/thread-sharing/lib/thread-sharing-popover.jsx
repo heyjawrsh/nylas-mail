@@ -1,5 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import classnames from 'classnames';
 import {Rx, Actions, NylasAPIHelpers, Thread, DatabaseStore} from 'nylas-exports';
@@ -16,8 +17,8 @@ function isShared(thread) {
 
 export default class ThreadSharingPopover extends React.Component {
   static propTypes = {
-    thread: React.PropTypes.object,
-    accountId: React.PropTypes.string,
+    thread: PropTypes.object,
+    accountId: PropTypes.string,
   }
 
   constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Utils} from 'nylas-exports'
 import CalendarEvent from './calendar-event'
 
@@ -13,12 +14,12 @@ export default class WeekViewAllDayEvents extends React.Component {
   static displayName = "WeekViewAllDayEvents";
 
   static propTypes = {
-    end: React.PropTypes.number,
-    start: React.PropTypes.number,
-    height: React.PropTypes.number,
-    minorDim: React.PropTypes.number,
-    allDayEvents: React.PropTypes.array,
-    allDayOverlap: React.PropTypes.object,
+    end: PropTypes.number,
+    start: PropTypes.number,
+    height: PropTypes.number,
+    minorDim: PropTypes.number,
+    allDayEvents: PropTypes.array,
+    allDayOverlap: PropTypes.object,
   }
 
   shouldComponentUpdate(nextProps, nextState) {

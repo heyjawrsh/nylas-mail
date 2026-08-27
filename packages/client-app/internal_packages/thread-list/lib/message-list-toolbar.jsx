@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactCSSTransitionGroup from '../../../src/components/css-transition-group-compat.jsx'
 import {Rx, FocusedContentStore} from 'nylas-exports'
 import ThreadListStore from './thread-list-store'
 import InjectsToolbarButtons, {ToolbarRole} from './injects-toolbar-buttons'

@@ -25,7 +25,7 @@ class EventHeader extends React.Component {
     this.displayName = 'EventHeader';
   
     this.propTypes =
-      {message: React.PropTypes.instanceOf(Message).isRequired};
+      {message: PropTypes.instanceOf(Message).isRequired};
   }
 
   constructor(props) {

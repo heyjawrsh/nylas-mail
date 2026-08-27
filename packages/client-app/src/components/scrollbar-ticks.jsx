@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 
 export default class ScrollbarTicks extends React.Component {
   static displayName = "ScrollbarTicks";
 
   static propTypes = {
-    ticks: React.PropTypes.array,
+    ticks: PropTypes.array,
   }
 
   componentDidMount() {

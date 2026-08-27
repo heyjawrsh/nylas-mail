@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import _ from 'underscore'
 import _str from 'underscore.string'
 import {Utils, Actions} from 'nylas-exports'
@@ -24,10 +25,10 @@ class SalesforceObjectForm extends React.Component {
      * existing object. If it's blank that means we're creating a new
      * object.
      */
-    objectId: React.PropTypes.string,
+    objectId: PropTypes.string,
 
     // The type of Salesforce Object
-    objectType: React.PropTypes.string.isRequired,
+    objectType: PropTypes.string.isRequired,
 
     /**
      * When the object form is created, it's passed in contextData. We use
@@ -38,7 +39,7 @@ class SalesforceObjectForm extends React.Component {
     contextData: SalesforceObjectPicker.propTypes.contextData,
 
     // Any initial data we get passed when creating this object.
-    objectInitialData: React.PropTypes.object,
+    objectInitialData: PropTypes.object,
   }
 
   static defaultProps = {

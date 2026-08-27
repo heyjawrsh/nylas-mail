@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import {Utils} from 'nylas-exports'
 
@@ -6,10 +7,10 @@ export default class EventGridBackground extends React.Component {
   static displayName = "EventGridBackground";
 
   static propTypes = {
-    height: React.PropTypes.number,
-    numColumns: React.PropTypes.number,
-    tickGenerator: React.PropTypes.func,
-    intervalHeight: React.PropTypes.number,
+    height: PropTypes.number,
+    numColumns: PropTypes.number,
+    tickGenerator: PropTypes.func,
+    intervalHeight: PropTypes.number,
   }
 
   constructor() {

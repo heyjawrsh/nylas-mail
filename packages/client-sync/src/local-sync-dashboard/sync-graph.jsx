@@ -1,4 +1,5 @@
 import {React, ReactDOM} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 setInterval(() => {
   const event = new Event('graphtick')
@@ -108,5 +109,5 @@ SyncGraph.config = {
 }
 
 SyncGraph.propTypes = {
-  syncTimestamps: React.PropTypes.arrayOf(React.PropTypes.number),
+  syncTimestamps: PropTypes.arrayOf(PropTypes.number),
 }

@@ -1,6 +1,7 @@
 import _ from 'underscore'
 import moment from 'moment-timezone'
 import React from 'react'
+import PropTypes from 'prop-types';
 import {DateUtils} from 'nylas-exports'
 import {RetinaImg} from 'nylas-component-kit'
 import b64Imgs from './email-images.json'
@@ -10,10 +11,10 @@ const TZ = moment.tz(DateUtils.timeZone).format("z");
 
 export default class ProposedTimeList extends React.Component {
   static propTypes = {
-    draft: React.PropTypes.object,
-    event: React.PropTypes.object,
-    inEmail: React.PropTypes.bool,
-    proposals: React.PropTypes.array.isRequired,
+    draft: PropTypes.object,
+    event: PropTypes.object,
+    inEmail: PropTypes.bool,
+    proposals: PropTypes.array.isRequired,
   }
 
   static defaultProps = {

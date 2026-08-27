@@ -22,9 +22,9 @@ module.exports =
       this.displayName = 'KeybaseUserProfile';
   
       this.propTypes = {
-        profile: React.PropTypes.instanceOf(Identity).isRequired,
-        actionButton: React.PropTypes.node,
-        displayEmailList: React.PropTypes.bool
+        profile: PropTypes.instanceOf(Identity).isRequired,
+        actionButton: PropTypes.node,
+        displayEmailList: PropTypes.bool
       };
   
       this.defaultProps = {

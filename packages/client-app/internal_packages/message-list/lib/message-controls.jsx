@@ -7,7 +7,7 @@ const {RetinaImg, ButtonDropdown, Menu} = require('nylas-component-kit');
 
 class MessageControls extends React.Component {
   static displayName = "MessageControls";
-  static propTypes = {thread: React.PropTypes.object.isRequired, message: React.PropTypes.object.isRequired};
+  static propTypes = {thread: PropTypes.object.isRequired, message: PropTypes.object.isRequired};
 
   constructor(props) {
     super(props);

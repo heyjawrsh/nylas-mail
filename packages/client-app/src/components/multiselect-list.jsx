@@ -42,12 +42,12 @@ class MultiselectList extends React.Component {
     this.displayName = 'MultiselectList';
   
     this.propTypes = {
-      dataSource: React.PropTypes.object,
-      className: React.PropTypes.string.isRequired,
-      columns: React.PropTypes.array.isRequired,
-      itemPropsProvider: React.PropTypes.func.isRequired,
-      keymapHandlers: React.PropTypes.object,
-      onComponentDidUpdate: React.PropTypes.func
+      dataSource: PropTypes.object,
+      className: PropTypes.string.isRequired,
+      columns: PropTypes.array.isRequired,
+      itemPropsProvider: PropTypes.func.isRequired,
+      keymapHandlers: PropTypes.object,
+      onComponentDidUpdate: PropTypes.func
     };
   }
 

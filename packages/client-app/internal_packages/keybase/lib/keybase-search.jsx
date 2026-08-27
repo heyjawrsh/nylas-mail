@@ -29,12 +29,12 @@ module.exports =
       this.displayName = 'KeybaseSearch';
   
       this.propTypes = {
-        initialSearch: React.PropTypes.string,
+        initialSearch: PropTypes.string,
         // importFunc: a alternate function to execute when the "import" button is
         // clicked instead of the "please specify an email" popover
-        importFunc: React.PropTypes.func,
+        importFunc: PropTypes.func,
         // TODO consider just passing in a pre-specified email instead of a func?
-        inPreferences: React.PropTypes.bool
+        inPreferences: PropTypes.bool
       };
   
       this.defaultProps = {

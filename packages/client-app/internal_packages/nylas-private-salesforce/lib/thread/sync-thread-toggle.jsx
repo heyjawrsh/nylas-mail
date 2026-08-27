@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import _str from 'underscore.string'
 import {Switch} from 'nylas-component-kit'
 import {Actions} from 'nylas-exports'
@@ -54,7 +55,7 @@ export default function SyncThreadToggle(props) {
 }
 SyncThreadToggle.displayName = "SyncThreadToggle"
 SyncThreadToggle.propTypes = {
-  thread: React.PropTypes.object,
-  sObjectId: React.PropTypes.string,
-  sObjectType: React.PropTypes.string,
+  thread: PropTypes.object,
+  sObjectId: PropTypes.string,
+  sObjectType: PropTypes.string,
 }

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {pickHTMLProps} from 'pick-react-known-prop'
 import ReactDOM from 'react-dom'
 

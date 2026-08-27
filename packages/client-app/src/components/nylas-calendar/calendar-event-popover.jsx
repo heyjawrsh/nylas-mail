@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import {Actions, DatabaseStore, DateUtils, SyncbackEventTask} from 'nylas-exports';
 import {DatePicker, RetinaImg, ScrollRegion, TabGroupRegion, TimePicker} from 'nylas-component-kit';
@@ -7,7 +8,7 @@ import EventParticipantsInput from './event-participants-input';
 
 export default class CalendarEventPopover extends React.Component {
   static propTypes = {
-    event: React.PropTypes.object.isRequired,
+    event: PropTypes.object.isRequired,
   }
 
   constructor(props) {

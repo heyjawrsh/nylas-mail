@@ -180,11 +180,11 @@ lazyLoad(`MessageViewExtension`, 'extensions/message-view-extension');
 lazyLoad(`ContenteditableExtension`, 'extensions/contenteditable-extension');
 
 // 3rd party libraries
-lazyLoadWithGetter(`Rx`, () => require('rx-lite'));
+lazyLoadWithGetter(`Rx`, () => require('rxjs'));
 lazyLoadWithGetter(`React`, () => require('react'));
 lazyLoadWithGetter(`Reflux`, () => require('reflux'));
 lazyLoadWithGetter(`ReactDOM`, () => require('react-dom'));
-lazyLoadWithGetter(`ReactTestUtils`, () => require('react-addons-test-utils'));
+lazyLoadWithGetter(`ReactTestUtils`, () => require('react-dom/test-utils'));
 
 // React Components
 lazyLoad(`ComponentRegistry`, 'registries/component-registry');

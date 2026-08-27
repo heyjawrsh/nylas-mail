@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {shell} from 'electron'
 import {RetinaImg} from 'nylas-component-kit'
 import SalesforceEnv from '../salesforce-env'
@@ -24,6 +25,6 @@ export default function OpenInSalesforceBtn({objectId, size = "small"}) {
   )
 }
 OpenInSalesforceBtn.propTypes = {
-  objectId: React.PropTypes.string,
-  size: React.PropTypes.string,
+  objectId: PropTypes.string,
+  size: PropTypes.string,
 }

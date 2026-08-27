@@ -9,7 +9,7 @@
  */
 const React = require('react');
 const ReactDOM = require('react-dom');
-const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+const ReactCSSTransitionGroup = require('../../../../src/components/css-transition-group-compat.jsx');
 const _ = require('underscore');
 const classNames = require('classnames');
 

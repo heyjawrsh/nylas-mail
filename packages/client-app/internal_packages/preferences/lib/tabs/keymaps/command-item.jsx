@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
 import { Flexbox } from 'nylas-component-kit';
@@ -8,9 +9,9 @@ import {keyAndModifiersForEvent} from './mousetrap-keybinding-helpers';
 
 export default class CommandKeybinding extends React.Component {
   static propTypes = {
-    bindings: React.PropTypes.array,
-    label: React.PropTypes.string,
-    command: React.PropTypes.string,
+    bindings: PropTypes.array,
+    label: PropTypes.string,
+    command: PropTypes.string,
   }
 
   constructor(props) {

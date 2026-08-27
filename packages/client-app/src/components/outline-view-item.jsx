@@ -4,7 +4,8 @@
 import _ from 'underscore';
 import {Utils} from 'nylas-exports'
 import classnames from 'classnames';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import DisclosureTriangle from './disclosure-triangle';
 import DropZone from './drop-zone';

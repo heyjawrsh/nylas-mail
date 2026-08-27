@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment-timezone'
 import {DateUtils} from 'nylas-exports'
 
@@ -15,10 +16,10 @@ export default class EventDatetimeInput extends React.Component {
   static displayName = "EventDatetimeInput";
 
   static propTypes = {
-    name: React.PropTypes.string,
-    value: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    reversed: React.PropTypes.bool,
+    name: PropTypes.string,
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+    reversed: PropTypes.bool,
   };
 
   constructor(props) {

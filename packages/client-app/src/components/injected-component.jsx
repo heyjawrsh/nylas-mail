@@ -64,14 +64,14 @@ class InjectedComponent extends React.Component {
   
     */
     this.propTypes = {
-      matching: React.PropTypes.object.isRequired,
-      className: React.PropTypes.string,
-      exposedProps: React.PropTypes.object,
-      fallback: React.PropTypes.func,
-      onComponentDidRender: React.PropTypes.func,
-      style: React.PropTypes.object,
-      requiredMethods: React.PropTypes.arrayOf(React.PropTypes.string),
-      onComponentDidChange: React.PropTypes.func
+      matching: PropTypes.object.isRequired,
+      className: PropTypes.string,
+      exposedProps: PropTypes.object,
+      fallback: PropTypes.func,
+      onComponentDidRender: PropTypes.func,
+      style: PropTypes.object,
+      requiredMethods: PropTypes.arrayOf(PropTypes.string),
+      onComponentDidChange: PropTypes.func
     };
   
     this.defaultProps = {

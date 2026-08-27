@@ -9,7 +9,7 @@ const MAX_COLLAPSED = 5;
 
 class MessageParticipants extends React.Component {
   static displayName = 'MessageParticipants';
-  static propTypes = {to: React.PropTypes.array, cc: React.PropTypes.array, bcc: React.PropTypes.array, from: React.PropTypes.array, onClick: React.PropTypes.func, isDetailed: React.PropTypes.bool};
+  static propTypes = {to: PropTypes.array, cc: PropTypes.array, bcc: PropTypes.array, from: PropTypes.array, onClick: PropTypes.func, isDetailed: PropTypes.bool};
   static defaultProps = {to: [], cc: [], bcc: [], from: []};
 
   constructor() {

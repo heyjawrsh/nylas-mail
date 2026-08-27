@@ -1,11 +1,11 @@
 /* eslint react/prefer-stateless-function: 0 */
 import React from 'react';
-
+import PropTypes from 'prop-types';
 export default class InjectedComponentLabel extends React.Component {
   static displayName = 'InjectedComponentLabel';
 
   static propTypes = {
-    matching: React.PropTypes.object,
+    matching: PropTypes.object,
   };
 
   render() {

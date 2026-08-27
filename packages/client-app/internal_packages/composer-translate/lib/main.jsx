@@ -7,6 +7,7 @@
 // a language from a popup menu and translates draft text into that language.
 
 import request from 'request'
+import PropTypes from 'prop-types';
 
 import {
   React,
@@ -45,8 +46,8 @@ class TranslateButton extends React.Component {
   // we receive the local id of the current draft as a `prop` (a read-only
   // property). Since our code depends on this prop, we mark it as a requirement.
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
   };
 
   shouldComponentUpdate(nextProps) {

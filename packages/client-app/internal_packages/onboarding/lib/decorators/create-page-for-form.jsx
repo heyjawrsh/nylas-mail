@@ -1,5 +1,6 @@
 import {shell} from 'electron'
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {RetinaImg} from 'nylas-component-kit';
 import {NylasAPI, Actions} from 'nylas-exports';
@@ -14,7 +15,7 @@ const CreatePageForForm = (FormComponent) => {
     static displayName = FormComponent.displayName;
 
     static propTypes = {
-      accountInfo: React.PropTypes.object,
+      accountInfo: PropTypes.object,
     };
 
     constructor(props) {

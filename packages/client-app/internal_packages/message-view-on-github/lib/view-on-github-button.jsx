@@ -1,4 +1,5 @@
 import {shell} from 'electron'
+import PropTypes from 'prop-types';
 import {Actions, React} from 'nylas-exports'
 import {RetinaImg, KeyCommandsRegion} from 'nylas-component-kit'
 
@@ -52,7 +53,7 @@ export default class ViewOnGithubButton extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    items: React.PropTypes.array,
+    items: PropTypes.array,
   }
 
   /** ** React methods ****

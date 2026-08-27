@@ -1,5 +1,6 @@
 import fs from 'fs';
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import {Actions, DateUtils, NylasAPIHelpers, DraftHelpers, FeatureUsageStore} from 'nylas-exports'
 import {RetinaImg, FeatureUsedUpModal} from 'nylas-component-kit'

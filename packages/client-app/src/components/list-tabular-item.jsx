@@ -23,13 +23,13 @@ class ListTabularItem extends React.Component {
   static initClass() {
     this.displayName = 'ListTabularItem';
     this.propTypes = {
-      metrics: React.PropTypes.object,
-      columns: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-      item: React.PropTypes.object.isRequired,
-      itemProps: React.PropTypes.object,
-      onSelect: React.PropTypes.func,
-      onClick: React.PropTypes.func,
-      onDoubleClick: React.PropTypes.func
+      metrics: PropTypes.object,
+      columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+      item: PropTypes.object.isRequired,
+      itemProps: PropTypes.object,
+      onSelect: PropTypes.func,
+      onClick: PropTypes.func,
+      onDoubleClick: PropTypes.func
     };
   }
 

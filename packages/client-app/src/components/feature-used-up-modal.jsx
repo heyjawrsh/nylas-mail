@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {shell} from 'electron'
 import Actions from '../flux/actions'
 import RetinaImg from './retina-img'
@@ -7,11 +8,11 @@ import IdentityStore from '../flux/stores/identity-store'
 
 export default class FeatureUsedUpModal extends React.Component {
   static propTypes = {
-    modalClass: React.PropTypes.string.isRequired,
-    featureName: React.PropTypes.string.isRequired,
-    headerText: React.PropTypes.string.isRequired,
-    rechargeText: React.PropTypes.string.isRequired,
-    iconUrl: React.PropTypes.string.isRequired,
+    modalClass: PropTypes.string.isRequired,
+    featureName: PropTypes.string.isRequired,
+    headerText: PropTypes.string.isRequired,
+    rechargeText: PropTypes.string.isRequired,
+    iconUrl: PropTypes.string.isRequired,
   }
 
   componentDidMount() {

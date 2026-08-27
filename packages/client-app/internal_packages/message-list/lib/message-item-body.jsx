@@ -10,7 +10,7 @@ const TransparentPixel = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB
 
 class MessageItemBody extends React.Component {
   static displayName = 'MessageItemBody';
-  static propTypes = {message: React.PropTypes.object.isRequired, downloads: React.PropTypes.object.isRequired, onLoad: React.PropTypes.func};
+  static propTypes = {message: PropTypes.object.isRequired, downloads: PropTypes.object.isRequired, onLoad: PropTypes.func};
 
   constructor(props) {
     super(props);

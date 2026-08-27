@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg, Flexbox} from 'nylas-component-kit';
 
 class AppearanceModeSwitch extends React.Component {
@@ -6,7 +7,7 @@ class AppearanceModeSwitch extends React.Component {
   static displayName = 'AppearanceModeSwitch';
 
   static propTypes = {
-    config: React.PropTypes.object.isRequired,
+    config: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -75,9 +76,9 @@ const AppearanceModeOption = function AppearanceModeOption(props) {
   );
 }
 AppearanceModeOption.propTypes = {
-  mode: React.PropTypes.string.isRequired,
-  active: React.PropTypes.bool,
-  onClick: React.PropTypes.func,
+  mode: PropTypes.string.isRequired,
+  active: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 class PreferencesAppearance extends React.Component {
@@ -85,8 +86,8 @@ class PreferencesAppearance extends React.Component {
   static displayName = 'PreferencesAppearance';
 
   static propTypes = {
-    config: React.PropTypes.object,
-    configSchema: React.PropTypes.object,
+    config: PropTypes.object,
+    configSchema: PropTypes.object,
   }
 
   onClick = () => {

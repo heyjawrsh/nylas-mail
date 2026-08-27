@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit';
 
 // This component renders buttons and is the default view in the
@@ -15,7 +16,7 @@ export default class ToolbarButtons extends React.Component {
   static propTypes = {
     // Declares what buttons should appear in the toolbar. An array of
     // config objects.
-    buttonConfigs: React.PropTypes.array,
+    buttonConfigs: PropTypes.array,
   }
 
   static defaultProps = {

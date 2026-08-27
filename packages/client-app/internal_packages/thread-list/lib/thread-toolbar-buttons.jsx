@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {RetinaImg} from 'nylas-component-kit';
 import {
@@ -18,7 +19,7 @@ export class ArchiveButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
   }
 
   _onArchive = (event) => {
@@ -56,7 +57,7 @@ export class TrashButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
   }
 
   _onRemove = (event) => {
@@ -91,7 +92,7 @@ export class MarkAsSpamButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
   }
 
   _allInSpam() {
@@ -161,7 +162,7 @@ export class ToggleStarredButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
   };
 
   _onStar = (event) => {
@@ -194,7 +195,7 @@ export class ToggleUnreadButton extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    items: React.PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
   }
 
   _onClick = (event) => {
@@ -227,10 +228,10 @@ export class ToggleUnreadButton extends React.Component {
 
 class ThreadArrowButton extends React.Component {
   static propTypes = {
-    getStateFromStores: React.PropTypes.func,
-    direction: React.PropTypes.string,
-    command: React.PropTypes.string,
-    title: React.PropTypes.string,
+    getStateFromStores: PropTypes.func,
+    direction: PropTypes.string,
+    command: PropTypes.string,
+    title: PropTypes.string,
   }
 
   constructor(props) {

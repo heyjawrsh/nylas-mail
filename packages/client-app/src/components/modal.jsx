@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Actions from '../flux/actions';
 import RetinaImg from './retina-img';
@@ -8,10 +9,10 @@ import RetinaImg from './retina-img';
 class Modal extends React.Component {
 
   static propTypes = {
-    className: React.PropTypes.string,
-    children: React.PropTypes.element,
-    height: React.PropTypes.number,
-    width: React.PropTypes.number,
+    className: PropTypes.string,
+    children: PropTypes.element,
+    height: PropTypes.number,
+    width: PropTypes.number,
   };
 
   constructor(props) {

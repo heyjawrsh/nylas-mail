@@ -21,8 +21,8 @@ class ThreadListScrollTooltip extends React.Component {
   static initClass() {
     this.displayName = 'ThreadListScrollTooltip';
     this.propTypes = {
-      viewportCenter: React.PropTypes.number.isRequired,
-      totalHeight: React.PropTypes.number.isRequired
+      viewportCenter: PropTypes.number.isRequired,
+      totalHeight: PropTypes.number.isRequired
     };
   }
 

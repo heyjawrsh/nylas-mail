@@ -22,16 +22,16 @@ class Sheet extends React.Component {
     this.displayName = 'Sheet';
   
     this.propTypes = {
-      data: React.PropTypes.object.isRequired,
-      depth: React.PropTypes.number.isRequired,
-      onColumnSizeChanged: React.PropTypes.func
+      data: PropTypes.object.isRequired,
+      depth: PropTypes.number.isRequired,
+      onColumnSizeChanged: PropTypes.func
     };
   
     this.defaultProps =
       {onColumnSizeChanged() {}};
   
     this.childContextTypes =
-      {sheetDepth: React.PropTypes.number};
+      {sheetDepth: PropTypes.number};
   }
 
   getChildContext() {

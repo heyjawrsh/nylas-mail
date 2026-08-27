@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import _ from 'underscore'
@@ -11,7 +12,7 @@ import KeyCommandsRegion from './key-commands-region';
 
 class SizeToFitInput extends React.Component {
   static propTypes = {
-    value: React.PropTypes.string,
+    value: PropTypes.string,
   };
 
   constructor(props) {
@@ -73,16 +74,16 @@ class Token extends React.Component {
   static displayName = "Token";
 
   static propTypes = {
-    className: React.PropTypes.string,
-    selected: React.PropTypes.bool,
-    valid: React.PropTypes.bool,
-    item: React.PropTypes.object,
-    onClick: React.PropTypes.func.isRequired,
-    onDragStart: React.PropTypes.func.isRequired,
-    onEdited: React.PropTypes.func,
-    onAction: React.PropTypes.func,
-    disabled: React.PropTypes.bool,
-    onEditMotion: React.PropTypes.func,
+    className: PropTypes.string,
+    selected: PropTypes.bool,
+    valid: PropTypes.bool,
+    item: PropTypes.object,
+    onClick: PropTypes.func.isRequired,
+    onDragStart: PropTypes.func.isRequired,
+    onEdited: PropTypes.func,
+    onAction: PropTypes.func,
+    disabled: PropTypes.bool,
+    onEditMotion: PropTypes.func,
   }
 
   static defaultProps = {
@@ -231,11 +232,11 @@ export default class TokenizingTextField extends React.Component {
   static Token = Token;
 
   static propTypes = {
-    className: React.PropTypes.string,
+    className: PropTypes.string,
 
-    disabled: React.PropTypes.bool,
+    disabled: PropTypes.bool,
 
-    placeholder: React.PropTypes.node,
+    placeholder: PropTypes.node,
 
     // An array of current tokens.
     //
@@ -243,36 +244,36 @@ export default class TokenizingTextField extends React.Component {
     // tokens is stored as a prop instead of `state`. This means that when
     // the set of tokens needs to be changed, it is the parent's
     // responsibility to make that change.
-    tokens: React.PropTypes.arrayOf(React.PropTypes.object),
+    tokens: PropTypes.arrayOf(PropTypes.object),
 
     // The maximum number of tokens allowed. When null (the default) and
     // unlimited number of tokens may be given
-    maxTokens: React.PropTypes.number,
+    maxTokens: PropTypes.number,
 
     // A string to pre-fill the input with when the tokens are empty.
-    defaultValue: React.PropTypes.string,
+    defaultValue: PropTypes.string,
 
     // A function that, given an object used for tokens, returns a unique
     // id (key) for that object.
     //
     // This is necessary for React to assign each of the subitems and
     // unique key.
-    tokenKey: React.PropTypes.func.isRequired,
+    tokenKey: PropTypes.func.isRequired,
 
     // A function that, given a token, returns true if the token is valid
     // and false if the token is invalid. Useful if your implementation of
     // onAdd allows invalid tokens to be added to the field (ie malformed
     // email addresses.) Optional.
     //
-    tokenIsValid: React.PropTypes.func,
+    tokenIsValid: PropTypes.func,
 
     // What each token looks like
     //
     // A function that is passed an object and should return React elements
     // to display that individual token.
-    tokenRenderer: React.PropTypes.func.isRequired,
+    tokenRenderer: PropTypes.func.isRequired,
 
-    tokenClassNames: React.PropTypes.func,
+    tokenClassNames: PropTypes.func,
 
     // The function responsible for providing a list of possible options
     // given the current input.
@@ -283,13 +284,13 @@ export default class TokenizingTextField extends React.Component {
     //
     // The function may either directly return tokens, or may return a
     // Promise, that resolves with the requested tokens
-    onRequestCompletions: React.PropTypes.func.isRequired,
+    onRequestCompletions: PropTypes.func.isRequired,
 
     // What each suggestion looks like.
     //
     // This is passed through to the Menu component's `itemContent` prop.
     // See components/menu.cjsx for more info.
-    completionNode: React.PropTypes.func.isRequired,
+    completionNode: PropTypes.func.isRequired,
 
     // Gets called when we we're ready to add whatever it is we're
     // completing
@@ -305,7 +306,7 @@ export default class TokenizingTextField extends React.Component {
     // The function doesn't need to return anything, but it is generally
     // responible for mutating the parent's state in a way that eventually
     // updates this component's `tokens` prop.
-    onAdd: React.PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
 
     // This gets fired when people try and submit a query with a break
     // character (tab, comma, semicolon, etc). It lets us the caller
@@ -313,11 +314,11 @@ export default class TokenizingTextField extends React.Component {
 
     // If this method is not implemented we'll pick the first available
     // option in the completions
-    onInputTrySubmit: React.PropTypes.func,
+    onInputTrySubmit: PropTypes.func,
 
     // If implemented lets the caller determine when to cut a token based
     // on the current input value and the current keydown.
-    shouldBreakOnKeydown: React.PropTypes.func,
+    shouldBreakOnKeydown: PropTypes.func,
 
     // Gets called when we remove a token
     //
@@ -327,7 +328,7 @@ export default class TokenizingTextField extends React.Component {
     // The function doesn't need to return anything, but it is generally
     // responible for mutating the parent's state in a way that eventually
     // updates this component's `tokens` prop.
-    onRemove: React.PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
 
     // Gets called when an existing token is double-clicked and edited.
     // Do not provide this method if you want to disable editing.
@@ -337,34 +338,34 @@ export default class TokenizingTextField extends React.Component {
     // The function doesn't need to return anything, but it is generally
     // responible for mutating the parent's state in a way that eventually
     // updates this component's `tokens` prop.
-    onEdit: React.PropTypes.func,
+    onEdit: PropTypes.func,
 
     // This is slightly different than onEdit. onEditMotion gets fired if
     // the user does an editing-like action on a Token. Double clicking,
     // etc. This is usefulf for when you don't want the text of the tokens
     // themselves to be editable, but want to perform some action when the
     // tokens are double clicked.
-    onEditMotion: React.PropTypes.func,
+    onEditMotion: PropTypes.func,
 
     // Called when we remove and there's nothing left to remove
-    onEmptied: React.PropTypes.func,
+    onEmptied: PropTypes.func,
 
     // Called when the secondary action of the token gets invoked.
-    onTokenAction: React.PropTypes.oneOfType([
-      React.PropTypes.func,
-      React.PropTypes.bool,
+    onTokenAction: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.bool,
     ]),
 
     // Called when the input is focused
-    onFocus: React.PropTypes.func,
+    onFocus: PropTypes.func,
 
     // A Prompt used in the head of the menu
-    menuPrompt: React.PropTypes.string,
+    menuPrompt: PropTypes.string,
 
     // A classSet hash applied to the Menu item
-    menuClassSet: React.PropTypes.object,
+    menuClassSet: PropTypes.object,
 
-    tabIndex: React.PropTypes.number,
+    tabIndex: PropTypes.number,
   };
 
   static defaultProps = {

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {EditableTable} from 'nylas-component-kit'
 import {pickHTMLProps} from 'pick-react-known-prop'
 import MailMergeHeaderInput from './mail-merge-header-input'

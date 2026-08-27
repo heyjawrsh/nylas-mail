@@ -1,9 +1,10 @@
 import _ from 'underscore';
+import PropTypes from 'prop-types';
 import {React, Utils} from 'nylas-exports';
 
 export default class SyncbackActivity extends React.Component {
   static propTypes = {
-    syncbackTasks: React.PropTypes.array,
+    syncbackTasks: PropTypes.array,
   }
 
   shouldComponentUpdate(nextProps, nextState) {

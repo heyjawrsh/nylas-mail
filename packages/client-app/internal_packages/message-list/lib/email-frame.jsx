@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import _ from "underscore";
 import {EventedIFrame} from 'nylas-component-kit';
@@ -12,10 +13,10 @@ export default class EmailFrame extends React.Component {
   static displayName = 'EmailFrame';
 
   static propTypes = {
-    content: React.PropTypes.string.isRequired,
-    message: React.PropTypes.object,
-    showQuotedText: React.PropTypes.bool,
-    onLoad: React.PropTypes.func,
+    content: PropTypes.string.isRequired,
+    message: PropTypes.object,
+    showQuotedText: PropTypes.bool,
+    onLoad: PropTypes.func,
   };
 
   componentDidMount() {

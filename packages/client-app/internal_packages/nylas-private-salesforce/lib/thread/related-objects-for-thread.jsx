@@ -1,6 +1,7 @@
 import _ from 'underscore'
 import _str from 'underscore.string'
 import React from 'react'
+import PropTypes from 'prop-types';
 import moment from 'moment'
 import ReactDOM from 'react-dom'
 import {Utils, DatabaseStore, AccountStore, FocusedContactsStore} from 'nylas-exports'
@@ -24,7 +25,7 @@ class RelatedObjectsForThread extends React.Component {
   }
 
   static propTypes = {
-    thread: React.PropTypes.object,
+    thread: PropTypes.object,
   }
 
   constructor(props) {

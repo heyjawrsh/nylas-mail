@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {DateUtils} from 'nylas-exports'
 
 class MessageTimestamp extends React.Component {
   static displayName = 'MessageTimestamp'
 
   static propTypes = {
-    date: React.PropTypes.object.isRequired,
-    className: React.PropTypes.string,
-    isDetailed: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
+    date: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    isDetailed: PropTypes.bool,
+    onClick: PropTypes.func,
   }
 
   shouldComponentUpdate(nextProps) {

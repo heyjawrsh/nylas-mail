@@ -1,6 +1,6 @@
 /* eslint global-require: 0*/
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {Actions} from 'nylas-exports'
 import ConfigSchemaItem from './config-schema-item';
 import WorkspaceSection from './workspace-section';
@@ -9,8 +9,8 @@ class PreferencesGeneral extends React.Component {
   static displayName = 'PreferencesGeneral'
 
   static propTypes = {
-    config: React.PropTypes.object,
-    configSchema: React.PropTypes.object,
+    config: PropTypes.object,
+    configSchema: PropTypes.object,
   };
 
   _reboot = () => {

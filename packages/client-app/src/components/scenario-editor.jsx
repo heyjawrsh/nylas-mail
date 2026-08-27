@@ -45,10 +45,10 @@ class ScenarioEditor extends React.Component {
     this.displayName = 'ScenarioEditor';
   
     this.propTypes = {
-      instances: React.PropTypes.array,
-      className: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      templates: React.PropTypes.array
+      instances: PropTypes.array,
+      className: PropTypes.string,
+      onChange: PropTypes.func,
+      templates: PropTypes.array
     };
   
     this.Template = Template;

@@ -1,5 +1,6 @@
 import _ from 'underscore';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {FocusedPerspectiveStore} from 'nylas-exports';
 import {RetinaImg, MailLabel} from 'nylas-component-kit';
 import {SNOOZE_CATEGORY_NAME, PLUGIN_ID} from './snooze-constants';

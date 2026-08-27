@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 export default class Modal extends React.Component {
   constructor(props) {
@@ -94,10 +95,10 @@ export default class Modal extends React.Component {
 }
 
 Modal.propTypes = {
-  openLink: React.PropTypes.object,
-  className: React.PropTypes.string,
-  id: React.PropTypes.string,
-  onOpen: React.PropTypes.func,
-  onClose: React.PropTypes.func,
-  actionElems: React.PropTypes.arrayOf(React.PropTypes.object),
+  openLink: PropTypes.object,
+  className: PropTypes.string,
+  id: PropTypes.string,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  actionElems: PropTypes.arrayOf(PropTypes.object),
 }

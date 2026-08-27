@@ -1,6 +1,7 @@
 /* eslint react/jsx-no-bind: 0 */
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import moment from 'moment-timezone'
 import classnames from 'classnames'
@@ -29,22 +30,22 @@ export default class WeekView extends React.Component {
   static displayName = "WeekView";
 
   static propTypes = {
-    dataSource: React.PropTypes.instanceOf(CalendarDataSource).isRequired,
-    currentMoment: React.PropTypes.instanceOf(moment).isRequired,
-    focusedEvent: React.PropTypes.object,
-    bannerComponents: React.PropTypes.node,
-    headerComponents: React.PropTypes.node,
-    footerComponents: React.PropTypes.node,
-    disabledCalendars: React.PropTypes.array,
-    changeCurrentView: React.PropTypes.func,
-    changeCurrentMoment: React.PropTypes.func,
-    onCalendarMouseUp: React.PropTypes.func,
-    onCalendarMouseDown: React.PropTypes.func,
-    onCalendarMouseMove: React.PropTypes.func,
-    onEventClick: React.PropTypes.func,
-    onEventDoubleClick: React.PropTypes.func,
-    onEventFocused: React.PropTypes.func,
-    selectedEvents: React.PropTypes.arrayOf(React.PropTypes.object),
+    dataSource: PropTypes.instanceOf(CalendarDataSource).isRequired,
+    currentMoment: PropTypes.instanceOf(moment).isRequired,
+    focusedEvent: PropTypes.object,
+    bannerComponents: PropTypes.node,
+    headerComponents: PropTypes.node,
+    footerComponents: PropTypes.node,
+    disabledCalendars: PropTypes.array,
+    changeCurrentView: PropTypes.func,
+    changeCurrentMoment: PropTypes.func,
+    onCalendarMouseUp: PropTypes.func,
+    onCalendarMouseDown: PropTypes.func,
+    onCalendarMouseMove: PropTypes.func,
+    onEventClick: PropTypes.func,
+    onEventDoubleClick: PropTypes.func,
+    onEventFocused: PropTypes.func,
+    selectedEvents: PropTypes.arrayOf(PropTypes.object),
   }
 
   static defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {DateUtils} from 'nylas-exports';
 import {Flexbox} from 'nylas-component-kit';
 import ActivityListStore from '../../activity-list/lib/activity-list-store';
@@ -8,8 +9,8 @@ class LinkTrackingMessagePopover extends React.Component {
   static displayName = 'LinkTrackingMessagePopover';
 
   static propTypes = {
-    message: React.PropTypes.object,
-    linkMetadata: React.PropTypes.object,
+    message: PropTypes.object,
+    linkMetadata: PropTypes.object,
   };
 
   renderClickActions() {

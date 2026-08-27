@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 /* Public: A small React component which renders as a horizontal on/off switch.
    Provide it with `onChange` and `checked` props just like a checkbox:
 
@@ -22,9 +22,9 @@ const Switch = (props) => {
 }
 
 Switch.propTypes = {
-  checked: React.PropTypes.bool,
-  onChange: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 export default Switch;

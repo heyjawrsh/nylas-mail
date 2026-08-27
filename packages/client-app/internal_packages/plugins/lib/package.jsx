@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {Flexbox, RetinaImg, Switch} from 'nylas-component-kit';
 import PluginsActions from './plugins-actions';
 
@@ -9,8 +9,8 @@ class Package extends React.Component {
   static displayName = 'Package';
 
   static propTypes = {
-    "package": React.PropTypes.object.isRequired,
-    "showVersions": React.PropTypes.bool,
+    "package": PropTypes.object.isRequired,
+    "showVersions": PropTypes.bool,
   }
 
   _onDisablePackage = () => {

@@ -65,13 +65,13 @@ class InjectedComponentSet extends React.Component {
         will be applied to the {Flexbox} rendered by the InjectedComponentSet.
     */
     this.propTypes = {
-      matching: React.PropTypes.object.isRequired,
-      children: React.PropTypes.array,
-      className: React.PropTypes.string,
-      matchLimit: React.PropTypes.number,
-      exposedProps: React.PropTypes.object,
-      containersRequired: React.PropTypes.bool,
-      onComponentsDidRender: React.PropTypes.func
+      matching: PropTypes.object.isRequired,
+      children: PropTypes.array,
+      className: PropTypes.string,
+      matchLimit: PropTypes.number,
+      exposedProps: PropTypes.object,
+      containersRequired: PropTypes.bool,
+      onComponentsDidRender: PropTypes.func
     };
   
     this.defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {EventedIFrame} from 'nylas-component-kit';
 import {Utils} from 'nylas-exports';
@@ -7,7 +8,7 @@ export default class EmailFrame extends React.Component {
   static displayName = 'EmailFrame';
 
   static propTypes = {
-    content: React.PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
   };
 
   componentDidMount() {

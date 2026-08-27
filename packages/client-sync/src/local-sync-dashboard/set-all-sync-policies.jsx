@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import Modal from './modal';
 
 export default class SetAllSyncPolicies extends React.Component {
@@ -53,5 +54,5 @@ export default class SetAllSyncPolicies extends React.Component {
 }
 
 SetAllSyncPolicies.propTypes = {
-  accountIds: React.PropTypes.arrayOf(React.PropTypes.number),
+  accountIds: PropTypes.arrayOf(PropTypes.number),
 }

@@ -39,9 +39,9 @@ class MenuItem extends React.Component {
      - `checked` (optional) Pass a {Boolean} to specify whether the item is checked.
     */
     this.propTypes = {
-      divider: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
-      selected: React.PropTypes.bool,
-      checked: React.PropTypes.bool
+      divider: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+      selected: PropTypes.bool,
+      checked: PropTypes.bool
     };
   }
 
@@ -86,8 +86,8 @@ class MenuNameEmailItem extends React.Component {
      - `email` (optional) The {String} email address to be displayed.
     */
     this.propTypes = {
-      name: React.PropTypes.string,
-      email: React.PropTypes.string
+      name: PropTypes.string,
+      email: PropTypes.string
     };
   }
 
@@ -175,21 +175,21 @@ class Menu extends React.Component {
   
     */
     this.propTypes = {
-      className: React.PropTypes.string,
-      footerComponents: React.PropTypes.node,
-      headerComponents: React.PropTypes.node,
-      itemContext: React.PropTypes.object,
-      itemContent: React.PropTypes.func.isRequired,
-      itemKey: React.PropTypes.func.isRequired,
-      itemChecked: React.PropTypes.func,
+      className: PropTypes.string,
+      footerComponents: PropTypes.node,
+      headerComponents: PropTypes.node,
+      itemContext: PropTypes.object,
+      itemContent: PropTypes.func.isRequired,
+      itemKey: PropTypes.func.isRequired,
+      itemChecked: PropTypes.func,
   
-      items: React.PropTypes.array.isRequired,
+      items: PropTypes.array.isRequired,
   
-      onSelect: React.PropTypes.func.isRequired,
+      onSelect: PropTypes.func.isRequired,
   
-      onEscape: React.PropTypes.func,
+      onEscape: PropTypes.func,
   
-      defaultSelectedIndex: React.PropTypes.number
+      defaultSelectedIndex: PropTypes.number
     };
   
     this.defaultProps =

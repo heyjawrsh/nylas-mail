@@ -1,10 +1,10 @@
 import React from 'react'
-
+import PropTypes from 'prop-types';
 export default class MonthView extends React.Component {
   static displayName = "MonthView";
 
   static propTypes = {
-    changeView: React.PropTypes.func,
+    changeView: PropTypes.func,
   }
 
   _onClick = () => {

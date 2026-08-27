@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {isValidHost} from './onboarding-helpers';
 import CreatePageForForm from './decorators/create-page-for-form';
 import FormField from './form-field';
@@ -7,12 +8,12 @@ class AccountIMAPSettingsForm extends React.Component {
   static displayName = 'AccountIMAPSettingsForm';
 
   static propTypes = {
-    accountInfo: React.PropTypes.object,
-    errorFieldNames: React.PropTypes.array,
-    submitting: React.PropTypes.bool,
-    onConnect: React.PropTypes.func,
-    onFieldChange: React.PropTypes.func,
-    onFieldKeyPress: React.PropTypes.func,
+    accountInfo: PropTypes.object,
+    errorFieldNames: PropTypes.array,
+    submitting: PropTypes.bool,
+    onConnect: PropTypes.func,
+    onFieldChange: PropTypes.func,
+    onFieldKeyPress: PropTypes.func,
   };
 
   static submitLabel = () => {

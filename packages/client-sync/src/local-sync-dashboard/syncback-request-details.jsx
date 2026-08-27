@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import Dropdown from './dropdown';
 import Modal from './modal';
 
@@ -169,5 +170,5 @@ export default class SyncbackRequestDetails extends React.Component {
 }
 
 SyncbackRequestDetails.propTypes = {
-  accountId: React.PropTypes.number,
+  accountId: PropTypes.number,
 }

@@ -1,5 +1,6 @@
 /* eslint react/no-danger: 0 */
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
 
@@ -55,10 +56,10 @@ const TipsStore = new TipsStoreCls();
 
 class TipPopoverContents extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string,
-    tipKey: React.PropTypes.string,
-    instructions: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-    onDismissed: React.PropTypes.func,
+    title: PropTypes.string,
+    tipKey: PropTypes.string,
+    instructions: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    onDismissed: PropTypes.func,
   }
 
   componentDidMount() {

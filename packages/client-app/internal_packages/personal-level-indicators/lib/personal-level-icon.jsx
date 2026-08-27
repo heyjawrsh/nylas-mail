@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit';
 
 const StaticEmptyIndicator = (
@@ -11,7 +12,7 @@ export default class PersonalLevelIcon extends React.Component {
   static displayName = 'PersonalLevelIcon';
 
   static propTypes = {
-    thread: React.PropTypes.object.isRequired,
+    thread: PropTypes.object.isRequired,
   };
 
   renderIndicator(level) {

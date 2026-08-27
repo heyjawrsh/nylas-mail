@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {HasTutorialTip} from 'nylas-component-kit';
 import {getLatestMessage} from './send-reminders-utils'
 import SendRemindersPopoverButton from './send-reminders-popover-button';

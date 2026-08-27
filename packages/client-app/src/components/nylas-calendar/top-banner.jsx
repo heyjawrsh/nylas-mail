@@ -1,10 +1,10 @@
 import React from 'react'
-
+import PropTypes from 'prop-types';
 export default class TopBanner extends React.Component {
   static displayName = "TopBanner";
 
   static propTypes = {
-    bannerComponents: React.PropTypes.node,
+    bannerComponents: PropTypes.node,
   }
 
   render() {

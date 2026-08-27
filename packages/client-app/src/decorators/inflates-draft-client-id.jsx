@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DraftStore from '../flux/stores/draft-store'
 import Actions from '../flux/actions'
 import Utils from '../flux/models/utils'
@@ -8,8 +9,8 @@ function InflatesDraftClientId(ComposedComponent) {
     static displayName = ComposedComponent.displayName;
 
     static propTypes = {
-      draftClientId: React.PropTypes.string,
-      onDraftReady: React.PropTypes.func,
+      draftClientId: PropTypes.string,
+      onDraftReady: PropTypes.func,
     }
 
     static defaultProps = {

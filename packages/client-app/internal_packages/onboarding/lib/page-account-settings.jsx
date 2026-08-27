@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RegExpUtils} from 'nylas-exports';
 
 import OnboardingActions from './onboarding-actions';
@@ -10,12 +11,12 @@ class AccountBasicSettingsForm extends React.Component {
   static displayName = 'AccountBasicSettingsForm';
 
   static propTypes = {
-    accountInfo: React.PropTypes.object,
-    errorFieldNames: React.PropTypes.array,
-    submitting: React.PropTypes.bool,
-    onConnect: React.PropTypes.func,
-    onFieldChange: React.PropTypes.func,
-    onFieldKeyPress: React.PropTypes.func,
+    accountInfo: PropTypes.object,
+    errorFieldNames: PropTypes.array,
+    submitting: PropTypes.bool,
+    onConnect: PropTypes.func,
+    onFieldChange: PropTypes.func,
+    onFieldKeyPress: PropTypes.func,
   };
 
   static submitLabel = (accountInfo) => {

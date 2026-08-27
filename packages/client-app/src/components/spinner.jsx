@@ -28,9 +28,9 @@ class Spinner extends React.Component {
      - `style` (optional) Additional styles to apply to the spinner.
     */
     this.propTypes = {
-      visible: React.PropTypes.bool,
-      withCover: React.PropTypes.bool,
-      style: React.PropTypes.object
+      visible: PropTypes.bool,
+      withCover: PropTypes.bool,
+      style: PropTypes.object
     };
   }
 

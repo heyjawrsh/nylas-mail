@@ -9,7 +9,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const React = require("react");
-const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+const ReactCSSTransitionGroup = require('./css-transition-group-compat.jsx');
 const _ = require('underscore');
 
 const {Utils, Actions} = require("nylas-exports");
@@ -57,8 +57,8 @@ class MultiselectActionBar extends React.Component {
         in the component registry that should appear in the bar (`thread` => `thread:BulkAtion`)
     */
     this.propTypes = {
-      collection: React.PropTypes.string.isRequired,
-      dataSource: React.PropTypes.object
+      collection: PropTypes.string.isRequired,
+      dataSource: PropTypes.object
     };
   }
 

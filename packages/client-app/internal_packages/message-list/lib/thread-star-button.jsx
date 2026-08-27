@@ -8,7 +8,7 @@ const {RetinaImg} = require('nylas-component-kit');
 class StarButton extends React.Component {
   static displayName = "StarButton";
   static containerRequired = false;
-  static propTypes = {thread: React.PropTypes.object};
+  static propTypes = {thread: PropTypes.object};
 
   constructor() {
     super(...arguments);

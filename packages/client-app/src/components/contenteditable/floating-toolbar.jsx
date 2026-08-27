@@ -38,15 +38,15 @@ class FloatingToolbar extends React.Component {
     // Every time the `innerState` of the `Contenteditable` change, we get
     // passed the data as new `innerProps`.
     this.propTypes = {
-      atomicEdit: React.PropTypes.func,
-      extensions: React.PropTypes.array
+      atomicEdit: PropTypes.func,
+      extensions: PropTypes.array
     };
     this.innerPropTypes = {
-      dragging: React.PropTypes.bool,
-      selection: React.PropTypes.object,
-      doubleDown: React.PropTypes.bool,
-      hoveringOver: React.PropTypes.object,
-      editableNode: React.PropTypes.object
+      dragging: PropTypes.bool,
+      selection: PropTypes.object,
+      doubleDown: PropTypes.bool,
+      hoveringOver: PropTypes.object,
+      editableNode: PropTypes.object
     };
   
     this.defaultProps =

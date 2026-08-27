@@ -1,4 +1,5 @@
 import {React} from 'nylas-exports'
+import PropTypes from 'prop-types';
 import {PLUGIN_ID} from '../salesforce-constants'
 import * as mdHelpers from '../metadata-helpers'
 import SalesforceActions from '../salesforce-actions'
@@ -9,7 +10,7 @@ export default class SalesforceSyncMessageStatus extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    message: React.PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired,
   };
 
   static containerStyles = {

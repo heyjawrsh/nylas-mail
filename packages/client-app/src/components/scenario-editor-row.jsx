@@ -20,11 +20,11 @@ class SourceSelect extends React.Component {
   static initClass() {
     this.displayName = 'SourceSelect';
     this.propTypes = {
-      value: React.PropTypes.string,
-      onChange: React.PropTypes.func.isRequired,
-      options: React.PropTypes.oneOfType([
-        React.PropTypes.object,
-        React.PropTypes.array
+      value: PropTypes.string,
+      onChange: PropTypes.func.isRequired,
+      options: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
       ]).isRequired
     };
   }
@@ -104,12 +104,12 @@ class ScenarioEditorRow extends React.Component {
   static initClass() {
     this.displayName = 'ScenarioEditorRow';
     this.propTypes = {
-      instance: React.PropTypes.object.isRequired,
-      removable: React.PropTypes.bool,
-      templates: React.PropTypes.array.isRequired,
-      onChange: React.PropTypes.func,
-      onInsert: React.PropTypes.func,
-      onRemove: React.PropTypes.func
+      instance: PropTypes.object.isRequired,
+      removable: PropTypes.bool,
+      templates: PropTypes.array.isRequired,
+      onChange: PropTypes.func,
+      onInsert: PropTypes.func,
+      onRemove: PropTypes.func
     };
   }
 

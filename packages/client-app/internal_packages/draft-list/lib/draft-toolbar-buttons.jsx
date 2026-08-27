@@ -20,7 +20,7 @@ class DraftDeleteButton extends React.Component {
     this.containerRequired = false;
   
     this.propTypes =
-      {selection: React.PropTypes.object.isRequired};
+      {selection: PropTypes.object.isRequired};
   }
 
   render() {

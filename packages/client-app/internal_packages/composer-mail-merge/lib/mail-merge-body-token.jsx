@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import MailMergeToken from './mail-merge-token'
 import {DragBehaviors} from './mail-merge-constants'
 import {tokenQuerySelector} from './mail-merge-utils'

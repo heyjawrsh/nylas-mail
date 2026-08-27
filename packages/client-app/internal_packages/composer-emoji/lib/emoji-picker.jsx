@@ -1,4 +1,5 @@
 import {React, ReactDOM} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import emoji from 'node-emoji';
 
 import EmojiStore from './emoji-store';
@@ -8,8 +9,8 @@ import EmojiActions from './emoji-actions';
 class EmojiPicker extends React.Component {
   static displayName = "EmojiPicker";
   static propTypes = {
-    emojiOptions: React.PropTypes.array,
-    selectedEmoji: React.PropTypes.string,
+    emojiOptions: PropTypes.array,
+    selectedEmoji: PropTypes.string,
   };
 
   constructor(props) {

@@ -1,10 +1,11 @@
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 
 class TemplateStatusBar extends React.Component {
   static displayName = 'TemplateStatusBar';
 
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
   };
 
   shouldComponentUpdate(nextProps) {

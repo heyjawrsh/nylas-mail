@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
@@ -85,12 +86,12 @@ export default class KeyCommandsRegion extends React.Component {
   static displayName = "KeyCommandsRegion";
 
   static propTypes = {
-    className: React.PropTypes.string,
-    localHandlers: React.PropTypes.object,
-    globalHandlers: React.PropTypes.object,
-    globalMenuItems: React.PropTypes.array,
-    onFocusIn: React.PropTypes.func,
-    onFocusOut: React.PropTypes.func,
+    className: PropTypes.string,
+    localHandlers: PropTypes.object,
+    globalHandlers: PropTypes.object,
+    globalMenuItems: PropTypes.array,
+    onFocusIn: PropTypes.func,
+    onFocusOut: PropTypes.func,
   };
 
   static defaultProps = {

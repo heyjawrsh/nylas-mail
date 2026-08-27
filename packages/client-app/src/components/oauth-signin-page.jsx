@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ipcRenderer, shell} from 'electron';
 import {Actions} from 'nylas-exports'
 import {RetinaImg} from 'nylas-component-kit';
@@ -14,7 +15,7 @@ export default class OAuthSignInPage extends React.Component {
      * the native provider's website. We pass along a key and a redirect
      * url to a Nylas-owned server
      */
-    providerAuthPageUrl: React.PropTypes.string,
+    providerAuthPageUrl: PropTypes.string,
 
     /**
      * Step 2: Poll a Nylas server with this function looking for the key.
@@ -23,7 +24,7 @@ export default class OAuthSignInPage extends React.Component {
      * since we don't know how long it'll take users to log in on their
      * provider's website.
      */
-    tokenRequestPollFn: React.PropTypes.func,
+    tokenRequestPollFn: PropTypes.func,
 
     /**
      * Once we have the token, we can use that to retrieve the full
@@ -34,19 +35,19 @@ export default class OAuthSignInPage extends React.Component {
      * IMAP connection directly that may have its own set of failure
      * cases.
      */
-    accountFromTokenFn: React.PropTypes.func,
+    accountFromTokenFn: PropTypes.func,
 
     /**
      * Called once we have successfully received the account data from
      * `accountFromTokenFn`
      */
-    onSuccess: React.PropTypes.func,
+    onSuccess: PropTypes.func,
 
-    onTryAgain: React.PropTypes.func,
-    iconName: React.PropTypes.string,
-    sessionKey: React.PropTypes.string,
-    serviceName: React.PropTypes.string,
-    accountInfo: React.PropTypes.object,
+    onTryAgain: PropTypes.func,
+    iconName: PropTypes.string,
+    sessionKey: PropTypes.string,
+    serviceName: PropTypes.string,
+    accountInfo: PropTypes.object,
   };
 
   constructor() {

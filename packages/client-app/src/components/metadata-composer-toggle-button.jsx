@@ -1,4 +1,5 @@
 import {React, Actions, NylasAPI, NylasAPIHelpers, APIError} from 'nylas-exports'
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit'
 import classnames from 'classnames'
 import _ from 'underscore'
@@ -8,17 +9,17 @@ export default class MetadataComposerToggleButton extends React.Component {
   static displayName = 'MetadataComposerToggleButton';
 
   static propTypes = {
-    title: React.PropTypes.func.isRequired,
-    iconUrl: React.PropTypes.string,
-    iconName: React.PropTypes.string,
-    pluginId: React.PropTypes.string.isRequired,
-    pluginName: React.PropTypes.string.isRequired,
-    metadataEnabledValue: React.PropTypes.object.isRequired,
-    stickyToggle: React.PropTypes.bool,
-    errorMessage: React.PropTypes.func.isRequired,
+    title: PropTypes.func.isRequired,
+    iconUrl: PropTypes.string,
+    iconName: PropTypes.string,
+    pluginId: PropTypes.string.isRequired,
+    pluginName: PropTypes.string.isRequired,
+    metadataEnabledValue: PropTypes.object.isRequired,
+    stickyToggle: PropTypes.bool,
+    errorMessage: PropTypes.func.isRequired,
 
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
   };
 
   static defaultProps = {

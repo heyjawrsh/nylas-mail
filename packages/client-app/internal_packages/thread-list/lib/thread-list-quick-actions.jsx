@@ -23,7 +23,7 @@ class ThreadArchiveQuickAction extends React.Component {
   static initClass() {
     this.displayName = 'ThreadArchiveQuickAction';
     this.propTypes =
-      {thread: React.PropTypes.object};
+      {thread: PropTypes.object};
   }
 
   render() {
@@ -63,7 +63,7 @@ class ThreadTrashQuickAction extends React.Component {
   static initClass() {
     this.displayName = 'ThreadTrashQuickAction';
     this.propTypes =
-      {thread: React.PropTypes.object};
+      {thread: PropTypes.object};
   }
 
   render() {

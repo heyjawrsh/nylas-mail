@@ -6,7 +6,7 @@ const {Actions, React, TaskFactory, DOMUtils, AccountStore, FocusedPerspectiveSt
 class ThreadArchiveButton extends React.Component {
   static displayName = "ThreadArchiveButton";
   static containerRequired = false;
-  static propTypes = {thread: React.PropTypes.object.isRequired};
+  static propTypes = {thread: PropTypes.object.isRequired};
 
   constructor() {
     super(...arguments);

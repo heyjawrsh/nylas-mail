@@ -1,4 +1,5 @@
 import {OnlineStatusStore, React, Actions} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import {Notification, ListensToFluxStore} from 'nylas-component-kit';
 
 
@@ -27,8 +28,8 @@ function OfflineNotification({isOnline, retryingInSeconds}) {
 }
 OfflineNotification.displayName = 'OfflineNotification'
 OfflineNotification.propTypes = {
-  isOnline: React.PropTypes.bool,
-  retryingInSeconds: React.PropTypes.number,
+  isOnline: PropTypes.bool,
+  retryingInSeconds: PropTypes.number,
 }
 
 export default ListensToFluxStore(OfflineNotification, {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FocusedPerspectiveStore from '../flux/stores/focused-perspective-store';
 import CategoryStore from '../flux/stores/category-store';
 import MessageStore from '../flux/stores/message-store';
@@ -13,10 +14,10 @@ export default class MailLabelSet extends React.Component {
   static displayName = 'MailLabelSet';
 
   static propTypes = {
-    thread: React.PropTypes.object.isRequired,
-    messages: React.PropTypes.array,
-    includeCurrentCategories: React.PropTypes.bool,
-    removable: React.PropTypes.bool,
+    thread: PropTypes.object.isRequired,
+    messages: PropTypes.array,
+    includeCurrentCategories: PropTypes.bool,
+    removable: PropTypes.bool,
   };
 
   _onRemoveLabel(label) {

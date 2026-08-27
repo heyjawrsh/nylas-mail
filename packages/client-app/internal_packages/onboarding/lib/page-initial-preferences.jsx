@@ -22,9 +22,9 @@ class AppearanceModeOption extends React.Component {
 
   static initClass() {
     this.propTypes = {
-      mode: React.PropTypes.string.isRequired,
-      active: React.PropTypes.bool,
-      onClick: React.PropTypes.func
+      mode: PropTypes.string.isRequired,
+      active: PropTypes.bool,
+      onClick: PropTypes.func
     };
   }
 
@@ -49,7 +49,7 @@ AppearanceModeOption.initClass();
 class InitialPreferencesOptions extends React.Component {
   static initClass() {
     this.propTypes =
-      {config: React.PropTypes.object};
+      {config: PropTypes.object};
   }
 
   constructor(props) {

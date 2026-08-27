@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import moment from 'moment'
 import classnames from 'classnames'
 import {DateUtils} from 'nylas-exports'
@@ -8,13 +9,13 @@ export default class DatePicker extends React.Component {
   static displayName = "DatePicker";
 
   static propTypes = {
-    value: React.PropTypes.number,
-    onChange: React.PropTypes.func,
-    dateFormat: React.PropTypes.string,
+    value: PropTypes.number,
+    onChange: PropTypes.func,
+    dateFormat: PropTypes.string,
   }
 
   static contextTypes = {
-    parentTabGroup: React.PropTypes.object,
+    parentTabGroup: PropTypes.object,
   }
 
   static defaultProps = {

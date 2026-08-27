@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import Webview from './webview'
 import Actions from '../flux/actions'
 import IdentityStore from '../flux/stores/identity-store'
 
 export default class BillingModal extends React.Component {
   static propTypes = {
-    upgradeUrl: React.PropTypes.string,
-    source: React.PropTypes.string,
+    upgradeUrl: PropTypes.string,
+    source: PropTypes.string,
   }
 
   constructor(props = {}) {

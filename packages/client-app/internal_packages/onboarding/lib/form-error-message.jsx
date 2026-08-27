@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RegExpUtils} from 'nylas-exports';
 
 const FormErrorMessage = (props) => {
@@ -39,9 +40,9 @@ const FormErrorMessage = (props) => {
 }
 
 FormErrorMessage.propTypes = {
-  empty: React.PropTypes.string,
-  message: React.PropTypes.string,
-  statusCode: React.PropTypes.number,
+  empty: PropTypes.string,
+  message: PropTypes.string,
+  statusCode: PropTypes.number,
 };
 
 export default FormErrorMessage;

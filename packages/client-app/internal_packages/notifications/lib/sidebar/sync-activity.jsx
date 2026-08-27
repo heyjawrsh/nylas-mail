@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import {Actions, React, Utils} from 'nylas-exports';
 
 import InitialSyncActivity from './initial-sync-activity';
@@ -7,8 +8,8 @@ import SyncbackActivity from './syncback-activity';
 export default class SyncActivity extends React.Component {
 
   static propTypes = {
-    initialSync: React.PropTypes.bool,
-    syncbackTasks: React.PropTypes.array,
+    initialSync: PropTypes.bool,
+    syncbackTasks: PropTypes.array,
   }
 
   constructor() {

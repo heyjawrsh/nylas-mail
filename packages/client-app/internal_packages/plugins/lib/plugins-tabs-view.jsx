@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Tabs from './tabs';
@@ -11,7 +12,7 @@ class PluginsTabs extends React.Component {
   static displayName = 'PluginsTabs';
 
   static propTypes = {
-    onChange: React.PropTypes.Func,
+    onChange: PropTypes.Func,
   };
 
   static containerRequired = false;

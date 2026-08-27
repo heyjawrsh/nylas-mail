@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import _ from 'underscore'
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
   Menu,
   RetinaImg,

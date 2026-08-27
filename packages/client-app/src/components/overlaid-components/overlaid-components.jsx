@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import Utils from '../../flux/models/utils'
 import CustomContenteditableComponents from './custom-contenteditable-components'
@@ -19,9 +20,9 @@ export default class OverlaidComponents extends React.Component {
   static displayName = "OverlaidComponents";
 
   static propTypes = {
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    exposedProps: React.PropTypes.object,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    exposedProps: PropTypes.object,
   }
 
   static defaultProps = {

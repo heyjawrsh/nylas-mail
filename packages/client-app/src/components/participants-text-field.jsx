@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 
 import {remote, clipboard} from 'electron';
@@ -25,7 +26,7 @@ const TokenRenderer = (props) => {
 };
 
 TokenRenderer.propTypes = {
-  token: React.PropTypes.object,
+  token: PropTypes.object,
 };
 
 export default class ParticipantsTextField extends React.Component {
@@ -34,27 +35,27 @@ export default class ParticipantsTextField extends React.Component {
   static propTypes = {
     // The name of the field, used for both display purposes and also
     // to modify the `participants` provided.
-    field: React.PropTypes.string,
+    field: PropTypes.string,
 
     // An object containing arrays of participants. Typically, this is
     // {to: [], cc: [], bcc: []}. Each ParticipantsTextField needs all of
     // the values, because adding an element to one field may remove it
     // from another.
-    participants: React.PropTypes.object.isRequired,
+    participants: PropTypes.object.isRequired,
 
     // The function to call with an updated `participants` object when
     // changes are made.
-    change: React.PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
 
-    className: React.PropTypes.string,
+    className: PropTypes.string,
 
-    onEmptied: React.PropTypes.func,
+    onEmptied: PropTypes.func,
 
-    onFocus: React.PropTypes.func,
+    onFocus: PropTypes.func,
 
-    draft: React.PropTypes.object,
+    draft: PropTypes.object,
 
-    session: React.PropTypes.object,
+    session: PropTypes.object,
   }
 
   static defaultProps = {

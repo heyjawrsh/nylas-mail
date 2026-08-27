@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import _ from 'underscore'
 import classNames from 'classnames'
 import {RetinaImg} from 'nylas-component-kit'
@@ -14,10 +15,10 @@ class SalesforceManuallyRelateThreadPopover extends React.Component {
   static displayName = "SalesforceManuallyRelateThreadPopover"
 
   static propTypes = {
-    threads: React.PropTypes.array,
-    isLoggedIn: React.PropTypes.bool,
-    focusedContact: React.PropTypes.object,
-    onObjectsPicked: React.PropTypes.func,
+    threads: PropTypes.array,
+    isLoggedIn: PropTypes.bool,
+    focusedContact: PropTypes.object,
+    onObjectsPicked: PropTypes.func,
   }
 
   static containerStyles = {

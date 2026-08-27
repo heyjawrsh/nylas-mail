@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Utils} from 'nylas-exports';
 import {clipboard} from 'electron';
 
@@ -6,8 +7,8 @@ import {clipboard} from 'electron';
 class CopyButton extends React.Component {
 
   static propTypes = {
-    btnLabel: React.PropTypes.string,
-    copyValue: React.PropTypes.string,
+    btnLabel: PropTypes.string,
+    copyValue: PropTypes.string,
   }
 
   constructor(props) {

@@ -1,15 +1,15 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Package from './package';
 
 
 class PackageSet extends React.Component {
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired,
-    packages: React.PropTypes.array,
-    emptyText: React.PropTypes.element,
-    showVersions: React.PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    packages: PropTypes.array,
+    emptyText: PropTypes.element,
+    showVersions: PropTypes.bool,
   }
 
   render() {

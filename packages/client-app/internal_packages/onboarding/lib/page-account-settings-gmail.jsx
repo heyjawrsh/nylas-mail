@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {OAuthSignInPage} from 'nylas-component-kit';
 import {IdentityStore} from 'nylas-exports'
 
@@ -17,7 +18,7 @@ export default class AccountSettingsPageGmail extends React.Component {
   static displayName = "AccountSettingsPageGmail";
 
   static propTypes = {
-    accountInfo: React.PropTypes.object,
+    accountInfo: PropTypes.object,
   };
 
   constructor() {

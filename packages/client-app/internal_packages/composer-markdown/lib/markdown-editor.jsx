@@ -40,11 +40,11 @@ class MarkdownEditor extends React.Component {
     this.containerRequired = false;
   
     this.contextTypes =
-      {parentTabGroup: React.PropTypes.object,};
+      {parentTabGroup: PropTypes.object,};
   
     this.propTypes = {
-      body: React.PropTypes.string.isRequired,
-      onBodyChanged: React.PropTypes.func.isRequired,
+      body: PropTypes.string.isRequired,
+      onBodyChanged: PropTypes.func.isRequired,
     };
   }
 

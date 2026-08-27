@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Utils, Event} from 'nylas-exports';
 
 import SchedulerActions from '../scheduler-actions'

@@ -10,7 +10,7 @@ const {Utils} = require('nylas-exports');
 class SendingProgressBar extends React.Component {
   static initClass() {
     this.propTypes =
-      {progress: React.PropTypes.number.isRequired};
+      {progress: PropTypes.number.isRequired};
   }
 
   render() {

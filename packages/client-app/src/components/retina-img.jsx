@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {Utils} from "nylas-exports";
 
 const StylesImpactedByZoom = [
@@ -84,15 +84,15 @@ class RetinaImg extends React.Component {
    - `resourcePath` (options) Changes the default lookup location used to find the images.
   */
   static propTypes = {
-    mode: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string,
-    url: React.PropTypes.string,
-    className: React.PropTypes.string,
-    style: React.PropTypes.object,
-    fallback: React.PropTypes.string,
-    selected: React.PropTypes.bool,
-    active: React.PropTypes.bool,
-    resourcePath: React.PropTypes.string,
+    mode: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    url: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    fallback: PropTypes.string,
+    selected: PropTypes.bool,
+    active: PropTypes.bool,
+    resourcePath: PropTypes.string,
   }
 
   static Mode = Mode;

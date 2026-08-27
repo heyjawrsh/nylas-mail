@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import path from 'path';
 import fs from 'fs';
 import { remote } from 'electron';
@@ -12,7 +13,7 @@ class PreferencesKeymaps extends React.Component {
   static displayName = 'PreferencesKeymaps';
 
   static propTypes = {
-    config: React.PropTypes.object,
+    config: PropTypes.object,
   };
 
   constructor() {

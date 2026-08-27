@@ -1,21 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import RetinaImg from './retina-img';
 
 export default class Notification extends React.Component {
   static containerRequired = false;
 
   static propTypes = {
-    className: React.PropTypes.string,
-    displayName: React.PropTypes.string,
-    title: React.PropTypes.string,
-    subtitle: React.PropTypes.string,
-    subtitleAction: React.PropTypes.func,
-    actions: React.PropTypes.array,
-    icon: React.PropTypes.string,
-    priority: React.PropTypes.string,
-    isError: React.PropTypes.bool,
-    isDismissable: React.PropTypes.bool,
-    isPermanentlyDismissable: React.PropTypes.bool,
+    className: PropTypes.string,
+    displayName: PropTypes.string,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    subtitleAction: PropTypes.func,
+    actions: PropTypes.array,
+    icon: PropTypes.string,
+    priority: PropTypes.string,
+    isError: PropTypes.bool,
+    isDismissable: PropTypes.bool,
+    isPermanentlyDismissable: PropTypes.bool,
   }
 
   static defaultProps = {

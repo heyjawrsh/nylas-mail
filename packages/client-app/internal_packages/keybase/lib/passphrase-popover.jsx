@@ -21,8 +21,8 @@ module.exports =
     static initClass() {
   
       this.propTypes = {
-        identity: React.PropTypes.instanceOf(Identity),
-        addresses: React.PropTypes.array
+        identity: PropTypes.instanceOf(Identity),
+        addresses: PropTypes.array
       };
     }
     constructor() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RetinaImg from './retina-img';
 
 export const LabelColorizer = {
@@ -29,8 +30,8 @@ export const LabelColorizer = {
 
 export class MailLabel extends React.Component {
   static propTypes = {
-    label: React.PropTypes.object.isRequired,
-    onRemove: React.PropTypes.func,
+    label: PropTypes.object.isRequired,
+    onRemove: PropTypes.func,
   };
 
   shouldComponentUpdate(nextProps) {

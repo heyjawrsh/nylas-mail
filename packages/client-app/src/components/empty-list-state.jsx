@@ -31,8 +31,8 @@ class EmptyPerspectiveState extends React.Component {
     this.displayName = "EmptyPerspectiveState";
   
     this.propTypes = {
-      perspective: React.PropTypes.object,
-      messageContent: React.PropTypes.node,
+      perspective: PropTypes.object,
+      messageContent: PropTypes.node,
     };
   }
 
@@ -69,7 +69,7 @@ class EmptyInboxState extends React.Component {
     this.displayName = "EmptyInboxState";
   
     this.propTypes =
-      {containerRect: React.PropTypes.object,};
+      {containerRect: PropTypes.object,};
   }
 
   _getScalingFactor() {
@@ -111,7 +111,7 @@ class EmptyListState extends React.Component {
   static initClass() {
     this.displayName = 'EmptyListState';
     this.propTypes =
-      {visible: React.PropTypes.bool.isRequired};
+      {visible: PropTypes.bool.isRequired};
   }
 
   constructor(props) {

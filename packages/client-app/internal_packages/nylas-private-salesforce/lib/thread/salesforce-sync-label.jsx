@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SalesforceIcon from '../shared-components/salesforce-icon'
 import SalesforceActions from '../salesforce-actions'
 import {CORE_RELATEABLE_OBJECT_TYPES} from '../salesforce-constants'
@@ -12,7 +13,7 @@ class SalesforceSyncLabel extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    thread: React.PropTypes.object,
+    thread: PropTypes.object,
   }
 
   constructor(props) {

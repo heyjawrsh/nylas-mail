@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Utils} from "nylas-exports";
 
 /*
@@ -17,10 +18,10 @@ export default class Flexbox extends React.Component {
    - `style` (optional) An {Object} with styles to apply to the flexbox.
   */
   static propTypes = {
-    direction: React.PropTypes.string,
-    inline: React.PropTypes.bool,
-    style: React.PropTypes.object,
-    height: React.PropTypes.string,
+    direction: PropTypes.string,
+    inline: PropTypes.bool,
+    style: PropTypes.object,
+    height: PropTypes.string,
   };
 
   static defaultProps = {

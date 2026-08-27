@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {DefaultClientHelper, SystemStartService} from 'nylas-exports';
 import ConfigSchemaItem from './config-schema-item';
 
@@ -156,8 +157,8 @@ const WorkspaceSection = (props) => {
 }
 
 WorkspaceSection.propTypes = {
-  config: React.PropTypes.object,
-  configSchema: React.PropTypes.object,
+  config: PropTypes.object,
+  configSchema: PropTypes.object,
 }
 
 export default WorkspaceSection;

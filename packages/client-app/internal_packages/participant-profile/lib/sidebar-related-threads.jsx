@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Actions, DateUtils} from 'nylas-exports'
 
 export default class RelatedThreads extends React.Component {
   static displayName = "RelatedThreads";
 
   static propTypes = {
-    contact: React.PropTypes.object,
-    contactThreads: React.PropTypes.array,
+    contact: PropTypes.object,
+    contactThreads: PropTypes.array,
   }
 
   static containerStyles = {

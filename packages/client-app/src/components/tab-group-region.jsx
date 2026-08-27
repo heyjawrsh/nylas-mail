@@ -20,7 +20,7 @@ class TabGroupRegion extends React.Component {
 
   static initClass() {
     this.childContextTypes =
-      {parentTabGroup: React.PropTypes.object};
+      {parentTabGroup: PropTypes.object};
   }
 
   _onKeyDown(event) {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Menu,
   RetinaImg,
@@ -13,8 +14,8 @@ import {Categories} from 'nylas-observables'
 
 export default class CategorySelection extends React.Component {
   static propTypes = {
-    account: React.PropTypes.object,
-    currentCategory: React.PropTypes.string,
+    account: PropTypes.object,
+    currentCategory: PropTypes.string,
   }
   constructor(props) {
     super(props)

@@ -1,5 +1,6 @@
 /* eslint react/no-danger: 0 */
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom'
 import {EditorAPI} from 'nylas-exports'
 import {OverlaidComponents, DropZone} from 'nylas-component-kit'

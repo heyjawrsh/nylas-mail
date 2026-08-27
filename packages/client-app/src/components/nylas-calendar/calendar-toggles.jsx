@@ -2,7 +2,7 @@
 import _ from 'underscore'
 import classnames from 'classnames'
 import React from 'react'
-
+import PropTypes from 'prop-types';
 import {calcColor} from './calendar-helpers'
 
 const DISABLED_CALENDARS = "nylas.disabledCalendars"
@@ -62,7 +62,7 @@ export default function CalendarToggles(props) {
 }
 
 CalendarToggles.propTypes = {
-  accounts: React.PropTypes.array,
-  calendars: React.PropTypes.array,
-  disabledCalendars: React.PropTypes.array,
+  accounts: PropTypes.array,
+  calendars: PropTypes.array,
+  disabledCalendars: PropTypes.array,
 }

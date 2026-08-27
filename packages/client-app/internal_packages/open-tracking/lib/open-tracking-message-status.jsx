@@ -1,4 +1,5 @@
 import {React, ReactDOM, Actions} from 'nylas-exports'
+import PropTypes from 'prop-types';
 import {RetinaImg} from 'nylas-component-kit'
 import OpenTrackingMessagePopover from './open-tracking-message-popover'
 import {PLUGIN_ID} from './open-tracking-constants'
@@ -8,7 +9,7 @@ export default class OpenTrackingMessageStatus extends React.Component {
   static displayName = "OpenTrackingMessageStatus";
 
   static propTypes = {
-    message: React.PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired,
   };
 
   static containerStyles = {

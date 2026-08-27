@@ -59,18 +59,18 @@ class Contenteditable extends React.Component {
   
     this.propTypes = {
       // The current html state, as a string, of the contenteditable.
-      value: React.PropTypes.string,
+      value: PropTypes.string,
   
       // Handlers
-      onChange: React.PropTypes.func.isRequired,
-      onFilePaste: React.PropTypes.func,
+      onChange: PropTypes.func.isRequired,
+      onFilePaste: PropTypes.func,
   
       // A list of objects that extend {ContenteditableExtension}
-      extensions: React.PropTypes.array,
+      extensions: PropTypes.array,
   
-      spellcheck: React.PropTypes.bool,
+      spellcheck: PropTypes.bool,
   
-      floatingToolbar: React.PropTypes.bool
+      floatingToolbar: PropTypes.bool
     };
   
     this.defaultProps = {

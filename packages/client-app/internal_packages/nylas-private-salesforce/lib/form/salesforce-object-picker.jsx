@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import titleize from 'underscore.string/titleize'
 import {Actions, Utils, DatabaseStore} from 'nylas-exports'
 import {FormItem, BoldedSearchResult, TokenizingTextField} from 'nylas-component-kit'
@@ -26,10 +27,10 @@ class SalesforceObjectPicker extends React.Component {
   static extendedPropTypes = {
     // Zero or more SalesforceObject's or PendingSalesforceObjects to turn
     // into `tokens` in the TokenizingTextField
-    value: React.PropTypes.arrayOf(
-      React.PropTypes.oneOfType([
-        React.PropTypes.instanceOf(SalesforceObject),
-        React.PropTypes.instanceOf(PendingSalesforceObject),
+    value: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(SalesforceObject),
+        PropTypes.instanceOf(PendingSalesforceObject),
       ])
     ),
 
@@ -39,37 +40,37 @@ class SalesforceObjectPicker extends React.Component {
      * context with, or with extra contact details used to help enrich the
      * form.
      */
-    contextData: React.PropTypes.shape({
+    contextData: PropTypes.shape({
       /**
        * The unique ID of the form the picker is in. This is used when
        * creating "PendingSalesforceObject" that are linked to forms. When
        * those forms close, we can know what PendingSalesforceObjects to
        * remove.
        */
-      formId: React.PropTypes.string,
+      formId: PropTypes.string,
 
       /**
        * The Salesforce object this form is about.
        * If the objectId is present, then we're editing an existing
        * object.
        */
-      objectId: React.PropTypes.string,
-      objectType: React.PropTypes.string,
+      objectId: PropTypes.string,
+      objectType: PropTypes.string,
 
       /**
        * The thread (or threads) that were selected when this object form
        * was requested. We use this to pre-fill contact form fields and
        * for analytics.
        */
-      nylasObjectId: React.PropTypes.string,
-      nylasObjectIds: React.PropTypes.array,
-      nylasObjectType: React.PropTypes.string,
+      nylasObjectId: PropTypes.string,
+      nylasObjectIds: PropTypes.array,
+      nylasObjectType: PropTypes.string,
 
       /**
        * Used by SmartFields to pre-fill in data given the contact that
        * was focused when the object form was requested.
        */
-      focusedNylasContactData: React.PropTypes.object,
+      focusedNylasContactData: PropTypes.object,
     }),
   }
 

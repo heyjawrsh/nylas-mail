@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 import _str from 'underscore.string';
 
@@ -14,10 +15,10 @@ class ConfigSchemaItem extends React.Component {
   static displayName = 'ConfigSchemaItem';
 
   static propTypes = {
-    config: React.PropTypes.object,
-    configSchema: React.PropTypes.object,
-    keyName: React.PropTypes.string,
-    keyPath: React.PropTypes.string,
+    config: PropTypes.object,
+    configSchema: PropTypes.object,
+    keyName: PropTypes.string,
+    keyPath: PropTypes.string,
   };
 
   _appliesToPlatform() {

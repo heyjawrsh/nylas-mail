@@ -14,7 +14,7 @@ class SendingCancelButton extends React.Component {
     this.displayName = 'SendingCancelButton';
   
     this.propTypes =
-      {taskId: React.PropTypes.string.isRequired};
+      {taskId: PropTypes.string.isRequired};
   }
 
   constructor(props) {

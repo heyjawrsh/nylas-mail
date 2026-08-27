@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {DisclosureTriangle,
   Flexbox,
   RetinaImg} from 'nylas-component-kit';
@@ -13,7 +13,7 @@ class ActivityListItemContainer extends React.Component {
   static displayName = 'ActivityListItemContainer';
 
   static propTypes = {
-    group: React.PropTypes.array,
+    group: PropTypes.array,
   };
 
   constructor(props) {

@@ -3,6 +3,7 @@
 /* eslint global-require: 0*/
 
 import {React} from 'nylas-exports';
+import PropTypes from 'prop-types';
 import SetAllSyncPolicies from './set-all-sync-policies';
 import SyncGraph from './sync-graph';
 import SyncbackRequestDetails from './syncback-request-details';
@@ -33,8 +34,8 @@ function formatSyncTimes(timestamp) {
 
 class AccountCard extends React.Component {
   static propTypes = {
-    account: React.PropTypes.object,
-    count: React.PropTypes.number,
+    account: PropTypes.object,
+    count: PropTypes.number,
   };
 
   onClearError = () => {
@@ -174,5 +175,5 @@ export default class Root extends React.Component {
 }
 
 Root.propTypes = {
-  collapsed: React.PropTypes.bool,
+  collapsed: PropTypes.bool,
 }

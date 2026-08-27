@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 import {Event} from 'nylas-exports'
 import {InjectedComponentSet} from 'nylas-component-kit'
@@ -8,18 +9,18 @@ export default class CalendarEvent extends React.Component {
   static displayName = "CalendarEvent";
 
   static propTypes = {
-    event: React.PropTypes.instanceOf(Event).isRequired,
-    order: React.PropTypes.number,
-    selected: React.PropTypes.bool,
-    scopeEnd: React.PropTypes.number.isRequired,
-    scopeStart: React.PropTypes.number.isRequired,
-    direction: React.PropTypes.oneOf(['horizontal', 'vertical']),
-    fixedSize: React.PropTypes.number,
-    focused: React.PropTypes.bool,
-    concurrentEvents: React.PropTypes.number,
-    onClick: React.PropTypes.func,
-    onDoubleClick: React.PropTypes.func,
-    onFocused: React.PropTypes.func,
+    event: PropTypes.instanceOf(Event).isRequired,
+    order: PropTypes.number,
+    selected: PropTypes.bool,
+    scopeEnd: PropTypes.number.isRequired,
+    scopeStart: PropTypes.number.isRequired,
+    direction: PropTypes.oneOf(['horizontal', 'vertical']),
+    fixedSize: PropTypes.number,
+    focused: PropTypes.bool,
+    concurrentEvents: PropTypes.number,
+    onClick: PropTypes.func,
+    onDoubleClick: PropTypes.func,
+    onFocused: PropTypes.func,
   }
 
   static defaultProps = {

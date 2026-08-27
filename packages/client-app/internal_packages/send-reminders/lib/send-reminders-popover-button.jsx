@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {Rx, Actions, Message, DatabaseStore} from 'nylas-exports';
 import {RetinaImg, ListensToObservable} from 'nylas-component-kit';

@@ -1,5 +1,6 @@
 // import {DraftStore, React, Actions, NylasAPI, DatabaseStore, Message, Rx} from 'nylas-exports'
 import {React, APIError, NylasAPI} from 'nylas-exports'
+import PropTypes from 'prop-types';
 import {MetadataComposerToggleButton} from 'nylas-component-kit'
 import {PLUGIN_ID, PLUGIN_NAME} from './link-tracking-constants'
 
@@ -7,8 +8,8 @@ export default class LinkTrackingButton extends React.Component {
   static displayName = 'LinkTrackingButton';
 
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
   };
 
   shouldComponentUpdate(nextProps) {

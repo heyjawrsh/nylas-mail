@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   React,
   Actions,
@@ -19,10 +20,10 @@ export default class SignatureComposerDropdown extends React.Component {
   static containerRequired = false
 
   static propTypes = {
-    draft: React.PropTypes.object.isRequired,
-    session: React.PropTypes.object.isRequired,
-    currentAccount: React.PropTypes.object,
-    accounts: React.PropTypes.array,
+    draft: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
+    currentAccount: PropTypes.object,
+    accounts: PropTypes.array,
   }
 
   constructor() {

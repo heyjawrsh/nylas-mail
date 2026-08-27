@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {shell} from 'electron';
 import classnames from 'classnames'
 import RetinaImg from './retina-img'
@@ -6,12 +7,12 @@ import IdentityStore from '../flux/stores/identity-store';
 
 export default class OpenIdentityPageButton extends React.Component {
   static propTypes = {
-    path: React.PropTypes.string,
-    label: React.PropTypes.string,
-    source: React.PropTypes.string,
-    campaign: React.PropTypes.string,
-    img: React.PropTypes.string,
-    isCTA: React.PropTypes.bool,
+    path: PropTypes.string,
+    label: PropTypes.string,
+    source: PropTypes.string,
+    campaign: PropTypes.string,
+    img: PropTypes.string,
+    isCTA: PropTypes.bool,
   }
 
   constructor(props) {

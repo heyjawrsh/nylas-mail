@@ -61,8 +61,8 @@ class EventedIFrame extends React.Component {
     this.displayName = 'EventedIFrame';
   
     this.propTypes = {
-      searchable: React.PropTypes.bool,
-      onResize: React.PropTypes.func
+      searchable: PropTypes.bool,
+      onResize: PropTypes.func
     };
   }
 

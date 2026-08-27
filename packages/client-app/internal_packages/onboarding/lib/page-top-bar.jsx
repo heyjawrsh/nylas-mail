@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {AccountStore} from 'nylas-exports';
 import {RetinaImg} from 'nylas-component-kit';
 import OnboardingActions from './onboarding-actions';
@@ -51,8 +52,8 @@ const PageTopBar = (props) => {
 }
 
 PageTopBar.propTypes = {
-  pageDepth: React.PropTypes.number,
-  allowMoveBack: React.PropTypes.bool,
+  pageDepth: PropTypes.number,
+  allowMoveBack: PropTypes.bool,
 };
 
 export default PageTopBar;

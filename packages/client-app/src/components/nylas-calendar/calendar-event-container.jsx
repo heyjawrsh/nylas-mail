@@ -1,15 +1,16 @@
 import moment from 'moment'
 
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 
 export default class CalendarEventContainer extends React.Component {
   static displayName = "CalendarEventContainer";
 
   static propTypes = {
-    onCalendarMouseUp: React.PropTypes.func,
-    onCalendarMouseDown: React.PropTypes.func,
-    onCalendarMouseMove: React.PropTypes.func,
+    onCalendarMouseUp: PropTypes.func,
+    onCalendarMouseDown: PropTypes.func,
+    onCalendarMouseMove: PropTypes.func,
   }
 
   constructor() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 import {remote, clipboard} from 'electron';
 import {Utils, Contact, ContactStore, RegExpUtils} from 'nylas-exports';
@@ -24,18 +25,18 @@ const TokenRenderer = (props) => {
 };
 
 TokenRenderer.propTypes = {
-  token: React.PropTypes.object,
+  token: PropTypes.object,
 };
 
 export default class EventParticipantsInput extends React.Component {
   static displayName = 'EventParticipantsInput';
 
   static propTypes = {
-    participants: React.PropTypes.array.isRequired,
-    change: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string,
-    onEmptied: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
+    participants: PropTypes.array.isRequired,
+    change: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    onEmptied: PropTypes.func,
+    onFocus: PropTypes.func,
   }
 
   shouldComponentUpdate(nextProps, nextState) {

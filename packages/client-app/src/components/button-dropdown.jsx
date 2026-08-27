@@ -16,12 +16,12 @@ class ButtonDropdown extends React.Component {
   static initClass() {
     this.displayName = "ButtonDropdown";
     this.propTypes = {
-      primaryItem: React.PropTypes.element,
-      primaryClick: React.PropTypes.func,
-      bordered: React.PropTypes.bool,
-      menu: React.PropTypes.element,
-      style: React.PropTypes.object,
-      closeOnMenuClick: React.PropTypes.bool
+      primaryItem: PropTypes.element,
+      primaryClick: PropTypes.func,
+      bordered: PropTypes.bool,
+      menu: PropTypes.element,
+      style: PropTypes.object,
+      closeOnMenuClick: PropTypes.bool
     };
   
     this.defaultProps =

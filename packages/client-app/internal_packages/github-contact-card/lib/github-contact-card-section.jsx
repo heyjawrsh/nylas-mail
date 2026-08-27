@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import PropTypes from 'prop-types';
 import {React} from 'nylas-exports';
 import GithubUserStore from "./github-user-store";
 
@@ -16,7 +17,7 @@ const GithubRepo = function GithubRepo(props) {
 GithubRepo.propTypes = {
   // This component takes a `repo` object as a prop. Listing props is optional
   // but enables nice React warnings when our expectations aren't met
-  repo: React.PropTypes.object.isRequired,
+  repo: PropTypes.object.isRequired,
 };
 
 // Small React component that renders the user's Github profile.
@@ -42,7 +43,7 @@ const GithubProfile = function GithubProfile(props) {
 GithubProfile.propTypes = {
   // This component takes a `profile` object as a prop. Listing props is optional
   // but enables nice React warnings when our expectations aren't met.
-  profile: React.PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 }
 
 export default class GithubContactCardSection extends React.Component {

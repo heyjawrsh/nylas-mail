@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from '../../../src/components/css-transition-group-compat.jsx';
 import {Actions} from 'nylas-exports'
 import OnboardingStore from './onboarding-store';
 import PageTopBar from './page-top-bar';

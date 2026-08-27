@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {RetinaImg, Flexbox, EditableList} from 'nylas-component-kit';
 import classnames from 'classnames';
 

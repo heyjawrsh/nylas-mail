@@ -8,7 +8,7 @@ const {RetinaImg} = require('nylas-component-kit');
 class ThreadTrashButton extends React.Component {
   static displayName = "ThreadTrashButton";
   static containerRequired = false;
-  static propTypes = {thread: React.PropTypes.object.isRequired};
+  static propTypes = {thread: PropTypes.object.isRequired};
 
   constructor() {
     super(...arguments);

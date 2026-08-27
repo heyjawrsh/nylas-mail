@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom'
 
 import {RetinaImg, KeyCommandsRegion} from 'nylas-component-kit'
@@ -18,7 +19,7 @@ export default class SalesforceManuallyRelateThreadButton extends React.Componen
   static containerRequired = false
 
   static propTypes = {
-    items: React.PropTypes.array,
+    items: PropTypes.array,
   }
 
   static defaultProps = {

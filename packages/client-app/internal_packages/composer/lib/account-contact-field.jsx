@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {
   AccountStore,
@@ -9,11 +10,11 @@ export default class AccountContactField extends React.Component {
   static displayName = 'AccountContactField';
 
   static propTypes = {
-    value: React.PropTypes.object,
-    accounts: React.PropTypes.array,
-    session: React.PropTypes.object.isRequired,
-    draft: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
+    value: PropTypes.object,
+    accounts: PropTypes.array,
+    session: PropTypes.object.isRequired,
+    draft: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   _onChooseContact = (contact) => {

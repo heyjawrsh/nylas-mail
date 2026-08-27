@@ -27,10 +27,10 @@ class CategoryPicker extends React.Component {
     this.containerRequired = false;
   
     this.propTypes =
-      {items: React.PropTypes.array};
+      {items: PropTypes.array};
   
     this.contextTypes =
-      {sheetDepth: React.PropTypes.number};
+      {sheetDepth: PropTypes.number};
   }
 
   constructor(props) {

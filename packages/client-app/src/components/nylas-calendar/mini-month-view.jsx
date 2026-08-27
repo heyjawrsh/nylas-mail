@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import React from 'react'
+import PropTypes from 'prop-types';
 import moment from 'moment'
 import classnames from 'classnames'
 
@@ -7,8 +8,8 @@ export default class MiniMonthView extends React.Component {
   static displayName = "MiniMonthView";
 
   static propTypes = {
-    value: React.PropTypes.number,
-    onChange: React.PropTypes.func,
+    value: PropTypes.number,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {

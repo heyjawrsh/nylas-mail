@@ -22,7 +22,7 @@ module.exports =
     static initClass() {
   
       this.propTypes =
-        {addresses: React.PropTypes.array};
+        {addresses: PropTypes.array};
     }
     constructor() {
       this.render = this.render.bind(this);

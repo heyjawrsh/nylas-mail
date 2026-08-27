@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Actions} from 'nylas-exports';
 import {RetinaImg} from 'nylas-component-kit';
 import Fields from './fields';
@@ -7,10 +8,10 @@ export default class ComposerHeaderActions extends React.Component {
   static displayName = 'ComposerHeaderActions';
 
   static propTypes = {
-    draftClientId: React.PropTypes.string.isRequired,
-    enabledFields: React.PropTypes.array.isRequired,
-    participantsFocused: React.PropTypes.bool,
-    onShowAndFocusField: React.PropTypes.func.isRequired,
+    draftClientId: PropTypes.string.isRequired,
+    enabledFields: PropTypes.array.isRequired,
+    participantsFocused: PropTypes.bool,
+    onShowAndFocusField: PropTypes.func.isRequired,
   }
 
   _onPopoutComposer = () => {

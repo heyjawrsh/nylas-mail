@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Utils} from 'nylas-exports'
 
 export default class FooterControls extends React.Component {
   static displayName = "FooterControls";
 
   static propTypes = {
-    footerComponents: React.PropTypes.node,
+    footerComponents: PropTypes.node,
   }
 
   static defaultProps = {
