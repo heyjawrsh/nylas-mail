@@ -77,13 +77,12 @@ export default function registerOpenTrackingRoutes(server) {
 				await updateMetadata({ metadata, recipient });
 			} catch (err) {
 				request.logger.error(err, "Error tracking open");
-			} finally {
-				return h
-					.file(Path.join(dirname, "../../static/images/transparent.gif"), {
-						confine: false,
-					})
-					.header("Cache-Control", "no-cache max-age=0");
 			}
+			return h
+				.file(Path.join(dirname, "../../static/images/transparent.gif"), {
+					confine: false,
+				})
+				.header("Cache-Control", "no-cache max-age=0");
 		},
 	});
 }

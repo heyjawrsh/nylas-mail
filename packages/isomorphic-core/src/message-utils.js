@@ -11,7 +11,6 @@ const decodeQuotedPrintable = (text, charset) => {
 	const buf = libqp.decode(text);
 	return iconv.decode(buf, charset || "utf-8");
 };
-import iconv from "iconv-lite";
 import addressparser from "nodemailer/lib/addressparser/index.js";
 import he from "he";
 import os from "node:os";

@@ -88,9 +88,8 @@ export default function registerLinkTrackingRoutes(server) {
 				await updateMetadata({ metadata, recipient, linkIdx });
 			} catch (err) {
 				request.logger.error(err, "Error tracking link");
-			} finally {
-				return h.redirect(redirect);
 			}
+			return h.redirect(redirect);
 		},
 	});
 }

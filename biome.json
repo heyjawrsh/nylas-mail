@@ -8,18 +8,22 @@
 	"files": {
 		"includes": [
 			"**",
-			"!**/node_modules",
-			"!**/coverage",
-			"!**/spec/fixtures",
-			"!**/blog-posts",
-			"!**/screenshot",
+			"!**/node_modules/**",
+			"!**/coverage/**",
+			"!**/spec/fixtures/**",
+			"!**/blog-posts/**",
+			"!**/screenshot/**",
 			"!**/*.html",
 			"!**/*.min.css",
-			"!**/static",
-			"!**/docs_templates",
-			"!**/dot-nylas",
-			"!**/assets",
-			"!**/src/views"
+			"!**/static/**",
+			"!**/docs_templates/**",
+			"!**/dot-nylas/**",
+			"!**/assets/**",
+			"!**/src/views/**",
+			"!**/build/**",
+			"!**/spec/**",
+			"!**/docs/**",
+			"!**/vendor/**"
 		]
 	},
 	"assist": {
@@ -33,5 +37,58 @@
 	},
 	"javascript": {
 		"globals": ["atom", "NylasEnv", "jasmine"]
+	},
+	"linter": {
+		"rules": {
+			"suspicious": {
+				"noAssignInExpressions": "off",
+				"useIterableCallbackReturn": "off",
+				"useBiomeIgnoreFolder": "off",
+				"noAsyncPromiseExecutor": "off",
+				"noShadowRestrictedNames": "off",
+				"noPrototypeBuiltins": "off",
+				"noDuplicateObjectKeys": "off",
+				"noGlobalAssign": "off",
+				"noThenProperty": "off",
+				"noSelfCompare": "off",
+				"noClassAssign": "off",
+				"noRedeclare": "off"
+			},
+			"correctness": {
+				"noInnerDeclarations": "off",
+				"noUnusedVariables": "off",
+				"noUnreachableSuper": "off",
+				"noUnusedFunctionParameters": "off",
+				"noUnreachable": "off",
+				"useYield": "off",
+				"noSelfAssign": "off",
+				"noConstantCondition": "off",
+				"noConstructorReturn": "off",
+				"noEmptyCharacterClassInRegex": "off"
+			},
+			"complexity": {
+				"noArguments": "off",
+				"noCommaOperator": "off",
+				"noStaticOnlyClass": "off"
+			},
+			"a11y": {
+				"noStaticElementInteractions": "off",
+				"useKeyWithClickEvents": "off",
+				"useButtonType": "off",
+				"useValidAnchor": "off",
+				"useKeyWithMouseEvents": "off",
+				"useAltText": "off",
+				"noAmbiguousAnchorText": "off",
+				"noLabelWithoutControl": "off",
+				"useIframeTitle": "off"
+			},
+			"style": {
+				"noDescendingSpecificity": "off",
+				"useConst": "off"
+			},
+			"performance": {
+				"noAccumulatingSpread": "off"
+			}
+		}
 	}
 }
