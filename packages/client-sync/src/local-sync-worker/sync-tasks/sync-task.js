@@ -1,4 +1,4 @@
-import MessageProcessor from '../../message-processor.js';
+import MessageProcessor from '../../message-processor/index.js';
 import Interruptible from '../../shared/interruptible.js';
 
 /**

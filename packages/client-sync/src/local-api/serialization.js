@@ -58,7 +58,7 @@ function jsonStringify(models) {
   return JSON.stringify(models, replacer, 2);
 }
 
-module.exports = {
+export default {
   jsonSchema,
   jsonStringify,
-}
+};

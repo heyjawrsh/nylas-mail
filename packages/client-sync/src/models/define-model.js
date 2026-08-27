@@ -1,4 +1,4 @@
-module.exports = function defineModel(sequelize, name, attributes, options = {}) {
+export default function defineModel(sequelize, name, attributes, options = {}) {
   const {statics, prototype, ...sequelizeOptions} = options
   const Model = sequelize.define(name, attributes, sequelizeOptions)
   Object.assign(Model, statics)

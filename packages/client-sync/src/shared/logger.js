@@ -76,4 +76,4 @@ function createLogger() {
   })
 }
 
-module.exports = {createLogger}
+export default {createLogger};

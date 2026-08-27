@@ -3,7 +3,7 @@ import _ from 'underscore';
 const {IMAPConnection} = IsomorphicCore;
 const {Capabilities} = IMAPConnection;
 import SyncTask from './sync-task.js';
-import MessageProcessor from '../../message-processor.js';
+import MessageProcessor from '../../message-processor/index.js';
 import SyncActivity from '../../shared/sync-activity.js'
 
 const MessageFlagAttributes = ['id', 'threadId', 'folderImapUID', 'unread', 'starred', 'folderImapXGMLabels']

@@ -40,23 +40,24 @@ class LocalDatabaseConnector {
     }
 
     const newSequelize = this._sequelizePoolForDatabase(`a-${accountId}`);
-    const db = loadModels(Sequelize, newSequelize, {
+
+    this._cache[accountId] = loadModels(Sequelize, newSequelize, {
       modelDirs: [path.resolve(__dirname, '..', 'models')],
-    })
+    }).then((db) => {
+      HookTransactionLog(db, newSequelize, {
+        onCreatedTransaction: (transaction) => {
+          TransactionConnector.notifyDelta(db.accountId, transaction);
+        },
+      });
 
-    HookTransactionLog(db, newSequelize, {
-      onCreatedTransaction: (transaction) => {
-        TransactionConnector.notifyDelta(db.accountId, transaction);
-      },
+      HookIncrementVersionOnSave(db, newSequelize);
+
+      db.sequelize = newSequelize;
+      db.Sequelize = Sequelize;
+      db.accountId = accountId;
+
+      return newSequelize.authenticate().then(() => newSequelize.sync()).then(() => db);
     });
-
-    HookIncrementVersionOnSave(db, newSequelize);
-
-    db.sequelize = newSequelize;
-    db.Sequelize = Sequelize;
-    db.accountId = accountId;
-
-    this._cache[accountId] = newSequelize.authenticate().then(() => db);
 
     return this._cache[accountId];
   }
@@ -95,16 +96,16 @@ class LocalDatabaseConnector {
     return Promise.resolve();
   }
 
-  _sequelizeForShared() {
+  async _sequelizeForShared() {
     const sequelize = this._sequelizePoolForDatabase(`shared`);
-    const db = loadModels(Sequelize, sequelize)
+    const db = await loadModels(Sequelize, sequelize)
 
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
 
-    return sequelize.authenticate().then(() =>
-      sequelize.sync()
-    ).then(() => db);
+    await sequelize.authenticate();
+    await sequelize.sync();
+    return db;
   }
 
   forShared() {
@@ -113,4 +114,4 @@ class LocalDatabaseConnector {
   }
 }
 
-module.exports = new LocalDatabaseConnector()
+export default new LocalDatabaseConnector()

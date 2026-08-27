@@ -8,4 +8,4 @@ function formatImapPath(pathStr) {
   return s;
 }
 
-module.exports = {formatImapPath}
+export default {formatImapPath};
