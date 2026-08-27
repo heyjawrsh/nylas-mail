@@ -5,9 +5,11 @@ packages:
   # conversion round, so they are NOT workspace members yet.
   - "packages/isomorphic-core"
   - "packages/cloud-core"
+  - "packages/cloud-workers"
 
 allowBuilds:
   sqlite3: set this to true or false
+  unix-dgram: set this to true or false
 
 onlyBuiltDependencies:
   - esbuild
