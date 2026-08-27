@@ -1,9 +1,10 @@
-const _ = require('underscore')
-const {Errors: {APIError}} = require('isomorphic-core')
+import * as IsomorphicCore from 'isomorphic-core'
+import _ from 'underscore';
+const {Errors: {APIError}} = IsomorphicCore
 
 const IMAPHelpers = {
   async messagesForThreadByFolder(db, threadId) {
-    const thread = await db.Thread.findById(threadId)
+    const thread = await db.Thread.findByPk(threadId)
     if (!thread) {
       throw new APIError(`IMAPHelpers.messagesForThreadByFolder - Can't find thread`, 404)
     }
@@ -68,7 +69,7 @@ const IMAPHelpers = {
 
   async openMessageBox({messageId, db, imap}) {
     const {Message} = db
-    const message = await Message.findById(messageId)
+    const message = await Message.findByPk(messageId)
     const folder = await message.getFolder()
     if (!folder) {
       throw new Error(`IMAPHelpers.openMessageBox - message does not have a folder`)
@@ -78,7 +79,7 @@ const IMAPHelpers = {
   },
 
   async setLabelsForMessages({db, box, messages, labelIds}) {
-    const sentLabel = await db.Label.find({where: {role: 'sent'}});
+    const sentLabel = await db.Label.findOne({where: {role: 'sent'}});
     if (!sentLabel) {
       throw new APIError('No Sent label present')
     }
@@ -99,10 +100,8 @@ const IMAPHelpers = {
       })
     }
 
-    const labelsToSet = (
-      await db.Label.findAll({where: {id: labelIds}})
-      .map(label => label.imapLabelIdentifier())
-    )
+    const labels = await db.Label.findAll({where: {id: labelIds}})
+    const labelsToSet = labels.map(label => label.imapLabelIdentifier())
     return IMAPHelpers.forEachLabelSetOfMessages({
       messages,
       async callback({messages: msgs, labelIdentifiers}) {
@@ -129,4 +128,4 @@ const IMAPHelpers = {
     })
   },
 }
-module.exports = IMAPHelpers
+export default IMAPHelpers;

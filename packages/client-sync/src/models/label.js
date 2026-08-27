@@ -1,15 +1,16 @@
-const crypto = require('crypto')
-const {formatImapPath} = require('../shared/imap-paths-utils');
+import crypto from 'crypto';
+import defineModel from './define-model.js';
+import {formatImapPath} from '../shared/imap-paths-utils.js';
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('label', {
+  return defineModel(sequelize, 'label', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },
     version: Sequelize.INTEGER,
     name: Sequelize.STRING,
     role: Sequelize.STRING,
   }, {
-    classMethods: {
+    statics: {
       associate({Label, Message, MessageLabel, Thread, ThreadLabel}) {
         Label.belongsToMany(Message, {through: MessageLabel})
         Label.belongsToMany(Thread, {through: ThreadLabel})
@@ -28,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
           );
         }
         return this.findAll({
-          where: sequelize.or({name: labelNames}, {role: labelRoles}),
+          where: {[Sequelize.Op.or]: [{name: labelNames}, {role: labelRoles}]},
         })
       },
 
@@ -36,7 +37,7 @@ module.exports = (sequelize, Sequelize) => {
         return crypto.createHash('sha256').update(`${accountId}${boxName}`, 'utf8').digest('hex')
       },
     },
-    instanceMethods: {
+    prototype: {
       imapLabelIdentifier() {
         if (this.role) {
           return `\\${this.role[0].toUpperCase()}${this.role.slice(1)}`

@@ -1,9 +1,9 @@
-const Joi = require('joi');
-const stream = require('stream');
-const _ = require('underscore');
-const Serialization = require('../serialization');
-const {createAndReplyWithSyncbackRequest} = require('../route-helpers')
-const {searchClientForAccount} = require('../search');
+import Joi from 'joi';
+import stream from 'stream';
+import _ from 'underscore';
+import Serialization from '../serialization.js';
+import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
+import {searchClientForAccount} from '../search.js';
 
 module.exports = (server) => {
   server.route({
@@ -20,14 +20,14 @@ module.exports = (server) => {
         },
       },
       response: {
-        schema: Joi.alternatives().try([
+        schema: Joi.alternatives().try(
           Joi.array().items(
             Serialization.jsonSchema('Thread')
           ),
           Joi.object().keys({
             count: Joi.number().integer().min(0),
           }),
-        ]),
+        ),
       },
     },
     handler: (request, reply) => {
@@ -42,7 +42,7 @@ module.exports = (server) => {
             {
               model: Message,
               as: 'messages',
-              attributes: _.without(Object.keys(Message.attributes), 'body'),
+              attributes: _.without(Object.keys(Message.rawAttributes), 'body'),
             },
           ],
         }).then((threads) => {
@@ -77,7 +77,7 @@ module.exports = (server) => {
       const disposable = source.subscribe((str) => outputStream.push(str));
       request.on("disconnect", () => {
         client.cancelSearchRequest();
-        disposable.dispose();
+        disposable.unsubscribe();
       });
       reply(outputStream);
     },

@@ -19,4 +19,4 @@ class SyncTaskFactory {
   }
 }
 
-module.exports = SyncTaskFactory
+export default SyncTaskFactory;

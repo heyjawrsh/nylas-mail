@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 function isContactMeaningful(contact) {
   // some suggestions: http://stackoverflow.com/questions/6317714/apache-camel-mail-to-identify-auto-generated-messages
@@ -52,7 +52,7 @@ async function extractContacts({db, messageValues, logger = console} = {}) {
           // and beat us to inserting. Since contacts are never deleted within
           // an account, we can safely assume that we can perform an update
           // instead.
-          Contact.find({where: {id: c.id}}).then(
+          Contact.findOne({where: {id: c.id}}).then(
             (row) => { row.update(c) });
         }
       });
@@ -62,4 +62,4 @@ async function extractContacts({db, messageValues, logger = console} = {}) {
   }
 }
 
-module.exports = extractContacts
+export default extractContacts;

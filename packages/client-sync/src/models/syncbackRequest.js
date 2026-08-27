@@ -1,4 +1,6 @@
-const {DatabaseTypes: {JSONColumn}} = require('isomorphic-core');
+import * as IsomorphicCore from 'isomorphic-core'
+const {DatabaseTypes: {JSONColumn}} = IsomorphicCore;
+import defineModel from './define-model.js';
 
 /**
  * CREATE TABLE IF NOT EXISTS `syncbackRequests` (
@@ -13,7 +15,7 @@ const {DatabaseTypes: {JSONColumn}} = require('isomorphic-core');
  * );
  */
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('syncbackRequest', {
+  return defineModel(sequelize, 'syncbackRequest', {
     type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM(
@@ -35,7 +37,7 @@ module.exports = (sequelize, Sequelize) => {
     indexes: [
       {fields: ['status', 'type']},
     ],
-    instanceMethods: {
+    prototype: {
       toJSON() {
         return {
           id: `${this.id}`,

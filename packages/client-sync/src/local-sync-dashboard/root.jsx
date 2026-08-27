@@ -39,7 +39,7 @@ class AccountCard extends React.Component {
 
   onClearError = () => {
     LocalDatabaseConnector.forShared().then(({Account}) => {
-      Account.find({where: {id: this.props.account.id}}).then((account) => {
+      Account.findOne({where: {id: this.props.account.id}}).then((account) => {
         account.syncError = null;
         account.save().then(() => {
           SyncProcessManager.wakeWorkerForAccount(account.id);

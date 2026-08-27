@@ -1,5 +1,6 @@
-const {EventEmitter} = require('events')
-const {Errors} = require('isomorphic-core')
+import * as IsomorphicCore from 'isomorphic-core'
+import {EventEmitter} from 'events';
+const {Errors} = IsomorphicCore
 
 /**
  * Interruptible objects allow you to run and interrupt functions by using
@@ -143,4 +144,4 @@ class Interruptible extends EventEmitter {
   }
 }
 
-module.exports = Interruptible
+export default Interruptible;

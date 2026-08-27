@@ -1,5 +1,5 @@
-const MessageProcessor = require('../../message-processor')
-const Interruptible = require('../../shared/interruptible')
+import MessageProcessor from '../../message-processor.js';
+import Interruptible from '../../shared/interruptible.js';
 
 /**
  * SyncTask represents an operation run by the SyncWorker.
@@ -73,4 +73,4 @@ class SyncTask extends Interruptible {
   }
 }
 
-module.exports = SyncTask
+export default SyncTask;

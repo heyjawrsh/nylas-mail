@@ -1,6 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const LocalDatabaseConnector = require('../src/shared/local-database-connector')
+import fs from 'node:fs';
+import path from 'node:path';
+import {vi} from 'vitest';
+import LocalDatabaseConnector from '../src/shared/local-database-connector.js';
 
 const FIXTURES_PATH = path.join(__dirname, 'fixtures');
 const ACCOUNT_ID = 'test-account-id';
@@ -36,8 +37,8 @@ function destroyTestDatabase(accountId = ACCOUNT_ID) {
 
 function mockImapBox() {
   return {
-    setLabels: jasmine.createSpy('setLabels'),
-    removeLabels: jasmine.createSpy('removeLabels'),
+    setLabels: vi.fn(),
+    removeLabels: vi.fn(),
   }
 }
 

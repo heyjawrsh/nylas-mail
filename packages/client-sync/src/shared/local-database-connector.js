@@ -1,9 +1,10 @@
-const createDebug = require('debug');
-const Sequelize = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-const {StringUtils, loadModels, HookIncrementVersionOnSave, HookTransactionLog} = require('isomorphic-core');
-const TransactionConnector = require('./transaction-connector')
+import * as IsomorphicCore from 'isomorphic-core'
+import createDebug from 'debug';
+import Sequelize from 'sequelize';
+import fs from 'fs';
+import path from 'path';
+const {StringUtils, loadModels, HookIncrementVersionOnSave, HookTransactionLog} = IsomorphicCore;
+import TransactionConnector from './transaction-connector.js';
 
 require('./database-extensions'); // Extends Sequelize on require
 const debugVerbose = createDebug("sync:K2DB:all");
@@ -55,7 +56,7 @@ class LocalDatabaseConnector {
     db.Sequelize = Sequelize;
     db.accountId = accountId;
 
-    this._cache[accountId] = newSequelize.authenticate().thenReturn(db);
+    this._cache[accountId] = newSequelize.authenticate().then(() => db);
 
     return this._cache[accountId];
   }
@@ -65,9 +66,7 @@ class LocalDatabaseConnector {
       // this is a bit of a hack, because sequelize.sync() doesn't work with
       // schemas. It's necessary to sync models individually and in the right order.
       const models = ['Contact', 'Folder', 'Label', 'Transaction', 'Thread', 'ThreadLabel', 'ThreadFolder', 'Message', 'MessageLabel', 'Reference', 'MessageReference', 'File', 'SyncbackRequest'];
-      return Promise.each(models, (n) =>
-        db[n].sync()
-      )
+      return models.reduce((promise, name) => promise.then(() => db[name].sync()), Promise.resolve())
     });
   }
 
@@ -105,7 +104,7 @@ class LocalDatabaseConnector {
 
     return sequelize.authenticate().then(() =>
       sequelize.sync()
-    ).thenReturn(db);
+    ).then(() => db);
   }
 
   forShared() {

@@ -1,15 +1,18 @@
-const _ = require('underscore');
-const Rx = require('rx-lite');
+import * as IsomorphicCore from 'isomorphic-core'
+import _ from 'underscore';
+import {Observable, from, of} from 'rxjs';
+import {concatMap, map} from 'rxjs/operators';
+import {Op} from 'sequelize';
 const {
   ExponentialBackoffScheduler,
   IMAPErrors,
   IMAPConnectionPool,
-} = require('isomorphic-core')
-const SyncProcessManager = require('../local-sync-worker/sync-process-manager')
-const {
+} = IsomorphicCore
+import SyncProcessManager from '../local-sync-worker/sync-process-manager.js';
+import {
   SearchQueryParser,
   IMAPSearchQueryBackend,
-} = require('nylas-exports')
+} from 'nylas-exports'
 
 const MAX_IMAP_TIMEOUT_ERRORS = 5;
 
@@ -27,7 +30,7 @@ const getThreadsForMessages = (db, messages, limit) => {
       {
         model: Message,
         as: 'messages',
-        attributes: _.without(Object.keys(Message.attributes), 'body'),
+        attributes: _.without(Object.keys(Message.rawAttributes), 'body'),
         include: [
           {model: Folder},
           {model: Label},
@@ -94,7 +97,7 @@ class ImapSearchClient {
     const accountFolders = await Folder.findAll({
       where: {
         accountId: this.account.id,
-        id: {$notIn: folders.map((f) => f.id)},
+        id: {[Op.notIn]: folders.map((f) => f.id)},
       },
     });
 
@@ -109,7 +112,8 @@ class ImapSearchClient {
     const parsedQuery = SearchQueryParser.parse(query);
     const folders = await this._getFoldersForSearch(db, parsedQuery);
     let numTimeoutErrors = 0;
-    return Rx.Observable.create(async (observer) => {
+    return new Observable((observer) => {
+      const run = async () => {
       const onConnected = async ([conn]) => {
         // Remove folders as we process them so we don't re-search previously
         // searched folders if there is an error later down the line.
@@ -119,10 +123,10 @@ class ImapSearchClient {
           const uids = await this._searchFolder(conn, folder, criteria);
           folders.shift();
           if (uids.length > 0) {
-            observer.onNext({uids, folder});
+            observer.next({uids, folder});
           }
         }
-        observer.onCompleted();
+        observer.complete();
       };
 
       const timeoutScheduler = new ExponentialBackoffScheduler({
@@ -149,9 +153,12 @@ class ImapSearchClient {
             onTimeout();
             continue;
           }
-          throw err;
+          observer.error(err);
+          return;
         }
       }
+      };
+      run();
     });
   }
 
@@ -173,7 +180,7 @@ class ImapSearchClient {
       {
         where: {
           type: "SyncUnknownUIDs",
-          status: {$in: ["NEW", "INPROGRESS-RETRYABLE", "INPROGRESS-NOTRETRYABLE"]},
+          status: {[Op.in]: ["NEW", "INPROGRESS-RETRYABLE", "INPROGRESS-NOTRETRYABLE"]},
           accountId: this.account.id,
         },
       });
@@ -184,7 +191,7 @@ class ImapSearchClient {
     const uidFolderStream = await this._search(db, query);
     // The first concatMap handles the fact that the async function returns promises
     // of the new observable streams.
-    const messageListStreamStream = uidFolderStream.concatMap(async ({uids, folder}) => {
+    const messageListStreamStream = uidFolderStream.pipe(concatMap(async ({uids, folder}) => {
       let messages = await Message.findAll({
         attributes: ['id', 'threadId', 'folderImapUID'],
         where: {folderImapUID: uids},
@@ -194,7 +201,7 @@ class ImapSearchClient {
       const unknownUids = uids.filter(uid => !knownUids.has(uid));
 
       if (unknownUids.length === 0 || this._cancelled) {
-        return Rx.Observable.from([messages]);
+        return of(messages);
       }
       // Sort into descending order so that we get the more recent messages sooner.
       unknownUids.sort((a, b) => b - a);
@@ -206,17 +213,17 @@ class ImapSearchClient {
       })
       SyncProcessManager.wakeWorkerForAccount(this.account.id, {interrupt: true, reason: 'Sync unknown UIDs'});
 
-      return Rx.Observable.create((observer) => {
-        observer.onNext(messages);
+      return new Observable((observer) => {
+        observer.next(messages);
         const findFn = async (remainingUids) => {
           if (this._cancelled) {
             await this._cancelSyncbackTasks(db);
-            observer.onCompleted();
+            observer.complete();
             return;
           }
 
           if (remainingUids.length === 0) {
-            observer.onCompleted();
+            observer.complete();
             return;
           }
 
@@ -226,26 +233,21 @@ class ImapSearchClient {
           });
           messages = messages.concat(newMessages);
           if (newMessages.length > 0) {
-            observer.onNext(newMessages);
+            observer.next(newMessages);
           }
           knownUids = new Set(messages.map(m => parseInt(m.folderImapUID, 10)));
           setTimeout(findFn, 1000, remainingUids.filter(uid => !knownUids.has(uid)));
         };
         findFn(unknownUids);
       });
-    });
+    }));
     // Now that we've unwrapped the promises with the previous concatMap, we
     // can flatten the observable into a stream of message lists.
-    return messageListStreamStream.concatMap(messageListStream => {
-      return messageListStream;
-    }).map(messages => {
-      return getThreadsForMessages(db, messages, limit);
-    }).concatMap((threads) => {
-      if (threads.length > 0) {
-        return `${JSON.stringify(threads)}\n`;
-      }
-      return '\n';
-    });
+    return messageListStreamStream.pipe(
+      concatMap(messageListStream => messageListStream),
+      concatMap(messages => from(getThreadsForMessages(db, messages, limit))),
+      map(threads => threads.length > 0 ? `${JSON.stringify(threads)}\n` : '\n')
+    );
   }
 }
 

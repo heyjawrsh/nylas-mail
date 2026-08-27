@@ -4,4 +4,4 @@ const DefaultSyncPolicy = {
     inactive: 5 * 60 * 1000,
   },
 }
-module.exports = DefaultSyncPolicy;
+export default DefaultSyncPolicy;

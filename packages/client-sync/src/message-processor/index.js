@@ -1,15 +1,16 @@
-const _ = require('underscore')
-const os = require('os');
-const fs = require('fs');
-const path = require('path')
-const mkdirp = require('mkdirp');
-const detectThread = require('./detect-thread');
-const extractFiles = require('./extract-files');
-const extractContacts = require('./extract-contacts');
-const {MessageUtils, TrackingUtils} = require('isomorphic-core');
-const LocalDatabaseConnector = require('../shared/local-database-connector');
-const {AccountStore, BatteryStatusManager} = require('nylas-exports');
-const SyncActivity = require('../shared/sync-activity').default;
+import * as IsomorphicCore from 'isomorphic-core'
+import _ from 'underscore';
+import os from 'os';
+import fs from 'fs';
+import path from 'path';
+import mkdirp from 'mkdirp';
+import detectThread from './detect-thread.js';
+import extractFiles from './extract-files.js';
+import extractContacts from './extract-contacts.js';
+const {MessageUtils, TrackingUtils} = IsomorphicCore;
+import LocalDatabaseConnector from '../shared/local-database-connector.js';
+import {AccountStore, BatteryStatusManager} from 'nylas-exports';
+import SyncActivity from '../shared/sync-activity.js';
 
 const MAX_QUEUE_LENGTH = 500
 // These CPU limits only apply when we're actually throttling. We don't
@@ -62,10 +63,10 @@ class MessageProcessor {
       let folder;
       try {
         const accountDb = await LocalDatabaseConnector.forShared()
-        const account = await accountDb.Account.findById(accountId)
+        const account = await accountDb.Account.findByPk(accountId)
         const db = await LocalDatabaseConnector.forAccount(accountId);
         const {Folder} = db
-        folder = await Folder.findById(folderId)
+        folder = await Folder.findByPk(folderId)
         logger = global.Logger.forAccount(account)
 
         this._queueLength++
@@ -126,7 +127,7 @@ class MessageProcessor {
         messageValues.body = TrackingUtils.stripTrackingLinksFromBody(messageValues.body)
       }
 
-      const existingMessage = await Message.findById(messageValues.id, {
+      const existingMessage = await Message.findByPk(messageValues.id, {
         include: [{model: Folder, as: 'folder'}, {model: Label, as: 'labels'}],
       });
       let processedMessage;

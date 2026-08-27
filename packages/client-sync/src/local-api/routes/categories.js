@@ -1,6 +1,6 @@
-const Joi = require('joi');
-const Serialization = require('../serialization');
-const {createAndReplyWithSyncbackRequest} = require('../route-helpers');
+import Joi from 'joi';
+import Serialization from '../serialization.js';
+import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
 module.exports = (server) => {
   ['Folder', 'Label'].forEach((klass) => {
@@ -108,7 +108,7 @@ module.exports = (server) => {
           }))
 
           // Add the role to the target item
-          const targetItem = await Klass.findById(request.params.id)
+          const targetItem = await Klass.findByPk(request.params.id)
           targetItem.role = role;
           await targetItem.save()
 

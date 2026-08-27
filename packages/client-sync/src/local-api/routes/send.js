@@ -1,6 +1,7 @@
-const Joi = require('joi');
-const {ModelUtils} = require('isomorphic-core');
-const {createAndReplyWithSyncbackRequest} = require('../route-helpers');
+import * as IsomorphicCore from 'isomorphic-core'
+import Joi from 'joi';
+const {ModelUtils} = IsomorphicCore;
+import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
 
 // const recipient = Joi.object().keys({

@@ -1,7 +1,7 @@
-const {AccountStore} = require('nylas-exports');
+import {AccountStore} from 'nylas-exports';
 
-const LocalDatabaseConnector = require('../shared/local-database-connector')
-const manager = require('./sync-process-manager')
+import LocalDatabaseConnector from '../shared/local-database-connector.js';
+import manager from './sync-process-manager.js';
 
 // Right now, it's a bit confusing because N1 has Account objects, and K2 has
 // Account objects. We want to sync all K2 Accounts, but when an N1 Account is

@@ -1,8 +1,9 @@
-const { AuthHelpers } = require('isomorphic-core');
-const DefaultSyncPolicy = require('../default-sync-policy')
-const LocalDatabaseConnector = require('../../shared/local-database-connector')
-const SyncProcessManager = require('../../local-sync-worker/sync-process-manager')
-const {preventCreationOfDuplicateAccounts} = require('../../shared/dedupe-accounts')
+import * as IsomorphicCore from 'isomorphic-core'
+const { AuthHelpers } = IsomorphicCore;
+import DefaultSyncPolicy from '../default-sync-policy.js';
+import LocalDatabaseConnector from '../../shared/local-database-connector.js';
+import SyncProcessManager from '../../local-sync-worker/sync-process-manager.js';
+import {preventCreationOfDuplicateAccounts} from '../../shared/dedupe-accounts.js';
 
 async function upsertAccount(accountParams, credentials) {
   accountParams.syncPolicy = DefaultSyncPolicy

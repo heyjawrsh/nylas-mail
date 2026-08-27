@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 function replacer(key, value) {
   // force remove any disallowed keys here

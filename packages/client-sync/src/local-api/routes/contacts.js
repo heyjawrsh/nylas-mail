@@ -1,6 +1,7 @@
-const Joi = require('joi');
-const Serialization = require('../serialization');
-const moment = require('moment-timezone');
+import Joi from 'joi';
+import {Op} from 'sequelize';
+import Serialization from '../serialization.js';
+import moment from 'moment-timezone';
 
 const LOOKBACK_TIME = moment.duration(2, 'years').asMilliseconds();
 const MIN_MESSAGE_WEIGHT = 0.01;
@@ -126,7 +127,7 @@ module.exports = (server) => {
           attributes: ['rowid', 'id', 'to', 'cc', 'bcc', 'date'],
           where: {
             'isDraft': false,                   // Don't include unsent things.
-            '$message.rowid$': {$gt: lastID},
+            '$message.rowid$': {[Op.gt]: lastID},
           },
           order: [['rowid', 'ASC']],
           limit: 100,

@@ -1,7 +1,8 @@
-const Joi = require('joi');
-const {Provider} = require('isomorphic-core')
-const Serialization = require('../serialization');
-const {createAndReplyWithSyncbackRequest} = require('../route-helpers');
+import * as IsomorphicCore from 'isomorphic-core'
+import Joi from 'joi';
+const {Provider} = IsomorphicCore
+import Serialization from '../serialization.js';
+import {createAndReplyWithSyncbackRequest} from '../route-helpers.js';
 
 
 module.exports = (server) => {

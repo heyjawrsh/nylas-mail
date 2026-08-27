@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 // TODO: This is a placeholder
 module.exports = (server) => {

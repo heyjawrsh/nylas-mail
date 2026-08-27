@@ -13,19 +13,21 @@
     "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
     "base64-stream": "^1.0.0",
+    "debug": "^4.4.3",
     "isomorphic-core": "workspace:*",
     "joi": "^17.13.3",
     "libmime": "^5.3.7",
     "mkdirp": "^3.0.1",
     "moment-timezone": "^0.6.1",
+    "rxjs": "^7.8.0",
     "sequelize": "^6.37.0",
     "underscore": "^1.13.7"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "latest",
-    "rxjs": "^7.8.0",
     "vitest": "latest"
   },
   "author": "Nylas",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module"
 }

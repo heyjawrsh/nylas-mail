@@ -43,4 +43,4 @@ class SyncbackTaskFactory {
   }
 }
 
-module.exports = SyncbackTaskFactory
+export default SyncbackTaskFactory;

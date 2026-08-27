@@ -1,4 +1,5 @@
-const crypto = require('crypto')
+import crypto from 'crypto';
+import defineModel from './define-model.js';
 
 /**
  * NOTE: SQLITE creates an index on the `primaryKey` (the ID) for you.
@@ -10,19 +11,19 @@ const crypto = require('crypto')
  * (id=?)
  */
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('contact', {
+  return defineModel(sequelize, 'contact', {
     id: {type: Sequelize.STRING(65), primaryKey: true},
     accountId: { type: Sequelize.STRING, allowNull: false },
     version: Sequelize.INTEGER,
     name: Sequelize.STRING,
     email: Sequelize.STRING,
   }, {
-    classMethods: {
+    statics: {
       hash({email}) {
         return crypto.createHash('sha256').update(email, 'utf8').digest('hex');
       },
     },
-    instanceMethods: {
+    prototype: {
       toJSON() {
         return {
           id: `${this.id}`,

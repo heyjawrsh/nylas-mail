@@ -1,16 +1,18 @@
-const base64 = require('base64-stream');
+import * as IsomorphicCore from 'isomorphic-core'
+import base64 from 'base64-stream';
+import defineModel from './define-model.js';
 const {
   ExponentialBackoffScheduler,
   IMAPErrors,
   IMAPConnectionPool,
-} = require('isomorphic-core')
-const {QuotedPrintableStreamDecoder} = require('../shared/stream-decoders')
-const {Actions} = require('nylas-exports')
+} = IsomorphicCore
+import {QuotedPrintableStreamDecoder} from '../shared/stream-decoders.js';
+import {Actions} from 'nylas-exports';
 
 const MAX_IMAP_TIMEOUT_ERRORS = 5;
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('file', {
+  return defineModel(sequelize, 'file', {
     id: { type: Sequelize.STRING(500), primaryKey: true },
     size: Sequelize.INTEGER,
     partId: Sequelize.STRING,
@@ -26,12 +28,12 @@ module.exports = (sequelize, Sequelize) => {
     indexes: [
       {fields: ['messageId']},
     ],
-    classMethods: {
+    statics: {
       associate: ({File, Message}) => {
         File.belongsTo(Message)
       },
     },
-    instanceMethods: {
+    prototype: {
       async fetch({account, db, logger}) {
         const message = await this.getMessage()
         const folder = await message.getFolder()

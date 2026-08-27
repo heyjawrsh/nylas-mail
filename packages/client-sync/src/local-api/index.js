@@ -1,15 +1,15 @@
 /* eslint import/no-dynamic-require: 0 */
 /* eslint global-require: 0 */
-const Hapi = require('hapi');
-const HapiSwagger = require('hapi-swagger');
-const HapiBoom = require('hapi-boom-decorators')
-const HapiBasicAuth = require('hapi-auth-basic');
-const Inert = require('inert');
-const Vision = require('vision');
-const Package = require('../../package');
-const fs = require('fs');
-const path = require('path');
-const LocalDatabaseConnector = require('../shared/local-database-connector')
+import Hapi from 'hapi';
+import HapiSwagger from 'hapi-swagger';
+import HapiBoom from 'hapi-boom-decorators';
+import HapiBasicAuth from 'hapi-auth-basic';
+import Inert from 'inert';
+import Vision from 'vision';
+import Package from '../../package.js';
+import fs from 'fs';
+import path from 'path';
+import LocalDatabaseConnector from '../shared/local-database-connector.js';
 
 const server = new Hapi.Server({
   connections: {
@@ -47,7 +47,7 @@ const validate = (request, username, password, callback) => {
     sharedDb = db;
     const {AccountToken} = db;
 
-    AccountToken.find({
+    AccountToken.findOne({
       where: {
         value: username,
       },
@@ -70,9 +70,9 @@ const validate = (request, username, password, callback) => {
 
 const attach = (directory) => {
   const routesDir = path.join(__dirname, directory)
-  fs.readdirSync(routesDir).forEach((filename) => {
-    if (filename.endsWith('.js') || filename.endsWith('.es6')) {
-      const routeFactory = require(path.join(routesDir, filename));
+  for (const filename of fs.readdirSync(routesDir)) {
+    if (filename.endsWith('.js')) {
+      const routeFactory = (await import(`file://${path.join(routesDir, filename)}`)).default;
       routeFactory(server);
     }
   });

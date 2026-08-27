@@ -1,5 +1,6 @@
-const {MessageUtils, Errors: {APIError}} = require('isomorphic-core')
-const Joi = require('joi');
+import * as IsomorphicCore from 'isomorphic-core'
+const {MessageUtils, Errors: {APIError}} = IsomorphicCore
+import Joi from 'joi';
 
 // TODO: This is a placeholder.
 module.exports = (server) => {
@@ -46,9 +47,9 @@ module.exports = (server) => {
       let trashFolderName;
 
       if (account.provider === 'gmail') {
-        sentFolder = await db.Label.find({where: {role: 'sent'}});
+        sentFolder = await db.Label.findOne({where: {role: 'sent'}});
       } else {
-        sentFolder = await db.Folder.find({where: {role: 'sent'}});
+        sentFolder = await db.Folder.findOne({where: {role: 'sent'}});
       }
 
       if (sentFolder) {
@@ -57,7 +58,7 @@ module.exports = (server) => {
         throw new APIError(`Can't find sent folder name.`, 500);
       }
 
-      const trashFolder = await db.Folder.find({where: {role: 'trash'}});
+      const trashFolder = await db.Folder.findOne({where: {role: 'trash'}});
 
       if (trashFolder) {
         trashFolderName = trashFolder.name;

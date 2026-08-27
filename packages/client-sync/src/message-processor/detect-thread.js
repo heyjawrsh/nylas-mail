@@ -41,7 +41,7 @@ async function findOrBuildByReferences(db, message) {
 
 async function findOrBuildByRemoteThreadId(db, remoteThreadId) {
   const {Thread, Label, Folder} = db;
-  const existing = await Thread.find({
+  const existing = await Thread.findOne({
     where: {remoteThreadId},
     include: [{model: Label}, {model: Folder}],
   });
@@ -85,4 +85,4 @@ async function detectThread({db, messageValues}) {
   return thread;
 }
 
-module.exports = detectThread
+export default detectThread;

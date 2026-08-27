@@ -1,5 +1,5 @@
-const Rx = require('rx-lite')
-const EventEmitter = require('events');
+import {Observable} from 'rxjs';
+import EventEmitter from 'events';
 
 class TransactionConnector extends EventEmitter {
   notifyDelta(accountId, transaction) {
@@ -7,8 +7,10 @@ class TransactionConnector extends EventEmitter {
   }
 
   getObservableForAccountId(accountId) {
-    return Rx.Observable.create((observer) => {
-      this.on(accountId, observer.onNext.bind(observer));
+    return new Observable((observer) => {
+      const listener = value => observer.next(value)
+      this.on(accountId, listener);
+      return () => this.removeListener(accountId, listener)
     });
   }
 }

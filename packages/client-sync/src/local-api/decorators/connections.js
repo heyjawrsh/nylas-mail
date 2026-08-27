@@ -1,6 +1,6 @@
 /* eslint func-names:0 */
 
-const LocalDatabaseConnector = require('../../shared/local-database-connector');
+import LocalDatabaseConnector from '../../shared/local-database-connector.js';
 
 module.exports = (server) => {
   server.decorate('request', 'getAccountDatabase', function () {

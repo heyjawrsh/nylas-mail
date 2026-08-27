@@ -1,7 +1,9 @@
-const {DatabaseTypes: {JSONArrayColumn}} = require('isomorphic-core');
+import * as IsomorphicCore from 'isomorphic-core'
+const {DatabaseTypes: {JSONArrayColumn}} = IsomorphicCore;
+import defineModel from './define-model.js';
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('thread', {
+  return defineModel(sequelize, 'thread', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },
     version: Sequelize.INTEGER,
@@ -27,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
       { fields: ['subject'] },
       { fields: ['remoteThreadId'] },
     ],
-    classMethods: {
+    statics: {
       MAX_THREAD_LENGTH: 500,
       requiredAssociationsForJSON: ({Folder, Label, Message}) => {
         return [
@@ -47,7 +49,7 @@ module.exports = (sequelize, Sequelize) => {
         Thread.hasMany(Reference)
       },
     },
-    instanceMethods: {
+    prototype: {
       async updateLabelsAndFolders({transaction} = {}) {
         const messages = await this.getMessages({attributes: ['id', 'folderId'], transaction});
         const labelIds = new Set()

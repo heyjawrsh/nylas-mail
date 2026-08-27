@@ -1,13 +1,15 @@
-const crypto = require('crypto')
+import * as IsomorphicCore from 'isomorphic-core'
+import crypto from 'crypto';
+import defineModel from './define-model.js';
 const {
   ExponentialBackoffScheduler,
   IMAPErrors,
   IMAPConnectionPool,
   MessageBodyUtils,
-} = require('isomorphic-core')
-const {DatabaseTypes: {JSONArrayColumn}} = require('isomorphic-core');
-const {Errors: {APIError}} = require('isomorphic-core')
-const {Actions} = require('nylas-exports')
+} = IsomorphicCore
+const {DatabaseTypes: {JSONArrayColumn}} = IsomorphicCore;
+const {Errors: {APIError}} = IsomorphicCore
+import {Actions} from 'nylas-exports';
 
 const MAX_IMAP_TIMEOUT_ERRORS = 5;
 
@@ -18,7 +20,7 @@ function validateRecipientsPresent(message) {
 }
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('message', {
+  return defineModel(sequelize, 'message', {
     id: { type: Sequelize.STRING(65), primaryKey: true },
     accountId: { type: Sequelize.STRING, allowNull: false },
     version: Sequelize.INTEGER,
@@ -99,7 +101,7 @@ module.exports = (sequelize, Sequelize) => {
       // {fields: ['isDraft']},
       {fields: ['folderImapUID']}, // Use in `searchThreads`
     ],
-    classMethods: {
+    statics: {
       associate({Message, Folder, Label, File, Thread, MessageLabel, Reference, MessageReference}) {
         Message.belongsTo(Thread)
         Message.belongsTo(Folder)
@@ -140,7 +142,7 @@ module.exports = (sequelize, Sequelize) => {
         ]
       },
     },
-    instanceMethods: {
+    prototype: {
       getRecipients() {
         const {to, cc, bcc} = this;
         return [].concat(to, cc, bcc);

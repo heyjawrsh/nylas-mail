@@ -1,4 +1,4 @@
-const mimelib = require('mimelib')
+import libmime from 'libmime';
 
 function collectFilesFromStruct({db, messageValues, struct, fileIds = new Set()}) {
   const {File} = db;
@@ -9,7 +9,7 @@ function collectFilesFromStruct({db, messageValues, struct, fileIds = new Set()}
       collected = collected.concat(collectFilesFromStruct({db, messageValues, struct: part, fileIds}));
     } else {
       const disposition = part.disposition || {}
-      const filename = mimelib.decodeMimeWord((disposition.params || {}).filename);
+      const filename = libmime.decodeWords((disposition.params || {}).filename);
 
       // Note that the contentId is stored in part.id, while the MIME part id
       // is stored in part.partID
@@ -57,4 +57,4 @@ async function extractFiles({db, messageValues, struct}) {
   return Promise.resolve(files)
 }
 
-module.exports = extractFiles
+export default extractFiles;
