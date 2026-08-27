@@ -18,7 +18,8 @@ import FocusedContentStore from "./focused-content-store.js";
 import * as NylasAPIHelpers from "../nylas-api-helpers.js";
 import * as ExtensionRegistryNS from "../../registries/extension-registry.js";
 const ExtensionRegistry = ExtensionRegistryNS.default || ExtensionRegistryNS;
-import { deprecate } from "../../deprecate-utils.js";
+import DeprecateUtilsNS from "../../deprecate-utils.js";
+const { deprecate } = DeprecateUtilsNS.default || DeprecateUtilsNS;
 import _async from "async";
 import _ from "underscore";
 

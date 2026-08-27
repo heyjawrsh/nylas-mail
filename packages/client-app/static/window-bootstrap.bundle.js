@@ -59126,10 +59126,6 @@ var init_model_with_metadata = __esm({
 });
 
 // src/flux/models/account.js
-var account_exports = {};
-__export(account_exports, {
-  default: () => Account
-});
 var import_node_module3, import_meta3, nodeRequire4, CategoryStore, Contact, Account;
 var init_account = __esm({
   "src/flux/models/account.js"() {
@@ -187638,27 +187634,27 @@ var require_rx_lite = __commonJS({
       var moduleExports = freeModule && freeModule.exports === freeExports ? freeExports : null;
       var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
       var root2 = freeGlobal || freeWindow !== (thisGlobal && thisGlobal.window) && freeWindow || freeSelf || thisGlobal || Function("return this")();
-      var Rx3 = {
+      var Rx4 = {
         internals: {},
         config: {
           Promise: root2.Promise
         },
         helpers: {}
       };
-      var noop2 = Rx3.helpers.noop = function() {
-      }, identity2 = Rx3.helpers.identity = function(x2) {
+      var noop2 = Rx4.helpers.noop = function() {
+      }, identity2 = Rx4.helpers.identity = function(x2) {
         return x2;
-      }, defaultNow = Rx3.helpers.defaultNow = Date.now, defaultComparer = Rx3.helpers.defaultComparer = function(x2, y) {
+      }, defaultNow = Rx4.helpers.defaultNow = Date.now, defaultComparer = Rx4.helpers.defaultComparer = function(x2, y) {
         return isEqual2(x2, y);
-      }, defaultSubComparer = Rx3.helpers.defaultSubComparer = function(x2, y) {
+      }, defaultSubComparer = Rx4.helpers.defaultSubComparer = function(x2, y) {
         return x2 > y ? 1 : x2 < y ? -1 : 0;
-      }, defaultKeySerializer = Rx3.helpers.defaultKeySerializer = function(x2) {
+      }, defaultKeySerializer = Rx4.helpers.defaultKeySerializer = function(x2) {
         return x2.toString();
-      }, defaultError = Rx3.helpers.defaultError = function(err) {
+      }, defaultError = Rx4.helpers.defaultError = function(err) {
         throw err;
-      }, isPromise = Rx3.helpers.isPromise = function(p) {
+      }, isPromise = Rx4.helpers.isPromise = function(p) {
         return !!p && typeof p.subscribe !== "function" && typeof p.then === "function";
-      }, isFunction2 = Rx3.helpers.isFunction = (function() {
+      }, isFunction2 = Rx4.helpers.isFunction = (function() {
         var isFn = function(value) {
           return typeof value == "function" || false;
         };
@@ -187687,7 +187683,7 @@ var require_rx_lite = __commonJS({
           }
         };
       }
-      var tryCatch = Rx3.internals.tryCatch = function tryCatch2(fn2) {
+      var tryCatch = Rx4.internals.tryCatch = function tryCatch2(fn2) {
         if (!isFunction2(fn2)) {
           throw new TypeError("fn must be a function");
         }
@@ -187696,7 +187692,7 @@ var require_rx_lite = __commonJS({
       function thrower(e) {
         throw e;
       }
-      Rx3.config.longStackSupport = false;
+      Rx4.config.longStackSupport = false;
       var hasStacks = false, stacks = tryCatch(function() {
         throw new Error();
       })();
@@ -187768,55 +187764,55 @@ var require_rx_lite = __commonJS({
           return [attempt3[1], Number(attempt3[2])];
         }
       }
-      var EmptyError = Rx3.EmptyError = function() {
+      var EmptyError = Rx4.EmptyError = function() {
         this.message = "Sequence contains no elements.";
         Error.call(this);
       };
       EmptyError.prototype = Object.create(Error.prototype);
       EmptyError.prototype.name = "EmptyError";
-      var ObjectDisposedError = Rx3.ObjectDisposedError = function() {
+      var ObjectDisposedError = Rx4.ObjectDisposedError = function() {
         this.message = "Object has been disposed";
         Error.call(this);
       };
       ObjectDisposedError.prototype = Object.create(Error.prototype);
       ObjectDisposedError.prototype.name = "ObjectDisposedError";
-      var ArgumentOutOfRangeError = Rx3.ArgumentOutOfRangeError = function() {
+      var ArgumentOutOfRangeError = Rx4.ArgumentOutOfRangeError = function() {
         this.message = "Argument out of range";
         Error.call(this);
       };
       ArgumentOutOfRangeError.prototype = Object.create(Error.prototype);
       ArgumentOutOfRangeError.prototype.name = "ArgumentOutOfRangeError";
-      var NotSupportedError = Rx3.NotSupportedError = function(message) {
+      var NotSupportedError = Rx4.NotSupportedError = function(message) {
         this.message = message || "This operation is not supported";
         Error.call(this);
       };
       NotSupportedError.prototype = Object.create(Error.prototype);
       NotSupportedError.prototype.name = "NotSupportedError";
-      var NotImplementedError = Rx3.NotImplementedError = function(message) {
+      var NotImplementedError = Rx4.NotImplementedError = function(message) {
         this.message = message || "This operation is not implemented";
         Error.call(this);
       };
       NotImplementedError.prototype = Object.create(Error.prototype);
       NotImplementedError.prototype.name = "NotImplementedError";
-      var notImplemented = Rx3.helpers.notImplemented = function() {
+      var notImplemented = Rx4.helpers.notImplemented = function() {
         throw new NotImplementedError();
       };
-      var notSupported = Rx3.helpers.notSupported = function() {
+      var notSupported = Rx4.helpers.notSupported = function() {
         throw new NotSupportedError();
       };
       var $iterator$ = typeof Symbol === "function" && Symbol.iterator || "_es6shim_iterator_";
       if (root2.Set && typeof new root2.Set()["@@iterator"] === "function") {
         $iterator$ = "@@iterator";
       }
-      var doneEnumerator = Rx3.doneEnumerator = { done: true, value: undefined2 };
-      var isIterable = Rx3.helpers.isIterable = function(o) {
+      var doneEnumerator = Rx4.doneEnumerator = { done: true, value: undefined2 };
+      var isIterable = Rx4.helpers.isIterable = function(o) {
         return o && o[$iterator$] !== undefined2;
       };
-      var isArrayLike = Rx3.helpers.isArrayLike = function(o) {
+      var isArrayLike = Rx4.helpers.isArrayLike = function(o) {
         return o && o.length !== undefined2;
       };
-      Rx3.helpers.iterator = $iterator$;
-      var bindCallback = Rx3.internals.bindCallback = function(func, thisArg, argCount) {
+      Rx4.helpers.iterator = $iterator$;
+      var bindCallback = Rx4.internals.bindCallback = function(func, thisArg, argCount) {
         if (typeof thisArg === "undefined") {
           return func;
         }
@@ -187931,7 +187927,7 @@ var require_rx_lite = __commonJS({
         }
         return false;
       }
-      var isObject2 = Rx3.internals.isObject = function(value) {
+      var isObject2 = Rx4.internals.isObject = function(value) {
         var type = typeof value;
         return !!value && (type === "object" || type === "function");
       };
@@ -188046,18 +188042,18 @@ var require_rx_lite = __commonJS({
         }
         return baseIsEqualDeep(value, other, baseIsEqual, isLoose, stackA, stackB);
       }
-      var isEqual2 = Rx3.internals.isEqual = function(value, other) {
+      var isEqual2 = Rx4.internals.isEqual = function(value, other) {
         return baseIsEqual(value, other);
       };
       var hasProp = {}.hasOwnProperty, slice2 = Array.prototype.slice;
-      var inherits = Rx3.internals.inherits = function(child, parent) {
+      var inherits = Rx4.internals.inherits = function(child, parent) {
         function __() {
           this.constructor = child;
         }
         __.prototype = parent.prototype;
         child.prototype = new __();
       };
-      var addProperties = Rx3.internals.addProperties = function(obj) {
+      var addProperties = Rx4.internals.addProperties = function(obj) {
         for (var sources = [], i = 1, len = arguments.length; i < len; i++) {
           sources.push(arguments[i]);
         }
@@ -188068,7 +188064,7 @@ var require_rx_lite = __commonJS({
           }
         }
       };
-      var addRef = Rx3.internals.addRef = function(xs, r) {
+      var addRef = Rx4.internals.addRef = function(xs, r) {
         return new AnonymousObservable(function(observer) {
           return new BinaryDisposable(r.getDisposable(), xs.subscribe(observer));
         });
@@ -188080,7 +188076,7 @@ var require_rx_lite = __commonJS({
         }
         return a;
       }
-      var CompositeDisposable = Rx3.CompositeDisposable = function() {
+      var CompositeDisposable = Rx4.CompositeDisposable = function() {
         var args = [], i, len;
         if (Array.isArray(arguments[0])) {
           args = arguments[0];
@@ -188131,7 +188127,7 @@ var require_rx_lite = __commonJS({
           }
         }
       };
-      var Disposable = Rx3.Disposable = function(action) {
+      var Disposable = Rx4.Disposable = function(action) {
         this.isDisposed = false;
         this.action = action || noop2;
       };
@@ -188156,7 +188152,7 @@ var require_rx_lite = __commonJS({
       var disposableFixup = Disposable._fixup = function(result2) {
         return isDisposable(result2) ? result2 : disposableEmpty;
       };
-      var SingleAssignmentDisposable = Rx3.SingleAssignmentDisposable = function() {
+      var SingleAssignmentDisposable = Rx4.SingleAssignmentDisposable = function() {
         this.isDisposed = false;
         this.current = null;
       };
@@ -188179,7 +188175,7 @@ var require_rx_lite = __commonJS({
           old && old.dispose();
         }
       };
-      var SerialDisposable = Rx3.SerialDisposable = function() {
+      var SerialDisposable = Rx4.SerialDisposable = function() {
         this.isDisposed = false;
         this.current = null;
       };
@@ -188203,7 +188199,7 @@ var require_rx_lite = __commonJS({
         }
         old && old.dispose();
       };
-      var BinaryDisposable = Rx3.BinaryDisposable = function(first2, second) {
+      var BinaryDisposable = Rx4.BinaryDisposable = function(first2, second) {
         this._first = first2;
         this._second = second;
         this.isDisposed = false;
@@ -188219,7 +188215,7 @@ var require_rx_lite = __commonJS({
           old2 && old2.dispose();
         }
       };
-      var NAryDisposable = Rx3.NAryDisposable = function(disposables) {
+      var NAryDisposable = Rx4.NAryDisposable = function(disposables) {
         this._disposables = disposables;
         this.isDisposed = false;
       };
@@ -188232,7 +188228,7 @@ var require_rx_lite = __commonJS({
           this._disposables.length = 0;
         }
       };
-      var RefCountDisposable = Rx3.RefCountDisposable = (function() {
+      var RefCountDisposable = Rx4.RefCountDisposable = (function() {
         function InnerDisposable(disposable) {
           this.disposable = disposable;
           this.disposable.count++;
@@ -188268,7 +188264,7 @@ var require_rx_lite = __commonJS({
         };
         return RefCountDisposable2;
       })();
-      var ScheduledItem = Rx3.internals.ScheduledItem = function(scheduler, state, action, dueTime, comparer) {
+      var ScheduledItem = Rx4.internals.ScheduledItem = function(scheduler, state, action, dueTime, comparer) {
         this.scheduler = scheduler;
         this.state = state;
         this.action = action;
@@ -188288,7 +188284,7 @@ var require_rx_lite = __commonJS({
       ScheduledItem.prototype.invokeCore = function() {
         return disposableFixup(this.action(this.scheduler, this.state));
       };
-      var Scheduler = Rx3.Scheduler = (function() {
+      var Scheduler = Rx4.Scheduler = (function() {
         function Scheduler2() {
         }
         Scheduler2.isScheduler = function(s) {
@@ -188429,7 +188425,7 @@ var require_rx_lite = __commonJS({
         return CurrentThreadScheduler2;
       })(Scheduler);
       var currentThreadScheduler = Scheduler.currentThread = new CurrentThreadScheduler();
-      var SchedulePeriodicRecursive = Rx3.internals.SchedulePeriodicRecursive = (function() {
+      var SchedulePeriodicRecursive = Rx4.internals.SchedulePeriodicRecursive = (function() {
         function createTick(self2) {
           return function tick(command, recurse) {
             recurse(0, self2._period);
@@ -188635,7 +188631,7 @@ var require_rx_lite = __commonJS({
         c === 0 && (c = this.id - other.id);
         return c;
       };
-      var PriorityQueue = Rx3.internals.PriorityQueue = function(capacity) {
+      var PriorityQueue = Rx4.internals.PriorityQueue = function(capacity) {
         this.items = new Array(capacity);
         this.length = 0;
       };
@@ -188705,7 +188701,7 @@ var require_rx_lite = __commonJS({
         return false;
       };
       PriorityQueue.count = 0;
-      var Notification = Rx3.Notification = (function() {
+      var Notification = Rx4.Notification = (function() {
         function Notification2() {
         }
         Notification2.prototype._accept = function(onNext, onError, onCompleted) {
@@ -188788,7 +188784,7 @@ var require_rx_lite = __commonJS({
       var notificationCreateOnCompleted = Notification.createOnCompleted = function() {
         return new OnCompletedNotification();
       };
-      var Observer = Rx3.Observer = function() {
+      var Observer = Rx4.Observer = function() {
       };
       var observerCreate = Observer.create = function(onNext, onError, onCompleted) {
         onNext || (onNext = noop2);
@@ -188796,7 +188792,7 @@ var require_rx_lite = __commonJS({
         onCompleted || (onCompleted = noop2);
         return new AnonymousObserver(onNext, onError, onCompleted);
       };
-      var AbstractObserver = Rx3.internals.AbstractObserver = (function(__super__) {
+      var AbstractObserver = Rx4.internals.AbstractObserver = (function(__super__) {
         inherits(AbstractObserver2, __super__);
         function AbstractObserver2() {
           this.isStopped = false;
@@ -188832,7 +188828,7 @@ var require_rx_lite = __commonJS({
         };
         return AbstractObserver2;
       })(Observer);
-      var AnonymousObserver = Rx3.AnonymousObserver = (function(__super__) {
+      var AnonymousObserver = Rx4.AnonymousObserver = (function(__super__) {
         inherits(AnonymousObserver2, __super__);
         function AnonymousObserver2(onNext, onError, onCompleted) {
           __super__.call(this);
@@ -188852,7 +188848,7 @@ var require_rx_lite = __commonJS({
         return AnonymousObserver2;
       })(AbstractObserver);
       var observableProto;
-      var Observable2 = Rx3.Observable = (function() {
+      var Observable2 = Rx4.Observable = (function() {
         function makeSubscribe(self2, subscribe) {
           return function(o) {
             var oldOnError = o.onError;
@@ -188864,7 +188860,7 @@ var require_rx_lite = __commonJS({
           };
         }
         function Observable3() {
-          if (Rx3.config.longStackSupport && hasStacks) {
+          if (Rx4.config.longStackSupport && hasStacks) {
             var oldSubscribe = this._subscribe;
             var e = tryCatch(thrower)(new Error()).e;
             this.stack = e.stack.substring(e.stack.indexOf("\n") + 1);
@@ -188895,7 +188891,7 @@ var require_rx_lite = __commonJS({
         };
         return Observable3;
       })();
-      var ScheduledObserver = Rx3.internals.ScheduledObserver = (function(__super__) {
+      var ScheduledObserver = Rx4.internals.ScheduledObserver = (function(__super__) {
         inherits(ScheduledObserver2, __super__);
         function ScheduledObserver2(scheduler, observer) {
           __super__.call(this);
@@ -188960,7 +188956,7 @@ var require_rx_lite = __commonJS({
         };
         return ScheduledObserver2;
       })(AbstractObserver);
-      var ObservableBase = Rx3.ObservableBase = (function(__super__) {
+      var ObservableBase = Rx4.ObservableBase = (function(__super__) {
         inherits(ObservableBase2, __super__);
         function fixSubscriber(subscriber) {
           return subscriber && isFunction2(subscriber.dispose) ? subscriber : isFunction2(subscriber) ? disposableCreate(subscriber) : disposableEmpty;
@@ -188988,7 +188984,7 @@ var require_rx_lite = __commonJS({
         ObservableBase2.prototype.subscribeCore = notImplemented;
         return ObservableBase2;
       })(Observable2);
-      var FlatMapObservable = Rx3.FlatMapObservable = (function(__super__) {
+      var FlatMapObservable = Rx4.FlatMapObservable = (function(__super__) {
         inherits(FlatMapObservable2, __super__);
         function FlatMapObservable2(source, selector, resultSelector, thisArg) {
           this.resultSelector = isFunction2(resultSelector) ? resultSelector : null;
@@ -189033,7 +189029,7 @@ var require_rx_lite = __commonJS({
         };
         return FlatMapObservable2;
       })(ObservableBase);
-      var Enumerable = Rx3.internals.Enumerable = function() {
+      var Enumerable = Rx4.internals.Enumerable = function() {
       };
       function IsDisposedDisposable(state) {
         this._s = state;
@@ -189933,7 +189929,7 @@ var require_rx_lite = __commonJS({
         }
         return observableOf(scheduler, sources).mergeAll();
       };
-      var CompositeError = Rx3.CompositeError = function(errors) {
+      var CompositeError = Rx4.CompositeError = function(errors) {
         this.innerErrors = errors;
         this.message = "This contains multiple errors. Check the innerErrors";
         Error.call(this);
@@ -191144,7 +191140,7 @@ var require_rx_lite = __commonJS({
       observableProto.flatMap = observableProto.selectMany = function(selector, resultSelector, thisArg) {
         return new FlatMapObservable(this, selector, resultSelector, thisArg).mergeAll();
       };
-      Rx3.Observable.prototype.flatMapLatest = function(selector, resultSelector, thisArg) {
+      Rx4.Observable.prototype.flatMapLatest = function(selector, resultSelector, thisArg) {
         return new FlatMapObservable(this, selector, resultSelector, thisArg).switchLatest();
       };
       var SkipObservable = (function(__super__) {
@@ -191469,7 +191465,7 @@ var require_rx_lite = __commonJS({
         }
         return disposables;
       }
-      Rx3.config.useNativeEvents = false;
+      Rx4.config.useNativeEvents = false;
       var EventObservable = (function(__super__) {
         inherits(EventObservable2, __super__);
         function EventObservable2(el, name2, fn2) {
@@ -191511,7 +191507,7 @@ var require_rx_lite = __commonJS({
             selector
           );
         }
-        if (!Rx3.config.useNativeEvents) {
+        if (!Rx4.config.useNativeEvents) {
           if (typeof element.on === "function" && typeof element.off === "function") {
             return fromEventPattern(
               function(h) {
@@ -191600,7 +191596,7 @@ var require_rx_lite = __commonJS({
         return new FromPromiseObservable(promise, scheduler);
       };
       observableProto.toPromise = function(promiseCtor) {
-        promiseCtor || (promiseCtor = Rx3.config.Promise);
+        promiseCtor || (promiseCtor = Rx4.config.Promise);
         if (!promiseCtor) {
           throw new NotSupportedError("Promise type not provided nor in Rx.config.Promise");
         }
@@ -191694,7 +191690,7 @@ var require_rx_lite = __commonJS({
         };
         return RefCountObservable2;
       })(ObservableBase);
-      var ConnectableObservable = Rx3.ConnectableObservable = (function(__super__) {
+      var ConnectableObservable = Rx4.ConnectableObservable = (function(__super__) {
         inherits(ConnectableObservable2, __super__);
         function ConnectableObservable2(source, subject) {
           this.source = source;
@@ -192144,7 +192140,7 @@ var require_rx_lite = __commonJS({
         isScheduler(scheduler) || (scheduler = defaultScheduler);
         return typeof intervalOrSampler === "number" ? new SampleObservable(this, observableinterval(intervalOrSampler, scheduler)) : new SampleObservable(this, intervalOrSampler);
       };
-      var TimeoutError2 = Rx3.TimeoutError = function(message) {
+      var TimeoutError2 = Rx4.TimeoutError = function(message) {
         this.message = message || "Timeout has occurred";
         this.name = "TimeoutError";
         Error.call(this);
@@ -192606,7 +192602,7 @@ var require_rx_lite = __commonJS({
           return source.subscribe(new TransduceObserver(o, xform));
         }, source);
       };
-      var AnonymousObservable = Rx3.AnonymousObservable = (function(__super__) {
+      var AnonymousObservable = Rx4.AnonymousObservable = (function(__super__) {
         inherits(AnonymousObservable2, __super__);
         function fixSubscriber(subscriber) {
           return subscriber && isFunction2(subscriber.dispose) ? subscriber : isFunction2(subscriber) ? disposableCreate(subscriber) : disposableEmpty;
@@ -192683,7 +192679,7 @@ var require_rx_lite = __commonJS({
           this._o = null;
         }
       };
-      var Subject = Rx3.Subject = (function(__super__) {
+      var Subject = Rx4.Subject = (function(__super__) {
         inherits(Subject2, __super__);
         function Subject2() {
           __super__.call(this);
@@ -192768,7 +192764,7 @@ var require_rx_lite = __commonJS({
         };
         return Subject2;
       })(Observable2);
-      var AsyncSubject = Rx3.AsyncSubject = (function(__super__) {
+      var AsyncSubject = Rx4.AsyncSubject = (function(__super__) {
         inherits(AsyncSubject2, __super__);
         function AsyncSubject2() {
           __super__.call(this);
@@ -192866,7 +192862,7 @@ var require_rx_lite = __commonJS({
         });
         return AsyncSubject2;
       })(Observable2);
-      var AnonymousSubject = Rx3.AnonymousSubject = (function(__super__) {
+      var AnonymousSubject = Rx4.AnonymousSubject = (function(__super__) {
         inherits(AnonymousSubject2, __super__);
         function AnonymousSubject2(observer, observable) {
           this.observer = observer;
@@ -192889,7 +192885,7 @@ var require_rx_lite = __commonJS({
         });
         return AnonymousSubject2;
       })(Observable2);
-      var BehaviorSubject = Rx3.BehaviorSubject = (function(__super__) {
+      var BehaviorSubject = Rx4.BehaviorSubject = (function(__super__) {
         inherits(BehaviorSubject2, __super__);
         function BehaviorSubject2(value) {
           __super__.call(this);
@@ -192993,7 +192989,7 @@ var require_rx_lite = __commonJS({
         });
         return BehaviorSubject2;
       })(Observable2);
-      var ReplaySubject = Rx3.ReplaySubject = (function(__super__) {
+      var ReplaySubject = Rx4.ReplaySubject = (function(__super__) {
         var maxSafeInteger2 = Math.pow(2, 53) - 1;
         function createRemovableDisposable(subject, observer) {
           return disposableCreate(function() {
@@ -193114,7 +193110,7 @@ var require_rx_lite = __commonJS({
         });
         return ReplaySubject2;
       })(Observable2);
-      Rx3.Pauser = (function(__super__) {
+      Rx4.Pauser = (function(__super__) {
         inherits(Pauser, __super__);
         function Pauser() {
           __super__.call(this);
@@ -193128,18 +193124,18 @@ var require_rx_lite = __commonJS({
         return Pauser;
       })(Subject);
       if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
-        root2.Rx = Rx3;
+        root2.Rx = Rx4;
         define(function() {
-          return Rx3;
+          return Rx4;
         });
       } else if (freeExports && freeModule) {
         if (moduleExports) {
-          (freeModule.exports = Rx3).Rx = Rx3;
+          (freeModule.exports = Rx4).Rx = Rx4;
         } else {
-          freeExports.Rx = Rx3;
+          freeExports.Rx = Rx4;
         }
       } else {
-        root2.Rx = Rx3;
+        root2.Rx = Rx4;
       }
       var rEndingLine = captureLine();
     }).call(exports2);
@@ -194344,7 +194340,7 @@ var init_query_subscription_pool = __esm({
 // src/global/nylas-observables.js
 var require_nylas_observables = __commonJS({
   "src/global/nylas-observables.js"(exports2, module2) {
-    var Rx3 = require_rx_lite();
+    var Rx4 = require_rx_lite();
     var _3 = (init_index_all(), __toCommonJS(index_all_exports));
     var Category3 = null;
     var getCategory = () => Category3 || (Category3 = (init_category(), __toCommonJS(category_exports)).default);
@@ -194376,7 +194372,7 @@ var require_nylas_observables = __commonJS({
     };
     var CategoryObservables = {
       forAllAccounts: () => {
-        const observable = Rx3.Observable.fromQuery(
+        const observable = Rx4.Observable.fromQuery(
           getDatabaseStore().findAll(getCategory())
         );
         _3.extend(observable, CategoryOperators);
@@ -194385,11 +194381,11 @@ var require_nylas_observables = __commonJS({
       forAccount: (account) => {
         let observable;
         if (account) {
-          observable = Rx3.Observable.fromQuery(
+          observable = Rx4.Observable.fromQuery(
             getDatabaseStore().findAll(getCategory()).where({ accountId: account.id })
           );
         } else {
-          observable = Rx3.Observable.fromQuery(
+          observable = Rx4.Observable.fromQuery(
             getDatabaseStore().findAll(getCategory())
           );
         }
@@ -194397,7 +194393,7 @@ var require_nylas_observables = __commonJS({
         return observable;
       },
       standard: (account) => {
-        const observable = Rx3.Observable.fromConfig(
+        const observable = Rx4.Observable.fromConfig(
           "core.workspace.showImportant"
         ).flatMapLatest((showImportant) => {
           return CategoryObservables.forAccount(account).sort().categoryFilter((cat) => cat.isStandardCategory(showImportant));
@@ -194413,22 +194409,22 @@ var require_nylas_observables = __commonJS({
       }
     };
     module2.exports = { Categories: CategoryObservables };
-    Rx3.Observable.fromStore = (store3) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromStore = (store3) => {
+      return Rx4.Observable.create((observer) => {
         const unsubscribe = store3.listen(() => {
           return observer.onNext(store3);
         });
         observer.onNext(store3);
-        return Rx3.Disposable.create(unsubscribe);
+        return Rx4.Disposable.create(unsubscribe);
       });
     };
-    Rx3.Observable.fromListSelection = (originStore) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromListSelection = (originStore) => {
+      return Rx4.Observable.create((observer) => {
         let dataSourceDisposable = null;
-        const storeObservable = Rx3.Observable.fromStore(originStore);
+        const storeObservable = Rx4.Observable.fromStore(originStore);
         const disposable = storeObservable.subscribe(() => {
           const dataSource = originStore.dataSource();
-          const dataSourceObservable = Rx3.Observable.fromStore(dataSource);
+          const dataSourceObservable = Rx4.Observable.fromStore(dataSource);
           if (dataSourceDisposable) {
             dataSourceDisposable.dispose();
           }
@@ -194442,36 +194438,36 @@ var require_nylas_observables = __commonJS({
           }
           return disposable.dispose();
         };
-        return Rx3.Disposable.create(dispose);
+        return Rx4.Disposable.create(dispose);
       });
     };
-    Rx3.Observable.fromConfig = (configKey) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromConfig = (configKey) => {
+      return Rx4.Observable.create((observer) => {
         const disposable = NylasEnv.config.onDidChange(configKey, () => {
           return observer.onNext(NylasEnv.config.get(configKey));
         });
         observer.onNext(NylasEnv.config.get(configKey));
-        return Rx3.Disposable.create(disposable.dispose);
+        return Rx4.Disposable.create(disposable.dispose);
       });
     };
-    Rx3.Observable.fromAction = (action) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromAction = (action) => {
+      return Rx4.Observable.create((observer) => {
         const unsubscribe = action.listen((...args) => {
           return observer.onNext(...Array.from(args || []));
         });
-        return Rx3.Disposable.create(unsubscribe);
+        return Rx4.Disposable.create(unsubscribe);
       });
     };
-    Rx3.Observable.fromQuery = (query) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromQuery = (query) => {
+      return Rx4.Observable.create((observer) => {
         const unsubscribe = getQuerySubscriptionPool().add(query, (result2) => {
           return observer.onNext(result2);
         });
-        return Rx3.Disposable.create(unsubscribe);
+        return Rx4.Disposable.create(unsubscribe);
       });
     };
-    Rx3.Observable.fromNamedQuerySubscription = (name2, subscription) => {
-      return Rx3.Observable.create((observer) => {
+    Rx4.Observable.fromNamedQuerySubscription = (name2, subscription) => {
+      return Rx4.Observable.create((observer) => {
         const unsubscribe = getQuerySubscriptionPool().addPrivateSubscription(
           name2,
           subscription,
@@ -194479,44 +194475,49 @@ var require_nylas_observables = __commonJS({
             return observer.onNext(result2);
           }
         );
-        return Rx3.Disposable.create(unsubscribe);
+        return Rx4.Disposable.create(unsubscribe);
       });
     };
   }
 });
 
 // src/flux/stores/category-store.js
-var require_category_store = __commonJS({
-  "src/flux/stores/category-store.js"(exports2, module2) {
-    var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var _Rx = require_rx_lite();
-    var NylasStore2 = (init_nylas_store(), __toCommonJS(nylas_store_exports));
-    var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var Account3 = (init_account(), __toCommonJS(account_exports)).default;
-    var _standardCategoryNames = null;
-    var getStandardCategoryNames = () => _standardCategoryNames || (_standardCategoryNames = (init_category(), __toCommonJS(category_exports)).default.StandardCategoryNames);
-    var { Categories } = require_nylas_observables();
-    var asAccount = (a) => {
+var category_store_exports = {};
+__export(category_store_exports, {
+  default: () => category_store_default
+});
+var import_rx_lite, import_nylas_observables, _standardCategoryNames, getStandardCategoryNames, asAccount, asAccountId, CategoryStore3, category_store_default;
+var init_category_store = __esm({
+  "src/flux/stores/category-store.js"() {
+    init_index_all();
+    import_rx_lite = __toESM(require_rx_lite());
+    init_nylas_store();
+    init_account_store();
+    init_account();
+    import_nylas_observables = __toESM(require_nylas_observables());
+    _standardCategoryNames = null;
+    getStandardCategoryNames = () => _standardCategoryNames || (_standardCategoryNames = (init_category(), __toCommonJS(category_exports)).default.StandardCategoryNames);
+    asAccount = (a) => {
       if (!a) {
         throw new Error("You must pass an Account or Account Id");
       }
-      if (a instanceof Account3) {
+      if (a instanceof Account) {
         return a;
       } else {
-        return AccountStore5.accountForId(a);
+        return account_store_default.accountForId(a);
       }
     };
-    var asAccountId = (a) => {
+    asAccountId = (a) => {
       if (!a) {
         throw new Error("You must pass an Account or Account Id");
       }
-      if (a instanceof Account3) {
+      if (a instanceof Account) {
         return a.id;
       } else {
         return a;
       }
     };
-    var CategoryStore6 = class extends NylasStore2 {
+    CategoryStore3 = class extends nylas_store_default {
       constructor() {
         super();
         this.getStandardCategory = this.getStandardCategory.bind(this);
@@ -194537,7 +194538,7 @@ var require_category_store = __commonJS({
           }
           return this._onCategoriesChanged(this._categoryResult);
         });
-        Categories.forAllAccounts().sort().subscribe(this._onCategoriesChanged);
+        import_nylas_observables.Categories.forAllAccounts().sort().subscribe(this._onCategoriesChanged);
       }
       byId(accountOrId, categoryId) {
         let left;
@@ -194551,12 +194552,12 @@ var require_category_store = __commonJS({
       categories(accountOrId = null) {
         if (accountOrId) {
           let left;
-          return (left = _3.values(this._categoryCache[asAccountId(accountOrId)])) != null ? left : [];
+          return (left = index_default_default.values(this._categoryCache[asAccountId(accountOrId)])) != null ? left : [];
         } else {
           let all = [];
           for (var accountId in this._categoryCache) {
             var categories = this._categoryCache[accountId];
-            all = all.concat(_3.values(categories));
+            all = all.concat(index_default_default.values(categories));
           }
           return all;
         }
@@ -194590,7 +194591,7 @@ var require_category_store = __commonJS({
         if (!Array.from(getStandardCategoryNames()).includes(name2)) {
           throw new Error(`'${name2}' is not a standard category`);
         }
-        return _3.findWhere(this._standardCategories[asAccountId(accountOrId)], {
+        return index_default_default.findWhere(this._standardCategories[asAccountId(accountOrId)], {
           name: name2
         });
       }
@@ -194601,11 +194602,11 @@ var require_category_store = __commonJS({
           let res = [];
           for (var accOrId of Array.from(accountsOrIds)) {
             var cats = names.map((name2) => this.getStandardCategory(accOrId, name2));
-            res = res.concat(_3.compact(cats));
+            res = res.concat(index_default_default.compact(cats));
           }
           return res;
         } else {
-          return _3.compact(
+          return index_default_default.compact(
             names.map((name2) => this.getStandardCategory(accountsOrIds, name2))
           );
         }
@@ -194698,7 +194699,7 @@ var require_category_store = __commonJS({
         return this.trigger();
       }
     };
-    module2.exports = new CategoryStore6();
+    category_store_default = new CategoryStore3();
   }
 });
 
@@ -199146,11 +199147,11 @@ var require_regexp_utils = __commonJS({
 });
 
 // src/flux/models/contact.js
-var import_node_module14, import_underscore29, import_model6, import_utils9, import_regexp_utils, import_meta15, nodeRequire15, FocusedPerspectiveStore2, namePrefixes, nameSuffixes, Contact3;
+var import_node_module14, import_underscore30, import_model6, import_utils9, import_regexp_utils, import_meta15, nodeRequire15, FocusedPerspectiveStore2, namePrefixes, nameSuffixes, Contact3;
 var init_contact = __esm({
   "src/flux/models/contact.js"() {
     import_node_module14 = require("module");
-    import_underscore29 = __toESM(require_underscore());
+    import_underscore30 = __toESM(require_underscore());
     import_model6 = __toESM(require_model());
     init_attributes();
     import_utils9 = __toESM(require_utils());
@@ -199567,7 +199568,7 @@ var init_contact = __esm({
         const domain = email.toLowerCase().trim().split("@").pop();
         const domainParts = domain.split(".");
         if (domainParts.length >= 2) {
-          return import_underscore29.default.titleize(import_underscore29.default.humanize(domainParts[domainParts.length - 2]));
+          return import_underscore30.default.titleize(import_underscore30.default.humanize(domainParts[domainParts.length - 2]));
         }
         return "";
       }
@@ -202530,10 +202531,10 @@ var init_request_compat = __esm({
 });
 
 // src/flux/stores/identity-store.js
-var import_rx_lite, import_electron2, import_remote4, import_node_url3, import_utils13, KEYCHAIN_NAME, IdentityStore3, identity_store_default;
+var import_rx_lite2, import_electron2, import_remote4, import_node_url3, import_utils13, KEYCHAIN_NAME, IdentityStore3, identity_store_default;
 var init_identity_store = __esm({
   "src/flux/stores/identity-store.js"() {
-    import_rx_lite = __toESM(require_rx_lite());
+    import_rx_lite2 = __toESM(require_rx_lite());
     init_nylas_store();
     import_electron2 = require("electron");
     import_remote4 = __toESM(require_at_electron_remote());
@@ -202562,7 +202563,7 @@ var init_identity_store = __esm({
         this._onEnvChanged();
         this.listenTo(actions_default.logoutNylasIdentity, this._onLogoutNylasIdentity);
         const q = database_store_default.findJSONBlob("NylasID");
-        this._disp = import_rx_lite.default.Observable.fromQuery(q).subscribe(this._onIdentityChanged);
+        this._disp = import_rx_lite2.default.Observable.fromQuery(q).subscribe(this._onIdentityChanged);
         const identity2 = await database_store_default.run(q);
         this._onIdentityChanged(identity2);
         this._fetchAndPollRemoteIdentity();
@@ -216585,7 +216586,7 @@ var init_change_folder_task = __esm({
 });
 
 // src/flux/tasks/change-labels-task.js
-var import_category_store, ChangeLabelsTask;
+var ChangeLabelsTask;
 var init_change_labels_task = __esm({
   "src/flux/tasks/change-labels-task.js"() {
     init_index_all();
@@ -216593,7 +216594,7 @@ var init_change_labels_task = __esm({
     init_message();
     init_category();
     init_database_store();
-    import_category_store = __toESM(require_category_store());
+    init_category_store();
     init_account_store();
     init_change_mail_task();
     init_syncback_category_task();
@@ -216673,34 +216674,34 @@ var init_change_labels_task = __esm({
           }
         } else if (setToAdd.has("all")) {
           if (!setToRemove.has("trash")) {
-            labelsToRemove.push(import_category_store.default.getTrashCategory(account));
+            labelsToRemove.push(category_store_default.getTrashCategory(account));
           }
           if (!setToRemove.has("spam")) {
-            labelsToRemove.push(import_category_store.default.getSpamCategory(account));
+            labelsToRemove.push(category_store_default.getSpamCategory(account));
           }
         }
         if (setToRemove.has("trash")) {
           if (!setToAdd.has("spam") && !setToAdd.has("all")) {
-            labelsToAdd.push(import_category_store.default.getAllMailCategory(account));
+            labelsToAdd.push(category_store_default.getAllMailCategory(account));
           }
         } else if (setToAdd.has("trash")) {
           if (!setToRemove.has("all")) {
-            labelsToRemove.push(import_category_store.default.getAllMailCategory(account));
+            labelsToRemove.push(category_store_default.getAllMailCategory(account));
           }
           if (!setToRemove.has("spam")) {
-            labelsToRemove.push(import_category_store.default.getSpamCategory(account));
+            labelsToRemove.push(category_store_default.getSpamCategory(account));
           }
         }
         if (setToRemove.has("spam")) {
           if (!setToAdd.has("trash") && !setToAdd.has("all")) {
-            labelsToAdd.push(import_category_store.default.getAllMailCategory(account));
+            labelsToAdd.push(category_store_default.getAllMailCategory(account));
           }
         } else if (setToAdd.has("spam")) {
           if (!setToRemove.has("all")) {
-            labelsToRemove.push(import_category_store.default.getAllMailCategory(account));
+            labelsToRemove.push(category_store_default.getAllMailCategory(account));
           }
           if (!setToRemove.has("trash")) {
-            labelsToRemove.push(import_category_store.default.getTrashCategory(account));
+            labelsToRemove.push(category_store_default.getTrashCategory(account));
           }
         }
         return {
@@ -216963,7 +216964,7 @@ var task_factory_exports = {};
 __export(task_factory_exports, {
   default: () => task_factory_default
 });
-var import_category_store2, TaskFactory2, task_factory_default;
+var TaskFactory2, task_factory_default;
 var init_task_factory = __esm({
   "src/flux/tasks/task-factory.js"() {
     init_index_all();
@@ -216972,7 +216973,7 @@ var init_task_factory = __esm({
     init_change_unread_task();
     init_change_starred_task();
     init_account_store();
-    import_category_store2 = __toESM(require_category_store());
+    init_category_store();
     init_thread();
     init_category();
     TaskFactory2 = {
@@ -217085,10 +217086,10 @@ var init_task_factory = __esm({
           source,
           threads,
           categoriesToAdd: (accountId) => [
-            import_category_store2.default.getSpamCategory(accountId)
+            category_store_default.getSpamCategory(accountId)
           ],
           categoriesToRemove: (accountId) => [
-            import_category_store2.default.getInboxCategory(accountId)
+            category_store_default.getInboxCategory(accountId)
           ]
         });
       },
@@ -217097,10 +217098,10 @@ var init_task_factory = __esm({
           source,
           threads,
           categoriesToRemove: (accountId) => [
-            import_category_store2.default.getInboxCategory(accountId)
+            category_store_default.getInboxCategory(accountId)
           ],
           categoriesToAdd: (accountId) => [
-            import_category_store2.default.getArchiveCategory(accountId)
+            category_store_default.getArchiveCategory(accountId)
           ]
         });
       },
@@ -217109,10 +217110,10 @@ var init_task_factory = __esm({
           source,
           threads,
           categoriesToAdd: (accountId) => [
-            import_category_store2.default.getTrashCategory(accountId)
+            category_store_default.getTrashCategory(accountId)
           ],
           categoriesToRemove: (accountId) => [
-            import_category_store2.default.getInboxCategory(accountId)
+            category_store_default.getInboxCategory(accountId)
           ]
         });
       },
@@ -217585,7 +217586,7 @@ var require_task_queue = __commonJS({
 var require_task_queue_status_store = __commonJS({
   "src/flux/stores/task-queue-status-store.js"(exports2, module2) {
     var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Rx3 = require_rx_lite();
+    var Rx4 = require_rx_lite();
     var NylasStore2 = (init_nylas_store(), __toCommonJS(nylas_store_exports));
     var DatabaseStore4 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var _AccountStore = (init_account_store(), __toCommonJS(account_store_exports)).default;
@@ -217599,7 +217600,7 @@ var require_task_queue_status_store = __commonJS({
         this._waitingLocals = [];
         this._waitingRemotes = [];
         const query = DatabaseStore4.findJSONBlob(TaskQueue2.JSONBlobStorageKey);
-        Rx3.Observable.fromQuery(query).subscribe((json2) => {
+        Rx4.Observable.fromQuery(query).subscribe((json2) => {
           this._queue = json2 || [];
           this._waitingLocals = this._waitingLocals.filter(({ task, resolve: resolve2 }) => {
             const queuedTask = _3.findWhere(this._queue, { id: task.id });
@@ -217962,7 +217963,7 @@ var focused_perspective_store_exports = {};
 __export(focused_perspective_store_exports, {
   default: () => focused_perspective_store_default
 });
-var import_workspace_store, import_mailbox_perspective, import_category_store3, FocusedPerspectiveStore3, focused_perspective_store_default;
+var import_workspace_store, import_mailbox_perspective, FocusedPerspectiveStore3, focused_perspective_store_default;
 var init_focused_perspective_store = __esm({
   "src/flux/stores/focused-perspective-store.js"() {
     init_index_all();
@@ -217970,14 +217971,14 @@ var init_focused_perspective_store = __esm({
     init_account_store();
     import_workspace_store = __toESM(require_workspace_store());
     import_mailbox_perspective = __toESM(require_mailbox_perspective());
-    import_category_store3 = __toESM(require_category_store());
+    init_category_store();
     init_actions();
     FocusedPerspectiveStore3 = class extends nylas_store_default {
       constructor() {
         super();
         this._current = import_mailbox_perspective.default.forNothing();
         this._initialized = false;
-        this.listenTo(import_category_store3.default, this._onCategoryStoreChanged);
+        this.listenTo(category_store_default, this._onCategoryStoreChanged);
         this.listenTo(actions_default.focusMailboxPerspective, this._onFocusPerspective);
         this.listenTo(
           actions_default.focusDefaultMailboxPerspectiveForAccounts,
@@ -218013,7 +218014,7 @@ var init_focused_perspective_store = __esm({
           ),
           "navigation:go-to-all": () => {
             const categories = this._current.accountIds.map(
-              (id) => import_category_store3.default.getArchiveCategory(id)
+              (id) => category_store_default.getArchiveCategory(id)
             );
             this._setPerspective(import_mailbox_perspective.default.forCategories(categories));
           },
@@ -218037,7 +218038,7 @@ var init_focused_perspective_store = __esm({
           return false;
         }
         const categoriesStillExist = perspective.categories().every((c) => {
-          return !!import_category_store3.default.byId(c.accountId, c.id);
+          return !!category_store_default.byId(c.accountId, c.id);
         });
         if (!categoriesStillExist) {
           return false;
@@ -218097,7 +218098,7 @@ var init_focused_perspective_store = __esm({
       _onEnsureCategoryIsFocused = (categoryName, accountIds = []) => {
         const ids = Array.isArray(accountIds) ? accountIds : [accountIds];
         const categories = ids.map(
-          (id) => import_category_store3.default.getStandardCategory(id, categoryName)
+          (id) => category_store_default.getStandardCategory(id, categoryName)
         );
         const perspective = import_mailbox_perspective.default.forCategories(categories);
         this._onFocusPerspective(perspective);
@@ -218137,7 +218138,7 @@ var init_focused_perspective_store = __esm({
       }
       _setPerspectiveByName(categoryName) {
         let categories = this._current.accountIds.map((id) => {
-          return import_category_store3.default.getStandardCategory(id, categoryName);
+          return category_store_default.getStandardCategory(id, categoryName);
         });
         categories = index_default_default.compact(categories);
         if (categories.length === 0) {
@@ -218157,7 +218158,7 @@ var require_mailbox_perspective = __commonJS({
     var Utils14 = require_utils();
     var TaskFactory3 = (init_task_factory(), __toCommonJS(task_factory_exports)).default;
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var CategoryStore6 = require_category_store();
+    var CategoryStore4 = (init_category_store(), __toCommonJS(category_store_exports));
     var DatabaseStore4 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var OutboxStore2 = (init_outbox_store(), __toCommonJS(outbox_store_exports)).default;
     var ThreadCountsStore = require_thread_counts_store();
@@ -218224,7 +218225,7 @@ var require_mailbox_perspective = __commonJS({
         return new CategoryMailboxPerspective(categories);
       }
       static forStandardCategories(accountsOrIds, ...names) {
-        const categories = CategoryStore6.getStandardCategories(
+        const categories = CategoryStore4.getStandardCategories(
           accountsOrIds,
           ...Array.from(names)
         );
@@ -218372,7 +218373,7 @@ var require_mailbox_perspective = __commonJS({
         }
         return _3.every(
           AccountStore5.accountsForItems(threads),
-          (acc) => CategoryStore6.getStandardCategory(acc, standardCategoryName) != null
+          (acc) => CategoryStore4.getStandardCategory(acc, standardCategoryName) != null
         );
       }
       tasksForRemovingItems(threads) {
@@ -218698,7 +218699,7 @@ var require_workspace_store = __commonJS({
     var _3 = (init_index_all(), __toCommonJS(index_all_exports));
     var Actions3 = (init_actions(), __toCommonJS(actions_exports)).default;
     var _AccountStore = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var _CategoryStore = require_category_store();
+    var _CategoryStore = (init_category_store(), __toCommonJS(category_store_exports));
     var _MailboxPerspective = require_mailbox_perspective();
     var NylasStore2 = (init_nylas_store(), __toCommonJS(nylas_store_exports));
     var Sheet = {};

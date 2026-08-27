@@ -86,7 +86,11 @@ class PreferencesUIStore extends NylasStore {
 
   */
 	registerPreferencesTab = (tabItem) => {
-		this._tabs = this._tabs.push(tabItem).sort((a, b) => a.order > b.order);
+		// Comparator bug fix: a boolean comparator is not a valid sort comparator
+		// (returns 0/1, never negative) — tabs registered out of order
+		// stayed unsorted. Numeric difference gives the intended
+		// ascending-order registration.
+		this._tabs = this._tabs.push(tabItem).sort((a, b) => a.order - b.order);
 		if (tabItem.tabId === MAIN_TAB_ITEM_ID) {
 			this._selection = this._selection.set("tabId", tabItem.tabId);
 		}

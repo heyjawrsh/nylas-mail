@@ -59,9 +59,10 @@ vi.mock("../src/registries/extension-registry.js", () => ({
 		},
 	},
 }));
-vi.mock("../src/deprecate-utils.js", () => ({
-	deprecate: (_oldName, _newName, context, fn) => fn.bind(context),
-}));
+vi.mock("../src/deprecate-utils.js", () => {
+	const deprecate = (_oldName, _newName, context, fn) => fn.bind(context);
+	return { default: { deprecate, default: { deprecate } }, deprecate };
+});
 
 import MessageStore from "../src/flux/stores/message-store.js";
 

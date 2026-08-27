@@ -39,6 +39,5 @@ Use ${newName} instead.\nCheck your code at ${stack[1]}`,
 		return fn;
 	}
 }
-
-export const deprecate = DeprecateUtils.deprecate;
-export default DeprecateUtils;
+module.exports = DeprecateUtils;
+module.exports.deprecate = DeprecateUtils.deprecate;

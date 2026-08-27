@@ -7,11 +7,11 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const _Rx = require("rx-lite");
-const NylasStore = require("nylas-store");
-const AccountStore = require("./account-store.js").default;
-const Account = require("../models/account.js").default;
+import _ from "underscore";
+import Rx from "rx-lite";
+import NylasStore from "nylas-store";
+import AccountStore from "./account-store.js";
+import Account from "../models/account.js";
 // Deferred: category.js imports back through the flux layer; requiring it
 // eagerly at module scope creates a require(esm) cycle.
 let _standardCategoryNames = null;
@@ -19,7 +19,7 @@ const getStandardCategoryNames = () =>
 	_standardCategoryNames ||
 	(_standardCategoryNames = require("../models/category.js").default
 		.StandardCategoryNames);
-const { Categories } = require("nylas-observables");
+import { Categories } from "nylas-observables";
 
 const asAccount = (a) => {
 	if (!a) {
@@ -264,4 +264,4 @@ class CategoryStore extends NylasStore {
 	}
 }
 
-module.exports = new CategoryStore();
+export default new CategoryStore();

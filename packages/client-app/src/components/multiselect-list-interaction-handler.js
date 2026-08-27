@@ -5,8 +5,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let MultiselectListInteractionHandler;
-const _ = require("underscore");
-const { Actions, WorkspaceStore } = require("nylas-exports");
+import _ from "underscore";
+import { Actions, WorkspaceStore } from "nylas-exports";
 
 module.exports =
 	MultiselectListInteractionHandler = class MultiselectListInteractionHandler {
