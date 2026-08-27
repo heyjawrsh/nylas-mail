@@ -24,9 +24,15 @@ const requestCompat = (options, callback) => {
 		try {
 			const headers = { ...(options.headers || {}) };
 			let body = options.body;
-			if (options.json === true || (options.json && typeof options.json === "object")) {
+			if (
+				options.json === true ||
+				(options.json && typeof options.json === "object")
+			) {
 				headers["Content-Type"] = headers["Content-Type"] || "application/json";
-				body = typeof options.json === "object" ? JSON.stringify(options.json) : body;
+				body =
+					typeof options.json === "object"
+						? JSON.stringify(options.json)
+						: body;
 				if (typeof body === "object" && body !== null && body !== undefined) {
 					body = JSON.stringify(body);
 				}
@@ -76,6 +82,8 @@ const requestCompat = (options, callback) => {
 		} finally {
 			clearTimeout(timer);
 		}
+	})();
+	// request() returns a thenable-ish stream; callers here only use the
 	// callback, but keep the promise chainable for safety.
 	return promise;
 };
