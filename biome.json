@@ -1,11 +1,19 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
+  },
   "files": {
-    "includes": ["**", "!**/node_modules/**", "!**/coverage/**", "!**/spec/fixtures/**", "!**/blog-posts/**", "!**/screenshot/**"]
+    "includes": [
+      "**",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/spec/fixtures/**",
+      "!**/blog-posts/**",
+      "!**/screenshot/**"
+    ]
   },
   "assist": {
     "actions": {
