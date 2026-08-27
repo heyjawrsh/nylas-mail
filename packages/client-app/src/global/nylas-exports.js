@@ -40,7 +40,9 @@ const requireFromSrc = (rel) => {
 // Works under CJS (electron main, nodeRequire chains) and ESM (vitest/vite):
 // anchor the bridge object on the window/global and re-export both ways.
 const $n = (window.$n = globalThis.$n = {});
-if (typeof module !== "undefined" && module.exports) {
+if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
+	// CJS contexts (electron main, nodeRequire chains). Under vitest the
+	// injected `module.exports` is a getter-only namespace — skip.
 	module.exports = exports = $n;
 }
 
@@ -236,11 +238,11 @@ lazyLoad(`MessageViewExtension`, "extensions/message-view-extension");
 lazyLoad(`ContenteditableExtension`, "extensions/contenteditable-extension");
 
 // 3rd party libraries
-lazyLoadWithGetter(`Rx`, () => require("rxjs"));
-lazyLoadWithGetter(`React`, () => require("react"));
-lazyLoadWithGetter(`Reflux`, () => require("reflux"));
-lazyLoadWithGetter(`ReactDOM`, () => require("react-dom"));
-lazyLoadWithGetter(`ReactTestUtils`, () => require("react-dom/test-utils"));
+lazyLoadWithGetter(`Rx`, () => nodeRequire("rxjs"));
+lazyLoadWithGetter(`React`, () => nodeRequire("react"));
+lazyLoadWithGetter(`Reflux`, () => nodeRequire("reflux"));
+lazyLoadWithGetter(`ReactDOM`, () => nodeRequire("react-dom"));
+lazyLoadWithGetter(`ReactTestUtils`, () => nodeRequire("react-dom/test-utils"));
 
 // React Components
 lazyLoad(`ComponentRegistry`, "registries/component-registry");
@@ -285,17 +287,17 @@ lazyLoad(
 lazyLoad(`BatteryStatusManager`, "services/battery-status-manager");
 
 // Errors
-lazyLoadWithGetter(`APIError`, () => require("../flux/errors.js").APIError);
+lazyLoadWithGetter(`APIError`, () => nodeRequire("../flux/errors.js").APIError);
 
 // Process Internals
 lazyLoad(`DefaultClientHelper`, "default-client-helper");
 lazyLoad(`BufferedProcess`, "buffered-process");
 lazyLoad(`SystemStartService`, "system-start-service");
-lazyLoadWithGetter(`APMWrapper`, () => require("../apm-wrapper.js"));
+lazyLoadWithGetter(`APMWrapper`, () => nodeRequire("../apm-wrapper.js"));
 
 // Testing
 lazyLoadWithGetter(`NylasTestUtils`, () =>
-	require("../../spec/nylas-test-utils.js"),
+	nodeRequire("../../spec/nylas-test-utils.js"),
 );
 
 // Deprecated
@@ -316,251 +318,102 @@ lazyLoadDeprecated(
 // ESM surface: named imports from this module resolve eagerly through the
 // lazy getters (safe against the app's intentional model<->store cycles).
 export default $n;
-export const APIError =
-	typeof $n.APIError !== "undefined" ? $n.APIError : undefined;
-export const APMWrapper =
-	typeof $n.APMWrapper !== "undefined" ? $n.APMWrapper : undefined;
-export const Account =
-	typeof $n.Account !== "undefined" ? $n.Account : undefined;
-export const AccountStore =
-	typeof $n.AccountStore !== "undefined" ? $n.AccountStore : undefined;
-export const Actions =
-	typeof $n.Actions !== "undefined" ? $n.Actions : undefined;
-export const Attributes =
-	typeof $n.Attributes !== "undefined" ? $n.Attributes : undefined;
-export const BadgeStore =
-	typeof $n.BadgeStore !== "undefined" ? $n.BadgeStore : undefined;
-export const BaseDraftTask =
-	typeof $n.BaseDraftTask !== "undefined" ? $n.BaseDraftTask : undefined;
-export const Calendar =
-	typeof $n.Calendar !== "undefined" ? $n.Calendar : undefined;
-export const CalendarDataSource =
-	typeof $n.CalendarDataSource !== "undefined"
-		? $n.CalendarDataSource
-		: undefined;
-export const Category =
-	typeof $n.Category !== "undefined" ? $n.Category : undefined;
-export const CategoryStore =
-	typeof $n.CategoryStore !== "undefined" ? $n.CategoryStore : undefined;
-export const ComponentRegistry =
-	typeof $n.ComponentRegistry !== "undefined"
-		? $n.ComponentRegistry
-		: undefined;
-export const ComposerExtension =
-	typeof $n.ComposerExtension !== "undefined"
-		? $n.ComposerExtension
-		: undefined;
-export const Contact =
-	typeof $n.Contact !== "undefined" ? $n.Contact : undefined;
-export const ContactStore =
-	typeof $n.ContactStore !== "undefined" ? $n.ContactStore : undefined;
-export const ContenteditableExtension =
-	typeof $n.ContenteditableExtension !== "undefined"
-		? $n.ContenteditableExtension
-		: undefined;
-export const CustomContenteditableComponents =
-	typeof $n.CustomContenteditableComponents !== "undefined"
-		? $n.CustomContenteditableComponents
-		: undefined;
-export const DOMUtils =
-	typeof $n.DOMUtils !== "undefined" ? $n.DOMUtils : undefined;
-export const DatabaseStore =
-	typeof $n.DatabaseStore !== "undefined" ? $n.DatabaseStore : undefined;
-export const DateUtils =
-	typeof $n.DateUtils !== "undefined" ? $n.DateUtils : undefined;
-export const DefaultClientHelper =
-	typeof $n.DefaultClientHelper !== "undefined"
-		? $n.DefaultClientHelper
-		: undefined;
-export const DestroyModelTask =
-	typeof $n.DestroyModelTask !== "undefined" ? $n.DestroyModelTask : undefined;
-export const DraftHelpers =
-	typeof $n.DraftHelpers !== "undefined" ? $n.DraftHelpers : undefined;
-export const DraftStore =
-	typeof $n.DraftStore !== "undefined" ? $n.DraftStore : undefined;
-export const EditorAPI =
-	typeof $n.EditorAPI !== "undefined" ? $n.EditorAPI : undefined;
-export const Event = typeof $n.Event !== "undefined" ? $n.Event : undefined;
-export const ExtensionRegistry =
-	typeof $n.ExtensionRegistry !== "undefined"
-		? $n.ExtensionRegistry
-		: undefined;
-export const FeatureUsageStore =
-	typeof $n.FeatureUsageStore !== "undefined"
-		? $n.FeatureUsageStore
-		: undefined;
-export const FileDownloadStore =
-	typeof $n.FileDownloadStore !== "undefined"
-		? $n.FileDownloadStore
-		: undefined;
-export const FocusedContactsStore =
-	typeof $n.FocusedContactsStore !== "undefined"
-		? $n.FocusedContactsStore
-		: undefined;
-export const FocusedContentStore =
-	typeof $n.FocusedContentStore !== "undefined"
-		? $n.FocusedContentStore
-		: undefined;
-export const FocusedPerspectiveStore =
-	typeof $n.FocusedPerspectiveStore !== "undefined"
-		? $n.FocusedPerspectiveStore
-		: undefined;
-export const FolderSyncProgressStore =
-	typeof $n.FolderSyncProgressStore !== "undefined"
-		? $n.FolderSyncProgressStore
-		: undefined;
-export const IdentityStore =
-	typeof $n.IdentityStore !== "undefined" ? $n.IdentityStore : undefined;
-export const InflatesDraftClientId =
-	typeof $n.InflatesDraftClientId !== "undefined"
-		? $n.InflatesDraftClientId
-		: undefined;
-export const InlineStyleTransformer =
-	typeof $n.InlineStyleTransformer !== "undefined"
-		? $n.InlineStyleTransformer
-		: undefined;
-export const KeyManager =
-	typeof $n.KeyManager !== "undefined" ? $n.KeyManager : undefined;
-export const MailRulesStore =
-	typeof $n.MailRulesStore !== "undefined" ? $n.MailRulesStore : undefined;
-export const MailRulesTemplates =
-	typeof $n.MailRulesTemplates !== "undefined"
-		? $n.MailRulesTemplates
-		: undefined;
-export const MailboxPerspective =
-	typeof $n.MailboxPerspective !== "undefined"
-		? $n.MailboxPerspective
-		: undefined;
-export const Matcher =
-	typeof $n.Matcher !== "undefined" ? $n.Matcher : undefined;
-export const Message =
-	typeof $n.Message !== "undefined" ? $n.Message : undefined;
-export const MessageBodyProcessor =
-	typeof $n.MessageBodyProcessor !== "undefined"
-		? $n.MessageBodyProcessor
-		: undefined;
-export const MessageStore =
-	typeof $n.MessageStore !== "undefined" ? $n.MessageStore : undefined;
-export const MessageViewExtension =
-	typeof $n.MessageViewExtension !== "undefined"
-		? $n.MessageViewExtension
-		: undefined;
-export const Model = typeof $n.Model !== "undefined" ? $n.Model : undefined;
-export const ModelSearchIndexer =
-	typeof $n.ModelSearchIndexer !== "undefined"
-		? $n.ModelSearchIndexer
-		: undefined;
-export const MutableQuerySubscription =
-	typeof $n.MutableQuerySubscription !== "undefined"
-		? $n.MutableQuerySubscription
-		: undefined;
-export const N1CloudAPI =
-	typeof $n.N1CloudAPI !== "undefined" ? $n.N1CloudAPI : undefined;
-export const NativeNotifications =
-	typeof $n.NativeNotifications !== "undefined"
-		? $n.NativeNotifications
-		: undefined;
-export const NylasAPI =
-	typeof $n.NylasAPI !== "undefined" ? $n.NylasAPI : undefined;
-export const NylasAPIHelpers =
-	typeof $n.NylasAPIHelpers !== "undefined" ? $n.NylasAPIHelpers : undefined;
-export const NylasAPIRequest =
-	typeof $n.NylasAPIRequest !== "undefined" ? $n.NylasAPIRequest : undefined;
-export const NylasLongConnection =
-	typeof $n.NylasLongConnection !== "undefined"
-		? $n.NylasLongConnection
-		: undefined;
-export const NylasTestUtils =
-	typeof $n.NylasTestUtils !== "undefined" ? $n.NylasTestUtils : undefined;
-export const ObservableListDataSource =
-	typeof $n.ObservableListDataSource !== "undefined"
-		? $n.ObservableListDataSource
-		: undefined;
-export const OnlineStatusStore =
-	typeof $n.OnlineStatusStore !== "undefined"
-		? $n.OnlineStatusStore
-		: undefined;
-export const PreferencesUIStore =
-	typeof $n.PreferencesUIStore !== "undefined"
-		? $n.PreferencesUIStore
-		: undefined;
-export const QueryResultSet =
-	typeof $n.QueryResultSet !== "undefined" ? $n.QueryResultSet : undefined;
-export const QuerySubscription =
-	typeof $n.QuerySubscription !== "undefined"
-		? $n.QuerySubscription
-		: undefined;
-export const QuotedHTMLTransformer =
-	typeof $n.QuotedHTMLTransformer !== "undefined"
-		? $n.QuotedHTMLTransformer
-		: undefined;
-export const React = typeof $n.React !== "undefined" ? $n.React : undefined;
-export const ReactDOM =
-	typeof $n.ReactDOM !== "undefined" ? $n.ReactDOM : undefined;
-export const Reflux = typeof $n.Reflux !== "undefined" ? $n.Reflux : undefined;
-export const RegExpUtils =
-	typeof $n.RegExpUtils !== "undefined" ? $n.RegExpUtils : undefined;
-export const ReprocessMailRulesTask =
-	typeof $n.ReprocessMailRulesTask !== "undefined"
-		? $n.ReprocessMailRulesTask
-		: undefined;
-export const Rx = typeof $n.Rx !== "undefined" ? $n.Rx : undefined;
-export const SanitizeTransformer =
-	typeof $n.SanitizeTransformer !== "undefined"
-		? $n.SanitizeTransformer
-		: undefined;
-export const SearchIndexScheduler =
-	typeof $n.SearchIndexScheduler !== "undefined"
-		? $n.SearchIndexScheduler
-		: undefined;
-export const SearchQueryParser =
-	typeof $n.SearchQueryParser !== "undefined"
-		? $n.SearchQueryParser
-		: undefined;
-export const SearchableComponentStore =
-	typeof $n.SearchableComponentStore !== "undefined"
-		? $n.SearchableComponentStore
-		: undefined;
-export const SendActionsStore =
-	typeof $n.SendActionsStore !== "undefined" ? $n.SendActionsStore : undefined;
-export const SendDraftTask =
-	typeof $n.SendDraftTask !== "undefined" ? $n.SendDraftTask : undefined;
-export const SignatureStore =
-	typeof $n.SignatureStore !== "undefined" ? $n.SignatureStore : undefined;
-export const SoundRegistry =
-	typeof $n.SoundRegistry !== "undefined" ? $n.SoundRegistry : undefined;
-export const Spellchecker =
-	typeof $n.Spellchecker !== "undefined" ? $n.Spellchecker : undefined;
-export const SyncbackCategoryTask =
-	typeof $n.SyncbackCategoryTask !== "undefined"
-		? $n.SyncbackCategoryTask
-		: undefined;
-export const SyncbackEventTask =
-	typeof $n.SyncbackEventTask !== "undefined"
-		? $n.SyncbackEventTask
-		: undefined;
-export const SyncbackMetadataTask =
-	typeof $n.SyncbackMetadataTask !== "undefined"
-		? $n.SyncbackMetadataTask
-		: undefined;
-export const SystemStartService =
-	typeof $n.SystemStartService !== "undefined"
-		? $n.SystemStartService
-		: undefined;
-export const Task = typeof $n.Task !== "undefined" ? $n.Task : undefined;
-export const TaskFactory =
-	typeof $n.TaskFactory !== "undefined" ? $n.TaskFactory : undefined;
-export const TaskQueue =
-	typeof $n.TaskQueue !== "undefined" ? $n.TaskQueue : undefined;
-export const TaskQueueStatusStore =
-	typeof $n.TaskQueueStatusStore !== "undefined"
-		? $n.TaskQueueStatusStore
-		: undefined;
-export const Thread = typeof $n.Thread !== "undefined" ? $n.Thread : undefined;
-export const UndoRedoStore =
-	typeof $n.UndoRedoStore !== "undefined" ? $n.UndoRedoStore : undefined;
-export const Utils = typeof $n.Utils !== "undefined" ? $n.Utils : undefined;
-export const VirtualDOMUtils =
-	typeof $n.VirtualDOMUtils !== "undefined" ? $n.VirtualDOMUtils : undefined;
-export const WorkspaceStore =
-	typeof $n.WorkspaceStore !== "undefined" ? $n.WorkspaceStore : undefined;
+const __safe = (name) => {
+	try {
+		return $n[name];
+	} catch (_e) {
+		return undefined;
+	}
+};
+export const APIError = __safe("APIError");
+export const APMWrapper = __safe("APMWrapper");
+export const Account = __safe("Account");
+export const AccountStore = __safe("AccountStore");
+export const Actions = __safe("Actions");
+export const Attributes = __safe("Attributes");
+export const BadgeStore = __safe("BadgeStore");
+export const BaseDraftTask = __safe("BaseDraftTask");
+export const Calendar = __safe("Calendar");
+export const CalendarDataSource = __safe("CalendarDataSource");
+export const Category = __safe("Category");
+export const CategoryStore = __safe("CategoryStore");
+export const ComponentRegistry = __safe("ComponentRegistry");
+export const ComposerExtension = __safe("ComposerExtension");
+export const Contact = __safe("Contact");
+export const ContactStore = __safe("ContactStore");
+export const ContenteditableExtension = __safe("ContenteditableExtension");
+export const CustomContenteditableComponents = __safe(
+	"CustomContenteditableComponents",
+);
+export const DOMUtils = __safe("DOMUtils");
+export const DatabaseStore = __safe("DatabaseStore");
+export const DateUtils = __safe("DateUtils");
+export const DefaultClientHelper = __safe("DefaultClientHelper");
+export const DestroyModelTask = __safe("DestroyModelTask");
+export const DraftHelpers = __safe("DraftHelpers");
+export const DraftStore = __safe("DraftStore");
+export const EditorAPI = __safe("EditorAPI");
+export const Event = __safe("Event");
+export const ExtensionRegistry = __safe("ExtensionRegistry");
+export const FeatureUsageStore = __safe("FeatureUsageStore");
+export const FileDownloadStore = __safe("FileDownloadStore");
+export const FocusedContactsStore = __safe("FocusedContactsStore");
+export const FocusedContentStore = __safe("FocusedContentStore");
+export const FocusedPerspectiveStore = __safe("FocusedPerspectiveStore");
+export const FolderSyncProgressStore = __safe("FolderSyncProgressStore");
+export const IdentityStore = __safe("IdentityStore");
+export const InflatesDraftClientId = __safe("InflatesDraftClientId");
+export const InlineStyleTransformer = __safe("InlineStyleTransformer");
+export const KeyManager = __safe("KeyManager");
+export const MailRulesStore = __safe("MailRulesStore");
+export const MailRulesTemplates = __safe("MailRulesTemplates");
+export const MailboxPerspective = __safe("MailboxPerspective");
+export const Matcher = __safe("Matcher");
+export const Message = __safe("Message");
+export const MessageBodyProcessor = __safe("MessageBodyProcessor");
+export const MessageStore = __safe("MessageStore");
+export const MessageViewExtension = __safe("MessageViewExtension");
+export const Model = __safe("Model");
+export const ModelSearchIndexer = __safe("ModelSearchIndexer");
+export const MutableQuerySubscription = __safe("MutableQuerySubscription");
+export const N1CloudAPI = __safe("N1CloudAPI");
+export const NativeNotifications = __safe("NativeNotifications");
+export const NylasAPI = __safe("NylasAPI");
+export const NylasAPIHelpers = __safe("NylasAPIHelpers");
+export const NylasAPIRequest = __safe("NylasAPIRequest");
+export const NylasLongConnection = __safe("NylasLongConnection");
+export const NylasTestUtils = __safe("NylasTestUtils");
+export const ObservableListDataSource = __safe("ObservableListDataSource");
+export const OnlineStatusStore = __safe("OnlineStatusStore");
+export const PreferencesUIStore = __safe("PreferencesUIStore");
+export const QueryResultSet = __safe("QueryResultSet");
+export const QuerySubscription = __safe("QuerySubscription");
+export const QuotedHTMLTransformer = __safe("QuotedHTMLTransformer");
+export const React = __safe("React");
+export const ReactDOM = __safe("ReactDOM");
+export const Reflux = __safe("Reflux");
+export const RegExpUtils = __safe("RegExpUtils");
+export const ReprocessMailRulesTask = __safe("ReprocessMailRulesTask");
+export const Rx = __safe("Rx");
+export const SanitizeTransformer = __safe("SanitizeTransformer");
+export const SearchIndexScheduler = __safe("SearchIndexScheduler");
+export const SearchQueryParser = __safe("SearchQueryParser");
+export const SearchableComponentStore = __safe("SearchableComponentStore");
+export const SendActionsStore = __safe("SendActionsStore");
+export const SendDraftTask = __safe("SendDraftTask");
+export const SignatureStore = __safe("SignatureStore");
+export const SoundRegistry = __safe("SoundRegistry");
+export const Spellchecker = __safe("Spellchecker");
+export const SyncbackCategoryTask = __safe("SyncbackCategoryTask");
+export const SyncbackEventTask = __safe("SyncbackEventTask");
+export const SyncbackMetadataTask = __safe("SyncbackMetadataTask");
+export const SystemStartService = __safe("SystemStartService");
+export const Task = __safe("Task");
+export const TaskFactory = __safe("TaskFactory");
+export const TaskQueue = __safe("TaskQueue");
+export const TaskQueueStatusStore = __safe("TaskQueueStatusStore");
+export const Thread = __safe("Thread");
+export const UndoRedoStore = __safe("UndoRedoStore");
+export const Utils = __safe("Utils");
+export const VirtualDOMUtils = __safe("VirtualDOMUtils");
+export const WorkspaceStore = __safe("WorkspaceStore");

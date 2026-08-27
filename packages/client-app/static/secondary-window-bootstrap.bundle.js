@@ -193145,1262 +193145,10 @@ var require_rx_lite = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js
-var require_react_dom_production = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
-    "use strict";
-    var React8 = require_react();
-    function formatProdErrorMessage(code) {
-      var url5 = "https://react.dev/errors/" + code;
-      if (1 < arguments.length) {
-        url5 += "?args[]=" + encodeURIComponent(arguments[1]);
-        for (var i = 2; i < arguments.length; i++)
-          url5 += "&args[]=" + encodeURIComponent(arguments[i]);
-      }
-      return "Minified React error #" + code + "; visit " + url5 + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
-    }
-    function noop2() {
-    }
-    var Internals = {
-      d: {
-        f: noop2,
-        r: function() {
-          throw Error(formatProdErrorMessage(522));
-        },
-        D: noop2,
-        C: noop2,
-        L: noop2,
-        m: noop2,
-        X: noop2,
-        S: noop2,
-        M: noop2
-      },
-      p: 0,
-      findDOMNode: null
-    };
-    var REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal");
-    function createPortal$1(children, containerInfo, implementation) {
-      var key = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
-      return {
-        $$typeof: REACT_PORTAL_TYPE,
-        key: null == key ? null : "" + key,
-        children,
-        containerInfo,
-        implementation
-      };
-    }
-    var ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
-    function getCrossOriginStringAs(as, input) {
-      if ("font" === as) return "";
-      if ("string" === typeof input)
-        return "use-credentials" === input ? input : "";
-    }
-    exports2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
-    exports2.createPortal = function(children, container) {
-      var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
-      if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType)
-        throw Error(formatProdErrorMessage(299));
-      return createPortal$1(children, container, null, key);
-    };
-    exports2.flushSync = function(fn2) {
-      var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
-      try {
-        if (ReactSharedInternals.T = null, Internals.p = 2, fn2) return fn2();
-      } finally {
-        ReactSharedInternals.T = previousTransition, Internals.p = previousUpdatePriority, Internals.d.f();
-      }
-    };
-    exports2.preconnect = function(href, options) {
-      "string" === typeof href && (options ? (options = options.crossOrigin, options = "string" === typeof options ? "use-credentials" === options ? options : "" : void 0) : options = null, Internals.d.C(href, options));
-    };
-    exports2.prefetchDNS = function(href) {
-      "string" === typeof href && Internals.d.D(href);
-    };
-    exports2.preinit = function(href, options) {
-      if ("string" === typeof href && options && "string" === typeof options.as) {
-        var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin), integrity = "string" === typeof options.integrity ? options.integrity : void 0, fetchPriority = "string" === typeof options.fetchPriority ? options.fetchPriority : void 0;
-        "style" === as ? Internals.d.S(
-          href,
-          "string" === typeof options.precedence ? options.precedence : void 0,
-          {
-            crossOrigin,
-            integrity,
-            fetchPriority
-          }
-        ) : "script" === as && Internals.d.X(href, {
-          crossOrigin,
-          integrity,
-          fetchPriority,
-          nonce: "string" === typeof options.nonce ? options.nonce : void 0
-        });
-      }
-    };
-    exports2.preinitModule = function(href, options) {
-      if ("string" === typeof href)
-        if ("object" === typeof options && null !== options) {
-          if (null == options.as || "script" === options.as) {
-            var crossOrigin = getCrossOriginStringAs(
-              options.as,
-              options.crossOrigin
-            );
-            Internals.d.M(href, {
-              crossOrigin,
-              integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-              nonce: "string" === typeof options.nonce ? options.nonce : void 0
-            });
-          }
-        } else null == options && Internals.d.M(href);
-    };
-    exports2.preload = function(href, options) {
-      if ("string" === typeof href && "object" === typeof options && null !== options && "string" === typeof options.as) {
-        var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin);
-        Internals.d.L(href, as, {
-          crossOrigin,
-          integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-          nonce: "string" === typeof options.nonce ? options.nonce : void 0,
-          type: "string" === typeof options.type ? options.type : void 0,
-          fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0,
-          referrerPolicy: "string" === typeof options.referrerPolicy ? options.referrerPolicy : void 0,
-          imageSrcSet: "string" === typeof options.imageSrcSet ? options.imageSrcSet : void 0,
-          imageSizes: "string" === typeof options.imageSizes ? options.imageSizes : void 0,
-          media: "string" === typeof options.media ? options.media : void 0
-        });
-      }
-    };
-    exports2.preloadModule = function(href, options) {
-      if ("string" === typeof href)
-        if (options) {
-          var crossOrigin = getCrossOriginStringAs(options.as, options.crossOrigin);
-          Internals.d.m(href, {
-            as: "string" === typeof options.as && "script" !== options.as ? options.as : void 0,
-            crossOrigin,
-            integrity: "string" === typeof options.integrity ? options.integrity : void 0
-          });
-        } else Internals.d.m(href);
-    };
-    exports2.requestFormReset = function(form) {
-      Internals.d.r(form);
-    };
-    exports2.unstable_batchedUpdates = function(fn2, a) {
-      return fn2(a);
-    };
-    exports2.useFormState = function(action, initialState, permalink) {
-      return ReactSharedInternals.H.useFormState(action, initialState, permalink);
-    };
-    exports2.useFormStatus = function() {
-      return ReactSharedInternals.H.useHostTransitionStatus();
-    };
-    exports2.version = "19.2.8";
-  }
-});
-
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.development.js
-var require_react_dom_development = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.development.js"(exports2) {
-    "use strict";
-    "production" !== process.env.NODE_ENV && (function() {
-      function noop2() {
-      }
-      function testStringCoercion(value) {
-        return "" + value;
-      }
-      function createPortal$1(children, containerInfo, implementation) {
-        var key = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
-        try {
-          testStringCoercion(key);
-          var JSCompiler_inline_result = false;
-        } catch (e) {
-          JSCompiler_inline_result = true;
-        }
-        JSCompiler_inline_result && (console.error(
-          "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          "function" === typeof Symbol && Symbol.toStringTag && key[Symbol.toStringTag] || key.constructor.name || "Object"
-        ), testStringCoercion(key));
-        return {
-          $$typeof: REACT_PORTAL_TYPE,
-          key: null == key ? null : "" + key,
-          children,
-          containerInfo,
-          implementation
-        };
-      }
-      function getCrossOriginStringAs(as, input) {
-        if ("font" === as) return "";
-        if ("string" === typeof input)
-          return "use-credentials" === input ? input : "";
-      }
-      function getValueDescriptorExpectingObjectForWarning(thing) {
-        return null === thing ? "`null`" : void 0 === thing ? "`undefined`" : "" === thing ? "an empty string" : 'something with type "' + typeof thing + '"';
-      }
-      function getValueDescriptorExpectingEnumForWarning(thing) {
-        return null === thing ? "`null`" : void 0 === thing ? "`undefined`" : "" === thing ? "an empty string" : "string" === typeof thing ? JSON.stringify(thing) : "number" === typeof thing ? "`" + thing + "`" : 'something with type "' + typeof thing + '"';
-      }
-      function resolveDispatcher() {
-        var dispatcher = ReactSharedInternals.H;
-        null === dispatcher && console.error(
-          "Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem."
-        );
-        return dispatcher;
-      }
-      "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React8 = require_react(), Internals = {
-        d: {
-          f: noop2,
-          r: function() {
-            throw Error(
-              "Invalid form element. requestFormReset must be passed a form that was rendered by React."
-            );
-          },
-          D: noop2,
-          C: noop2,
-          L: noop2,
-          m: noop2,
-          X: noop2,
-          S: noop2,
-          M: noop2
-        },
-        p: 0,
-        findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
-      "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
-        "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
-      );
-      exports2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
-      exports2.createPortal = function(children, container) {
-        var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
-        if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType)
-          throw Error("Target container is not a DOM element.");
-        return createPortal$1(children, container, null, key);
-      };
-      exports2.flushSync = function(fn2) {
-        var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
-        try {
-          if (ReactSharedInternals.T = null, Internals.p = 2, fn2)
-            return fn2();
-        } finally {
-          ReactSharedInternals.T = previousTransition, Internals.p = previousUpdatePriority, Internals.d.f() && console.error(
-            "flushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task."
-          );
-        }
-      };
-      exports2.preconnect = function(href, options) {
-        "string" === typeof href && href ? null != options && "object" !== typeof options ? console.error(
-          "ReactDOM.preconnect(): Expected the `options` argument (second) to be an object but encountered %s instead. The only supported option at this time is `crossOrigin` which accepts a string.",
-          getValueDescriptorExpectingEnumForWarning(options)
-        ) : null != options && "string" !== typeof options.crossOrigin && console.error(
-          "ReactDOM.preconnect(): Expected the `crossOrigin` option (second argument) to be a string but encountered %s instead. Try removing this option or passing a string value instead.",
-          getValueDescriptorExpectingObjectForWarning(options.crossOrigin)
-        ) : console.error(
-          "ReactDOM.preconnect(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
-          getValueDescriptorExpectingObjectForWarning(href)
-        );
-        "string" === typeof href && (options ? (options = options.crossOrigin, options = "string" === typeof options ? "use-credentials" === options ? options : "" : void 0) : options = null, Internals.d.C(href, options));
-      };
-      exports2.prefetchDNS = function(href) {
-        if ("string" !== typeof href || !href)
-          console.error(
-            "ReactDOM.prefetchDNS(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
-            getValueDescriptorExpectingObjectForWarning(href)
-          );
-        else if (1 < arguments.length) {
-          var options = arguments[1];
-          "object" === typeof options && options.hasOwnProperty("crossOrigin") ? console.error(
-            "ReactDOM.prefetchDNS(): Expected only one argument, `href`, but encountered %s as a second argument instead. This argument is reserved for future options and is currently disallowed. It looks like the you are attempting to set a crossOrigin property for this DNS lookup hint. Browsers do not perform DNS queries using CORS and setting this attribute on the resource hint has no effect. Try calling ReactDOM.prefetchDNS() with just a single string argument, `href`.",
-            getValueDescriptorExpectingEnumForWarning(options)
-          ) : console.error(
-            "ReactDOM.prefetchDNS(): Expected only one argument, `href`, but encountered %s as a second argument instead. This argument is reserved for future options and is currently disallowed. Try calling ReactDOM.prefetchDNS() with just a single string argument, `href`.",
-            getValueDescriptorExpectingEnumForWarning(options)
-          );
-        }
-        "string" === typeof href && Internals.d.D(href);
-      };
-      exports2.preinit = function(href, options) {
-        "string" === typeof href && href ? null == options || "object" !== typeof options ? console.error(
-          "ReactDOM.preinit(): Expected the `options` argument (second) to be an object with an `as` property describing the type of resource to be preinitialized but encountered %s instead.",
-          getValueDescriptorExpectingEnumForWarning(options)
-        ) : "style" !== options.as && "script" !== options.as && console.error(
-          'ReactDOM.preinit(): Expected the `as` property in the `options` argument (second) to contain a valid value describing the type of resource to be preinitialized but encountered %s instead. Valid values for `as` are "style" and "script".',
-          getValueDescriptorExpectingEnumForWarning(options.as)
-        ) : console.error(
-          "ReactDOM.preinit(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
-          getValueDescriptorExpectingObjectForWarning(href)
-        );
-        if ("string" === typeof href && options && "string" === typeof options.as) {
-          var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin), integrity = "string" === typeof options.integrity ? options.integrity : void 0, fetchPriority = "string" === typeof options.fetchPriority ? options.fetchPriority : void 0;
-          "style" === as ? Internals.d.S(
-            href,
-            "string" === typeof options.precedence ? options.precedence : void 0,
-            {
-              crossOrigin,
-              integrity,
-              fetchPriority
-            }
-          ) : "script" === as && Internals.d.X(href, {
-            crossOrigin,
-            integrity,
-            fetchPriority,
-            nonce: "string" === typeof options.nonce ? options.nonce : void 0
-          });
-        }
-      };
-      exports2.preinitModule = function(href, options) {
-        var encountered = "";
-        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
-        void 0 !== options && "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : options && "as" in options && "script" !== options.as && (encountered += " The `as` option encountered was " + getValueDescriptorExpectingEnumForWarning(options.as) + ".");
-        if (encountered)
-          console.error(
-            "ReactDOM.preinitModule(): Expected up to two arguments, a non-empty `href` string and, optionally, an `options` object with a valid `as` property.%s",
-            encountered
-          );
-        else
-          switch (encountered = options && "string" === typeof options.as ? options.as : "script", encountered) {
-            case "script":
-              break;
-            default:
-              encountered = getValueDescriptorExpectingEnumForWarning(encountered), console.error(
-                'ReactDOM.preinitModule(): Currently the only supported "as" type for this function is "script" but received "%s" instead. This warning was generated for `href` "%s". In the future other module types will be supported, aligning with the import-attributes proposal. Learn more here: (https://github.com/tc39/proposal-import-attributes)',
-                encountered,
-                href
-              );
-          }
-        if ("string" === typeof href)
-          if ("object" === typeof options && null !== options) {
-            if (null == options.as || "script" === options.as)
-              encountered = getCrossOriginStringAs(
-                options.as,
-                options.crossOrigin
-              ), Internals.d.M(href, {
-                crossOrigin: encountered,
-                integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-                nonce: "string" === typeof options.nonce ? options.nonce : void 0
-              });
-          } else null == options && Internals.d.M(href);
-      };
-      exports2.preload = function(href, options) {
-        var encountered = "";
-        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
-        null == options || "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : "string" === typeof options.as && options.as || (encountered += " The `as` option encountered was " + getValueDescriptorExpectingObjectForWarning(options.as) + ".");
-        encountered && console.error(
-          'ReactDOM.preload(): Expected two arguments, a non-empty `href` string and an `options` object with an `as` property valid for a `<link rel="preload" as="..." />` tag.%s',
-          encountered
-        );
-        if ("string" === typeof href && "object" === typeof options && null !== options && "string" === typeof options.as) {
-          encountered = options.as;
-          var crossOrigin = getCrossOriginStringAs(
-            encountered,
-            options.crossOrigin
-          );
-          Internals.d.L(href, encountered, {
-            crossOrigin,
-            integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-            nonce: "string" === typeof options.nonce ? options.nonce : void 0,
-            type: "string" === typeof options.type ? options.type : void 0,
-            fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0,
-            referrerPolicy: "string" === typeof options.referrerPolicy ? options.referrerPolicy : void 0,
-            imageSrcSet: "string" === typeof options.imageSrcSet ? options.imageSrcSet : void 0,
-            imageSizes: "string" === typeof options.imageSizes ? options.imageSizes : void 0,
-            media: "string" === typeof options.media ? options.media : void 0
-          });
-        }
-      };
-      exports2.preloadModule = function(href, options) {
-        var encountered = "";
-        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
-        void 0 !== options && "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : options && "as" in options && "string" !== typeof options.as && (encountered += " The `as` option encountered was " + getValueDescriptorExpectingObjectForWarning(options.as) + ".");
-        encountered && console.error(
-          'ReactDOM.preloadModule(): Expected two arguments, a non-empty `href` string and, optionally, an `options` object with an `as` property valid for a `<link rel="modulepreload" as="..." />` tag.%s',
-          encountered
-        );
-        "string" === typeof href && (options ? (encountered = getCrossOriginStringAs(
-          options.as,
-          options.crossOrigin
-        ), Internals.d.m(href, {
-          as: "string" === typeof options.as && "script" !== options.as ? options.as : void 0,
-          crossOrigin: encountered,
-          integrity: "string" === typeof options.integrity ? options.integrity : void 0
-        })) : Internals.d.m(href));
-      };
-      exports2.requestFormReset = function(form) {
-        Internals.d.r(form);
-      };
-      exports2.unstable_batchedUpdates = function(fn2, a) {
-        return fn2(a);
-      };
-      exports2.useFormState = function(action, initialState, permalink) {
-        return resolveDispatcher().useFormState(action, initialState, permalink);
-      };
-      exports2.useFormStatus = function() {
-        return resolveDispatcher().useHostTransitionStatus();
-      };
-      exports2.version = "19.2.8";
-      "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
-    })();
-  }
-});
-
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/index.js
-var require_react_dom = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/index.js"(exports2, module2) {
-    "use strict";
-    function checkDCE() {
-      if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
-        return;
-      }
-      if (process.env.NODE_ENV !== "production") {
-        throw new Error("^_^");
-      }
-      try {
-        __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    if (process.env.NODE_ENV === "production") {
-      checkDCE();
-      module2.exports = require_react_dom_production();
-    } else {
-      module2.exports = require_react_dom_development();
-    }
-  }
-});
-
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom-test-utils.production.js
-var require_react_dom_test_utils_production = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom-test-utils.production.js"(exports2) {
-    "use strict";
-    var React8 = require_react();
-    var didWarnAboutUsingAct = false;
-    exports2.act = function(callback) {
-      false === didWarnAboutUsingAct && (didWarnAboutUsingAct = true, console.error(
-        "`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info."
-      ));
-      return React8.act(callback);
-    };
-  }
-});
-
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom-test-utils.development.js
-var require_react_dom_test_utils_development = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom-test-utils.development.js"(exports2) {
-    "use strict";
-    "production" !== process.env.NODE_ENV && (function() {
-      var React8 = require_react(), didWarnAboutUsingAct = false;
-      exports2.act = function(callback) {
-        false === didWarnAboutUsingAct && (didWarnAboutUsingAct = true, console.error(
-          "`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info."
-        ));
-        return React8.act(callback);
-      };
-    })();
-  }
-});
-
-// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/test-utils.js
-var require_test_utils = __commonJS({
-  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/test-utils.js"(exports2, module2) {
-    "use strict";
-    if (process.env.NODE_ENV === "production") {
-      module2.exports = require_react_dom_test_utils_production();
-    } else {
-      module2.exports = require_react_dom_test_utils_development();
-    }
-  }
-});
-
-// src/flux/errors.js
-var errors_exports2 = {};
-__export(errors_exports2, {
-  APIError: () => APIError2,
-  RequestEnsureOnceError: () => RequestEnsureOnceError
-});
-var APIError2, RequestEnsureOnceError;
-var init_errors2 = __esm({
-  "src/flux/errors.js"() {
-    APIError2 = class _APIError extends Error {
-      static NonReportableStatusCodes = [
-        0,
-        // When errors like ETIMEDOUT, ECONNABORTED or ESOCKETTIMEDOUT occur from the client
-        401,
-        // Don't report `Incorrect username or password`
-        404,
-        // Don't report not-founds
-        408,
-        // Timeout error code
-        429
-        // Too many requests
-      ];
-      constructor({
-        error,
-        message,
-        response,
-        body,
-        requestOptions,
-        statusCode
-      } = {}) {
-        super();
-        this.name = "APIError";
-        this.error = error;
-        this.body = body;
-        this.requestOptions = requestOptions;
-        this.statusCode = statusCode;
-        this.message = message;
-        if (this.statusCode == null) {
-          if (response && response.statusCode != null) {
-            this.statusCode = response.statusCode;
-          }
-          if (error) {
-            if (error.code) {
-              this.statusCode = 0;
-            } else {
-              this.statusCode = 500;
-            }
-          }
-        }
-        if (this.requestOptions == null) {
-          this.requestOptions = response ? response.requestOptions : null;
-        }
-        this.stack = new Error().stack;
-        if (!this.message) {
-          if (this.body) {
-            this.message = this.body.message || this.body.error || JSON.stringify(this.body);
-          } else {
-            this.message = this.error ? this.error.message || this.error.toString() : null;
-          }
-        }
-        this.errorType = this.body ? this.body.type : null;
-      }
-      shouldReportError() {
-        return !_APIError.NonReportableStatusCodes.includes(this.statusCode);
-      }
-      fromJSON(json2 = {}) {
-        for (const key of Object.keys(json2)) {
-          this[key] = json2[key];
-        }
-        return this;
-      }
-    };
-    RequestEnsureOnceError = class extends Error {
-    };
-  }
-});
-
-// src/buffered-process.js
-var require_buffered_process = __commonJS({
-  "src/buffered-process.js"(exports2, module2) {
-    var BufferedProcess;
-    var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var ChildProcess = require("child_process");
-    var { Emitter: Emitter3 } = require_event_kit();
-    var path10 = require("path");
-    module2.exports = BufferedProcess = class BufferedProcess {
-      /*
-       Section: Construction
-       */
-      // Public: Runs the given command by spawning a new child process.
-      //
-      // * `options` An {Object} with the following keys:
-      //   * `command` The {String} command to execute.
-      //   * `args` The {Array} of arguments to pass to the command (optional).
-      //   * `options` {Object} (optional) The options {Object} to pass to Node's
-      //     `ChildProcess.spawn` method.
-      //   * `stdout` {Function} (optional) The callback that receives a single
-      //     argument which contains the standard output from the command. The
-      //     callback is called as data is received but it's buffered to ensure only
-      //     complete lines are passed until the source stream closes. After the
-      //     source stream has closed all remaining data is sent in a final call.
-      //     * `data` {String}
-      //   * `stderr` {Function} (optional) The callback that receives a single
-      //     argument which contains the standard error output from the command. The
-      //     callback is called as data is received but it's buffered to ensure only
-      //     complete lines are passed until the source stream closes. After the
-      //     source stream has closed all remaining data is sent in a final call.
-      //     * `data` {String}
-      //   * `exit` {Function} (optional) The callback which receives a single
-      //     argument containing the exit status.
-      //     * `code` {Number}
-      constructor(param) {
-        if (param == null) {
-          param = {};
-        }
-        let { command, args, options, stdout, stderr, exit } = param;
-        this.emitter = new Emitter3();
-        if (options == null) {
-          options = {};
-        }
-        this.command = command;
-        if (process.platform === "win32") {
-          let cmdArgs;
-          if (args != null) {
-            cmdArgs = args.filter((arg) => arg != null);
-            cmdArgs = cmdArgs.map((arg) => {
-              if (this.isExplorerCommand(command) && /^\/[a-zA-Z]+,.*$/.test(arg)) {
-                return arg;
-              } else {
-                return `"${arg.toString().replace(/"/g, '\\"')}"`;
-              }
-            });
-          } else {
-            cmdArgs = [];
-          }
-          if (/\s/.test(command)) {
-            cmdArgs.unshift(`"${command}"`);
-          } else {
-            cmdArgs.unshift(command);
-          }
-          cmdArgs = ["/s", "/c", `"${cmdArgs.join(" ")}"`];
-          const cmdOptions = _3.clone(options);
-          cmdOptions.windowsVerbatimArguments = true;
-          this.spawn(this.getCmdPath(), cmdArgs, cmdOptions);
-        } else {
-          this.spawn(command, args, options);
-        }
-        this.killed = false;
-        this.handleEvents(stdout, stderr, exit);
-      }
-      /*
-       Section: Event Subscription
-       */
-      // Public: Will call your callback when an error will be raised by the process.
-      // Usually this is due to the command not being available or not on the PATH.
-      // You can call `handle()` on the object passed to your callback to indicate
-      // that you have handled this error.
-      //
-      // * `callback` {Function} callback
-      //   * `errorObject` {Object}
-      //     * `error` {Object} the error object
-      //     * `handle` {Function} call this to indicate you have handled the error.
-      //       The error will not be thrown if this function is called.
-      //
-      // Returns a {Disposable}
-      onWillThrowError(callback) {
-        return this.emitter.on("will-throw-error", callback);
-      }
-      /*
-       Section: Helper Methods
-       */
-      // Helper method to pass data line by line.
-      //
-      // * `stream` The Stream to read from.
-      // * `onLines` The callback to call with each line of data.
-      // * `onDone` The callback to call when the stream has closed.
-      bufferStream(stream, onLines, onDone) {
-        stream.setEncoding("utf8");
-        let buffered = "";
-        stream.on("data", (data) => {
-          if (this.killed) {
-            return;
-          }
-          buffered += data;
-          const lastNewlineIndex = buffered.lastIndexOf("\n");
-          if (lastNewlineIndex !== -1) {
-            onLines(buffered.substring(0, lastNewlineIndex + 1));
-            return buffered = buffered.substring(lastNewlineIndex + 1);
-          }
-        });
-        return stream.on("close", () => {
-          if (this.killed) {
-            return;
-          }
-          if (buffered.length > 0) {
-            onLines(buffered);
-          }
-          return onDone();
-        });
-      }
-      // Kill all child processes of the spawned cmd.exe process on Windows.
-      //
-      // This is required since killing the cmd.exe does not terminate child
-      // processes.
-      killOnWindows() {
-        let wmicProcess;
-        if (this.process == null) {
-          return;
-        }
-        const parentPid = this.process.pid;
-        const cmd = "wmic";
-        const args = [
-          "process",
-          "where",
-          `(ParentProcessId=${parentPid})`,
-          "get",
-          "processid"
-        ];
-        try {
-          wmicProcess = ChildProcess.spawn(cmd, args);
-        } catch (_spawnError) {
-          this.killProcess();
-          return;
-        }
-        wmicProcess.on("error", () => {
-        });
-        let output = "";
-        wmicProcess.stdout.on("data", (data) => output += data);
-        return wmicProcess.stdout.on("close", () => {
-          const pidsToKill = output.split(/\s+/).filter((pid2) => /^\d+$/.test(pid2)).map((pid2) => parseInt(pid2, 10)).filter((pid2) => pid2 !== parentPid && 0 < pid2 && pid2 < Infinity);
-          for (var pid of Array.from(pidsToKill)) {
-            try {
-              process.kill(pid);
-            } catch (_error) {
-            }
-          }
-          return this.killProcess();
-        });
-      }
-      killProcess() {
-        if (this.process != null) {
-          this.process.kill();
-        }
-        return this.process = null;
-      }
-      isExplorerCommand(command) {
-        if (command === "explorer.exe" || command === "explorer") {
-          return true;
-        } else if (process.env.SystemRoot) {
-          return command === path10.join(process.env.SystemRoot, "explorer.exe") || command === path10.join(process.env.SystemRoot, "explorer");
-        } else {
-          return false;
-        }
-      }
-      getCmdPath() {
-        if (process.env.comspec) {
-          return process.env.comspec;
-        } else if (process.env.SystemRoot) {
-          return path10.join(process.env.SystemRoot, "System32", "cmd.exe");
-        } else {
-          return "cmd.exe";
-        }
-      }
-      // Public: Terminate the process.
-      kill() {
-        if (this.killed) {
-          return;
-        }
-        this.killed = true;
-        if (process.platform === "win32") {
-          this.killOnWindows();
-        } else {
-          this.killProcess();
-        }
-        return void 0;
-      }
-      spawn(command, args, options) {
-        try {
-          return this.process = ChildProcess.spawn(command, args, options);
-        } catch (spawnError) {
-          return setTimeout(() => this.handleError(spawnError), 0);
-        }
-      }
-      handleEvents(stdout, stderr, exit) {
-        if (this.process == null) {
-          return;
-        }
-        let stdoutClosed = true;
-        let stderrClosed = true;
-        let processExited = true;
-        let exitCode = 0;
-        const triggerExitCallback = function() {
-          if (this.killed) {
-            return;
-          }
-          if (stdoutClosed && stderrClosed && processExited) {
-            return typeof exit === "function" ? exit(exitCode) : void 0;
-          }
-        };
-        if (stdout) {
-          stdoutClosed = false;
-          this.bufferStream(this.process.stdout, stdout, () => {
-            stdoutClosed = true;
-            return triggerExitCallback();
-          });
-        }
-        if (stderr) {
-          stderrClosed = false;
-          this.bufferStream(this.process.stderr, stderr, () => {
-            stderrClosed = true;
-            return triggerExitCallback();
-          });
-        }
-        if (exit) {
-          processExited = false;
-          this.process.on("exit", (code) => {
-            exitCode = code;
-            processExited = true;
-            return triggerExitCallback();
-          });
-        }
-        this.process.on("error", (error) => this.handleError(error));
-      }
-      handleError(error) {
-        let handled = false;
-        const handle = () => handled = true;
-        this.emitter.emit("will-throw-error", { error, handle });
-        if (error.code === "ENOENT" && error.syscall.indexOf("spawn") === 0) {
-          error = new Error(
-            `Failed to spawn command \`${this.command}\`. Make sure \`${this.command}\` is installed and on your PATH`,
-            error.path
-          );
-          error.name = "BufferedProcessError";
-        }
-        if (!handled) {
-          throw error;
-        }
-      }
-    };
-  }
-});
-
-// src/apm-wrapper.js
-var require_apm_wrapper = __commonJS({
-  "src/apm-wrapper.js"(exports2, module2) {
-    var APMWrapper2;
-    var _3 = (init_index_all(), __toCommonJS(index_all_exports));
-    var _Q = require_q();
-    var semver = require_semver2();
-    var BufferedProcess = require_buffered_process();
-    module2.exports = APMWrapper2 = class APMWrapper {
-      constructor() {
-        this.packagePromises = [];
-      }
-      runCommand(args, options, callback) {
-        const command = NylasEnv.packages.getApmPath();
-        const outputLines = [];
-        const stdout = (lines) => outputLines.push(lines);
-        const errorLines = [];
-        const stderr = (lines) => errorLines.push(lines);
-        const exit = (code) => callback(code, outputLines.join("\n"), errorLines.join("\n"));
-        if (!options) {
-          options = {};
-        }
-        options.env = {
-          ATOM_API_URL: "https://edgehill-packages.nylas.com/api",
-          ATOM_RESOURCE_PATH: NylasEnv.getLoadSettings().resourcePath,
-          ATOM_HOME: NylasEnv.getConfigDirPath()
-        };
-        if (process.platform === "win32") {
-          options.env.ProgramFiles = process.env.ProgramFiles;
-        }
-        args.push("--no-color");
-        return new BufferedProcess({
-          command,
-          args,
-          stdout,
-          stderr,
-          exit,
-          options
-        });
-      }
-      runCommandReturningPackages(args, errorMessage, callback) {
-        return this.runCommand(args, null, (code, stdout, stderr) => {
-          let error;
-          if (code === 0) {
-            let packages;
-            try {
-              let left;
-              packages = (left = JSON.parse(stdout)) != null ? left : [];
-            } catch (parseError) {
-              error = createJsonParseError(errorMessage, parseError, stdout);
-              return callback(error);
-            }
-            return callback(null, packages);
-          } else {
-            error = new Error(errorMessage);
-            error.stdout = stdout;
-            error.stderr = stderr;
-            return callback(error);
-          }
-        });
-      }
-      loadInstalled(callback) {
-        const args = ["ls", "--json"];
-        const errorMessage = "Fetching local packages failed.";
-        const apmProcess = this.runCommandReturningPackages(
-          args,
-          errorMessage,
-          callback
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      loadFeatured(options, callback) {
-        const args = ["featured", "--json"];
-        const version3 = NylasEnv.getVersion();
-        if (options.themes) {
-          args.push("--themes");
-        }
-        if (semver.valid(version3)) {
-          args.push("--compatible", version3);
-        }
-        const errorMessage = "Fetching featured packages failed.";
-        const apmProcess = this.runCommandReturningPackages(
-          args,
-          errorMessage,
-          callback
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      loadOutdated(callback) {
-        const args = ["outdated", "--json"];
-        const version3 = NylasEnv.getVersion();
-        if (semver.valid(version3)) {
-          args.push("--compatible", version3);
-        }
-        const errorMessage = "Fetching outdated packages and themes failed.";
-        const apmProcess = this.runCommandReturningPackages(
-          args,
-          errorMessage,
-          callback
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      loadPackage(packageName, callback) {
-        const args = ["view", packageName, "--json"];
-        const errorMessage = `Fetching package '${packageName}' failed.`;
-        const apmProcess = this.runCommandReturningPackages(
-          args,
-          errorMessage,
-          callback
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      loadCompatiblePackageVersion(packageName, callback) {
-        const args = [
-          "view",
-          packageName,
-          "--json",
-          "--compatible",
-          this.normalizeVersion(NylasEnv.getVersion())
-        ];
-        const errorMessage = `Fetching package '${packageName}' failed.`;
-        const apmProcess = this.runCommandReturningPackages(
-          args,
-          errorMessage,
-          callback
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      getInstalled() {
-        return Promise.promisify(this.loadInstalled, { context: this })();
-      }
-      getFeatured(options) {
-        if (options == null) {
-          options = {};
-        }
-        return Promise.promisify(this.loadFeatured, { context: this })(options);
-      }
-      getOutdated() {
-        return Promise.promisify(this.loadOutdated, { context: this })();
-      }
-      getPackage(packageName) {
-        return this.packagePromises[packageName] != null ? this.packagePromises[packageName] : this.packagePromises[packageName] = Promise.promisify(
-          this.loadPackage,
-          { context: this }
-        )();
-      }
-      satisfiesVersion(version3, metadata) {
-        const engine = (metadata.engines != null ? metadata.engines.nylas : void 0) != null ? metadata.engines != null ? metadata.engines.nylas : void 0 : "*";
-        if (!semver.validRange(engine)) {
-          return false;
-        }
-        return semver.satisfies(version3, engine);
-      }
-      normalizeVersion(version3) {
-        if (typeof version3 === "string") {
-          [version3] = Array.from(version3.split("-"));
-        }
-        return version3;
-      }
-      search(query, options) {
-        if (options == null) {
-          options = {};
-        }
-        const deferred = Promise.defer();
-        const args = ["search", query, "--json"];
-        if (options.themes) {
-          args.push("--themes");
-        } else if (options.packages) {
-          args.push("--packages");
-        }
-        const errorMessage = `Searching for \u201C${query}\u201D failed.`;
-        const apmProcess = this.runCommand(args, null, (code, stdout, stderr) => {
-          let error;
-          if (code === 0) {
-            try {
-              let left;
-              const packages = (left = JSON.parse(stdout)) != null ? left : [];
-              return deferred.resolve(packages);
-            } catch (parseError) {
-              error = createJsonParseError(errorMessage, parseError, stdout);
-              return deferred.reject(error);
-            }
-          } else {
-            error = new Error(errorMessage);
-            error.stdout = stdout;
-            error.stderr = stderr;
-            return deferred.reject(error);
-          }
-        });
-        handleProcessErrors(
-          apmProcess,
-          errorMessage,
-          (error) => deferred.reject(error)
-        );
-        return deferred.promise;
-      }
-      update(pack, newVersion, callback) {
-        let activateOnSuccess;
-        const { name: name2, theme } = pack;
-        if (theme) {
-          activateOnSuccess = NylasEnv.packages.isPackageActive(name2);
-        } else {
-          activateOnSuccess = !NylasEnv.packages.isPackageDisabled(name2);
-        }
-        const activateOnFailure = NylasEnv.packages.isPackageActive(name2);
-        if (NylasEnv.packages.isPackageActive(name2)) {
-          NylasEnv.packages.deactivatePackage(name2);
-        }
-        if (NylasEnv.packages.isPackageLoaded(name2)) {
-          NylasEnv.packages.unloadPackage(name2);
-        }
-        const errorMessage = `Updating to \u201C${name2}@${newVersion}\u201D failed.`;
-        const onError = (error) => {
-          error.packageInstallError = !theme;
-          return callback(error);
-        };
-        const args = ["install", `${name2}@${newVersion}`];
-        const exit = (code, stdout, stderr) => {
-          if (code === 0) {
-            if (activateOnSuccess) {
-              NylasEnv.packages.activatePackage(name2);
-            } else {
-              NylasEnv.packages.loadPackage(name2);
-            }
-            return typeof callback === "function" ? callback() : void 0;
-          } else {
-            if (activateOnFailure) {
-              NylasEnv.packages.activatePackage(name2);
-            }
-            const error = new Error(errorMessage);
-            error.stdout = stdout;
-            error.stderr = stderr;
-            return onError(error);
-          }
-        };
-        const apmProcess = this.runCommand(args, null, exit);
-        return handleProcessErrors(apmProcess, errorMessage, onError);
-      }
-      unload(_packageName) {
-        if (NylasEnv.packages.isPackageLoaded(name)) {
-          if (NylasEnv.packages.isPackageActive(name)) {
-            NylasEnv.packages.deactivatePackage(name);
-          }
-          return NylasEnv.packages.unloadPackage(name);
-        }
-      }
-      install(pack, callback) {
-        const { name: name2, version: version3, theme } = pack;
-        const activateOnSuccess = !theme && !NylasEnv.packages.isPackageDisabled(name2);
-        const activateOnFailure = NylasEnv.packages.isPackageActive(name2);
-        this.unload(name2);
-        const args = ["install", `${name2}@${version3}`];
-        const errorMessage = `Installing \u201C${name2}@${version3}\u201D failed.`;
-        const onError = (error) => {
-          error.packageInstallError = !theme;
-          return callback(error);
-        };
-        const exit = (code, stdout, stderr) => {
-          if (code === 0) {
-            if (activateOnSuccess) {
-              NylasEnv.packages.activatePackage(name2);
-            } else {
-              NylasEnv.packages.loadPackage(name2);
-            }
-            return typeof callback === "function" ? callback() : void 0;
-          } else {
-            if (activateOnFailure) {
-              NylasEnv.packages.activatePackage(name2);
-            }
-            const error = new Error(errorMessage);
-            error.stdout = stdout;
-            error.stderr = stderr;
-            return onError(error);
-          }
-        };
-        const apmProcess = this.runCommand(args, null, exit);
-        return handleProcessErrors(apmProcess, errorMessage, onError);
-      }
-      installDependenciesInPackageDirectory(dir, callback) {
-        const errorMessage = "Running apm install failed to install package dependencies.";
-        const exit = (code, stdout, stderr) => {
-          if (code === 0) {
-            return typeof callback === "function" ? callback() : void 0;
-          } else {
-            const error = new Error(errorMessage);
-            error.stdout = stdout;
-            error.stderr = stderr;
-            return callback(error);
-          }
-        };
-        const apmProcess = this.runCommand(
-          ["install", "--production"],
-          { cwd: dir },
-          exit
-        );
-        return handleProcessErrors(apmProcess, errorMessage, callback);
-      }
-      uninstall(pack, callback) {
-        const { name: name2 } = pack;
-        if (NylasEnv.packages.isPackageActive(name2)) {
-          NylasEnv.packages.deactivatePackage(name2);
-        }
-        const errorMessage = `Uninstalling \u201C${name2}\u201D failed.`;
-        const onError = (error) => {
-          return callback(error);
-        };
-        const apmProcess = this.runCommand(
-          ["uninstall", "--hard", name2],
-          null,
-          (code, stdout, stderr) => {
-            if (code === 0) {
-              this.unload(name2);
-              return typeof callback === "function" ? callback() : void 0;
-            } else {
-              const error = new Error(errorMessage);
-              error.stdout = stdout;
-              error.stderr = stderr;
-              return onError(error);
-            }
-          }
-        );
-        return handleProcessErrors(apmProcess, errorMessage, onError);
-      }
-      canUpgrade(installedPackage, availableVersion) {
-        if (installedPackage == null) {
-          return false;
-        }
-        const installedVersion = installedPackage.metadata.version;
-        if (!semver.valid(installedVersion)) {
-          return false;
-        }
-        if (!semver.valid(availableVersion)) {
-          return false;
-        }
-        return semver.gt(availableVersion, installedVersion);
-      }
-      checkNativeBuildTools() {
-        const deferred = Promise.defer();
-        const apmProcess = this.runCommand(
-          ["install", "--check"],
-          null,
-          (code, _stdout, _stderr) => {
-            if (code === 0) {
-              return deferred.resolve();
-            } else {
-              return deferred.reject(new Error());
-            }
-          }
-        );
-        apmProcess.onWillThrowError(({ error, handle }) => {
-          handle();
-          return deferred.reject(error);
-        });
-        return deferred.promise;
-      }
-    };
-    var createJsonParseError = (message, parseError, stdout) => {
-      const error = new Error(message);
-      error.stdout = "";
-      error.stderr = `${parseError.message}: ${stdout}`;
-      return error;
-    };
-    var createProcessError = (message, processError) => {
-      const error = new Error(message);
-      error.stdout = "";
-      error.stderr = processError.message;
-      return error;
-    };
-    var handleProcessErrors = (apmProcess, message, callback) => apmProcess.onWillThrowError(({ error, handle }) => {
-      handle();
-      return callback(createProcessError(message, error));
-    });
-  }
-});
-
-// spec/nylas-test-utils.js
-var require_nylas_test_utils = __commonJS({
-  "spec/nylas-test-utils.js"(exports2, module2) {
-    var React8 = require_react();
-    var ReactDOM3 = require_react_dom();
-    var ReactTestUtils = require_test_utils();
-    var NylasTestUtils2 = {
-      loadKeymap: (path10) => {
-        return NylasEnv.keymaps.loadKeymap(path10);
-      },
-      simulateCommand: (target, command) => {
-        return target.dispatchEvent(new CustomEvent(command, { bubbles: true }));
-      },
-      // React's "renderIntoDocument" does not /actually/ attach the component
-      // to the document. It's a sham: http://dragon.ak.fbcdn.net/hphotos-ak-xpf1/t39.3284-6/10956909_1423563877937976_838415501_n.js
-      // The Atom keymap manager doesn't work correctly on elements outside of the
-      // DOM tree, so we need to attach it.
-      renderIntoDocument(component) {
-        const node = ReactTestUtils.renderIntoDocument(component);
-        const $node = ReactDOM3.findDOMNode(node);
-        if (!document.body.contains($node)) {
-          let parent = $node;
-          while (parent.parentNode != null) {
-            parent = parent.parentNode;
-          }
-          document.body.appendChild(parent);
-        }
-        return node;
-      },
-      removeFromDocument(reactElement) {
-        const $el = ReactDOM3.findDOMNode(reactElement);
-        if (document.body.contains($el)) {
-          for (var child of Array.from(Array.prototype.slice.call(document.body.childNodes))) {
-            if (child.contains($el)) {
-              document.body.removeChild(child);
-              return;
-            }
-          }
-        }
-      },
-      // Returns mock observable that triggers immediately and provides helper
-      // function to trigger later
-      mockObservable(data, param) {
-        if (param == null) {
-          param = {};
-        }
-        let { dispose } = param;
-        if (dispose == null) {
-          dispose = function() {
-          };
-        }
-        let func = function() {
-        };
-        return {
-          subscribe(fn2) {
-            func = fn2;
-            func(data);
-            return { dispose };
-          },
-          triggerNext(nextData) {
-            if (nextData == null) {
-              nextData = data;
-            }
-            return func(nextData);
-          }
-        };
-      }
-    };
-    module2.exports = NylasTestUtils2;
-    module2.exports = NylasTestUtils2;
-  }
-});
-
 // src/global/nylas-exports.js
 var nylas_exports_exports = {};
 __export(nylas_exports_exports, {
-  APIError: () => APIError3,
+  APIError: () => APIError2,
   APMWrapper: () => APMWrapper,
   Account: () => Account2,
   AccountStore: () => AccountStore2,
@@ -194492,7 +193240,7 @@ __export(nylas_exports_exports, {
   WorkspaceStore: () => WorkspaceStore,
   default: () => nylas_exports_default
 });
-var import_node_module10, import_meta11, nodeRequire11, resolveExport, requireFromSrc, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, APIError3, APMWrapper, Account2, AccountStore2, Actions2, Attributes, BadgeStore, BaseDraftTask, Calendar, CalendarDataSource, Category, CategoryStore2, ComponentRegistry, ComposerExtension, Contact2, ContactStore, ContenteditableExtension, CustomContenteditableComponents, DOMUtils, DatabaseStore2, DateUtils, DefaultClientHelper, DestroyModelTask, DraftHelpers, DraftStore, EditorAPI, Event2, ExtensionRegistry, FeatureUsageStore, FileDownloadStore, FocusedContactsStore, FocusedContentStore, FocusedPerspectiveStore, FolderSyncProgressStore, IdentityStore, InflatesDraftClientId, InlineStyleTransformer, KeyManager2, MailRulesStore, MailRulesTemplates, MailboxPerspective, Matcher3, Message, MessageBodyProcessor, MessageStore, MessageViewExtension, Model5, ModelSearchIndexer, MutableQuerySubscription, N1CloudAPI, NativeNotifications, NylasAPI, NylasAPIHelpers, NylasAPIRequest, NylasLongConnection, NylasTestUtils, ObservableListDataSource, OnlineStatusStore, PreferencesUIStore, QueryResultSet, QuerySubscription, QuotedHTMLTransformer, React2, ReactDOM, Reflux2, RegExpUtils, ReprocessMailRulesTask, Rx, SanitizeTransformer, SearchIndexScheduler, SearchQueryParser, SearchableComponentStore, SendActionsStore, SendDraftTask, SignatureStore, SoundRegistry, Spellchecker2, SyncbackCategoryTask, SyncbackEventTask, SyncbackMetadataTask, SystemStartService, Task, TaskFactory, TaskQueue, TaskQueueStatusStore, Thread, UndoRedoStore, Utils7, VirtualDOMUtils, WorkspaceStore;
+var import_node_module10, import_meta11, nodeRequire11, resolveExport, requireFromSrc, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __safe, APIError2, APMWrapper, Account2, AccountStore2, Actions2, Attributes, BadgeStore, BaseDraftTask, Calendar, CalendarDataSource, Category, CategoryStore2, ComponentRegistry, ComposerExtension, Contact2, ContactStore, ContenteditableExtension, CustomContenteditableComponents, DOMUtils, DatabaseStore2, DateUtils, DefaultClientHelper, DestroyModelTask, DraftHelpers, DraftStore, EditorAPI, Event2, ExtensionRegistry, FeatureUsageStore, FileDownloadStore, FocusedContactsStore, FocusedContentStore, FocusedPerspectiveStore, FolderSyncProgressStore, IdentityStore, InflatesDraftClientId, InlineStyleTransformer, KeyManager2, MailRulesStore, MailRulesTemplates, MailboxPerspective, Matcher3, Message, MessageBodyProcessor, MessageStore, MessageViewExtension, Model5, ModelSearchIndexer, MutableQuerySubscription, N1CloudAPI, NativeNotifications, NylasAPI, NylasAPIHelpers, NylasAPIRequest, NylasLongConnection, NylasTestUtils, ObservableListDataSource, OnlineStatusStore, PreferencesUIStore, QueryResultSet, QuerySubscription, QuotedHTMLTransformer, React2, ReactDOM, Reflux2, RegExpUtils, ReprocessMailRulesTask, Rx, SanitizeTransformer, SearchIndexScheduler, SearchQueryParser, SearchableComponentStore, SendActionsStore, SendDraftTask, SignatureStore, SoundRegistry, Spellchecker2, SyncbackCategoryTask, SyncbackEventTask, SyncbackMetadataTask, SystemStartService, Task, TaskFactory, TaskQueue, TaskQueueStatusStore, Thread, UndoRedoStore, Utils7, VirtualDOMUtils, WorkspaceStore;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module10 = require("module");
@@ -194518,7 +193266,7 @@ var init_nylas_exports = __esm({
       }
     };
     $n = window.$n = globalThis.$n = {};
-    if (typeof module !== "undefined" && module.exports) {
+    if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
       module.exports = exports = $n;
     }
     RequireCache = {};
@@ -194678,11 +193426,11 @@ var init_nylas_exports = __esm({
     lazyLoad(`ComposerExtension`, "extensions/composer-extension");
     lazyLoad(`MessageViewExtension`, "extensions/message-view-extension");
     lazyLoad(`ContenteditableExtension`, "extensions/contenteditable-extension");
-    lazyLoadWithGetter(`Rx`, () => require_cjs());
-    lazyLoadWithGetter(`React`, () => require_react());
-    lazyLoadWithGetter(`Reflux`, () => require_src());
-    lazyLoadWithGetter(`ReactDOM`, () => require_react_dom());
-    lazyLoadWithGetter(`ReactTestUtils`, () => require_test_utils());
+    lazyLoadWithGetter(`Rx`, () => nodeRequire11("rxjs"));
+    lazyLoadWithGetter(`React`, () => nodeRequire11("react"));
+    lazyLoadWithGetter(`Reflux`, () => nodeRequire11("reflux"));
+    lazyLoadWithGetter(`ReactDOM`, () => nodeRequire11("react-dom"));
+    lazyLoadWithGetter(`ReactTestUtils`, () => nodeRequire11("react-dom/test-utils"));
     lazyLoad(`ComponentRegistry`, "registries/component-registry");
     lazyLoad(`PriorityUICoordinator`, "priority-ui-coordinator");
     lazyLoad(`Utils`, "flux/models/utils");
@@ -194719,14 +193467,14 @@ var init_nylas_exports = __esm({
       "services/quoted-plain-text-transformer"
     );
     lazyLoad(`BatteryStatusManager`, "services/battery-status-manager");
-    lazyLoadWithGetter(`APIError`, () => (init_errors2(), __toCommonJS(errors_exports2)).APIError);
+    lazyLoadWithGetter(`APIError`, () => nodeRequire11("../flux/errors.js").APIError);
     lazyLoad(`DefaultClientHelper`, "default-client-helper");
     lazyLoad(`BufferedProcess`, "buffered-process");
     lazyLoad(`SystemStartService`, "system-start-service");
-    lazyLoadWithGetter(`APMWrapper`, () => require_apm_wrapper());
+    lazyLoadWithGetter(`APMWrapper`, () => nodeRequire11("../apm-wrapper.js"));
     lazyLoadWithGetter(
       `NylasTestUtils`,
-      () => require_nylas_test_utils()
+      () => nodeRequire11("../../spec/nylas-test-utils.js")
     );
     lazyLoadDeprecated(`QuotedHTMLParser`, "services/quoted-html-transformer", {
       instead: "QuotedHTMLTransformer"
@@ -194742,96 +193490,103 @@ var init_nylas_exports = __esm({
       }
     );
     nylas_exports_default = $n;
-    APIError3 = typeof $n.APIError !== "undefined" ? $n.APIError : void 0;
-    APMWrapper = typeof $n.APMWrapper !== "undefined" ? $n.APMWrapper : void 0;
-    Account2 = typeof $n.Account !== "undefined" ? $n.Account : void 0;
-    AccountStore2 = typeof $n.AccountStore !== "undefined" ? $n.AccountStore : void 0;
-    Actions2 = typeof $n.Actions !== "undefined" ? $n.Actions : void 0;
-    Attributes = typeof $n.Attributes !== "undefined" ? $n.Attributes : void 0;
-    BadgeStore = typeof $n.BadgeStore !== "undefined" ? $n.BadgeStore : void 0;
-    BaseDraftTask = typeof $n.BaseDraftTask !== "undefined" ? $n.BaseDraftTask : void 0;
-    Calendar = typeof $n.Calendar !== "undefined" ? $n.Calendar : void 0;
-    CalendarDataSource = typeof $n.CalendarDataSource !== "undefined" ? $n.CalendarDataSource : void 0;
-    Category = typeof $n.Category !== "undefined" ? $n.Category : void 0;
-    CategoryStore2 = typeof $n.CategoryStore !== "undefined" ? $n.CategoryStore : void 0;
-    ComponentRegistry = typeof $n.ComponentRegistry !== "undefined" ? $n.ComponentRegistry : void 0;
-    ComposerExtension = typeof $n.ComposerExtension !== "undefined" ? $n.ComposerExtension : void 0;
-    Contact2 = typeof $n.Contact !== "undefined" ? $n.Contact : void 0;
-    ContactStore = typeof $n.ContactStore !== "undefined" ? $n.ContactStore : void 0;
-    ContenteditableExtension = typeof $n.ContenteditableExtension !== "undefined" ? $n.ContenteditableExtension : void 0;
-    CustomContenteditableComponents = typeof $n.CustomContenteditableComponents !== "undefined" ? $n.CustomContenteditableComponents : void 0;
-    DOMUtils = typeof $n.DOMUtils !== "undefined" ? $n.DOMUtils : void 0;
-    DatabaseStore2 = typeof $n.DatabaseStore !== "undefined" ? $n.DatabaseStore : void 0;
-    DateUtils = typeof $n.DateUtils !== "undefined" ? $n.DateUtils : void 0;
-    DefaultClientHelper = typeof $n.DefaultClientHelper !== "undefined" ? $n.DefaultClientHelper : void 0;
-    DestroyModelTask = typeof $n.DestroyModelTask !== "undefined" ? $n.DestroyModelTask : void 0;
-    DraftHelpers = typeof $n.DraftHelpers !== "undefined" ? $n.DraftHelpers : void 0;
-    DraftStore = typeof $n.DraftStore !== "undefined" ? $n.DraftStore : void 0;
-    EditorAPI = typeof $n.EditorAPI !== "undefined" ? $n.EditorAPI : void 0;
-    Event2 = typeof $n.Event !== "undefined" ? $n.Event : void 0;
-    ExtensionRegistry = typeof $n.ExtensionRegistry !== "undefined" ? $n.ExtensionRegistry : void 0;
-    FeatureUsageStore = typeof $n.FeatureUsageStore !== "undefined" ? $n.FeatureUsageStore : void 0;
-    FileDownloadStore = typeof $n.FileDownloadStore !== "undefined" ? $n.FileDownloadStore : void 0;
-    FocusedContactsStore = typeof $n.FocusedContactsStore !== "undefined" ? $n.FocusedContactsStore : void 0;
-    FocusedContentStore = typeof $n.FocusedContentStore !== "undefined" ? $n.FocusedContentStore : void 0;
-    FocusedPerspectiveStore = typeof $n.FocusedPerspectiveStore !== "undefined" ? $n.FocusedPerspectiveStore : void 0;
-    FolderSyncProgressStore = typeof $n.FolderSyncProgressStore !== "undefined" ? $n.FolderSyncProgressStore : void 0;
-    IdentityStore = typeof $n.IdentityStore !== "undefined" ? $n.IdentityStore : void 0;
-    InflatesDraftClientId = typeof $n.InflatesDraftClientId !== "undefined" ? $n.InflatesDraftClientId : void 0;
-    InlineStyleTransformer = typeof $n.InlineStyleTransformer !== "undefined" ? $n.InlineStyleTransformer : void 0;
-    KeyManager2 = typeof $n.KeyManager !== "undefined" ? $n.KeyManager : void 0;
-    MailRulesStore = typeof $n.MailRulesStore !== "undefined" ? $n.MailRulesStore : void 0;
-    MailRulesTemplates = typeof $n.MailRulesTemplates !== "undefined" ? $n.MailRulesTemplates : void 0;
-    MailboxPerspective = typeof $n.MailboxPerspective !== "undefined" ? $n.MailboxPerspective : void 0;
-    Matcher3 = typeof $n.Matcher !== "undefined" ? $n.Matcher : void 0;
-    Message = typeof $n.Message !== "undefined" ? $n.Message : void 0;
-    MessageBodyProcessor = typeof $n.MessageBodyProcessor !== "undefined" ? $n.MessageBodyProcessor : void 0;
-    MessageStore = typeof $n.MessageStore !== "undefined" ? $n.MessageStore : void 0;
-    MessageViewExtension = typeof $n.MessageViewExtension !== "undefined" ? $n.MessageViewExtension : void 0;
-    Model5 = typeof $n.Model !== "undefined" ? $n.Model : void 0;
-    ModelSearchIndexer = typeof $n.ModelSearchIndexer !== "undefined" ? $n.ModelSearchIndexer : void 0;
-    MutableQuerySubscription = typeof $n.MutableQuerySubscription !== "undefined" ? $n.MutableQuerySubscription : void 0;
-    N1CloudAPI = typeof $n.N1CloudAPI !== "undefined" ? $n.N1CloudAPI : void 0;
-    NativeNotifications = typeof $n.NativeNotifications !== "undefined" ? $n.NativeNotifications : void 0;
-    NylasAPI = typeof $n.NylasAPI !== "undefined" ? $n.NylasAPI : void 0;
-    NylasAPIHelpers = typeof $n.NylasAPIHelpers !== "undefined" ? $n.NylasAPIHelpers : void 0;
-    NylasAPIRequest = typeof $n.NylasAPIRequest !== "undefined" ? $n.NylasAPIRequest : void 0;
-    NylasLongConnection = typeof $n.NylasLongConnection !== "undefined" ? $n.NylasLongConnection : void 0;
-    NylasTestUtils = typeof $n.NylasTestUtils !== "undefined" ? $n.NylasTestUtils : void 0;
-    ObservableListDataSource = typeof $n.ObservableListDataSource !== "undefined" ? $n.ObservableListDataSource : void 0;
-    OnlineStatusStore = typeof $n.OnlineStatusStore !== "undefined" ? $n.OnlineStatusStore : void 0;
-    PreferencesUIStore = typeof $n.PreferencesUIStore !== "undefined" ? $n.PreferencesUIStore : void 0;
-    QueryResultSet = typeof $n.QueryResultSet !== "undefined" ? $n.QueryResultSet : void 0;
-    QuerySubscription = typeof $n.QuerySubscription !== "undefined" ? $n.QuerySubscription : void 0;
-    QuotedHTMLTransformer = typeof $n.QuotedHTMLTransformer !== "undefined" ? $n.QuotedHTMLTransformer : void 0;
-    React2 = typeof $n.React !== "undefined" ? $n.React : void 0;
-    ReactDOM = typeof $n.ReactDOM !== "undefined" ? $n.ReactDOM : void 0;
-    Reflux2 = typeof $n.Reflux !== "undefined" ? $n.Reflux : void 0;
-    RegExpUtils = typeof $n.RegExpUtils !== "undefined" ? $n.RegExpUtils : void 0;
-    ReprocessMailRulesTask = typeof $n.ReprocessMailRulesTask !== "undefined" ? $n.ReprocessMailRulesTask : void 0;
-    Rx = typeof $n.Rx !== "undefined" ? $n.Rx : void 0;
-    SanitizeTransformer = typeof $n.SanitizeTransformer !== "undefined" ? $n.SanitizeTransformer : void 0;
-    SearchIndexScheduler = typeof $n.SearchIndexScheduler !== "undefined" ? $n.SearchIndexScheduler : void 0;
-    SearchQueryParser = typeof $n.SearchQueryParser !== "undefined" ? $n.SearchQueryParser : void 0;
-    SearchableComponentStore = typeof $n.SearchableComponentStore !== "undefined" ? $n.SearchableComponentStore : void 0;
-    SendActionsStore = typeof $n.SendActionsStore !== "undefined" ? $n.SendActionsStore : void 0;
-    SendDraftTask = typeof $n.SendDraftTask !== "undefined" ? $n.SendDraftTask : void 0;
-    SignatureStore = typeof $n.SignatureStore !== "undefined" ? $n.SignatureStore : void 0;
-    SoundRegistry = typeof $n.SoundRegistry !== "undefined" ? $n.SoundRegistry : void 0;
-    Spellchecker2 = typeof $n.Spellchecker !== "undefined" ? $n.Spellchecker : void 0;
-    SyncbackCategoryTask = typeof $n.SyncbackCategoryTask !== "undefined" ? $n.SyncbackCategoryTask : void 0;
-    SyncbackEventTask = typeof $n.SyncbackEventTask !== "undefined" ? $n.SyncbackEventTask : void 0;
-    SyncbackMetadataTask = typeof $n.SyncbackMetadataTask !== "undefined" ? $n.SyncbackMetadataTask : void 0;
-    SystemStartService = typeof $n.SystemStartService !== "undefined" ? $n.SystemStartService : void 0;
-    Task = typeof $n.Task !== "undefined" ? $n.Task : void 0;
-    TaskFactory = typeof $n.TaskFactory !== "undefined" ? $n.TaskFactory : void 0;
-    TaskQueue = typeof $n.TaskQueue !== "undefined" ? $n.TaskQueue : void 0;
-    TaskQueueStatusStore = typeof $n.TaskQueueStatusStore !== "undefined" ? $n.TaskQueueStatusStore : void 0;
-    Thread = typeof $n.Thread !== "undefined" ? $n.Thread : void 0;
-    UndoRedoStore = typeof $n.UndoRedoStore !== "undefined" ? $n.UndoRedoStore : void 0;
-    Utils7 = typeof $n.Utils !== "undefined" ? $n.Utils : void 0;
-    VirtualDOMUtils = typeof $n.VirtualDOMUtils !== "undefined" ? $n.VirtualDOMUtils : void 0;
-    WorkspaceStore = typeof $n.WorkspaceStore !== "undefined" ? $n.WorkspaceStore : void 0;
+    __safe = (name2) => {
+      try {
+        return $n[name2];
+      } catch (_e) {
+        return void 0;
+      }
+    };
+    APIError2 = __safe("APIError");
+    APMWrapper = __safe("APMWrapper");
+    Account2 = __safe("Account");
+    AccountStore2 = __safe("AccountStore");
+    Actions2 = __safe("Actions");
+    Attributes = __safe("Attributes");
+    BadgeStore = __safe("BadgeStore");
+    BaseDraftTask = __safe("BaseDraftTask");
+    Calendar = __safe("Calendar");
+    CalendarDataSource = __safe("CalendarDataSource");
+    Category = __safe("Category");
+    CategoryStore2 = __safe("CategoryStore");
+    ComponentRegistry = __safe("ComponentRegistry");
+    ComposerExtension = __safe("ComposerExtension");
+    Contact2 = __safe("Contact");
+    ContactStore = __safe("ContactStore");
+    ContenteditableExtension = __safe("ContenteditableExtension");
+    CustomContenteditableComponents = __safe("CustomContenteditableComponents");
+    DOMUtils = __safe("DOMUtils");
+    DatabaseStore2 = __safe("DatabaseStore");
+    DateUtils = __safe("DateUtils");
+    DefaultClientHelper = __safe("DefaultClientHelper");
+    DestroyModelTask = __safe("DestroyModelTask");
+    DraftHelpers = __safe("DraftHelpers");
+    DraftStore = __safe("DraftStore");
+    EditorAPI = __safe("EditorAPI");
+    Event2 = __safe("Event");
+    ExtensionRegistry = __safe("ExtensionRegistry");
+    FeatureUsageStore = __safe("FeatureUsageStore");
+    FileDownloadStore = __safe("FileDownloadStore");
+    FocusedContactsStore = __safe("FocusedContactsStore");
+    FocusedContentStore = __safe("FocusedContentStore");
+    FocusedPerspectiveStore = __safe("FocusedPerspectiveStore");
+    FolderSyncProgressStore = __safe("FolderSyncProgressStore");
+    IdentityStore = __safe("IdentityStore");
+    InflatesDraftClientId = __safe("InflatesDraftClientId");
+    InlineStyleTransformer = __safe("InlineStyleTransformer");
+    KeyManager2 = __safe("KeyManager");
+    MailRulesStore = __safe("MailRulesStore");
+    MailRulesTemplates = __safe("MailRulesTemplates");
+    MailboxPerspective = __safe("MailboxPerspective");
+    Matcher3 = __safe("Matcher");
+    Message = __safe("Message");
+    MessageBodyProcessor = __safe("MessageBodyProcessor");
+    MessageStore = __safe("MessageStore");
+    MessageViewExtension = __safe("MessageViewExtension");
+    Model5 = __safe("Model");
+    ModelSearchIndexer = __safe("ModelSearchIndexer");
+    MutableQuerySubscription = __safe("MutableQuerySubscription");
+    N1CloudAPI = __safe("N1CloudAPI");
+    NativeNotifications = __safe("NativeNotifications");
+    NylasAPI = __safe("NylasAPI");
+    NylasAPIHelpers = __safe("NylasAPIHelpers");
+    NylasAPIRequest = __safe("NylasAPIRequest");
+    NylasLongConnection = __safe("NylasLongConnection");
+    NylasTestUtils = __safe("NylasTestUtils");
+    ObservableListDataSource = __safe("ObservableListDataSource");
+    OnlineStatusStore = __safe("OnlineStatusStore");
+    PreferencesUIStore = __safe("PreferencesUIStore");
+    QueryResultSet = __safe("QueryResultSet");
+    QuerySubscription = __safe("QuerySubscription");
+    QuotedHTMLTransformer = __safe("QuotedHTMLTransformer");
+    React2 = __safe("React");
+    ReactDOM = __safe("ReactDOM");
+    Reflux2 = __safe("Reflux");
+    RegExpUtils = __safe("RegExpUtils");
+    ReprocessMailRulesTask = __safe("ReprocessMailRulesTask");
+    Rx = __safe("Rx");
+    SanitizeTransformer = __safe("SanitizeTransformer");
+    SearchIndexScheduler = __safe("SearchIndexScheduler");
+    SearchQueryParser = __safe("SearchQueryParser");
+    SearchableComponentStore = __safe("SearchableComponentStore");
+    SendActionsStore = __safe("SendActionsStore");
+    SendDraftTask = __safe("SendDraftTask");
+    SignatureStore = __safe("SignatureStore");
+    SoundRegistry = __safe("SoundRegistry");
+    Spellchecker2 = __safe("Spellchecker");
+    SyncbackCategoryTask = __safe("SyncbackCategoryTask");
+    SyncbackEventTask = __safe("SyncbackEventTask");
+    SyncbackMetadataTask = __safe("SyncbackMetadataTask");
+    SystemStartService = __safe("SystemStartService");
+    Task = __safe("Task");
+    TaskFactory = __safe("TaskFactory");
+    TaskQueue = __safe("TaskQueue");
+    TaskQueueStatusStore = __safe("TaskQueueStatusStore");
+    Thread = __safe("Thread");
+    UndoRedoStore = __safe("UndoRedoStore");
+    Utils7 = __safe("Utils");
+    VirtualDOMUtils = __safe("VirtualDOMUtils");
+    WorkspaceStore = __safe("WorkspaceStore");
   }
 });
 
@@ -202848,6 +201603,83 @@ ${message.computePlainText()}`
   }
 });
 
+// src/flux/errors.js
+var errors_exports2 = {};
+__export(errors_exports2, {
+  APIError: () => APIError3,
+  RequestEnsureOnceError: () => RequestEnsureOnceError
+});
+var APIError3, RequestEnsureOnceError;
+var init_errors2 = __esm({
+  "src/flux/errors.js"() {
+    APIError3 = class _APIError extends Error {
+      static NonReportableStatusCodes = [
+        0,
+        // When errors like ETIMEDOUT, ECONNABORTED or ESOCKETTIMEDOUT occur from the client
+        401,
+        // Don't report `Incorrect username or password`
+        404,
+        // Don't report not-founds
+        408,
+        // Timeout error code
+        429
+        // Too many requests
+      ];
+      constructor({
+        error,
+        message,
+        response,
+        body,
+        requestOptions,
+        statusCode
+      } = {}) {
+        super();
+        this.name = "APIError";
+        this.error = error;
+        this.body = body;
+        this.requestOptions = requestOptions;
+        this.statusCode = statusCode;
+        this.message = message;
+        if (this.statusCode == null) {
+          if (response && response.statusCode != null) {
+            this.statusCode = response.statusCode;
+          }
+          if (error) {
+            if (error.code) {
+              this.statusCode = 0;
+            } else {
+              this.statusCode = 500;
+            }
+          }
+        }
+        if (this.requestOptions == null) {
+          this.requestOptions = response ? response.requestOptions : null;
+        }
+        this.stack = new Error().stack;
+        if (!this.message) {
+          if (this.body) {
+            this.message = this.body.message || this.body.error || JSON.stringify(this.body);
+          } else {
+            this.message = this.error ? this.error.message || this.error.toString() : null;
+          }
+        }
+        this.errorType = this.body ? this.body.type : null;
+      }
+      shouldReportError() {
+        return !_APIError.NonReportableStatusCodes.includes(this.statusCode);
+      }
+      fromJSON(json2 = {}) {
+        for (const key of Object.keys(json2)) {
+          this[key] = json2[key];
+        }
+        return this;
+      }
+    };
+    RequestEnsureOnceError = class extends Error {
+    };
+  }
+});
+
 // src/flux/nylas-long-connection.js
 var import_node_module15, import_node_url2, import_event_kit, import_meta16, nodeRequire16, IdentityStore2, CONNECTION_TIMEOUT, PROCESS_BUFFER_THROTTLE, Status, NylasLongConnection2, nylas_long_connection_default;
 var init_nylas_long_connection = __esm({
@@ -202972,7 +201804,7 @@ var init_nylas_long_connection = __esm({
           const accountToken = this._api.accessTokenForAccountId(this._accountId);
           const identityToken = IdentityStore2.identity()?.token || "";
           if (!accountToken) {
-            throw new APIError2({
+            throw new APIError3({
               statusCode: 401,
               message: `Can't establish NylasLongConnection: No account token available for account ${this._accountId}`
             });
@@ -202990,7 +201822,7 @@ var init_nylas_long_connection = __esm({
             this._httpStatusCode = responseStream.statusCode;
             if (responseStream.statusCode !== 200) {
               responseStream.on("data", (chunk2) => {
-                const error = new APIError2({
+                const error = new APIError3({
                   response: responseStream,
                   message: chunk2.toString("utf8"),
                   statusCode: responseStream.statusCode
@@ -203001,7 +201833,7 @@ var init_nylas_long_connection = __esm({
             }
             responseStream.setEncoding("utf8");
             responseStream.on("error", (error) => {
-              this.onError(new APIError2({ error }));
+              this.onError(new APIError3({ error }));
             });
             responseStream.on("close", () => this.close());
             responseStream.on("end", () => this.close());
@@ -203017,7 +201849,7 @@ var init_nylas_long_connection = __esm({
           this._req.setTimeout(60 * 60 * 1e3);
           this._req.setSocketKeepAlive(true);
           this._req.on("error", (error) => {
-            this.onError(new APIError2({ error }));
+            this.onError(new APIError3({ error }));
           });
           this._req.on("socket", (socket) => {
             this.setStatus(Status.Connecting);
@@ -203026,7 +201858,7 @@ var init_nylas_long_connection = __esm({
               this.closeIfDataStops();
             });
             socket.on("error", (error) => {
-              this.onError(new APIError2({ error }));
+              this.onError(new APIError3({ error }));
             });
             socket.on("close", () => this.close());
             socket.on("end", () => this.close());
@@ -203335,7 +202167,7 @@ var init_task = __esm({
       // similar way. We retry on temproary API error codes and permenantly
       // fail on others.
       apiErrorHandler = (err = {}) => {
-        if (err instanceof APIError2) {
+        if (err instanceof APIError3) {
           if (PermanentErrorCodes.includes(err.statusCode)) {
             return Promise.resolve([_Task.Status.Failed, err]);
           }
@@ -203905,7 +202737,7 @@ var init_identity_store = __esm({
               requestId
             });
             if (error || response.statusCode > 299) {
-              const apiError = new APIError2({
+              const apiError = new APIError3({
                 error,
                 response,
                 body,
@@ -203957,8 +202789,8 @@ var init_nylas_api_request = __esm({
           return await this._asyncRequest(this.options);
         } catch (error) {
           let apiError = error;
-          if (!(apiError instanceof APIError2)) {
-            apiError = new APIError2({ error: apiError, statusCode: 500 });
+          if (!(apiError instanceof APIError3)) {
+            apiError = new APIError3({ error: apiError, statusCode: 500 });
           }
           this._notifyOfAPIError(apiError);
           throw apiError;
@@ -203986,7 +202818,7 @@ var init_nylas_api_request = __esm({
               }
               return resolve2(body);
             }
-            const apiError = new APIError2({
+            const apiError = new APIError3({
               body,
               error,
               response,
@@ -204002,7 +202834,7 @@ var init_nylas_api_request = __esm({
           });
           req.on("abort", () => {
             const statusCode = 0;
-            const abortedError = new APIError2({
+            const abortedError = new APIError3({
               statusCode,
               body: "Request aborted by client"
             });
@@ -204015,7 +202847,7 @@ var init_nylas_api_request = __esm({
           });
           req.on("aborted", () => {
             const statusCode = "ECONNABORTED";
-            const abortedError = new APIError2({
+            const abortedError = new APIError3({
               statusCode,
               body: "Request aborted by server"
             });
@@ -204080,7 +202912,7 @@ var init_nylas_api_request = __esm({
             sendImmediately: true
           };
         } catch (error) {
-          throw new APIError2({ error, statusCode: 400 });
+          throw new APIError3({ error, statusCode: 400 });
         }
       }
     };
@@ -204308,7 +203140,7 @@ var init_syncback_task_api_request = __esm({
               );
               if (failed) {
                 unsubscribe();
-                const error = new APIError2({
+                const error = new APIError3({
                   error: failed.error,
                   body: {
                     message: failed.error.message,
@@ -216707,7 +215539,7 @@ var init_syncback_model_task = __esm({
         return model;
       };
       handleRemoteError = (err) => {
-        if (err instanceof APIError2) {
+        if (err instanceof APIError3) {
           if (nylas_api_default.PermanentErrorCodes.includes(err.statusCode)) {
             return Promise.resolve([Task2.Status.Failed, err]);
           }
@@ -217050,7 +215882,7 @@ Error: Returned a message without accountId`
           return Promise.resolve(Task2.Status.Continue);
         }
         let message = err.message;
-        if (err instanceof APIError2) {
+        if (err instanceof APIError3) {
           const errorMessage = err.body?.message || "";
           message = `Sorry, this message could not be sent, please try again.`;
           message += `
@@ -217166,7 +215998,7 @@ var init_ensure_message_in_sent_folder_task = __esm({
           const errorMessage = `Your message successfully sent; however, we had trouble saving your message, "${this.message.subject}", to your Sent folder.
 
 ${err.message}`;
-          if (err instanceof APIError2) {
+          if (err instanceof APIError3) {
             if (nylas_api_default.PermanentErrorCodes.includes(err.statusCode)) {
               NylasEnv.showErrorDialog(errorMessage, {
                 showInMainWindow: true,
@@ -217349,7 +216181,7 @@ var init_change_mail_task = __esm({
           this._ensureLocksRemoved();
           return Promise.resolve(Task2.Status.Success);
         }).catch((err) => {
-          if (err instanceof APIError2 && !nylas_api_default.PermanentErrorCodes.includes(err.statusCode)) {
+          if (err instanceof APIError3 && !nylas_api_default.PermanentErrorCodes.includes(err.statusCode)) {
             return Promise.resolve(Task2.Status.Retry);
           }
           this._isReverting = true;
@@ -217387,7 +216219,7 @@ Error message: ${err.message}`
               }
             }
           }).run().catch((err) => {
-            if (err instanceof APIError2 && err.statusCode === 404) {
+            if (err instanceof APIError3 && err.statusCode === 404) {
               return Promise.resolve();
             }
             return Promise.reject(err);
@@ -217579,7 +216411,7 @@ var init_syncback_category_task = __esm({
           return database_store_default.inTransaction(
             (t) => t.persistModel(this.category)
           );
-        }).thenReturn(Task2.Status.Success).catch(APIError2, async (err) => {
+        }).thenReturn(Task2.Status.Success).catch(APIError3, async (err) => {
           if (!nylas_api_default.PermanentErrorCodes.includes(err.statusCode)) {
             return Task2.Status.Retry;
           }
@@ -220158,6 +218990,425 @@ var require_workspace_store = __commonJS({
     };
     WorkspaceStore4.initClass();
     module2.exports = new WorkspaceStore4();
+  }
+});
+
+// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js
+var require_react_dom_production = __commonJS({
+  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
+    "use strict";
+    var React8 = require_react();
+    function formatProdErrorMessage(code) {
+      var url5 = "https://react.dev/errors/" + code;
+      if (1 < arguments.length) {
+        url5 += "?args[]=" + encodeURIComponent(arguments[1]);
+        for (var i = 2; i < arguments.length; i++)
+          url5 += "&args[]=" + encodeURIComponent(arguments[i]);
+      }
+      return "Minified React error #" + code + "; visit " + url5 + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
+    }
+    function noop2() {
+    }
+    var Internals = {
+      d: {
+        f: noop2,
+        r: function() {
+          throw Error(formatProdErrorMessage(522));
+        },
+        D: noop2,
+        C: noop2,
+        L: noop2,
+        m: noop2,
+        X: noop2,
+        S: noop2,
+        M: noop2
+      },
+      p: 0,
+      findDOMNode: null
+    };
+    var REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal");
+    function createPortal$1(children, containerInfo, implementation) {
+      var key = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
+      return {
+        $$typeof: REACT_PORTAL_TYPE,
+        key: null == key ? null : "" + key,
+        children,
+        containerInfo,
+        implementation
+      };
+    }
+    var ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    function getCrossOriginStringAs(as, input) {
+      if ("font" === as) return "";
+      if ("string" === typeof input)
+        return "use-credentials" === input ? input : "";
+    }
+    exports2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
+    exports2.createPortal = function(children, container) {
+      var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
+      if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType)
+        throw Error(formatProdErrorMessage(299));
+      return createPortal$1(children, container, null, key);
+    };
+    exports2.flushSync = function(fn2) {
+      var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
+      try {
+        if (ReactSharedInternals.T = null, Internals.p = 2, fn2) return fn2();
+      } finally {
+        ReactSharedInternals.T = previousTransition, Internals.p = previousUpdatePriority, Internals.d.f();
+      }
+    };
+    exports2.preconnect = function(href, options) {
+      "string" === typeof href && (options ? (options = options.crossOrigin, options = "string" === typeof options ? "use-credentials" === options ? options : "" : void 0) : options = null, Internals.d.C(href, options));
+    };
+    exports2.prefetchDNS = function(href) {
+      "string" === typeof href && Internals.d.D(href);
+    };
+    exports2.preinit = function(href, options) {
+      if ("string" === typeof href && options && "string" === typeof options.as) {
+        var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin), integrity = "string" === typeof options.integrity ? options.integrity : void 0, fetchPriority = "string" === typeof options.fetchPriority ? options.fetchPriority : void 0;
+        "style" === as ? Internals.d.S(
+          href,
+          "string" === typeof options.precedence ? options.precedence : void 0,
+          {
+            crossOrigin,
+            integrity,
+            fetchPriority
+          }
+        ) : "script" === as && Internals.d.X(href, {
+          crossOrigin,
+          integrity,
+          fetchPriority,
+          nonce: "string" === typeof options.nonce ? options.nonce : void 0
+        });
+      }
+    };
+    exports2.preinitModule = function(href, options) {
+      if ("string" === typeof href)
+        if ("object" === typeof options && null !== options) {
+          if (null == options.as || "script" === options.as) {
+            var crossOrigin = getCrossOriginStringAs(
+              options.as,
+              options.crossOrigin
+            );
+            Internals.d.M(href, {
+              crossOrigin,
+              integrity: "string" === typeof options.integrity ? options.integrity : void 0,
+              nonce: "string" === typeof options.nonce ? options.nonce : void 0
+            });
+          }
+        } else null == options && Internals.d.M(href);
+    };
+    exports2.preload = function(href, options) {
+      if ("string" === typeof href && "object" === typeof options && null !== options && "string" === typeof options.as) {
+        var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin);
+        Internals.d.L(href, as, {
+          crossOrigin,
+          integrity: "string" === typeof options.integrity ? options.integrity : void 0,
+          nonce: "string" === typeof options.nonce ? options.nonce : void 0,
+          type: "string" === typeof options.type ? options.type : void 0,
+          fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0,
+          referrerPolicy: "string" === typeof options.referrerPolicy ? options.referrerPolicy : void 0,
+          imageSrcSet: "string" === typeof options.imageSrcSet ? options.imageSrcSet : void 0,
+          imageSizes: "string" === typeof options.imageSizes ? options.imageSizes : void 0,
+          media: "string" === typeof options.media ? options.media : void 0
+        });
+      }
+    };
+    exports2.preloadModule = function(href, options) {
+      if ("string" === typeof href)
+        if (options) {
+          var crossOrigin = getCrossOriginStringAs(options.as, options.crossOrigin);
+          Internals.d.m(href, {
+            as: "string" === typeof options.as && "script" !== options.as ? options.as : void 0,
+            crossOrigin,
+            integrity: "string" === typeof options.integrity ? options.integrity : void 0
+          });
+        } else Internals.d.m(href);
+    };
+    exports2.requestFormReset = function(form) {
+      Internals.d.r(form);
+    };
+    exports2.unstable_batchedUpdates = function(fn2, a) {
+      return fn2(a);
+    };
+    exports2.useFormState = function(action, initialState, permalink) {
+      return ReactSharedInternals.H.useFormState(action, initialState, permalink);
+    };
+    exports2.useFormStatus = function() {
+      return ReactSharedInternals.H.useHostTransitionStatus();
+    };
+    exports2.version = "19.2.8";
+  }
+});
+
+// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.development.js
+var require_react_dom_development = __commonJS({
+  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.development.js"(exports2) {
+    "use strict";
+    "production" !== process.env.NODE_ENV && (function() {
+      function noop2() {
+      }
+      function testStringCoercion(value) {
+        return "" + value;
+      }
+      function createPortal$1(children, containerInfo, implementation) {
+        var key = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
+        try {
+          testStringCoercion(key);
+          var JSCompiler_inline_result = false;
+        } catch (e) {
+          JSCompiler_inline_result = true;
+        }
+        JSCompiler_inline_result && (console.error(
+          "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
+          "function" === typeof Symbol && Symbol.toStringTag && key[Symbol.toStringTag] || key.constructor.name || "Object"
+        ), testStringCoercion(key));
+        return {
+          $$typeof: REACT_PORTAL_TYPE,
+          key: null == key ? null : "" + key,
+          children,
+          containerInfo,
+          implementation
+        };
+      }
+      function getCrossOriginStringAs(as, input) {
+        if ("font" === as) return "";
+        if ("string" === typeof input)
+          return "use-credentials" === input ? input : "";
+      }
+      function getValueDescriptorExpectingObjectForWarning(thing) {
+        return null === thing ? "`null`" : void 0 === thing ? "`undefined`" : "" === thing ? "an empty string" : 'something with type "' + typeof thing + '"';
+      }
+      function getValueDescriptorExpectingEnumForWarning(thing) {
+        return null === thing ? "`null`" : void 0 === thing ? "`undefined`" : "" === thing ? "an empty string" : "string" === typeof thing ? JSON.stringify(thing) : "number" === typeof thing ? "`" + thing + "`" : 'something with type "' + typeof thing + '"';
+      }
+      function resolveDispatcher() {
+        var dispatcher = ReactSharedInternals.H;
+        null === dispatcher && console.error(
+          "Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem."
+        );
+        return dispatcher;
+      }
+      "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
+      var React8 = require_react(), Internals = {
+        d: {
+          f: noop2,
+          r: function() {
+            throw Error(
+              "Invalid form element. requestFormReset must be passed a form that was rendered by React."
+            );
+          },
+          D: noop2,
+          C: noop2,
+          L: noop2,
+          m: noop2,
+          X: noop2,
+          S: noop2,
+          M: noop2
+        },
+        p: 0,
+        findDOMNode: null
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
+        "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
+      );
+      exports2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
+      exports2.createPortal = function(children, container) {
+        var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
+        if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType)
+          throw Error("Target container is not a DOM element.");
+        return createPortal$1(children, container, null, key);
+      };
+      exports2.flushSync = function(fn2) {
+        var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
+        try {
+          if (ReactSharedInternals.T = null, Internals.p = 2, fn2)
+            return fn2();
+        } finally {
+          ReactSharedInternals.T = previousTransition, Internals.p = previousUpdatePriority, Internals.d.f() && console.error(
+            "flushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task."
+          );
+        }
+      };
+      exports2.preconnect = function(href, options) {
+        "string" === typeof href && href ? null != options && "object" !== typeof options ? console.error(
+          "ReactDOM.preconnect(): Expected the `options` argument (second) to be an object but encountered %s instead. The only supported option at this time is `crossOrigin` which accepts a string.",
+          getValueDescriptorExpectingEnumForWarning(options)
+        ) : null != options && "string" !== typeof options.crossOrigin && console.error(
+          "ReactDOM.preconnect(): Expected the `crossOrigin` option (second argument) to be a string but encountered %s instead. Try removing this option or passing a string value instead.",
+          getValueDescriptorExpectingObjectForWarning(options.crossOrigin)
+        ) : console.error(
+          "ReactDOM.preconnect(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
+          getValueDescriptorExpectingObjectForWarning(href)
+        );
+        "string" === typeof href && (options ? (options = options.crossOrigin, options = "string" === typeof options ? "use-credentials" === options ? options : "" : void 0) : options = null, Internals.d.C(href, options));
+      };
+      exports2.prefetchDNS = function(href) {
+        if ("string" !== typeof href || !href)
+          console.error(
+            "ReactDOM.prefetchDNS(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
+            getValueDescriptorExpectingObjectForWarning(href)
+          );
+        else if (1 < arguments.length) {
+          var options = arguments[1];
+          "object" === typeof options && options.hasOwnProperty("crossOrigin") ? console.error(
+            "ReactDOM.prefetchDNS(): Expected only one argument, `href`, but encountered %s as a second argument instead. This argument is reserved for future options and is currently disallowed. It looks like the you are attempting to set a crossOrigin property for this DNS lookup hint. Browsers do not perform DNS queries using CORS and setting this attribute on the resource hint has no effect. Try calling ReactDOM.prefetchDNS() with just a single string argument, `href`.",
+            getValueDescriptorExpectingEnumForWarning(options)
+          ) : console.error(
+            "ReactDOM.prefetchDNS(): Expected only one argument, `href`, but encountered %s as a second argument instead. This argument is reserved for future options and is currently disallowed. Try calling ReactDOM.prefetchDNS() with just a single string argument, `href`.",
+            getValueDescriptorExpectingEnumForWarning(options)
+          );
+        }
+        "string" === typeof href && Internals.d.D(href);
+      };
+      exports2.preinit = function(href, options) {
+        "string" === typeof href && href ? null == options || "object" !== typeof options ? console.error(
+          "ReactDOM.preinit(): Expected the `options` argument (second) to be an object with an `as` property describing the type of resource to be preinitialized but encountered %s instead.",
+          getValueDescriptorExpectingEnumForWarning(options)
+        ) : "style" !== options.as && "script" !== options.as && console.error(
+          'ReactDOM.preinit(): Expected the `as` property in the `options` argument (second) to contain a valid value describing the type of resource to be preinitialized but encountered %s instead. Valid values for `as` are "style" and "script".',
+          getValueDescriptorExpectingEnumForWarning(options.as)
+        ) : console.error(
+          "ReactDOM.preinit(): Expected the `href` argument (first) to be a non-empty string but encountered %s instead.",
+          getValueDescriptorExpectingObjectForWarning(href)
+        );
+        if ("string" === typeof href && options && "string" === typeof options.as) {
+          var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin), integrity = "string" === typeof options.integrity ? options.integrity : void 0, fetchPriority = "string" === typeof options.fetchPriority ? options.fetchPriority : void 0;
+          "style" === as ? Internals.d.S(
+            href,
+            "string" === typeof options.precedence ? options.precedence : void 0,
+            {
+              crossOrigin,
+              integrity,
+              fetchPriority
+            }
+          ) : "script" === as && Internals.d.X(href, {
+            crossOrigin,
+            integrity,
+            fetchPriority,
+            nonce: "string" === typeof options.nonce ? options.nonce : void 0
+          });
+        }
+      };
+      exports2.preinitModule = function(href, options) {
+        var encountered = "";
+        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
+        void 0 !== options && "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : options && "as" in options && "script" !== options.as && (encountered += " The `as` option encountered was " + getValueDescriptorExpectingEnumForWarning(options.as) + ".");
+        if (encountered)
+          console.error(
+            "ReactDOM.preinitModule(): Expected up to two arguments, a non-empty `href` string and, optionally, an `options` object with a valid `as` property.%s",
+            encountered
+          );
+        else
+          switch (encountered = options && "string" === typeof options.as ? options.as : "script", encountered) {
+            case "script":
+              break;
+            default:
+              encountered = getValueDescriptorExpectingEnumForWarning(encountered), console.error(
+                'ReactDOM.preinitModule(): Currently the only supported "as" type for this function is "script" but received "%s" instead. This warning was generated for `href` "%s". In the future other module types will be supported, aligning with the import-attributes proposal. Learn more here: (https://github.com/tc39/proposal-import-attributes)',
+                encountered,
+                href
+              );
+          }
+        if ("string" === typeof href)
+          if ("object" === typeof options && null !== options) {
+            if (null == options.as || "script" === options.as)
+              encountered = getCrossOriginStringAs(
+                options.as,
+                options.crossOrigin
+              ), Internals.d.M(href, {
+                crossOrigin: encountered,
+                integrity: "string" === typeof options.integrity ? options.integrity : void 0,
+                nonce: "string" === typeof options.nonce ? options.nonce : void 0
+              });
+          } else null == options && Internals.d.M(href);
+      };
+      exports2.preload = function(href, options) {
+        var encountered = "";
+        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
+        null == options || "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : "string" === typeof options.as && options.as || (encountered += " The `as` option encountered was " + getValueDescriptorExpectingObjectForWarning(options.as) + ".");
+        encountered && console.error(
+          'ReactDOM.preload(): Expected two arguments, a non-empty `href` string and an `options` object with an `as` property valid for a `<link rel="preload" as="..." />` tag.%s',
+          encountered
+        );
+        if ("string" === typeof href && "object" === typeof options && null !== options && "string" === typeof options.as) {
+          encountered = options.as;
+          var crossOrigin = getCrossOriginStringAs(
+            encountered,
+            options.crossOrigin
+          );
+          Internals.d.L(href, encountered, {
+            crossOrigin,
+            integrity: "string" === typeof options.integrity ? options.integrity : void 0,
+            nonce: "string" === typeof options.nonce ? options.nonce : void 0,
+            type: "string" === typeof options.type ? options.type : void 0,
+            fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0,
+            referrerPolicy: "string" === typeof options.referrerPolicy ? options.referrerPolicy : void 0,
+            imageSrcSet: "string" === typeof options.imageSrcSet ? options.imageSrcSet : void 0,
+            imageSizes: "string" === typeof options.imageSizes ? options.imageSizes : void 0,
+            media: "string" === typeof options.media ? options.media : void 0
+          });
+        }
+      };
+      exports2.preloadModule = function(href, options) {
+        var encountered = "";
+        "string" === typeof href && href || (encountered += " The `href` argument encountered was " + getValueDescriptorExpectingObjectForWarning(href) + ".");
+        void 0 !== options && "object" !== typeof options ? encountered += " The `options` argument encountered was " + getValueDescriptorExpectingObjectForWarning(options) + "." : options && "as" in options && "string" !== typeof options.as && (encountered += " The `as` option encountered was " + getValueDescriptorExpectingObjectForWarning(options.as) + ".");
+        encountered && console.error(
+          'ReactDOM.preloadModule(): Expected two arguments, a non-empty `href` string and, optionally, an `options` object with an `as` property valid for a `<link rel="modulepreload" as="..." />` tag.%s',
+          encountered
+        );
+        "string" === typeof href && (options ? (encountered = getCrossOriginStringAs(
+          options.as,
+          options.crossOrigin
+        ), Internals.d.m(href, {
+          as: "string" === typeof options.as && "script" !== options.as ? options.as : void 0,
+          crossOrigin: encountered,
+          integrity: "string" === typeof options.integrity ? options.integrity : void 0
+        })) : Internals.d.m(href));
+      };
+      exports2.requestFormReset = function(form) {
+        Internals.d.r(form);
+      };
+      exports2.unstable_batchedUpdates = function(fn2, a) {
+        return fn2(a);
+      };
+      exports2.useFormState = function(action, initialState, permalink) {
+        return resolveDispatcher().useFormState(action, initialState, permalink);
+      };
+      exports2.useFormStatus = function() {
+        return resolveDispatcher().useHostTransitionStatus();
+      };
+      exports2.version = "19.2.8";
+      "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
+    })();
+  }
+});
+
+// ../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/index.js
+var require_react_dom = __commonJS({
+  "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/index.js"(exports2, module2) {
+    "use strict";
+    function checkDCE() {
+      if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
+        return;
+      }
+      if (process.env.NODE_ENV !== "production") {
+        throw new Error("^_^");
+      }
+      try {
+        __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (process.env.NODE_ENV === "production") {
+      checkDCE();
+      module2.exports = require_react_dom_production();
+    } else {
+      module2.exports = require_react_dom_development();
+    }
   }
 });
 
@@ -225715,6 +224966,14 @@ inflection/lib/inflection.js:
 he/he.js:
   (*! https://mths.be/he v1.2.0 by @mathias | MIT license *)
 
+is-plain-object/dist/is-plain-object.js:
+  (*!
+   * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+   *
+   * Copyright (c) 2014-2017, Jon Schlinkert.
+   * Released under the MIT License.
+   *)
+
 react-dom/cjs/react-dom.production.js:
   (**
    * @license React
@@ -225735,36 +224994,6 @@ react-dom/cjs/react-dom.development.js:
    *
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
-   *)
-
-react-dom/cjs/react-dom-test-utils.production.js:
-  (**
-   * @license React
-   * react-dom-test-utils.production.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
-react-dom/cjs/react-dom-test-utils.development.js:
-  (**
-   * @license React
-   * react-dom-test-utils.development.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
-is-plain-object/dist/is-plain-object.js:
-  (*!
-   * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
-   *
-   * Copyright (c) 2014-2017, Jon Schlinkert.
-   * Released under the MIT License.
    *)
 
 react-is/cjs/react-is.production.min.js:
