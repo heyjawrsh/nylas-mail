@@ -236,3 +236,29 @@ no bridge) and fix the deferred five first.
 
 Verification after round 2: lint green, smoke SMOKE_PASS, isomorphic-core +
 client-sync re-verified green.
+
+
+## Loop 17 — Coverage round 3 + the JSX-extension wall (commit 8b1c2216b)
+
+client-app: 10.23% → **12.10% lines** (445 tests, 18 files green). comp-services
+(search backends, 37) + comp-tasks (change-mail request bodies, 28) landed.
+
+### The wall, precisely
+comp-root-1/2/3 + comp-contenteditable (≈120 tests authored, deferred) import
+components whose chains reach JSX files through STATIC ESM imports in natively
+loaded modules. Node's ESM loader has no extension hooks — `.jsx` cannot be
+imported natively, period. Attempted the industry-standard fix (rename all 373
+`.jsx` → `.js`, JSX-in-.js with plugin-react/esbuild loaders): REVERTED —
+vitest 4's oxc parser rejects several class-property+JSX combinations that
+esbuild and the old pipeline accept. Two viable unblocks (next loop):
+1. oxc-compatible rewrite of the ~10 offending component files, then redo the
+   rename (mechanical, bounded);
+2. per-spec vi.mock of the bridge so the heavy chains never load (per-file
+   mocking, what comp-tasks successfully does).
+
+Harness durables this round: plugin-react wired, link-bridges.sh (pnpm installs
+wipe manual node_modules symlinks — relink via `link:test-bridges`),
+nylas-exports 90-name ESM surface, webFrame/menu/commands/config.observe stubs,
+mailbox-perspective super() fix, query-subscription duck-type guards.
+
+Yield: +1.9 pts/round at current mix; stores+components remain the mass.
