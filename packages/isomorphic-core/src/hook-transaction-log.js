@@ -1,6 +1,6 @@
 import _ from "underscore";
 
-module.exports = (db, sequelize, { only, onCreatedTransaction } = {}) => {
+export default (db, sequelize, { only, onCreatedTransaction } = {}) => {
 	if (!db.Transaction) {
 		throw new Error(
 			"Cannot enable transaction logging, there is no Transaction model class in this database.",

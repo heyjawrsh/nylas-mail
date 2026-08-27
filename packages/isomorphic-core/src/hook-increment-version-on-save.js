@@ -1,6 +1,6 @@
 import _ from "underscore";
 
-module.exports = (db) => {
+export default (db) => {
 	for (const modelName of Object.keys(db)) {
 		const model = db[modelName];
 

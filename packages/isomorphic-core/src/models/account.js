@@ -1,15 +1,38 @@
-import crypto from "crypto";
+import crypto from 'crypto';
 
-import { JSONColumn, JSONArrayColumn } from "../database-types";
-import {
-	credentialsForProvider,
-	smtpConfigFromSettings,
-} from "../auth-helpers";
-import { MAX_INDEXABLE_LENGTH } from "../db-utils";
+import {JSONColumn, JSONArrayColumn} from '../database-types.js';
+import {credentialsForProvider, smtpConfigFromSettings} from '../auth-helpers.js';
+import {MAX_INDEXABLE_LENGTH} from '../db-utils.js';
 
 const { DB_ENCRYPTION_ALGORITHM, DB_ENCRYPTION_PASSWORD } = process.env;
 
-module.exports = (sequelize, Sequelize) => {
+// Modern credential crypto: aes-XXX via createCipheriv with a random IV
+// (createCipher was removed from Node). Format: hex(iv) + ":" + hex(cipher).
+function deriveKey() {
+	return crypto.createHash("sha256").update(String(DB_ENCRYPTION_PASSWORD), "utf8").digest();
+}
+
+function encryptJson(json) {
+	const iv = crypto.randomBytes(16);
+	const cipher = crypto.createCipheriv(DB_ENCRYPTION_ALGORITHM, deriveKey(), iv);
+	let crypted = cipher.update(JSON.stringify(json), "utf8", "hex");
+	crypted += cipher.final("hex");
+	return `${iv.toString("hex")}:${crypted}`;
+}
+
+function decryptJson(payload) {
+	const [ivHex, body] = String(payload).split(":");
+	const decipher = crypto.createDecipheriv(
+		DB_ENCRYPTION_ALGORITHM,
+		deriveKey(),
+		Buffer.from(ivHex, "hex"),
+	);
+	let dec = decipher.update(body, "hex", "utf8");
+	dec += decipher.final("utf8");
+	return dec;
+}
+
+export default (sequelize, Sequelize) => {
 	const Account = sequelize.define(
 		"account",
 		{
@@ -91,13 +114,7 @@ module.exports = (sequelize, Sequelize) => {
 		if (!(json instanceof Object))
 			throw new Error("Call setCredentials with JSON!");
 		if (DB_ENCRYPTION_ALGORITHM && DB_ENCRYPTION_PASSWORD) {
-			const cipher = crypto.createCipher(
-				DB_ENCRYPTION_ALGORITHM,
-				DB_ENCRYPTION_PASSWORD,
-			);
-			let crypted = cipher.update(JSON.stringify(json), "utf8", "hex");
-			crypted += cipher.final("hex");
-			this.connectionCredentials = crypted;
+			this.connectionCredentials = encryptJson(json);
 		} else {
 			this.connectionCredentials = JSON.stringify(json);
 		}
@@ -105,12 +122,7 @@ module.exports = (sequelize, Sequelize) => {
 	Account.prototype.decryptedCredentials = function decryptedCredentials() {
 		let dec = this.connectionCredentials;
 		if (DB_ENCRYPTION_ALGORITHM && DB_ENCRYPTION_PASSWORD) {
-			const decipher = crypto.createDecipher(
-				DB_ENCRYPTION_ALGORITHM,
-				DB_ENCRYPTION_PASSWORD,
-			);
-			dec = decipher.update(this.connectionCredentials, "hex", "utf8");
-			dec += decipher.final("utf8");
+			dec = decryptJson(this.connectionCredentials);
 		}
 		try {
 			return JSON.parse(dec);

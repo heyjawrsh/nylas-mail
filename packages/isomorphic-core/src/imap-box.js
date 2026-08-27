@@ -1,11 +1,11 @@
 import _ from "underscore";
-import { RetryableError } from "./errors";
-import { IMAPConnectionNotReadyError } from "./imap-errors";
+import { RetryableError } from "./errors.js";
+import { IMAPConnectionNotReadyError } from "./imap-errors.js";
 import {
 	bodySpecToFetchQuery,
 	criteriaToSearchQuery,
 	imapflowStructToLegacy,
-} from "./imap-translators";
+} from "./imap-translators.js";
 
 /*
 IMAPBox uses Proxy to wrap the mailbox exposed by the connection. It provides
@@ -358,4 +358,4 @@ function _filterHeaderFields(headerBuffer, fields) {
 	return Buffer.from(`${kept.join("\r\n")}\r\n`);
 }
 
-module.exports = IMAPBox;
+export default IMAPBox;

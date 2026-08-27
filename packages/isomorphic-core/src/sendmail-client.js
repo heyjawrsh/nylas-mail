@@ -1,8 +1,8 @@
 /* eslint no-useless-escape: 0 */
 import nodemailer from "nodemailer";
-import { APIError } from "./errors";
-import { convertSmtpError } from "./smtp-errors";
-import { getMailerPayload, buildMime } from "./message-utils";
+import { APIError } from "./errors.js";
+import { convertSmtpError } from "./smtp-errors.js";
+import { getMailerPayload, buildMime } from "./message-utils.js";
 
 const MAX_RETRIES = 1;
 
@@ -85,4 +85,4 @@ class SendmailClient {
 	}
 }
 
-module.exports = SendmailClient;
+export default SendmailClient;

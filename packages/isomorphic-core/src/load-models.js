@@ -1,39 +1,35 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs'
+import path from 'node:path'
+import {pathToFileURL} from 'node:url'
 
-function loadModels(
-	Sequelize,
-	sequelize,
-	{ loadShared = true, modelDirs = [], schema } = {},
-) {
-	if (loadShared) {
-		modelDirs.unshift(path.join(__dirname, "models"));
-	}
+const __dirname = path.dirname(new URL('.', import.meta.url).pathname);
 
-	const db = {};
 
-	for (const modelsDir of modelDirs) {
-		for (const filename of fs.readdirSync(modelsDir)) {
-			if (filename.endsWith(".js")) {
-				let model = require(path.join(modelsDir, filename))(
-					sequelize,
-					Sequelize,
-				);
-				if (schema) {
-					model = model.schema(schema);
-				}
-				db[model.name[0].toUpperCase() + model.name.substr(1)] = model;
-			}
-		}
-	}
+export default async function loadModels(Sequelize, sequelize, {loadShared = true, modelDirs = [], schema} = {}) {
+  if (loadShared) {
+    modelDirs.unshift(path.join(__dirname, 'src', 'models'))
+  }
 
-	Object.keys(db).forEach((modelName) => {
-		if ("associate" in db[modelName]) {
-			db[modelName].associate(db);
-		}
-	});
+  const db = {};
 
-	return db;
+  for (const modelsDir of modelDirs) {
+    for (const filename of fs.readdirSync(modelsDir)) {
+      if (filename.endsWith('.js')) {
+        const mod = await import(pathToFileURL(path.join(modelsDir, filename)).href)
+        let model = mod.default(sequelize, Sequelize);
+        if (schema) {
+          model = model.schema(schema);
+        }
+        db[model.name[0].toUpperCase() + model.name.substr(1)] = model;
+      }
+    }
+  }
+
+  Object.keys(db).forEach((modelName) => {
+    if ("associate" in db[modelName]) {
+      db[modelName].associate(db);
+    }
+  });
+
+  return db;
 }
-
-module.exports = loadModels;

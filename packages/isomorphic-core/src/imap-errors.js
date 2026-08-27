@@ -1,4 +1,4 @@
-import { NylasError, RetryableError } from "./errors";
+import { NylasError, RetryableError } from "./errors.js";
 
 export class IMAPRetryableError extends RetryableError {
 	constructor(msg) {

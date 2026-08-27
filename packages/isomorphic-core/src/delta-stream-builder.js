@@ -79,7 +79,7 @@ function transactionsSinceCursor(db, cursor, accountId) {
 	});
 }
 
-module.exports = {
+const DeltaStreamBuilder = {
 	DELTA_CONNECTION_TIMEOUT_MS: DELTA_CONNECTION_TIMEOUT_MS,
 	buildAPIStream(
 		request,
@@ -147,3 +147,5 @@ module.exports = {
 		});
 	},
 };
+
+export default DeltaStreamBuilder;

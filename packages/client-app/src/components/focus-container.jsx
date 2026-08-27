@@ -3,7 +3,7 @@ import {FocusedContentStore, Actions} from 'nylas-exports';
 import {FluxContainer} from 'nylas-component-kit';
 
 export default class FocusContainer extends React.Component {
-  static displayName: 'FocusContainer'
+  static displayName = 'FocusContainer';
   static propTypes = {
     children: React.PropTypes.element,
     collection: React.PropTypes.string,

@@ -1,33 +1,60 @@
-/* eslint global-require: 0 */
-module.exports = {
-  Provider: {
-    Gmail: 'gmail',
-    IMAP: 'imap',
-  },
-  Imap: require('imapflow').ImapFlow,
-  Errors: require('./src/errors'),
-  IMAPErrors: require('./src/imap-errors'),
-  SMTPErrors: require('./src/smtp-errors'),
-  loadModels: require('./src/load-models'),
-  AuthHelpers: require('./src/auth-helpers'),
-  PromiseUtils: require('./src/promise-utils'),
-  DatabaseTypes: require('./src/database-types'),
-  IMAPConnection: require('./src/imap-connection').default,
-  IMAPConnectionPool: require('./src/imap-connection-pool'),
-  MessageBodyUtils: require('./src/message-body-utils'),
-  SendmailClient: require('./src/sendmail-client'),
-  DeltaStreamBuilder: require('./src/delta-stream-builder'),
-  HookTransactionLog: require('./src/hook-transaction-log'),
-  HookIncrementVersionOnSave: require('./src/hook-increment-version-on-save'),
-  BackoffScheduler: require('./src/backoff-schedulers').BackoffScheduler,
-  ExponentialBackoffScheduler: require('./src/backoff-schedulers').ExponentialBackoffScheduler,
-  CommonProviderSettings: require('./vendor/imap-provider-settings').CommonProviderSettings,
-  MetricsReporter: require('./src/metrics-reporter').default,
-  MessageUtils: require('./src/message-utils'),
-  TrackingUtils: require('./src/tracking-utils').default,
-  ModelUtils: require('./src/model-utils').default,
-  StringUtils: require('./src/string-utils'),
-  TLSUtils: require('./src/tls-utils'),
-  DBUtils: require('./src/db-utils'),
-  ShellUtils: require('./src/shell-utils'),
-}
+import {ImapFlow} from 'imapflow';
+
+import * as Errors from './src/errors.js';
+import * as IMAPErrors from './src/imap-errors.js';
+import * as SMTPErrors from './src/smtp-errors.js';
+import loadModels from './src/load-models.js';
+import * as AuthHelpers from './src/auth-helpers.js';
+import * as PromiseUtils from './src/promise-utils.js';
+import * as DatabaseTypes from './src/database-types.js';
+import IMAPConnection from './src/imap-connection.js';
+import IMAPConnectionPool from './src/imap-connection-pool.js';
+import * as MessageBodyUtils from './src/message-body-utils.js';
+import SendmailClient from './src/sendmail-client.js';
+import DeltaStreamBuilder from './src/delta-stream-builder.js';
+import HookTransactionLog from './src/hook-transaction-log.js';
+import HookIncrementVersionOnSave from './src/hook-increment-version-on-save.js';
+import {BackoffScheduler, ExponentialBackoffScheduler} from './src/backoff-schedulers.js';
+import {CommonProviderSettings} from './vendor/imap-provider-settings/index.js';
+import MetricsReporter from './src/metrics-reporter.js';
+import * as MessageUtils from './src/message-utils.js';
+import TrackingUtils from './src/tracking-utils.js';
+import ModelUtils from './src/model-utils.js';
+import * as StringUtils from './src/string-utils.js';
+import * as TLSUtils from './src/tls-utils.js';
+import * as DBUtils from './src/db-utils.js';
+import * as ShellUtils from './src/shell-utils.js';
+
+export {
+  ImapFlow as Imap,
+  Errors,
+  IMAPErrors,
+  SMTPErrors,
+  loadModels,
+  AuthHelpers,
+  PromiseUtils,
+  DatabaseTypes,
+  IMAPConnection,
+  IMAPConnectionPool,
+  MessageBodyUtils,
+  SendmailClient,
+  DeltaStreamBuilder,
+  HookTransactionLog,
+  HookIncrementVersionOnSave,
+  BackoffScheduler,
+  ExponentialBackoffScheduler,
+  CommonProviderSettings,
+  MetricsReporter,
+  MessageUtils,
+  TrackingUtils,
+  ModelUtils,
+  StringUtils,
+  TLSUtils,
+  DBUtils,
+  ShellUtils,
+};
+
+export const Provider = {
+  Gmail: 'gmail',
+  IMAP: 'imap',
+};

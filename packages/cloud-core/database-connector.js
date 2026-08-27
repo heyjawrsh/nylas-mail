@@ -67,7 +67,7 @@ class DatabaseConnector {
 			process.env.DB_NAME,
 			options,
 		);
-		const db = loadModels(Sequelize, sequelize, {
+		const db = await loadModels(Sequelize, sequelize, {
 			modelDirs: [path.join(__dirname, "models")],
 		});
 

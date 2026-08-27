@@ -1,5 +1,5 @@
-import IMAPConnection from "./imap-connection";
-import { inDevMode } from "./env-helpers";
+import IMAPConnection from "./imap-connection.js";
+import { inDevMode } from "./env-helpers.js";
 
 const MAX_DEV_MODE_CONNECTIONS = 3;
 const MAX_GMAIL_CONNECTIONS = 7;
@@ -145,4 +145,4 @@ class IMAPConnectionPool {
 	}
 }
 
-module.exports = new IMAPConnectionPool();
+export default new IMAPConnectionPool();

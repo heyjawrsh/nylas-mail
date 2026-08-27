@@ -50,18 +50,14 @@ function promisifyAll(obj) {
 	return obj;
 }
 
-module.exports = {
-	each,
-	sleep,
-	promisify,
-	promisifyAll,
-	props(object) {
-		const keys = Object.keys(object);
-		return Promise.all(keys.map((key) => object[key])).then((values) => {
-			return keys.reduce((resolved, key, index) => {
-				resolved[key] = values[index];
-				return resolved;
-			}, {});
-		});
-	},
-};
+export { each, sleep, promisify, promisifyAll };
+
+export function props(object) {
+	const keys = Object.keys(object);
+	return Promise.all(keys.map((key) => object[key])).then((values) => {
+		return keys.reduce((resolved, key, index) => {
+			resolved[key] = values[index];
+			return resolved;
+		}, {});
+	});
+}

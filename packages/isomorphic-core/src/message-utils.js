@@ -7,10 +7,10 @@ import he from "he";
 import os from "os";
 import fs from "fs";
 import path from "path";
-import mkdirp from "mkdirp";
-import { APIError } from "./errors";
-import { deepClone } from "./model-utils";
-import TrackingUtils from "./tracking-utils";
+import {mkdirp} from "mkdirp";
+import { APIError } from "./errors.js";
+import { deepClone } from "./model-utils.js";
+import TrackingUtils from "./tracking-utils.js";
 
 // Aiming for the former in length, but the latter is the hard db cutoff
 const SNIPPET_SIZE = 100;

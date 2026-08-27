@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: 0 */
 
-module.exports = {
+export default {
 	up: function up(queryInterface, Sequelize) {
 		return queryInterface.createTable("Users", {
 			id: {

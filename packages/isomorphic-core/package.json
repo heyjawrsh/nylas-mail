@@ -16,6 +16,7 @@
     "nodemailer": "^9.0.5",
     "rxjs": "^7.8.0",
     "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1",
     "underscore": "^1.13.8",
     "xoauth2": "^1.2.0"
   },
@@ -24,5 +25,9 @@
     "vitest": "latest"
   },
   "author": "Nylas",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  }
 }

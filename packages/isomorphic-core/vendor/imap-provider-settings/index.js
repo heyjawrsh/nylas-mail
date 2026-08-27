@@ -1,3 +1,3 @@
-const CommonProviderSettings = require('./common-provider-settings.json');
+import CommonProviderSettings from './common-provider-settings.json' with {type: 'json'};
 
-module.exports = { CommonProviderSettings };
+export { CommonProviderSettings };

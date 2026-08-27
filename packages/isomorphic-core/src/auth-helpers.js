@@ -2,11 +2,11 @@
 import _ from "underscore";
 import Joi from "joi";
 import nodemailer from "nodemailer";
-import { CommonProviderSettings } from "../vendor/imap-provider-settings";
-import { INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS } from "./tls-utils";
-import IMAPConnection from "./imap-connection";
-import { RetryableError } from "./errors";
-import { convertSmtpError } from "./smtp-errors";
+import { CommonProviderSettings } from "../vendor/imap-provider-settings/index.js";
+import { INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS } from "./tls-utils.js";
+import IMAPConnection from "./imap-connection.js";
+import { RetryableError } from "./errors.js";
+import { convertSmtpError } from "./smtp-errors.js";
 
 const { GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET } = process.env;
 

@@ -2,16 +2,16 @@ import { ImapFlow } from "imapflow";
 import _ from "underscore";
 import xoauth2 from "xoauth2";
 import EventEmitter from "events";
-import IMAPBox from "./imap-box";
-import { INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS } from "./tls-utils";
-import { RetryableError } from "./errors";
-import { decodeXOAuth2String } from "./imap-translators";
+import IMAPBox from "./imap-box.js";
+import { INSECURE_TLS_OPTIONS, SECURE_TLS_OPTIONS } from "./tls-utils.js";
+import { RetryableError } from "./errors.js";
+import { decodeXOAuth2String } from "./imap-translators.js";
 import {
 	convertImapError,
 	IMAPConnectionTimeoutError,
 	IMAPConnectionNotReadyError,
 	IMAPConnectionEndedError,
-} from "./imap-errors";
+} from "./imap-errors.js";
 
 const Capabilities = {
 	Gmail: "X-GM-EXT-1",

@@ -1,7 +1,7 @@
-import { JSONArrayColumn } from "../database-types";
-import { MAX_INDEXABLE_LENGTH } from "../db-utils";
+import {JSONArrayColumn} from '../database-types.js';
+import {MAX_INDEXABLE_LENGTH} from '../db-utils.js';
 
-module.exports = (sequelize, Sequelize) => {
+export default (sequelize, Sequelize) => {
 	const Transaction = sequelize.define(
 		"transaction",
 		{
