@@ -61,3 +61,14 @@ _None yet. Every entry needs: dep, reason, replacement candidates evaluated._
 ### Loop 7 — cloud-workers modernized (commit 3e2b4f6a)
 - @hapi/hapi 21 (inject-testable monitoring server), @aws-sdk/client-s3 v3, hot-shots, @sentry/node, Sequelize.Op, findByPk/findOne, native promises. 33 tests, 86.9% lines.
 - Round 3 in flight: 7 coffee lanes (src/components, src/flux, src root, keybase, thread-list, misc, category-picker explore lane on free nemotron) + isomorphic-core coverage hardening (check = package test gate itself).
+
+### Loop 8 — dep floors to latest majors (commit 407261ec1)
+- joi 18 / nodemailer 9 / redis 6 / sqlite3 6 / hot-shots 17 / googleapis / pino / @aws-sdk / @sentry bumped; all three server suites green post-bump; `pnpm outdated` clean for isomorphic-core, cloud-core, cloud-workers. @scarf/scarf telemetry postinstall denied.
+- Round 3 salvage: 4 verified patches applied (flux/keybase/thread-list/misc-1, 0 parse failures); src-root lane worktree discarded (worker deleted 87 sources without converting — spec hardened to convert-then-delete); category-picker salvaged manually (JSX-in-.js renamed .jsx). codex OAuth capacity hit at max_parallel 4 → round 4 runs at 2.
+
+### Client-app phase plan (next)
+1. Finish CoffeeScript migration (lanes in flight: components, src-root; then remaining ~100 in internal_packages small dirs).
+2. Manifest + toolchain: electron current, react 19, vite/esbuild build (grunt/babel6/coffee pipeline deleted), vitest + @testing-library, electron-builder packaging; apm/ (Atom plugin manager) dropped with the Atom ecosystem.
+3. Import graph: `nylas-exports` bridge stays app-provided; specs stub it.
+4. React 15 → 19 codemods: createClass→ES classes, PropTypes→prop-types, react-addons-* → react-transition-group/testing-library; legacy lifecycles.
+5. Reflux: no maintained npm equivalent — vendor it (MIT, tiny) with an allowlist entry; new state code uses modern approaches. If React 19 migration degrades into product-level UI redesign, that tripwires stop-condition (d) and surfaces to the user instead.
