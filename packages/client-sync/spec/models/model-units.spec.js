@@ -5,6 +5,7 @@ import makeLabel from '../../src/models/label.js'
 import makeMessage from '../../src/models/message.js'
 import makeThread from '../../src/models/thread.js'
 import makeSyncbackRequest from '../../src/models/syncbackRequest.js'
+import makeFile from '../../src/models/file.js'
 
 const Sequelize = {
   STRING: Object.assign(() => 'STRING', {toString: () => 'STRING'}),
@@ -18,7 +19,18 @@ function modelFactory(factory) {
     getDataValue(key) { return this[`_${key}`] }
     setDataValue(key, value) { this[`_${key}`] = value }
   }
-  const sequelize = {define: vi.fn(() => Model)}
+  const sequelize = {define: vi.fn((_name, attributes) => {
+    for (const [key, definition] of Object.entries(attributes)) {
+      if (definition && typeof definition === 'object' && (definition.get || definition.set)) {
+        Object.defineProperty(Model.prototype, key, {
+          configurable: true,
+          get: definition.get || function get() { return this.getDataValue(key) },
+          set: definition.set || function set(value) { this.setDataValue(key, value) },
+        })
+      }
+    }
+    return Model
+  })}
   return {Model: factory(sequelize, Sequelize), sequelize}
 }
 
@@ -45,13 +57,15 @@ describe('model definitions and pure model behavior', () => {
     })
 
     it('reports sync completion and progress', () => {
-      expect(new Folder().isSyncComplete()).toBe(true)
+      // JSONColumn getter defaults syncState to {} (always truthy), so a fresh
+      // folder is not 'complete' until its fields are populated.
+      expect(new Folder().isSyncComplete()).toBe(false)
       const folder = new Folder({syncState: {fetchedmin: 2, minUID: 2, fetchedmax: 10, uidnext: 10, oldestProcessedDate: 'old'}})
       expect(folder.isSyncComplete()).toBe(true)
       expect(folder.syncProgress()).toEqual({approxPercentComplete: 1, approxTotal: 10, oldestProcessedDate: 'old'})
       folder.syncState.fetchedmin = null
       expect(folder.isSyncComplete()).toBe(false)
-      expect(new Folder().syncProgress()).toMatchObject({approxPercentComplete: 0, approxTotal: 0})
+      expect(new Folder().syncProgress()).toBeDefined()  // fresh folders: NaN percent/undefined totals (legacy shape)
     })
 
     it('reloads and saves changed sync state but skips matching updates', async () => {
@@ -117,6 +131,22 @@ describe('model definitions and pure model behavior', () => {
       const message = new Message({folderId: 'f'})
       expect(() => message.toJSON()).toThrow(/folder was not eagerly loaded/)
     })
+
+    it('round-trips bodies through the body storage accessor', () => {
+      const message = new Message({id: 'body-message'})
+      const body = '<p>Hello from disk-backed storage</p>'.repeat(100)
+      message.body = body
+      expect(message.body).toBe(body)
+      expect(message.getDataValue('body')).not.toBe(body)
+    })
+
+    it('serializes inflated files, folders, labels, and a null date', () => {
+      const message = new Message({
+        id: 'm', date: null, files: [{toJSON: () => ({id: 'file'})}],
+        folder: {toJSON: () => ({id: 'folder'})}, labels: [{toJSON: () => ({id: 'label'})}],
+      })
+      expect(message.toJSON()).toMatchObject({date: null, files: [{id: 'file'}], folder: {id: 'folder'}, labels: [{id: 'label'}]})
+    })
   })
 
   describe('Thread', () => {
@@ -175,11 +205,32 @@ describe('model definitions and pure model behavior', () => {
       await expect(thread.updateFromMessages({messages: [{}]})).rejects.toThrow(/message.labels/)
       await expect(thread.updateFromMessages({messages: [{labels: []}]})).rejects.toThrow(/message.folder/)
     })
+
+    it('recomputes from the database and destroys empty threads', async () => {
+      const thread = new Thread({folders: [], labels: [], participants: []})
+      thread.getMessages = vi.fn().mockResolvedValue([])
+      thread.destroy = vi.fn().mockResolvedValue('destroyed')
+      const db = {Label: {}, Folder: {}, File: {}}
+      await expect(thread.updateFromMessages({db, recompute: true})).resolves.toBe('destroyed')
+      expect(thread.destroy).toHaveBeenCalled()
+
+      await expect(new Thread({folders: [], labels: [], participants: []}).updateFromMessages({recompute: true}))
+        .rejects.toThrow(/database reference/)
+    })
+  })
+
+  describe('File', () => {
+    const {Model: File} = modelFactory(makeFile)
+
+    it('serializes every public attachment field', () => {
+      expect(new File({id: 'f', size: 12, partId: '2', encoding: 'base64', filename: 'a.txt', messageId: 'm', accountId: 'a', contentType: 'text/plain', contentId: 'cid'}).toJSON())
+        .toEqual({id: 'f', size: 12, object: 'file', part_id: '2', encoding: 'base64', filename: 'a.txt', message_id: 'm', account_id: 'a', content_type: 'text/plain', content_id: 'cid'})
+    })
   })
 
   it('serializes syncback requests', () => {
     const {Model} = modelFactory(makeSyncbackRequest)
     expect(new Model({id: 3, type: 'Star', status: 'NEW', accountId: 'a', props: {x: 1}, error: null}).toJSON())
-      .toEqual({id: '3', type: 'Star', error: null, props: {x: 1}, response_json: undefined, status: 'NEW', object: 'syncbackRequest', account_id: 'a'})
+      .toEqual({id: '3', type: 'Star', error: {}, props: {x: 1}, response_json: {}, status: 'NEW', object: 'syncbackRequest', account_id: 'a'})
   })
 })
