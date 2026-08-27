@@ -75,6 +75,9 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.891.0
         version: 3.1118.0
+      '@hapi/basic':
+        specifier: ^7.0.2
+        version: 7.0.2
       '@hapi/boom':
         specifier: ^10.0.1
         version: 10.0.1
@@ -93,12 +96,6 @@ importers:
       handlebars:
         specifier: ^4.7.8
         version: 4.7.9
-      hapi-auth-basic:
-        specifier: ^5.0.0
-        version: 5.0.0(hapi@18.1.0)
-      hapi-boom-decorators:
-        specifier: ^4.1.2
-        version: 4.1.2(hapi@18.1.0)
       hapi-swagger:
         specifier: ^17.0.0
         version: 17.3.2(@hapi/hapi@21.4.10)(joi@17.13.6)(openapi-types@12.1.3)
@@ -612,6 +609,9 @@ packages:
   '@hapi/b64@6.0.1':
     resolution: {integrity: sha512-ZvjX4JQReUmBheeCq+S9YavcnMMHWqx3S0jHNXWIM1kQDxB9cyfSycpVvjfrKcIS8Mh5N3hmu/YKo4Iag9g2Kw==}
 
+  '@hapi/basic@7.0.2':
+    resolution: {integrity: sha512-kdpsmCEHVDlIYStRbszSyy/9+dq5KkfWLX5AjuHGPwtzuuZopZnhkVvMZV45hQ8hA8V/weCoMs0nzXJ7JCA2ow==}
+
   '@hapi/boom@10.0.1':
     resolution: {integrity: sha512-ERcCZaEjdH3OgSJlyjVk8pHIFeus91CjKP3v+MpgBNp5IvGzP2l/bRiD78nqYcKPaZdbKkK5vDBVPd2ohHBlsA==}
 
@@ -1077,17 +1077,9 @@ packages:
     resolution: {integrity: sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  accept@3.1.3:
-    resolution: {integrity: sha512-OgOEAidVEOKPup+Gv2+2wdH2AgVKI9LxsJ4hicdJ6cY0faUuZdZoi56kkXWlHp9qicN1nWQLmW5ZRGk+SBS5xg==}
-    deprecated: This module has moved and is now available at @hapi/accept. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   agent-base@7.1.4:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
     engines: {node: '>= 14'}
-
-  ammo@3.0.3:
-    resolution: {integrity: sha512-vo76VJ44MkUBZL/BzpGXaKzMfroF4ZR6+haRuw9p+eSWfoNaH2AxVc8xmiEPC08jhzJSeM6w7/iMUGet8b4oBQ==}
-    deprecated: This module has moved and is now available at @hapi/ammo. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1127,10 +1119,6 @@ packages:
     resolution: {integrity: sha512-NZKeq9AfyQvEeNlN0zSYAaWrmBffJh3IELMZfRpJVWgrpEbtEpnjvzqBPf+mxoI287JohRDoa+/nsfqqiZmF6g==}
     engines: {node: '>= 6.0.0'}
 
-  b64@4.1.2:
-    resolution: {integrity: sha512-+GUspBxlH3CJaxMUGUE1EBoWM6RKgWiYwUDal0qdf8m3ArnXNN1KzKVo5HOnE/FSq4HHyWf3TlHLsZI8PKQgrQ==}
-    deprecated: This module has moved and is now available at @hapi/b64. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -1148,19 +1136,6 @@ packages:
 
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
-
-  boom@7.3.0:
-    resolution: {integrity: sha512-Swpoyi2t5+GhOEGw8rEsKvTxFLIDiiKoUc2gsoV6Lyr43LHBIzch3k2MvYUs8RTROrIkVJ3Al0TkaOGjnb+B6A==}
-    deprecated: This module has moved and is now available at @hapi/boom. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
-  bounce@1.2.3:
-    resolution: {integrity: sha512-3G7B8CyBnip5EahCZJjnvQ1HLyArC6P5e+xcolo13BVI9ogFaDOsNMAE7FIWliHtIkYI8/nTRCvCY9tZa3Mu4g==}
-    deprecated: This module has moved and is now available at @hapi/bounce. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
-  bourne@1.3.3:
-    resolution: {integrity: sha512-6K4uuAlRGcorC6aV2Y1rypeQ17grx4XKyVyG6NA963PwRfxyievy0CDXtiSBPKvIc7OTpcJRT86X3mU7j5Zp9A==}
-    engines: {node: '>=6.0.0'}
-    deprecated: This module has moved and is now available at @hapi/bourne. Please update your dependencies as this version is no longer maintained and may contain bugs and security issues.
 
   bowser@2.14.1:
     resolution: {integrity: sha512-tzPjzCxygAKWFOJP011oxFHs57HzIhOEracIgAePE4pqB3LikALKnSzUyU4MGs9/iCEUuHlAJTjTc5M+u7YEGg==}
@@ -1184,18 +1159,6 @@ packages:
 
   call-me-maybe@1.0.2:
     resolution: {integrity: sha512-HpX65o1Hnr9HH25ojC1YGs7HCQLq0GCOibSaWER0eNpgJ/Z1MZv2mTc7+xh6WOPxbRVcmgbv4hGU+uSQ/2xFZQ==}
-
-  call@5.0.3:
-    resolution: {integrity: sha512-eX16KHiAYXugbFu6VifstSdwH6aMuWWb4s0qvpq1nR1b+Sf+u68jjttg8ixDBEldPqBi30bDU35OJQWKeTLKxg==}
-    deprecated: This module has moved and is now available at @hapi/call. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
-  catbox-memory@4.0.1:
-    resolution: {integrity: sha512-ZmqNiLsYCIu9qvBJ/MQbznDV2bFH5gFiH67TgIJgSSffJFtTXArT+MM3AvJQlby9NSkLHOX4eH/uuUqnch/Ldw==}
-    deprecated: This module has moved and is now available at @hapi/catbox-memory. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
-  catbox@10.0.6:
-    resolution: {integrity: sha512-gQWCnF/jbHcfwGbQ4FQxyRiAwLRipqWTTXjpq7rTqqdcsnZosFa0L3LsCZcPTF33QIeMMkS7QmFBHt6QdzGPvg==}
-    deprecated: This module has moved and is now available at @hapi/catbox. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   chai@6.2.2:
     resolution: {integrity: sha512-NUPRluOfOiTKBKvWPtSD4PhFvWCqOi0BGStNWs57X9js7XGTprSmFoz5F0tWhR4WPjNeR9jXqdC7/UpSJTnlRg==}
@@ -1229,20 +1192,12 @@ packages:
     resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
     engines: {node: ^12.20.0 || >=14}
 
-  content@4.0.6:
-    resolution: {integrity: sha512-lR9ND3dXiMdmsE84K6l02rMdgiBVmtYWu1Vr/gfSGHcIcznBj2QxmSdUgDuNFOA+G9yrb1IIWkZ7aKtB6hDGyA==}
-    deprecated: This module has moved and is now available at @hapi/content. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
-
-  cryptiles@4.1.3:
-    resolution: {integrity: sha512-gT9nyTMSUC1JnziQpPbxKGBbUg8VL7Zn2NB4E1cJYvuXdElHrwxrV9bmltZGDzet45zSDGyYceueke1TjynGzw==}
-    deprecated: This module has moved and is now available at @hapi/cryptiles. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   data-uri-to-buffer@4.0.1:
     resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
@@ -1456,29 +1411,12 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
-  hapi-auth-basic@5.0.0:
-    resolution: {integrity: sha512-4ceLge/CYBtEAvfnbwBPPck2wb9O7wksaeSOF0C1lp8GX2IuIm8BqtZtvDGLhqNH5j3ztP4im/TfCj3oYQ9bgA==}
-    engines: {node: '>=8.9.0'}
-    deprecated: This module has moved and is now available at @hapi/basic. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-    peerDependencies:
-      hapi: '>=17.x.x'
-
-  hapi-boom-decorators@4.1.2:
-    resolution: {integrity: sha512-XYA+aHsAtys8d71GvwSKHtzI7OF8hU9LoV1o9TBSJUgMztNujrFNcQpTlQO5mX6q927FUxgRg+/IbiqhCCLkqA==}
-    engines: {node: '>=4'}
-    peerDependencies:
-      hapi: '>=17'
-
   hapi-swagger@17.3.2:
     resolution: {integrity: sha512-mj1KPBl5UY4rLTLj9CrgNCps29iZ7vKNTEey3Ztm7fZ/DrMdJ7KHdxSucACyaFdPAiEpfJtHvm/5lxJVXVxa4g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@hapi/hapi': '>=20.x.x'
       joi: 17.x
-
-  hapi@18.1.0:
-    resolution: {integrity: sha512-nSU1VLyTAgp7P5gy47QzJIP2JAb+wOFvJIV3gnL0lFj/mD+HuTXhyUsDYXjF/dhADMVXVEz31z6SUHBJhtsvGA==}
-    deprecated: This version contains severe security issues and defects and should not be used! Please upgrade to the latest version of @hapi/hapi or consider a commercial license (https://github.com/hapijs/hapi/issues/4114)
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -1496,21 +1434,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heavy@6.1.2:
-    resolution: {integrity: sha512-cJp884bqhiebNcEHydW0g6V1MUGYOXRPw9c7MFiHQnuGxtbWuSZpsbojwb2kxb3AA1/Rfs8CNiV9MMOF8pFRDg==}
-    deprecated: This module has moved and is now available at @hapi/heavy. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   help-me@5.0.0:
     resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
-
-  hoek@5.0.4:
-    resolution: {integrity: sha512-Alr4ZQgoMlnere5FZJsIyfIjORBqZll5POhDsF4q64dPuJR6rNxXdDxtHSQq8OXRurhmx+PWYEE8bXRROY8h0w==}
-    engines: {node: '>=8.9.0'}
-    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
-
-  hoek@6.1.3:
-    resolution: {integrity: sha512-YXXAAhmF9zpQbC7LEcREFtXfGq5K1fmd+4PHkBq8NUqmzW3G+Dq10bI/i0KucLRwss3YYFQ0fSfoxBZYiGUqtQ==}
-    deprecated: This module has moved and is now available at @hapi/hoek. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   hot-shots@17.1.0:
     resolution: {integrity: sha512-F7hnyBtBq7UE1amiWFRF8uEIzb29+FKW2otG9KbgPG+DwALavjwn/Vzc9GWp6EU6T1JW5sik7qnPecainwpIQA==}
@@ -1555,20 +1480,12 @@ packages:
     resolution: {integrity: sha512-R5SnVLJmgYYvf2F2ZgwSBnelz5G4q5AxIC277GDfUaNbrZKNANcBC7RHqYYePlszf4kBolVkJauG0ZjHHFh55g==}
     engines: {node: '>= 12'}
 
-  iron@5.0.6:
-    resolution: {integrity: sha512-zYUMOSkEXGBdwlV/AXF9zJC0aLuTJUKHkGeYS5I2g225M5i6SrxQyGJGhPgOR8BK1omL6N5i6TcwfsXbP8/Exw==}
-    deprecated: This module has moved and is now available at @hapi/iron. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
 
   is-property@1.0.2:
     resolution: {integrity: sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==}
-
-  isemail@3.2.0:
-    resolution: {integrity: sha512-zKqkK+O+dGqevc93KNsbZ/TqTUFd46MwWjYOoMrjIMZ51eU7DtQG3Wmd9SQQT7i7RVnuTPEiYEWHU3MSbxC1Tg==}
-    engines: {node: '>=4.0.0'}
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -1591,10 +1508,6 @@ packages:
 
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
-
-  joi@14.3.1:
-    resolution: {integrity: sha512-LQDdM+pkOrpAn4Lp+neNIFV3axv1Vna3j38bisbQhETPMANYRbFJFUyOZcOClYvM/hppMhGWuKSFEK9vjrB+bQ==}
-    deprecated: This module has moved and is now available at @hapi/joi. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   joi@17.13.6:
     resolution: {integrity: sha512-ImNZaq/LSysofih+xIGYfR0WUXMA9GLUNB//YTCSrZptoRmVgaNAdJyi6K1kXi9pkLEoSkoI8I4UwtNiu/D7nw==}
@@ -1757,10 +1670,6 @@ packages:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
     engines: {node: '>=10'}
 
-  mimos@4.0.2:
-    resolution: {integrity: sha512-5XBsDqBqzSN88XPPH/TFpOalWOjHJM5Z2d3AMx/30iq+qXvYKd/8MPhqBwZDOLtoaIWInR3nLzMQcxfGK9djXA==}
-    deprecated: This module has moved and is now available at @hapi/mimos. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   minimatch@9.0.9:
     resolution: {integrity: sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -1828,10 +1737,6 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  nigel@3.0.4:
-    resolution: {integrity: sha512-3SZCCS/duVDGxFpTROHEieC+itDo4UqL9JNUyQJv3rljudQbK6aqus5B4470OxhESPJLN93Qqxg16rH7DUjbfQ==}
-    deprecated: This module has moved and is now available at @hapi/nigel. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   node-abi@3.95.0:
     resolution: {integrity: sha512-T9iGctuocf0qIWFFOTxPzjT5q0SILqaBYXt272tlBHvTKC5+3JnkMirLxNJNkXHtFyBjU2Jx+NL4Zipr0B/c6Q==}
     engines: {node: '>=10'}
@@ -1895,10 +1800,6 @@ packages:
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
 
-  pez@4.0.5:
-    resolution: {integrity: sha512-HvL8uiFIlkXbx/qw4B8jKDCWzo7Pnnd65Uvanf9OOCtb20MRcb9gtTVBf9NCnhETif1/nzbDHIjAWC/sUp7LIQ==}
-    deprecated: This module has moved and is now available at @hapi/pez. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   pg-connection-string@2.14.0:
     resolution: {integrity: sha512-XwWDGcLRGCXAR8F/AM5bG7Q+A3Wm2s6QeEjlOKZLlH3UYcguiqCWKyWXVag5TLTIjR7oOJUY8kcADaZgWPyLeg==}
 
@@ -1923,10 +1824,6 @@ packages:
     resolution: {integrity: sha512-r34yH/GlQpKZbU1BvFFqOjhISRo1MNx1tWYsYvmj6KIRHSPMT2+yHOEb1SG6NMvRoHRF0a07kCOox/9yakl1vg==}
     hasBin: true
 
-  podium@3.2.0:
-    resolution: {integrity: sha512-rbwvxwVkI6gRRlxZQ1zUeafrpGxZ7QPHIheinehAvGATvGIPfWRkaTeWedc5P4YjXJXEV8ZbBxPtglNylF9hjw==}
-    deprecated: This module has moved and is now available at @hapi/podium. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   postcss@8.5.26:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -1946,10 +1843,6 @@ packages:
 
   pump@3.0.4:
     resolution: {integrity: sha512-VS7sjc6KR7e1ukRFhQSY5LM2uBWAUPiOPa/A3mkKmiMwSmRFUITt0xuj+/lesgnCv+dPIEYlkzrcyXgquIHMcA==}
-
-  punycode@2.3.1:
-    resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
-    engines: {node: '>=6'}
 
   qs@6.15.3:
     resolution: {integrity: sha512-O9gl3zCl5h5blw1KGUzQKhA5oUXSl8rwUIM5o0S3nCXMliSvy5Dzx7/DJcI+SwgICv+IneSZwhBh1oSyEHA71A==}
@@ -2062,10 +1955,6 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shot@4.0.7:
-    resolution: {integrity: sha512-RKaKAGKxJ11EjJl0cf2fYVSsd4KB5Cncb9J0v7w+0iIaXpxNqFWTYNDNhBX7f0XSyDrjOH9a4OWZ9Gp/ZML+ew==}
-    deprecated: This module has moved and is now available at @hapi/shot. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   side-channel-list@1.0.1:
     resolution: {integrity: sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==}
     engines: {node: '>= 0.4'}
@@ -2103,10 +1992,6 @@ packages:
     resolution: {integrity: sha512-LJhUYUvItdQ0LkJTmPeaEObWXAqFyfmP85x0tch/ez9cahmhlBBLbIqDFnvBnUJGagb0JbIQrkBs1wJ+yRYpEw==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
-  somever@2.0.0:
-    resolution: {integrity: sha512-9JaIPP+HxwYGqCDqqK3tRaTqdtQHoK6Qy3IrXhIt2q5x8fs8RcfU7BMWlFTCOgFazK8p88zIv1tHQXvAwtXMyw==}
-    deprecated: This module has moved and is now available at @hapi/somever. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   sonic-boom@4.2.1:
     resolution: {integrity: sha512-w6AxtubXa2wTXAUsZMMWERrsIRAdrK0Sc+FUytWvYAhBJLyuI4llrMIC1DtlNSdI99EI86KZum2MMq3EAZlF9Q==}
 
@@ -2132,10 +2017,6 @@ packages:
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
-
-  statehood@6.0.9:
-    resolution: {integrity: sha512-jbFg1+MYEqfC7ABAoWZoeF4cQUtp3LUvMDUGExL76cMmleBHG7I6xlZFsE8hRi7nEySIvutHmVlLmBe9+2R5LQ==}
-    deprecated: This module has moved and is now available at @hapi/statehood. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   std-env@4.2.0:
     resolution: {integrity: sha512-oCUKSupKTHX53EyjDtuZQ64pjLJ6yYCtpmEw0goYxtjG9KpbRe8KAsl2tBUGU9DyMcJ0RwJ8GqJAFzMXcXW1Rw==}
@@ -2167,10 +2048,6 @@ packages:
     resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
     engines: {node: '>=14.16'}
 
-  subtext@6.0.12:
-    resolution: {integrity: sha512-yT1wCDWVgqvL9BIkWzWqgj5spUSYo/Enu09iUV8t2ZvHcr2tKGTGg2kc9tUpVEsdhp1ihsZeTAiDqh0TQciTPQ==}
-    deprecated: This module has moved and is now available at @hapi/subtext. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
-
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -2192,10 +2069,6 @@ packages:
   tar@7.5.22:
     resolution: {integrity: sha512-MFO/QzvtAOmJbkhOaCTvbGcFN9L9b+JunIsDwaKljSOdcLMea3NJ1k9Usz/rjdfSXTq4dfzfeS7W4p4YOAAHeA==}
     engines: {node: '>=18'}
-
-  teamwork@3.2.0:
-    resolution: {integrity: sha512-xAmJ8PIVjRZMXAHgUuOP8ITsv0SedyWAit2UWiNImXgg/F+BxrsG46ZegElNBM0Dwp+iMfbigg/Ll/M2oDRYww==}
-    deprecated: This module has moved and is now available at @hapi/teamwork. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   thread-stream@4.2.0:
     resolution: {integrity: sha512-e2zZ96wSChazBsbENf/Pcm/4swHt2cEKQ92rhUjkL9GCKiTDJIaTBenjE/m9DXi0QBmTMDkFDdOomUy20A1tDQ==}
@@ -2219,10 +2092,6 @@ packages:
   tmp@0.2.7:
     resolution: {integrity: sha512-e0votIpp4Uo2AJYSzVHV6xCcawuiez3DzqDAbrTc3YxBkplN6e+dM13ZeIcZnDg/QpSuU2zfZ3rzwY8ukEnaXw==}
     engines: {node: '>=14.14'}
-
-  topo@3.0.3:
-    resolution: {integrity: sha512-IgpPtvD4kjrJ7CRA3ov2FhWQADwv+Tdqbsf1ZnPUSAtCJ9e1Z44MmoSGDXGk4IppoZA7jd/QRkNddlLJWlUZsQ==}
-    deprecated: This module has moved and is now available at @hapi/topo. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   toposort-class@1.0.1:
     resolution: {integrity: sha512-OsLcGGbYF3rMjPUf8oKktyvCiUxSbqMMS39m33MAjLTC1DVIH6x3WSt63/M77ihI09+Sdfk1AXvfhCEeUmC7mg==}
@@ -2271,10 +2140,6 @@ packages:
   validator@13.15.35:
     resolution: {integrity: sha512-TQ5pAGhd5whStmqWvYF4OjQROlmv9SMFVt37qoCBdqRffuuklWYQlCNnEs2ZaIBD1kZRNnikiZOS1eqgkar0iw==}
     engines: {node: '>= 0.10'}
-
-  vise@3.0.2:
-    resolution: {integrity: sha512-X52VtdRQbSBXdjcazRiY3eRgV3vTQ0B+7Wh8uC9cVv7lKfML5m9+9NHlbcgCY0R9EAqD1v/v7o9mhGh2A3ANFg==}
-    deprecated: This module has moved and is now available at @hapi/vise. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   vite@8.2.2:
     resolution: {integrity: sha512-cFKLV/PRgAUlIRm5WjMjJ86jrftzpqcgH+Us+DS8mI3CDNiH30Whrz8uHL3+MOLPAgqbMBAqWdAHAphOAM+z/Q==}
@@ -2395,10 +2260,6 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
-
-  wreck@14.2.0:
-    resolution: {integrity: sha512-NFFft3SMgqrJbXEVfYifh+QDWFxni+98/I7ut7rLbz3F0XOypluHsdo3mdEYssGSirMobM3fGlqhyikbWKDn2Q==}
-    deprecated: This module has moved and is now available at @hapi/wreck. Please update your dependencies as this version is no longer maintained an may contain bugs and security issues.
 
   xoauth2@1.2.0:
     resolution: {integrity: sha512-hKuNbkj3q/ifCcfWnW6KURP+6ExSuLdLG007gasNhMEMKlLaejNkIA6eu5Ol1xPP0/kzTuA87XHDaAcUw5k73Q==}
@@ -2782,6 +2643,11 @@ snapshots:
 
   '@hapi/b64@6.0.1':
     dependencies:
+      '@hapi/hoek': 11.0.7
+
+  '@hapi/basic@7.0.2':
+    dependencies:
+      '@hapi/boom': 10.0.1
       '@hapi/hoek': 11.0.7
 
   '@hapi/boom@10.0.1':
@@ -3289,16 +3155,7 @@ snapshots:
   abbrev@4.0.0:
     optional: true
 
-  accept@3.1.3:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-
   agent-base@7.1.4: {}
-
-  ammo@3.0.3:
-    dependencies:
-      hoek: 6.1.3
 
   ansi-regex@5.0.1: {}
 
@@ -3326,10 +3183,6 @@ snapshots:
 
   aws-ssl-profiles@1.1.2: {}
 
-  b64@4.1.2:
-    dependencies:
-      hoek: 6.1.3
-
   balanced-match@1.0.2: {}
 
   base64-js@1.5.1: {}
@@ -3347,17 +3200,6 @@ snapshots:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
-
-  boom@7.3.0:
-    dependencies:
-      hoek: 6.1.3
-
-  bounce@1.2.3:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-
-  bourne@1.3.3: {}
 
   bowser@2.14.1: {}
 
@@ -3384,22 +3226,6 @@ snapshots:
 
   call-me-maybe@1.0.2: {}
 
-  call@5.0.3:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-
-  catbox-memory@4.0.1:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-
-  catbox@10.0.6:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-      joi: 14.3.1
-
   chai@6.2.2: {}
 
   chownr@1.1.4: {}
@@ -3421,10 +3247,6 @@ snapshots:
   commander@9.5.0:
     optional: true
 
-  content@4.0.6:
-    dependencies:
-      boom: 7.3.0
-
   convert-source-map@2.0.0: {}
 
   cross-spawn@7.0.6:
@@ -3432,10 +3254,6 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-
-  cryptiles@4.1.3:
-    dependencies:
-      boom: 7.3.0
 
   data-uri-to-buffer@4.0.1: {}
 
@@ -3684,17 +3502,6 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
-  hapi-auth-basic@5.0.0(hapi@18.1.0):
-    dependencies:
-      boom: 7.3.0
-      hapi: 18.1.0
-      hoek: 5.0.4
-
-  hapi-boom-decorators@4.1.2(hapi@18.1.0):
-    dependencies:
-      boom: 7.3.0
-      hapi: 18.1.0
-
   hapi-swagger@17.3.2(@hapi/hapi@21.4.10)(joi@17.13.6)(openapi-types@12.1.3):
     dependencies:
       '@apidevtools/json-schema-ref-parser': 11.9.3
@@ -3709,27 +3516,6 @@ snapshots:
     transitivePeerDependencies:
       - openapi-types
 
-  hapi@18.1.0:
-    dependencies:
-      accept: 3.1.3
-      ammo: 3.0.3
-      boom: 7.3.0
-      bounce: 1.2.3
-      call: 5.0.3
-      catbox: 10.0.6
-      catbox-memory: 4.0.1
-      heavy: 6.1.2
-      hoek: 6.1.3
-      joi: 14.3.1
-      mimos: 4.0.2
-      podium: 3.2.0
-      shot: 4.0.7
-      somever: 2.0.0
-      statehood: 6.0.9
-      subtext: 6.0.12
-      teamwork: 3.2.0
-      topo: 3.0.3
-
   has-flag@4.0.0: {}
 
   has-symbols@1.1.0: {}
@@ -3740,17 +3526,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  heavy@6.1.2:
-    dependencies:
-      boom: 7.3.0
-      hoek: 6.1.3
-      joi: 14.3.1
-
   help-me@5.0.0: {}
-
-  hoek@5.0.4: {}
-
-  hoek@6.1.3: {}
 
   hot-shots@17.1.0:
     optionalDependencies:
@@ -3798,20 +3574,9 @@ snapshots:
 
   ip-address@10.5.0: {}
 
-  iron@5.0.6:
-    dependencies:
-      b64: 4.1.2
-      boom: 7.3.0
-      cryptiles: 4.1.3
-      hoek: 6.1.3
-
   is-fullwidth-code-point@3.0.0: {}
 
   is-property@1.0.2: {}
-
-  isemail@3.2.0:
-    dependencies:
-      punycode: 2.3.1
 
   isexe@2.0.0: {}
 
@@ -3836,12 +3601,6 @@ snapshots:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-
-  joi@14.3.1:
-    dependencies:
-      hoek: 6.1.3
-      isemail: 3.2.0
-      topo: 3.0.3
 
   joi@17.13.6:
     dependencies:
@@ -3980,11 +3739,6 @@ snapshots:
 
   mimic-response@3.1.0: {}
 
-  mimos@4.0.2:
-    dependencies:
-      hoek: 6.1.3
-      mime-db: 1.54.0
-
   minimatch@9.0.9:
     dependencies:
       brace-expansion: 2.1.4
@@ -4042,11 +3796,6 @@ snapshots:
   napi-build-utils@2.0.0: {}
 
   neo-async@2.6.2: {}
-
-  nigel@3.0.4:
-    dependencies:
-      hoek: 6.1.3
-      vise: 3.0.2
 
   node-abi@3.95.0:
     dependencies:
@@ -4106,14 +3855,6 @@ snapshots:
 
   pathe@2.0.3: {}
 
-  pez@4.0.5:
-    dependencies:
-      b64: 4.1.2
-      boom: 7.3.0
-      content: 4.0.6
-      hoek: 6.1.3
-      nigel: 3.0.4
-
   pg-connection-string@2.14.0: {}
 
   picocolors@1.1.1: {}
@@ -4156,11 +3897,6 @@ snapshots:
       sonic-boom: 4.2.1
       thread-stream: 4.2.0
 
-  podium@3.2.0:
-    dependencies:
-      hoek: 6.1.3
-      joi: 14.3.1
-
   postcss@8.5.26:
     dependencies:
       nanoid: 3.3.18
@@ -4191,8 +3927,6 @@ snapshots:
     dependencies:
       end-of-stream: 1.4.5
       once: 1.4.0
-
-  punycode@2.3.1: {}
 
   qs@6.15.3:
     dependencies:
@@ -4311,11 +4045,6 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shot@4.0.7:
-    dependencies:
-      hoek: 6.1.3
-      joi: 14.3.1
-
   side-channel-list@1.0.1:
     dependencies:
       es-errors: 1.3.0
@@ -4363,11 +4092,6 @@ snapshots:
       ip-address: 10.5.0
       smart-buffer: 4.2.0
 
-  somever@2.0.0:
-    dependencies:
-      bounce: 1.2.3
-      hoek: 6.1.3
-
   sonic-boom@4.2.1:
     dependencies:
       atomic-sleep: 1.0.0
@@ -4390,16 +4114,6 @@ snapshots:
       node-gyp: 12.4.0
 
   stackback@0.0.2: {}
-
-  statehood@6.0.9:
-    dependencies:
-      boom: 7.3.0
-      bounce: 1.2.3
-      bourne: 1.3.3
-      cryptiles: 4.1.3
-      hoek: 6.1.3
-      iron: 5.0.6
-      joi: 14.3.1
 
   std-env@4.2.0: {}
 
@@ -4430,15 +4144,6 @@ snapshots:
   strip-json-comments@2.0.1: {}
 
   strip-json-comments@5.0.3: {}
-
-  subtext@6.0.12:
-    dependencies:
-      boom: 7.3.0
-      bourne: 1.3.3
-      content: 4.0.6
-      hoek: 6.1.3
-      pez: 4.0.5
-      wreck: 14.2.0
 
   supports-color@7.2.0:
     dependencies:
@@ -4477,8 +4182,6 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teamwork@3.2.0: {}
-
   thread-stream@4.2.0:
     dependencies:
       real-require: 1.0.0
@@ -4495,10 +4198,6 @@ snapshots:
   tinyrainbow@3.1.1: {}
 
   tmp@0.2.7: {}
-
-  topo@3.0.3:
-    dependencies:
-      hoek: 6.1.3
 
   toposort-class@1.0.1: {}
 
@@ -4537,10 +4236,6 @@ snapshots:
   uuid@8.3.2: {}
 
   validator@13.15.35: {}
-
-  vise@3.0.2:
-    dependencies:
-      hoek: 6.1.3
 
   vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(tsx@4.23.12):
     dependencies:
@@ -4619,12 +4314,6 @@ snapshots:
       strip-ansi: 7.2.0
 
   wrappy@1.0.2: {}
-
-  wreck@14.2.0:
-    dependencies:
-      boom: 7.3.0
-      bourne: 1.3.3
-      hoek: 6.1.3
 
   xoauth2@1.2.0: {}
 
