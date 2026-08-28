@@ -241140,8 +241140,11 @@ var init_nylas_component_kit = __esm({
       throw e;
     }
     if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
-      module.exports = new NylasComponentKit();
+      const kitInstance = new NylasComponentKit();
+      kitInstance.NylasComponentKit = NylasComponentKit;
+      module.exports = kitInstance;
     }
+    globalThis.NylasComponentKitClass = NylasComponentKit;
   }
 });
 

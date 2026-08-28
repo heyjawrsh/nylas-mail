@@ -425,5 +425,10 @@ try {
 // module-eval time (loading .jsx components through the CJS shim, which has
 // no JSX loader). Under vitest, export the class; consumers instantiate.
 if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
-	module.exports = new NylasComponentKit();
+	const kitInstance = new NylasComponentKit();
+	kitInstance.NylasComponentKit = NylasComponentKit; // class handle for specs
+	module.exports = kitInstance;
 }
+// Dual-context handle: tests reach the class without an ESM export statement
+// (any export would flip the module ESM and break the CJS bundle shape).
+globalThis.NylasComponentKitClass = NylasComponentKit;
