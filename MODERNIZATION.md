@@ -507,3 +507,25 @@ require hid inside an ESM conversion.
 
 Cumulative: **0.32% → 30.74%**, 11 → 2,010 tests, twelve swarm rounds.
 ~29 points remain to the 60% gate.
+
+
+## Loop 28 — Coverage round 13: env/perspective/components (commit 660e79be0)
+
+client-app: 30.74% → **34.63% lines** (2,150 tests, 116/116 files green).
+**+3.89 points** — second-biggest jump. nylas-env (456 uncovered lines,
+the app environment object) and mailbox-perspective both landed.
+
+mailbox-perspective was the worst decaffeinate damage in the tree: three
+constructors with binds before super, one with `this` referenced inside
+the super() argument itself. The regex sweeps kept missing the multiline
+wrapped binds; replaced with a line-based state machine. Also learned:
+`this.x = require()` continuation lines break naive reorder detection.
+
+The interop-require trap swept four more files this round (multiselect-
+list, thread-list-icon, quick-actions, workspace-store) — every ESM
+conversion in the flux family perturbs the module graph of files that
+still CJS-require the converted modules. The trap is now self-revealing:
+'Cannot require() ES Module' points straight at the offender.
+
+Cumulative: **0.32% → 34.63%**, 11 → 2,150 tests, thirteen swarm rounds.
+~25 points remain to the 60% gate.
