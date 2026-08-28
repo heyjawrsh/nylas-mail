@@ -679,3 +679,15 @@ env-services (33), package-manager second spec (19), iframe third (17).
 
 Cumulative: **0.32% → 46.49%**, 11 → 3,057 tests, twenty-two swarm
 rounds. ~13.5 points (~3,130 lines) remain.
+
+
+## Loop 38 — Coverage round 23: zero-coverage stragglers (commit df2f43d88)
+
+client-app: 46.49% → **47.34% lines** (3,166 tests, 161/161 files green).
+
+editor-api (66 tests) — the biggest single-file test haul yet — plus
+reflux-coffee's mixin machinery (33), canvas-utils (29), env events (21),
+account edges (15), delta-streaming-connection (11).
+
+Cumulative: **0.32% → 47.34%**, 11 → 3,166 tests, twenty-three swarm
+rounds. ~12.7 points (~2,930 lines) remain.
