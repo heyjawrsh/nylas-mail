@@ -36,6 +36,11 @@ vi.mock("electron", () => ({
 		},
 	},
 	ipcRenderer: { on: m.on, send: m.send }, shell: { beep: m.beep },
+	remote: {
+		getCurrentWindow: () => m.win, getGlobal: () => m.application,
+		app: { quit: vi.fn() }, screen: { getPrimaryDisplay: () => m.display },
+		dialog: { showMessageBox: m.showMessageBox, showOpenDialog: m.showOpenDialog, showSaveDialog: m.showSaveDialog },
+	},
 }));
 vi.mock("@electron/remote", () => ({
 	default: {

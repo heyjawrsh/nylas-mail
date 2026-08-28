@@ -5,11 +5,11 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const { DOMUtils } = require("nylas-exports");
-const _React = require("react");
-const ExtendedSelection = require("./extended-selection.js");
-let OverlaidComponents = null;
+import _ from "underscore";
+import { DOMUtils } from "nylas-exports";
+import _React from "react";
+import ExtendedSelection from "./extended-selection.js";
+import OverlaidComponents from "../overlaid-components/overlaid-components.jsx";
 
 // An extended interface of execCommand
 //
@@ -116,10 +116,6 @@ class EditorAPI {
 	insertCustomComponent(componentKey, props) {
 		if (props == null) {
 			props = {};
-		}
-		if (OverlaidComponents == null) {
-			OverlaidComponents =
-				require("../overlaid-components/overlaid-components.jsx").default;
 		}
 		const { anchorId, anchorTag } = OverlaidComponents.buildAnchorTag(
 			componentKey,
@@ -306,4 +302,4 @@ class EditorAPI {
 	}
 }
 
-module.exports = EditorAPI;
+export default EditorAPI;

@@ -202986,12 +202986,12 @@ var require_classnames = __commonJS({
 var require_menu = __commonJS({
   "src/components/menu.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_index_all();
     init_nylas_exports();
-    var MenuItem2 = class _MenuItem extends import_react66.default.Component {
+    var MenuItem2 = class _MenuItem extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203007,7 +203007,7 @@ var require_menu = __commonJS({
       render() {
         if (this.props.divider) {
           const dividerLabel = index_default_default.isString(this.props.divider) ? this.props.divider : "";
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className: "item divider" },
             dividerLabel
@@ -203018,7 +203018,7 @@ var require_menu = __commonJS({
             selected: this.props.selected,
             checked: this.props.checked
           });
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className, onMouseDown: this.props.onMouseDown },
             this.props.content
@@ -203027,7 +203027,7 @@ var require_menu = __commonJS({
       }
     };
     MenuItem2.initClass();
-    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react66.default.Component {
+    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203041,18 +203041,18 @@ var require_menu = __commonJS({
       }
       render() {
         if ((this.props.name != null ? this.props.name.length : void 0) > 0 && this.props.name !== this.props.email) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "span",
             null,
-            import_react66.default.createElement("span", { className: "primary" }, this.props.name),
-            import_react66.default.createElement(
+            import_react67.default.createElement("span", { className: "primary" }, this.props.name),
+            import_react67.default.createElement(
               "span",
               { className: "secondary" },
               `(${this.props.email})`
             )
           );
         } else {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "span",
             { className: "primary" },
             this.props.email
@@ -203061,7 +203061,7 @@ var require_menu = __commonJS({
       }
     };
     MenuNameEmailItem.initClass();
-    var Menu7 = class _Menu extends import_react66.default.Component {
+    var Menu7 = class _Menu extends import_react67.default.Component {
       static initClass() {
         _Menu.displayName = "Menu";
         _Menu.propTypes = {
@@ -203154,19 +203154,19 @@ var require_menu = __commonJS({
         }
       }
       render() {
-        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react66.default.createElement("span", null);
-        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react66.default.createElement("span", null);
+        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react67.default.createElement("span", null);
+        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react67.default.createElement("span", null);
         const className = this.props.className ? this.props.className : "";
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           {
             onKeyDown: this._onKeyDown,
             className: `menu ${className}`,
             tabIndex: "-1"
           },
-          import_react66.default.createElement("div", { className: "header-container" }, hc),
+          import_react67.default.createElement("div", { className: "header-container" }, hc),
           this._contentContainer(),
-          import_react66.default.createElement("div", { className: "footer-container" }, fc)
+          import_react67.default.createElement("div", { className: "footer-container" }, fc)
         );
       }
       _onKeyDown(event2) {
@@ -203191,7 +203191,7 @@ var require_menu = __commonJS({
         const seenItemKeys = {};
         const items = (this.props.items || []).map((item, i) => {
           const content = this.props.itemContent(item);
-          if (import_react66.default.isValidElement(content) && content.type === MenuItem2) {
+          if (import_react67.default.isValidElement(content) && content.type === MenuItem2) {
             return content;
           }
           const onMouseDown = (event2) => {
@@ -203213,7 +203213,7 @@ var require_menu = __commonJS({
             );
           }
           seenItemKeys[key] = item;
-          return import_react66.default.createElement(MenuItem2, {
+          return import_react67.default.createElement(MenuItem2, {
             key,
             onMouseDown,
             checked: typeof this.props.itemChecked === "function" ? this.props.itemChecked(item) : void 0,
@@ -203225,7 +203225,7 @@ var require_menu = __commonJS({
           "content-container": true,
           empty: items.length === 0
         });
-        return import_react66.default.createElement("div", { className: contentClass }, items);
+        return import_react67.default.createElement("div", { className: contentClass }, items);
       }
       _onShiftSelectedIndex(delta) {
         if (this.props.items.length === 0) {
@@ -203362,10 +203362,10 @@ var init_drop_zone = __esm({
 var require_spinner = __commonJS({
   "src/components/spinner.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var Spinner4 = class _Spinner extends import_react66.default.Component {
+    var Spinner4 = class _Spinner extends import_react67.default.Component {
       static initClass() {
         _Spinner.propTypes = {
           visible: import_prop_types69.default.bool,
@@ -203464,7 +203464,7 @@ var require_spinner = __commonJS({
             zIndex: 1e3
           }
         );
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: coverClasses, style },
           this._renderSpinnerDots()
@@ -203491,13 +203491,13 @@ var require_spinner = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           Object.assign({ className: spinnerClass }, otherProps, { style }),
-          import_react66.default.createElement("div", { className: "bounce1" }),
-          import_react66.default.createElement("div", { className: "bounce2" }),
-          import_react66.default.createElement("div", { className: "bounce3" }),
-          import_react66.default.createElement("div", { className: "bounce4" })
+          import_react67.default.createElement("div", { className: "bounce1" }),
+          import_react67.default.createElement("div", { className: "bounce2" }),
+          import_react67.default.createElement("div", { className: "bounce3" }),
+          import_react67.default.createElement("div", { className: "bounce4" })
         );
       }
     };
@@ -209725,14 +209725,14 @@ var require_empty_list_state = __commonJS({
   "src/components/empty-list-state.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_retina_img();
     init_nylas_exports();
     init_nylas_component_kit();
     var INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
-    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react66.default.Component {
+    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react67.default.Component {
       static initClass() {
         _EmptyPerspectiveState.displayName = "EmptyPerspectiveState";
         _EmptyPerspectiveState.propTypes = {
@@ -209752,19 +209752,19 @@ var require_empty_list_state = __commonJS({
         if (name2) {
           name2 = name2.toLowerCase();
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: "perspective-empty-state" },
-          name2 ? import_react66.default.createElement(retina_img_default, {
+          name2 ? import_react67.default.createElement(retina_img_default, {
             name: `ic-emptystate-${name2}.png`,
             mode: retina_img_default.Mode.ContentIsMask
           }) : void 0,
-          import_react66.default.createElement("div", { className: "message" }, messageContent)
+          import_react67.default.createElement("div", { className: "message" }, messageContent)
         );
       }
     };
     EmptyPerspectiveState.initClass();
-    var EmptyInboxState = class _EmptyInboxState extends import_react66.default.Component {
+    var EmptyInboxState = class _EmptyInboxState extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this._getScalingFactor = this._getScalingFactor.bind(this);
@@ -209798,16 +209798,16 @@ var require_empty_list_state = __commonJS({
         const animationName = this._getAnimationName();
         const factor = this._getScalingFactor();
         const style = factor ? { transform: `scale(${factor})` } : {};
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: "inbox-zero-animation" },
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             { className: "animation-wrapper", style },
-            import_react66.default.createElement("iframe", {
+            import_react67.default.createElement("iframe", {
               src: `animations/inbox-zero/${animationName}/${animationName}.html`
             }),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "message" },
               "Hooray! You\u2019re done."
@@ -209817,7 +209817,7 @@ var require_empty_list_state = __commonJS({
       }
     };
     EmptyInboxState.initClass();
-    var EmptyListState = class _EmptyListState extends import_react66.default.Component {
+    var EmptyListState = class _EmptyListState extends import_react67.default.Component {
       static initClass() {
         _EmptyListState.displayName = "EmptyListState";
         _EmptyListState.propTypes = { visible: import_prop_types69.default.bool.isRequired };
@@ -209882,13 +209882,13 @@ var require_empty_list_state = __commonJS({
       }
       render() {
         if (!this.props.visible) {
-          return import_react66.default.createElement("span", null);
+          return import_react67.default.createElement("span", null);
         }
         let ContentComponent = EmptyPerspectiveState;
         const current = FocusedPerspectiveStore3.current();
         let messageContent = current.emptyMessage();
         if (this.state.syncing) {
-          messageContent = import_react66.default.createElement(void 0, { empty: true });
+          messageContent = import_react67.default.createElement(void 0, { empty: true });
         } else if (current.isInbox()) {
           ContentComponent = EmptyInboxState;
         }
@@ -209896,10 +209896,10 @@ var require_empty_list_state = __commonJS({
           "empty-state": true,
           active: this.state.active
         });
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: classes },
-          import_react66.default.createElement(ContentComponent, {
+          import_react67.default.createElement(ContentComponent, {
             perspective: current,
             containerRect: this.state.rect,
             messageContent
@@ -209975,12 +209975,12 @@ var require_scroll_region = __commonJS({
   "src/components/scroll-region.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
     var import_classnames19 = __toESM(require_classnames());
     init_scrollbar_ticks();
-    var Scrollbar = class _Scrollbar extends import_react66.default.Component {
+    var Scrollbar = class _Scrollbar extends import_react67.default.Component {
       static initClass() {
         _Scrollbar.displayName = "Scrollbar";
         _Scrollbar.propTypes = {
@@ -210050,19 +210050,19 @@ var require_scroll_region = __commonJS({
         });
         let tooltip = [];
         if (this.props.scrollTooltipComponent && this.state.dragging) {
-          tooltip = import_react66.default.createElement(this.props.scrollTooltipComponent, {
+          tooltip = import_react67.default.createElement(this.props.scrollTooltipComponent, {
             viewportCenter: this.state.viewportScrollTop + this.state.viewportHeight / 2,
             totalHeight: this.state.totalHeight
           });
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           {
             className: containerClasses,
             style: this._scrollbarWrapStyles(),
             onMouseEnter: this.recomputeDimensions
           },
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             {
               className: "scrollbar-track-inner",
@@ -210070,7 +210070,7 @@ var require_scroll_region = __commonJS({
               onClick: this._onScrollJump
             },
             this._renderScrollbarTicks(),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               {
                 className: "scrollbar-handle",
@@ -210079,7 +210079,7 @@ var require_scroll_region = __commonJS({
                 ref: "handle",
                 onClick: this._onHandleClick
               },
-              import_react66.default.createElement("div", { className: "tooltip" }, tooltip)
+              import_react67.default.createElement("div", { className: "tooltip" }, tooltip)
             )
           )
         );
@@ -210107,7 +210107,7 @@ var require_scroll_region = __commonJS({
         if (!(this.state.scrollbarTicks.length > 0)) {
           return false;
         }
-        return import_react66.default.createElement(ScrollbarTicks, {
+        return import_react67.default.createElement(ScrollbarTicks, {
           ticks: this.state.scrollbarTicks
         });
       }
@@ -210186,7 +210186,7 @@ var require_scroll_region = __commonJS({
       }
     };
     Scrollbar.initClass();
-    var ScrollRegion5 = class _ScrollRegion extends import_react66.default.Component {
+    var ScrollRegion5 = class _ScrollRegion extends import_react67.default.Component {
       static initClass() {
         _ScrollRegion.displayName = "ScrollRegion";
         _ScrollRegion.propTypes = {
@@ -210301,7 +210301,7 @@ var require_scroll_region = __commonJS({
         });
         if (!this.props.getScrollbar) {
           if (this._scrollbarComponent == null) {
-            this._scrollbarComponent = import_react66.default.createElement(Scrollbar, {
+            this._scrollbarComponent = import_react67.default.createElement(Scrollbar, {
               ref: "scrollbar",
               scrollbarTickProvider: this.props.scrollbarTickProvider,
               scrollTooltipComponent: this.props.scrollTooltipComponent,
@@ -210313,18 +210313,18 @@ var require_scroll_region = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           Object.assign({ className: containerClasses }, otherProps),
           this._scrollbarComponent,
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             {
               className: "scroll-region-content",
               onScroll: this._onScroll,
               ref: "content"
             },
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "scroll-region-content-inner" },
               this.props.children
@@ -210339,7 +210339,7 @@ var require_scroll_region = __commonJS({
           param = {};
         }
         const { position, settle, done } = param;
-        if (node instanceof import_react66.default.Component) {
+        if (node instanceof import_react67.default.Component) {
           node = import_react_dom31.default.findDOMNode(node);
         }
         if (!(node instanceof Node)) {
@@ -210808,10 +210808,10 @@ var init_list_data_source = __esm({
 var require_list_tabular_item = __commonJS({
   "src/components/list-tabular-item.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     init_swipe_container();
     init_nylas_exports();
-    var ListTabularItem2 = class _ListTabularItem extends import_react66.default.Component {
+    var ListTabularItem2 = class _ListTabularItem extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -210856,7 +210856,7 @@ var require_list_tabular_item = __commonJS({
         if (this._columnCache == null) {
           this._columnCache = this._columns();
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           SwipeContainer,
           Object.assign({}, props, {
             onClick: this._onClick,
@@ -210867,7 +210867,7 @@ var require_list_tabular_item = __commonJS({
               height: this.props.metrics.height
             }
           }),
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             { className, style: { height: this.props.metrics.height } },
             this._columnCache
@@ -210884,7 +210884,7 @@ var require_list_tabular_item = __commonJS({
               );
             }
             names[column.name] = true;
-            return import_react66.default.createElement(
+            return import_react67.default.createElement(
               "div",
               {
                 key: column.name,
@@ -213764,7 +213764,7 @@ var require_iframe_searcher = __commonJS({
 var require_evented_iframe = __commonJS({
   "src/components/evented-iframe.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_iframe_searcher = __toESM(require_iframe_searcher());
     var url6 = __toESM(require("url"));
@@ -213776,10 +213776,10 @@ var require_evented_iframe = __commonJS({
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var EventedIFrame = class _EventedIFrame extends import_react66.default.Component {
+    var EventedIFrame = class _EventedIFrame extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
-        this._nodeRef = import_react66.default.createRef();
+        this._nodeRef = import_react67.default.createRef();
         this.render = this.render.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -213811,7 +213811,7 @@ var require_evented_iframe = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "iframe",
           Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps)
         );
@@ -214204,9 +214204,9 @@ var require_button_dropdown = __commonJS({
     var import_prop_types69 = __toESM(require_prop_types());
     init_retina_img();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
-    var ButtonDropdown2 = class _ButtonDropdown extends import_react66.default.Component {
+    var ButtonDropdown2 = class _ButtonDropdown extends import_react67.default.Component {
       static initClass() {
         _ButtonDropdown.displayName = "ButtonDropdown";
         _ButtonDropdown.propTypes = {
@@ -214221,8 +214221,8 @@ var require_button_dropdown = __commonJS({
       }
       constructor(props) {
         super();
-        this.buttonRef = import_react66.default.createRef();
-        this.secondaryItemsRef = import_react66.default.createRef();
+        this.buttonRef = import_react67.default.createRef();
+        this.secondaryItemsRef = import_react67.default.createRef();
         this.render = this.render.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this._onMenuClick = this._onMenuClick.bind(this);
@@ -214238,7 +214238,7 @@ var require_button_dropdown = __commonJS({
           bordered: this.props.bordered !== false
         });
         if (this.props.primaryClick) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214247,7 +214247,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               {
                 className: "primary-item",
@@ -214256,15 +214256,15 @@ var require_button_dropdown = __commonJS({
               },
               this.props.primaryItem
             ),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "secondary-picker", onClick: this.toggleDropdown },
-              import_react66.default.createElement(retina_img_default, {
+              import_react67.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214275,7 +214275,7 @@ var require_button_dropdown = __commonJS({
             )
           );
         } else {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214284,7 +214284,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               {
                 className: "only-item",
@@ -214292,13 +214292,13 @@ var require_button_dropdown = __commonJS({
                 onClick: this.toggleDropdown
               },
               this.props.primaryItem,
-              import_react66.default.createElement(retina_img_default, {
+              import_react67.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 style: { marginLeft: 12 },
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214979,9 +214979,9 @@ var init_multiselect_dropdown = __esm({
 var require_tab_group_region = __commonJS({
   "src/components/tab-group-region.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
-    var TabGroupRegion = class _TabGroupRegion extends import_react66.default.Component {
+    var TabGroupRegion = class _TabGroupRegion extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -215032,7 +215032,7 @@ var require_tab_group_region = __commonJS({
         return { parentTabGroup: this };
       }
       render() {
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
           this.props.children
@@ -215224,13 +215224,13 @@ var init_injected_component_label = __esm({
 var require_injected_component = __commonJS({
   "src/components/injected-component.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
     init_unsafe_component();
     init_injected_component_label();
-    var InjectedComponent2 = class _InjectedComponent extends import_react66.default.Component {
+    var InjectedComponent2 = class _InjectedComponent extends import_react67.default.Component {
       static initClass() {
         _InjectedComponent.displayName = "InjectedComponent";
         _InjectedComponent.propTypes = {
@@ -215255,7 +215255,7 @@ var require_injected_component = __commonJS({
       }
       constructor(props) {
         super();
-        this.innerRef = import_react66.default.createRef();
+        this.innerRef = import_react67.default.createRef();
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -215306,7 +215306,7 @@ var require_injected_component = __commonJS({
       render() {
         let element;
         if (!this.state.component) {
-          return import_react66.default.createElement("div", null);
+          return import_react67.default.createElement("div", null);
         }
         const exposedProps = Object.assign({}, this.props.exposedProps, {
           fallback: this.props.fallback
@@ -215320,15 +215320,15 @@ var require_injected_component = __commonJS({
           const privateProps = {
             key: Component20.displayName
           };
-          if (import_react66.default.Component.isPrototypeOf(Component20)) {
+          if (import_react67.default.Component.isPrototypeOf(Component20)) {
             privateProps.ref = "inner";
           }
-          element = import_react66.default.createElement(
+          element = import_react67.default.createElement(
             Component20,
             Object.assign({}, privateProps, exposedProps)
           );
         } else {
-          element = import_react66.default.createElement(
+          element = import_react67.default.createElement(
             unsafe_component_default,
             Object.assign(
               {
@@ -215344,18 +215344,18 @@ var require_injected_component = __commonJS({
           );
         }
         if (this.state.visible) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className, style: this.props.style },
             element,
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               InjectedComponentLabel,
               Object.assign({ matching: this.props.matching }, exposedProps)
             ),
-            import_react66.default.createElement("span", { style: { clear: "both" } })
+            import_react67.default.createElement("span", { style: { clear: "both" } })
           );
         } else {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className, style: this.props.style },
             element
@@ -218353,8 +218353,8 @@ var init_config_prop_container = __esm({
 var require_disclosure_triangle = __commonJS({
   "src/components/disclosure-triangle.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
-    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react66.default.Component {
+    var import_react67 = __toESM(require_react());
+    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react67.default.Component {
       static initClass() {
         _DisclosureTriangle.displayName = "DisclosureTriangle";
         _DisclosureTriangle.propTypes = {
@@ -218373,10 +218373,10 @@ var require_disclosure_triangle = __commonJS({
         if (this.props.collapsed) {
           classnames14 += " collapsed";
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: classnames14, onClick: this.props.onCollapseToggled },
-          import_react66.default.createElement("div", null)
+          import_react67.default.createElement("div", null)
         );
       }
     };
@@ -239485,18 +239485,18 @@ var require_generated_form = __commonJS({
     var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     init_nylas_exports();
     init_date_picker();
     var import_tab_group_region = __toESM(require_tab_group_region());
     var idPropType = import_prop_types69.default.oneOfType([import_prop_types69.default.string, import_prop_types69.default.number]);
-    var FormItem = class _FormItem extends import_react66.default.Component {
+    var FormItem = class _FormItem extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
-        this.inputRef = import_react66.default.createRef();
-        this.formRef = import_react66.default.createRef();
-        this.inputWrapRef = import_react66.default.createRef();
-        this.formHeaderErrorRef = import_react66.default.createRef();
+        this.inputRef = import_react67.default.createRef();
+        this.formRef = import_react67.default.createRef();
+        this.inputWrapRef = import_react67.default.createRef();
+        this.formHeaderErrorRef = import_react67.default.createRef();
         this.render = this.render.bind(this);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
         this._renderError = this._renderError.bind(this);
@@ -239600,25 +239600,25 @@ var require_generated_form = __commonJS({
         });
         let { label } = this.props;
         if (this.props.required) {
-          label = import_react66.default.createElement(
+          label = import_react67.default.createElement(
             "strong",
             null,
-            import_react66.default.createElement("span", { className: "required" }, "*"),
+            import_react67.default.createElement("span", { className: "required" }, "*"),
             this.props.label
           );
         }
         if (this.props.type === "hidden") {
           return this._renderInput();
         } else {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className: classes, ref: this.inputWrapRef },
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "label-area" },
-              import_react66.default.createElement("label", { htmlFor: this.props.id }, label)
+              import_react67.default.createElement("label", { htmlFor: this.props.id }, label)
             ),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "input-area" },
               this._renderInput(),
@@ -239643,7 +239643,7 @@ var require_generated_form = __commonJS({
           return false;
         }
         const msg = this.props.formItemError.message;
-        return import_react66.default.createElement("div", { className: "form-error" }, msg);
+        return import_react67.default.createElement("div", { className: "form-error" }, msg);
       }
       _isDisabled() {
         return this.props.disabled || this.props.formType === "new" && this.props.editableForNew === false || this.props.formType === "update" && this.props.editableForUpdate === false;
@@ -239668,10 +239668,10 @@ var require_generated_form = __commonJS({
           inputProps.disabled = true;
         }
         if (_FormItem.inputElementTypes[this.props.type]) {
-          return import_react66.default.createElement("input", inputProps);
+          return import_react67.default.createElement("input", inputProps);
         } else if (this.props.type === "select") {
           const options2 = (this.props.selectOptions != null ? this.props.selectOptions : []).map(
-            (optionData) => import_react66.default.createElement(
+            (optionData) => import_react67.default.createElement(
               "option",
               Object.assign({}, optionData, {
                 key: `${Utils13.generateTempId()}-optionData.value`
@@ -239680,24 +239680,24 @@ var require_generated_form = __commonJS({
             )
           );
           options2.unshift(
-            import_react66.default.createElement("option", {
+            import_react67.default.createElement("option", {
               key: `${Utils13.generateTempId()}-blank-option`
             })
           );
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "select",
             Object.assign({}, inputProps),
             options2
           );
         } else if (this.props.type === "textarea") {
-          return import_react66.default.createElement("textarea", inputProps);
+          return import_react67.default.createElement("textarea", inputProps);
         } else if (this.props.type === "date") {
           inputProps.dateFormat = "YYYY-MM-DD";
-          return import_react66.default.createElement(DatePicker, inputProps);
+          return import_react67.default.createElement(DatePicker, inputProps);
         } else if (this.props.type === "EmptySpace") {
-          return import_react66.default.createElement("div", { className: "empty-space" });
+          return import_react67.default.createElement("div", { className: "empty-space" });
         } else if (index_default_default.isFunction(this.props.customComponent)) {
-          return import_react66.default.createElement(this.props.customComponent, inputProps);
+          return import_react67.default.createElement(this.props.customComponent, inputProps);
         } else {
           return console.warn(
             `We do not support type ${this.props.type} with attributes:`,
@@ -239707,7 +239707,7 @@ var require_generated_form = __commonJS({
       }
     };
     FormItem.initClass();
-    var GeneratedFieldset = class _GeneratedFieldset extends import_react66.default.Component {
+    var GeneratedFieldset = class _GeneratedFieldset extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239752,14 +239752,14 @@ var require_generated_form = __commonJS({
           "first-fieldset": this.props.firstFieldset,
           "last-fieldset": this.props.lastFieldset
         });
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "fieldset",
           {
             style: { zIndex: this.props.zIndex != null ? this.props.zIndex : 0 },
             className: classStr
           },
           this._renderHeader(),
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             { className: "fieldset-form-items" },
             this._renderFormItems()
@@ -239772,13 +239772,13 @@ var require_generated_form = __commonJS({
       }
       _renderHeader() {
         if (this.props.useHeading) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "header",
             null,
-            import_react66.default.createElement("legend", null, this.props.heading)
+            import_react67.default.createElement("legend", null, this.props.heading)
           );
         } else {
-          return import_react66.default.createElement("div", null);
+          return import_react67.default.createElement("div", null);
         }
       }
       _renderFormItems() {
@@ -239794,7 +239794,7 @@ var require_generated_form = __commonJS({
           if (allHidden) {
             style.display = "none";
           }
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className: "row", "data-row-num": rowNum, style, key: rowNum },
             index_default_default.map(byCol, (itemsInCol, colNum) => {
@@ -239802,12 +239802,12 @@ var require_generated_form = __commonJS({
                 itemsInCol = [];
               }
               const colEls = [
-                import_react66.default.createElement(
+                import_react67.default.createElement(
                   "div",
                   { className: "column", "data-col-num": colNum, key: colNum },
                   itemsInCol.map((formItemData) => {
                     const props = this._propsFromFormItemData(formItemData);
-                    return import_react66.default.createElement(
+                    return import_react67.default.createElement(
                       FormItem,
                       Object.assign({}, props, {
                         key: `form-item-${formItemData.id}`
@@ -239818,7 +239818,7 @@ var require_generated_form = __commonJS({
               ];
               if (colNum !== numCols - 1) {
                 colEls.push(
-                  import_react66.default.createElement("div", {
+                  import_react67.default.createElement("div", {
                     className: "column-spacer",
                     "data-col-num": `${colNum}-spacer`,
                     key: `${colNum}-spacer`
@@ -239858,11 +239858,11 @@ var require_generated_form = __commonJS({
         return this.props.onChange(this.props.id, newFormItems);
       }
       _renderFooter() {
-        return import_react66.default.createElement("footer", null);
+        return import_react67.default.createElement("footer", null);
       }
     };
     GeneratedFieldset.initClass();
-    var GeneratedForm = class _GeneratedForm extends import_react66.default.Component {
+    var GeneratedForm = class _GeneratedForm extends import_react67.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239907,7 +239907,7 @@ var require_generated_form = __commonJS({
       }
       render() {
         const submitText = this.props.formType === "new" ? "Create" : "Update";
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "form",
           {
             className: "generated-form",
@@ -239917,20 +239917,20 @@ var require_generated_form = __commonJS({
             onKeyDown: this._onKeyDown,
             noValidate: true
           },
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             import_tab_group_region.default,
             null,
             this._renderHeaderFormError(),
             this._renderPrefilledMessage(),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "fieldsets" },
               this._renderFieldsets()
             ),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "div",
               { className: "form-footer" },
-              import_react66.default.createElement(
+              import_react67.default.createElement(
                 "button",
                 {
                   type: "button",
@@ -239958,11 +239958,11 @@ var require_generated_form = __commonJS({
       }
       _renderPrefilledMessage() {
         if (this.props.prefilled) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             { className: "prefilled-message" },
             `The `,
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               "span",
               { className: "highlighted" },
               "highlighted"
@@ -239973,7 +239973,7 @@ var require_generated_form = __commonJS({
       }
       _renderHeaderFormError() {
         if (this.props.errors != null ? this.props.errors.formError : void 0) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "div",
             {
               ref: this.formHeaderErrorRef,
@@ -239994,7 +239994,7 @@ var require_generated_form = __commonJS({
             props.currentFormValues = this._currentFormValues();
             props.firstFieldset = i === 0;
             props.lastFieldset = i !== 0 && i === this.props.fieldsets.length - 1;
-            return import_react66.default.createElement(
+            return import_react67.default.createElement(
               GeneratedFieldset,
               Object.assign({}, props, { ref: `fieldset-${fieldset.id}` })
             );
@@ -240176,11 +240176,11 @@ var init_scenario_editor_models = __esm({
 var require_scenario_editor_row = __commonJS({
   "src/components/scenario-editor-row.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     init_index_all();
     var import_rx_lite10 = __toESM(require_rx_lite());
     var SOURCE_SELECT_NULL = "NULL";
-    var SourceSelect = class _SourceSelect extends import_react66.default.Component {
+    var SourceSelect = class _SourceSelect extends import_react67.default.Component {
       static initClass() {
         _SourceSelect.displayName = "SourceSelect";
         _SourceSelect.propTypes = {
@@ -240230,18 +240230,18 @@ var require_scenario_editor_row = __commonJS({
       }
       render() {
         const { options: options2 } = this.state;
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "select",
           {
             value: this.props.value || SOURCE_SELECT_NULL,
             onChange: this._onChange
           },
-          import_react66.default.createElement("option", {
+          import_react67.default.createElement("option", {
             key: SOURCE_SELECT_NULL,
             value: SOURCE_SELECT_NULL
           }),
           this.state.options.map(({ value, name: name2 }) => {
-            return import_react66.default.createElement(
+            return import_react67.default.createElement(
               "option",
               { key: value, value },
               name2
@@ -240258,7 +240258,7 @@ var require_scenario_editor_row = __commonJS({
       }
     };
     SourceSelect.initClass();
-    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react66.default.Component {
+    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react67.default.Component {
       static initClass() {
         _ScenarioEditorRow.displayName = "ScenarioEditorRow";
         _ScenarioEditorRow.propTypes = {
@@ -240286,33 +240286,33 @@ var require_scenario_editor_row = __commonJS({
           key: this.props.instance.templateKey
         });
         if (!template2) {
-          return import_react66.default.createElement(
+          return import_react67.default.createElement(
             "span",
             null,
             " Could not find template for instance key: ",
             this.props.instance.templateKey
           );
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           Flexbox,
           { direction: "row", className: "well-row" },
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "span",
             null,
             this._renderTemplateSelect(template2),
             this._renderComparator(template2),
-            import_react66.default.createElement("span", null, template2.valueLabel),
+            import_react67.default.createElement("span", null, template2.valueLabel),
             this._renderValue(template2)
           ),
-          import_react66.default.createElement("div", { style: { flex: 1 } }),
+          import_react67.default.createElement("div", { style: { flex: 1 } }),
           this._renderActions()
         );
       }
       _renderTemplateSelect(_template) {
         const options2 = this.props.templates.map(({ key, name: name2 }) => {
-          return import_react66.default.createElement("option", { value: key, key }, name2);
+          return import_react67.default.createElement("option", { value: key, key }, name2);
         });
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "select",
           {
             value: this.props.instance.templateKey,
@@ -240323,12 +240323,12 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderComparator(template2) {
         const options2 = index_default_default.map(template2.comparators, ({ name: name2 }, key) => {
-          return import_react66.default.createElement("option", { key, value: key }, name2);
+          return import_react67.default.createElement("option", { key, value: key }, name2);
         });
         if (!(options2.length > 0)) {
           return false;
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "select",
           {
             value: this.props.instance.comparatorKey,
@@ -240339,13 +240339,13 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderValue(template2) {
         if (template2.type === Template.Type.Enum) {
-          return import_react66.default.createElement(SourceSelect, {
+          return import_react67.default.createElement(SourceSelect, {
             value: this.props.instance.value,
             onChange: this._onChangeValue,
             options: template2.values
           });
         } else if (template2.type === Template.Type.String) {
-          return import_react66.default.createElement("input", {
+          return import_react67.default.createElement("input", {
             type: "text",
             value: this.props.instance.value,
             onChange: this._onChangeValue
@@ -240355,15 +240355,15 @@ var require_scenario_editor_row = __commonJS({
         }
       }
       _renderActions() {
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: "actions" },
-          this.props.removable ? import_react66.default.createElement(
+          this.props.removable ? import_react67.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onRemove },
             "\u2212"
           ) : void 0,
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onInsert },
             "+"
@@ -240401,10 +240401,10 @@ var require_scenario_editor_row = __commonJS({
 var require_scenario_editor = __commonJS({
   "src/components/scenario-editor.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     init_scenario_editor_models();
     var import_scenario_editor_row = __toESM(require_scenario_editor_row());
-    var ScenarioEditor = class _ScenarioEditor extends import_react66.default.Component {
+    var ScenarioEditor = class _ScenarioEditor extends import_react67.default.Component {
       static initClass() {
         _ScenarioEditor.displayName = "ScenarioEditor";
         _ScenarioEditor.propTypes = {
@@ -240427,11 +240427,11 @@ var require_scenario_editor = __commonJS({
         this.state = { collapsed: true };
       }
       render() {
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: this.props.className },
           (this.props.instances || []).map((instance, idx) => {
-            return import_react66.default.createElement(import_scenario_editor_row.default, {
+            return import_react67.default.createElement(import_scenario_editor_row.default, {
               key: idx,
               instance,
               removable: this.props.instances.length > 1,
@@ -274215,7 +274215,7 @@ var require_extended_selection = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ExportedSelection2 = (init_exported_selection(), __toCommonJS(exported_selection_exports)).default;
-    var ExtendedSelection2 = class _ExtendedSelection {
+    var ExtendedSelection3 = class _ExtendedSelection {
       static initClass() {
         Object.defineProperty(_ExtendedSelection.prototype, "anchorNode", {
           get() {
@@ -274565,8 +274565,8 @@ var require_extended_selection = __commonJS({
         return new Error(`Can't set ${property2}`);
       }
     };
-    ExtendedSelection2.initClass();
-    module2.exports = ExtendedSelection2;
+    ExtendedSelection3.initClass();
+    module2.exports = ExtendedSelection3;
   }
 });
 
@@ -274602,8 +274602,8 @@ var require_floating_toolbar = __commonJS({
     var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react66 = __toESM(require_react());
-    var FloatingToolbar2 = class _FloatingToolbar extends import_react66.default.Component {
+    var import_react67 = __toESM(require_react());
+    var FloatingToolbar2 = class _FloatingToolbar extends import_react67.default.Component {
       static initClass() {
         _FloatingToolbar.displayName = "FloatingToolbar";
         _FloatingToolbar.propTypes = {
@@ -274689,10 +274689,10 @@ var require_floating_toolbar = __commonJS({
         if (!ToolbarComponent) {
           return false;
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: "floating-toolbar-container" },
-          import_react66.default.createElement(
+          import_react67.default.createElement(
             "div",
             {
               ref: "floatingToolbar",
@@ -274700,7 +274700,7 @@ var require_floating_toolbar = __commonJS({
               style: this._toolbarStyles()
             },
             this._renderPointer(),
-            import_react66.default.createElement(
+            import_react67.default.createElement(
               ToolbarComponent,
               Object.assign({}, this.state.toolbarComponentProps)
             )
@@ -274860,14 +274860,14 @@ var require_floating_toolbar = __commonJS({
         if (this.state.hidePointer) {
           return false;
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           {
             className: "toolbar-pointer-container",
             style: this._toolbarPointerStyles()
           },
-          import_react66.default.createElement("div", { className: "shadow" }),
-          import_react66.default.createElement("div", { className: "foreground" })
+          import_react67.default.createElement("div", { className: "shadow" }),
+          import_react67.default.createElement("div", { className: "foreground" })
         );
       }
     };
@@ -274930,10 +274930,10 @@ var init_tab_manager = __esm({
 var require_link_editor = __commonJS({
   "src/components/contenteditable/link-editor.jsx"(exports2, module2) {
     var import_prop_types69 = __toESM(require_prop_types());
-    var import_react66 = __toESM(require_react());
+    var import_react67 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
-    var LinkEditor2 = class _LinkEditor extends import_react66.default.Component {
+    var LinkEditor2 = class _LinkEditor extends import_react67.default.Component {
       static initClass() {
         _LinkEditor.displayName = "LinkEditor";
         _LinkEditor.propTypes = {
@@ -274975,7 +274975,7 @@ var require_link_editor = __commonJS({
         let removeBtn = "";
         if (this._initialUrl()) {
           widthCorrection += 32;
-          removeBtn = import_react66.default.createElement(
+          removeBtn = import_react67.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -274983,12 +274983,12 @@ var require_link_editor = __commonJS({
               style: { float: "right" },
               onMouseDown: this._removeUrl
             },
-            import_react66.default.createElement("i", { className: "fa fa-times" })
+            import_react67.default.createElement("i", { className: "fa fa-times" })
           );
         }
         if (this.state.urlInputValue.length === 0 || this.state.urlInputValue !== this._initialUrl()) {
           widthCorrection += 32;
-          checkBtn = import_react66.default.createElement(
+          checkBtn = import_react67.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -274997,14 +274997,14 @@ var require_link_editor = __commonJS({
               onKeyPress: this._saveUrlOnEnter,
               onMouseDown: this._saveUrl
             },
-            import_react66.default.createElement("i", { className: "fa fa-check" })
+            import_react67.default.createElement("i", { className: "fa fa-check" })
           );
         }
-        return import_react66.default.createElement(
+        return import_react67.default.createElement(
           "div",
           { className: "toolbar-new-link" },
-          import_react66.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
-          import_react66.default.createElement("input", {
+          import_react67.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
+          import_react67.default.createElement("input", {
             type: "text",
             ref: "urlInput",
             style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
@@ -276073,7 +276073,7 @@ var init_paragraph_formatting_extension = __esm({
 function __guard__2(value, transform) {
   return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
 }
-var import_prop_types65, import_react61, import_react_dom27, import_floating_toolbar, import_editor_api, import_extended_selection, import_dom_normalizer, Contenteditable, IgnoreMutationClassName;
+var import_prop_types65, import_react61, import_react_dom27, import_floating_toolbar, import_extended_selection, import_dom_normalizer, Contenteditable, IgnoreMutationClassName;
 var init_contenteditable = __esm({
   "src/components/contenteditable/contenteditable.jsx"() {
     import_prop_types65 = __toESM(require_prop_types());
@@ -276083,7 +276083,7 @@ var init_contenteditable = __esm({
     init_nylas_exports();
     init_nylas_component_kit();
     import_floating_toolbar = __toESM(require_floating_toolbar());
-    import_editor_api = __toESM(require_editor_api());
+    init_editor_api();
     import_extended_selection = __toESM(require_extended_selection());
     init_tab_manager();
     init_link_manager();
@@ -276149,7 +276149,7 @@ var init_contenteditable = __esm({
           extraArgsObj = {};
         }
         this._teardownNonMutationListeners();
-        const editor = new import_editor_api.default(this._editableNode());
+        const editor = new editor_api_default(this._editableNode());
         if (!editor.currentSelection().isInScope() && extraArgsObj.methodName !== "onBlur") {
           this._restoreSelection();
         }
@@ -276788,10 +276788,6 @@ var init_anchor_constants = __esm({
 });
 
 // src/components/overlaid-components/overlaid-components.jsx
-var overlaid_components_exports = {};
-__export(overlaid_components_exports, {
-  default: () => OverlaidComponents
-});
 var import_react62, import_prop_types66, import_react_dom28, import_utils24, MUTATION_CONFIG, OverlaidComponents;
 var init_overlaid_components = __esm({
   "src/components/overlaid-components/overlaid-components.jsx"() {
@@ -277015,20 +277011,25 @@ var init_overlaid_components = __esm({
 });
 
 // src/components/contenteditable/editor-api.js
-var require_editor_api = __commonJS({
-  "src/components/contenteditable/editor-api.js"(exports2, module2) {
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var _React = require_react();
-    var ExtendedSelection2 = require_extended_selection();
-    var OverlaidComponents2 = null;
-    var EditorAPI3 = class {
+var editor_api_exports = {};
+__export(editor_api_exports, {
+  default: () => editor_api_default
+});
+var import_react63, import_extended_selection2, EditorAPI, editor_api_default;
+var init_editor_api = __esm({
+  "src/components/contenteditable/editor-api.js"() {
+    init_index_all();
+    init_nylas_exports();
+    import_react63 = __toESM(require_react());
+    import_extended_selection2 = __toESM(require_extended_selection());
+    init_overlaid_components();
+    EditorAPI = class {
       constructor(rootNode) {
         this.rootNode = rootNode;
-        this._extendedSelection = new ExtendedSelection2(this.rootNode);
+        this._extendedSelection = new import_extended_selection2.default(this.rootNode);
       }
       wrapSelection(nodeName) {
-        const wrapped = DOMUtils5.wrap(
+        const wrapped = DOMUtils4.wrap(
           this._extendedSelection.getRangeAt(0),
           nodeName
         );
@@ -277036,17 +277037,17 @@ var require_editor_api = __commonJS({
         return this;
       }
       unwrapNodeAndSelectAll(node) {
-        const replacedNodes = DOMUtils5.unwrapNode(node);
+        const replacedNodes = DOMUtils4.unwrapNode(node);
         if (replacedNodes.length === 0) {
           return this;
         }
-        const first2 = DOMUtils5.findFirstTextNode(replacedNodes[0]);
-        const last2 = DOMUtils5.findLastTextNode(_4.last(replacedNodes));
+        const first2 = DOMUtils4.findFirstTextNode(replacedNodes[0]);
+        const last2 = DOMUtils4.findLastTextNode(index_default_default.last(replacedNodes));
         this._extendedSelection.selectFromTo(first2, last2);
         return this;
       }
       regExpSelectorAll(regex) {
-        return DOMUtils5.regExpSelectorAll(this.rootNode, regex);
+        return DOMUtils4.regExpSelectorAll(this.rootNode, regex);
       }
       currentSelection() {
         return this._extendedSelection;
@@ -277090,10 +277091,7 @@ var require_editor_api = __commonJS({
         if (props == null) {
           props = {};
         }
-        if (OverlaidComponents2 == null) {
-          OverlaidComponents2 = (init_overlaid_components(), __toCommonJS(overlaid_components_exports)).default;
-        }
-        const { anchorId, anchorTag } = OverlaidComponents2.buildAnchorTag(
+        const { anchorId, anchorTag } = OverlaidComponents.buildAnchorTag(
           componentKey,
           props,
           props.anchorId
@@ -277271,7 +277269,7 @@ var require_editor_api = __commonJS({
         throw new Error("Not implemented");
       }
     };
-    module2.exports = EditorAPI3;
+    editor_api_default = EditorAPI;
   }
 });
 
@@ -279003,7 +279001,7 @@ var init_nylas_exports = __esm({
     );
     lazyLoad(
       `EditorAPI`,
-      () => typeof require !== "undefined" && require.resolve ? require_editor_api().default || require_editor_api() : requireFromSrc2("../components/contenteditable/editor-api.js").default || requireFromSrc2("../components/contenteditable/editor-api.js")
+      () => typeof require !== "undefined" && require.resolve ? (init_editor_api(), __toCommonJS(editor_api_exports)).default || (init_editor_api(), __toCommonJS(editor_api_exports)) : requireFromSrc2("../components/contenteditable/editor-api.js").default || requireFromSrc2("../components/contenteditable/editor-api.js")
     );
     lazyLoad(
       `KeyManager`,
@@ -280069,11 +280067,11 @@ var sheet_exports = {};
 __export(sheet_exports, {
   default: () => sheet_default
 });
-var import_prop_types67, import_react63, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
+var import_prop_types67, import_react64, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
 var init_sheet = __esm({
   "src/sheet.jsx"() {
     import_prop_types67 = __toESM(require_prop_types());
-    import_react63 = __toESM(require_react());
+    import_react64 = __toESM(require_react());
     init_index_all();
     init_nylas_exports();
     init_retina_img();
@@ -280081,7 +280079,7 @@ var init_sheet = __esm({
     import_injected_component_set2 = __toESM(require_injected_component_set());
     import_resizable_region = __toESM(require_resizable_region());
     FLEX = 1e4;
-    Sheet = class _Sheet extends import_react63.default.Component {
+    Sheet = class _Sheet extends import_react64.default.Component {
       static initClass() {
         _Sheet.displayName = "Sheet";
         _Sheet.propTypes = {
@@ -280147,7 +280145,7 @@ var init_sheet = __esm({
           height: "100%",
           zIndex: 1
         };
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           {
             name: "Sheet",
@@ -280155,7 +280153,7 @@ var init_sheet = __esm({
             className: `sheet mode-${this.state.mode}`,
             "data-id": this.props.data.id
           },
-          import_react63.default.createElement(
+          import_react64.default.createElement(
             Flexbox2,
             { direction: "row", style: { overflow: "hidden" } },
             this._columnFlexboxElements()
@@ -280166,7 +280164,7 @@ var init_sheet = __esm({
         return this.state.columns.map((column, idx) => {
           const { maxWidth, minWidth, handle, location: location2, width } = column;
           if (minWidth !== maxWidth && maxWidth < FLEX) {
-            return import_react63.default.createElement(
+            return import_react64.default.createElement(
               import_resizable_region.default,
               {
                 key: `${this.props.data.id}:${idx}`,
@@ -280180,7 +280178,7 @@ var init_sheet = __esm({
                 maxWidth,
                 handle
               },
-              import_react63.default.createElement(import_injected_component_set2.default, {
+              import_react64.default.createElement(import_injected_component_set2.default, {
                 direction: "column",
                 matching: { location: location2, mode: this.state.mode }
               })
@@ -280196,7 +280194,7 @@ var init_sheet = __esm({
             } else {
               style.flex = 1;
             }
-            return import_react63.default.createElement(import_injected_component_set2.default, {
+            return import_react64.default.createElement(import_injected_component_set2.default, {
               direction: "column",
               key: `${this.props.data.id}:${idx}`,
               name: `${this.props.data.id}:${idx}`,
@@ -280286,21 +280284,21 @@ __export(sheet_toolbar_exports, {
 function __guard__3(value, transform) {
   return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
 }
-var import_prop_types68, import_react64, import_react_dom29, import_utils25, import_electron10, import_underscore94, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
+var import_prop_types68, import_react65, import_react_dom29, import_utils25, import_electron10, import_underscore95, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
 var init_sheet_toolbar = __esm({
   "src/sheet-toolbar.jsx"() {
     import_prop_types68 = __toESM(require_prop_types());
-    import_react64 = __toESM(require_react());
+    import_react65 = __toESM(require_react());
     import_react_dom29 = __toESM(require_react_dom());
     init_sheet();
     init_flexbox();
     init_retina_img();
     import_utils25 = __toESM(require_utils());
     import_electron10 = require("electron");
-    import_underscore94 = __toESM(require_underscore());
+    import_underscore95 = __toESM(require_underscore());
     init_index_all();
     init_nylas_exports();
-    ToolbarSpacer = class _ToolbarSpacer extends import_react64.default.Component {
+    ToolbarSpacer = class _ToolbarSpacer extends import_react65.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         super(...args);
@@ -280310,7 +280308,7 @@ var init_sheet_toolbar = __esm({
         _ToolbarSpacer.propTypes = { order: import_prop_types68.default.number };
       }
       render() {
-        return import_react64.default.createElement("div", {
+        return import_react65.default.createElement("div", {
           className: "item-spacer",
           style: {
             flex: 1,
@@ -280320,7 +280318,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarSpacer.initClass();
-    WindowTitle = class _WindowTitle extends import_react64.default.Component {
+    WindowTitle = class _WindowTitle extends import_react65.default.Component {
       static initClass() {
         _WindowTitle.displayName = "WindowTitle";
       }
@@ -280337,7 +280335,7 @@ var init_sheet_toolbar = __esm({
         return typeof this.unlisten === "function" ? this.unlisten() : void 0;
       }
       render() {
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "window-title" },
           this.state.title
@@ -280347,7 +280345,7 @@ var init_sheet_toolbar = __esm({
     WindowTitle.initClass();
     Category4 = null;
     FocusedPerspectiveStore4 = null;
-    ToolbarBack = class _ToolbarBack extends import_react64.default.Component {
+    ToolbarBack = class _ToolbarBack extends import_react65.default.Component {
       static initClass() {
         _ToolbarBack.displayName = "ToolbarBack";
       }
@@ -280384,22 +280382,22 @@ var init_sheet_toolbar = __esm({
         if (this.state.categoryName === Category4.AllMailName) {
           title = "All Mail";
         } else if (this.state.categoryName) {
-          title = import_underscore94.default.titleize(this.state.categoryName);
+          title = import_underscore95.default.titleize(this.state.categoryName);
         } else {
           title = "Back";
         }
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             className: "item-back",
             onClick: this._onClick,
             title: `Return to ${title}`
           },
-          import_react64.default.createElement(retina_img_default, {
+          import_react65.default.createElement(retina_img_default, {
             name: "sheet-back.png",
             mode: retina_img_default.Mode.ContentIsMask
           }),
-          import_react64.default.createElement("div", { className: "item-back-title" }, title)
+          import_react65.default.createElement("div", { className: "item-back-title" }, title)
         );
       }
       _onClick() {
@@ -280407,7 +280405,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarBack.initClass();
-    ToolbarWindowControls = class _ToolbarWindowControls extends import_react64.default.Component {
+    ToolbarWindowControls = class _ToolbarWindowControls extends import_react65.default.Component {
       static initClass() {
         _ToolbarWindowControls.displayName = "ToolbarWindowControls";
       }
@@ -280433,27 +280431,27 @@ var init_sheet_toolbar = __esm({
         }
       }
       render() {
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             name: "ToolbarWindowControls",
             className: `toolbar-window-controls alt-${this.state.alt}`
           },
-          import_react64.default.createElement("button", {
+          import_react65.default.createElement("button", {
             tabIndex: -1,
             className: "close",
             onClick() {
               return NylasEnv.close();
             }
           }),
-          import_react64.default.createElement("button", {
+          import_react65.default.createElement("button", {
             tabIndex: -1,
             className: "minimize",
             onClick() {
               return NylasEnv.minimize();
             }
           }),
-          import_react64.default.createElement("button", {
+          import_react65.default.createElement("button", {
             tabIndex: -1,
             className: "maximize",
             onClick: this._onMaximize
@@ -280474,7 +280472,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarWindowControls.initClass();
-    ToolbarMenuControl = class _ToolbarMenuControl extends import_react64.default.Component {
+    ToolbarMenuControl = class _ToolbarMenuControl extends import_react65.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         this._openMenu = this._openMenu.bind(this);
@@ -280484,13 +280482,13 @@ var init_sheet_toolbar = __esm({
         _ToolbarMenuControl.displayName = "ToolbarMenuControl";
       }
       render() {
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "toolbar-menu-control" },
-          import_react64.default.createElement(
+          import_react65.default.createElement(
             "button",
             { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
-            import_react64.default.createElement(retina_img_default, {
+            import_react65.default.createElement(retina_img_default, {
               name: "windows-menu-icon.png",
               mode: retina_img_default.Mode.ContentIsMask
             })
@@ -280509,7 +280507,7 @@ var init_sheet_toolbar = __esm({
     ComponentRegistry2.register(ToolbarMenuControl, {
       location: WorkspaceStore.Sheet.Global.Toolbar.Right
     });
-    Toolbar = class _Toolbar extends import_react64.default.Component {
+    Toolbar = class _Toolbar extends import_react65.default.Component {
       static initClass() {
         _Toolbar.displayName = "Toolbar";
         _Toolbar.propTypes = {
@@ -280574,7 +280572,7 @@ var init_sheet_toolbar = __esm({
           zIndex: 1
         };
         const toolbars = this.state.columns.map((components, idx) => {
-          return import_react64.default.createElement(
+          return import_react65.default.createElement(
             "div",
             {
               style: { position: "absolute", top: 0, display: "none" },
@@ -280585,7 +280583,7 @@ var init_sheet_toolbar = __esm({
             this._flexboxForComponents(components)
           );
         });
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             style,
@@ -280597,17 +280595,17 @@ var init_sheet_toolbar = __esm({
       }
       _flexboxForComponents(components) {
         const elements = components.map((Component20) => {
-          return import_react64.default.createElement(
+          return import_react65.default.createElement(
             Component20,
             Object.assign({ key: Component20.displayName }, this.props)
           );
         });
-        return import_react64.default.createElement(
+        return import_react65.default.createElement(
           Flexbox2,
           { className: "item-container", direction: "row" },
           elements,
-          import_react64.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
-          import_react64.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
+          import_react65.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
+          import_react65.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
         );
       }
       recomputeLayout() {
@@ -281246,7 +281244,7 @@ var theme_manager_default = ThemeManager;
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
 var import_workspace_store4 = __toESM(require_workspace_store());
-var import_react65 = __toESM(require_react());
+var import_react66 = __toESM(require_react());
 var import_react_dom30 = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
 init_nylas_exports();
@@ -282203,7 +282201,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.item.setAttribute("id", "sheet-container");
     this.item.setAttribute("class", "sheet-container");
     this.item.setAttribute("tabIndex", "-1");
-    import_react_dom30.default.render(import_react65.default.createElement(import_sheet_container.default), this.item);
+    import_react_dom30.default.render(import_react66.default.createElement(import_sheet_container.default), this.item);
     return document.querySelector(this.workspaceViewParentSelector).appendChild(this.item);
   }
   deserializePackageStates() {
