@@ -652,3 +652,18 @@ message-store, query-subscription, tokenizing keyboard/drop.
 
 Cumulative: **0.32% → 44.17%**, 11 → 2,801 tests, twenty swarm rounds.
 ~15.8 points (~3,660 lines) remain to the 60% gate.
+
+
+## Loop 36 — Coverage round 21: third-pass deep sweep (commit 4c6678e78)
+
+client-app: 44.17% → **45.59% lines** (2,947 tests, 152/152 files green).
+
+Third specs on database-store, account-store, file-download-store (the
+three-time crashers finally fell to the deepen pattern), plus identity,
+scroll-region, task-queue. Hand-wrote the component-kit registration
+spec — taught the dual-context contract a new trick: reaching a class in
+a dual-CJS module from tests via a globalThis handle, because any ESM
+export statement flips the module for esbuild and breaks the bundle.
+
+Cumulative: **0.32% → 45.59%**, 11 → 2,947 tests, twenty-one swarm
+rounds. ~14.4 points (~3,340 lines) remain.
