@@ -79,7 +79,8 @@ export default class CalendarEventPopover extends React.Component {
 				.map((el) => el.content)
 				.join("\n");
 		} else {
-			notes = node.innerText;
+			// jsdom lacks innerText; textContent is equivalent for our collapse pass
+			notes = node.innerText || node.textContent;
 		}
 		while (true) {
 			const nextNotes = notes.replace("\n\n", "\n");
