@@ -717,3 +717,19 @@ apm-wrapper, buffered-process) that resist unit interception by design.
 
 Cumulative: **0.32% → 47.72%**, 11 → 3,328 tests, twenty-four swarm
 rounds. 12.3 points remain.
+
+
+## Loop 41 — Coverage round 25: zero-coverage clearing (commit e7a4df3ac)
+
+client-app: 47.72% → **51.75% lines** (3,488 tests, 174/174 files green).
+**+4.03 points** — the zero-coverage clearing pattern (group 4-6 fully-
+uncovered files per family by theme) is the most efficient swarm shape
+yet: every executed line is new coverage.
+
+Cleared: 26 previously-0% files across stores, tasks, components, core
+infra, search parsers, and the sheet/outline UI shell. Ten-file ESM
+batch conversion of the sheet/searchable chains; the bundle gate caught
+the one dropped-relative-prefix regression.
+
+Cumulative: **0.32% → 51.75%**, 11 → 3,488 tests, twenty-five swarm
+rounds. 8.25 points (~1,900 lines) remain.
