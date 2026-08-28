@@ -4,11 +4,12 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import { ipcRenderer, remote } from "electron";
 import PropTypes from "prop-types";
-const React = require("react");
-const { Actions } = require("nylas-exports");
-const { RetinaImg } = require("nylas-component-kit");
-const AccountCommands = require("../account-commands");
+import React from "react";
+import { Actions } from "nylas-exports";
+import { RetinaImg } from "nylas-component-kit";
+import AccountCommands from "../account-commands";
 
 class AccountSwitcher extends React.Component {
 	constructor(...args) {
@@ -46,8 +47,7 @@ class AccountSwitcher extends React.Component {
 	// Handlers
 
 	_onAddAccount() {
-		const ipc = require("electron").ipcRenderer;
-		return ipc.send("command", "application:add-account", {
+		return ipcRenderer.send("command", "application:add-account", {
 			source: "Sidebar",
 		});
 	}
@@ -58,8 +58,7 @@ class AccountSwitcher extends React.Component {
 	}
 
 	_onShowMenu() {
-		const { remote } = require("electron");
-		const { Menu } = remote;
+		const { Menu } = remote || {};
 		const menu = Menu.buildFromTemplate(this._makeMenuTemplate());
 		return menu.popup();
 	}
@@ -78,4 +77,4 @@ class AccountSwitcher extends React.Component {
 }
 AccountSwitcher.initClass();
 
-module.exports = AccountSwitcher;
+export default AccountSwitcher;

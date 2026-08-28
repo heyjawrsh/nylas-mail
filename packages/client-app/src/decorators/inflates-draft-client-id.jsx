@@ -21,6 +21,7 @@ function InflatesDraftClientId(ComposedComponent) {
 
 		constructor(props) {
 			super(props);
+			this.composedRef = React.createRef();
 			this.state = {
 				session: null,
 				draft: null,
@@ -92,8 +93,8 @@ function InflatesDraftClientId(ComposedComponent) {
 		// Returns a promise for use in composer/main.es6, to show the window
 		// once the composer is rendered and focused.
 		focus() {
-			return Utils.waitFor(() => this.refs.composed)
-				.then(() => this.refs.composed.focus())
+			return Utils.waitFor(() => this.composedRef?.current)
+				.then(() => this.composedRef?.current.focus())
 				.catch(() => {});
 		}
 
@@ -102,7 +103,11 @@ function InflatesDraftClientId(ComposedComponent) {
 				return <span />;
 			}
 			return (
-				<ComposedComponent ref="composed" {...this.props} {...this.state} />
+				<ComposedComponent
+					ref={this.composedRef}
+					{...this.props}
+					{...this.state}
+				/>
 			);
 		}
 	};

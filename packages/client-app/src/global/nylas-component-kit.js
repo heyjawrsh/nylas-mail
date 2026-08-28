@@ -424,4 +424,6 @@ try {
 // The eager instance makes vite's CJS interop walk every prototype getter at
 // module-eval time (loading .jsx components through the CJS shim, which has
 // no JSX loader). Under vitest, export the class; consumers instantiate.
-module.exports = new NylasComponentKit();
+if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
+	module.exports = new NylasComponentKit();
+}

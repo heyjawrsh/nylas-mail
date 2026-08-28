@@ -47,4 +47,4 @@ class DraftDeleteButton extends React.Component {
 }
 DraftDeleteButton.initClass();
 
-module.exports = { DraftDeleteButton };
+export { DraftDeleteButton };

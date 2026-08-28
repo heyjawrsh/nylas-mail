@@ -32,12 +32,12 @@ module.exports = KeybaseUser = (() => {
 		}
 
 		constructor(props) {
+			super(props);
 			this._addEmail = this._addEmail.bind(this);
 			this._addEmailClick = this._addEmailClick.bind(this);
 			this._popoverDone = this._popoverDone.bind(this);
 			this._removeEmail = this._removeEmail.bind(this);
 			this.render = this.render.bind(this);
-			super(props);
 		}
 
 		componentDidMount() {

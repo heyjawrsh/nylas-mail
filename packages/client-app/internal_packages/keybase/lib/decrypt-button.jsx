@@ -32,6 +32,7 @@ class DecryptMessageButton extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this._onClickDecrypt = this._onClickDecrypt.bind(this);
 		this._onClickDecryptAttachments =
 			this._onClickDecryptAttachments.bind(this);
@@ -41,7 +42,6 @@ class DecryptMessageButton extends React.Component {
 		this._openPassphrasePopover = this._openPassphrasePopover.bind(this);
 		this._noPrivateKeys = this._noPrivateKeys.bind(this);
 		this.render = this.render.bind(this);
-		super(props);
 		this.state = this._getStateFromStores();
 	}
 

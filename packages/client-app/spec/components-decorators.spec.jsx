@@ -203,7 +203,7 @@ describe("ListensToObservable", () => {
 describe("ListensToMovementKeys", () => {
 	const build = (handlers = {}) => {
 		const instance = new (ListensToMovementKeys(FixtureComponent))({ label: "keys" });
-		Object.defineProperty(instance, "refs", { value: { composed: handlers } });
+		Object.defineProperty(instance, "composedRef", { value: { current: handlers } });
 		return instance;
 	};
 

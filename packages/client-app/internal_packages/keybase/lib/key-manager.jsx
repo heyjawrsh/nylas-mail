@@ -25,9 +25,9 @@ module.exports = KeyManager = (() => {
 		}
 
 		constructor(props) {
+			super(props);
 			this._exportPopoverDone = this._exportPopoverDone.bind(this);
 			this._exportPrivateKey = this._exportPrivateKey.bind(this);
-			super(props);
 		}
 
 		_exportPopoverDone(passphrase, identity) {

@@ -47,11 +47,11 @@ module.exports = KeybaseSearch = (() => {
 		}
 
 		constructor(props) {
+			super(props);
 			this._importKey = this._importKey.bind(this);
 			this._popoverDone = this._popoverDone.bind(this);
 			this._save = this._save.bind(this);
 			this._queryChange = this._queryChange.bind(this);
-			super(props);
 			this.state = {
 				query: props.initialSearch,
 				results: [],

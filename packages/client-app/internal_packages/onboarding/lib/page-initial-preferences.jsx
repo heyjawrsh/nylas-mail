@@ -21,8 +21,8 @@ const _OnboardingActions = require("./onboarding-actions").default;
 // NOTE: Temporarily copied from preferences module
 class AppearanceModeOption extends React.Component {
 	constructor(...args) {
-		this.render = this.render.bind(this);
 		super(...args);
+		this.render = this.render.bind(this);
 	}
 
 	static initClass() {

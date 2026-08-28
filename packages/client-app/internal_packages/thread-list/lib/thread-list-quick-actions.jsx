@@ -18,9 +18,9 @@ const {
 
 class ThreadArchiveQuickAction extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this._onArchive = this._onArchive.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -65,9 +65,9 @@ ThreadArchiveQuickAction.initClass();
 
 class ThreadTrashQuickAction extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this._onRemove = this._onRemove.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

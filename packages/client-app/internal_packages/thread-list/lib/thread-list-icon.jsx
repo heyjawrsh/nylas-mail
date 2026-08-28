@@ -20,13 +20,13 @@ const {
 
 class ThreadListIcon extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this._extensionsIconClassNames = this._extensionsIconClassNames.bind(this);
 		this._iconClassNames = this._iconClassNames.bind(this);
 		this._nonDraftMessages = this._nonDraftMessages.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._onToggleStar = this._onToggleStar.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

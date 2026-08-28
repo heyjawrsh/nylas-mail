@@ -37,12 +37,12 @@ class EncryptMessageButton extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this._onKeystoreChange = this._onKeystoreChange.bind(this);
 		this._onClick = this._onClick.bind(this);
 		this._toggleCrypt = this._toggleCrypt.bind(this);
 		this._encrypt = this._encrypt.bind(this);
 		this._checkKeysAndEncrypt = this._checkKeysAndEncrypt.bind(this);
-		super(props);
 
 		// plaintext: store the message's plaintext in case the user wants to edit
 		// further after hitting the "encrypt" button (i.e. so we can "undo" the

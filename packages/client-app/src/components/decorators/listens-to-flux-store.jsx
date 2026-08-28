@@ -41,9 +41,8 @@ function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 				...this.props,
 				...this.state,
 			};
-			if (Component.isPrototypeOf(ComposedComponent)) {
-				props.ref = "composed";
-			}
+			// React 19: string refs removed. Nothing consumes this ref — drop it
+			// (getWrappedInstance never existed here).
 			return <ComposedComponent {...props} />;
 		}
 	};

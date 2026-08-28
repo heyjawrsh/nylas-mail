@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const classnames = require("classnames");
-const { Actions, Contact } = require("nylas-exports");
+import _ from "underscore";
+import React from "react";
+import classnames from "classnames";
+import { Actions, Contact } from "nylas-exports";
 const { Menu, MenuItem } = require("electron").remote;
 const MAX_COLLAPSED = 5;
 
@@ -182,4 +182,4 @@ class MessageParticipants extends React.Component {
 	}
 }
 
-module.exports = MessageParticipants;
+export default MessageParticipants;

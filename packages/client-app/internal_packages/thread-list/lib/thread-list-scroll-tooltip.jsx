@@ -12,11 +12,11 @@ import ThreadListStore from "./thread-list-store";
 
 class ThreadListScrollTooltip extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
 			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -64,4 +64,4 @@ class ThreadListScrollTooltip extends React.Component {
 }
 ThreadListScrollTooltip.initClass();
 
-module.exports = ThreadListScrollTooltip;
+export default ThreadListScrollTooltip;

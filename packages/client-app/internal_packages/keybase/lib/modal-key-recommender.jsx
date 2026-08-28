@@ -32,6 +32,7 @@ module.exports = ModalKeyRecommender = (() => {
 		}
 
 		constructor(props) {
+			super(props);
 			this._onKeystoreChange = this._onKeystoreChange.bind(this);
 			this._getStateFromStores = this._getStateFromStores.bind(this);
 			this._selectProfile = this._selectProfile.bind(this);
@@ -40,7 +41,6 @@ module.exports = ModalKeyRecommender = (() => {
 			this._setPage = this._setPage.bind(this);
 			this._onDone = this._onDone.bind(this);
 			this._onManageKeys = this._onManageKeys.bind(this);
-			super(props);
 			this.state = Object.assign(
 				{
 					currentContact: 0,

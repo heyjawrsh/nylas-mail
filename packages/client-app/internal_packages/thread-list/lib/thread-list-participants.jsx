@@ -13,13 +13,13 @@ import { Utils } from "nylas-exports";
 
 class ThreadListParticipants extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this.renderSpans = this.renderSpans.bind(this);
 		this.getTokensFromMessages = this.getTokensFromMessages.bind(this);
 		this.getTokensFromParticipants = this.getTokensFromParticipants.bind(this);
 		this.getTokens = this.getTokens.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -202,4 +202,4 @@ class ThreadListParticipants extends React.Component {
 }
 ThreadListParticipants.initClass();
 
-module.exports = ThreadListParticipants;
+export default ThreadListParticipants;

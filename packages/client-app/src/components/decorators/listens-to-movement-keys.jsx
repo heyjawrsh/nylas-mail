@@ -1,3 +1,4 @@
+import React from "react";
 import KeyCommandsRegion from "../key-commands-region.jsx";
 
 function ListensToMovementKeys(ComposedComponent) {
@@ -9,59 +10,59 @@ function ListensToMovementKeys(ComposedComponent) {
 		localKeyHandlers() {
 			return {
 				"core:previous-item": (event) => {
-					if (!this.refs.composed?.onArrowUp) {
+					if (!this.composedRef?.current?.onArrowUp) {
 						return;
 					}
 					event.stopPropagation();
-					this.refs.composed.onArrowUp(event);
+					this.composedRef?.current.onArrowUp(event);
 				},
 				"core:next-item": (event) => {
-					if (!this.refs.composed?.onArrowDown) {
+					if (!this.composedRef?.current?.onArrowDown) {
 						return;
 					}
 					event.stopPropagation();
-					this.refs.composed.onArrowDown(event);
+					this.composedRef?.current.onArrowDown(event);
 				},
 				"core:move-left": (event) => {
-					if (!this.refs.composed?.onArrowDown) {
+					if (!this.composedRef?.current?.onArrowDown) {
 						return;
 					}
 					event.stopPropagation();
-					this.refs.composed.onArrowLeft(event);
+					this.composedRef?.current.onArrowLeft(event);
 				},
 				"core:move-right": (event) => {
-					if (!this.refs.composed?.onArrowDown) {
+					if (!this.composedRef?.current?.onArrowDown) {
 						return;
 					}
 					event.stopPropagation();
-					this.refs.composed.onArrowRight(event);
+					this.composedRef?.current.onArrowRight(event);
 				},
 			};
 		}
 
 		onKeyDown = (event) => {
 			if (["Enter", "Return"].includes(event.key)) {
-				if (!this.refs.composed?.onEnter) {
+				if (!this.composedRef?.current?.onEnter) {
 					return;
 				}
 				event.stopPropagation();
-				this.refs.composed.onEnter(event);
+				this.composedRef?.current.onEnter(event);
 			}
 			if (event.key === "Tab") {
 				if (event.shiftKey) {
-					if (!this.refs.composed?.onShiftTab) {
+					if (!this.composedRef?.current?.onShiftTab) {
 						return;
 					}
 					event.stopPropagation();
 					event.preventDefault();
-					this.refs.composed.onShiftTab(event);
+					this.composedRef?.current.onShiftTab(event);
 				} else {
-					if (!this.refs.composed?.onTab) {
+					if (!this.composedRef?.current?.onTab) {
 						return;
 					}
 					event.stopPropagation();
 					event.preventDefault();
-					this.refs.composed.onTab(event);
+					this.composedRef?.current.onTab(event);
 				}
 			}
 		};
@@ -73,7 +74,7 @@ function ListensToMovementKeys(ComposedComponent) {
 					localHandlers={this.localKeyHandlers()}
 					onKeyDown={this.onKeyDown}
 				>
-					<ComposedComponent ref="composed" {...this.props} />
+					<ComposedComponent ref={this.composedRef} {...this.props} />
 				</KeyCommandsRegion>
 			);
 		}
