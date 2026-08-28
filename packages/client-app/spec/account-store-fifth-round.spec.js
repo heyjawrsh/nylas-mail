@@ -1,0 +1,22 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
+const m = vi.hoisted(() => ({ getPassword: vi.fn(), deletePassword: vi.fn(), replacePassword: vi.fn(), trigger: vi.fn(), listenTo: vi.fn(), config: new Map() }));
+vi.mock("node:module", () => { const api = { createRequire: () => vi.fn(() => ({ default: {} })) }; return { default: api, ...api }; });
+vi.mock("underscore", () => { const u = { any: (a,f)=>a.some(f), compact:(a)=>a.filter(Boolean), difference:(a,b)=>a.filter(x=>!b.includes(x)), extend:Object.assign, filter:(a,f)=>a.filter(f), findIndex:(a,f)=>a.findIndex(f), findWhere:(a,o)=>a.find(x=>Object.keys(o).every(k=>x[k]===o[k])), pluck:(a,k)=>(a||[]).map(x=>x[k]), uniq:(a,f)=>{const s=new Set();return a.filter(x=>{const k=f?f(x):x;if(s.has(k))return false;s.add(k);return true;});}, unique:(a)=>[...new Set(a)], values:(o)=>Object.values(o||{}), without:(a,x)=>a.filter(v=>v!==x), last:(a)=>a[a.length-1] }; return { default:u, ...u }; });
+vi.mock("nylas-store", () => ({ default: class { listenTo(...a){return m.listenTo(...a);} trigger(...a){return m.trigger(...a);} } }));
+vi.mock("../src/key-manager.js", () => ({ default: { getPassword:m.getPassword, deletePassword:m.deletePassword, replacePassword:m.replacePassword } }));
+vi.mock("../src/flux/actions.js", () => ({ default: { removeAccount:vi.fn(), updateAccount:vi.fn(), reorderAccount:vi.fn(), apiAuthError:vi.fn(), focusDefaultMailboxPerspectiveForAccounts:vi.fn(), setCollapsedSidebarItem:vi.fn(), retryDeltaConnection:vi.fn() } }));
+vi.mock("../src/flux/models/account.js", () => { class Account { static N1_CLOUD_STATE_AUTH_FAILED="cloud-failed"; static SYNC_STATE_AUTH_FAILED="sync-failed"; constructor(){this.aliases=[];} fromJSON(j){Object.assign(this,j,{emailAddress:j.email_address});return this;} toJSON(){return {...this};} me(){return {accountId:this.id,email:this.emailAddress};} meUsingAlias(email){return {accountId:this.id,email};} hasSyncStateError(){return !!this.syncError;} } return { default:Account }; });
+vi.mock("../src/flux/models/utils.js", () => ({ default: { emailIsEquivalent:(a,b)=>a?.toLowerCase()===b?.toLowerCase() } }));
+vi.mock("../src/flux/stores/database-store.js", () => ({ default: { inTransaction:vi.fn() } }));
+vi.mock("fs-plus", () => ({ default: { readdirSync:vi.fn(), readFileSync:vi.fn(), existsSync:vi.fn(), removeSync:vi.fn(), copySync:vi.fn() } }));
+vi.mock("node:path", () => { const p={join:(...a)=>a.join("/")}; return {default:p,...p}; });
+globalThis.NylasEnv={isWorkWindow:vi.fn(()=>true),inSpecMode:vi.fn(()=>true),inDevMode:vi.fn(()=>false),reportError:vi.fn(),isMainWindow:vi.fn(()=>true),showErrorDialog:vi.fn(),config:{get:vi.fn(k=>m.config.get(k)),set:vi.fn((k,v)=>m.config.set(k,v)),onDidChange:vi.fn()},getConfigDirPath:vi.fn(()=>"/cfg"),getPath:vi.fn(()=>"/tmp"),getVersion:vi.fn(()=>"1")};
+const {default:store}=await import("../src/flux/stores/account-store.js");
+describe("AccountStore fifth-round validity and auth edges",()=>{
+	beforeEach(()=>{vi.clearAllMocks();m.config=new Map([["nylas.accounts",[]],["nylas.accountsVersion",2]]);store._accounts=[];store._tokens={};});
+	it("returns false for an empty address collection",()=>{store._accounts=[];expect(store.isMyEmail()).toBe(false);});
+	it("removes an account missing its email address during validation",()=>{store._accounts=[{id:"bad"}];store._enforceAccountsValidity();expect(store._accounts).toEqual([]);});
+	it("keeps only the first account when ids are duplicated",()=>{store._accounts=[{id:"x",emailAddress:"a@x"},{id:"x",emailAddress:"b@x"}];store._enforceAccountsValidity();expect(store._accounts.map(a=>a.emailAddress)).toEqual(["a@x"]);});
+	it("keeps only the first account when emails are duplicated",()=>{store._accounts=[{id:"a",emailAddress:"same@x"},{id:"b",emailAddress:"same@x"}];store._enforceAccountsValidity();expect(store._accounts.map(a=>a.id)).toEqual(["a"]);});
+	it("does not update auth state when the request has no token",async()=>{store._accounts=[{id:"a"}];store._onUpdateAccount=vi.fn();await store._onAPIAuthError({}, {auth:{user:null}}, "API");expect(store._onUpdateAccount).not.toHaveBeenCalled();});
+});
