@@ -11,25 +11,25 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const ReactDOM = require("react-dom");
+import _ from "underscore";
+import React from "react";
+import ReactDOM from "react-dom";
 
-const { Utils, DOMUtils } = require("nylas-exports");
-const { KeyCommandsRegion } = require("nylas-component-kit");
-const FloatingToolbar = require("./floating-toolbar.jsx");
+import { Utils, DOMUtils } from "nylas-exports";
+import { KeyCommandsRegion } from "nylas-component-kit";
+import FloatingToolbar from "./floating-toolbar.jsx";
 
-const EditorAPI = require("./editor-api.js");
-const ExtendedSelection = require("./extended-selection.js");
+import EditorAPI from "./editor-api.js";
+import ExtendedSelection from "./extended-selection.js";
 
-const TabManager = require("./tab-manager.js").default;
-const LinkManager = require("./link-manager.js").default;
-const ListManager = require("./list-manager.js").default;
-const MouseService = require("./mouse-service.js").default;
-const DOMNormalizer = require("./dom-normalizer.js");
-const ClipboardService = require("./clipboard-service.js").default;
-const BlockquoteManager = require("./blockquote-manager.js").default;
-const ToolbarButtonManager = require("./toolbar-button-manager.js").default;
+import TabManager from "./tab-manager.js";
+import LinkManager from "./link-manager.js";
+import ListManager from "./list-manager.js";
+import MouseService from "./mouse-service.js";
+import DOMNormalizer from "./dom-normalizer.js";
+import ClipboardService from "./clipboard-service.js";
+import BlockquoteManager from "./blockquote-manager.js";
+import ToolbarButtonManager from "./toolbar-button-manager.js";
 import EmphasisFormattingExtension from "./emphasis-formatting-extension.js";
 import ParagraphFormattingExtension from "./paragraph-formatting-extension.js";
 
@@ -851,7 +851,8 @@ class Contenteditable extends React.Component {
 }
 Contenteditable.initClass();
 
-module.exports = Contenteditable;
+export default Contenteditable;
+export const IgnoreMutationClassName = "ignore-mutations";
 
 function __guard__(value, transform) {
 	return typeof value !== "undefined" && value !== null

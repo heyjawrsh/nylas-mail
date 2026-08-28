@@ -27227,7 +27227,7 @@ var require_utils = __commonJS({
           imageData = (left = NylasEnv.fileListCache().imageData) != null ? left : "{}";
           Utils26.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
         }
-        if (!__guard__3(
+        if (!__guard__4(
           Utils26 != null ? Utils26.images : void 0,
           (x3) => x3[resourcePath2]
         )) {
@@ -27718,7 +27718,7 @@ var require_utils = __commonJS({
       }
       return range2;
     }
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -38257,7 +38257,7 @@ var require_module_cache = __commonJS({
       if (!fs12.isFileSync(metadataPath)) {
         return;
       }
-      const dependencies = (left = __guard__3(
+      const dependencies = (left = __guard__4(
         JSON.parse(fs12.readFileSync(metadataPath)),
         (x3) => x3.dependencies
       )) != null ? left : {};
@@ -38558,7 +38558,7 @@ var require_module_cache = __commonJS({
       }
     };
     exports2.cache = cache;
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -38677,7 +38677,7 @@ var require_package3 = __commonJS({
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     try {
       let left;
-      packagesCache = (left = __guard__3(require_package2(), (x3) => x3._N1Packages)) != null ? left : {};
+      packagesCache = (left = __guard__4(require_package2(), (x3) => x3._N1Packages)) != null ? left : {};
     } catch (error1) {
       _error = error1;
       packagesCache = {};
@@ -39275,7 +39275,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
       Package.initClass();
       return Package;
     })();
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
     function __guardMethod__(obj2, methodName, transform) {
@@ -202505,7 +202505,7 @@ var require_prop_types = __commonJS({
 var require_react_dom_production = __commonJS({
   "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
     "use strict";
-    var React54 = require_react();
+    var React55 = require_react();
     function formatProdErrorMessage(code) {
       var url6 = "https://react.dev/errors/" + code;
       if (1 < arguments.length) {
@@ -202545,7 +202545,7 @@ var require_react_dom_production = __commonJS({
         implementation
       };
     }
-    var ReactSharedInternals = React54.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    var ReactSharedInternals = React55.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
     function getCrossOriginStringAs(as2, input) {
       if ("font" === as2) return "";
       if ("string" === typeof input)
@@ -202699,7 +202699,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React54 = require_react(), Internals = {
+      var React55 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -202717,7 +202717,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React54.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React55.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -202983,13 +202983,13 @@ var require_classnames = __commonJS({
 // src/components/menu.jsx
 var require_menu = __commonJS({
   "src/components/menu.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_index_all();
     init_nylas_exports();
-    var MenuItem2 = class _MenuItem extends import_react65.default.Component {
+    var MenuItem2 = class _MenuItem extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -202997,15 +202997,15 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuItem.displayName = "MenuItem";
         _MenuItem.propTypes = {
-          divider: import_prop_types68.default.oneOfType([import_prop_types68.default.string, import_prop_types68.default.bool]),
-          selected: import_prop_types68.default.bool,
-          checked: import_prop_types68.default.bool
+          divider: import_prop_types69.default.oneOfType([import_prop_types69.default.string, import_prop_types69.default.bool]),
+          selected: import_prop_types69.default.bool,
+          checked: import_prop_types69.default.bool
         };
       }
       render() {
         if (this.props.divider) {
           const dividerLabel = index_default_default.isString(this.props.divider) ? this.props.divider : "";
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className: "item divider" },
             dividerLabel
@@ -203016,7 +203016,7 @@ var require_menu = __commonJS({
             selected: this.props.selected,
             checked: this.props.checked
           });
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className, onMouseDown: this.props.onMouseDown },
             this.props.content
@@ -203025,7 +203025,7 @@ var require_menu = __commonJS({
       }
     };
     MenuItem2.initClass();
-    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react65.default.Component {
+    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203033,24 +203033,24 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuNameEmailItem.displayName = "MenuNameEmailItem";
         _MenuNameEmailItem.propTypes = {
-          name: import_prop_types68.default.string,
-          email: import_prop_types68.default.string
+          name: import_prop_types69.default.string,
+          email: import_prop_types69.default.string
         };
       }
       render() {
         if ((this.props.name != null ? this.props.name.length : void 0) > 0 && this.props.name !== this.props.email) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "span",
             null,
-            import_react65.default.createElement("span", { className: "primary" }, this.props.name),
-            import_react65.default.createElement(
+            import_react66.default.createElement("span", { className: "primary" }, this.props.name),
+            import_react66.default.createElement(
               "span",
               { className: "secondary" },
               `(${this.props.email})`
             )
           );
         } else {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "span",
             { className: "primary" },
             this.props.email
@@ -203059,21 +203059,21 @@ var require_menu = __commonJS({
       }
     };
     MenuNameEmailItem.initClass();
-    var Menu7 = class _Menu extends import_react65.default.Component {
+    var Menu7 = class _Menu extends import_react66.default.Component {
       static initClass() {
         _Menu.displayName = "Menu";
         _Menu.propTypes = {
-          className: import_prop_types68.default.string,
-          footerComponents: import_prop_types68.default.node,
-          headerComponents: import_prop_types68.default.node,
-          itemContext: import_prop_types68.default.object,
-          itemContent: import_prop_types68.default.func.isRequired,
-          itemKey: import_prop_types68.default.func.isRequired,
-          itemChecked: import_prop_types68.default.func,
-          items: import_prop_types68.default.array.isRequired,
-          onSelect: import_prop_types68.default.func.isRequired,
-          onEscape: import_prop_types68.default.func,
-          defaultSelectedIndex: import_prop_types68.default.number
+          className: import_prop_types69.default.string,
+          footerComponents: import_prop_types69.default.node,
+          headerComponents: import_prop_types69.default.node,
+          itemContext: import_prop_types69.default.object,
+          itemContent: import_prop_types69.default.func.isRequired,
+          itemKey: import_prop_types69.default.func.isRequired,
+          itemChecked: import_prop_types69.default.func,
+          items: import_prop_types69.default.array.isRequired,
+          onSelect: import_prop_types69.default.func.isRequired,
+          onEscape: import_prop_types69.default.func,
+          defaultSelectedIndex: import_prop_types69.default.number
         };
         _Menu.defaultProps = { onEscape() {
         } };
@@ -203141,8 +203141,8 @@ var require_menu = __commonJS({
         });
       }
       componentDidUpdate() {
-        const item = import_react_dom30.default.findDOMNode(this).querySelector(".selected");
-        const container = import_react_dom30.default.findDOMNode(this).querySelector(".content-container");
+        const item = import_react_dom31.default.findDOMNode(this).querySelector(".selected");
+        const container = import_react_dom31.default.findDOMNode(this).querySelector(".content-container");
         const adjustment = DOMUtils4.scrollAdjustmentToMakeNodeVisibleInContainer(
           item,
           container
@@ -203152,19 +203152,19 @@ var require_menu = __commonJS({
         }
       }
       render() {
-        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react65.default.createElement("span", null);
-        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react65.default.createElement("span", null);
+        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react66.default.createElement("span", null);
+        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react66.default.createElement("span", null);
         const className = this.props.className ? this.props.className : "";
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           {
             onKeyDown: this._onKeyDown,
             className: `menu ${className}`,
             tabIndex: "-1"
           },
-          import_react65.default.createElement("div", { className: "header-container" }, hc),
+          import_react66.default.createElement("div", { className: "header-container" }, hc),
           this._contentContainer(),
-          import_react65.default.createElement("div", { className: "footer-container" }, fc)
+          import_react66.default.createElement("div", { className: "footer-container" }, fc)
         );
       }
       _onKeyDown(event2) {
@@ -203189,7 +203189,7 @@ var require_menu = __commonJS({
         const seenItemKeys = {};
         const items = (this.props.items || []).map((item, i) => {
           const content = this.props.itemContent(item);
-          if (import_react65.default.isValidElement(content) && content.type === MenuItem2) {
+          if (import_react66.default.isValidElement(content) && content.type === MenuItem2) {
             return content;
           }
           const onMouseDown = (event2) => {
@@ -203211,7 +203211,7 @@ var require_menu = __commonJS({
             );
           }
           seenItemKeys[key] = item;
-          return import_react65.default.createElement(MenuItem2, {
+          return import_react66.default.createElement(MenuItem2, {
             key,
             onMouseDown,
             checked: typeof this.props.itemChecked === "function" ? this.props.itemChecked(item) : void 0,
@@ -203223,7 +203223,7 @@ var require_menu = __commonJS({
           "content-container": true,
           empty: items.length === 0
         });
-        return import_react65.default.createElement("div", { className: contentClass }, items);
+        return import_react66.default.createElement("div", { className: contentClass }, items);
       }
       _onShiftSelectedIndex(delta) {
         if (this.props.items.length === 0) {
@@ -203236,7 +203236,7 @@ var require_menu = __commonJS({
           if (!item) {
             break;
           }
-          if (__guard__3(
+          if (__guard__4(
             this.props.itemContent(item, this.props.itemContext).props,
             (x3) => x3.divider
           )) {
@@ -203266,7 +203266,7 @@ var require_menu = __commonJS({
     Menu7.Item = MenuItem2;
     Menu7.NameEmailItem = MenuNameEmailItem;
     module2.exports = Menu7;
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -203359,16 +203359,16 @@ var init_drop_zone = __esm({
 // src/components/spinner.jsx
 var require_spinner = __commonJS({
   "src/components/spinner.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var Spinner4 = class _Spinner extends import_react65.default.Component {
+    var Spinner4 = class _Spinner extends import_react66.default.Component {
       static initClass() {
         _Spinner.propTypes = {
-          visible: import_prop_types68.default.bool,
-          withCover: import_prop_types68.default.bool,
-          style: import_prop_types68.default.object
+          visible: import_prop_types69.default.bool,
+          withCover: import_prop_types69.default.bool,
+          style: import_prop_types69.default.object
         };
       }
       constructor(props) {
@@ -203462,7 +203462,7 @@ var require_spinner = __commonJS({
             zIndex: 1e3
           }
         );
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: coverClasses, style },
           this._renderSpinnerDots()
@@ -203489,13 +203489,13 @@ var require_spinner = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           Object.assign({ className: spinnerClass }, otherProps, { style }),
-          import_react65.default.createElement("div", { className: "bounce1" }),
-          import_react65.default.createElement("div", { className: "bounce2" }),
-          import_react65.default.createElement("div", { className: "bounce3" }),
-          import_react65.default.createElement("div", { className: "bounce4" })
+          import_react66.default.createElement("div", { className: "bounce1" }),
+          import_react66.default.createElement("div", { className: "bounce2" }),
+          import_react66.default.createElement("div", { className: "bounce3" }),
+          import_react66.default.createElement("div", { className: "bounce4" })
         );
       }
     };
@@ -209721,21 +209721,21 @@ var init_syncing_list_state = __esm({
 // src/components/empty-list-state.jsx
 var require_empty_list_state = __commonJS({
   "src/components/empty-list-state.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_retina_img();
     init_nylas_exports();
     init_nylas_component_kit();
     var INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
-    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react65.default.Component {
+    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react66.default.Component {
       static initClass() {
         _EmptyPerspectiveState.displayName = "EmptyPerspectiveState";
         _EmptyPerspectiveState.propTypes = {
-          perspective: import_prop_types68.default.object,
-          messageContent: import_prop_types68.default.node
+          perspective: import_prop_types69.default.object,
+          messageContent: import_prop_types69.default.node
         };
       }
       render() {
@@ -209750,19 +209750,19 @@ var require_empty_list_state = __commonJS({
         if (name2) {
           name2 = name2.toLowerCase();
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: "perspective-empty-state" },
-          name2 ? import_react65.default.createElement(retina_img_default, {
+          name2 ? import_react66.default.createElement(retina_img_default, {
             name: `ic-emptystate-${name2}.png`,
             mode: retina_img_default.Mode.ContentIsMask
           }) : void 0,
-          import_react65.default.createElement("div", { className: "message" }, messageContent)
+          import_react66.default.createElement("div", { className: "message" }, messageContent)
         );
       }
     };
     EmptyPerspectiveState.initClass();
-    var EmptyInboxState = class _EmptyInboxState extends import_react65.default.Component {
+    var EmptyInboxState = class _EmptyInboxState extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this._getScalingFactor = this._getScalingFactor.bind(this);
@@ -209770,7 +209770,7 @@ var require_empty_list_state = __commonJS({
       }
       static initClass() {
         _EmptyInboxState.displayName = "EmptyInboxState";
-        _EmptyInboxState.propTypes = { containerRect: import_prop_types68.default.object };
+        _EmptyInboxState.propTypes = { containerRect: import_prop_types69.default.object };
       }
       _getScalingFactor() {
         const { width } = this.props.containerRect;
@@ -209796,16 +209796,16 @@ var require_empty_list_state = __commonJS({
         const animationName = this._getAnimationName();
         const factor = this._getScalingFactor();
         const style = factor ? { transform: `scale(${factor})` } : {};
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: "inbox-zero-animation" },
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             { className: "animation-wrapper", style },
-            import_react65.default.createElement("iframe", {
+            import_react66.default.createElement("iframe", {
               src: `animations/inbox-zero/${animationName}/${animationName}.html`
             }),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "message" },
               "Hooray! You\u2019re done."
@@ -209815,10 +209815,10 @@ var require_empty_list_state = __commonJS({
       }
     };
     EmptyInboxState.initClass();
-    var EmptyListState = class _EmptyListState extends import_react65.default.Component {
+    var EmptyListState = class _EmptyListState extends import_react66.default.Component {
       static initClass() {
         _EmptyListState.displayName = "EmptyListState";
-        _EmptyListState.propTypes = { visible: import_prop_types68.default.bool.isRequired };
+        _EmptyListState.propTypes = { visible: import_prop_types69.default.bool.isRequired };
       }
       constructor(props) {
         this._getDimensions = this._getDimensions.bind(this);
@@ -209880,13 +209880,13 @@ var require_empty_list_state = __commonJS({
       }
       render() {
         if (!this.props.visible) {
-          return import_react65.default.createElement("span", null);
+          return import_react66.default.createElement("span", null);
         }
         let ContentComponent = EmptyPerspectiveState;
         const current = FocusedPerspectiveStore3.current();
         let messageContent = current.emptyMessage();
         if (this.state.syncing) {
-          messageContent = import_react65.default.createElement(void 0, { empty: true });
+          messageContent = import_react66.default.createElement(void 0, { empty: true });
         } else if (current.isInbox()) {
           ContentComponent = EmptyInboxState;
         }
@@ -209894,10 +209894,10 @@ var require_empty_list_state = __commonJS({
           "empty-state": true,
           active: this.state.active
         });
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: classes },
-          import_react65.default.createElement(ContentComponent, {
+          import_react66.default.createElement(ContentComponent, {
             perspective: current,
             containerRect: this.state.rect,
             messageContent
@@ -209908,7 +209908,7 @@ var require_empty_list_state = __commonJS({
         if (!this._mounted) {
           return null;
         }
-        const node = import_react_dom30.default.findDOMNode(this);
+        const node = import_react_dom31.default.findDOMNode(this);
         const rect = node.getBoundingClientRect();
         return { width: rect.width, height: rect.height };
       }
@@ -209971,18 +209971,18 @@ var init_scrollbar_ticks = __esm({
 // src/components/scroll-region.jsx
 var require_scroll_region = __commonJS({
   "src/components/scroll-region.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
     var import_classnames19 = __toESM(require_classnames());
     init_scrollbar_ticks();
-    var Scrollbar = class _Scrollbar extends import_react65.default.Component {
+    var Scrollbar = class _Scrollbar extends import_react66.default.Component {
       static initClass() {
         _Scrollbar.displayName = "Scrollbar";
         _Scrollbar.propTypes = {
-          scrollTooltipComponent: import_prop_types68.default.func,
+          scrollTooltipComponent: import_prop_types69.default.func,
           // A scrollbarTickProvider is any object that has the `listen` and
           // `scrollbarTicks` method. Since ScrollRegions tend to encompass large
           // render trees it's more efficent for the scrollbar to listen for its
@@ -209991,8 +209991,8 @@ var require_scroll_region = __commonJS({
           // method must return an array of numbers between 0 and 1 which
           // represent the height percentages at which tick marks will be
           // rendered.
-          scrollbarTickProvider: import_prop_types68.default.object,
-          getScrollRegion: import_prop_types68.default.func
+          scrollbarTickProvider: import_prop_types69.default.object,
+          getScrollRegion: import_prop_types69.default.func
         };
       }
       constructor(props) {
@@ -210048,19 +210048,19 @@ var require_scroll_region = __commonJS({
         });
         let tooltip = [];
         if (this.props.scrollTooltipComponent && this.state.dragging) {
-          tooltip = import_react65.default.createElement(this.props.scrollTooltipComponent, {
+          tooltip = import_react66.default.createElement(this.props.scrollTooltipComponent, {
             viewportCenter: this.state.viewportScrollTop + this.state.viewportHeight / 2,
             totalHeight: this.state.totalHeight
           });
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           {
             className: containerClasses,
             style: this._scrollbarWrapStyles(),
             onMouseEnter: this.recomputeDimensions
           },
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             {
               className: "scrollbar-track-inner",
@@ -210068,7 +210068,7 @@ var require_scroll_region = __commonJS({
               onClick: this._onScrollJump
             },
             this._renderScrollbarTicks(),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               {
                 className: "scrollbar-handle",
@@ -210077,7 +210077,7 @@ var require_scroll_region = __commonJS({
                 ref: "handle",
                 onClick: this._onHandleClick
               },
-              import_react65.default.createElement("div", { className: "tooltip" }, tooltip)
+              import_react66.default.createElement("div", { className: "tooltip" }, tooltip)
             )
           )
         );
@@ -210105,13 +210105,13 @@ var require_scroll_region = __commonJS({
         if (!(this.state.scrollbarTicks.length > 0)) {
           return false;
         }
-        return import_react65.default.createElement(ScrollbarTicks, {
+        return import_react66.default.createElement(ScrollbarTicks, {
           ticks: this.state.scrollbarTicks
         });
       }
       _recomputeDimensions({ useCachedValues }) {
         if (!useCachedValues) {
-          const trackNode = import_react_dom30.default.findDOMNode(this.refs.track);
+          const trackNode = import_react_dom31.default.findDOMNode(this.refs.track);
           if (!trackNode) {
             return;
           }
@@ -210141,8 +210141,8 @@ var require_scroll_region = __commonJS({
         };
       }
       _onHandleDown(event2) {
-        const handleNode = import_react_dom30.default.findDOMNode(this.refs.handle);
-        this._trackOffset = import_react_dom30.default.findDOMNode(
+        const handleNode = import_react_dom31.default.findDOMNode(this.refs.handle);
+        this._trackOffset = import_react_dom31.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = event2.pageY - handleNode.getBoundingClientRect().top;
@@ -210167,7 +210167,7 @@ var require_scroll_region = __commonJS({
         return event2.stopPropagation();
       }
       _onScrollJump(event2) {
-        this._trackOffset = import_react_dom30.default.findDOMNode(
+        this._trackOffset = import_react_dom31.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = this._getHandleHeight() / 2;
@@ -210184,17 +210184,17 @@ var require_scroll_region = __commonJS({
       }
     };
     Scrollbar.initClass();
-    var ScrollRegion5 = class _ScrollRegion extends import_react65.default.Component {
+    var ScrollRegion5 = class _ScrollRegion extends import_react66.default.Component {
       static initClass() {
         _ScrollRegion.displayName = "ScrollRegion";
         _ScrollRegion.propTypes = {
-          onScroll: import_prop_types68.default.func,
-          onScrollEnd: import_prop_types68.default.func,
-          className: import_prop_types68.default.string,
-          scrollTooltipComponent: import_prop_types68.default.func,
-          scrollbarTickProvider: import_prop_types68.default.object,
-          children: import_prop_types68.default.oneOfType([import_prop_types68.default.element, import_prop_types68.default.array]),
-          getScrollbar: import_prop_types68.default.func
+          onScroll: import_prop_types69.default.func,
+          onScrollEnd: import_prop_types69.default.func,
+          className: import_prop_types69.default.string,
+          scrollTooltipComponent: import_prop_types69.default.func,
+          scrollbarTickProvider: import_prop_types69.default.object,
+          children: import_prop_types69.default.oneOfType([import_prop_types69.default.element, import_prop_types69.default.array]),
+          getScrollbar: import_prop_types69.default.func
         };
         _ScrollRegion.ScrollPosition = {
           // Scroll so that the desired region is at the top of the viewport
@@ -210236,10 +210236,10 @@ var require_scroll_region = __commonJS({
         };
         Object.defineProperty(this, "scrollTop", {
           get() {
-            return import_react_dom30.default.findDOMNode(this.refs.content).scrollTop;
+            return import_react_dom31.default.findDOMNode(this.refs.content).scrollTop;
           },
           set(val) {
-            return import_react_dom30.default.findDOMNode(this.refs.content).scrollTop = val;
+            return import_react_dom31.default.findDOMNode(this.refs.content).scrollTop = val;
           }
         });
       }
@@ -210256,7 +210256,7 @@ var require_scroll_region = __commonJS({
           }
         });
         return this._heightObserver.observe(
-          import_react_dom30.default.findDOMNode(this.refs.content),
+          import_react_dom31.default.findDOMNode(this.refs.content),
           {
             subtree: true,
             attributes: true,
@@ -210299,7 +210299,7 @@ var require_scroll_region = __commonJS({
         });
         if (!this.props.getScrollbar) {
           if (this._scrollbarComponent == null) {
-            this._scrollbarComponent = import_react65.default.createElement(Scrollbar, {
+            this._scrollbarComponent = import_react66.default.createElement(Scrollbar, {
               ref: "scrollbar",
               scrollbarTickProvider: this.props.scrollbarTickProvider,
               scrollTooltipComponent: this.props.scrollTooltipComponent,
@@ -210311,18 +210311,18 @@ var require_scroll_region = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           Object.assign({ className: containerClasses }, otherProps),
           this._scrollbarComponent,
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             {
               className: "scroll-region-content",
               onScroll: this._onScroll,
               ref: "content"
             },
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "scroll-region-content-inner" },
               this.props.children
@@ -210337,8 +210337,8 @@ var require_scroll_region = __commonJS({
           param = {};
         }
         const { position, settle, done } = param;
-        if (node instanceof import_react65.default.Component) {
-          node = import_react_dom30.default.findDOMNode(node);
+        if (node instanceof import_react66.default.Component) {
+          node = import_react_dom31.default.findDOMNode(node);
         }
         if (!(node instanceof Node)) {
           throw new Error(
@@ -210372,7 +210372,7 @@ var require_scroll_region = __commonJS({
       }
       _scroll({ position, settle, done }, clientRectProviderCallback) {
         let settleFn;
-        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom31.default.findDOMNode(this.refs.content);
         if (position == null) {
           position = _ScrollRegion.ScrollPosition.Visible;
         }
@@ -210417,7 +210417,7 @@ var require_scroll_region = __commonJS({
         });
       }
       _settleHeight(callback) {
-        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom31.default.findDOMNode(this.refs.content);
         let lastContentHeight = -1;
         var scrollIfSettled = () => {
           if (!this._mounted) {
@@ -210449,7 +210449,7 @@ var require_scroll_region = __commonJS({
         if (!this.refs.content) {
           return;
         }
-        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom31.default.findDOMNode(this.refs.content);
         if (!contentNode) {
           return;
         }
@@ -210479,7 +210479,7 @@ var require_scroll_region = __commonJS({
         return this.setState(state);
       }
       _onScroll(event2) {
-        if (event2.target !== import_react_dom30.default.findDOMNode(this.refs.content)) {
+        if (event2.target !== import_react_dom31.default.findDOMNode(this.refs.content)) {
           return;
         }
         if (this.state.scrolling) {
@@ -210805,11 +210805,11 @@ var init_list_data_source = __esm({
 // src/components/list-tabular-item.jsx
 var require_list_tabular_item = __commonJS({
   "src/components/list-tabular-item.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
     init_swipe_container();
     init_nylas_exports();
-    var ListTabularItem2 = class _ListTabularItem extends import_react65.default.Component {
+    var ListTabularItem2 = class _ListTabularItem extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -210820,13 +210820,13 @@ var require_list_tabular_item = __commonJS({
       static initClass() {
         _ListTabularItem.displayName = "ListTabularItem";
         _ListTabularItem.propTypes = {
-          metrics: import_prop_types68.default.object,
-          columns: import_prop_types68.default.arrayOf(import_prop_types68.default.object).isRequired,
-          item: import_prop_types68.default.object.isRequired,
-          itemProps: import_prop_types68.default.object,
-          onSelect: import_prop_types68.default.func,
-          onClick: import_prop_types68.default.func,
-          onDoubleClick: import_prop_types68.default.func
+          metrics: import_prop_types69.default.object,
+          columns: import_prop_types69.default.arrayOf(import_prop_types69.default.object).isRequired,
+          item: import_prop_types69.default.object.isRequired,
+          itemProps: import_prop_types69.default.object,
+          onSelect: import_prop_types69.default.func,
+          onClick: import_prop_types69.default.func,
+          onDoubleClick: import_prop_types69.default.func
         };
       }
       // DO NOT DELETE unless you know what you're doing! This method cuts
@@ -210854,7 +210854,7 @@ var require_list_tabular_item = __commonJS({
         if (this._columnCache == null) {
           this._columnCache = this._columns();
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           SwipeContainer,
           Object.assign({}, props, {
             onClick: this._onClick,
@@ -210865,7 +210865,7 @@ var require_list_tabular_item = __commonJS({
               height: this.props.metrics.height
             }
           }),
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             { className, style: { height: this.props.metrics.height } },
             this._columnCache
@@ -210882,7 +210882,7 @@ var require_list_tabular_item = __commonJS({
               );
             }
             names[column.name] = true;
-            return import_react65.default.createElement(
+            return import_react66.default.createElement(
               "div",
               {
                 key: column.name,
@@ -213761,9 +213761,9 @@ var require_iframe_searcher = __commonJS({
 // src/components/evented-iframe.jsx
 var require_evented_iframe = __commonJS({
   "src/components/evented-iframe.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     var import_iframe_searcher = __toESM(require_iframe_searcher());
     var url6 = __toESM(require("url"));
     init_index_all();
@@ -213774,10 +213774,10 @@ var require_evented_iframe = __commonJS({
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var EventedIFrame = class _EventedIFrame extends import_react65.default.Component {
+    var EventedIFrame = class _EventedIFrame extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
-        this._nodeRef = import_react65.default.createRef();
+        this._nodeRef = import_react66.default.createRef();
         this.render = this.render.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -213800,8 +213800,8 @@ var require_evented_iframe = __commonJS({
       static initClass() {
         _EventedIFrame.displayName = "EventedIFrame";
         _EventedIFrame.propTypes = {
-          searchable: import_prop_types68.default.bool,
-          onResize: import_prop_types68.default.func
+          searchable: import_prop_types69.default.bool,
+          onResize: import_prop_types69.default.func
         };
       }
       render() {
@@ -213809,7 +213809,7 @@ var require_evented_iframe = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "iframe",
           Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps)
         );
@@ -214199,28 +214199,28 @@ var require_evented_iframe = __commonJS({
 // src/components/button-dropdown.jsx
 var require_button_dropdown = __commonJS({
   "src/components/button-dropdown.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_retina_img();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
-    var ButtonDropdown2 = class _ButtonDropdown extends import_react65.default.Component {
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
+    var ButtonDropdown2 = class _ButtonDropdown extends import_react66.default.Component {
       static initClass() {
         _ButtonDropdown.displayName = "ButtonDropdown";
         _ButtonDropdown.propTypes = {
-          primaryItem: import_prop_types68.default.element,
-          primaryClick: import_prop_types68.default.func,
-          bordered: import_prop_types68.default.bool,
-          menu: import_prop_types68.default.element,
-          style: import_prop_types68.default.object,
-          closeOnMenuClick: import_prop_types68.default.bool
+          primaryItem: import_prop_types69.default.element,
+          primaryClick: import_prop_types69.default.func,
+          bordered: import_prop_types69.default.bool,
+          menu: import_prop_types69.default.element,
+          style: import_prop_types69.default.object,
+          closeOnMenuClick: import_prop_types69.default.bool
         };
         _ButtonDropdown.defaultProps = { style: {} };
       }
       constructor(props) {
         super();
-        this.buttonRef = import_react65.default.createRef();
-        this.secondaryItemsRef = import_react65.default.createRef();
+        this.buttonRef = import_react66.default.createRef();
+        this.secondaryItemsRef = import_react66.default.createRef();
         this.render = this.render.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this._onMenuClick = this._onMenuClick.bind(this);
@@ -214236,7 +214236,7 @@ var require_button_dropdown = __commonJS({
           bordered: this.props.bordered !== false
         });
         if (this.props.primaryClick) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214245,7 +214245,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               {
                 className: "primary-item",
@@ -214254,15 +214254,15 @@ var require_button_dropdown = __commonJS({
               },
               this.props.primaryItem
             ),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "secondary-picker", onClick: this.toggleDropdown },
-              import_react65.default.createElement(retina_img_default, {
+              import_react66.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214273,7 +214273,7 @@ var require_button_dropdown = __commonJS({
             )
           );
         } else {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214282,7 +214282,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               {
                 className: "only-item",
@@ -214290,13 +214290,13 @@ var require_button_dropdown = __commonJS({
                 onClick: this.toggleDropdown
               },
               this.props.primaryItem,
-              import_react65.default.createElement(retina_img_default, {
+              import_react66.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 style: { marginLeft: 12 },
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214312,8 +214312,8 @@ var require_button_dropdown = __commonJS({
         if (this.state.open !== false) {
           return this.setState({ open: false });
         } else {
-          const buttonBottom = import_react_dom30.default.findDOMNode(this).getBoundingClientRect().bottom;
-          const openHeight = import_react_dom30.default.findDOMNode(
+          const buttonBottom = import_react_dom31.default.findDOMNode(this).getBoundingClientRect().bottom;
+          const openHeight = import_react_dom31.default.findDOMNode(
             this.secondaryItemsRef?.current
           ).getBoundingClientRect().height;
           if (buttonBottom + openHeight > window.innerHeight) {
@@ -214976,10 +214976,10 @@ var init_multiselect_dropdown = __esm({
 // src/components/tab-group-region.jsx
 var require_tab_group_region = __commonJS({
   "src/components/tab-group-region.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
-    var TabGroupRegion = class _TabGroupRegion extends import_react65.default.Component {
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
+    var TabGroupRegion = class _TabGroupRegion extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -214987,7 +214987,7 @@ var require_tab_group_region = __commonJS({
         this.getChildContext = this.getChildContext.bind(this);
       }
       static initClass() {
-        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types68.default.object };
+        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types69.default.object };
       }
       _onKeyDown(event2) {
         if (event2.key === "Tab" && !event2.defaultPrevented) {
@@ -214998,7 +214998,7 @@ var require_tab_group_region = __commonJS({
         }
       }
       shiftFocus(dir) {
-        const nodes = import_react_dom30.default.findDOMNode(this).querySelectorAll(
+        const nodes = import_react_dom31.default.findDOMNode(this).querySelectorAll(
           "input, textarea, [contenteditable], [tabIndex]"
         );
         const current = document.activeElement;
@@ -215030,7 +215030,7 @@ var require_tab_group_region = __commonJS({
         return { parentTabGroup: this };
       }
       render() {
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
           this.props.children
@@ -215221,25 +215221,25 @@ var init_injected_component_label = __esm({
 // src/components/injected-component.jsx
 var require_injected_component = __commonJS({
   "src/components/injected-component.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
     init_unsafe_component();
     init_injected_component_label();
-    var InjectedComponent2 = class _InjectedComponent extends import_react65.default.Component {
+    var InjectedComponent2 = class _InjectedComponent extends import_react66.default.Component {
       static initClass() {
         _InjectedComponent.displayName = "InjectedComponent";
         _InjectedComponent.propTypes = {
-          matching: import_prop_types68.default.object.isRequired,
-          className: import_prop_types68.default.string,
-          exposedProps: import_prop_types68.default.object,
-          fallback: import_prop_types68.default.func,
-          onComponentDidRender: import_prop_types68.default.func,
-          style: import_prop_types68.default.object,
-          requiredMethods: import_prop_types68.default.arrayOf(import_prop_types68.default.string),
-          onComponentDidChange: import_prop_types68.default.func
+          matching: import_prop_types69.default.object.isRequired,
+          className: import_prop_types69.default.string,
+          exposedProps: import_prop_types69.default.object,
+          fallback: import_prop_types69.default.func,
+          onComponentDidRender: import_prop_types69.default.func,
+          style: import_prop_types69.default.object,
+          requiredMethods: import_prop_types69.default.arrayOf(import_prop_types69.default.string),
+          onComponentDidChange: import_prop_types69.default.func
         };
         _InjectedComponent.defaultProps = {
           style: {},
@@ -215253,7 +215253,7 @@ var require_injected_component = __commonJS({
       }
       constructor(props) {
         super();
-        this.innerRef = import_react65.default.createRef();
+        this.innerRef = import_react66.default.createRef();
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -215304,7 +215304,7 @@ var require_injected_component = __commonJS({
       render() {
         let element;
         if (!this.state.component) {
-          return import_react65.default.createElement("div", null);
+          return import_react66.default.createElement("div", null);
         }
         const exposedProps = Object.assign({}, this.props.exposedProps, {
           fallback: this.props.fallback
@@ -215318,15 +215318,15 @@ var require_injected_component = __commonJS({
           const privateProps = {
             key: Component20.displayName
           };
-          if (import_react65.default.Component.isPrototypeOf(Component20)) {
+          if (import_react66.default.Component.isPrototypeOf(Component20)) {
             privateProps.ref = "inner";
           }
-          element = import_react65.default.createElement(
+          element = import_react66.default.createElement(
             Component20,
             Object.assign({}, privateProps, exposedProps)
           );
         } else {
-          element = import_react65.default.createElement(
+          element = import_react66.default.createElement(
             unsafe_component_default,
             Object.assign(
               {
@@ -215342,18 +215342,18 @@ var require_injected_component = __commonJS({
           );
         }
         if (this.state.visible) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className, style: this.props.style },
             element,
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               InjectedComponentLabel,
               Object.assign({ matching: this.props.matching }, exposedProps)
             ),
-            import_react65.default.createElement("span", { style: { clear: "both" } })
+            import_react66.default.createElement("span", { style: { clear: "both" } })
           );
         } else {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className, style: this.props.style },
             element
@@ -215378,9 +215378,9 @@ var require_injected_component = __commonJS({
         } else if (this.innerRef?.current && this.innerRef?.current[method] != null) {
           target = this.innerRef?.current;
         } else if (this.innerRef?.current) {
-          target = import_react_dom30.default.findDOMNode(this.innerRef?.current);
+          target = import_react_dom31.default.findDOMNode(this.innerRef?.current);
         } else {
-          target = import_react_dom30.default.findDOMNode(this);
+          target = import_react_dom31.default.findDOMNode(this);
         }
         if (target[method]) {
           return target[method].bind(target)(...Array.from(args || []));
@@ -218127,9 +218127,9 @@ var init_multiselect_toolbar = __esm({
 // src/components/injected-component-set.jsx
 var require_injected_component_set = __commonJS({
   "src/components/injected-component-set.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_injected_component_label();
-    var React54 = require_react();
+    var React55 = require_react();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var UnsafeComponent2 = (init_unsafe_component(), __toCommonJS(unsafe_component_exports));
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
@@ -218139,17 +218139,17 @@ var require_injected_component_set = __commonJS({
       WorkspaceStore: WorkspaceStore6,
       ComponentRegistry: ComponentRegistry3
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var InjectedComponentSet5 = class _InjectedComponentSet extends React54.Component {
+    var InjectedComponentSet5 = class _InjectedComponentSet extends React55.Component {
       static initClass() {
         _InjectedComponentSet.displayName = "InjectedComponentSet";
         _InjectedComponentSet.propTypes = {
-          matching: import_prop_types68.default.object.isRequired,
-          children: import_prop_types68.default.array,
-          className: import_prop_types68.default.string,
-          matchLimit: import_prop_types68.default.number,
-          exposedProps: import_prop_types68.default.object,
-          containersRequired: import_prop_types68.default.bool,
-          onComponentsDidRender: import_prop_types68.default.func
+          matching: import_prop_types69.default.object.isRequired,
+          children: import_prop_types69.default.array,
+          className: import_prop_types69.default.string,
+          matchLimit: import_prop_types69.default.number,
+          exposedProps: import_prop_types69.default.object,
+          containersRequired: import_prop_types69.default.bool,
+          onComponentsDidRender: import_prop_types69.default.func
         };
         _InjectedComponentSet.defaultProps = {
           direction: "row",
@@ -218204,12 +218204,12 @@ var require_injected_component_set = __commonJS({
         const exposedProps = this.props.exposedProps != null ? this.props.exposedProps : {};
         const elements = this.state.components.map((Component20) => {
           if (this.props.containersRequired === false || Component20.containerRequired === false) {
-            return React54.createElement(
+            return React55.createElement(
               Component20,
               Object.assign({ key: Component20.displayName }, exposedProps)
             );
           } else {
-            return React54.createElement(
+            return React55.createElement(
               UnsafeComponent2,
               Object.assign(
                 {
@@ -218230,7 +218230,7 @@ var require_injected_component_set = __commonJS({
           elements.splice(
             0,
             0,
-            React54.createElement(
+            React55.createElement(
               InjectedComponentLabel,
               Object.assign(
                 { key: "_label", matching: this.props.matching },
@@ -218239,13 +218239,13 @@ var require_injected_component_set = __commonJS({
             )
           );
           elements.push(
-            React54.createElement("span", {
+            React55.createElement("span", {
               key: "_clear",
               style: { clear: "both" }
             })
           );
         }
-        return React54.createElement(
+        return React55.createElement(
           Flexbox3,
           Object.assign({ className: flexboxClassName }, flexboxProps),
           elements,
@@ -218350,15 +218350,15 @@ var init_config_prop_container = __esm({
 // src/components/disclosure-triangle.jsx
 var require_disclosure_triangle = __commonJS({
   "src/components/disclosure-triangle.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react65.default.Component {
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react66.default.Component {
       static initClass() {
         _DisclosureTriangle.displayName = "DisclosureTriangle";
         _DisclosureTriangle.propTypes = {
-          collapsed: import_prop_types68.default.bool,
-          visible: import_prop_types68.default.bool,
-          onCollapseToggled: import_prop_types68.default.func
+          collapsed: import_prop_types69.default.bool,
+          visible: import_prop_types69.default.bool,
+          onCollapseToggled: import_prop_types69.default.func
         };
         _DisclosureTriangle.defaultProps = { onCollapseToggled() {
         } };
@@ -218371,10 +218371,10 @@ var require_disclosure_triangle = __commonJS({
         if (this.props.collapsed) {
           classnames14 += " collapsed";
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: classnames14, onClick: this.props.onCollapseToggled },
-          import_react65.default.createElement("div", null)
+          import_react66.default.createElement("div", null)
         );
       }
     };
@@ -222066,9 +222066,9 @@ var init_dropdown_menu = __esm({
 // src/components/resizable-region.jsx
 var require_resizable_region = __commonJS({
   "src/components/resizable-region.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var React54 = require_react();
-    var ReactDOM28 = require_react_dom();
+    var import_prop_types69 = __toESM(require_prop_types());
+    var React55 = require_react();
+    var ReactDOM29 = require_react_dom();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var {
       Utils: Utils26,
@@ -222138,19 +222138,19 @@ var require_resizable_region = __commonJS({
         }
       }
     };
-    var ResizableRegion3 = class _ResizableRegion extends React54.Component {
+    var ResizableRegion3 = class _ResizableRegion extends React55.Component {
       static initClass() {
         _ResizableRegion.displayName = "ResizableRegion";
         _ResizableRegion.propTypes = {
-          handle: import_prop_types68.default.object.isRequired,
-          onResize: import_prop_types68.default.func,
-          initialWidth: import_prop_types68.default.number,
-          minWidth: import_prop_types68.default.number,
-          maxWidth: import_prop_types68.default.number,
-          initialHeight: import_prop_types68.default.number,
-          minHeight: import_prop_types68.default.number,
-          maxHeight: import_prop_types68.default.number,
-          style: import_prop_types68.default.object
+          handle: import_prop_types69.default.object.isRequired,
+          onResize: import_prop_types69.default.func,
+          initialWidth: import_prop_types69.default.number,
+          minWidth: import_prop_types69.default.number,
+          maxWidth: import_prop_types69.default.number,
+          initialHeight: import_prop_types69.default.number,
+          minHeight: import_prop_types69.default.number,
+          maxHeight: import_prop_types69.default.number,
+          style: import_prop_types69.default.object
         };
       }
       constructor(props) {
@@ -222205,17 +222205,17 @@ var require_resizable_region = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return React54.createElement(
+        return React55.createElement(
           "div",
           Object.assign({ style: containerStyle }, otherProps),
           this.props.children,
-          React54.createElement(
+          React55.createElement(
             "div",
             {
               className: this.props.handle.className,
               onMouseDown: this._mouseDown
             },
-            React54.createElement("div", null)
+            React55.createElement("div", null)
           )
         );
       }
@@ -222246,7 +222246,7 @@ var require_resizable_region = __commonJS({
         if (event2.button !== 0) {
           return;
         }
-        const bcr = ReactDOM28.findDOMNode(this).getBoundingClientRect();
+        const bcr = ReactDOM29.findDOMNode(this).getBoundingClientRect();
         this.setState({
           dragging: true,
           bcr
@@ -239334,9 +239334,9 @@ var init_mail_label_set = __esm({
 // src/components/mail-important-icon.jsx
 var require_mail_important_icon = __commonJS({
   "src/components/mail-important-icon.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React54 = require_react();
+    var React55 = require_react();
     var classNames6 = require_classnames();
     var {
       Actions: Actions39,
@@ -239348,12 +239348,12 @@ var require_mail_important_icon = __commonJS({
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ShowImportantKey = "core.workspace.showImportant";
-    var MailImportantIcon = class _MailImportantIcon extends React54.Component {
+    var MailImportantIcon = class _MailImportantIcon extends React55.Component {
       static initClass() {
         _MailImportantIcon.displayName = "MailImportantIcon";
         _MailImportantIcon.propTypes = {
-          thread: import_prop_types68.default.object,
-          showIfAvailableForAnyAccount: import_prop_types68.default.bool
+          thread: import_prop_types69.default.object,
+          showIfAvailableForAnyAccount: import_prop_types69.default.bool
         };
       }
       constructor(props) {
@@ -239443,7 +239443,7 @@ var require_mail_important_icon = __commonJS({
         } else {
           title = "Mark as important";
         }
-        return React54.createElement("div", {
+        return React55.createElement("div", {
           className: classes,
           title,
           onClick: this._onToggleImportant
@@ -239480,21 +239480,21 @@ var require_mail_important_icon = __commonJS({
 // src/components/generated-form.jsx
 var require_generated_form = __commonJS({
   "src/components/generated-form.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react65 = __toESM(require_react());
+    var import_react66 = __toESM(require_react());
     init_nylas_exports();
     init_date_picker();
     var import_tab_group_region = __toESM(require_tab_group_region());
-    var idPropType = import_prop_types68.default.oneOfType([import_prop_types68.default.string, import_prop_types68.default.number]);
-    var FormItem = class _FormItem extends import_react65.default.Component {
+    var idPropType = import_prop_types69.default.oneOfType([import_prop_types69.default.string, import_prop_types69.default.number]);
+    var FormItem = class _FormItem extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
-        this.inputRef = import_react65.default.createRef();
-        this.formRef = import_react65.default.createRef();
-        this.inputWrapRef = import_react65.default.createRef();
-        this.formHeaderErrorRef = import_react65.default.createRef();
+        this.inputRef = import_react66.default.createRef();
+        this.formRef = import_react66.default.createRef();
+        this.inputWrapRef = import_react66.default.createRef();
+        this.formHeaderErrorRef = import_react66.default.createRef();
         this.render = this.render.bind(this);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
         this._renderError = this._renderError.bind(this);
@@ -239530,63 +239530,63 @@ var require_generated_form = __commonJS({
           id: idPropType.isRequired,
           // Either a type of input or any type that can be passed into
           // `React.createElement(type, ...)`
-          type: import_prop_types68.default.string.isRequired,
+          type: import_prop_types69.default.string.isRequired,
           // The name as POSTed to the eventual endpoint.
-          name: import_prop_types68.default.string,
+          name: import_prop_types69.default.string,
           // The human-readable display label for the formItem
-          label: import_prop_types68.default.node,
+          label: import_prop_types69.default.node,
           // Most input types take strings, numbers, and bools. Some types (like
           // "reference" can get passed arrays)
-          value: import_prop_types68.default.oneOfType([
-            import_prop_types68.default.string,
-            import_prop_types68.default.number,
-            import_prop_types68.default.bool
+          value: import_prop_types69.default.oneOfType([
+            import_prop_types69.default.string,
+            import_prop_types69.default.number,
+            import_prop_types69.default.bool
           ]),
-          defaultValue: import_prop_types68.default.string,
+          defaultValue: import_prop_types69.default.string,
           // A function that takes two arguments:
           //   - The id of this FormItem
           //   - The new value of the FormItem
-          onChange: import_prop_types68.default.func,
+          onChange: import_prop_types69.default.func,
           // FormItems can either explicitly set the disabled state, or determine
           // the disabled state by whether or not this is a 'new' or 'update'
           // form.
-          formType: import_prop_types68.default.oneOf(["new", "update"]),
-          disabled: import_prop_types68.default.bool,
-          editableForNew: import_prop_types68.default.bool,
-          editableForUpdate: import_prop_types68.default.bool,
-          formItemError: import_prop_types68.default.shape({
+          formType: import_prop_types69.default.oneOf(["new", "update"]),
+          disabled: import_prop_types69.default.bool,
+          editableForNew: import_prop_types69.default.bool,
+          editableForUpdate: import_prop_types69.default.bool,
+          formItemError: import_prop_types69.default.shape({
             id: idPropType,
             // The formItemId
-            message: import_prop_types68.default.string
+            message: import_prop_types69.default.string
           }),
           // selectOptions
           // An array of options.
-          selectOptions: import_prop_types68.default.arrayOf(
-            import_prop_types68.default.shape({
-              label: import_prop_types68.default.node,
-              value: import_prop_types68.default.string
+          selectOptions: import_prop_types69.default.arrayOf(
+            import_prop_types69.default.shape({
+              label: import_prop_types69.default.node,
+              value: import_prop_types69.default.string
             })
           ),
           // Common <input> props.
           // Anything that can be passed into a standard React <input> item will
           // be passed along. Here are some common ones. There can be many more
-          multiple: import_prop_types68.default.bool,
-          required: import_prop_types68.default.bool,
-          prefilled: import_prop_types68.default.bool,
-          maxlength: import_prop_types68.default.number,
-          placeholder: import_prop_types68.default.node,
-          tabIndex: import_prop_types68.default.oneOfType([import_prop_types68.default.number, import_prop_types68.default.string]),
+          multiple: import_prop_types69.default.bool,
+          required: import_prop_types69.default.bool,
+          prefilled: import_prop_types69.default.bool,
+          maxlength: import_prop_types69.default.number,
+          placeholder: import_prop_types69.default.node,
+          tabIndex: import_prop_types69.default.oneOfType([import_prop_types69.default.number, import_prop_types69.default.string]),
           //### Used by "reference" type objects
-          customComponent: import_prop_types68.default.func,
-          contextData: import_prop_types68.default.object,
-          referenceTo: import_prop_types68.default.oneOfType([import_prop_types68.default.array, import_prop_types68.default.string]),
-          referenceType: import_prop_types68.default.oneOf([
+          customComponent: import_prop_types69.default.func,
+          contextData: import_prop_types69.default.object,
+          referenceTo: import_prop_types69.default.oneOfType([import_prop_types69.default.array, import_prop_types69.default.string]),
+          referenceType: import_prop_types69.default.oneOf([
             "belongsTo",
             "hasMany",
             "hasManyThrough"
           ]),
-          referenceThrough: import_prop_types68.default.string,
-          currentFormValues: import_prop_types68.default.object
+          referenceThrough: import_prop_types69.default.string,
+          currentFormValues: import_prop_types69.default.object
         };
       }
       render() {
@@ -239598,25 +239598,25 @@ var require_generated_form = __commonJS({
         });
         let { label } = this.props;
         if (this.props.required) {
-          label = import_react65.default.createElement(
+          label = import_react66.default.createElement(
             "strong",
             null,
-            import_react65.default.createElement("span", { className: "required" }, "*"),
+            import_react66.default.createElement("span", { className: "required" }, "*"),
             this.props.label
           );
         }
         if (this.props.type === "hidden") {
           return this._renderInput();
         } else {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className: classes, ref: this.inputWrapRef },
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "label-area" },
-              import_react65.default.createElement("label", { htmlFor: this.props.id }, label)
+              import_react66.default.createElement("label", { htmlFor: this.props.id }, label)
             ),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "input-area" },
               this._renderInput(),
@@ -239641,7 +239641,7 @@ var require_generated_form = __commonJS({
           return false;
         }
         const msg = this.props.formItemError.message;
-        return import_react65.default.createElement("div", { className: "form-error" }, msg);
+        return import_react66.default.createElement("div", { className: "form-error" }, msg);
       }
       _isDisabled() {
         return this.props.disabled || this.props.formType === "new" && this.props.editableForNew === false || this.props.formType === "update" && this.props.editableForUpdate === false;
@@ -239652,10 +239652,10 @@ var require_generated_form = __commonJS({
           onChange: (eventOrValue) => {
             return this.props.onChange(
               this.props.id,
-              __guard__3(
+              __guard__4(
                 eventOrValue != null ? eventOrValue.target : void 0,
                 (x3) => x3.value
-              ) != null ? __guard__3(
+              ) != null ? __guard__4(
                 eventOrValue != null ? eventOrValue.target : void 0,
                 (x3) => x3.value
               ) : eventOrValue
@@ -239666,10 +239666,10 @@ var require_generated_form = __commonJS({
           inputProps.disabled = true;
         }
         if (_FormItem.inputElementTypes[this.props.type]) {
-          return import_react65.default.createElement("input", inputProps);
+          return import_react66.default.createElement("input", inputProps);
         } else if (this.props.type === "select") {
           const options2 = (this.props.selectOptions != null ? this.props.selectOptions : []).map(
-            (optionData) => import_react65.default.createElement(
+            (optionData) => import_react66.default.createElement(
               "option",
               Object.assign({}, optionData, {
                 key: `${Utils13.generateTempId()}-optionData.value`
@@ -239678,24 +239678,24 @@ var require_generated_form = __commonJS({
             )
           );
           options2.unshift(
-            import_react65.default.createElement("option", {
+            import_react66.default.createElement("option", {
               key: `${Utils13.generateTempId()}-blank-option`
             })
           );
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "select",
             Object.assign({}, inputProps),
             options2
           );
         } else if (this.props.type === "textarea") {
-          return import_react65.default.createElement("textarea", inputProps);
+          return import_react66.default.createElement("textarea", inputProps);
         } else if (this.props.type === "date") {
           inputProps.dateFormat = "YYYY-MM-DD";
-          return import_react65.default.createElement(DatePicker, inputProps);
+          return import_react66.default.createElement(DatePicker, inputProps);
         } else if (this.props.type === "EmptySpace") {
-          return import_react65.default.createElement("div", { className: "empty-space" });
+          return import_react66.default.createElement("div", { className: "empty-space" });
         } else if (index_default_default.isFunction(this.props.customComponent)) {
-          return import_react65.default.createElement(this.props.customComponent, inputProps);
+          return import_react66.default.createElement(this.props.customComponent, inputProps);
         } else {
           return console.warn(
             `We do not support type ${this.props.type} with attributes:`,
@@ -239705,7 +239705,7 @@ var require_generated_form = __commonJS({
       }
     };
     FormItem.initClass();
-    var GeneratedFieldset = class _GeneratedFieldset extends import_react65.default.Component {
+    var GeneratedFieldset = class _GeneratedFieldset extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239721,28 +239721,28 @@ var require_generated_form = __commonJS({
         _GeneratedFieldset.propTypes = {
           // Some sort of unique identifier
           id: idPropType.isRequired,
-          formItems: import_prop_types68.default.arrayOf(
-            import_prop_types68.default.shape(
+          formItems: import_prop_types69.default.arrayOf(
+            import_prop_types69.default.shape(
               index_default_default.extend(FormItem.propTypes, {
-                row: import_prop_types68.default.number,
-                column: import_prop_types68.default.number
+                row: import_prop_types69.default.number,
+                column: import_prop_types69.default.number
               })
             )
           ),
           // The key is the formItem id, the value is the error object
-          formItemErrors: import_prop_types68.default.arrayOf(FormItem.propTypes.formItemError),
+          formItemErrors: import_prop_types69.default.arrayOf(FormItem.propTypes.formItemError),
           // A function that takes two arguments:
           //   - The id of this GeneratedFieldset
           //   - A new array of updated formItems with the correct value.
-          onChange: import_prop_types68.default.func,
-          heading: import_prop_types68.default.node,
-          useHeading: import_prop_types68.default.bool,
-          formType: import_prop_types68.default.oneOf(["new", "update"]),
-          zIndex: import_prop_types68.default.number,
-          lastFieldset: import_prop_types68.default.bool,
-          firstFieldset: import_prop_types68.default.bool,
-          contextData: import_prop_types68.default.object,
-          currentFormValues: import_prop_types68.default.object
+          onChange: import_prop_types69.default.func,
+          heading: import_prop_types69.default.node,
+          useHeading: import_prop_types69.default.bool,
+          formType: import_prop_types69.default.oneOf(["new", "update"]),
+          zIndex: import_prop_types69.default.number,
+          lastFieldset: import_prop_types69.default.bool,
+          firstFieldset: import_prop_types69.default.bool,
+          contextData: import_prop_types69.default.object,
+          currentFormValues: import_prop_types69.default.object
         };
       }
       render() {
@@ -239750,14 +239750,14 @@ var require_generated_form = __commonJS({
           "first-fieldset": this.props.firstFieldset,
           "last-fieldset": this.props.lastFieldset
         });
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "fieldset",
           {
             style: { zIndex: this.props.zIndex != null ? this.props.zIndex : 0 },
             className: classStr
           },
           this._renderHeader(),
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             { className: "fieldset-form-items" },
             this._renderFormItems()
@@ -239770,13 +239770,13 @@ var require_generated_form = __commonJS({
       }
       _renderHeader() {
         if (this.props.useHeading) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "header",
             null,
-            import_react65.default.createElement("legend", null, this.props.heading)
+            import_react66.default.createElement("legend", null, this.props.heading)
           );
         } else {
-          return import_react65.default.createElement("div", null);
+          return import_react66.default.createElement("div", null);
         }
       }
       _renderFormItems() {
@@ -239792,7 +239792,7 @@ var require_generated_form = __commonJS({
           if (allHidden) {
             style.display = "none";
           }
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className: "row", "data-row-num": rowNum, style, key: rowNum },
             index_default_default.map(byCol, (itemsInCol, colNum) => {
@@ -239800,12 +239800,12 @@ var require_generated_form = __commonJS({
                 itemsInCol = [];
               }
               const colEls = [
-                import_react65.default.createElement(
+                import_react66.default.createElement(
                   "div",
                   { className: "column", "data-col-num": colNum, key: colNum },
                   itemsInCol.map((formItemData) => {
                     const props = this._propsFromFormItemData(formItemData);
-                    return import_react65.default.createElement(
+                    return import_react66.default.createElement(
                       FormItem,
                       Object.assign({}, props, {
                         key: `form-item-${formItemData.id}`
@@ -239816,7 +239816,7 @@ var require_generated_form = __commonJS({
               ];
               if (colNum !== numCols - 1) {
                 colEls.push(
-                  import_react65.default.createElement("div", {
+                  import_react66.default.createElement("div", {
                     className: "column-spacer",
                     "data-col-num": `${colNum}-spacer`,
                     key: `${colNum}-spacer`
@@ -239856,11 +239856,11 @@ var require_generated_form = __commonJS({
         return this.props.onChange(this.props.id, newFormItems);
       }
       _renderFooter() {
-        return import_react65.default.createElement("footer", null);
+        return import_react66.default.createElement("footer", null);
       }
     };
     GeneratedFieldset.initClass();
-    var GeneratedForm = class _GeneratedForm extends import_react65.default.Component {
+    var GeneratedForm = class _GeneratedForm extends import_react66.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239878,24 +239878,24 @@ var require_generated_form = __commonJS({
         _GeneratedForm.propTypes = {
           // Some sort of unique identifier
           id: idPropType,
-          errors: import_prop_types68.default.shape({
-            formError: import_prop_types68.default.shape({
-              message: import_prop_types68.default.string,
-              location: import_prop_types68.default.string
+          errors: import_prop_types69.default.shape({
+            formError: import_prop_types69.default.shape({
+              message: import_prop_types69.default.string,
+              location: import_prop_types69.default.string
               // Can be "header" (default) or "footer"
             }),
             formItemErrors: GeneratedFieldset.propTypes.formItemErrors
           }),
-          fieldsets: import_prop_types68.default.arrayOf(
-            import_prop_types68.default.shape(GeneratedFieldset.propTypes)
+          fieldsets: import_prop_types69.default.arrayOf(
+            import_prop_types69.default.shape(GeneratedFieldset.propTypes)
           ),
           // A function whose argument is a new set of Props
-          onChange: import_prop_types68.default.func.isRequired,
-          onSubmit: import_prop_types68.default.func.isRequired,
-          style: import_prop_types68.default.object,
-          formType: import_prop_types68.default.oneOf(["new", "update"]),
-          prefilled: import_prop_types68.default.bool,
-          contextData: import_prop_types68.default.object
+          onChange: import_prop_types69.default.func.isRequired,
+          onSubmit: import_prop_types69.default.func.isRequired,
+          style: import_prop_types69.default.object,
+          formType: import_prop_types69.default.oneOf(["new", "update"]),
+          prefilled: import_prop_types69.default.bool,
+          contextData: import_prop_types69.default.object
         };
         _GeneratedForm.defaultProps = {
           style: {},
@@ -239905,7 +239905,7 @@ var require_generated_form = __commonJS({
       }
       render() {
         const submitText = this.props.formType === "new" ? "Create" : "Update";
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "form",
           {
             className: "generated-form",
@@ -239915,20 +239915,20 @@ var require_generated_form = __commonJS({
             onKeyDown: this._onKeyDown,
             noValidate: true
           },
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             import_tab_group_region.default,
             null,
             this._renderHeaderFormError(),
             this._renderPrefilledMessage(),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "fieldsets" },
               this._renderFieldsets()
             ),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "div",
               { className: "form-footer" },
-              import_react65.default.createElement(
+              import_react66.default.createElement(
                 "button",
                 {
                   type: "button",
@@ -239956,11 +239956,11 @@ var require_generated_form = __commonJS({
       }
       _renderPrefilledMessage() {
         if (this.props.prefilled) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             { className: "prefilled-message" },
             `The `,
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               "span",
               { className: "highlighted" },
               "highlighted"
@@ -239971,7 +239971,7 @@ var require_generated_form = __commonJS({
       }
       _renderHeaderFormError() {
         if (this.props.errors != null ? this.props.errors.formError : void 0) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "div",
             {
               ref: this.formHeaderErrorRef,
@@ -239992,7 +239992,7 @@ var require_generated_form = __commonJS({
             props.currentFormValues = this._currentFormValues();
             props.firstFieldset = i === 0;
             props.lastFieldset = i !== 0 && i === this.props.fieldsets.length - 1;
-            return import_react65.default.createElement(
+            return import_react66.default.createElement(
               GeneratedFieldset,
               Object.assign({}, props, { ref: `fieldset-${fieldset.id}` })
             );
@@ -240040,7 +240040,7 @@ var require_generated_form = __commonJS({
       GeneratedForm,
       GeneratedFieldset
     };
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -240173,18 +240173,18 @@ var init_scenario_editor_models = __esm({
 // src/components/scenario-editor-row.jsx
 var require_scenario_editor_row = __commonJS({
   "src/components/scenario-editor-row.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
     init_index_all();
     var import_rx_lite10 = __toESM(require_rx_lite());
     var SOURCE_SELECT_NULL = "NULL";
-    var SourceSelect = class _SourceSelect extends import_react65.default.Component {
+    var SourceSelect = class _SourceSelect extends import_react66.default.Component {
       static initClass() {
         _SourceSelect.displayName = "SourceSelect";
         _SourceSelect.propTypes = {
-          value: import_prop_types68.default.string,
-          onChange: import_prop_types68.default.func.isRequired,
-          options: import_prop_types68.default.oneOfType([import_prop_types68.default.object, import_prop_types68.default.array]).isRequired
+          value: import_prop_types69.default.string,
+          onChange: import_prop_types69.default.func.isRequired,
+          options: import_prop_types69.default.oneOfType([import_prop_types69.default.object, import_prop_types69.default.array]).isRequired
         };
       }
       constructor(props) {
@@ -240228,18 +240228,18 @@ var require_scenario_editor_row = __commonJS({
       }
       render() {
         const { options: options2 } = this.state;
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "select",
           {
             value: this.props.value || SOURCE_SELECT_NULL,
             onChange: this._onChange
           },
-          import_react65.default.createElement("option", {
+          import_react66.default.createElement("option", {
             key: SOURCE_SELECT_NULL,
             value: SOURCE_SELECT_NULL
           }),
           this.state.options.map(({ value, name: name2 }) => {
-            return import_react65.default.createElement(
+            return import_react66.default.createElement(
               "option",
               { key: value, value },
               name2
@@ -240256,16 +240256,16 @@ var require_scenario_editor_row = __commonJS({
       }
     };
     SourceSelect.initClass();
-    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react65.default.Component {
+    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react66.default.Component {
       static initClass() {
         _ScenarioEditorRow.displayName = "ScenarioEditorRow";
         _ScenarioEditorRow.propTypes = {
-          instance: import_prop_types68.default.object.isRequired,
-          removable: import_prop_types68.default.bool,
-          templates: import_prop_types68.default.array.isRequired,
-          onChange: import_prop_types68.default.func,
-          onInsert: import_prop_types68.default.func,
-          onRemove: import_prop_types68.default.func
+          instance: import_prop_types69.default.object.isRequired,
+          removable: import_prop_types69.default.bool,
+          templates: import_prop_types69.default.array.isRequired,
+          onChange: import_prop_types69.default.func,
+          onInsert: import_prop_types69.default.func,
+          onRemove: import_prop_types69.default.func
         };
       }
       constructor(props) {
@@ -240284,33 +240284,33 @@ var require_scenario_editor_row = __commonJS({
           key: this.props.instance.templateKey
         });
         if (!template2) {
-          return import_react65.default.createElement(
+          return import_react66.default.createElement(
             "span",
             null,
             " Could not find template for instance key: ",
             this.props.instance.templateKey
           );
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           Flexbox,
           { direction: "row", className: "well-row" },
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "span",
             null,
             this._renderTemplateSelect(template2),
             this._renderComparator(template2),
-            import_react65.default.createElement("span", null, template2.valueLabel),
+            import_react66.default.createElement("span", null, template2.valueLabel),
             this._renderValue(template2)
           ),
-          import_react65.default.createElement("div", { style: { flex: 1 } }),
+          import_react66.default.createElement("div", { style: { flex: 1 } }),
           this._renderActions()
         );
       }
       _renderTemplateSelect(_template) {
         const options2 = this.props.templates.map(({ key, name: name2 }) => {
-          return import_react65.default.createElement("option", { value: key, key }, name2);
+          return import_react66.default.createElement("option", { value: key, key }, name2);
         });
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "select",
           {
             value: this.props.instance.templateKey,
@@ -240321,12 +240321,12 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderComparator(template2) {
         const options2 = index_default_default.map(template2.comparators, ({ name: name2 }, key) => {
-          return import_react65.default.createElement("option", { key, value: key }, name2);
+          return import_react66.default.createElement("option", { key, value: key }, name2);
         });
         if (!(options2.length > 0)) {
           return false;
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "select",
           {
             value: this.props.instance.comparatorKey,
@@ -240337,13 +240337,13 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderValue(template2) {
         if (template2.type === Template.Type.Enum) {
-          return import_react65.default.createElement(SourceSelect, {
+          return import_react66.default.createElement(SourceSelect, {
             value: this.props.instance.value,
             onChange: this._onChangeValue,
             options: template2.values
           });
         } else if (template2.type === Template.Type.String) {
-          return import_react65.default.createElement("input", {
+          return import_react66.default.createElement("input", {
             type: "text",
             value: this.props.instance.value,
             onChange: this._onChangeValue
@@ -240353,15 +240353,15 @@ var require_scenario_editor_row = __commonJS({
         }
       }
       _renderActions() {
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: "actions" },
-          this.props.removable ? import_react65.default.createElement(
+          this.props.removable ? import_react66.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onRemove },
             "\u2212"
           ) : void 0,
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onInsert },
             "+"
@@ -240398,18 +240398,18 @@ var require_scenario_editor_row = __commonJS({
 // src/components/scenario-editor.jsx
 var require_scenario_editor = __commonJS({
   "src/components/scenario-editor.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
     init_scenario_editor_models();
     var import_scenario_editor_row = __toESM(require_scenario_editor_row());
-    var ScenarioEditor = class _ScenarioEditor extends import_react65.default.Component {
+    var ScenarioEditor = class _ScenarioEditor extends import_react66.default.Component {
       static initClass() {
         _ScenarioEditor.displayName = "ScenarioEditor";
         _ScenarioEditor.propTypes = {
-          instances: import_prop_types68.default.array,
-          className: import_prop_types68.default.string,
-          onChange: import_prop_types68.default.func,
-          templates: import_prop_types68.default.array
+          instances: import_prop_types69.default.array,
+          className: import_prop_types69.default.string,
+          onChange: import_prop_types69.default.func,
+          templates: import_prop_types69.default.array
         };
         _ScenarioEditor.Template = Template2;
         _ScenarioEditor.Comparator = Comparator;
@@ -240425,11 +240425,11 @@ var require_scenario_editor = __commonJS({
         this.state = { collapsed: true };
       }
       render() {
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: this.props.className },
           (this.props.instances || []).map((instance, idx) => {
-            return import_react65.default.createElement(import_scenario_editor_row.default, {
+            return import_react66.default.createElement(import_scenario_editor_row.default, {
               key: idx,
               instance,
               removable: this.props.instances.length > 1,
@@ -240696,7 +240696,6 @@ var init_has_tutorial_tip = __esm({
 });
 
 // src/global/nylas-component-kit.js
-var nylas_component_kit_exports = {};
 var import_node_module20, import_meta21, nodeRequire21, jsxModuleCache, loadJsxManually, requireFromSrc, NylasComponentKit;
 var init_nylas_component_kit = __esm({
   "src/global/nylas-component-kit.js"() {
@@ -273989,7 +273988,7 @@ var require_menu_helpers = __commonJS({
             return menu[matchingItemIndex] = item;
           }
         }
-      } else if (item.type !== "separator" || __guard__3(_4.last(menu), (x3) => x3.type) !== "separator") {
+      } else if (item.type !== "separator" || __guard__4(_4.last(menu), (x3) => x3.type) !== "separator") {
         return menu.push(item);
       }
     };
@@ -274058,7 +274057,7 @@ var require_menu_helpers = __commonJS({
       cloneMenuItem,
       forEachMenuItem
     };
-    function __guard__3(value, transform) {
+    function __guard__4(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -274211,7 +274210,7 @@ var require_extended_selection = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ExportedSelection2 = (init_exported_selection(), __toCommonJS(exported_selection_exports)).default;
-    var ExtendedSelection = class _ExtendedSelection {
+    var ExtendedSelection2 = class _ExtendedSelection {
       static initClass() {
         Object.defineProperty(_ExtendedSelection.prototype, "anchorNode", {
           get() {
@@ -274561,8 +274560,8 @@ var require_extended_selection = __commonJS({
         return new Error(`Can't set ${property2}`);
       }
     };
-    ExtendedSelection.initClass();
-    module2.exports = ExtendedSelection;
+    ExtendedSelection2.initClass();
+    module2.exports = ExtendedSelection2;
   }
 });
 
@@ -274592,126 +274591,26 @@ var init_custom_contenteditable_components = __esm({
   }
 });
 
-// src/components/contenteditable/emphasis-formatting-extension.js
-var EmphasisFormattingExtension;
-var init_emphasis_formatting_extension = __esm({
-  "src/components/contenteditable/emphasis-formatting-extension.js"() {
-    init_nylas_exports();
-    EmphasisFormattingExtension = class _EmphasisFormattingExtension extends ContenteditableExtension {
-      static keyCommandHandlers() {
-        return {
-          "contenteditable:bold": _EmphasisFormattingExtension._onBold,
-          "contenteditable:italic": _EmphasisFormattingExtension._onItalic,
-          "contenteditable:underline": _EmphasisFormattingExtension._onUnderline,
-          "contenteditable:strikeThrough": _EmphasisFormattingExtension._onStrikeThrough
-        };
-      }
-      static toolbarButtons() {
-        return [
-          {
-            className: "btn-bold",
-            onClick: _EmphasisFormattingExtension._onBold,
-            tooltip: "Bold",
-            iconUrl: null
-            // Defined in the css of btn-bold
-          },
-          {
-            className: "btn-italic",
-            onClick: _EmphasisFormattingExtension._onItalic,
-            tooltip: "Italic",
-            iconUrl: null
-            // Defined in the css of btn-italic
-          },
-          {
-            className: "btn-underline",
-            onClick: _EmphasisFormattingExtension._onUnderline,
-            tooltip: "Underline",
-            iconUrl: null
-            // Defined in the css of btn-underline
-          }
-        ];
-      }
-      static _onBold({ editor }) {
-        editor.bold();
-      }
-      static _onItalic({ editor }) {
-        editor.italic();
-      }
-      static _onUnderline({ editor }) {
-        editor.underline();
-      }
-      static _onStrikeThrough({ editor }) {
-        editor.strikeThrough();
-      }
-      // None of the emphasis formatting buttons need a custom component.
-      //
-      // They use the default <ToolbarButtons> component via the
-      // `toolbarButtons` extension API.
-      //
-      // The <ToolbarButtons> core component is managed by the
-      // {ToolbarButtonManager}
-      static toolbarComponentConfig() {
-        return null;
-      }
-    };
-  }
-});
-
-// src/components/contenteditable/paragraph-formatting-extension.js
-var ParagraphFormattingExtension;
-var init_paragraph_formatting_extension = __esm({
-  "src/components/contenteditable/paragraph-formatting-extension.js"() {
-    init_nylas_exports();
-    ParagraphFormattingExtension = class _ParagraphFormattingExtension extends ContenteditableExtension {
-      static keyCommandHandlers() {
-        return {
-          "contenteditable:indent": _ParagraphFormattingExtension._onIndent,
-          "contenteditable:outdent": _ParagraphFormattingExtension._onOutdent
-        };
-      }
-      static toolbarButtons() {
-        return [];
-      }
-      static _onIndent({ editor }) {
-        editor.indent();
-      }
-      static _onOutdent({ editor }) {
-        editor.outdent();
-      }
-      // None of the paragraph formatting buttons need a custom component.
-      //
-      // They use the default <ToolbarButtons> component via the
-      // `toolbarButtons` extension API.
-      //
-      // We can either return `null` or return the requsted object with no
-      // component.
-      static toolbarComponentConfig() {
-        return null;
-      }
-    };
-  }
-});
-
 // src/components/contenteditable/floating-toolbar.jsx
 var require_floating_toolbar = __commonJS({
   "src/components/contenteditable/floating-toolbar.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+    var import_prop_types69 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react65 = __toESM(require_react());
-    var FloatingToolbar = class _FloatingToolbar extends import_react65.default.Component {
+    var import_react66 = __toESM(require_react());
+    var FloatingToolbar2 = class _FloatingToolbar extends import_react66.default.Component {
       static initClass() {
         _FloatingToolbar.displayName = "FloatingToolbar";
         _FloatingToolbar.propTypes = {
-          atomicEdit: import_prop_types68.default.func,
-          extensions: import_prop_types68.default.array
+          atomicEdit: import_prop_types69.default.func,
+          extensions: import_prop_types69.default.array
         };
         _FloatingToolbar.innerPropTypes = {
-          dragging: import_prop_types68.default.bool,
-          selection: import_prop_types68.default.object,
-          doubleDown: import_prop_types68.default.bool,
-          hoveringOver: import_prop_types68.default.object,
-          editableNode: import_prop_types68.default.object
+          dragging: import_prop_types69.default.bool,
+          selection: import_prop_types69.default.object,
+          doubleDown: import_prop_types69.default.bool,
+          hoveringOver: import_prop_types69.default.object,
+          editableNode: import_prop_types69.default.object
         };
         _FloatingToolbar.defaultProps = { extensions: [] };
         _FloatingToolbar.defaultInnerProps = {
@@ -274785,10 +274684,10 @@ var require_floating_toolbar = __commonJS({
         if (!ToolbarComponent) {
           return false;
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: "floating-toolbar-container" },
-          import_react65.default.createElement(
+          import_react66.default.createElement(
             "div",
             {
               ref: "floatingToolbar",
@@ -274796,7 +274695,7 @@ var require_floating_toolbar = __commonJS({
               style: this._toolbarStyles()
             },
             this._renderPointer(),
-            import_react65.default.createElement(
+            import_react66.default.createElement(
               ToolbarComponent,
               Object.assign({}, this.state.toolbarComponentProps)
             )
@@ -274956,27 +274855,23 @@ var require_floating_toolbar = __commonJS({
         if (this.state.hidePointer) {
           return false;
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           {
             className: "toolbar-pointer-container",
             style: this._toolbarPointerStyles()
           },
-          import_react65.default.createElement("div", { className: "shadow" }),
-          import_react65.default.createElement("div", { className: "foreground" })
+          import_react66.default.createElement("div", { className: "shadow" }),
+          import_react66.default.createElement("div", { className: "foreground" })
         );
       }
     };
-    FloatingToolbar.initClass();
-    module2.exports = FloatingToolbar;
+    FloatingToolbar2.initClass();
+    module2.exports = FloatingToolbar2;
   }
 });
 
 // src/components/contenteditable/tab-manager.js
-var tab_manager_exports = {};
-__export(tab_manager_exports, {
-  default: () => TabManager
-});
 var TabManager;
 var init_tab_manager = __esm({
   "src/components/contenteditable/tab-manager.js"() {
@@ -275029,21 +274924,21 @@ var init_tab_manager = __esm({
 // src/components/contenteditable/link-editor.jsx
 var require_link_editor = __commonJS({
   "src/components/contenteditable/link-editor.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
-    var import_react65 = __toESM(require_react());
-    var import_react_dom30 = __toESM(require_react_dom());
+    var import_prop_types69 = __toESM(require_prop_types());
+    var import_react66 = __toESM(require_react());
+    var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
-    var LinkEditor2 = class _LinkEditor extends import_react65.default.Component {
+    var LinkEditor2 = class _LinkEditor extends import_react66.default.Component {
       static initClass() {
         _LinkEditor.displayName = "LinkEditor";
         _LinkEditor.propTypes = {
           // A callback function we use to save the URL to the Contenteditable
-          onSaveUrl: import_prop_types68.default.func,
+          onSaveUrl: import_prop_types69.default.func,
           // The current DOM link we are modifying
-          linkToModify: import_prop_types68.default.object,
+          linkToModify: import_prop_types69.default.object,
           // A callback used when a link has been cancled, completed, or escaped
           // from. Used to notify our parent to switch modes.
-          onDoneWithLink: import_prop_types68.default.func
+          onDoneWithLink: import_prop_types69.default.func
         };
       }
       constructor(props) {
@@ -275066,7 +274961,7 @@ var require_link_editor = __commonJS({
       }
       componentDidMount() {
         if (this.props.focusOnMount) {
-          return import_react_dom30.default.findDOMNode(this.refs.urlInput).focus();
+          return import_react_dom31.default.findDOMNode(this.refs.urlInput).focus();
         }
       }
       render() {
@@ -275075,7 +274970,7 @@ var require_link_editor = __commonJS({
         let removeBtn = "";
         if (this._initialUrl()) {
           widthCorrection += 32;
-          removeBtn = import_react65.default.createElement(
+          removeBtn = import_react66.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275083,12 +274978,12 @@ var require_link_editor = __commonJS({
               style: { float: "right" },
               onMouseDown: this._removeUrl
             },
-            import_react65.default.createElement("i", { className: "fa fa-times" })
+            import_react66.default.createElement("i", { className: "fa fa-times" })
           );
         }
         if (this.state.urlInputValue.length === 0 || this.state.urlInputValue !== this._initialUrl()) {
           widthCorrection += 32;
-          checkBtn = import_react65.default.createElement(
+          checkBtn = import_react66.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275097,14 +274992,14 @@ var require_link_editor = __commonJS({
               onKeyPress: this._saveUrlOnEnter,
               onMouseDown: this._saveUrl
             },
-            import_react65.default.createElement("i", { className: "fa fa-check" })
+            import_react66.default.createElement("i", { className: "fa fa-check" })
           );
         }
-        return import_react65.default.createElement(
+        return import_react66.default.createElement(
           "div",
           { className: "toolbar-new-link" },
-          import_react65.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
-          import_react65.default.createElement("input", {
+          import_react66.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
+          import_react66.default.createElement("input", {
             type: "text",
             ref: "urlInput",
             style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
@@ -275125,10 +275020,10 @@ var require_link_editor = __commonJS({
       _onBlur(event2) {
         const targets = [];
         if (this.refs.saveBtn) {
-          targets.push(import_react_dom30.default.findDOMNode(this.refs.saveBtn));
+          targets.push(import_react_dom31.default.findDOMNode(this.refs.saveBtn));
         }
         if (this.refs.removeBtn) {
-          targets.push(import_react_dom30.default.findDOMNode(this.refs.removeBtn));
+          targets.push(import_react_dom31.default.findDOMNode(this.refs.removeBtn));
         }
         if (Array.from(targets).includes(event2.relatedTarget)) {
           event2.preventDefault();
@@ -275189,10 +275084,6 @@ var require_link_editor = __commonJS({
 });
 
 // src/components/contenteditable/link-manager.js
-var link_manager_exports = {};
-__export(link_manager_exports, {
-  default: () => LinkManager
-});
 var import_link_editor, LinkManager;
 var init_link_manager = __esm({
   "src/components/contenteditable/link-manager.js"() {
@@ -275391,10 +275282,6 @@ var init_link_manager = __esm({
 });
 
 // src/components/contenteditable/list-manager.js
-var list_manager_exports = {};
-__export(list_manager_exports, {
-  default: () => ListManager
-});
 var ListManager;
 var init_list_manager = __esm({
   "src/components/contenteditable/list-manager.js"() {
@@ -275597,10 +275484,6 @@ var init_contenteditable_service = __esm({
 });
 
 // src/components/contenteditable/mouse-service.js
-var mouse_service_exports = {};
-__export(mouse_service_exports, {
-  default: () => mouse_service_default
-});
 var MouseService, mouse_service_default;
 var init_mouse_service = __esm({
   "src/components/contenteditable/mouse-service.js"() {
@@ -275712,7 +275595,7 @@ var init_mouse_service = __esm({
 var require_dom_normalizer = __commonJS({
   "src/components/contenteditable/dom-normalizer.js"(exports2, module2) {
     var { ContenteditableExtension: ContenteditableExtension2, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var DOMNormalizer = class _DOMNormalizer extends ContenteditableExtension2 {
+    var DOMNormalizer2 = class _DOMNormalizer extends ContenteditableExtension2 {
       // This component works by re-rendering on every change and restoring the
       // selection. This is also how standard React controlled inputs work too.
       //
@@ -275803,15 +275686,11 @@ var require_dom_normalizer = __commonJS({
         }
       }
     };
-    module2.exports = DOMNormalizer;
+    module2.exports = DOMNormalizer2;
   }
 });
 
 // src/components/contenteditable/clipboard-service.js
-var clipboard_service_exports = {};
-__export(clipboard_service_exports, {
-  default: () => ClipboardService
-});
 var import_node_module25, import_meta26, nodeRequire26, ClipboardService;
 var init_clipboard_service = __esm({
   "src/components/contenteditable/clipboard-service.js"() {
@@ -275911,10 +275790,6 @@ var init_clipboard_service = __esm({
 });
 
 // src/components/contenteditable/blockquote-manager.js
-var blockquote_manager_exports = {};
-__export(blockquote_manager_exports, {
-  default: () => BlockquoteManager
-});
 var BlockquoteManager;
 var init_blockquote_manager = __esm({
   "src/components/contenteditable/blockquote-manager.js"() {
@@ -276019,10 +275894,6 @@ var init_toolbar_buttons = __esm({
 });
 
 // src/components/contenteditable/toolbar-button-manager.js
-var toolbar_button_manager_exports = {};
-__export(toolbar_button_manager_exports, {
-  default: () => ToolbarButtonManager
-});
 var ToolbarButtonManager;
 var init_toolbar_button_manager = __esm({
   "src/components/contenteditable/toolbar-button-manager.js"() {
@@ -276093,42 +275964,146 @@ var init_toolbar_button_manager = __esm({
   }
 });
 
+// src/components/contenteditable/emphasis-formatting-extension.js
+var EmphasisFormattingExtension;
+var init_emphasis_formatting_extension = __esm({
+  "src/components/contenteditable/emphasis-formatting-extension.js"() {
+    init_nylas_exports();
+    EmphasisFormattingExtension = class _EmphasisFormattingExtension extends ContenteditableExtension {
+      static keyCommandHandlers() {
+        return {
+          "contenteditable:bold": _EmphasisFormattingExtension._onBold,
+          "contenteditable:italic": _EmphasisFormattingExtension._onItalic,
+          "contenteditable:underline": _EmphasisFormattingExtension._onUnderline,
+          "contenteditable:strikeThrough": _EmphasisFormattingExtension._onStrikeThrough
+        };
+      }
+      static toolbarButtons() {
+        return [
+          {
+            className: "btn-bold",
+            onClick: _EmphasisFormattingExtension._onBold,
+            tooltip: "Bold",
+            iconUrl: null
+            // Defined in the css of btn-bold
+          },
+          {
+            className: "btn-italic",
+            onClick: _EmphasisFormattingExtension._onItalic,
+            tooltip: "Italic",
+            iconUrl: null
+            // Defined in the css of btn-italic
+          },
+          {
+            className: "btn-underline",
+            onClick: _EmphasisFormattingExtension._onUnderline,
+            tooltip: "Underline",
+            iconUrl: null
+            // Defined in the css of btn-underline
+          }
+        ];
+      }
+      static _onBold({ editor }) {
+        editor.bold();
+      }
+      static _onItalic({ editor }) {
+        editor.italic();
+      }
+      static _onUnderline({ editor }) {
+        editor.underline();
+      }
+      static _onStrikeThrough({ editor }) {
+        editor.strikeThrough();
+      }
+      // None of the emphasis formatting buttons need a custom component.
+      //
+      // They use the default <ToolbarButtons> component via the
+      // `toolbarButtons` extension API.
+      //
+      // The <ToolbarButtons> core component is managed by the
+      // {ToolbarButtonManager}
+      static toolbarComponentConfig() {
+        return null;
+      }
+    };
+  }
+});
+
+// src/components/contenteditable/paragraph-formatting-extension.js
+var ParagraphFormattingExtension;
+var init_paragraph_formatting_extension = __esm({
+  "src/components/contenteditable/paragraph-formatting-extension.js"() {
+    init_nylas_exports();
+    ParagraphFormattingExtension = class _ParagraphFormattingExtension extends ContenteditableExtension {
+      static keyCommandHandlers() {
+        return {
+          "contenteditable:indent": _ParagraphFormattingExtension._onIndent,
+          "contenteditable:outdent": _ParagraphFormattingExtension._onOutdent
+        };
+      }
+      static toolbarButtons() {
+        return [];
+      }
+      static _onIndent({ editor }) {
+        editor.indent();
+      }
+      static _onOutdent({ editor }) {
+        editor.outdent();
+      }
+      // None of the paragraph formatting buttons need a custom component.
+      //
+      // They use the default <ToolbarButtons> component via the
+      // `toolbarButtons` extension API.
+      //
+      // We can either return `null` or return the requsted object with no
+      // component.
+      static toolbarComponentConfig() {
+        return null;
+      }
+    };
+  }
+});
+
 // src/components/contenteditable/contenteditable.jsx
-var require_contenteditable = __commonJS({
-  "src/components/contenteditable/contenteditable.jsx"(exports2, module2) {
-    var import_prop_types68 = __toESM(require_prop_types());
+function __guard__2(value, transform) {
+  return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
+}
+var import_prop_types65, import_react61, import_react_dom27, import_floating_toolbar, import_editor_api, import_extended_selection, import_dom_normalizer, Contenteditable, IgnoreMutationClassName;
+var init_contenteditable = __esm({
+  "src/components/contenteditable/contenteditable.jsx"() {
+    import_prop_types65 = __toESM(require_prop_types());
+    init_index_all();
+    import_react61 = __toESM(require_react());
+    import_react_dom27 = __toESM(require_react_dom());
+    init_nylas_exports();
+    init_nylas_component_kit();
+    import_floating_toolbar = __toESM(require_floating_toolbar());
+    import_editor_api = __toESM(require_editor_api());
+    import_extended_selection = __toESM(require_extended_selection());
+    init_tab_manager();
+    init_link_manager();
+    init_list_manager();
+    init_mouse_service();
+    import_dom_normalizer = __toESM(require_dom_normalizer());
+    init_clipboard_service();
+    init_blockquote_manager();
+    init_toolbar_button_manager();
     init_emphasis_formatting_extension();
     init_paragraph_formatting_extension();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React54 = require_react();
-    var ReactDOM28 = require_react_dom();
-    var { Utils: Utils26, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var { KeyCommandsRegion: KeyCommandsRegion3 } = (init_nylas_component_kit(), __toCommonJS(nylas_component_kit_exports));
-    var FloatingToolbar = require_floating_toolbar();
-    var EditorAPI2 = require_editor_api();
-    var ExtendedSelection = require_extended_selection();
-    var TabManager2 = (init_tab_manager(), __toCommonJS(tab_manager_exports)).default;
-    var LinkManager2 = (init_link_manager(), __toCommonJS(link_manager_exports)).default;
-    var ListManager2 = (init_list_manager(), __toCommonJS(list_manager_exports)).default;
-    var MouseService2 = (init_mouse_service(), __toCommonJS(mouse_service_exports)).default;
-    var DOMNormalizer = require_dom_normalizer();
-    var ClipboardService2 = (init_clipboard_service(), __toCommonJS(clipboard_service_exports)).default;
-    var BlockquoteManager2 = (init_blockquote_manager(), __toCommonJS(blockquote_manager_exports)).default;
-    var ToolbarButtonManager2 = (init_toolbar_button_manager(), __toCommonJS(toolbar_button_manager_exports)).default;
-    var Contenteditable = class _Contenteditable extends React54.Component {
+    Contenteditable = class _Contenteditable extends import_react61.default.Component {
       static initClass() {
         _Contenteditable.displayName = "Contenteditable";
         _Contenteditable.IgnoreMutationClassName = "ignore-mutations";
         _Contenteditable.propTypes = {
           // The current html state, as a string, of the contenteditable.
-          value: import_prop_types68.default.string,
+          value: import_prop_types65.default.string,
           // Handlers
-          onChange: import_prop_types68.default.func.isRequired,
-          onFilePaste: import_prop_types68.default.func,
+          onChange: import_prop_types65.default.func.isRequired,
+          onFilePaste: import_prop_types65.default.func,
           // A list of objects that extend {ContenteditableExtension}
-          extensions: import_prop_types68.default.array,
-          spellcheck: import_prop_types68.default.bool,
-          floatingToolbar: import_prop_types68.default.bool
+          extensions: import_prop_types65.default.array,
+          spellcheck: import_prop_types65.default.bool,
+          floatingToolbar: import_prop_types65.default.bool
         };
         _Contenteditable.defaultProps = {
           extensions: [],
@@ -276137,16 +276112,16 @@ var require_contenteditable = __commonJS({
           onSelectionRestored: () => {
           }
         };
-        _Contenteditable.prototype.coreServices = [MouseService2, ClipboardService2];
+        _Contenteditable.prototype.coreServices = [mouse_service_default, ClipboardService];
         _Contenteditable.prototype.coreExtensions = [
-          ToolbarButtonManager2,
-          ListManager2,
-          TabManager2,
+          ToolbarButtonManager,
+          ListManager,
+          TabManager,
           EmphasisFormattingExtension,
           ParagraphFormattingExtension,
-          LinkManager2,
-          BlockquoteManager2,
-          DOMNormalizer
+          LinkManager,
+          BlockquoteManager,
+          import_dom_normalizer.default
         ];
       }
       //#####################################################################
@@ -276169,11 +276144,11 @@ var require_contenteditable = __commonJS({
           extraArgsObj = {};
         }
         this._teardownNonMutationListeners();
-        const editor = new EditorAPI2(this._editableNode());
+        const editor = new import_editor_api.default(this._editableNode());
         if (!editor.currentSelection().isInScope() && extraArgsObj.methodName !== "onBlur") {
           this._restoreSelection();
         }
-        const argsObj = _4.extend(extraArgsObj, { editor });
+        const argsObj = index_default_default.extend(extraArgsObj, { editor });
         try {
           editingFunction(argsObj);
         } catch (error) {
@@ -276257,7 +276232,7 @@ var require_contenteditable = __commonJS({
       // When we have a composition event in progress, we should not update
       // because otherwise our composition event will be blown away.
       shouldComponentUpdate(nextProps, nextState) {
-        return !this._inCompositionEvent && (!Utils26.isEqualReact(nextProps, this.props) || !Utils26.isEqualReact(nextState, this.state));
+        return !this._inCompositionEvent && (!Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state));
       }
       componentDidUpdate() {
         if (this._shouldRestoreSelectionOnUpdate()) {
@@ -276283,10 +276258,10 @@ var require_contenteditable = __commonJS({
         if (innerState == null) {
           innerState = {};
         }
-        if (_4.isMatch(this.innerState, innerState)) {
+        if (index_default_default.isMatch(this.innerState, innerState)) {
           return;
         }
-        this.innerState = _4.extend(this.innerState, innerState);
+        this.innerState = index_default_default.extend(this.innerState, innerState);
         if (this._broadcastInnerStateToToolbar) {
           if (this.refs.toolbarController != null) {
             this.refs.toolbarController.componentWillReceiveInnerProps(
@@ -276327,14 +276302,14 @@ var require_contenteditable = __commonJS({
       //############################# Render ################################
       //#####################################################################
       render() {
-        return React54.createElement(
-          KeyCommandsRegion3,
+        return import_react61.default.createElement(
+          void 0,
           {
             className: "contenteditable-container",
             localHandlers: this._keymapHandlers()
           },
           this._renderFloatingToolbar(),
-          React54.createElement(
+          import_react61.default.createElement(
             "div",
             Object.assign(
               {
@@ -276354,14 +276329,14 @@ var require_contenteditable = __commonJS({
         if (!this.props.floatingToolbar) {
           return;
         }
-        return React54.createElement(FloatingToolbar, {
+        return import_react61.default.createElement(import_floating_toolbar.default, {
           ref: "toolbarController",
           atomicEdit: this.atomicEdit,
           extensions: this._extensions()
         });
       }
       _editableNode() {
-        return ReactDOM28.findDOMNode(this.refs.contenteditable);
+        return import_react_dom27.default.findDOMNode(this.refs.contenteditable);
       }
       //#####################################################################
       //########################## Listener Setup ###########################
@@ -276369,9 +276344,9 @@ var require_contenteditable = __commonJS({
       _eventHandlers() {
         let handlers = {};
         for (var service of Array.from(this._services)) {
-          _4.extend(handlers, service.eventHandlers());
+          index_default_default.extend(handlers, service.eventHandlers());
         }
-        handlers = _4.extend(handlers, {
+        handlers = index_default_default.extend(handlers, {
           onBlur: this._onBlur,
           onFocus: this._onFocus,
           onKeyDown: this._onKeyDown,
@@ -276386,12 +276361,12 @@ var require_contenteditable = __commonJS({
       _boundExtensionKeymapHandlers() {
         const keymapHandlers = {};
         this._extensions().forEach((extension) => {
-          if (!_4.isFunction(extension.keyCommandHandlers)) {
+          if (!index_default_default.isFunction(extension.keyCommandHandlers)) {
             return;
           }
           try {
             const extensionHandlers = extension.keyCommandHandlers.call(extension);
-            return _4.each(extensionHandlers, (handler, command) => {
+            return index_default_default.each(extensionHandlers, (handler, command) => {
               return keymapHandlers[command] = (event2) => {
                 return this.atomicEdit(handler, { event: event2 });
               };
@@ -276408,7 +276383,7 @@ var require_contenteditable = __commonJS({
       // to keymaps.
       _keymapHandlers() {
         const defaultKeymaps = {};
-        return _4.extend(defaultKeymaps, this._boundExtensionKeymapHandlers());
+        return index_default_default.extend(defaultKeymaps, this._boundExtensionKeymapHandlers());
       }
       _setupNonMutationListeners() {
         this._broadcastInnerStateToToolbar = true;
@@ -276492,7 +276467,7 @@ var require_contenteditable = __commonJS({
         }
         let runCallbacks = true;
         for (var mutation of Array.from(mutations)) {
-          if (__guard__3(
+          if (__guard__2(
             mutation.target != null ? mutation.target.className : void 0,
             (x3) => x3.includes(_Contenteditable.IgnoreMutationClassName)
           )) {
@@ -276628,7 +276603,7 @@ var require_contenteditable = __commonJS({
         if (args == null) {
           args = {};
         }
-        const argsObj = _4.extend(args, { event: event2 });
+        const argsObj = index_default_default.extend(args, { event: event2 });
         for (extension of Array.from(this.props.extensions)) {
           if (event2 != null ? event2.isPropagationStopped() : void 0) {
             break;
@@ -276660,7 +276635,7 @@ var require_contenteditable = __commonJS({
           return;
         }
         const editingFunction = extension[method].bind(extension);
-        argsObj = _4.extend(argsObj, { methodName: method });
+        argsObj = index_default_default.extend(argsObj, { methodName: method });
         return this.atomicEdit(editingFunction, argsObj);
       }
       //#####################################################################
@@ -276758,7 +276733,7 @@ var require_contenteditable = __commonJS({
       // 3. `previousExportedSelection` - This is used for undo / redo so when
       // you revert to a previous state, the selection updates as well.
       _saveSelection() {
-        const selection = new ExtendedSelection(this._editableNode());
+        const selection = new import_extended_selection.default(this._editableNode());
         if (!(selection != null ? selection.isInScope() : void 0)) {
           return;
         }
@@ -276770,7 +276745,7 @@ var require_contenteditable = __commonJS({
       }
       _restoreSelection() {
         this._teardownNonMutationListeners();
-        const selection = new ExtendedSelection(this._editableNode());
+        const selection = new import_extended_selection.default(this._editableNode());
         selection.importSelection(this.innerState.exportedSelection);
         if (selection.isInScope()) {
           this.setInnerState({ editableNode: this._editableNode() });
@@ -276778,7 +276753,7 @@ var require_contenteditable = __commonJS({
         return this._setupNonMutationListeners();
       }
       _notifyOfSelectionRestoration() {
-        const selection = new ExtendedSelection(this._editableNode());
+        const selection = new import_extended_selection.default(this._editableNode());
         if (selection.isInScope()) {
           return this.props.onSelectionRestored(selection, this._editableNode());
         }
@@ -276794,10 +276769,7 @@ var require_contenteditable = __commonJS({
       }
     };
     Contenteditable.initClass();
-    module2.exports = Contenteditable;
-    function __guard__3(value, transform) {
-      return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
-    }
+    IgnoreMutationClassName = "ignore-mutations";
   }
 });
 
@@ -276815,16 +276787,16 @@ var overlaid_components_exports = {};
 __export(overlaid_components_exports, {
   default: () => OverlaidComponents
 });
-var import_react61, import_prop_types65, import_react_dom27, import_utils24, import_contenteditable, MUTATION_CONFIG, OverlaidComponents;
+var import_react62, import_prop_types66, import_react_dom28, import_utils24, MUTATION_CONFIG, OverlaidComponents;
 var init_overlaid_components = __esm({
   "src/components/overlaid-components/overlaid-components.jsx"() {
     init_index_all();
-    import_react61 = __toESM(require_react());
-    import_prop_types65 = __toESM(require_prop_types());
-    import_react_dom27 = __toESM(require_react_dom());
+    import_react62 = __toESM(require_react());
+    import_prop_types66 = __toESM(require_prop_types());
+    import_react_dom28 = __toESM(require_react_dom());
     import_utils24 = __toESM(require_utils());
     init_custom_contenteditable_components();
-    import_contenteditable = __toESM(require_contenteditable());
+    init_contenteditable();
     init_anchor_constants();
     MUTATION_CONFIG = {
       subtree: true,
@@ -276834,12 +276806,12 @@ var init_overlaid_components = __esm({
       attributeOldValue: true,
       characterDataOldValue: true
     };
-    OverlaidComponents = class _OverlaidComponents extends import_react61.default.Component {
+    OverlaidComponents = class _OverlaidComponents extends import_react62.default.Component {
       static displayName = "OverlaidComponents";
       static propTypes = {
-        children: import_prop_types65.default.node,
-        className: import_prop_types65.default.string,
-        exposedProps: import_prop_types65.default.object
+        children: import_prop_types66.default.node,
+        className: import_prop_types66.default.string,
+        exposedProps: import_prop_types66.default.object
       };
       static defaultProps = {
         children: false,
@@ -276851,7 +276823,7 @@ var init_overlaid_components = __esm({
       }
       static buildAnchorTag(componentKey, props = {}, existingId = null, style = "") {
         const overlayId = existingId || import_utils24.default.generateTempId();
-        let className = `${import_contenteditable.IgnoreMutationClassName} ${ANCHOR_CLASS}`;
+        let className = `${IgnoreMutationClassName} ${ANCHOR_CLASS}`;
         if (props.className) {
           className = `${className} ${props.className}`;
         }
@@ -276891,12 +276863,12 @@ var init_overlaid_components = __esm({
       _setupMutationObservers() {
         this.observeOverlays.disconnect();
         this.observeOverlays.observe(
-          import_react_dom27.default.findDOMNode(this.refs.overlaidComponents),
+          import_react_dom28.default.findDOMNode(this.refs.overlaidComponents),
           MUTATION_CONFIG
         );
         this.observeAnchors.disconnect();
         this.observeAnchors.observe(
-          import_react_dom27.default.findDOMNode(this.refs.anchorContainer),
+          import_react_dom28.default.findDOMNode(this.refs.anchorContainer),
           MUTATION_CONFIG
         );
       }
@@ -276939,7 +276911,7 @@ var init_overlaid_components = __esm({
         }
       };
       _adjustNodes(ref, rects, dims) {
-        const root2 = import_react_dom27.default.findDOMNode(this.refs[ref]);
+        const root2 = import_react_dom28.default.findDOMNode(this.refs[ref]);
         for (const id of Object.keys(rects)) {
           const node = root2.querySelector(`[data-overlay-id=${id}]`);
           if (!node) {
@@ -276982,7 +276954,7 @@ var init_overlaid_components = __esm({
         if (this.state.previewMode) {
           msg = "Return to editor";
         }
-        return /* @__PURE__ */ import_react61.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
+        return /* @__PURE__ */ import_react62.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
       }
       _renderOverlaidComponents() {
         const els = [];
@@ -277006,7 +276978,7 @@ var init_overlaid_components = __esm({
           );
           previewToggleVisible = previewToggleVisible || supportsPreviewWithinEditor;
           els.push(
-            /* @__PURE__ */ import_react61.default.createElement(
+            /* @__PURE__ */ import_react62.default.createElement(
               "span",
               {
                 key: id,
@@ -277014,22 +276986,22 @@ var init_overlaid_components = __esm({
                 style,
                 "data-overlay-id": id
               },
-              import_react61.default.createElement(component, props)
+              import_react62.default.createElement(component, props)
             )
           );
         }
         const toggle = previewToggleVisible ? this._renderPreviewToggle() : false;
-        return /* @__PURE__ */ import_react61.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
+        return /* @__PURE__ */ import_react62.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
       }
       render() {
         const { className } = this.props;
-        return /* @__PURE__ */ import_react61.default.createElement(
+        return /* @__PURE__ */ import_react62.default.createElement(
           "div",
           {
             className: `overlaid-components-wrap ${className || ""}`,
             style: { position: "relative" }
           },
-          /* @__PURE__ */ import_react61.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
+          /* @__PURE__ */ import_react62.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
           this._renderOverlaidComponents()
         );
       }
@@ -277043,12 +277015,12 @@ var require_editor_api = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var _React = require_react();
-    var ExtendedSelection = require_extended_selection();
+    var ExtendedSelection2 = require_extended_selection();
     var OverlaidComponents2 = null;
-    var EditorAPI2 = class {
+    var EditorAPI3 = class {
       constructor(rootNode) {
         this.rootNode = rootNode;
-        this._extendedSelection = new ExtendedSelection(this.rootNode);
+        this._extendedSelection = new ExtendedSelection2(this.rootNode);
       }
       wrapSelection(nodeName) {
         const wrapped = DOMUtils5.wrap(
@@ -277294,7 +277266,7 @@ var require_editor_api = __commonJS({
         throw new Error("Not implemented");
       }
     };
-    module2.exports = EditorAPI2;
+    module2.exports = EditorAPI3;
   }
 });
 
@@ -278435,7 +278407,7 @@ __export(nylas_exports_exports, {
   DestroyModelTask: () => DestroyModelTask2,
   DraftHelpers: () => DraftHelpers2,
   DraftStore: () => DraftStore2,
-  EditorAPI: () => EditorAPI,
+  EditorAPI: () => EditorAPI2,
   Event: () => Event3,
   ExtensionRegistry: () => ExtensionRegistry2,
   FeatureUsageStore: () => FeatureUsageStore2,
@@ -278502,7 +278474,7 @@ __export(nylas_exports_exports, {
   WorkspaceStore: () => WorkspaceStore,
   default: () => nylas_exports_default
 });
-var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry2, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore3, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model12, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React43, ReactDOM21, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx10, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore;
+var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry2, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI2, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore3, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model12, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React43, ReactDOM21, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx10, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module26 = require("module");
@@ -279173,7 +279145,7 @@ var init_nylas_exports = __esm({
     DestroyModelTask2 = __lazy("DestroyModelTask");
     DraftHelpers2 = __lazy("DraftHelpers");
     DraftStore2 = __lazy("DraftStore");
-    EditorAPI = __lazy("EditorAPI");
+    EditorAPI2 = __lazy("EditorAPI");
     Event3 = __lazy("Event");
     ExtensionRegistry2 = __lazy("ExtensionRegistry");
     FeatureUsageStore2 = __lazy("FeatureUsageStore");
@@ -280092,11 +280064,11 @@ var sheet_exports = {};
 __export(sheet_exports, {
   default: () => sheet_default
 });
-var import_prop_types66, import_react62, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
+var import_prop_types67, import_react63, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
 var init_sheet = __esm({
   "src/sheet.jsx"() {
-    import_prop_types66 = __toESM(require_prop_types());
-    import_react62 = __toESM(require_react());
+    import_prop_types67 = __toESM(require_prop_types());
+    import_react63 = __toESM(require_react());
     init_index_all();
     init_nylas_exports();
     init_retina_img();
@@ -280104,17 +280076,17 @@ var init_sheet = __esm({
     import_injected_component_set2 = __toESM(require_injected_component_set());
     import_resizable_region = __toESM(require_resizable_region());
     FLEX = 1e4;
-    Sheet = class _Sheet extends import_react62.default.Component {
+    Sheet = class _Sheet extends import_react63.default.Component {
       static initClass() {
         _Sheet.displayName = "Sheet";
         _Sheet.propTypes = {
-          data: import_prop_types66.default.object.isRequired,
-          depth: import_prop_types66.default.number.isRequired,
-          onColumnSizeChanged: import_prop_types66.default.func
+          data: import_prop_types67.default.object.isRequired,
+          depth: import_prop_types67.default.number.isRequired,
+          onColumnSizeChanged: import_prop_types67.default.func
         };
         _Sheet.defaultProps = { onColumnSizeChanged() {
         } };
-        _Sheet.childContextTypes = { sheetDepth: import_prop_types66.default.number };
+        _Sheet.childContextTypes = { sheetDepth: import_prop_types67.default.number };
       }
       getChildContext() {
         return { sheetDepth: this.props.depth };
@@ -280170,7 +280142,7 @@ var init_sheet = __esm({
           height: "100%",
           zIndex: 1
         };
-        return import_react62.default.createElement(
+        return import_react63.default.createElement(
           "div",
           {
             name: "Sheet",
@@ -280178,7 +280150,7 @@ var init_sheet = __esm({
             className: `sheet mode-${this.state.mode}`,
             "data-id": this.props.data.id
           },
-          import_react62.default.createElement(
+          import_react63.default.createElement(
             Flexbox2,
             { direction: "row", style: { overflow: "hidden" } },
             this._columnFlexboxElements()
@@ -280189,7 +280161,7 @@ var init_sheet = __esm({
         return this.state.columns.map((column, idx) => {
           const { maxWidth, minWidth, handle, location: location2, width } = column;
           if (minWidth !== maxWidth && maxWidth < FLEX) {
-            return import_react62.default.createElement(
+            return import_react63.default.createElement(
               import_resizable_region.default,
               {
                 key: `${this.props.data.id}:${idx}`,
@@ -280203,7 +280175,7 @@ var init_sheet = __esm({
                 maxWidth,
                 handle
               },
-              import_react62.default.createElement(import_injected_component_set2.default, {
+              import_react63.default.createElement(import_injected_component_set2.default, {
                 direction: "column",
                 matching: { location: location2, mode: this.state.mode }
               })
@@ -280219,7 +280191,7 @@ var init_sheet = __esm({
             } else {
               style.flex = 1;
             }
-            return import_react62.default.createElement(import_injected_component_set2.default, {
+            return import_react63.default.createElement(import_injected_component_set2.default, {
               direction: "column",
               key: `${this.props.data.id}:${idx}`,
               name: `${this.props.data.id}:${idx}`,
@@ -280306,34 +280278,34 @@ var sheet_toolbar_exports = {};
 __export(sheet_toolbar_exports, {
   default: () => sheet_toolbar_default
 });
-function __guard__2(value, transform) {
+function __guard__3(value, transform) {
   return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
 }
-var import_prop_types67, import_react63, import_react_dom28, import_utils25, import_electron10, import_underscore93, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
+var import_prop_types68, import_react64, import_react_dom29, import_utils25, import_electron10, import_underscore94, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
 var init_sheet_toolbar = __esm({
   "src/sheet-toolbar.jsx"() {
-    import_prop_types67 = __toESM(require_prop_types());
-    import_react63 = __toESM(require_react());
-    import_react_dom28 = __toESM(require_react_dom());
+    import_prop_types68 = __toESM(require_prop_types());
+    import_react64 = __toESM(require_react());
+    import_react_dom29 = __toESM(require_react_dom());
     init_sheet();
     init_flexbox();
     init_retina_img();
     import_utils25 = __toESM(require_utils());
     import_electron10 = require("electron");
-    import_underscore93 = __toESM(require_underscore());
+    import_underscore94 = __toESM(require_underscore());
     init_index_all();
     init_nylas_exports();
-    ToolbarSpacer = class _ToolbarSpacer extends import_react63.default.Component {
+    ToolbarSpacer = class _ToolbarSpacer extends import_react64.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         super(...args);
       }
       static initClass() {
         _ToolbarSpacer.displayName = "ToolbarSpacer";
-        _ToolbarSpacer.propTypes = { order: import_prop_types67.default.number };
+        _ToolbarSpacer.propTypes = { order: import_prop_types68.default.number };
       }
       render() {
-        return import_react63.default.createElement("div", {
+        return import_react64.default.createElement("div", {
           className: "item-spacer",
           style: {
             flex: 1,
@@ -280343,7 +280315,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarSpacer.initClass();
-    WindowTitle = class _WindowTitle extends import_react63.default.Component {
+    WindowTitle = class _WindowTitle extends import_react64.default.Component {
       static initClass() {
         _WindowTitle.displayName = "WindowTitle";
       }
@@ -280360,7 +280332,7 @@ var init_sheet_toolbar = __esm({
         return typeof this.unlisten === "function" ? this.unlisten() : void 0;
       }
       render() {
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           { className: "window-title" },
           this.state.title
@@ -280370,7 +280342,7 @@ var init_sheet_toolbar = __esm({
     WindowTitle.initClass();
     Category4 = null;
     FocusedPerspectiveStore4 = null;
-    ToolbarBack = class _ToolbarBack extends import_react63.default.Component {
+    ToolbarBack = class _ToolbarBack extends import_react64.default.Component {
       static initClass() {
         _ToolbarBack.displayName = "ToolbarBack";
       }
@@ -280407,22 +280379,22 @@ var init_sheet_toolbar = __esm({
         if (this.state.categoryName === Category4.AllMailName) {
           title = "All Mail";
         } else if (this.state.categoryName) {
-          title = import_underscore93.default.titleize(this.state.categoryName);
+          title = import_underscore94.default.titleize(this.state.categoryName);
         } else {
           title = "Back";
         }
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           {
             className: "item-back",
             onClick: this._onClick,
             title: `Return to ${title}`
           },
-          import_react63.default.createElement(retina_img_default, {
+          import_react64.default.createElement(retina_img_default, {
             name: "sheet-back.png",
             mode: retina_img_default.Mode.ContentIsMask
           }),
-          import_react63.default.createElement("div", { className: "item-back-title" }, title)
+          import_react64.default.createElement("div", { className: "item-back-title" }, title)
         );
       }
       _onClick() {
@@ -280430,7 +280402,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarBack.initClass();
-    ToolbarWindowControls = class _ToolbarWindowControls extends import_react63.default.Component {
+    ToolbarWindowControls = class _ToolbarWindowControls extends import_react64.default.Component {
       static initClass() {
         _ToolbarWindowControls.displayName = "ToolbarWindowControls";
       }
@@ -280456,27 +280428,27 @@ var init_sheet_toolbar = __esm({
         }
       }
       render() {
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           {
             name: "ToolbarWindowControls",
             className: `toolbar-window-controls alt-${this.state.alt}`
           },
-          import_react63.default.createElement("button", {
+          import_react64.default.createElement("button", {
             tabIndex: -1,
             className: "close",
             onClick() {
               return NylasEnv.close();
             }
           }),
-          import_react63.default.createElement("button", {
+          import_react64.default.createElement("button", {
             tabIndex: -1,
             className: "minimize",
             onClick() {
               return NylasEnv.minimize();
             }
           }),
-          import_react63.default.createElement("button", {
+          import_react64.default.createElement("button", {
             tabIndex: -1,
             className: "maximize",
             onClick: this._onMaximize
@@ -280497,7 +280469,7 @@ var init_sheet_toolbar = __esm({
       }
     };
     ToolbarWindowControls.initClass();
-    ToolbarMenuControl = class _ToolbarMenuControl extends import_react63.default.Component {
+    ToolbarMenuControl = class _ToolbarMenuControl extends import_react64.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         this._openMenu = this._openMenu.bind(this);
@@ -280507,13 +280479,13 @@ var init_sheet_toolbar = __esm({
         _ToolbarMenuControl.displayName = "ToolbarMenuControl";
       }
       render() {
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           { className: "toolbar-menu-control" },
-          import_react63.default.createElement(
+          import_react64.default.createElement(
             "button",
             { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
-            import_react63.default.createElement(retina_img_default, {
+            import_react64.default.createElement(retina_img_default, {
               name: "windows-menu-icon.png",
               mode: retina_img_default.Mode.ContentIsMask
             })
@@ -280532,14 +280504,14 @@ var init_sheet_toolbar = __esm({
     ComponentRegistry2.register(ToolbarMenuControl, {
       location: WorkspaceStore.Sheet.Global.Toolbar.Right
     });
-    Toolbar = class _Toolbar extends import_react63.default.Component {
+    Toolbar = class _Toolbar extends import_react64.default.Component {
       static initClass() {
         _Toolbar.displayName = "Toolbar";
         _Toolbar.propTypes = {
-          data: import_prop_types67.default.object,
-          depth: import_prop_types67.default.number
+          data: import_prop_types68.default.object,
+          depth: import_prop_types68.default.number
         };
-        _Toolbar.childContextTypes = { sheetDepth: import_prop_types67.default.number };
+        _Toolbar.childContextTypes = { sheetDepth: import_prop_types68.default.number };
       }
       getChildContext() {
         return { sheetDepth: this.props.depth };
@@ -280597,7 +280569,7 @@ var init_sheet_toolbar = __esm({
           zIndex: 1
         };
         const toolbars = this.state.columns.map((components, idx) => {
-          return import_react63.default.createElement(
+          return import_react64.default.createElement(
             "div",
             {
               style: { position: "absolute", top: 0, display: "none" },
@@ -280608,7 +280580,7 @@ var init_sheet_toolbar = __esm({
             this._flexboxForComponents(components)
           );
         });
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           "div",
           {
             style,
@@ -280620,24 +280592,24 @@ var init_sheet_toolbar = __esm({
       }
       _flexboxForComponents(components) {
         const elements = components.map((Component20) => {
-          return import_react63.default.createElement(
+          return import_react64.default.createElement(
             Component20,
             Object.assign({ key: Component20.displayName }, this.props)
           );
         });
-        return import_react63.default.createElement(
+        return import_react64.default.createElement(
           Flexbox2,
           { className: "item-container", direction: "row" },
           elements,
-          import_react63.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
-          import_react63.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
+          import_react64.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
+          import_react64.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
         );
       }
       recomputeLayout() {
         if (!this.mounted) {
           return;
         }
-        const el = import_react_dom28.default.findDOMNode(this);
+        const el = import_react_dom29.default.findDOMNode(this);
         const columnToolbarEls = el.querySelectorAll("[data-column]");
         const sheet = document.querySelectorAll("[name='Sheet']")[this.props.depth];
         if (!sheet) {
@@ -280702,7 +280674,7 @@ var init_sheet_toolbar = __esm({
             location: loc.Toolbar.Right,
             mode: state.mode
           });
-          __guard__2(
+          __guard__3(
             state.columns[state.columns.length - 1],
             (x3) => x3.push(...Array.from(entries2 || []))
           );
@@ -280723,7 +280695,7 @@ var init_sheet_toolbar = __esm({
 // src/sheet-container.jsx
 var require_sheet_container = __commonJS({
   "src/sheet-container.jsx"(exports2, module2) {
-    var React54 = require_react();
+    var React55 = require_react();
     var ReactCSSTransitionGroup2 = (init_css_transition_group_compat(), __toCommonJS(css_transition_group_compat_exports));
     var Sheet2 = (init_sheet(), __toCommonJS(sheet_exports));
     var Toolbar2 = (init_sheet_toolbar(), __toCommonJS(sheet_toolbar_exports));
@@ -280734,7 +280706,7 @@ var require_sheet_container = __commonJS({
     var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var SheetContainer2 = (() => {
       let _displayName;
-      SheetContainer2 = class SheetContainer extends React54.Component {
+      SheetContainer2 = class SheetContainer extends React55.Component {
         static initClass() {
           _displayName = "SheetContainer";
         }
@@ -280763,10 +280735,10 @@ var require_sheet_container = __commonJS({
           const totalSheets = this.state.stack.length;
           const topSheet = this.state.stack[totalSheets - 1];
           if (!topSheet) {
-            return React54.createElement("div", null);
+            return React55.createElement("div", null);
           }
           const sheetElements = this._sheetElements();
-          return React54.createElement(
+          return React55.createElement(
             Flexbox3,
             {
               direction: "column",
@@ -280774,10 +280746,10 @@ var require_sheet_container = __commonJS({
               style: { overflow: "hidden" }
             },
             this._toolbarContainerElement(),
-            React54.createElement(
+            React55.createElement(
               "div",
               { name: "Header", style: { order: 1, zIndex: 2 } },
-              React54.createElement(InjectedComponentSet5, {
+              React55.createElement(InjectedComponentSet5, {
                 matching: {
                   locations: [topSheet.Header, WorkspaceStore6.Sheet.Global.Header]
                 },
@@ -280785,14 +280757,14 @@ var require_sheet_container = __commonJS({
                 id: topSheet.id
               })
             ),
-            React54.createElement(
+            React55.createElement(
               "div",
               {
                 name: "Center",
                 style: { order: 2, flex: 1, position: "relative", zIndex: 1 }
               },
               sheetElements[0],
-              React54.createElement(
+              React55.createElement(
                 ReactCSSTransitionGroup2,
                 {
                   transitionLeaveTimeout: 125,
@@ -280802,10 +280774,10 @@ var require_sheet_container = __commonJS({
                 sheetElements.slice(1)
               )
             ),
-            React54.createElement(
+            React55.createElement(
               "div",
               { name: "Footer", style: { order: 3, zIndex: 4 } },
-              React54.createElement(InjectedComponentSet5, {
+              React55.createElement(InjectedComponentSet5, {
                 matching: {
                   locations: [topSheet.Footer, WorkspaceStore6.Sheet.Global.Footer]
                 },
@@ -280821,7 +280793,7 @@ var require_sheet_container = __commonJS({
             return [];
           }
           const toolbarElements = this._toolbarElements();
-          return React54.createElement(
+          return React55.createElement(
             "div",
             {
               name: "Toolbar",
@@ -280829,7 +280801,7 @@ var require_sheet_container = __commonJS({
               className: "sheet-toolbar"
             },
             toolbarElements[0],
-            React54.createElement(
+            React55.createElement(
               ReactCSSTransitionGroup2,
               {
                 transitionLeaveTimeout: 125,
@@ -280842,7 +280814,7 @@ var require_sheet_container = __commonJS({
         }
         _toolbarElements() {
           return this.state.stack.map(
-            (sheet, index) => React54.createElement(Toolbar2, {
+            (sheet, index) => React55.createElement(Toolbar2, {
               data: sheet,
               ref: `toolbar-${index}`,
               key: `${index}:${sheet.id}:toolbar`,
@@ -280852,7 +280824,7 @@ var require_sheet_container = __commonJS({
         }
         _sheetElements() {
           return this.state.stack.map((sheet, index) => {
-            return React54.createElement(Sheet2, {
+            return React55.createElement(Sheet2, {
               data: sheet,
               depth: index,
               key: `${index}:${sheet.id}`,
@@ -281269,8 +281241,8 @@ var theme_manager_default = ThemeManager;
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
 var import_workspace_store4 = __toESM(require_workspace_store());
-var import_react64 = __toESM(require_react());
-var import_react_dom29 = __toESM(require_react_dom());
+var import_react65 = __toESM(require_react());
+var import_react_dom30 = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
 init_nylas_exports();
 init_nylas_component_kit();
@@ -282226,7 +282198,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.item.setAttribute("id", "sheet-container");
     this.item.setAttribute("class", "sheet-container");
     this.item.setAttribute("tabIndex", "-1");
-    import_react_dom29.default.render(import_react64.default.createElement(import_sheet_container.default), this.item);
+    import_react_dom30.default.render(import_react65.default.createElement(import_sheet_container.default), this.item);
     return document.querySelector(this.workspaceViewParentSelector).appendChild(this.item);
   }
   deserializePackageStates() {
