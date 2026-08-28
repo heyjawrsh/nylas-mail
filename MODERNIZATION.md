@@ -641,3 +641,14 @@ Deepen-existing-file round: a second spec file per already-specced module
 +22) proved the most reliable worker pattern — every family delivered.
 Cumulative: **0.32% → 42.39%**, 11 → 2,648 tests, nineteen swarm rounds.
 ~17.6 points (~4,080 lines) remain.
+
+
+## Loop 35 — Coverage round 20: flux deep sweep (commit 5dbf5686d)
+
+client-app: 42.39% → **44.17% lines** (2,801 tests, 145/145 files green).
+**+1.78 points** — the deepen-existing pattern delivered every family
+again: api-helpers, file-upload-store (both previously 0%), draft-store,
+message-store, query-subscription, tokenizing keyboard/drop.
+
+Cumulative: **0.32% → 44.17%**, 11 → 2,801 tests, twenty swarm rounds.
+~15.8 points (~3,660 lines) remain to the 60% gate.
