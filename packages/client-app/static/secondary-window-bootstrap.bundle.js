@@ -70,10 +70,10 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __glob = (map2) => (path14) => {
-  var fn2 = map2[path14];
+var __glob = (map2) => (path15) => {
+  var fn2 = map2[path15];
   if (fn2) return fn2();
-  throw new Error("Module not found in bundle: " + path14);
+  throw new Error("Module not found in bundle: " + path15);
 };
 var __esm = (fn2, res, err) => function __init() {
   if (err) throw err[0];
@@ -1014,8 +1014,8 @@ var init_tap = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/toPath.js
-function toPath(path14) {
-  return isArray_default(path14) ? path14 : [path14];
+function toPath(path15) {
+  return isArray_default(path15) ? path15 : [path15];
 }
 var init_toPath = __esm({
   "../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/toPath.js"() {
@@ -1026,8 +1026,8 @@ var init_toPath = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/_toPath.js
-function toPath2(path14) {
-  return _.toPath(path14);
+function toPath2(path15) {
+  return _.toPath(path15);
 }
 var init_toPath2 = __esm({
   "../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/_toPath.js"() {
@@ -1037,11 +1037,11 @@ var init_toPath2 = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/_deepGet.js
-function deepGet(obj2, path14) {
-  var length = path14.length;
+function deepGet(obj2, path15) {
+  var length = path15.length;
   for (var i = 0; i < length; i++) {
     if (obj2 == null) return void 0;
-    obj2 = obj2[path14[i]];
+    obj2 = obj2[path15[i]];
   }
   return length ? obj2 : void 0;
 }
@@ -1051,8 +1051,8 @@ var init_deepGet = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/get.js
-function get(object2, path14, defaultValue) {
-  var value = deepGet(object2, toPath2(path14));
+function get(object2, path15, defaultValue) {
+  var value = deepGet(object2, toPath2(path15));
   return isUndefined(value) ? defaultValue : value;
 }
 var init_get = __esm({
@@ -1064,11 +1064,11 @@ var init_get = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/has.js
-function has2(obj2, path14) {
-  path14 = toPath2(path14);
-  var length = path14.length;
+function has2(obj2, path15) {
+  path15 = toPath2(path15);
+  var length = path15.length;
   for (var i = 0; i < length; i++) {
-    var key = path14[i];
+    var key = path15[i];
     if (!has(obj2, key)) return false;
     obj2 = obj2[key];
   }
@@ -1105,10 +1105,10 @@ var init_matcher = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/property.js
-function property(path14) {
-  path14 = toPath2(path14);
+function property(path15) {
+  path15 = toPath2(path15);
   return function(obj2) {
-    return deepGet(obj2, path14);
+    return deepGet(obj2, path15);
   };
 }
 var init_property = __esm({
@@ -1217,8 +1217,8 @@ var init_noop = __esm({
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/propertyOf.js
 function propertyOf(obj2) {
   if (obj2 == null) return noop;
-  return function(path14) {
-    return get(obj2, path14);
+  return function(path15) {
+    return get(obj2, path15);
   };
 }
 var init_propertyOf = __esm({
@@ -1412,14 +1412,14 @@ var init_template = __esm({
 });
 
 // ../../node_modules/.pnpm/underscore@1.13.8/node_modules/underscore/modules/result.js
-function result(obj2, path14, fallback) {
-  path14 = toPath2(path14);
-  var length = path14.length;
+function result(obj2, path15, fallback) {
+  path15 = toPath2(path15);
+  var length = path15.length;
   if (!length) {
     return isFunction_default(fallback) ? fallback.call(obj2) : fallback;
   }
   for (var i = 0; i < length; i++) {
-    var prop = obj2 == null ? void 0 : obj2[path14[i]];
+    var prop = obj2 == null ? void 0 : obj2[path15[i]];
     if (prop === void 0) {
       prop = fallback;
       i = length;
@@ -2102,14 +2102,14 @@ var init_invoke = __esm({
     init_map();
     init_deepGet();
     init_toPath2();
-    invoke_default = restArguments(function(obj2, path14, args) {
+    invoke_default = restArguments(function(obj2, path15, args) {
       var contextPath, func;
-      if (isFunction_default(path14)) {
-        func = path14;
+      if (isFunction_default(path15)) {
+        func = path15;
       } else {
-        path14 = toPath2(path14);
-        contextPath = path14.slice(0, -1);
-        path14 = path14[path14.length - 1];
+        path15 = toPath2(path15);
+        contextPath = path15.slice(0, -1);
+        path15 = path15[path15.length - 1];
       }
       return map(obj2, function(context) {
         var method = func;
@@ -2118,7 +2118,7 @@ var init_invoke = __esm({
             context = deepGet(context, contextPath);
           }
           if (context == null) return void 0;
-          method = context[path14];
+          method = context[path15];
         }
         return method == null ? method : method.apply(context, args);
       });
@@ -3231,7 +3231,7 @@ var require_disposable = __commonJS({
       return Constructor;
     }
     module2.exports = /* @__PURE__ */ (() => {
-      _createClass(Disposable, null, [
+      _createClass(Disposable2, null, [
         {
           key: "isDisposable",
           // Public: Ensure that `object` correctly implements the `Disposable`
@@ -3252,12 +3252,12 @@ var require_disposable = __commonJS({
           //   first time.
         }
       ]);
-      function Disposable(disposalAction) {
-        _classCallCheck(this, Disposable);
+      function Disposable2(disposalAction) {
+        _classCallCheck(this, Disposable2);
         this.disposed = false;
         this.disposalAction = disposalAction;
       }
-      _createClass(Disposable, [
+      _createClass(Disposable2, [
         {
           key: "dispose",
           value: function dispose() {
@@ -3271,7 +3271,7 @@ var require_disposable = __commonJS({
           }
         }
       ]);
-      return Disposable;
+      return Disposable2;
     })();
   }
 });
@@ -3298,10 +3298,10 @@ var require_composite_disposable = __commonJS({
       if (staticProps) _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-    var Disposable;
+    var Disposable2;
     module2.exports = /* @__PURE__ */ (() => {
-      function CompositeDisposable() {
-        _classCallCheck(this, CompositeDisposable);
+      function CompositeDisposable2() {
+        _classCallCheck(this, CompositeDisposable2);
         this.disposed = false;
         this.disposables = /* @__PURE__ */ new Set();
         var _iteratorNormalCompletion = true;
@@ -3327,7 +3327,7 @@ var require_composite_disposable = __commonJS({
           }
         }
       }
-      _createClass(CompositeDisposable, [
+      _createClass(CompositeDisposable2, [
         {
           key: "dispose",
           value: function dispose() {
@@ -3407,13 +3407,13 @@ var require_composite_disposable = __commonJS({
           }
         }
       ]);
-      return CompositeDisposable;
+      return CompositeDisposable2;
     })();
     function assertDisposable(disposable) {
-      if (Disposable == null) {
-        Disposable = require_disposable();
+      if (Disposable2 == null) {
+        Disposable2 = require_disposable();
       }
-      if (!Disposable.isDisposable(disposable)) {
+      if (!Disposable2.isDisposable(disposable)) {
         throw new TypeError(
           "Arguments to CompositeDisposable.add must have a .dispose() method"
         );
@@ -3444,10 +3444,10 @@ var require_emitter = __commonJS({
       if (staticProps) _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-    var Disposable = require_disposable();
-    var CompositeDisposable = require_composite_disposable();
-    var Emitter3 = /* @__PURE__ */ (() => {
-      _createClass(Emitter4, null, [
+    var Disposable2 = require_disposable();
+    var CompositeDisposable2 = require_composite_disposable();
+    var Emitter5 = /* @__PURE__ */ (() => {
+      _createClass(Emitter6, null, [
         {
           key: "onEventHandlerException",
           value: function onEventHandlerException(exceptionHandler) {
@@ -3455,7 +3455,7 @@ var require_emitter = __commonJS({
               this.dispatch = this.exceptionHandlingDispatch;
             }
             this.exceptionHandlers.push(exceptionHandler);
-            return new Disposable(() => {
+            return new Disposable2(() => {
               this.exceptionHandlers.splice(
                 this.exceptionHandlers.indexOf(exceptionHandler),
                 1
@@ -3493,19 +3493,19 @@ var require_emitter = __commonJS({
           // ```
         }
       ]);
-      function Emitter4() {
-        _classCallCheck(this, Emitter4);
+      function Emitter6() {
+        _classCallCheck(this, Emitter6);
         this.disposed = false;
         this.clear();
       }
-      _createClass(Emitter4, [
+      _createClass(Emitter6, [
         {
           key: "clear",
           value: function clear() {
             if (this.subscriptions != null) {
               this.subscriptions.dispose();
             }
-            this.subscriptions = new CompositeDisposable();
+            this.subscriptions = new CompositeDisposable2();
             this.handlersByEventName = {};
           }
           // Public: Unsubscribe all handlers.
@@ -3552,7 +3552,7 @@ var require_emitter = __commonJS({
             } else {
               this.handlersByEventName[eventName] = [handler];
             }
-            var cleanup = new Disposable(() => {
+            var cleanup = new Disposable2(() => {
               this.subscriptions.remove(cleanup);
               return this.off(eventName, handler);
             });
@@ -3685,11 +3685,11 @@ var require_emitter = __commonJS({
           }
         }
       ]);
-      return Emitter4;
+      return Emitter6;
     })();
-    Emitter3.dispatch = Emitter3.simpleDispatch;
-    Emitter3.exceptionHandlers = [];
-    module2.exports = Emitter3;
+    Emitter5.dispatch = Emitter5.simpleDispatch;
+    Emitter5.exceptionHandlers = [];
+    module2.exports = Emitter5;
   }
 });
 
@@ -5268,8 +5268,8 @@ var require_async = __commonJS({
 // ../../node_modules/.pnpm/mkdirp@0.5.6/node_modules/mkdirp/index.js
 var require_mkdirp = __commonJS({
   "../../node_modules/.pnpm/mkdirp@0.5.6/node_modules/mkdirp/index.js"(exports2, module2) {
-    var path14 = require("path");
-    var fs11 = require("fs");
+    var path15 = require("path");
+    var fs12 = require("fs");
     var _0777 = parseInt("0777", 8);
     module2.exports = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
     function mkdirP(p, opts, f, made) {
@@ -5280,7 +5280,7 @@ var require_mkdirp = __commonJS({
         opts = { mode: opts };
       }
       var mode = opts.mode;
-      var xfs = opts.fs || fs11;
+      var xfs = opts.fs || fs12;
       if (mode === void 0) {
         mode = _0777;
       }
@@ -5288,7 +5288,7 @@ var require_mkdirp = __commonJS({
       var cb3 = f || /* istanbul ignore next */
       function() {
       };
-      p = path14.resolve(p);
+      p = path15.resolve(p);
       xfs.mkdir(p, mode, function(er) {
         if (!er) {
           made = made || p;
@@ -5296,8 +5296,8 @@ var require_mkdirp = __commonJS({
         }
         switch (er.code) {
           case "ENOENT":
-            if (path14.dirname(p) === p) return cb3(er);
-            mkdirP(path14.dirname(p), opts, function(er2, made2) {
+            if (path15.dirname(p) === p) return cb3(er);
+            mkdirP(path15.dirname(p), opts, function(er2, made2) {
               if (er2) cb3(er2, made2);
               else mkdirP(p, opts, cb3, made2);
             });
@@ -5319,19 +5319,19 @@ var require_mkdirp = __commonJS({
         opts = { mode: opts };
       }
       var mode = opts.mode;
-      var xfs = opts.fs || fs11;
+      var xfs = opts.fs || fs12;
       if (mode === void 0) {
         mode = _0777;
       }
       if (!made) made = null;
-      p = path14.resolve(p);
+      p = path15.resolve(p);
       try {
         xfs.mkdirSync(p, mode);
         made = made || p;
       } catch (err0) {
         switch (err0.code) {
           case "ENOENT":
-            made = sync(path14.dirname(p), opts, made);
+            made = sync(path15.dirname(p), opts, made);
             sync(p, opts, made);
             break;
           // In the case of any other error, just see if there's a dir
@@ -5358,7 +5358,7 @@ var require_old = __commonJS({
   "../../node_modules/.pnpm/fs.realpath@1.0.0/node_modules/fs.realpath/old.js"(exports2) {
     var pathModule = require("path");
     var isWindows = process.platform === "win32";
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var DEBUG = process.env.NODE_DEBUG && /fs/.test(process.env.NODE_DEBUG);
     function rethrow() {
       var callback;
@@ -5423,7 +5423,7 @@ var require_old = __commonJS({
         base = m[0];
         previous = "";
         if (isWindows && !knownHard[base]) {
-          fs11.lstatSync(base);
+          fs12.lstatSync(base);
           knownHard[base] = true;
         }
       }
@@ -5441,7 +5441,7 @@ var require_old = __commonJS({
         if (cache && Object.prototype.hasOwnProperty.call(cache, base)) {
           resolvedLink = cache[base];
         } else {
-          var stat3 = fs11.lstatSync(base);
+          var stat3 = fs12.lstatSync(base);
           if (!stat3.isSymbolicLink()) {
             knownHard[base] = true;
             if (cache) cache[base] = base;
@@ -5455,8 +5455,8 @@ var require_old = __commonJS({
             }
           }
           if (linkTarget === null) {
-            fs11.statSync(base);
-            linkTarget = fs11.readlinkSync(base);
+            fs12.statSync(base);
+            linkTarget = fs12.readlinkSync(base);
           }
           resolvedLink = pathModule.resolve(previous, linkTarget);
           if (cache) cache[base] = resolvedLink;
@@ -5490,7 +5490,7 @@ var require_old = __commonJS({
         base = m[0];
         previous = "";
         if (isWindows && !knownHard[base]) {
-          fs11.lstat(base, function(err) {
+          fs12.lstat(base, function(err) {
             if (err) return cb3(err);
             knownHard[base] = true;
             LOOP();
@@ -5516,7 +5516,7 @@ var require_old = __commonJS({
         if (cache && Object.prototype.hasOwnProperty.call(cache, base)) {
           return gotResolvedLink(cache[base]);
         }
-        return fs11.lstat(base, gotStat);
+        return fs12.lstat(base, gotStat);
       }
       function gotStat(err, stat3) {
         if (err) return cb3(err);
@@ -5531,9 +5531,9 @@ var require_old = __commonJS({
             return gotTarget(null, seenLinks[id], base);
           }
         }
-        fs11.stat(base, function(err2) {
+        fs12.stat(base, function(err2) {
           if (err2) return cb3(err2);
-          fs11.readlink(base, function(err3, target) {
+          fs12.readlink(base, function(err3, target) {
             if (!isWindows) seenLinks[id] = target;
             gotTarget(err3, target);
           });
@@ -5562,9 +5562,9 @@ var require_fs = __commonJS({
     realpath.realpathSync = realpathSync;
     realpath.monkeypatch = monkeypatch;
     realpath.unmonkeypatch = unmonkeypatch;
-    var fs11 = require("fs");
-    var origRealpath = fs11.realpath;
-    var origRealpathSync = fs11.realpathSync;
+    var fs12 = require("fs");
+    var origRealpath = fs12.realpath;
+    var origRealpathSync = fs12.realpathSync;
     var version3 = process.version;
     var ok = /^v[0-5]\./.test(version3);
     var old = require_old();
@@ -5602,12 +5602,12 @@ var require_fs = __commonJS({
       }
     }
     function monkeypatch() {
-      fs11.realpath = realpath;
-      fs11.realpathSync = realpathSync;
+      fs12.realpath = realpath;
+      fs12.realpathSync = realpathSync;
     }
     function unmonkeypatch() {
-      fs11.realpath = origRealpath;
-      fs11.realpathSync = origRealpathSync;
+      fs12.realpath = origRealpath;
+      fs12.realpathSync = origRealpathSync;
     }
   }
 });
@@ -5931,7 +5931,7 @@ var require_minimatch = __commonJS({
   "../../node_modules/.pnpm/minimatch@3.1.5/node_modules/minimatch/minimatch.js"(exports2, module2) {
     module2.exports = minimatch;
     minimatch.Minimatch = Minimatch;
-    var path14 = (function() {
+    var path15 = (function() {
       try {
         return require("path");
       } catch (e) {
@@ -5939,7 +5939,7 @@ var require_minimatch = __commonJS({
     })() || {
       sep: "/"
     };
-    minimatch.sep = path14.sep;
+    minimatch.sep = path15.sep;
     var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {};
     var expand = require_brace_expansion();
     var plTypes = {
@@ -6028,8 +6028,8 @@ var require_minimatch = __commonJS({
       assertValidPattern(pattern);
       if (!options2) options2 = {};
       pattern = pattern.trim();
-      if (!options2.allowWindowsEscape && path14.sep !== "/") {
-        pattern = pattern.split(path14.sep).join("/");
+      if (!options2.allowWindowsEscape && path15.sep !== "/") {
+        pattern = pattern.split(path15.sep).join("/");
       }
       this.options = options2;
       this.maxGlobstarRecursion = options2.maxGlobstarRecursion !== void 0 ? options2.maxGlobstarRecursion : 200;
@@ -6400,8 +6400,8 @@ var require_minimatch = __commonJS({
       if (this.empty) return f === "";
       if (f === "/" && partial2) return true;
       var options2 = this.options;
-      if (path14.sep !== "/") {
-        f = f.split(path14.sep).join("/");
+      if (path15.sep !== "/") {
+        f = f.split(path15.sep).join("/");
       }
       f = f.split(slashSplit);
       this.debug(this.pattern, "split", f);
@@ -6648,12 +6648,12 @@ var require_inherits = __commonJS({
 var require_path_is_absolute = __commonJS({
   "../../node_modules/.pnpm/path-is-absolute@1.0.1/node_modules/path-is-absolute/index.js"(exports2, module2) {
     "use strict";
-    function posix2(path14) {
-      return path14.charAt(0) === "/";
+    function posix2(path15) {
+      return path15.charAt(0) === "/";
     }
-    function win32(path14) {
+    function win32(path15) {
       var splitDeviceRe = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/;
-      var result2 = splitDeviceRe.exec(path14);
+      var result2 = splitDeviceRe.exec(path15);
       var device = result2[1] || "";
       var isUnc = Boolean(device && device.charAt(1) !== ":");
       return Boolean(result2[2] || isUnc);
@@ -6677,8 +6677,8 @@ var require_common = __commonJS({
     function ownProp(obj2, field) {
       return Object.prototype.hasOwnProperty.call(obj2, field);
     }
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var minimatch = require_minimatch();
     var isAbsolute = require_path_is_absolute();
     var Minimatch = minimatch.Minimatch;
@@ -6732,7 +6732,7 @@ var require_common = __commonJS({
       self2.stat = !!options2.stat;
       self2.noprocess = !!options2.noprocess;
       self2.absolute = !!options2.absolute;
-      self2.fs = options2.fs || fs11;
+      self2.fs = options2.fs || fs12;
       self2.maxLength = options2.maxLength || Infinity;
       self2.cache = options2.cache || /* @__PURE__ */ Object.create(null);
       self2.statCache = options2.statCache || /* @__PURE__ */ Object.create(null);
@@ -6743,11 +6743,11 @@ var require_common = __commonJS({
       if (!ownProp(options2, "cwd"))
         self2.cwd = cwd;
       else {
-        self2.cwd = path14.resolve(options2.cwd);
+        self2.cwd = path15.resolve(options2.cwd);
         self2.changedCwd = self2.cwd !== cwd;
       }
-      self2.root = options2.root || path14.resolve(self2.cwd, "/");
-      self2.root = path14.resolve(self2.root);
+      self2.root = options2.root || path15.resolve(self2.cwd, "/");
+      self2.root = path15.resolve(self2.root);
       if (process.platform === "win32")
         self2.root = self2.root.replace(/\\/g, "/");
       self2.cwdAbs = isAbsolute(self2.cwd) ? self2.cwd : makeAbs(self2, self2.cwd);
@@ -6829,30 +6829,30 @@ var require_common = __commonJS({
     function makeAbs(self2, f) {
       var abs = f;
       if (f.charAt(0) === "/") {
-        abs = path14.join(self2.root, f);
+        abs = path15.join(self2.root, f);
       } else if (isAbsolute(f) || f === "") {
         abs = f;
       } else if (self2.changedCwd) {
-        abs = path14.resolve(self2.cwd, f);
+        abs = path15.resolve(self2.cwd, f);
       } else {
-        abs = path14.resolve(f);
+        abs = path15.resolve(f);
       }
       if (process.platform === "win32")
         abs = abs.replace(/\\/g, "/");
       return abs;
     }
-    function isIgnored(self2, path15) {
+    function isIgnored(self2, path16) {
       if (!self2.ignore.length)
         return false;
       return self2.ignore.some(function(item) {
-        return item.matcher.match(path15) || !!(item.gmatcher && item.gmatcher.match(path15));
+        return item.matcher.match(path16) || !!(item.gmatcher && item.gmatcher.match(path16));
       });
     }
-    function childrenIgnored(self2, path15) {
+    function childrenIgnored(self2, path16) {
       if (!self2.ignore.length)
         return false;
       return self2.ignore.some(function(item) {
-        return !!(item.gmatcher && item.gmatcher.match(path15));
+        return !!(item.gmatcher && item.gmatcher.match(path16));
       });
     }
   }
@@ -6868,7 +6868,7 @@ var require_sync = __commonJS({
     var Minimatch = minimatch.Minimatch;
     var Glob = require_glob().Glob;
     var util = require("util");
-    var path14 = require("path");
+    var path15 = require("path");
     var assert2 = require("assert");
     var isAbsolute = require_path_is_absolute();
     var common = require_common();
@@ -6997,7 +6997,7 @@ var require_sync = __commonJS({
               e = prefix + e;
           }
           if (e.charAt(0) === "/" && !this.nomount) {
-            e = path14.join(this.root, e);
+            e = path15.join(this.root, e);
           }
           this._emitMatch(index, e);
         }
@@ -7148,9 +7148,9 @@ var require_sync = __commonJS({
       if (prefix && isAbsolute(prefix) && !this.nomount) {
         var trail = /[\/\\]$/.test(prefix);
         if (prefix.charAt(0) === "/") {
-          prefix = path14.join(this.root, prefix);
+          prefix = path15.join(this.root, prefix);
         } else {
-          prefix = path14.resolve(this.root, prefix);
+          prefix = path15.resolve(this.root, prefix);
           if (trail)
             prefix += "/";
         }
@@ -7342,7 +7342,7 @@ var require_glob = __commonJS({
     var Minimatch = minimatch.Minimatch;
     var inherits2 = require_inherits();
     var EE = require("events").EventEmitter;
-    var path14 = require("path");
+    var path15 = require("path");
     var assert2 = require("assert");
     var isAbsolute = require_path_is_absolute();
     var globSync = require_sync();
@@ -7624,7 +7624,7 @@ var require_glob = __commonJS({
               e = prefix + e;
           }
           if (e.charAt(0) === "/" && !this.nomount) {
-            e = path14.join(this.root, e);
+            e = path15.join(this.root, e);
           }
           this._emitMatch(index, e);
         }
@@ -7813,9 +7813,9 @@ var require_glob = __commonJS({
       if (prefix && isAbsolute(prefix) && !this.nomount) {
         var trail = /[\/\\]$/.test(prefix);
         if (prefix.charAt(0) === "/") {
-          prefix = path14.join(this.root, prefix);
+          prefix = path15.join(this.root, prefix);
         } else {
-          prefix = path14.resolve(this.root, prefix);
+          prefix = path15.resolve(this.root, prefix);
           if (trail)
             prefix += "/";
         }
@@ -7895,8 +7895,8 @@ var require_rimraf = __commonJS({
     module2.exports = rimraf2;
     rimraf2.sync = rimrafSync2;
     var assert2 = require("assert");
-    var path14 = require("path");
-    var fs11 = require("fs");
+    var path15 = require("path");
+    var fs12 = require("fs");
     var glob = void 0;
     try {
       glob = require_glob();
@@ -7919,9 +7919,9 @@ var require_rimraf = __commonJS({
         "readdir"
       ];
       methods.forEach(function(m) {
-        options2[m] = options2[m] || fs11[m];
+        options2[m] = options2[m] || fs12[m];
         m = m + "Sync";
-        options2[m] = options2[m] || fs11[m];
+        options2[m] = options2[m] || fs12[m];
       });
       options2.maxBusyTries = options2.maxBusyTries || 3;
       options2.emfileWait = options2.emfileWait || 1e3;
@@ -8086,7 +8086,7 @@ var require_rimraf = __commonJS({
           return options2.rmdir(p, cb3);
         var errState;
         files.forEach(function(f) {
-          rimraf2(path14.join(p, f), options2, function(er2) {
+          rimraf2(path15.join(p, f), options2, function(er2) {
             if (errState)
               return;
             if (er2)
@@ -8163,7 +8163,7 @@ var require_rimraf = __commonJS({
       assert2(p);
       assert2(options2);
       options2.readdirSync(p).forEach(function(f) {
-        rimrafSync2(path14.join(p, f), options2);
+        rimrafSync2(path15.join(p, f), options2);
       });
       var retries = isWindows ? 100 : 1;
       var i = 0;
@@ -8186,10 +8186,10 @@ var require_rimraf = __commonJS({
 var require_fs_plus = __commonJS({
   "../../node_modules/.pnpm/fs-plus@file+packages+client-app+src+vendor+fs-plus/node_modules/fs-plus/lib/fs-plus.js"(exports2, module2) {
     (() => {
-      var BINARY_EXTENSIONS, COMPRESSED_EXTENSIONS, IMAGE_EXTENSIONS, MARKDOWN_EXTENSIONS, Module, async2, checkIfElectron2OrLower, fs11, fsPlus, isElectron2OrLower, isMoveTargetValid, isMoveTargetValidSync, isPathValid, lstatSyncNoException, mkdirp2, path14, rimraf2, statSyncNoException, _4, __slice = [].slice;
-      fs11 = require("fs");
+      var BINARY_EXTENSIONS, COMPRESSED_EXTENSIONS, IMAGE_EXTENSIONS, MARKDOWN_EXTENSIONS, Module, async2, checkIfElectron2OrLower, fs12, fsPlus, isElectron2OrLower, isMoveTargetValid, isMoveTargetValidSync, isPathValid, lstatSyncNoException, mkdirp2, path15, rimraf2, statSyncNoException, _4, __slice = [].slice;
+      fs12 = require("fs");
       Module = require("module");
-      path14 = require("path");
+      path15 = require("path");
       _4 = require_underscore_plus();
       async2 = require_async();
       mkdirp2 = require_mkdirp();
@@ -8210,7 +8210,7 @@ var require_fs_plus = __commonJS({
           }
           relativePath = fsPlus.resolveHome(relativePath);
           try {
-            return fs11.realpathSync(relativePath);
+            return fs12.realpathSync(relativePath);
           } catch (_error) {
             _e2 = _error;
             return relativePath;
@@ -8220,12 +8220,12 @@ var require_fs_plus = __commonJS({
           if (pathToNormalize == null) {
             return null;
           }
-          return fsPlus.resolveHome(path14.normalize(pathToNormalize.toString()));
+          return fsPlus.resolveHome(path15.normalize(pathToNormalize.toString()));
         },
         resolveHome: (relativePath) => {
           if (relativePath === "~") {
             return fsPlus.getHomeDirectory();
-          } else if (relativePath.indexOf(`~${path14.sep}`) === 0) {
+          } else if (relativePath.indexOf(`~${path15.sep}`) === 0) {
             return `${fsPlus.getHomeDirectory()}${relativePath.substring(1)}`;
           }
           return relativePath;
@@ -8243,16 +8243,16 @@ var require_fs_plus = __commonJS({
           if (normalized === homeDir2) {
             return "~";
           }
-          if (!normalized.startsWith(path14.join(homeDir2, path14.sep))) {
+          if (!normalized.startsWith(path15.join(homeDir2, path15.sep))) {
             return pathToTildify;
           }
-          return path14.join("~", path14.sep, normalized.substring(homeDir2.length + 1));
+          return path15.join("~", path15.sep, normalized.substring(homeDir2.length + 1));
         },
         getAppDataDirectory: () => {
           switch (process.platform) {
             case "darwin":
               return fsPlus.absolute(
-                path14.join("~", "Library", "Application Support")
+                path15.join("~", "Library", "Application Support")
               );
             case "linux":
               return "/var/lib";
@@ -8294,7 +8294,7 @@ var require_fs_plus = __commonJS({
           if (!isPathValid(directoryPath)) {
             return done(false);
           }
-          return fs11.stat(directoryPath, (error, stat3) => {
+          return fs12.stat(directoryPath, (error, stat3) => {
             if (error != null) {
               return done(false);
             } else {
@@ -8326,7 +8326,7 @@ var require_fs_plus = __commonJS({
         },
         isSymbolicLink: (symlinkPath, callback) => {
           if (isPathValid(symlinkPath)) {
-            return fs11.lstat(
+            return fs12.lstat(
               symlinkPath,
               (_error, stat3) => typeof callback === "function" ? callback(stat3?.isSymbolicLink()) : void 0
             );
@@ -8360,14 +8360,14 @@ var require_fs_plus = __commonJS({
           if (!fsPlus.isDirectorySync(rootPath)) {
             return [];
           }
-          paths = fs11.readdirSync(rootPath);
+          paths = fs12.readdirSync(rootPath);
           if (extensions) {
             paths = fsPlus.filterExtensions(paths, extensions);
           }
           paths = paths.sort(
             (a, b) => a.toLowerCase().localeCompare(b.toLowerCase())
           );
-          paths = paths.map((childPath) => path14.join(rootPath, childPath));
+          paths = paths.map((childPath) => path15.join(rootPath, childPath));
           return paths;
         },
         list: function() {
@@ -8377,7 +8377,7 @@ var require_fs_plus = __commonJS({
             extensions = rest2.shift();
           }
           done = rest2.shift();
-          return fs11.readdir(rootPath, (error, paths) => {
+          return fs12.readdir(rootPath, (error, paths) => {
             if (error != null) {
               return done(error);
             } else {
@@ -8387,7 +8387,7 @@ var require_fs_plus = __commonJS({
               paths = paths.sort(
                 (a, b) => a.toLowerCase().localeCompare(b.toLowerCase())
               );
-              paths = paths.map((childPath) => path14.join(rootPath, childPath));
+              paths = paths.map((childPath) => path15.join(rootPath, childPath));
               return done(null, paths);
             }
           });
@@ -8401,7 +8401,7 @@ var require_fs_plus = __commonJS({
             }
           });
           return paths.filter(
-            (pathToCheck) => _4.include(extensions, path14.extname(pathToCheck))
+            (pathToCheck) => _4.include(extensions, path15.extname(pathToCheck))
           );
         },
         listTreeSync: (rootPath) => {
@@ -8429,10 +8429,10 @@ var require_fs_plus = __commonJS({
               callback(error);
               return;
             }
-            targetParentPath = path14.dirname(target);
-            return fs11.exists(targetParentPath, (targetParentExists) => {
+            targetParentPath = path15.dirname(target);
+            return fs12.exists(targetParentPath, (targetParentExists) => {
               if (targetParentExists) {
-                fs11.rename(source, target, callback);
+                fs12.rename(source, target, callback);
                 return;
               }
               return fsPlus.makeTree(targetParentPath, (makeTreeErr) => {
@@ -8440,7 +8440,7 @@ var require_fs_plus = __commonJS({
                   callback(makeTreeErr);
                   return;
                 }
-                return fs11.rename(source, target, callback);
+                return fs12.rename(source, target, callback);
               });
             });
           }
@@ -8452,29 +8452,29 @@ var require_fs_plus = __commonJS({
             error.code = "EEXIST";
             throw error;
           }
-          targetParentPath = path14.dirname(target);
-          if (!fs11.existsSync(targetParentPath)) {
+          targetParentPath = path15.dirname(target);
+          if (!fs12.existsSync(targetParentPath)) {
             fsPlus.makeTreeSync(targetParentPath);
           }
-          return fs11.renameSync(source, target);
+          return fs12.renameSync(source, target);
         },
         removeSync: (pathToRemove) => rimraf2.sync(pathToRemove),
         remove: (pathToRemove, callback) => rimraf2(pathToRemove, callback),
         writeFileSync: (filePath, content, options2) => {
-          mkdirp2.sync(path14.dirname(filePath));
-          return fs11.writeFileSync(filePath, content, options2);
+          mkdirp2.sync(path15.dirname(filePath));
+          return fs12.writeFileSync(filePath, content, options2);
         },
         writeFile: function(filePath, content, options2, callback) {
           callback = _4.last(arguments);
-          return mkdirp2(path14.dirname(filePath), (error) => {
+          return mkdirp2(path15.dirname(filePath), (error) => {
             if (error != null) {
               return typeof callback === "function" ? callback(error) : void 0;
             } else {
-              return fs11.writeFile(filePath, content, options2, callback);
+              return fs12.writeFile(filePath, content, options2, callback);
             }
           });
         },
-        copy: (sourcePath, destinationPath, done) => mkdirp2(path14.dirname(destinationPath), (error) => {
+        copy: (sourcePath, destinationPath, done) => mkdirp2(path15.dirname(destinationPath), (error) => {
           var destinationStream, sourceStream;
           if (error != null) {
             if (typeof done === "function") {
@@ -8482,14 +8482,14 @@ var require_fs_plus = __commonJS({
             }
             return;
           }
-          sourceStream = fs11.createReadStream(sourcePath);
+          sourceStream = fs12.createReadStream(sourcePath);
           sourceStream.on("error", (error2) => {
             if (typeof done === "function") {
               done(error2);
             }
             return done = null;
           });
-          destinationStream = fs11.createWriteStream(destinationPath);
+          destinationStream = fs12.createWriteStream(destinationPath);
           destinationStream.on("error", (error2) => {
             if (typeof done === "function") {
               done(error2);
@@ -8506,13 +8506,13 @@ var require_fs_plus = __commonJS({
         }),
         copySync: (sourcePath, destinationPath) => {
           var destinationFilePath, source, sourceFilePath, sources, _i2, _len, _results;
-          sources = fs11.readdirSync(sourcePath);
+          sources = fs12.readdirSync(sourcePath);
           mkdirp2.sync(destinationPath);
           _results = [];
           for (_i2 = 0, _len = sources.length; _i2 < _len; _i2++) {
             source = sources[_i2];
-            sourceFilePath = path14.join(sourcePath, source);
-            destinationFilePath = path14.join(destinationPath, source);
+            sourceFilePath = path15.join(sourcePath, source);
+            destinationFilePath = path15.join(destinationPath, source);
             if (fsPlus.isDirectorySync(sourceFilePath)) {
               _results.push(fsPlus.copySync(sourceFilePath, destinationFilePath));
             } else {
@@ -8528,28 +8528,28 @@ var require_fs_plus = __commonJS({
           if (bufferSize == null) {
             bufferSize = 16 * 1024;
           }
-          mkdirp2.sync(path14.dirname(destinationFilePath));
+          mkdirp2.sync(path15.dirname(destinationFilePath));
           readFd = null;
           writeFd = null;
           try {
-            readFd = fs11.openSync(sourceFilePath, "r");
-            writeFd = fs11.openSync(destinationFilePath, "w");
+            readFd = fs12.openSync(sourceFilePath, "r");
+            writeFd = fs12.openSync(destinationFilePath, "w");
             bytesRead = 1;
             position = 0;
             _results = [];
             while (bytesRead > 0) {
               buffer = new Buffer(bufferSize);
-              bytesRead = fs11.readSync(readFd, buffer, 0, buffer.length, position);
-              fs11.writeSync(writeFd, buffer, 0, bytesRead, position);
+              bytesRead = fs12.readSync(readFd, buffer, 0, buffer.length, position);
+              fs12.writeSync(writeFd, buffer, 0, bytesRead, position);
               _results.push(position += bytesRead);
             }
             return _results;
           } finally {
             if (readFd != null) {
-              fs11.closeSync(readFd);
+              fs12.closeSync(readFd);
             }
             if (writeFd != null) {
-              fs11.closeSync(writeFd);
+              fs12.closeSync(writeFd);
             }
           }
         },
@@ -8577,11 +8577,11 @@ var require_fs_plus = __commonJS({
           }
           traverse = (directoryPath, onFile2, onDirectory2) => {
             var childPath, file, linkStats, stats, _i2, _len, _ref;
-            _ref = fs11.readdirSync(directoryPath);
+            _ref = fs12.readdirSync(directoryPath);
             for (_i2 = 0, _len = _ref.length; _i2 < _len; _i2++) {
               file = _ref[_i2];
-              childPath = path14.join(directoryPath, file);
-              stats = fs11.lstatSync(childPath);
+              childPath = path15.join(directoryPath, file);
+              stats = fs12.lstatSync(childPath);
               if (stats.isSymbolicLink()) {
                 if (linkStats = statSyncNoException(childPath)) {
                   stats = linkStats;
@@ -8599,13 +8599,13 @@ var require_fs_plus = __commonJS({
           };
           return traverse(rootPath, onFile, onDirectory);
         },
-        traverseTree: (rootPath, onFile, onDirectory, onDone) => fs11.readdir(rootPath, (error, files) => {
+        traverseTree: (rootPath, onFile, onDirectory, onDone) => fs12.readdir(rootPath, (error, files) => {
           var file, queue, _i2, _len, _results;
           if (error) {
             return typeof onDone === "function" ? onDone() : void 0;
           } else {
             queue = async2.queue(
-              (childPath, callback) => fs11.stat(childPath, (error2, stats) => {
+              (childPath, callback) => fs12.stat(childPath, (error2, stats) => {
                 if (error2) {
                   return callback(error2);
                 } else if (stats.isFile()) {
@@ -8613,14 +8613,14 @@ var require_fs_plus = __commonJS({
                   return callback();
                 } else if (stats.isDirectory()) {
                   if (onDirectory(childPath)) {
-                    return fs11.readdir(childPath, (error3, files2) => {
+                    return fs12.readdir(childPath, (error3, files2) => {
                       var file2, _i3, _len2;
                       if (error3) {
                         return callback(error3);
                       } else {
                         for (_i3 = 0, _len2 = files2.length; _i3 < _len2; _i3++) {
                           file2 = files2[_i3];
-                          queue.unshift(path14.join(childPath, file2));
+                          queue.unshift(path15.join(childPath, file2));
                         }
                         return callback();
                       }
@@ -8638,14 +8638,14 @@ var require_fs_plus = __commonJS({
             _results = [];
             for (_i2 = 0, _len = files.length; _i2 < _len; _i2++) {
               file = files[_i2];
-              _results.push(queue.push(path14.join(rootPath, file)));
+              _results.push(queue.push(path15.join(rootPath, file)));
             }
             return _results;
           }
         }),
         md5ForPath: (pathToDigest) => {
           var contents;
-          contents = fs11.readFileSync(pathToDigest);
+          contents = fs12.readFileSync(pathToDigest);
           return require("crypto").createHash("md5").update(contents).digest("hex");
         },
         resolve: function() {
@@ -8670,7 +8670,7 @@ var require_fs_plus = __commonJS({
           }
           for (_i2 = 0, _len = loadPaths.length; _i2 < _len; _i2++) {
             loadPath = loadPaths[_i2];
-            candidatePath = path14.join(loadPath, pathToResolve);
+            candidatePath = path15.join(loadPath, pathToResolve);
             if (extensions) {
               if (resolvedPath = fsPlus.resolveExtension(candidatePath, extensions)) {
                 return resolvedPath;
@@ -8690,7 +8690,7 @@ var require_fs_plus = __commonJS({
           if (module2.paths != null) {
             modulePaths = module2.paths;
           } else if (process.resourcesPath) {
-            modulePaths = [path14.join(process.resourcesPath, "app", "node_modules")];
+            modulePaths = [path15.join(process.resourcesPath, "app", "node_modules")];
           } else {
             modulePaths = [];
           }
@@ -8738,8 +8738,8 @@ var require_fs_plus = __commonJS({
         },
         isReadmePath: (readmePath) => {
           var base, extension;
-          extension = path14.extname(readmePath);
-          base = path14.basename(readmePath, extension).toLowerCase();
+          extension = path15.extname(readmePath);
+          base = path15.basename(readmePath, extension).toLowerCase();
           return base === "readme" && (extension === "" || fsPlus.isMarkdownExtension(extension));
         },
         isMarkdownExtension: (ext) => {
@@ -8783,11 +8783,11 @@ var require_fs_plus = __commonJS({
       statSyncNoException = function() {
         var args, error;
         args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        if (fs11.statSyncNoException && checkIfElectron2OrLower()) {
-          return fs11.statSyncNoException.apply(fs11, args);
+        if (fs12.statSyncNoException && checkIfElectron2OrLower()) {
+          return fs12.statSyncNoException.apply(fs12, args);
         } else {
           try {
-            return fs11.statSync.apply(fs11, args);
+            return fs12.statSync.apply(fs12, args);
           } catch (_error) {
             error = _error;
             return false;
@@ -8797,11 +8797,11 @@ var require_fs_plus = __commonJS({
       lstatSyncNoException = function() {
         var args, error;
         args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        if (fs11.lstatSyncNoException && checkIfElectron2OrLower()) {
-          return fs11.lstatSyncNoException.apply(fs11, args);
+        if (fs12.lstatSyncNoException && checkIfElectron2OrLower()) {
+          return fs12.lstatSyncNoException.apply(fs12, args);
         } else {
           try {
-            return fs11.lstatSync.apply(fs11, args);
+            return fs12.lstatSync.apply(fs12, args);
           } catch (_error) {
             error = _error;
             return false;
@@ -8858,12 +8858,12 @@ var require_fs_plus = __commonJS({
         ".ron": true
       };
       isPathValid = (pathToCheck) => pathToCheck != null && typeof pathToCheck === "string" && pathToCheck.length > 0;
-      isMoveTargetValid = (source, target, callback) => fs11.stat(source, (oldErr, oldStat) => {
+      isMoveTargetValid = (source, target, callback) => fs12.stat(source, (oldErr, oldStat) => {
         if (oldErr) {
           callback(oldErr);
           return;
         }
-        return fs11.stat(target, (newErr, newStat) => {
+        return fs12.stat(target, (newErr, newStat) => {
           if (newErr && newErr.code === "ENOENT") {
             callback(void 0, true);
             return;
@@ -8888,7 +8888,7 @@ var require_fs_plus = __commonJS({
         {
           get: (_target, key) => {
             var _ref;
-            return (_ref = fsPlus[key]) != null ? _ref : fs11[key];
+            return (_ref = fsPlus[key]) != null ? _ref : fs12[key];
           },
           set: (_target, key, value) => fsPlus[key] = value
         }
@@ -8901,10 +8901,10 @@ var require_fs_plus = __commonJS({
 var require_fs_plus2 = __commonJS({
   "../../node_modules/.pnpm/fs-plus@3.1.1/node_modules/fs-plus/lib/fs-plus.js"(exports2, module2) {
     (function() {
-      var BINARY_EXTENSIONS, COMPRESSED_EXTENSIONS, IMAGE_EXTENSIONS, MARKDOWN_EXTENSIONS, Module, async2, checkIfElectron2OrLower, fs11, fsPlus, isElectron2OrLower, isMoveTargetValid, isMoveTargetValidSync, isPathValid, lstatSyncNoException, mkdirp2, path14, rimraf2, statSyncNoException, _4, __slice = [].slice;
-      fs11 = require("fs");
+      var BINARY_EXTENSIONS, COMPRESSED_EXTENSIONS, IMAGE_EXTENSIONS, MARKDOWN_EXTENSIONS, Module, async2, checkIfElectron2OrLower, fs12, fsPlus, isElectron2OrLower, isMoveTargetValid, isMoveTargetValidSync, isPathValid, lstatSyncNoException, mkdirp2, path15, rimraf2, statSyncNoException, _4, __slice = [].slice;
+      fs12 = require("fs");
       Module = require("module");
-      path14 = require("path");
+      path15 = require("path");
       _4 = require_underscore_plus();
       async2 = require_async();
       mkdirp2 = require_mkdirp();
@@ -8925,7 +8925,7 @@ var require_fs_plus2 = __commonJS({
           }
           relativePath = fsPlus.resolveHome(relativePath);
           try {
-            return fs11.realpathSync(relativePath);
+            return fs12.realpathSync(relativePath);
           } catch (_error) {
             e = _error;
             return relativePath;
@@ -8935,12 +8935,12 @@ var require_fs_plus2 = __commonJS({
           if (pathToNormalize == null) {
             return null;
           }
-          return fsPlus.resolveHome(path14.normalize(pathToNormalize.toString()));
+          return fsPlus.resolveHome(path15.normalize(pathToNormalize.toString()));
         },
         resolveHome: function(relativePath) {
           if (relativePath === "~") {
             return fsPlus.getHomeDirectory();
-          } else if (relativePath.indexOf("~" + path14.sep) === 0) {
+          } else if (relativePath.indexOf("~" + path15.sep) === 0) {
             return "" + fsPlus.getHomeDirectory() + relativePath.substring(1);
           }
           return relativePath;
@@ -8958,15 +8958,15 @@ var require_fs_plus2 = __commonJS({
           if (normalized === homeDir2) {
             return "~";
           }
-          if (!normalized.startsWith(path14.join(homeDir2, path14.sep))) {
+          if (!normalized.startsWith(path15.join(homeDir2, path15.sep))) {
             return pathToTildify;
           }
-          return path14.join("~", path14.sep, normalized.substring(homeDir2.length + 1));
+          return path15.join("~", path15.sep, normalized.substring(homeDir2.length + 1));
         },
         getAppDataDirectory: function() {
           switch (process.platform) {
             case "darwin":
-              return fsPlus.absolute(path14.join("~", "Library", "Application Support"));
+              return fsPlus.absolute(path15.join("~", "Library", "Application Support"));
             case "linux":
               return "/var/lib";
             case "win32":
@@ -9009,7 +9009,7 @@ var require_fs_plus2 = __commonJS({
           if (!isPathValid(directoryPath)) {
             return done(false);
           }
-          return fs11.stat(directoryPath, function(error, stat3) {
+          return fs12.stat(directoryPath, function(error, stat3) {
             if (error != null) {
               return done(false);
             } else {
@@ -9041,7 +9041,7 @@ var require_fs_plus2 = __commonJS({
         },
         isSymbolicLink: function(symlinkPath, callback) {
           if (isPathValid(symlinkPath)) {
-            return fs11.lstat(symlinkPath, function(error, stat3) {
+            return fs12.lstat(symlinkPath, function(error, stat3) {
               return typeof callback === "function" ? callback(stat3 != null && stat3.isSymbolicLink()) : void 0;
             });
           } else {
@@ -9074,7 +9074,7 @@ var require_fs_plus2 = __commonJS({
           if (!fsPlus.isDirectorySync(rootPath)) {
             return [];
           }
-          paths = fs11.readdirSync(rootPath);
+          paths = fs12.readdirSync(rootPath);
           if (extensions) {
             paths = fsPlus.filterExtensions(paths, extensions);
           }
@@ -9082,7 +9082,7 @@ var require_fs_plus2 = __commonJS({
             return a.toLowerCase().localeCompare(b.toLowerCase());
           });
           paths = paths.map(function(childPath) {
-            return path14.join(rootPath, childPath);
+            return path15.join(rootPath, childPath);
           });
           return paths;
         },
@@ -9093,7 +9093,7 @@ var require_fs_plus2 = __commonJS({
             extensions = rest2.shift();
           }
           done = rest2.shift();
-          return fs11.readdir(rootPath, function(error, paths) {
+          return fs12.readdir(rootPath, function(error, paths) {
             if (error != null) {
               return done(error);
             } else {
@@ -9104,7 +9104,7 @@ var require_fs_plus2 = __commonJS({
                 return a.toLowerCase().localeCompare(b.toLowerCase());
               });
               paths = paths.map(function(childPath) {
-                return path14.join(rootPath, childPath);
+                return path15.join(rootPath, childPath);
               });
               return done(null, paths);
             }
@@ -9119,7 +9119,7 @@ var require_fs_plus2 = __commonJS({
             }
           });
           return paths.filter(function(pathToCheck) {
-            return _4.include(extensions, path14.extname(pathToCheck));
+            return _4.include(extensions, path15.extname(pathToCheck));
           });
         },
         listTreeSync: function(rootPath) {
@@ -9145,10 +9145,10 @@ var require_fs_plus2 = __commonJS({
               callback(error);
               return;
             }
-            targetParentPath = path14.dirname(target);
-            return fs11.exists(targetParentPath, function(targetParentExists) {
+            targetParentPath = path15.dirname(target);
+            return fs12.exists(targetParentPath, function(targetParentExists) {
               if (targetParentExists) {
-                fs11.rename(source, target, callback);
+                fs12.rename(source, target, callback);
                 return;
               }
               return fsPlus.makeTree(targetParentPath, function(makeTreeErr) {
@@ -9156,7 +9156,7 @@ var require_fs_plus2 = __commonJS({
                   callback(makeTreeErr);
                   return;
                 }
-                return fs11.rename(source, target, callback);
+                return fs12.rename(source, target, callback);
               });
             });
           });
@@ -9168,11 +9168,11 @@ var require_fs_plus2 = __commonJS({
             error.code = "EEXIST";
             throw error;
           }
-          targetParentPath = path14.dirname(target);
-          if (!fs11.existsSync(targetParentPath)) {
+          targetParentPath = path15.dirname(target);
+          if (!fs12.existsSync(targetParentPath)) {
             fsPlus.makeTreeSync(targetParentPath);
           }
-          return fs11.renameSync(source, target);
+          return fs12.renameSync(source, target);
         },
         removeSync: function(pathToRemove) {
           return rimraf2.sync(pathToRemove);
@@ -9181,21 +9181,21 @@ var require_fs_plus2 = __commonJS({
           return rimraf2(pathToRemove, callback);
         },
         writeFileSync: function(filePath, content, options2) {
-          mkdirp2.sync(path14.dirname(filePath));
-          return fs11.writeFileSync(filePath, content, options2);
+          mkdirp2.sync(path15.dirname(filePath));
+          return fs12.writeFileSync(filePath, content, options2);
         },
         writeFile: function(filePath, content, options2, callback) {
           callback = _4.last(arguments);
-          return mkdirp2(path14.dirname(filePath), function(error) {
+          return mkdirp2(path15.dirname(filePath), function(error) {
             if (error != null) {
               return typeof callback === "function" ? callback(error) : void 0;
             } else {
-              return fs11.writeFile(filePath, content, options2, callback);
+              return fs12.writeFile(filePath, content, options2, callback);
             }
           });
         },
         copy: function(sourcePath, destinationPath, done) {
-          return mkdirp2(path14.dirname(destinationPath), function(error) {
+          return mkdirp2(path15.dirname(destinationPath), function(error) {
             var destinationStream, sourceStream;
             if (error != null) {
               if (typeof done === "function") {
@@ -9203,14 +9203,14 @@ var require_fs_plus2 = __commonJS({
               }
               return;
             }
-            sourceStream = fs11.createReadStream(sourcePath);
+            sourceStream = fs12.createReadStream(sourcePath);
             sourceStream.on("error", function(error2) {
               if (typeof done === "function") {
                 done(error2);
               }
               return done = null;
             });
-            destinationStream = fs11.createWriteStream(destinationPath);
+            destinationStream = fs12.createWriteStream(destinationPath);
             destinationStream.on("error", function(error2) {
               if (typeof done === "function") {
                 done(error2);
@@ -9228,13 +9228,13 @@ var require_fs_plus2 = __commonJS({
         },
         copySync: function(sourcePath, destinationPath) {
           var destinationFilePath, source, sourceFilePath, sources, _i2, _len, _results;
-          sources = fs11.readdirSync(sourcePath);
+          sources = fs12.readdirSync(sourcePath);
           mkdirp2.sync(destinationPath);
           _results = [];
           for (_i2 = 0, _len = sources.length; _i2 < _len; _i2++) {
             source = sources[_i2];
-            sourceFilePath = path14.join(sourcePath, source);
-            destinationFilePath = path14.join(destinationPath, source);
+            sourceFilePath = path15.join(sourcePath, source);
+            destinationFilePath = path15.join(destinationPath, source);
             if (fsPlus.isDirectorySync(sourceFilePath)) {
               _results.push(fsPlus.copySync(sourceFilePath, destinationFilePath));
             } else {
@@ -9248,28 +9248,28 @@ var require_fs_plus2 = __commonJS({
           if (bufferSize == null) {
             bufferSize = 16 * 1024;
           }
-          mkdirp2.sync(path14.dirname(destinationFilePath));
+          mkdirp2.sync(path15.dirname(destinationFilePath));
           readFd = null;
           writeFd = null;
           try {
-            readFd = fs11.openSync(sourceFilePath, "r");
-            writeFd = fs11.openSync(destinationFilePath, "w");
+            readFd = fs12.openSync(sourceFilePath, "r");
+            writeFd = fs12.openSync(destinationFilePath, "w");
             bytesRead = 1;
             position = 0;
             _results = [];
             while (bytesRead > 0) {
               buffer = new Buffer(bufferSize);
-              bytesRead = fs11.readSync(readFd, buffer, 0, buffer.length, position);
-              fs11.writeSync(writeFd, buffer, 0, bytesRead, position);
+              bytesRead = fs12.readSync(readFd, buffer, 0, buffer.length, position);
+              fs12.writeSync(writeFd, buffer, 0, bytesRead, position);
               _results.push(position += bytesRead);
             }
             return _results;
           } finally {
             if (readFd != null) {
-              fs11.closeSync(readFd);
+              fs12.closeSync(readFd);
             }
             if (writeFd != null) {
-              fs11.closeSync(writeFd);
+              fs12.closeSync(writeFd);
             }
           }
         },
@@ -9298,11 +9298,11 @@ var require_fs_plus2 = __commonJS({
           }
           traverse = function(directoryPath, onFile2, onDirectory2) {
             var childPath, file, linkStats, stats, _i2, _len, _ref;
-            _ref = fs11.readdirSync(directoryPath);
+            _ref = fs12.readdirSync(directoryPath);
             for (_i2 = 0, _len = _ref.length; _i2 < _len; _i2++) {
               file = _ref[_i2];
-              childPath = path14.join(directoryPath, file);
-              stats = fs11.lstatSync(childPath);
+              childPath = path15.join(directoryPath, file);
+              stats = fs12.lstatSync(childPath);
               if (stats.isSymbolicLink()) {
                 if (linkStats = statSyncNoException(childPath)) {
                   stats = linkStats;
@@ -9321,13 +9321,13 @@ var require_fs_plus2 = __commonJS({
           return traverse(rootPath, onFile, onDirectory);
         },
         traverseTree: function(rootPath, onFile, onDirectory, onDone) {
-          return fs11.readdir(rootPath, function(error, files) {
+          return fs12.readdir(rootPath, function(error, files) {
             var file, queue, _i2, _len, _results;
             if (error) {
               return typeof onDone === "function" ? onDone() : void 0;
             } else {
               queue = async2.queue(function(childPath, callback) {
-                return fs11.stat(childPath, function(error2, stats) {
+                return fs12.stat(childPath, function(error2, stats) {
                   if (error2) {
                     return callback(error2);
                   } else if (stats.isFile()) {
@@ -9335,14 +9335,14 @@ var require_fs_plus2 = __commonJS({
                     return callback();
                   } else if (stats.isDirectory()) {
                     if (onDirectory(childPath)) {
-                      return fs11.readdir(childPath, function(error3, files2) {
+                      return fs12.readdir(childPath, function(error3, files2) {
                         var file2, _i3, _len2;
                         if (error3) {
                           return callback(error3);
                         } else {
                           for (_i3 = 0, _len2 = files2.length; _i3 < _len2; _i3++) {
                             file2 = files2[_i3];
-                            queue.unshift(path14.join(childPath, file2));
+                            queue.unshift(path15.join(childPath, file2));
                           }
                           return callback();
                         }
@@ -9360,7 +9360,7 @@ var require_fs_plus2 = __commonJS({
               _results = [];
               for (_i2 = 0, _len = files.length; _i2 < _len; _i2++) {
                 file = files[_i2];
-                _results.push(queue.push(path14.join(rootPath, file)));
+                _results.push(queue.push(path15.join(rootPath, file)));
               }
               return _results;
             }
@@ -9368,7 +9368,7 @@ var require_fs_plus2 = __commonJS({
         },
         md5ForPath: function(pathToDigest) {
           var contents;
-          contents = fs11.readFileSync(pathToDigest);
+          contents = fs12.readFileSync(pathToDigest);
           return require("crypto").createHash("md5").update(contents).digest("hex");
         },
         resolve: function() {
@@ -9393,7 +9393,7 @@ var require_fs_plus2 = __commonJS({
           }
           for (_i2 = 0, _len = loadPaths.length; _i2 < _len; _i2++) {
             loadPath = loadPaths[_i2];
-            candidatePath = path14.join(loadPath, pathToResolve);
+            candidatePath = path15.join(loadPath, pathToResolve);
             if (extensions) {
               if (resolvedPath = fsPlus.resolveExtension(candidatePath, extensions)) {
                 return resolvedPath;
@@ -9413,7 +9413,7 @@ var require_fs_plus2 = __commonJS({
           if (module2.paths != null) {
             modulePaths = module2.paths;
           } else if (process.resourcesPath) {
-            modulePaths = [path14.join(process.resourcesPath, "app", "node_modules")];
+            modulePaths = [path15.join(process.resourcesPath, "app", "node_modules")];
           } else {
             modulePaths = [];
           }
@@ -9460,8 +9460,8 @@ var require_fs_plus2 = __commonJS({
         },
         isReadmePath: function(readmePath) {
           var base, extension;
-          extension = path14.extname(readmePath);
-          base = path14.basename(readmePath, extension).toLowerCase();
+          extension = path15.extname(readmePath);
+          base = path15.basename(readmePath, extension).toLowerCase();
           return base === "readme" && (extension === "" || fsPlus.isMarkdownExtension(extension));
         },
         isMarkdownExtension: function(ext) {
@@ -9507,11 +9507,11 @@ var require_fs_plus2 = __commonJS({
       statSyncNoException = function() {
         var args, error;
         args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        if (fs11.statSyncNoException && checkIfElectron2OrLower()) {
-          return fs11.statSyncNoException.apply(fs11, args);
+        if (fs12.statSyncNoException && checkIfElectron2OrLower()) {
+          return fs12.statSyncNoException.apply(fs12, args);
         } else {
           try {
-            return fs11.statSync.apply(fs11, args);
+            return fs12.statSync.apply(fs12, args);
           } catch (_error) {
             error = _error;
             return false;
@@ -9521,11 +9521,11 @@ var require_fs_plus2 = __commonJS({
       lstatSyncNoException = function() {
         var args, error;
         args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        if (fs11.lstatSyncNoException && checkIfElectron2OrLower()) {
-          return fs11.lstatSyncNoException.apply(fs11, args);
+        if (fs12.lstatSyncNoException && checkIfElectron2OrLower()) {
+          return fs12.lstatSyncNoException.apply(fs12, args);
         } else {
           try {
-            return fs11.lstatSync.apply(fs11, args);
+            return fs12.lstatSync.apply(fs12, args);
           } catch (_error) {
             error = _error;
             return false;
@@ -9585,12 +9585,12 @@ var require_fs_plus2 = __commonJS({
         return pathToCheck != null && typeof pathToCheck === "string" && pathToCheck.length > 0;
       };
       isMoveTargetValid = function(source, target, callback) {
-        return fs11.stat(source, function(oldErr, oldStat) {
+        return fs12.stat(source, function(oldErr, oldStat) {
           if (oldErr) {
             callback(oldErr);
             return;
           }
-          return fs11.stat(target, function(newErr, newStat) {
+          return fs12.stat(target, function(newErr, newStat) {
             if (newErr && newErr.code === "ENOENT") {
               callback(void 0, true);
               return;
@@ -9611,7 +9611,7 @@ var require_fs_plus2 = __commonJS({
       module2.exports = new Proxy({}, {
         get: function(target, key) {
           var _ref;
-          return (_ref = fsPlus[key]) != null ? _ref : fs11[key];
+          return (_ref = fsPlus[key]) != null ? _ref : fs12[key];
         },
         set: function(target, key, value) {
           return fsPlus[key] = value;
@@ -12237,11 +12237,11 @@ var require_sourcemap = __commonJS({
 var require_register = __commonJS({
   "../../node_modules/.pnpm/coffee-script@1.8.0/node_modules/coffee-script/lib/coffee-script/register.js"(exports2) {
     (function() {
-      var CoffeeScript, Module, binary, child_process, ext, findExtension, fork, helpers, loadFile, path14, _i2, _len, _ref;
+      var CoffeeScript, Module, binary, child_process, ext, findExtension, fork, helpers, loadFile, path15, _i2, _len, _ref;
       CoffeeScript = require_coffee_script();
       child_process = require("child_process");
       helpers = require_helpers();
-      path14 = require("path");
+      path15 = require("path");
       loadFile = function(module3, filename) {
         var answer;
         answer = CoffeeScript._compileFile(filename, false);
@@ -12256,7 +12256,7 @@ var require_register = __commonJS({
         Module = require("module");
         findExtension = function(filename) {
           var curExtension, extensions;
-          extensions = path14.basename(filename).split(".");
+          extensions = path15.basename(filename).split(".");
           if (extensions[0] === "") {
             extensions.shift();
           }
@@ -12271,7 +12271,7 @@ var require_register = __commonJS({
         Module.prototype.load = function(filename) {
           var extension;
           this.filename = filename;
-          this.paths = Module._nodeModulePaths(path14.dirname(filename));
+          this.paths = Module._nodeModulePaths(path15.dirname(filename));
           extension = findExtension(filename);
           Module._extensions[extension](this, filename);
           return this.loaded = true;
@@ -12280,16 +12280,16 @@ var require_register = __commonJS({
       if (child_process) {
         fork = child_process.fork;
         binary = require.resolve("../../bin/coffee");
-        child_process.fork = function(path15, args, options2) {
-          if (helpers.isCoffee(path15)) {
+        child_process.fork = function(path16, args, options2) {
+          if (helpers.isCoffee(path16)) {
             if (!Array.isArray(args)) {
               options2 = args || {};
               args = [];
             }
-            args = [path15].concat(args);
-            path15 = binary;
+            args = [path16].concat(args);
+            path16 = binary;
           }
-          return fork(path15, args, options2);
+          return fork(path16, args, options2);
         };
       }
     }).call(exports2);
@@ -15216,15 +15216,15 @@ var require_nodes = __commonJS({
 var require_coffee_script = __commonJS({
   "../../node_modules/.pnpm/coffee-script@1.8.0/node_modules/coffee-script/lib/coffee-script/coffee-script.js"(exports2) {
     (function() {
-      var Lexer, SourceMap, compile, ext, formatSourcePosition, fs11, getSourceMap, helpers, lexer, parser, path14, sourceMaps, vm2, withPrettyErrors, _base, _i2, _len, _ref, __hasProp = {}.hasOwnProperty, __indexOf = [].indexOf || function(item) {
+      var Lexer, SourceMap, compile, ext, formatSourcePosition, fs12, getSourceMap, helpers, lexer, parser, path15, sourceMaps, vm2, withPrettyErrors, _base, _i2, _len, _ref, __hasProp = {}.hasOwnProperty, __indexOf = [].indexOf || function(item) {
         for (var i = 0, l = this.length; i < l; i++) {
           if (i in this && this[i] === item) return i;
         }
         return -1;
       };
-      fs11 = require("fs");
+      fs12 = require("fs");
       vm2 = require("vm");
-      path14 = require("path");
+      path15 = require("path");
       Lexer = require_lexer().Lexer;
       parser = require_parser().parser;
       helpers = require_helpers();
@@ -15312,9 +15312,9 @@ var require_coffee_script = __commonJS({
           options2 = {};
         }
         mainModule = require.main;
-        mainModule.filename = process.argv[1] = options2.filename ? fs11.realpathSync(options2.filename) : ".";
+        mainModule.filename = process.argv[1] = options2.filename ? fs12.realpathSync(options2.filename) : ".";
         mainModule.moduleCache && (mainModule.moduleCache = {});
-        dir = options2.filename ? path14.dirname(fs11.realpathSync(options2.filename)) : fs11.realpathSync(".");
+        dir = options2.filename ? path15.dirname(fs12.realpathSync(options2.filename)) : fs12.realpathSync(".");
         mainModule.paths = require("module")._nodeModulePaths(dir);
         if (!helpers.isCoffee(mainModule.filename) || require.extensions) {
           answer = compile(code, options2);
@@ -15349,12 +15349,12 @@ var require_coffee_script = __commonJS({
             sandbox = global;
           }
           sandbox.__filename = options2.filename || "eval";
-          sandbox.__dirname = path14.dirname(sandbox.__filename);
+          sandbox.__dirname = path15.dirname(sandbox.__filename);
           if (!(sandbox !== global || sandbox.module || sandbox.require)) {
             Module = require("module");
             sandbox.module = _module = new Module(options2.modulename || "eval");
-            sandbox.require = _require = function(path15) {
-              return Module._load(path15, _module, true);
+            sandbox.require = _require = function(path16) {
+              return Module._load(path16, _module, true);
             };
             _module.filename = sandbox.__filename;
             _ref1 = Object.getOwnPropertyNames(require);
@@ -15403,7 +15403,7 @@ var require_coffee_script = __commonJS({
         if (sourceMap == null) {
           sourceMap = false;
         }
-        raw = fs11.readFileSync(filename, "utf8");
+        raw = fs12.readFileSync(filename, "utf8");
         stripped = raw.charCodeAt(0) === 65279 ? raw.substring(1) : raw;
         try {
           answer = compile(stripped, {
@@ -15501,7 +15501,7 @@ var require_coffee_script = __commonJS({
         if (sourceMaps[filename]) {
           return sourceMaps[filename];
         }
-        if (_ref1 = path14 != null ? path14.extname(filename) : void 0, __indexOf.call(exports2.FILE_EXTENSIONS, _ref1) < 0) {
+        if (_ref1 = path15 != null ? path15.extname(filename) : void 0, __indexOf.call(exports2.FILE_EXTENSIONS, _ref1) < 0) {
           return;
         }
         answer = exports2._compileFile(filename, true);
@@ -15545,7 +15545,7 @@ var require_amdefine = __commonJS({
     "use strict";
     function amdefine(module3, requireFn) {
       "use strict";
-      var defineCache = {}, loaderCache = {}, alreadyCalled = false, path14 = require("path"), makeRequire, stringRequire;
+      var defineCache = {}, loaderCache = {}, alreadyCalled = false, path15 = require("path"), makeRequire, stringRequire;
       function trimDots(ary) {
         var i, part;
         for (i = 0; ary[i]; i += 1) {
@@ -15607,7 +15607,7 @@ var require_amdefine = __commonJS({
         }
         amdRequire.toUrl = function(filePath) {
           if (filePath.indexOf(".") === 0) {
-            return normalize(filePath, path14.dirname(module4.filename));
+            return normalize(filePath, path15.dirname(module4.filename));
           } else {
             return filePath;
           }
@@ -16589,10 +16589,10 @@ var require_source_map = __commonJS({
 var require_coffeestack = __commonJS({
   "../../node_modules/.pnpm/coffeestack@1.2.0/node_modules/coffeestack/index.js"(exports2) {
     (function() {
-      var CoffeeScript, CoffeeScriptVersion, SourceMapConsumer, cachePath, compileSourceMap, convertLine, convertStackTrace2, crypto7, fs11, getCachePath, getCachedSourceMap, getSourceMapPosition, loadCoffeeScript, path14, writeSourceMapToCache;
+      var CoffeeScript, CoffeeScriptVersion, SourceMapConsumer, cachePath, compileSourceMap, convertLine, convertStackTrace2, crypto7, fs12, getCachePath, getCachedSourceMap, getSourceMapPosition, loadCoffeeScript, path15, writeSourceMapToCache;
       crypto7 = require("crypto");
-      fs11 = require_fs_plus2();
-      path14 = require("path");
+      fs12 = require_fs_plus2();
+      path15 = require("path");
       CoffeeScriptVersion = null;
       CoffeeScript = null;
       SourceMapConsumer = null;
@@ -16606,12 +16606,12 @@ var require_coffeestack = __commonJS({
         if (CoffeeScriptVersion == null) {
           CoffeeScriptVersion = require_package().version;
         }
-        return path14.join(cachePath, CoffeeScriptVersion, "" + digest + ".json");
+        return path15.join(cachePath, CoffeeScriptVersion, "" + digest + ".json");
       };
       getCachedSourceMap = function(codeCachePath) {
-        if (fs11.isFileSync(codeCachePath)) {
+        if (fs12.isFileSync(codeCachePath)) {
           try {
-            return fs11.readFileSync(codeCachePath, "utf8");
+            return fs12.readFileSync(codeCachePath, "utf8");
           } catch (_error) {
           }
         }
@@ -16619,7 +16619,7 @@ var require_coffeestack = __commonJS({
       writeSourceMapToCache = function(codeCachePath, sourceMap) {
         if (codeCachePath) {
           try {
-            fs11.writeFileSync(codeCachePath, sourceMap);
+            fs12.writeFileSync(codeCachePath, sourceMap);
           } catch (_error) {
           }
         }
@@ -16671,11 +16671,11 @@ var require_coffeestack = __commonJS({
         }
         try {
           if (!(sourceMapContents = sourceMaps[filePath])) {
-            if (path14.extname(filePath) === ".js") {
+            if (path15.extname(filePath) === ".js") {
               sourceMapPath = "" + filePath + ".map";
-              sourceMapContents = fs11.readFileSync(sourceMapPath, "utf8");
+              sourceMapContents = fs12.readFileSync(sourceMapPath, "utf8");
             } else {
-              code = fs11.readFileSync(filePath, "utf8");
+              code = fs12.readFileSync(filePath, "utf8");
               codeCachePath = getCachePath(code);
               sourceMapContents = getCachedSourceMap(codeCachePath);
               if (sourceMapContents == null) {
@@ -16688,7 +16688,7 @@ var require_coffeestack = __commonJS({
             position = getSourceMapPosition(sourceMapContents, line, column);
             if (position.line != null && position.column != null) {
               if (position.source && position.source !== ".") {
-                source = path14.resolve(filePath, "..", position.source);
+                source = path15.resolve(filePath, "..", position.source);
               } else {
                 source = filePath;
               }
@@ -16720,7 +16720,7 @@ var require_coffeestack = __commonJS({
             filePath = match[2];
             line = match[3];
             column = match[4];
-            if (path14.extname(filePath) === ".js") {
+            if (path15.extname(filePath) === ".js") {
               mappedLine = convertLine(filePath, line, column, sourceMaps);
             }
             if (mappedLine != null) {
@@ -16892,16 +16892,16 @@ var require_util = __commonJS({
     }
     exports2.urlGenerate = urlGenerate;
     function normalize(aPath) {
-      var path14 = aPath;
+      var path15 = aPath;
       var url6 = urlParse(aPath);
       if (url6) {
         if (!url6.path) {
           return aPath;
         }
-        path14 = url6.path;
+        path15 = url6.path;
       }
-      var isAbsolute = exports2.isAbsolute(path14);
-      var parts = path14.split(/\/+/);
+      var isAbsolute = exports2.isAbsolute(path15);
+      var parts = path15.split(/\/+/);
       for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
         part = parts[i];
         if (part === ".") {
@@ -16918,15 +16918,15 @@ var require_util = __commonJS({
           }
         }
       }
-      path14 = parts.join("/");
-      if (path14 === "") {
-        path14 = isAbsolute ? "/" : ".";
+      path15 = parts.join("/");
+      if (path15 === "") {
+        path15 = isAbsolute ? "/" : ".";
       }
       if (url6) {
-        url6.path = path14;
+        url6.path = path15;
         return urlGenerate(url6);
       }
-      return path14;
+      return path15;
     }
     exports2.normalize = normalize;
     function join(aRoot, aPath) {
@@ -18546,12 +18546,12 @@ var require_buffer_from = __commonJS({
 var require_source_map_support = __commonJS({
   "../../node_modules/.pnpm/source-map-support@0.5.21/node_modules/source-map-support/source-map-support.js"(exports2, module2) {
     var SourceMapConsumer = require_source_map2().SourceMapConsumer;
-    var path14 = require("path");
-    var fs11;
+    var path15 = require("path");
+    var fs12;
     try {
-      fs11 = require("fs");
-      if (!fs11.existsSync || !fs11.readFileSync) {
-        fs11 = null;
+      fs12 = require("fs");
+      if (!fs12.existsSync || !fs12.readFileSync) {
+        fs12 = null;
       }
     } catch (err) {
     }
@@ -18607,26 +18607,26 @@ var require_source_map_support = __commonJS({
       };
     }
     var retrieveFile = handlerExec(retrieveFileHandlers);
-    retrieveFileHandlers.push(function(path15) {
-      path15 = path15.trim();
-      if (/^file:/.test(path15)) {
-        path15 = path15.replace(/file:\/\/\/(\w:)?/, function(protocol, drive) {
+    retrieveFileHandlers.push(function(path16) {
+      path16 = path16.trim();
+      if (/^file:/.test(path16)) {
+        path16 = path16.replace(/file:\/\/\/(\w:)?/, function(protocol, drive) {
           return drive ? "" : (
             // file:///C:/dir/file -> C:/dir/file
             "/"
           );
         });
       }
-      if (path15 in fileContentsCache) {
-        return fileContentsCache[path15];
+      if (path16 in fileContentsCache) {
+        return fileContentsCache[path16];
       }
       var contents = "";
       try {
-        if (!fs11) {
+        if (!fs12) {
           var xhr = new XMLHttpRequest();
           xhr.open(
             "GET",
-            path15,
+            path16,
             /** async */
             false
           );
@@ -18634,24 +18634,24 @@ var require_source_map_support = __commonJS({
           if (xhr.readyState === 4 && xhr.status === 200) {
             contents = xhr.responseText;
           }
-        } else if (fs11.existsSync(path15)) {
-          contents = fs11.readFileSync(path15, "utf8");
+        } else if (fs12.existsSync(path16)) {
+          contents = fs12.readFileSync(path16, "utf8");
         }
       } catch (er) {
       }
-      return fileContentsCache[path15] = contents;
+      return fileContentsCache[path16] = contents;
     });
     function supportRelativeURL(file, url6) {
       if (!file) return url6;
-      var dir = path14.dirname(file);
+      var dir = path15.dirname(file);
       var match = /^\w+:\/\/[^\/]*/.exec(dir);
       var protocol = match ? match[0] : "";
       var startPath = dir.slice(protocol.length);
       if (protocol && /^\/\w\:/.test(startPath)) {
         protocol += "/";
-        return protocol + path14.resolve(dir.slice(protocol.length), url6).replace(/\\/g, "/");
+        return protocol + path15.resolve(dir.slice(protocol.length), url6).replace(/\\/g, "/");
       }
-      return protocol + path14.resolve(dir.slice(protocol.length), url6);
+      return protocol + path15.resolve(dir.slice(protocol.length), url6);
     }
     function retrieveSourceMapURL(source) {
       var fileData;
@@ -18899,9 +18899,9 @@ var require_source_map_support = __commonJS({
         var line = +match[2];
         var column = +match[3];
         var contents = fileContentsCache[source];
-        if (!contents && fs11 && fs11.existsSync(source)) {
+        if (!contents && fs12 && fs12.existsSync(source)) {
           try {
-            contents = fs11.readFileSync(source, "utf8");
+            contents = fs12.readFileSync(source, "utf8");
           } catch (er) {
             contents = "";
           }
@@ -20370,7 +20370,7 @@ var require_underscore = __commonJS({
 var require_reflux_coffee = __commonJS({
   "src/flux/modules/reflux-coffee.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var _str3 = require_underscore();
+    var _str4 = require_underscore();
     var { EventEmitter: EventEmitter5 } = require("events");
     var callbackName = (string) => `on${string.charAt(0).toUpperCase()}${string.slice(1)}`;
     var mapChildListenables = (listenable) => {
@@ -20395,7 +20395,7 @@ var require_reflux_coffee = __commonJS({
         flattened[key] = listenable;
         for (var childKey in children) {
           var childListenable = children[childKey];
-          flattened[key + _str3.capitalize(childKey)] = childListenable;
+          flattened[key + _str4.capitalize(childKey)] = childListenable;
         }
       }
       return flattened;
@@ -21090,8 +21090,8 @@ var require_window_event_handler = __commonJS({
     var WindowEventHandler2;
     var _path = require("path");
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Disposable } = require_event_kit();
-    var { shell: shell6, ipcRenderer: ipcRenderer8, remote: remote9 } = require("electron");
+    var { Disposable: Disposable2 } = require_event_kit();
+    var { shell: shell6, ipcRenderer: ipcRenderer8, remote: remote10 } = require("electron");
     var _fs = require_fs_plus();
     var url6 = require("url");
     module2.exports = WindowEventHandler2 = class WindowEventHandler {
@@ -21238,10 +21238,10 @@ var require_window_event_handler = __commonJS({
         return unloadCallbacksRunning === 0;
       }
       runUnloadFinished() {
-        ({ remote: remote9 } = require("electron"));
+        ({ remote: remote10 } = require("electron"));
         return _4.defer(() => {
-          if (remote9.getGlobal("application").isQuitting()) {
-            return remote9.app.quit();
+          if (remote10.getGlobal("application").isQuitting()) {
+            return remote10.app.quit();
           } else if (NylasEnv.isReloading) {
             NylasEnv.isReloading = false;
             return NylasEnv.reload();
@@ -21287,7 +21287,7 @@ var require_window_event_handler = __commonJS({
         }
         if (["mailto:", "nylas:"].includes(protocol)) {
           href = encodeURI(decodeURI(href));
-          remote9.getGlobal("application").openUrl(href);
+          remote10.getGlobal("application").openUrl(href);
         } else if (["http:", "https:", "tel:"].includes(protocol)) {
           shell6.openExternal(href, { activate: !metaKey });
         }
@@ -21325,8 +21325,8 @@ var require_window_event_handler = __commonJS({
           }
         }
         const word2 = event2.target.value.substr(wordStart, wordEnd - wordStart);
-        ({ remote: remote9 } = require("electron"));
-        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
+        ({ remote: remote10 } = require("electron"));
+        const { Menu: Menu7, MenuItem: MenuItem2 } = remote10;
         const menu = new Menu7();
         const Spellchecker3 = (init_spellchecker(), __toCommonJS(spellchecker_exports)).default;
         Spellchecker3.appendSpellingItemsToMenu({
@@ -21358,7 +21358,7 @@ var require_window_event_handler = __commonJS({
             click: () => document.execCommand("paste")
           })
         );
-        return menu.popup(remote9.getCurrentWindow());
+        return menu.popup(remote10.getCurrentWindow());
       }
       showDevModeMessages() {
         if (!NylasEnv.isMainWindow()) {
@@ -21380,7 +21380,7 @@ var require_window_event_handler = __commonJS({
 // src/styles-element.js
 var require_styles_element = __commonJS({
   "src/styles-element.js"(exports2, module2) {
-    var { Emitter: Emitter3, CompositeDisposable } = require_event_kit();
+    var { Emitter: Emitter5, CompositeDisposable: CompositeDisposable2 } = require_event_kit();
     var StylesElement2 = class _StylesElement extends HTMLElement {
       static initClass() {
         _StylesElement.prototype.subscriptions = null;
@@ -21397,7 +21397,7 @@ var require_styles_element = __commonJS({
       }
       constructor() {
         super();
-        this.emitter = new Emitter3();
+        this.emitter = new Emitter5();
         this.styleElementClonesByOriginalElement = /* @__PURE__ */ new WeakMap();
       }
       connectedCallback() {
@@ -21417,7 +21417,7 @@ var require_styles_element = __commonJS({
         if (this.subscriptions != null) {
           return;
         }
-        this.subscriptions = new CompositeDisposable();
+        this.subscriptions = new CompositeDisposable2();
         this.context = (left = this.getAttribute("context")) != null ? left : void 0;
         this.subscriptions.add(
           NylasEnv.styles.observeStyleElements(this.styleElementAdded.bind(this))
@@ -26996,16 +26996,16 @@ var require_database_object_registry = __commonJS({
 // src/flux/models/utils.js
 var require_utils = __commonJS({
   "src/flux/models/utils.js"(exports2, module2) {
-    var Utils25;
+    var Utils26;
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var fs11 = require_fs_plus();
-    var path14 = require("path");
+    var fs12 = require_fs_plus();
+    var path15 = require("path");
     var _moment = require_moment_timezone2();
     var DefaultResourcePath = null;
     var TaskRegistry2 = require_task_registry().default;
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     var imageData = null;
-    module2.exports = Utils25 = {
+    module2.exports = Utils26 = {
       waitFor(latch, options2) {
         if (options2 == null) {
           options2 = {};
@@ -27101,7 +27101,7 @@ var require_utils = __commonJS({
         if (str == null) {
           str = "";
         }
-        return new RegExp(`((?:^|\\W|$)${Utils25.escapeRegExp(str.trim())})`, "ig");
+        return new RegExp(`((?:^|\\W|$)${Utils26.escapeRegExp(str.trim())})`, "ig");
       },
       // Takes an optional customizer. The customizer is passed the key and the
       // new cloned value for that key. The customizer is expected to either
@@ -27134,7 +27134,7 @@ var require_utils = __commonJS({
         stackSeen.push(object2);
         stackRefs.push(newObject);
         for (var key of Array.from(Object.getOwnPropertyNames(object2))) {
-          var newVal = Utils25.deepClone(
+          var newVal = Utils26.deepClone(
             object2[key],
             customizer,
             stackSeen,
@@ -27167,7 +27167,7 @@ var require_utils = __commonJS({
         }
         const name2 = (left = (left1 = file.filename != null ? file.filename : file.fileName) != null ? left1 : file.name) != null ? left : "";
         const size2 = (left2 = file.size != null ? file.size : file.fileSize) != null ? left2 : 0;
-        const ext = path14.extname(name2).toLowerCase();
+        const ext = path15.extname(name2).toLowerCase();
         const extensions = [".jpg", ".bmp", ".gif", ".png", ".jpeg"];
         return Array.from(extensions).includes(ext) && size2 > 512 && size2 < 1024 * 1024 * 5;
       },
@@ -27192,7 +27192,7 @@ var require_utils = __commonJS({
         return Object.getOwnPropertyNames(o).forEach((key) => {
           const val = o[key];
           if (typeof val === "object" && val !== null && !Object.isFrozen(val)) {
-            return Utils25.modelFreeze(val);
+            return Utils26.modelFreeze(val);
           }
         });
       },
@@ -27225,30 +27225,30 @@ var require_utils = __commonJS({
         if (!imageData) {
           let left, left1;
           imageData = (left = NylasEnv.fileListCache().imageData) != null ? left : "{}";
-          Utils25.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
+          Utils26.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
         }
-        if (!__guard__2(
-          Utils25 != null ? Utils25.images : void 0,
+        if (!__guard__3(
+          Utils26 != null ? Utils26.images : void 0,
           (x3) => x3[resourcePath2]
         )) {
-          if (Utils25.images == null) {
-            Utils25.images = {};
+          if (Utils26.images == null) {
+            Utils26.images = {};
           }
-          if (Utils25.images[resourcePath2] == null) {
-            Utils25.images[resourcePath2] = {};
+          if (Utils26.images[resourcePath2] == null) {
+            Utils26.images[resourcePath2] = {};
           }
-          const imagesPath = path14.join(resourcePath2, "static", "images");
-          const files = fs11.listTreeSync(imagesPath);
+          const imagesPath = path15.join(resourcePath2, "static", "images");
+          const files = fs12.listTreeSync(imagesPath);
           for (var file of Array.from(files)) {
             file = file.replace(/\\/g, "/");
-            var _basename = path14.basename(file);
-            Utils25.images[resourcePath2][path14.basename(file)] = file;
+            var _basename = path15.basename(file);
+            Utils26.images[resourcePath2][path15.basename(file)] = file;
           }
-          NylasEnv.fileListCache().imageData = JSON.stringify(Utils25.images);
+          NylasEnv.fileListCache().imageData = JSON.stringify(Utils26.images);
         }
         const plat = process.platform != null ? process.platform : "";
         const ratio = window.devicePixelRatio != null ? window.devicePixelRatio : 1;
-        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils25.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils25.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils25.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils25.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils25.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils25.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils25.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils25.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils25.images[resourcePath2][`${name2}@1x.${ext}`];
+        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils26.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils26.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils26.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils26.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils26.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils26.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils26.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils26.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils26.images[resourcePath2][`${name2}@1x.${ext}`];
       },
       subjectWithPrefix(subject, prefix) {
         if (subject.search(/fwd:/i) === 0) {
@@ -27281,7 +27281,7 @@ var require_utils = __commonJS({
           email = "";
         }
         const domain = _4.last(email.toLowerCase().trim().split("@"));
-        return Utils25.commonDomains[domain] != null ? Utils25.commonDomains[domain] : false;
+        return Utils26.commonDomains[domain] != null ? Utils26.commonDomains[domain] : false;
       },
       // This looks for and removes plus-ing, it taks a VERY liberal approach
       // to match an email address. We'd rather let false positives through.
@@ -27303,8 +27303,8 @@ var require_utils = __commonJS({
         if (email1 === email2) {
           return true;
         }
-        email1 = Utils25.toEquivalentEmailForm(email1);
-        email2 = Utils25.toEquivalentEmailForm(email2);
+        email1 = Utils26.toEquivalentEmailForm(email1);
+        email2 = Utils26.toEquivalentEmailForm(email2);
         return email1 === email2;
       },
       rectVisibleInRect(r1, r2) {
@@ -27316,7 +27316,7 @@ var require_utils = __commonJS({
         }
         options2.functionsAreEqual = true;
         options2.ignoreKeys = (options2.ignoreKeys != null ? options2.ignoreKeys : []).push("clientId");
-        return Utils25.isEqual(a, b, options2);
+        return Utils26.isEqual(a, b, options2);
       },
       // Customized version of Underscore 1.8.2's isEqual function
       // You can pass the following options:
@@ -27327,7 +27327,7 @@ var require_utils = __commonJS({
         if (options2 == null) {
           options2 = {};
         }
-        const value = Utils25._isEqual(a, b, [], [], options2);
+        const value = Utils26._isEqual(a, b, [], [], options2);
         if (options2.logWhenFalse) {
           if (value === false) {
             console.log("isEqual is false", a, b, options2);
@@ -27412,7 +27412,7 @@ var require_utils = __commonJS({
             return false;
           }
           while (length--) {
-            if (!Utils25._isEqual(a[length], b[length], aStack, bStack, options2)) {
+            if (!Utils26._isEqual(a[length], b[length], aStack, bStack, options2)) {
               return false;
             }
           }
@@ -27434,7 +27434,7 @@ var require_utils = __commonJS({
             if (key in keysToIgnore) {
               continue;
             }
-            if (!(_4.has(b, key) && Utils25._isEqual(a[key], b[key], aStack, bStack, options2))) {
+            if (!(_4.has(b, key) && Utils26._isEqual(a[key], b[key], aStack, bStack, options2))) {
               return false;
             }
           }
@@ -27660,9 +27660,9 @@ var require_utils = __commonJS({
         if (values2.length === 0) {
           throw new Error("Can't stdev zero values");
         }
-        const avg = Utils25.mean(values2);
+        const avg = Utils26.mean(values2);
         const squareDiffs = values2.map((val) => (val - avg) ** 2);
-        return Math.sqrt(Utils25.mean(squareDiffs));
+        return Math.sqrt(Utils26.mean(squareDiffs));
       },
       // Resolves nested paths in objects of the form "key.subKey.subKey".
       // Null checks along the way.
@@ -27718,7 +27718,7 @@ var require_utils = __commonJS({
       }
       return range2;
     }
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -29671,7 +29671,7 @@ var require_property_accessors = __commonJS({
 var require_subscription = __commonJS({
   "../../node_modules/.pnpm/emissary@file+packages+client-app+src+vendor+emissary/node_modules/emissary/lib/subscription.js"(exports2, module2) {
     (() => {
-      var Emitter3, Subscription, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
+      var Emitter5, Subscription, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
         for (var key in parent) {
           if (__hasProp.call(parent, key)) child[key] = parent[key];
         }
@@ -29683,7 +29683,7 @@ var require_subscription = __commonJS({
         child.__super__ = parent.prototype;
         return child;
       };
-      Emitter3 = require_emitter2();
+      Emitter5 = require_emitter2();
       module2.exports = Subscription = ((_super) => {
         __extends(Subscription2, _super);
         Subscription2.prototype.cancelled = false;
@@ -29708,7 +29708,7 @@ var require_subscription = __commonJS({
           return this.emit("cancelled");
         };
         return Subscription2;
-      })(Emitter3);
+      })(Emitter5);
     }).call(exports2);
   }
 });
@@ -29717,7 +29717,7 @@ var require_subscription = __commonJS({
 var require_emitter2 = __commonJS({
   "../../node_modules/.pnpm/emissary@file+packages+client-app+src+vendor+emissary/node_modules/emissary/lib/emitter.js"(exports2, module2) {
     (() => {
-      var Emitter3, Mixin, Signal, Subscription, removeFromArray, subscriptionRemovedPattern, _ref, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
+      var Emitter5, Mixin, Signal, Subscription, removeFromArray, subscriptionRemovedPattern, _ref, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
         for (var key in parent) {
           if (__hasProp.call(parent, key)) child[key] = parent[key];
         }
@@ -29733,21 +29733,21 @@ var require_emitter2 = __commonJS({
       Signal = null;
       Subscription = null;
       subscriptionRemovedPattern = /^(last-)?.+-subscription-removed$/;
-      module2.exports = Emitter3 = ((_super) => {
-        __extends(Emitter4, _super);
-        function Emitter4() {
-          _ref = Emitter4.__super__.constructor.apply(this, arguments);
+      module2.exports = Emitter5 = ((_super) => {
+        __extends(Emitter6, _super);
+        function Emitter6() {
+          _ref = Emitter6.__super__.constructor.apply(this, arguments);
           return _ref;
         }
-        Emitter4.prototype.eventHandlersByEventName = null;
-        Emitter4.prototype.eventHandlersByNamespace = null;
-        Emitter4.prototype.subscriptionCounts = null;
-        Emitter4.prototype.pauseCountsByEventName = null;
-        Emitter4.prototype.queuedEventsByEventName = null;
-        Emitter4.prototype.globalPauseCount = null;
-        Emitter4.prototype.globalQueuedEvents = null;
-        Emitter4.prototype.signalsByEventName = null;
-        Emitter4.prototype.on = function(eventNames, handler) {
+        Emitter6.prototype.eventHandlersByEventName = null;
+        Emitter6.prototype.eventHandlersByNamespace = null;
+        Emitter6.prototype.subscriptionCounts = null;
+        Emitter6.prototype.pauseCountsByEventName = null;
+        Emitter6.prototype.queuedEventsByEventName = null;
+        Emitter6.prototype.globalPauseCount = null;
+        Emitter6.prototype.globalQueuedEvents = null;
+        Emitter6.prototype.signalsByEventName = null;
+        Emitter6.prototype.on = function(eventNames, handler) {
           var eventName, namespace, _base, _base1, _base2, _i2, _len, _ref1, _ref2;
           _ref1 = eventNames.split(/\s+/);
           for (_i2 = 0, _len = _ref1.length; _i2 < _len; _i2++) {
@@ -29786,7 +29786,7 @@ var require_emitter2 = __commonJS({
           }
           return new Subscription(this, eventNames, handler);
         };
-        Emitter4.prototype.once = function(eventName, handler) {
+        Emitter6.prototype.once = function(eventName, handler) {
           var subscription;
           return subscription = this.on(eventName, function() {
             var args;
@@ -29795,7 +29795,7 @@ var require_emitter2 = __commonJS({
             return handler.apply(null, args);
           });
         };
-        Emitter4.prototype.signal = function(eventName) {
+        Emitter6.prototype.signal = function(eventName) {
           var _base;
           if (Signal == null) {
             Signal = require_signal();
@@ -29805,10 +29805,10 @@ var require_emitter2 = __commonJS({
           }
           return (_base = this.signalsByEventName)[eventName] != null ? (_base = this.signalsByEventName)[eventName] : _base[eventName] = Signal.fromEmitter(this, eventName);
         };
-        Emitter4.prototype.behavior = function(eventName, initialValue) {
+        Emitter6.prototype.behavior = function(eventName, initialValue) {
           return this.signal(eventName).toBehavior(initialValue);
         };
-        Emitter4.prototype.emit = function(eventName, payload) {
+        Emitter6.prototype.emit = function(eventName, payload) {
           var handler, handlers, queuedEvents, _i2, _len, _ref1, _ref2, _ref3;
           if (arguments.length > 2 || /\s|\./.test(eventName)) {
             return this.emitSlow.apply(this, arguments);
@@ -29829,7 +29829,7 @@ var require_emitter2 = __commonJS({
             }
           }
         };
-        Emitter4.prototype.emitSlow = function() {
+        Emitter6.prototype.emitSlow = function() {
           var args, eventName, handlers, namespace, queuedEvents, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
           eventName = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
           if (this.globalQueuedEvents) {
@@ -29877,7 +29877,7 @@ var require_emitter2 = __commonJS({
             }
           }
         };
-        Emitter4.prototype.off = function(eventNames, handler) {
+        Emitter6.prototype.off = function(eventNames, handler) {
           var eventHandlers, eventName, handlers, namespace, namespaceHandlers, _i2, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
           if (eventNames) {
             _ref1 = eventNames.split(/\s+/);
@@ -29968,7 +29968,7 @@ var require_emitter2 = __commonJS({
             return this.eventHandlersByNamespace = {};
           }
         };
-        Emitter4.prototype.pauseEvents = function(eventNames) {
+        Emitter6.prototype.pauseEvents = function(eventNames) {
           var eventName, _base, _base1, _i2, _len, _ref1, _results;
           if (eventNames) {
             _ref1 = eventNames.split(/\s+/);
@@ -30003,7 +30003,7 @@ var require_emitter2 = __commonJS({
             return this.globalPauseCount++;
           }
         };
-        Emitter4.prototype.resumeEvents = function(eventNames) {
+        Emitter6.prototype.resumeEvents = function(eventNames) {
           var event2, eventName, queuedEvents, _i2, _j, _len, _len1, _ref1, _ref2, _results, _results1;
           if (eventNames) {
             _ref1 = eventNames.split(/\s+/);
@@ -30047,7 +30047,7 @@ var require_emitter2 = __commonJS({
             }
           }
         };
-        Emitter4.prototype.incrementSubscriptionCount = function(eventName) {
+        Emitter6.prototype.incrementSubscriptionCount = function(eventName) {
           var _base;
           if (this.subscriptionCounts == null) {
             this.subscriptionCounts = {};
@@ -30057,7 +30057,7 @@ var require_emitter2 = __commonJS({
           }
           return ++this.subscriptionCounts[eventName];
         };
-        Emitter4.prototype.decrementSubscriptionCount = function(eventName) {
+        Emitter6.prototype.decrementSubscriptionCount = function(eventName) {
           var count;
           count = --this.subscriptionCounts[eventName];
           if (count === 0) {
@@ -30065,7 +30065,7 @@ var require_emitter2 = __commonJS({
           }
           return count;
         };
-        Emitter4.prototype.getSubscriptionCount = function(eventName) {
+        Emitter6.prototype.getSubscriptionCount = function(eventName) {
           var count, name2, total, _ref1, _ref2, _ref3;
           if (eventName != null) {
             return (_ref1 = (_ref2 = this.subscriptionCounts) != null ? _ref2[eventName] : void 0) != null ? _ref1 : 0;
@@ -30079,10 +30079,10 @@ var require_emitter2 = __commonJS({
             return total;
           }
         };
-        Emitter4.prototype.hasSubscriptions = function(eventName) {
+        Emitter6.prototype.hasSubscriptions = function(eventName) {
           return this.getSubscriptionCount(eventName) > 0;
         };
-        return Emitter4;
+        return Emitter6;
       })(Mixin);
       removeFromArray = (array, element) => {
         var index;
@@ -30215,7 +30215,7 @@ var require_subscriber = __commonJS({
 var require_signal = __commonJS({
   "../../node_modules/.pnpm/emissary@file+packages+client-app+src+vendor+emissary/node_modules/emissary/lib/signal.js"(exports2, module2) {
     (() => {
-      var Behavior, Emitter3, Signal, Subscriber, isEqual2, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
+      var Behavior, Emitter5, Signal, Subscriber, isEqual2, __hasProp = {}.hasOwnProperty, __extends = (child, parent) => {
         for (var key in parent) {
           if (__hasProp.call(parent, key)) child[key] = parent[key];
         }
@@ -30228,7 +30228,7 @@ var require_signal = __commonJS({
         return child;
       }, __slice = [].slice;
       isEqual2 = require_underscore_plus().isEqual;
-      Emitter3 = require_emitter2();
+      Emitter5 = require_emitter2();
       Subscriber = require_subscriber();
       Behavior = null;
       module2.exports = Signal = ((_super) => {
@@ -30489,7 +30489,7 @@ var require_signal = __commonJS({
           });
         };
         return Signal2;
-      })(Emitter3);
+      })(Emitter5);
     }).call(exports2);
   }
 });
@@ -31805,15 +31805,15 @@ function link(from, to) {
   };
 }
 function wrapConversion(toModel, graph) {
-  const path14 = [graph[toModel].parent, toModel];
+  const path15 = [graph[toModel].parent, toModel];
   let fn2 = conversions_default[graph[toModel].parent][toModel];
   let cur = graph[toModel].parent;
   while (graph[cur].parent) {
-    path14.unshift(graph[cur].parent);
+    path15.unshift(graph[cur].parent);
     fn2 = link(conversions_default[graph[cur].parent][cur], fn2);
     cur = graph[cur].parent;
   }
-  fn2.conversion = path14;
+  fn2.conversion = path15;
   return fn2;
 }
 function route(fromModel) {
@@ -32439,17 +32439,17 @@ var require_config = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var _configUtils = (init_config_utils(), __toCommonJS(config_utils_exports));
     _4 = _4.extend(_4, _configUtils.default || _configUtils);
-    var remote9 = null;
+    var remote10 = null;
     if (process.type === "renderer") {
-      remote9 = require_at_electron_remote();
+      remote10 = require_at_electron_remote();
     }
     var _fs = require_fs_plus();
-    var EmitterMixin = require_emissary().Emitter;
-    var { CompositeDisposable, Disposable, Emitter: Emitter3 } = require_event_kit();
+    var EmitterMixin2 = require_emissary().Emitter;
+    var { CompositeDisposable: CompositeDisposable2, Disposable: Disposable2, Emitter: Emitter5 } = require_event_kit();
     var Color2 = require_color();
     if (process.type === "renderer") {
-      app2 = remote9.getGlobal("application");
-      webContentsId = remote9.getCurrentWebContents()?.getId?.() ?? remote9.getCurrentWebContents()?.id ?? -1;
+      app2 = remote10.getGlobal("application");
+      webContentsId = remote10.getCurrentWebContents()?.getId?.() ?? remote10.getCurrentWebContents()?.id ?? -1;
       getErrorLogger = () => NylasEnv.errorLogger;
     } else {
       app2 = global.application;
@@ -32459,7 +32459,7 @@ var require_config = __commonJS({
     module2.exports = Config2 = (() => {
       Config2 = class Config3 {
         static initClass() {
-          EmitterMixin.includeInto(Config3);
+          EmitterMixin2.includeInto(Config3);
           Config3.schemaEnforcers = {};
         }
         static addSchemaEnforcer(typeName, enforcerFunction) {
@@ -32517,7 +32517,7 @@ var require_config = __commonJS({
         // Created during initialization, available as `NylasEnv.config`
         constructor() {
           this.updateSettings = this.updateSettings.bind(this);
-          this.emitter = new Emitter3();
+          this.emitter = new Emitter5();
           this.schema = {
             type: "object",
             properties: {}
@@ -33393,7 +33393,7 @@ var require_q = __commonJS({
           return callback.apply(callback, arguments);
         };
       }
-      function Q2(value) {
+      function Q3(value) {
         if (value instanceof Promise3) {
           return value;
         }
@@ -33403,14 +33403,14 @@ var require_q = __commonJS({
           return fulfill(value);
         }
       }
-      Q2.resolve = Q2;
-      Q2.nextTick = nextTick;
-      Q2.longStackSupport = false;
+      Q3.resolve = Q3;
+      Q3.nextTick = nextTick;
+      Q3.longStackSupport = false;
       var longStackCounter = 1;
       if (typeof process === "object" && process && process.env && process.env.Q_DEBUG) {
-        Q2.longStackSupport = true;
+        Q3.longStackSupport = true;
       }
-      Q2.defer = defer;
+      Q3.defer = defer;
       function defer() {
         var messages = [], progressListeners = [], resolvedPromise;
         var deferred = object_create(defer.prototype);
@@ -33423,7 +33423,7 @@ var require_q = __commonJS({
               progressListeners.push(operands[1]);
             }
           } else {
-            Q2.nextTick(function() {
+            Q3.nextTick(function() {
               resolvedPromise.promiseDispatch.apply(resolvedPromise, args);
             });
           }
@@ -33444,7 +33444,7 @@ var require_q = __commonJS({
           }
           return resolvedPromise.inspect();
         };
-        if (Q2.longStackSupport && hasStacks) {
+        if (Q3.longStackSupport && hasStacks) {
           try {
             throw new Error();
           } catch (e) {
@@ -33454,11 +33454,11 @@ var require_q = __commonJS({
         }
         function become(newPromise) {
           resolvedPromise = newPromise;
-          if (Q2.longStackSupport && hasStacks) {
+          if (Q3.longStackSupport && hasStacks) {
             promise2.source = newPromise;
           }
           array_reduce(messages, function(undefined2, message) {
-            Q2.nextTick(function() {
+            Q3.nextTick(function() {
               newPromise.promiseDispatch.apply(newPromise, message);
             });
           }, void 0);
@@ -33470,7 +33470,7 @@ var require_q = __commonJS({
           if (resolvedPromise) {
             return;
           }
-          become(Q2(value));
+          become(Q3(value));
         };
         deferred.fulfill = function(value) {
           if (resolvedPromise) {
@@ -33489,7 +33489,7 @@ var require_q = __commonJS({
             return;
           }
           array_reduce(progressListeners, function(undefined2, progressListener) {
-            Q2.nextTick(function() {
+            Q3.nextTick(function() {
               progressListener(progress3);
             });
           }, void 0);
@@ -33508,8 +33508,8 @@ var require_q = __commonJS({
           }
         };
       };
-      Q2.Promise = promise;
-      Q2.promise = promise;
+      Q3.Promise = promise;
+      Q3.promise = promise;
       function promise(resolver) {
         if (typeof resolver !== "function") {
           throw new TypeError("resolver must be a function.");
@@ -33525,18 +33525,18 @@ var require_q = __commonJS({
       promise.race = race;
       promise.all = all2;
       promise.reject = reject2;
-      promise.resolve = Q2;
-      Q2.passByCopy = function(object2) {
+      promise.resolve = Q3;
+      Q3.passByCopy = function(object2) {
         return object2;
       };
       Promise3.prototype.passByCopy = function() {
         return this;
       };
-      Q2.join = function(x3, y) {
-        return Q2(x3).join(y);
+      Q3.join = function(x3, y) {
+        return Q3(x3).join(y);
       };
       Promise3.prototype.join = function(that) {
-        return Q2([this, that]).spread(function(x3, y) {
+        return Q3([this, that]).spread(function(x3, y) {
           if (x3 === y) {
             return x3;
           } else {
@@ -33544,18 +33544,18 @@ var require_q = __commonJS({
           }
         });
       };
-      Q2.race = race;
+      Q3.race = race;
       function race(answerPs) {
         return promise(function(resolve7, reject3) {
           for (var i = 0, len = answerPs.length; i < len; i++) {
-            Q2(answerPs[i]).then(resolve7, reject3);
+            Q3(answerPs[i]).then(resolve7, reject3);
           }
         });
       }
       Promise3.prototype.race = function() {
-        return this.then(Q2.race);
+        return this.then(Q3.race);
       };
-      Q2.makePromise = Promise3;
+      Q3.makePromise = Promise3;
       function Promise3(descriptor, fallback, inspect3) {
         if (fallback === void 0) {
           fallback = function(op) {
@@ -33629,7 +33629,7 @@ var require_q = __commonJS({
         function _progressed(value) {
           return typeof progressed === "function" ? progressed(value) : value;
         }
-        Q2.nextTick(function() {
+        Q3.nextTick(function() {
           self2.promiseDispatch(function(value) {
             if (done) {
               return;
@@ -33651,8 +33651,8 @@ var require_q = __commonJS({
             newValue = _progressed(value);
           } catch (e) {
             threw = true;
-            if (Q2.onerror) {
-              Q2.onerror(e);
+            if (Q3.onerror) {
+              Q3.onerror(e);
             } else {
               throw e;
             }
@@ -33663,36 +33663,36 @@ var require_q = __commonJS({
         }]);
         return deferred.promise;
       };
-      Q2.tap = function(promise2, callback) {
-        return Q2(promise2).tap(callback);
+      Q3.tap = function(promise2, callback) {
+        return Q3(promise2).tap(callback);
       };
       Promise3.prototype.tap = function(callback) {
-        callback = Q2(callback);
+        callback = Q3(callback);
         return this.then(function(value) {
           return callback.fcall(value).thenResolve(value);
         });
       };
-      Q2.when = when;
+      Q3.when = when;
       function when(value, fulfilled, rejected, progressed) {
-        return Q2(value).then(fulfilled, rejected, progressed);
+        return Q3(value).then(fulfilled, rejected, progressed);
       }
       Promise3.prototype.thenResolve = function(value) {
         return this.then(function() {
           return value;
         });
       };
-      Q2.thenResolve = function(promise2, value) {
-        return Q2(promise2).thenResolve(value);
+      Q3.thenResolve = function(promise2, value) {
+        return Q3(promise2).thenResolve(value);
       };
       Promise3.prototype.thenReject = function(reason) {
         return this.then(function() {
           throw reason;
         });
       };
-      Q2.thenReject = function(promise2, reason) {
-        return Q2(promise2).thenReject(reason);
+      Q3.thenReject = function(promise2, reason) {
+        return Q3(promise2).thenReject(reason);
       };
-      Q2.nearer = nearer;
+      Q3.nearer = nearer;
       function nearer(value) {
         if (isPromise(value)) {
           var inspected = value.inspect();
@@ -33702,29 +33702,29 @@ var require_q = __commonJS({
         }
         return value;
       }
-      Q2.isPromise = isPromise;
+      Q3.isPromise = isPromise;
       function isPromise(object2) {
         return object2 instanceof Promise3;
       }
-      Q2.isPromiseAlike = isPromiseAlike;
+      Q3.isPromiseAlike = isPromiseAlike;
       function isPromiseAlike(object2) {
         return isObject3(object2) && typeof object2.then === "function";
       }
-      Q2.isPending = isPending;
+      Q3.isPending = isPending;
       function isPending(object2) {
         return isPromise(object2) && object2.inspect().state === "pending";
       }
       Promise3.prototype.isPending = function() {
         return this.inspect().state === "pending";
       };
-      Q2.isFulfilled = isFulfilled;
+      Q3.isFulfilled = isFulfilled;
       function isFulfilled(object2) {
         return !isPromise(object2) || object2.inspect().state === "fulfilled";
       }
       Promise3.prototype.isFulfilled = function() {
         return this.inspect().state === "fulfilled";
       };
-      Q2.isRejected = isRejected;
+      Q3.isRejected = isRejected;
       function isRejected(object2) {
         return isPromise(object2) && object2.inspect().state === "rejected";
       }
@@ -33747,7 +33747,7 @@ var require_q = __commonJS({
           return;
         }
         if (typeof process === "object" && typeof process.emit === "function") {
-          Q2.nextTick.runAfter(function() {
+          Q3.nextTick.runAfter(function() {
             if (array_indexOf(unhandledRejections, promise2) !== -1) {
               process.emit("unhandledRejection", reason, promise2);
               reportedUnhandledRejections.push(promise2);
@@ -33768,7 +33768,7 @@ var require_q = __commonJS({
         var at2 = array_indexOf(unhandledRejections, promise2);
         if (at2 !== -1) {
           if (typeof process === "object" && typeof process.emit === "function") {
-            Q2.nextTick.runAfter(function() {
+            Q3.nextTick.runAfter(function() {
               var atReport = array_indexOf(reportedUnhandledRejections, promise2);
               if (atReport !== -1) {
                 process.emit("rejectionHandled", unhandledReasons[at2], promise2);
@@ -33780,16 +33780,16 @@ var require_q = __commonJS({
           unhandledReasons.splice(at2, 1);
         }
       }
-      Q2.resetUnhandledRejections = resetUnhandledRejections;
-      Q2.getUnhandledReasons = function() {
+      Q3.resetUnhandledRejections = resetUnhandledRejections;
+      Q3.getUnhandledReasons = function() {
         return unhandledReasons.slice();
       };
-      Q2.stopUnhandledRejectionTracking = function() {
+      Q3.stopUnhandledRejectionTracking = function() {
         resetUnhandledRejections();
         trackUnhandledRejections = false;
       };
       resetUnhandledRejections();
-      Q2.reject = reject2;
+      Q3.reject = reject2;
       function reject2(reason) {
         var rejection = Promise3({
           "when": function(rejected) {
@@ -33806,7 +33806,7 @@ var require_q = __commonJS({
         trackRejection(rejection, reason);
         return rejection;
       }
-      Q2.fulfill = fulfill;
+      Q3.fulfill = fulfill;
       function fulfill(value) {
         return Promise3({
           "when": function() {
@@ -33840,7 +33840,7 @@ var require_q = __commonJS({
       }
       function coerce(promise2) {
         var deferred = defer();
-        Q2.nextTick(function() {
+        Q3.nextTick(function() {
           try {
             promise2.then(deferred.resolve, deferred.reject, deferred.notify);
           } catch (exception) {
@@ -33849,7 +33849,7 @@ var require_q = __commonJS({
         });
         return deferred.promise;
       }
-      Q2.master = master;
+      Q3.master = master;
       function master(object2) {
         return Promise3({
           "isDef": function() {
@@ -33857,19 +33857,19 @@ var require_q = __commonJS({
         }, function fallback(op, args) {
           return dispatch(object2, op, args);
         }, function() {
-          return Q2(object2).inspect();
+          return Q3(object2).inspect();
         });
       }
-      Q2.spread = spread;
+      Q3.spread = spread;
       function spread(value, fulfilled, rejected) {
-        return Q2(value).spread(fulfilled, rejected);
+        return Q3(value).spread(fulfilled, rejected);
       }
       Promise3.prototype.spread = function(fulfilled, rejected) {
         return this.all().then(function(array) {
           return fulfilled.apply(void 0, array);
         }, rejected);
       };
-      Q2.async = async2;
+      Q3.async = async2;
       function async2(makeGenerator) {
         return function() {
           function continuer(verb, arg) {
@@ -33881,7 +33881,7 @@ var require_q = __commonJS({
                 return reject2(exception);
               }
               if (result2.done) {
-                return Q2(result2.value);
+                return Q3(result2.value);
               } else {
                 return when(result2.value, callback, errback);
               }
@@ -33890,7 +33890,7 @@ var require_q = __commonJS({
                 result2 = generator[verb](arg);
               } catch (exception) {
                 if (isStopIteration(exception)) {
-                  return Q2(exception.value);
+                  return Q3(exception.value);
                 } else {
                   return reject2(exception);
                 }
@@ -33904,15 +33904,15 @@ var require_q = __commonJS({
           return callback();
         };
       }
-      Q2.spawn = spawn2;
+      Q3.spawn = spawn2;
       function spawn2(makeGenerator) {
-        Q2.done(Q2.async(makeGenerator)());
+        Q3.done(Q3.async(makeGenerator)());
       }
-      Q2["return"] = _return;
+      Q3["return"] = _return;
       function _return(value) {
         throw new QReturnValue(value);
       }
-      Q2.promised = promised;
+      Q3.promised = promised;
       function promised(callback) {
         return function() {
           return spread([this, all2(arguments)], function(self2, args) {
@@ -33920,70 +33920,70 @@ var require_q = __commonJS({
           });
         };
       }
-      Q2.dispatch = dispatch;
+      Q3.dispatch = dispatch;
       function dispatch(object2, op, args) {
-        return Q2(object2).dispatch(op, args);
+        return Q3(object2).dispatch(op, args);
       }
       Promise3.prototype.dispatch = function(op, args) {
         var self2 = this;
         var deferred = defer();
-        Q2.nextTick(function() {
+        Q3.nextTick(function() {
           self2.promiseDispatch(deferred.resolve, op, args);
         });
         return deferred.promise;
       };
-      Q2.get = function(object2, key) {
-        return Q2(object2).dispatch("get", [key]);
+      Q3.get = function(object2, key) {
+        return Q3(object2).dispatch("get", [key]);
       };
       Promise3.prototype.get = function(key) {
         return this.dispatch("get", [key]);
       };
-      Q2.set = function(object2, key, value) {
-        return Q2(object2).dispatch("set", [key, value]);
+      Q3.set = function(object2, key, value) {
+        return Q3(object2).dispatch("set", [key, value]);
       };
       Promise3.prototype.set = function(key, value) {
         return this.dispatch("set", [key, value]);
       };
-      Q2.del = // XXX legacy
-      Q2["delete"] = function(object2, key) {
-        return Q2(object2).dispatch("delete", [key]);
+      Q3.del = // XXX legacy
+      Q3["delete"] = function(object2, key) {
+        return Q3(object2).dispatch("delete", [key]);
       };
       Promise3.prototype.del = // XXX legacy
       Promise3.prototype["delete"] = function(key) {
         return this.dispatch("delete", [key]);
       };
-      Q2.mapply = // XXX As proposed by "Redsandro"
-      Q2.post = function(object2, name2, args) {
-        return Q2(object2).dispatch("post", [name2, args]);
+      Q3.mapply = // XXX As proposed by "Redsandro"
+      Q3.post = function(object2, name2, args) {
+        return Q3(object2).dispatch("post", [name2, args]);
       };
       Promise3.prototype.mapply = // XXX As proposed by "Redsandro"
       Promise3.prototype.post = function(name2, args) {
         return this.dispatch("post", [name2, args]);
       };
-      Q2.send = // XXX Mark Miller's proposed parlance
-      Q2.mcall = // XXX As proposed by "Redsandro"
-      Q2.invoke = function(object2, name2) {
-        return Q2(object2).dispatch("post", [name2, array_slice(arguments, 2)]);
+      Q3.send = // XXX Mark Miller's proposed parlance
+      Q3.mcall = // XXX As proposed by "Redsandro"
+      Q3.invoke = function(object2, name2) {
+        return Q3(object2).dispatch("post", [name2, array_slice(arguments, 2)]);
       };
       Promise3.prototype.send = // XXX Mark Miller's proposed parlance
       Promise3.prototype.mcall = // XXX As proposed by "Redsandro"
       Promise3.prototype.invoke = function(name2) {
         return this.dispatch("post", [name2, array_slice(arguments, 1)]);
       };
-      Q2.fapply = function(object2, args) {
-        return Q2(object2).dispatch("apply", [void 0, args]);
+      Q3.fapply = function(object2, args) {
+        return Q3(object2).dispatch("apply", [void 0, args]);
       };
       Promise3.prototype.fapply = function(args) {
         return this.dispatch("apply", [void 0, args]);
       };
-      Q2["try"] = Q2.fcall = function(object2) {
-        return Q2(object2).dispatch("apply", [void 0, array_slice(arguments, 1)]);
+      Q3["try"] = Q3.fcall = function(object2) {
+        return Q3(object2).dispatch("apply", [void 0, array_slice(arguments, 1)]);
       };
       Promise3.prototype.fcall = function() {
         return this.dispatch("apply", [void 0, array_slice(arguments)]);
       };
-      Q2.fbind = function(object2) {
-        var promise2 = Q2(object2);
+      Q3.fbind = function(object2) {
+        var promise2 = Q3(object2);
         var args = array_slice(arguments, 1);
         return function fbound() {
           return promise2.dispatch("apply", [
@@ -34002,13 +34002,13 @@ var require_q = __commonJS({
           ]);
         };
       };
-      Q2.keys = function(object2) {
-        return Q2(object2).dispatch("keys", []);
+      Q3.keys = function(object2) {
+        return Q3(object2).dispatch("keys", []);
       };
       Promise3.prototype.keys = function() {
         return this.dispatch("keys", []);
       };
-      Q2.all = all2;
+      Q3.all = all2;
       function all2(promises2) {
         return when(promises2, function(promises3) {
           var pendingCount = 0;
@@ -34043,12 +34043,12 @@ var require_q = __commonJS({
       Promise3.prototype.all = function() {
         return all2(this);
       };
-      Q2.any = any;
+      Q3.any = any;
       function any(promises2) {
         if (promises2.length === 0) {
-          return Q2.resolve();
+          return Q3.resolve();
         }
-        var deferred = Q2.defer();
+        var deferred = Q3.defer();
         var pendingCount = 0;
         array_reduce(promises2, function(prev, current, index) {
           var promise2 = promises2[index];
@@ -34077,10 +34077,10 @@ var require_q = __commonJS({
       Promise3.prototype.any = function() {
         return any(this);
       };
-      Q2.allResolved = deprecate2(allResolved, "allResolved", "allSettled");
+      Q3.allResolved = deprecate2(allResolved, "allResolved", "allSettled");
       function allResolved(promises2) {
         return when(promises2, function(promises3) {
-          promises3 = array_map(promises3, Q2);
+          promises3 = array_map(promises3, Q3);
           return when(all2(array_map(promises3, function(promise2) {
             return when(promise2, noop4, noop4);
           })), function() {
@@ -34091,14 +34091,14 @@ var require_q = __commonJS({
       Promise3.prototype.allResolved = function() {
         return allResolved(this);
       };
-      Q2.allSettled = allSettled;
+      Q3.allSettled = allSettled;
       function allSettled(promises2) {
-        return Q2(promises2).allSettled();
+        return Q3(promises2).allSettled();
       }
       Promise3.prototype.allSettled = function() {
         return this.then(function(promises2) {
           return all2(array_map(promises2, function(promise2) {
-            promise2 = Q2(promise2);
+            promise2 = Q3(promise2);
             function regardless() {
               return promise2.inspect();
             }
@@ -34106,31 +34106,31 @@ var require_q = __commonJS({
           }));
         });
       };
-      Q2.fail = // XXX legacy
-      Q2["catch"] = function(object2, rejected) {
-        return Q2(object2).then(void 0, rejected);
+      Q3.fail = // XXX legacy
+      Q3["catch"] = function(object2, rejected) {
+        return Q3(object2).then(void 0, rejected);
       };
       Promise3.prototype.fail = // XXX legacy
       Promise3.prototype["catch"] = function(rejected) {
         return this.then(void 0, rejected);
       };
-      Q2.progress = progress2;
+      Q3.progress = progress2;
       function progress2(object2, progressed) {
-        return Q2(object2).then(void 0, void 0, progressed);
+        return Q3(object2).then(void 0, void 0, progressed);
       }
       Promise3.prototype.progress = function(progressed) {
         return this.then(void 0, void 0, progressed);
       };
-      Q2.fin = // XXX legacy
-      Q2["finally"] = function(object2, callback) {
-        return Q2(object2)["finally"](callback);
+      Q3.fin = // XXX legacy
+      Q3["finally"] = function(object2, callback) {
+        return Q3(object2)["finally"](callback);
       };
       Promise3.prototype.fin = // XXX legacy
       Promise3.prototype["finally"] = function(callback) {
         if (!callback || typeof callback.apply !== "function") {
           throw new Error("Q can't apply finally callback");
         }
-        callback = Q2(callback);
+        callback = Q3(callback);
         return this.then(function(value) {
           return callback.fcall().then(function() {
             return value;
@@ -34141,15 +34141,15 @@ var require_q = __commonJS({
           });
         });
       };
-      Q2.done = function(object2, fulfilled, rejected, progress3) {
-        return Q2(object2).done(fulfilled, rejected, progress3);
+      Q3.done = function(object2, fulfilled, rejected, progress3) {
+        return Q3(object2).done(fulfilled, rejected, progress3);
       };
       Promise3.prototype.done = function(fulfilled, rejected, progress3) {
         var onUnhandledError = function(error) {
-          Q2.nextTick(function() {
+          Q3.nextTick(function() {
             makeStackTraceLong(error, promise2);
-            if (Q2.onerror) {
-              Q2.onerror(error);
+            if (Q3.onerror) {
+              Q3.onerror(error);
             } else {
               throw error;
             }
@@ -34161,8 +34161,8 @@ var require_q = __commonJS({
         }
         promise2.then(void 0, onUnhandledError);
       };
-      Q2.timeout = function(object2, ms2, error) {
-        return Q2(object2).timeout(ms2, error);
+      Q3.timeout = function(object2, ms2, error) {
+        return Q3(object2).timeout(ms2, error);
       };
       Promise3.prototype.timeout = function(ms2, error) {
         var deferred = defer();
@@ -34182,12 +34182,12 @@ var require_q = __commonJS({
         }, deferred.notify);
         return deferred.promise;
       };
-      Q2.delay = function(object2, timeout2) {
+      Q3.delay = function(object2, timeout2) {
         if (timeout2 === void 0) {
           timeout2 = object2;
           object2 = void 0;
         }
-        return Q2(object2).delay(timeout2);
+        return Q3(object2).delay(timeout2);
       };
       Promise3.prototype.delay = function(timeout2) {
         return this.then(function(value) {
@@ -34198,8 +34198,8 @@ var require_q = __commonJS({
           return deferred.promise;
         });
       };
-      Q2.nfapply = function(callback, args) {
-        return Q2(callback).nfapply(args);
+      Q3.nfapply = function(callback, args) {
+        return Q3(callback).nfapply(args);
       };
       Promise3.prototype.nfapply = function(args) {
         var deferred = defer();
@@ -34208,9 +34208,9 @@ var require_q = __commonJS({
         this.fapply(nodeArgs).fail(deferred.reject);
         return deferred.promise;
       };
-      Q2.nfcall = function(callback) {
+      Q3.nfcall = function(callback) {
         var args = array_slice(arguments, 1);
-        return Q2(callback).nfapply(args);
+        return Q3(callback).nfapply(args);
       };
       Promise3.prototype.nfcall = function() {
         var nodeArgs = array_slice(arguments);
@@ -34219,7 +34219,7 @@ var require_q = __commonJS({
         this.fapply(nodeArgs).fail(deferred.reject);
         return deferred.promise;
       };
-      Q2.nfbind = Q2.denodeify = function(callback) {
+      Q3.nfbind = Q3.denodeify = function(callback) {
         if (callback === void 0) {
           throw new Error("Q can't wrap an undefined function");
         }
@@ -34228,16 +34228,16 @@ var require_q = __commonJS({
           var nodeArgs = baseArgs.concat(array_slice(arguments));
           var deferred = defer();
           nodeArgs.push(deferred.makeNodeResolver());
-          Q2(callback).fapply(nodeArgs).fail(deferred.reject);
+          Q3(callback).fapply(nodeArgs).fail(deferred.reject);
           return deferred.promise;
         };
       };
       Promise3.prototype.nfbind = Promise3.prototype.denodeify = function() {
         var args = array_slice(arguments);
         args.unshift(this);
-        return Q2.denodeify.apply(void 0, args);
+        return Q3.denodeify.apply(void 0, args);
       };
-      Q2.nbind = function(callback, thisp) {
+      Q3.nbind = function(callback, thisp) {
         var baseArgs = array_slice(arguments, 2);
         return function() {
           var nodeArgs = baseArgs.concat(array_slice(arguments));
@@ -34246,18 +34246,18 @@ var require_q = __commonJS({
           function bound() {
             return callback.apply(thisp, arguments);
           }
-          Q2(bound).fapply(nodeArgs).fail(deferred.reject);
+          Q3(bound).fapply(nodeArgs).fail(deferred.reject);
           return deferred.promise;
         };
       };
       Promise3.prototype.nbind = function() {
         var args = array_slice(arguments, 0);
         args.unshift(this);
-        return Q2.nbind.apply(void 0, args);
+        return Q3.nbind.apply(void 0, args);
       };
-      Q2.nmapply = // XXX As proposed by "Redsandro"
-      Q2.npost = function(object2, name2, args) {
-        return Q2(object2).npost(name2, args);
+      Q3.nmapply = // XXX As proposed by "Redsandro"
+      Q3.npost = function(object2, name2, args) {
+        return Q3(object2).npost(name2, args);
       };
       Promise3.prototype.nmapply = // XXX As proposed by "Redsandro"
       Promise3.prototype.npost = function(name2, args) {
@@ -34267,13 +34267,13 @@ var require_q = __commonJS({
         this.dispatch("post", [name2, nodeArgs]).fail(deferred.reject);
         return deferred.promise;
       };
-      Q2.nsend = // XXX Based on Mark Miller's proposed "send"
-      Q2.nmcall = // XXX Based on "Redsandro's" proposal
-      Q2.ninvoke = function(object2, name2) {
+      Q3.nsend = // XXX Based on Mark Miller's proposed "send"
+      Q3.nmcall = // XXX Based on "Redsandro's" proposal
+      Q3.ninvoke = function(object2, name2) {
         var nodeArgs = array_slice(arguments, 2);
         var deferred = defer();
         nodeArgs.push(deferred.makeNodeResolver());
-        Q2(object2).dispatch("post", [name2, nodeArgs]).fail(deferred.reject);
+        Q3(object2).dispatch("post", [name2, nodeArgs]).fail(deferred.reject);
         return deferred.promise;
       };
       Promise3.prototype.nsend = // XXX Based on Mark Miller's proposed "send"
@@ -34285,18 +34285,18 @@ var require_q = __commonJS({
         this.dispatch("post", [name2, nodeArgs]).fail(deferred.reject);
         return deferred.promise;
       };
-      Q2.nodeify = nodeify;
+      Q3.nodeify = nodeify;
       function nodeify(object2, nodeback) {
-        return Q2(object2).nodeify(nodeback);
+        return Q3(object2).nodeify(nodeback);
       }
       Promise3.prototype.nodeify = function(nodeback) {
         if (nodeback) {
           this.then(function(value) {
-            Q2.nextTick(function() {
+            Q3.nextTick(function() {
               nodeback(null, value);
             });
           }, function(error) {
-            Q2.nextTick(function() {
+            Q3.nextTick(function() {
               nodeback(error);
             });
           });
@@ -34304,11 +34304,11 @@ var require_q = __commonJS({
           return this;
         }
       };
-      Q2.noConflict = function() {
+      Q3.noConflict = function() {
         throw new Error("Q.noConflict only works when Q is used as a global");
       };
       var qEndingLine = captureLine();
-      return Q2;
+      return Q3;
     });
   }
 });
@@ -38172,7 +38172,8 @@ var require_module_cache = __commonJS({
   "src/module-cache.js"(exports2) {
     var isAbsolute;
     var Module = require("module");
-    var path14 = require("path");
+    var path15 = require("path");
+    var fs12 = require_fs_plus();
     var semver = require_semver2();
     var Range2 = class extends semver.Range {
       constructor() {
@@ -38215,24 +38216,23 @@ var require_module_cache = __commonJS({
     }
     var isCorePath = (pathToCheck) => pathToCheck.startsWith(cache.resourcePathWithTrailingSlash);
     var loadDependencies = (modulePath, rootPath, rootMetadata, moduleCache) => {
-      const fs11 = require_fs_plus();
       for (var childPath of Array.from(
-        fs11.listSync(path14.join(modulePath, "node_modules"))
+        fs12.listSync(path15.join(modulePath, "node_modules"))
       )) {
-        if (path14.basename(childPath) === ".bin") {
+        if (path15.basename(childPath) === ".bin") {
           continue;
         }
         if (rootPath === modulePath && (rootMetadata.packageDependencies != null ? Object.hasOwn(
           rootMetadata.packageDependencies,
-          path14.basename(childPath)
+          path15.basename(childPath)
         ) : void 0)) {
           continue;
         }
-        var childMetadataPath = path14.join(childPath, "package.json");
-        if (!fs11.isFileSync(childMetadataPath)) {
+        var childMetadataPath = path15.join(childPath, "package.json");
+        if (!fs12.isFileSync(childMetadataPath)) {
           continue;
         }
-        var childMetadata = JSON.parse(fs11.readFileSync(childMetadataPath));
+        var childMetadata = JSON.parse(fs12.readFileSync(childMetadataPath));
         if (childMetadata != null ? childMetadata.version : void 0) {
           var mainPath;
           try {
@@ -38244,7 +38244,7 @@ var require_module_cache = __commonJS({
             moduleCache.dependencies.push({
               name: childMetadata.name,
               version: childMetadata.version,
-              path: path14.relative(rootPath, mainPath)
+              path: path15.relative(rootPath, mainPath)
             });
           }
           loadDependencies(childPath, rootPath, rootMetadata, moduleCache);
@@ -38253,13 +38253,12 @@ var require_module_cache = __commonJS({
     };
     var loadFolderCompatibility = (modulePath, rootPath, rootMetadata, moduleCache) => {
       let left;
-      const fs11 = require_fs_plus();
-      const metadataPath = path14.join(modulePath, "package.json");
-      if (!fs11.isFileSync(metadataPath)) {
+      const metadataPath = path15.join(modulePath, "package.json");
+      if (!fs12.isFileSync(metadataPath)) {
         return;
       }
-      const dependencies = (left = __guard__2(
-        JSON.parse(fs11.readFileSync(metadataPath)),
+      const dependencies = (left = __guard__3(
+        JSON.parse(fs12.readFileSync(metadataPath)),
         (x3) => x3.dependencies
       )) != null ? left : {};
       for (var name2 in dependencies) {
@@ -38270,30 +38269,30 @@ var require_module_cache = __commonJS({
           delete dependencies[name2];
         }
       }
-      const onDirectory = (childPath2) => path14.basename(childPath2) !== "node_modules";
+      const onDirectory = (childPath2) => path15.basename(childPath2) !== "node_modules";
       const extensions = [".js", ".coffee", ".json", ".node"];
       let paths = {};
       const onFile = (childPath2) => {
         let needle;
-        if (needle = path14.extname(childPath2), Array.from(extensions).includes(needle)) {
-          const relativePath = path14.relative(rootPath, path14.dirname(childPath2));
+        if (needle = path15.extname(childPath2), Array.from(extensions).includes(needle)) {
+          const relativePath = path15.relative(rootPath, path15.dirname(childPath2));
           return paths[relativePath] = true;
         }
       };
-      fs11.traverseTreeSync(modulePath, onFile, onDirectory);
+      fs12.traverseTreeSync(modulePath, onFile, onDirectory);
       paths = Object.keys(paths);
       if (paths.length > 0 && Object.keys(dependencies).length > 0) {
         moduleCache.folders.push({ paths, dependencies });
       }
       for (var childPath of Array.from(
-        fs11.listSync(path14.join(modulePath, "node_modules"))
+        fs12.listSync(path15.join(modulePath, "node_modules"))
       )) {
-        if (path14.basename(childPath) === ".bin") {
+        if (path15.basename(childPath) === ".bin") {
           continue;
         }
         if (rootPath === modulePath && (rootMetadata.packageDependencies != null ? Object.hasOwn(
           rootMetadata.packageDependencies,
-          path14.basename(childPath)
+          path15.basename(childPath)
         ) : void 0)) {
           continue;
         }
@@ -38301,12 +38300,11 @@ var require_module_cache = __commonJS({
       }
     };
     var loadExtensions = (_modulePath, rootPath, rootMetadata, moduleCache) => {
-      const fs11 = require_fs_plus();
       const extensions = [".js", ".coffee", ".json", ".node"];
-      const nodeModulesPath = path14.join(rootPath, "node_modules");
+      const nodeModulesPath = path15.join(rootPath, "node_modules");
       const onFile = (filePath) => {
-        filePath = path14.relative(rootPath, filePath);
-        const segments = filePath.split(path14.sep);
+        filePath = path15.relative(rootPath, filePath);
+        const segments = filePath.split(path15.sep);
         if (Array.from(segments).includes("test")) {
           return;
         }
@@ -38322,7 +38320,7 @@ var require_module_cache = __commonJS({
         if (segments.length > 1 && !["lib", "node_modules", "src", "static", "vendor"].includes(segments[0])) {
           return;
         }
-        const extension = path14.extname(filePath);
+        const extension = path15.extname(filePath);
         if (Array.from(extensions).includes(extension)) {
           if (moduleCache.extensions[extension] == null) {
             moduleCache.extensions[extension] = [];
@@ -38332,9 +38330,9 @@ var require_module_cache = __commonJS({
       };
       const onDirectory = (childPath) => {
         if (rootMetadata.name === "nylas") {
-          const parentPath = path14.dirname(childPath);
+          const parentPath = path15.dirname(childPath);
           if (parentPath === nodeModulesPath) {
-            const packageName = path14.basename(childPath);
+            const packageName = path15.basename(childPath);
             if (rootMetadata.packageDependencies != null ? Object.hasOwn(rootMetadata.packageDependencies, packageName) : void 0) {
               return false;
             }
@@ -38342,7 +38340,7 @@ var require_module_cache = __commonJS({
         }
         return true;
       };
-      fs11.traverseTreeSync(rootPath, onFile, onDirectory);
+      fs12.traverseTreeSync(rootPath, onFile, onDirectory);
     };
     var satisfies = (version3, rawRange) => {
       let parsedRange;
@@ -38362,14 +38360,14 @@ var require_module_cache = __commonJS({
       if (relativePath[0] !== "." && !isAbsolute(relativePath)) {
         return;
       }
-      const resolvedPath = path14.resolve(
-        path14.dirname(parentModule.filename),
+      const resolvedPath = path15.resolve(
+        path15.dirname(parentModule.filename),
         relativePath
       );
       if (!isCorePath(resolvedPath)) {
         return;
       }
-      let extension = path14.extname(resolvedPath);
+      let extension = path15.extname(resolvedPath);
       if (extension) {
         if (cache.extensions[extension] != null ? cache.extensions[extension].has(resolvedPath) : void 0) {
           return resolvedPath;
@@ -38400,7 +38398,7 @@ var require_module_cache = __commonJS({
       if (isAbsolute(relativePath)) {
         return;
       }
-      const folderPath = path14.dirname(parentModule.filename);
+      const folderPath = path15.dirname(parentModule.filename);
       const range2 = cache.folders[folderPath] != null ? cache.folders[folderPath][relativePath] : void 0;
       if (range2 == null) {
         let builtinPath;
@@ -38425,8 +38423,8 @@ var require_module_cache = __commonJS({
     };
     var registerBuiltins = (_devMode) => {
       let builtin;
-      const electronRoot = path14.join(process.resourcesPath, "atom.asar");
-      const commonRoot = path14.join(electronRoot, "common", "api", "lib");
+      const electronRoot = path15.join(process.resourcesPath, "atom.asar");
+      const commonRoot = path15.join(electronRoot, "common", "api", "lib");
       const commonBuiltins = [
         "callbacks-registry",
         "clipboard",
@@ -38435,15 +38433,15 @@ var require_module_cache = __commonJS({
         "shell"
       ];
       for (builtin of Array.from(commonBuiltins)) {
-        cache.builtins[builtin] = path14.join(commonRoot, `${builtin}.js`);
+        cache.builtins[builtin] = path15.join(commonRoot, `${builtin}.js`);
       }
-      const rendererRoot = path14.join(electronRoot, "renderer", "api", "lib");
+      const rendererRoot = path15.join(electronRoot, "renderer", "api", "lib");
       const rendererBuiltins = ["ipc", "remote"];
       return (() => {
         const result2 = [];
         for (builtin of Array.from(rendererBuiltins)) {
           result2.push(
-            cache.builtins[builtin] = path14.join(rendererRoot, `${builtin}.js`)
+            cache.builtins[builtin] = path15.join(rendererRoot, `${builtin}.js`)
           );
         }
         return result2;
@@ -38480,10 +38478,9 @@ var require_module_cache = __commonJS({
       };
     }
     exports2.create = (modulePath) => {
-      const fs11 = require_fs_plus();
-      modulePath = fs11.realpathSync(modulePath);
-      const metadataPath = path14.join(modulePath, "package.json");
-      const metadata = JSON.parse(fs11.readFileSync(metadataPath));
+      modulePath = fs12.realpathSync(modulePath);
+      const metadataPath = path15.join(modulePath, "package.json");
+      const metadata = JSON.parse(fs12.readFileSync(metadataPath));
       const moduleCache = {
         version: 1,
         dependencies: [],
@@ -38494,7 +38491,7 @@ var require_module_cache = __commonJS({
       loadFolderCompatibility(modulePath, modulePath, metadata, moduleCache);
       loadExtensions(modulePath, modulePath, metadata, moduleCache);
       metadata._nylasModuleCache = moduleCache;
-      fs11.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+      fs12.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
     };
     exports2.register = (param) => {
       if (param == null) {
@@ -38514,13 +38511,13 @@ var require_module_cache = __commonJS({
       };
       cache.registered = true;
       cache.resourcePath = resourcePath2;
-      cache.resourcePathWithTrailingSlash = `${resourcePath2}${path14.sep}`;
+      cache.resourcePathWithTrailingSlash = `${resourcePath2}${path15.sep}`;
       registerBuiltins(devMode);
     };
     exports2.add = (directoryPath, metadata) => {
       if (metadata == null) {
         try {
-          metadata = nodeRequire(`${directoryPath}${path14.sep}package.json`);
+          metadata = nodeRequire(`${directoryPath}${path15.sep}package.json`);
         } catch (_error) {
           return;
         }
@@ -38536,7 +38533,7 @@ var require_module_cache = __commonJS({
           cache.dependencies[dependency.name] = {};
         }
         if (cache.dependencies[dependency.name][dependency.version] == null) {
-          cache.dependencies[dependency.name][dependency.version] = `${directoryPath}${path14.sep}${dependency.path}`;
+          cache.dependencies[dependency.name][dependency.version] = `${directoryPath}${path15.sep}${dependency.path}`;
         }
       }
       for (var entry of Array.from(
@@ -38544,7 +38541,7 @@ var require_module_cache = __commonJS({
       )) {
         for (var folderPath of Array.from(entry.paths)) {
           if (folderPath) {
-            cache.folders[`${directoryPath}${path14.sep}${folderPath}`] = entry.dependencies;
+            cache.folders[`${directoryPath}${path15.sep}${folderPath}`] = entry.dependencies;
           } else {
             cache.folders[directoryPath] = entry.dependencies;
           }
@@ -38556,12 +38553,12 @@ var require_module_cache = __commonJS({
           cache.extensions[extension] = /* @__PURE__ */ new Set();
         }
         for (var filePath of Array.from(paths)) {
-          cache.extensions[extension].add(`${directoryPath}${path14.sep}${filePath}`);
+          cache.extensions[extension].add(`${directoryPath}${path15.sep}${filePath}`);
         }
       }
     };
     exports2.cache = cache;
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -38669,19 +38666,19 @@ var require_package3 = __commonJS({
     var _error;
     var Package;
     var packagesCache;
-    var path14 = require("path");
+    var path15 = require("path");
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var _async = require_async2();
-    var fs11 = require_fs_plus();
-    var EmitterMixin = require_emissary().Emitter;
-    var { Emitter: Emitter3, CompositeDisposable } = require_event_kit();
-    var Q2 = require_q();
+    var fs12 = require_fs_plus();
+    var EmitterMixin2 = require_emissary().Emitter;
+    var { Emitter: Emitter5, CompositeDisposable: CompositeDisposable2 } = require_event_kit();
+    var Q3 = require_q();
     var ModuleCache = require_module_cache();
     var TaskRegistry2 = require_task_registry().default;
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     try {
       let left;
-      packagesCache = (left = __guard__2(require_package2(), (x3) => x3._N1Packages)) != null ? left : {};
+      packagesCache = (left = __guard__3(require_package2(), (x3) => x3._N1Packages)) != null ? left : {};
     } catch (error1) {
       _error = error1;
       packagesCache = {};
@@ -38689,7 +38686,7 @@ var require_package3 = __commonJS({
     module2.exports = Package = (() => {
       Package = class Package2 {
         static initClass() {
-          EmitterMixin.includeInto(Package2);
+          EmitterMixin2.includeInto(Package2);
           Package2.prototype.keymaps = null;
           Package2.prototype.menus = null;
           Package2.prototype.stylesheets = null;
@@ -38701,13 +38698,13 @@ var require_package3 = __commonJS({
         static isBundledPackagePath(packagePath) {
           if (NylasEnv.packages.devMode) {
             if (!NylasEnv.packages.resourcePath.startsWith(
-              `${process.resourcesPath}${path14.sep}`
+              `${process.resourcesPath}${path15.sep}`
             )) {
               return false;
             }
           }
           if (Package2.resourcePathWithTrailingSlash == null) {
-            Package2.resourcePathWithTrailingSlash = `${NylasEnv.packages.resourcePath}${path14.sep}`;
+            Package2.resourcePathWithTrailingSlash = `${NylasEnv.packages.resourcePath}${path15.sep}`;
           }
           return packagePath != null ? packagePath.startsWith(Package2.resourcePathWithTrailingSlash) : void 0;
         }
@@ -38716,15 +38713,15 @@ var require_package3 = __commonJS({
           if (ignoreErrors == null) {
             ignoreErrors = false;
           }
-          const packageName = path14.basename(packagePath);
+          const packageName = path15.basename(packagePath);
           if (Package2.isBundledPackagePath(packagePath)) {
             metadata = packagesCache[packageName] != null ? packagesCache[packageName].metadata : void 0;
           }
           if (metadata == null) {
-            const metadataPath = fs11.resolve(path14.join(packagePath, "package.json"));
-            if (fs11.existsSync(metadataPath)) {
+            const metadataPath = fs12.resolve(path15.join(packagePath, "package.json"));
+            if (fs12.existsSync(metadataPath)) {
               try {
-                metadata = JSON.parse(fs11.readFileSync(metadataPath));
+                metadata = JSON.parse(fs12.readFileSync(metadataPath));
               } catch (error) {
                 if (!ignoreErrors) {
                   throw error;
@@ -38747,12 +38744,12 @@ var require_package3 = __commonJS({
         constructor(path1, metadata) {
           this.path = path1;
           this.metadata = metadata;
-          this.emitter = new Emitter3();
+          this.emitter = new Emitter5();
           if (this.metadata == null) {
             this.metadata = Package2.loadMetadata(this.path);
           }
           this.bundledPackage = Package2.isBundledPackagePath(this.path);
-          this.name = (this.metadata != null ? this.metadata.name : void 0) != null ? this.metadata != null ? this.metadata.name : void 0 : path14.basename(this.path);
+          this.name = (this.metadata != null ? this.metadata.name : void 0) != null ? this.metadata != null ? this.metadata.name : void 0 : path15.basename(this.path);
           this.pluginAppId = this.name;
           this.displayName = (this.metadata != null ? this.metadata.displayName : void 0) || this.name;
           ModuleCache.add(this.path, this.metadata);
@@ -38854,13 +38851,13 @@ var require_package3 = __commonJS({
         }
         activate() {
           if (this.activationDeferred == null) {
-            this.activationDeferred = Q2.defer();
+            this.activationDeferred = Q3.defer();
             this.measure("activateTime", () => {
               this.activateResources();
               return this.activateNow();
             });
           }
-          return Q2.all([this.activationDeferred.promise]);
+          return Q3.all([this.activationDeferred.promise]);
         }
         activateNow() {
           try {
@@ -38909,11 +38906,11 @@ var require_package3 = __commonJS({
           if (this.stylesheetsActivated) {
             return;
           }
-          this.stylesheetDisposables = new CompositeDisposable();
+          this.stylesheetDisposables = new CompositeDisposable2();
           const priority = this.getStyleSheetPriority();
           for (var [sourcePath, source] of Array.from(this.stylesheets)) {
             var context, match;
-            if (match = path14.basename(sourcePath).match(/[^.]*\.([^.]*)\./)) {
+            if (match = path15.basename(sourcePath).match(/[^.]*\.([^.]*)\./)) {
               context = match[1];
             } else {
               context = void 0;
@@ -38931,7 +38928,7 @@ var require_package3 = __commonJS({
         activateResources() {
           let keymapPath;
           let map2;
-          this.activationDisposables = new CompositeDisposable();
+          this.activationDisposables = new CompositeDisposable2();
           for ([keymapPath, map2] of Array.from(this.keymaps)) {
             this.activationDisposables.add(
               NylasEnv.keymaps.loadKeymap(keymapPath, map2)
@@ -38959,7 +38956,7 @@ var require_package3 = __commonJS({
                 for (keymapPath in packagesCache[this.name].keymaps) {
                   var keymapObject = packagesCache[this.name].keymaps[keymapPath];
                   result2.push([
-                    `${NylasEnv.packages.resourcePath}${path14.sep}${keymapPath}`,
+                    `${NylasEnv.packages.resourcePath}${path15.sep}${keymapPath}`,
                     keymapObject
                   ]);
                 }
@@ -38970,7 +38967,7 @@ var require_package3 = __commonJS({
                 let left1;
                 return [
                   keymapPath2,
-                  (left1 = JSON.parse(fs11.readFileSync(keymapPath2))) != null ? left1 : {}
+                  (left1 = JSON.parse(fs12.readFileSync(keymapPath2))) != null ? left1 : {}
                 ];
               });
             }
@@ -38990,7 +38987,7 @@ var require_package3 = __commonJS({
                 for (menuPath in packagesCache[this.name].menus) {
                   var menuObject = packagesCache[this.name].menus[menuPath];
                   result2.push([
-                    `${NylasEnv.packages.resourcePath}${path14.sep}${menuPath}`,
+                    `${NylasEnv.packages.resourcePath}${path15.sep}${menuPath}`,
                     menuObject
                   ]);
                 }
@@ -39001,7 +38998,7 @@ var require_package3 = __commonJS({
                 let left1;
                 return [
                   menuPath2,
-                  (left1 = JSON.parse(fs11.readFileSync(menuPath2))) != null ? left1 : {}
+                  (left1 = JSON.parse(fs12.readFileSync(menuPath2))) != null ? left1 : {}
                 ];
               });
             }
@@ -39025,23 +39022,23 @@ var require_package3 = __commonJS({
           })();
         }
         getKeymapPaths() {
-          const keymapsDirPath = path14.join(this.path, "keymaps");
+          const keymapsDirPath = path15.join(this.path, "keymaps");
           if (this.metadata.keymaps) {
             return this.metadata.keymaps.map(
-              (name2) => fs11.resolve(keymapsDirPath, name2, ["json", ""])
+              (name2) => fs12.resolve(keymapsDirPath, name2, ["json", ""])
             );
           } else {
-            return fs11.listSync(keymapsDirPath, ["json"]);
+            return fs12.listSync(keymapsDirPath, ["json"]);
           }
         }
         getMenuPaths() {
-          const menusDirPath = path14.join(this.path, "menus");
+          const menusDirPath = path15.join(this.path, "menus");
           if (this.metadata.menus) {
             return this.metadata.menus.map(
-              (name2) => fs11.resolve(menusDirPath, name2, ["json", ""])
+              (name2) => fs12.resolve(menusDirPath, name2, ["json", ""])
             );
           } else {
-            return fs11.listSync(menusDirPath, ["json"]);
+            return fs12.listSync(menusDirPath, ["json"]);
           }
         }
         loadStylesheets() {
@@ -39053,27 +39050,27 @@ var require_package3 = __commonJS({
           );
         }
         getStylesheetsPath() {
-          if (fs11.isDirectorySync(path14.join(this.path, "stylesheets"))) {
-            return path14.join(this.path, "stylesheets");
+          if (fs12.isDirectorySync(path15.join(this.path, "stylesheets"))) {
+            return path15.join(this.path, "stylesheets");
           } else {
-            return path14.join(this.path, "styles");
+            return path15.join(this.path, "styles");
           }
         }
         getStylesheetPaths() {
           let indexStylesheet;
           const stylesheetDirPath = this.getStylesheetsPath();
           if (this.metadata.mainStyleSheet) {
-            return [fs11.resolve(this.path, this.metadata.mainStyleSheet)];
+            return [fs12.resolve(this.path, this.metadata.mainStyleSheet)];
           } else if (this.metadata.styleSheets) {
             return this.metadata.styleSheets.map(
-              (name2) => fs11.resolve(stylesheetDirPath, name2, ["css", "less", ""])
+              (name2) => fs12.resolve(stylesheetDirPath, name2, ["css", "less", ""])
             );
-          } else if (indexStylesheet = fs11.resolve(this.path, "index", ["css", "less"])) {
+          } else if (indexStylesheet = fs12.resolve(this.path, "index", ["css", "less"])) {
             return [indexStylesheet];
           } else {
             return _4.filter(
-              fs11.listSync(stylesheetDirPath, ["css", "less"]),
-              (file) => path14.basename(file)[0] !== "."
+              fs12.listSync(stylesheetDirPath, ["css", "less"]),
+              (file) => path15.basename(file)[0] !== "."
             );
           }
         }
@@ -39133,7 +39130,7 @@ var require_package3 = __commonJS({
           if (this.stylesheetDisposables != null) {
             this.stylesheetDisposables.dispose();
           }
-          this.stylesheetDisposables = new CompositeDisposable();
+          this.stylesheetDisposables = new CompositeDisposable2();
           this.stylesheetsActivated = false;
           return this.activateStylesheets();
         }
@@ -39147,7 +39144,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
             return;
           }
           const mainModulePath = this.getMainModulePath();
-          if (fs11.isFileSync(mainModulePath)) {
+          if (fs12.isFileSync(mainModulePath)) {
             this.mainModule = require(mainModulePath);
           }
           return this.mainModule;
@@ -39159,8 +39156,8 @@ Run \`apm rebuild\` in the package directory to resolve.`);
           this.resolvedMainModulePath = true;
           if (this.bundledPackage && packagesCache[this.name] != null) {
             if (packagesCache[this.name].main) {
-              this.mainModulePath = `${NylasEnv.packages.resourcePath}${path14.sep}${packagesCache[this.name].main}`;
-              return this.mainModulePath = fs11.resolveExtension(
+              this.mainModulePath = `${NylasEnv.packages.resourcePath}${path15.sep}${packagesCache[this.name].main}`;
+              return this.mainModulePath = fs12.resolveExtension(
                 this.mainModulePath,
                 ["", ...Array.from(Object.keys(require.extensions))]
               );
@@ -39168,8 +39165,8 @@ Run \`apm rebuild\` in the package directory to resolve.`);
               return this.mainModulePath = null;
             }
           } else {
-            const mainModulePath = this.metadata.main ? path14.join(this.path, this.metadata.main) : path14.join(this.path, "index");
-            return this.mainModulePath = fs11.resolveExtension(mainModulePath, [
+            const mainModulePath = this.metadata.main ? path15.join(this.path, this.metadata.main) : path15.join(this.path, "index");
+            return this.mainModulePath = fs12.resolveExtension(mainModulePath, [
               "",
               ...Array.from(Object.keys(require.extensions))
             ]);
@@ -39177,7 +39174,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
         }
         isNativeModule(modulePath) {
           try {
-            return fs11.listSync(path14.join(modulePath, "build", "Release"), [".node"]).length > 0;
+            return fs12.listSync(path15.join(modulePath, "build", "Release"), [".node"]).length > 0;
           } catch (_error2) {
             return false;
           }
@@ -39190,18 +39187,18 @@ Run \`apm rebuild\` in the package directory to resolve.`);
             try {
               return (() => {
                 const result2 = [];
-                for (var modulePath of Array.from(fs11.listSync(nodeModulesPath))) {
+                for (var modulePath of Array.from(fs12.listSync(nodeModulesPath))) {
                   if (this.isNativeModule(modulePath)) {
                     nativeModulePaths.push(modulePath);
                   }
-                  result2.push(traversePath(path14.join(modulePath, "node_modules")));
+                  result2.push(traversePath(path15.join(modulePath, "node_modules")));
                 }
                 return result2;
               })();
             } catch (_error2) {
             }
           };
-          traversePath(path14.join(this.path, "node_modules"));
+          traversePath(path15.join(this.path, "node_modules"));
           return nativeModulePaths;
         }
         // Get the incompatible native modules that this package depends on.
@@ -39239,7 +39236,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
               }
               incompatibleNativeModules.push({
                 path: nativeModulePath,
-                name: path14.basename(nativeModulePath),
+                name: path15.basename(nativeModulePath),
                 version: version3,
                 error: error.message
               });
@@ -39264,7 +39261,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
             return this.compatible;
           }
           if (this.path.indexOf(
-            path14.join(NylasEnv.packages.resourcePath, "node_modules") + path14.sep
+            path15.join(NylasEnv.packages.resourcePath, "node_modules") + path15.sep
           ) === 0) {
             return this.compatible = true;
           } else if (packageMain = this.getMainModulePath()) {
@@ -39278,7 +39275,7 @@ Run \`apm rebuild\` in the package directory to resolve.`);
       Package.initClass();
       return Package;
     })();
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
     function __guardMethod__(obj2, methodName, transform) {
@@ -39300,25 +39297,25 @@ var require_walkdir = __commonJS({
     var sep = _path.sep || "/";
     module2.exports = walkdir;
     walkdir.find = walkdir.walk = walkdir;
-    walkdir.sync = function(path14, options2, eventHandler) {
+    walkdir.sync = function(path15, options2, eventHandler) {
       if (typeof options2 == "function") cb = options2;
       options2 = options2 || {};
       options2.sync = true;
-      return walkdir(path14, options2, eventHandler);
+      return walkdir(path15, options2, eventHandler);
     };
-    walkdir.async = function(path14, options2, eventHandler) {
+    walkdir.async = function(path15, options2, eventHandler) {
       return new Promise((resolve7, reject2) => {
         if (typeof options2 == "function") cb = options2;
         options2 = options2 || {};
-        let emitter = walkdir(path14, options2, eventHandler);
+        let emitter = walkdir(path15, options2, eventHandler);
         emitter.on("error", reject2);
-        emitter.on("fail", (path15, err) => {
-          err.message = 'Error walking": ' + path15 + " " + err.message;
+        emitter.on("fail", (path16, err) => {
+          err.message = 'Error walking": ' + path16 + " " + err.message;
           if (err) reject2(err);
         });
         let allPaths = {};
-        emitter.on("path", (path15, stat3) => {
-          if (options2.no_return !== true) allPaths[path15] = stat3;
+        emitter.on("path", (path16, stat3) => {
+          if (options2.no_return !== true) allPaths[path16] = stat3;
         });
         emitter.on("end", () => {
           if (options2.no_return !== true) {
@@ -39328,13 +39325,13 @@ var require_walkdir = __commonJS({
         });
       });
     };
-    function walkdir(path14, options2, cb3) {
+    function walkdir(path15, options2, cb3) {
       if (typeof options2 == "function") cb3 = options2;
       options2 = options2 || {};
       if (options2.find_links === void 0) {
         options2.find_links = true;
       }
-      var fs11 = options2.fs || _fs;
+      var fs12 = options2.fs || _fs;
       var emitter = new EventEmitter5(), dontTraverse = [], allPaths = options2.return_object ? {} : [], resolved = false, inos = {}, stop = 0, pause = null, ended = 0, jobs = 0, job = function(value) {
         jobs += value;
         if (value < 1 && !tick) {
@@ -39348,36 +39345,36 @@ var require_walkdir = __commonJS({
           });
         }
       }, tick = 0;
-      emitter.ignore = function(path15) {
-        if (Array.isArray(path15)) dontTraverse.push.apply(dontTraverse, path15);
-        else dontTraverse.push(path15);
+      emitter.ignore = function(path16) {
+        if (Array.isArray(path16)) dontTraverse.push.apply(dontTraverse, path16);
+        else dontTraverse.push(path16);
         return this;
       };
       var statIs = [["isFile", "file"], ["isDirectory", "directory"], ["isSymbolicLink", "link"], ["isSocket", "socket"], ["isFIFO", "fifo"], ["isBlockDevice", "blockdevice"], ["isCharacterDevice", "characterdevice"]];
-      var statter = function(path15, first2, depth) {
+      var statter = function(path16, first2, depth) {
         job(1);
         var statAction = function fn2(err, stat4, data) {
           job(-1);
           if (stop) return;
           if (err || !stat4) {
-            emitter.emit("fail", path15, err);
+            emitter.emit("fail", path16, err);
             return;
           }
-          var fileName = _path.basename(path15);
+          var fileName = _path.basename(path16);
           var fileKey = stat4.dev + "-" + stat4.ino + "-" + fileName;
           if (options2.track_inodes !== false) {
             if (inos[fileKey] && stat4.ino) return;
             inos[fileKey] = 1;
           }
           if (first2 && stat4.isDirectory()) {
-            emitter.emit("targetdirectory", path15, stat4, depth);
+            emitter.emit("targetdirectory", path16, stat4, depth);
             return;
           }
-          emitter.emit("path", path15, stat4, depth);
+          emitter.emit("path", path16, stat4, depth);
           var i, name2;
           for (var j3 = 0, k3 = statIs.length; j3 < k3; j3++) {
             if (stat4[statIs[j3][0]]()) {
-              emitter.emit(statIs[j3][1], path15, stat4, depth);
+              emitter.emit(statIs[j3][1], path16, stat4, depth);
               break;
             }
           }
@@ -39385,26 +39382,26 @@ var require_walkdir = __commonJS({
         if (options2.sync) {
           var stat3, ex;
           try {
-            stat3 = fs11[options2.find_links ? "lstatSync" : "statSync"](path15);
+            stat3 = fs12[options2.find_links ? "lstatSync" : "statSync"](path16);
           } catch (e) {
             ex = e;
           }
           statAction(ex, stat3);
         } else {
-          fs11[options2.find_links ? "lstat" : "stat"](path15, statAction);
+          fs12[options2.find_links ? "lstat" : "stat"](path16, statAction);
         }
-      }, readdir2 = function(path15, stat3, depth) {
+      }, readdir2 = function(path16, stat3, depth) {
         if (!resolved) {
-          path15 = _path.resolve(path15);
+          path16 = _path.resolve(path16);
           resolved = 1;
         }
         if (options2.max_depth && depth >= options2.max_depth) {
-          emitter.emit("maxdepth", path15, stat3, depth);
+          emitter.emit("maxdepth", path16, stat3, depth);
           return;
         }
         if (dontTraverse.length) {
           for (var i = 0; i < dontTraverse.length; ++i) {
-            if (dontTraverse[i] == path15) {
+            if (dontTraverse[i] == path16) {
               dontTraverse.splice(i, 1);
               return;
             }
@@ -39414,16 +39411,16 @@ var require_walkdir = __commonJS({
         var readdirAction = function(err, files2) {
           job(-1);
           if (err || !files2) {
-            emitter.emit("fail", path15, err);
+            emitter.emit("fail", path16, err);
             return;
           }
           if (!files2.length) {
-            emitter.emit("empty", path15, stat3, depth);
+            emitter.emit("empty", path16, stat3, depth);
             return;
           }
-          if (path15 == sep) path15 = "";
+          if (path16 == sep) path16 = "";
           if (options2.filter) {
-            var res = options2.filter(path15, files2);
+            var res = options2.filter(path16, files2);
             if (!res) {
               throw new Error("option.filter function must return a array of strings or a promise");
             }
@@ -39432,7 +39429,7 @@ var require_walkdir = __commonJS({
               res.then((files3) => {
                 job(-1);
                 for (var i3 = 0, j4 = files3.length; i3 < j4; i3++) {
-                  statter(path15 + sep + files3[i3], false, (depth || 0) + 1);
+                  statter(path16 + sep + files3[i3], false, (depth || 0) + 1);
                 }
               });
               return;
@@ -39440,39 +39437,39 @@ var require_walkdir = __commonJS({
             files2 = res;
           }
           for (var i2 = 0, j3 = files2.length; i2 < j3; i2++) {
-            statter(path15 + sep + files2[i2], false, (depth || 0) + 1);
+            statter(path16 + sep + files2[i2], false, (depth || 0) + 1);
           }
         };
         if (options2.sync) {
           var e, files;
           try {
-            files = fs11.readdirSync(path15);
+            files = fs12.readdirSync(path16);
           } catch (_e2) {
             e = _e2;
           }
           readdirAction(e, files);
         } else {
-          fs11.readdir(path15, readdirAction);
+          fs12.readdir(path16, readdirAction);
         }
       };
       if (options2.follow_symlinks) {
-        var linkAction = function(err, path15, depth) {
+        var linkAction = function(err, path16, depth) {
           job(-1);
-          statter(path15, false, depth);
+          statter(path16, false, depth);
         };
-        emitter.on("link", function(path15, stat3, depth) {
+        emitter.on("link", function(path16, stat3, depth) {
           job(1);
           if (options2.sync) {
             var lpath, ex;
             try {
-              lpath = fs11.readlinkSync(path15);
+              lpath = fs12.readlinkSync(path16);
             } catch (e) {
               ex = e;
             }
-            linkAction(ex, _path.resolve(_path.dirname(path15), lpath), depth);
+            linkAction(ex, _path.resolve(_path.dirname(path16), lpath), depth);
           } else {
-            fs11.readlink(path15, function(err, lpath2) {
-              linkAction(err, _path.resolve(_path.dirname(path15), lpath2), depth);
+            fs12.readlink(path16, function(err, lpath2) {
+              linkAction(err, _path.resolve(_path.dirname(path16), lpath2), depth);
             });
           }
         });
@@ -39482,9 +39479,9 @@ var require_walkdir = __commonJS({
       }
       if (options2.sync) {
         if (!options2.no_return) {
-          emitter.on("path", function(path15, stat3) {
-            if (options2.return_object) allPaths[path15] = stat3;
-            else allPaths.push(path15);
+          emitter.on("path", function(path16, stat3) {
+            if (options2.return_object) allPaths[path16] = stat3;
+            else allPaths.push(path16);
           });
         }
       }
@@ -39493,11 +39490,11 @@ var require_walkdir = __commonJS({
       }
       emitter.once("targetdirectory", readdir2);
       emitter.once("fail", function(_path2, err) {
-        if (path14 == _path2) {
-          emitter.emit("error", new Error("error reading first path in the walk " + path14 + "\n" + err), err);
+        if (path15 == _path2) {
+          emitter.emit("error", new Error("error reading first path in the walk " + path15 + "\n" + err), err);
         }
       });
-      statter(path14, 1);
+      statter(path15, 1);
       if (options2.sync) {
         return allPaths;
       } else {
@@ -39539,8 +39536,8 @@ var require_types = __commonJS({
 // ../../node_modules/.pnpm/mime@1.6.0/node_modules/mime/mime.js
 var require_mime = __commonJS({
   "../../node_modules/.pnpm/mime@1.6.0/node_modules/mime/mime.js"(exports2, module2) {
-    var path14 = require("path");
-    var fs11 = require("fs");
+    var path15 = require("path");
+    var fs12 = require("fs");
     function Mime() {
       this.types = /* @__PURE__ */ Object.create(null);
       this.extensions = /* @__PURE__ */ Object.create(null);
@@ -39561,7 +39558,7 @@ var require_mime = __commonJS({
     };
     Mime.prototype.load = function(file) {
       this._loading = file;
-      var map2 = {}, content = fs11.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
+      var map2 = {}, content = fs12.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
       lines.forEach(function(line) {
         var fields = line.replace(/\s*#.*|^\s*|\s*$/g, "").split(/\s+/);
         map2[fields.shift()] = fields;
@@ -39569,8 +39566,8 @@ var require_mime = __commonJS({
       this.define(map2);
       this._loading = null;
     };
-    Mime.prototype.lookup = function(path15, fallback) {
-      var ext = path15.replace(/^.*[\.\/\\]/, "").toLowerCase();
+    Mime.prototype.lookup = function(path16, fallback) {
+      var ext = path16.replace(/^.*[\.\/\\]/, "").toLowerCase();
       return this.types[ext] || fallback || this.default_type;
     };
     Mime.prototype.extension = function(mimeType) {
@@ -39639,54 +39636,54 @@ var require_polyfills = __commonJS({
     }
     var chdir;
     module2.exports = patch;
-    function patch(fs11) {
+    function patch(fs12) {
       if (constants.hasOwnProperty("O_SYMLINK") && process.version.match(/^v0\.6\.[0-2]|^v0\.5\./)) {
-        patchLchmod(fs11);
+        patchLchmod(fs12);
       }
-      if (!fs11.lutimes) {
-        patchLutimes(fs11);
+      if (!fs12.lutimes) {
+        patchLutimes(fs12);
       }
-      fs11.chown = chownFix(fs11.chown);
-      fs11.fchown = chownFix(fs11.fchown);
-      fs11.lchown = chownFix(fs11.lchown);
-      fs11.chmod = chmodFix(fs11.chmod);
-      fs11.fchmod = chmodFix(fs11.fchmod);
-      fs11.lchmod = chmodFix(fs11.lchmod);
-      fs11.chownSync = chownFixSync(fs11.chownSync);
-      fs11.fchownSync = chownFixSync(fs11.fchownSync);
-      fs11.lchownSync = chownFixSync(fs11.lchownSync);
-      fs11.chmodSync = chmodFixSync(fs11.chmodSync);
-      fs11.fchmodSync = chmodFixSync(fs11.fchmodSync);
-      fs11.lchmodSync = chmodFixSync(fs11.lchmodSync);
-      fs11.stat = statFix(fs11.stat);
-      fs11.fstat = statFix(fs11.fstat);
-      fs11.lstat = statFix(fs11.lstat);
-      fs11.statSync = statFixSync(fs11.statSync);
-      fs11.fstatSync = statFixSync(fs11.fstatSync);
-      fs11.lstatSync = statFixSync(fs11.lstatSync);
-      if (fs11.chmod && !fs11.lchmod) {
-        fs11.lchmod = function(path14, mode, cb3) {
+      fs12.chown = chownFix(fs12.chown);
+      fs12.fchown = chownFix(fs12.fchown);
+      fs12.lchown = chownFix(fs12.lchown);
+      fs12.chmod = chmodFix(fs12.chmod);
+      fs12.fchmod = chmodFix(fs12.fchmod);
+      fs12.lchmod = chmodFix(fs12.lchmod);
+      fs12.chownSync = chownFixSync(fs12.chownSync);
+      fs12.fchownSync = chownFixSync(fs12.fchownSync);
+      fs12.lchownSync = chownFixSync(fs12.lchownSync);
+      fs12.chmodSync = chmodFixSync(fs12.chmodSync);
+      fs12.fchmodSync = chmodFixSync(fs12.fchmodSync);
+      fs12.lchmodSync = chmodFixSync(fs12.lchmodSync);
+      fs12.stat = statFix(fs12.stat);
+      fs12.fstat = statFix(fs12.fstat);
+      fs12.lstat = statFix(fs12.lstat);
+      fs12.statSync = statFixSync(fs12.statSync);
+      fs12.fstatSync = statFixSync(fs12.fstatSync);
+      fs12.lstatSync = statFixSync(fs12.lstatSync);
+      if (fs12.chmod && !fs12.lchmod) {
+        fs12.lchmod = function(path15, mode, cb3) {
           if (cb3) process.nextTick(cb3);
         };
-        fs11.lchmodSync = function() {
+        fs12.lchmodSync = function() {
         };
       }
-      if (fs11.chown && !fs11.lchown) {
-        fs11.lchown = function(path14, uid, gid, cb3) {
+      if (fs12.chown && !fs12.lchown) {
+        fs12.lchown = function(path15, uid, gid, cb3) {
           if (cb3) process.nextTick(cb3);
         };
-        fs11.lchownSync = function() {
+        fs12.lchownSync = function() {
         };
       }
       if (platform2 === "win32") {
-        fs11.rename = typeof fs11.rename !== "function" ? fs11.rename : (function(fs$rename) {
+        fs12.rename = typeof fs12.rename !== "function" ? fs12.rename : (function(fs$rename) {
           function rename2(from, to, cb3) {
             var start = Date.now();
             var backoff = 0;
             fs$rename(from, to, function CB(er) {
               if (er && (er.code === "EACCES" || er.code === "EPERM" || er.code === "EBUSY") && Date.now() - start < 6e4) {
                 setTimeout(function() {
-                  fs11.stat(to, function(stater, st2) {
+                  fs12.stat(to, function(stater, st2) {
                     if (stater && stater.code === "ENOENT")
                       fs$rename(from, to, CB);
                     else
@@ -39702,9 +39699,9 @@ var require_polyfills = __commonJS({
           }
           if (Object.setPrototypeOf) Object.setPrototypeOf(rename2, fs$rename);
           return rename2;
-        })(fs11.rename);
+        })(fs12.rename);
       }
-      fs11.read = typeof fs11.read !== "function" ? fs11.read : (function(fs$read) {
+      fs12.read = typeof fs12.read !== "function" ? fs12.read : (function(fs$read) {
         function read(fd, buffer, offset, length, position, callback_) {
           var callback;
           if (callback_ && typeof callback_ === "function") {
@@ -39712,22 +39709,22 @@ var require_polyfills = __commonJS({
             callback = function(er, _4, __) {
               if (er && er.code === "EAGAIN" && eagCounter < 10) {
                 eagCounter++;
-                return fs$read.call(fs11, fd, buffer, offset, length, position, callback);
+                return fs$read.call(fs12, fd, buffer, offset, length, position, callback);
               }
               callback_.apply(this, arguments);
             };
           }
-          return fs$read.call(fs11, fd, buffer, offset, length, position, callback);
+          return fs$read.call(fs12, fd, buffer, offset, length, position, callback);
         }
         if (Object.setPrototypeOf) Object.setPrototypeOf(read, fs$read);
         return read;
-      })(fs11.read);
-      fs11.readSync = typeof fs11.readSync !== "function" ? fs11.readSync : /* @__PURE__ */ (function(fs$readSync) {
+      })(fs12.read);
+      fs12.readSync = typeof fs12.readSync !== "function" ? fs12.readSync : /* @__PURE__ */ (function(fs$readSync) {
         return function(fd, buffer, offset, length, position) {
           var eagCounter = 0;
           while (true) {
             try {
-              return fs$readSync.call(fs11, fd, buffer, offset, length, position);
+              return fs$readSync.call(fs12, fd, buffer, offset, length, position);
             } catch (er) {
               if (er.code === "EAGAIN" && eagCounter < 10) {
                 eagCounter++;
@@ -39737,11 +39734,11 @@ var require_polyfills = __commonJS({
             }
           }
         };
-      })(fs11.readSync);
-      function patchLchmod(fs12) {
-        fs12.lchmod = function(path14, mode, callback) {
-          fs12.open(
-            path14,
+      })(fs12.readSync);
+      function patchLchmod(fs13) {
+        fs13.lchmod = function(path15, mode, callback) {
+          fs13.open(
+            path15,
             constants.O_WRONLY | constants.O_SYMLINK,
             mode,
             function(err, fd) {
@@ -39749,80 +39746,80 @@ var require_polyfills = __commonJS({
                 if (callback) callback(err);
                 return;
               }
-              fs12.fchmod(fd, mode, function(err2) {
-                fs12.close(fd, function(err22) {
+              fs13.fchmod(fd, mode, function(err2) {
+                fs13.close(fd, function(err22) {
                   if (callback) callback(err2 || err22);
                 });
               });
             }
           );
         };
-        fs12.lchmodSync = function(path14, mode) {
-          var fd = fs12.openSync(path14, constants.O_WRONLY | constants.O_SYMLINK, mode);
+        fs13.lchmodSync = function(path15, mode) {
+          var fd = fs13.openSync(path15, constants.O_WRONLY | constants.O_SYMLINK, mode);
           var threw = true;
           var ret2;
           try {
-            ret2 = fs12.fchmodSync(fd, mode);
+            ret2 = fs13.fchmodSync(fd, mode);
             threw = false;
           } finally {
             if (threw) {
               try {
-                fs12.closeSync(fd);
+                fs13.closeSync(fd);
               } catch (er) {
               }
             } else {
-              fs12.closeSync(fd);
+              fs13.closeSync(fd);
             }
           }
           return ret2;
         };
       }
-      function patchLutimes(fs12) {
-        if (constants.hasOwnProperty("O_SYMLINK") && fs12.futimes) {
-          fs12.lutimes = function(path14, at2, mt2, cb3) {
-            fs12.open(path14, constants.O_SYMLINK, function(er, fd) {
+      function patchLutimes(fs13) {
+        if (constants.hasOwnProperty("O_SYMLINK") && fs13.futimes) {
+          fs13.lutimes = function(path15, at2, mt2, cb3) {
+            fs13.open(path15, constants.O_SYMLINK, function(er, fd) {
               if (er) {
                 if (cb3) cb3(er);
                 return;
               }
-              fs12.futimes(fd, at2, mt2, function(er2) {
-                fs12.close(fd, function(er22) {
+              fs13.futimes(fd, at2, mt2, function(er2) {
+                fs13.close(fd, function(er22) {
                   if (cb3) cb3(er2 || er22);
                 });
               });
             });
           };
-          fs12.lutimesSync = function(path14, at2, mt2) {
-            var fd = fs12.openSync(path14, constants.O_SYMLINK);
+          fs13.lutimesSync = function(path15, at2, mt2) {
+            var fd = fs13.openSync(path15, constants.O_SYMLINK);
             var ret2;
             var threw = true;
             try {
-              ret2 = fs12.futimesSync(fd, at2, mt2);
+              ret2 = fs13.futimesSync(fd, at2, mt2);
               threw = false;
             } finally {
               if (threw) {
                 try {
-                  fs12.closeSync(fd);
+                  fs13.closeSync(fd);
                 } catch (er) {
                 }
               } else {
-                fs12.closeSync(fd);
+                fs13.closeSync(fd);
               }
             }
             return ret2;
           };
-        } else if (fs12.futimes) {
-          fs12.lutimes = function(_a, _b, _c, cb3) {
+        } else if (fs13.futimes) {
+          fs13.lutimes = function(_a, _b, _c, cb3) {
             if (cb3) process.nextTick(cb3);
           };
-          fs12.lutimesSync = function() {
+          fs13.lutimesSync = function() {
           };
         }
       }
       function chmodFix(orig) {
         if (!orig) return orig;
         return function(target, mode, cb3) {
-          return orig.call(fs11, target, mode, function(er) {
+          return orig.call(fs12, target, mode, function(er) {
             if (chownErOk(er)) er = null;
             if (cb3) cb3.apply(this, arguments);
           });
@@ -39832,7 +39829,7 @@ var require_polyfills = __commonJS({
         if (!orig) return orig;
         return function(target, mode) {
           try {
-            return orig.call(fs11, target, mode);
+            return orig.call(fs12, target, mode);
           } catch (er) {
             if (!chownErOk(er)) throw er;
           }
@@ -39841,7 +39838,7 @@ var require_polyfills = __commonJS({
       function chownFix(orig) {
         if (!orig) return orig;
         return function(target, uid, gid, cb3) {
-          return orig.call(fs11, target, uid, gid, function(er) {
+          return orig.call(fs12, target, uid, gid, function(er) {
             if (chownErOk(er)) er = null;
             if (cb3) cb3.apply(this, arguments);
           });
@@ -39851,7 +39848,7 @@ var require_polyfills = __commonJS({
         if (!orig) return orig;
         return function(target, uid, gid) {
           try {
-            return orig.call(fs11, target, uid, gid);
+            return orig.call(fs12, target, uid, gid);
           } catch (er) {
             if (!chownErOk(er)) throw er;
           }
@@ -39871,13 +39868,13 @@ var require_polyfills = __commonJS({
             }
             if (cb3) cb3.apply(this, arguments);
           }
-          return options2 ? orig.call(fs11, target, options2, callback) : orig.call(fs11, target, callback);
+          return options2 ? orig.call(fs12, target, options2, callback) : orig.call(fs12, target, callback);
         };
       }
       function statFixSync(orig) {
         if (!orig) return orig;
         return function(target, options2) {
-          var stats = options2 ? orig.call(fs11, target, options2) : orig.call(fs11, target);
+          var stats = options2 ? orig.call(fs12, target, options2) : orig.call(fs12, target);
           if (stats) {
             if (stats.uid < 0) stats.uid += 4294967296;
             if (stats.gid < 0) stats.gid += 4294967296;
@@ -39906,16 +39903,16 @@ var require_legacy_streams = __commonJS({
   "../../node_modules/.pnpm/graceful-fs@4.2.11/node_modules/graceful-fs/legacy-streams.js"(exports2, module2) {
     var Stream = require("stream").Stream;
     module2.exports = legacy;
-    function legacy(fs11) {
+    function legacy(fs12) {
       return {
         ReadStream,
         WriteStream
       };
-      function ReadStream(path14, options2) {
-        if (!(this instanceof ReadStream)) return new ReadStream(path14, options2);
+      function ReadStream(path15, options2) {
+        if (!(this instanceof ReadStream)) return new ReadStream(path15, options2);
         Stream.call(this);
         var self2 = this;
-        this.path = path14;
+        this.path = path15;
         this.fd = null;
         this.readable = true;
         this.paused = false;
@@ -39949,7 +39946,7 @@ var require_legacy_streams = __commonJS({
           });
           return;
         }
-        fs11.open(this.path, this.flags, this.mode, function(err, fd) {
+        fs12.open(this.path, this.flags, this.mode, function(err, fd) {
           if (err) {
             self2.emit("error", err);
             self2.readable = false;
@@ -39960,10 +39957,10 @@ var require_legacy_streams = __commonJS({
           self2._read();
         });
       }
-      function WriteStream(path14, options2) {
-        if (!(this instanceof WriteStream)) return new WriteStream(path14, options2);
+      function WriteStream(path15, options2) {
+        if (!(this instanceof WriteStream)) return new WriteStream(path15, options2);
         Stream.call(this);
-        this.path = path14;
+        this.path = path15;
         this.fd = null;
         this.writable = true;
         this.flags = "w";
@@ -39988,7 +39985,7 @@ var require_legacy_streams = __commonJS({
         this.busy = false;
         this._queue = [];
         if (this.fd === null) {
-          this._open = fs11.open;
+          this._open = fs12.open;
           this._queue.push([this._open, this.path, this.flags, this.mode, void 0]);
           this.flush();
         }
@@ -40023,7 +40020,7 @@ var require_clone = __commonJS({
 // ../../node_modules/.pnpm/graceful-fs@4.2.11/node_modules/graceful-fs/graceful-fs.js
 var require_graceful_fs = __commonJS({
   "../../node_modules/.pnpm/graceful-fs@4.2.11/node_modules/graceful-fs/graceful-fs.js"(exports2, module2) {
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var polyfills = require_polyfills();
     var legacy = require_legacy_streams();
     var clone2 = require_clone();
@@ -40055,12 +40052,12 @@ var require_graceful_fs = __commonJS({
         m = "GFS4: " + m.split(/\n/).join("\nGFS4: ");
         console.error(m);
       };
-    if (!fs11[gracefulQueue]) {
+    if (!fs12[gracefulQueue]) {
       queue = global[gracefulQueue] || [];
-      publishQueue(fs11, queue);
-      fs11.close = (function(fs$close) {
+      publishQueue(fs12, queue);
+      fs12.close = (function(fs$close) {
         function close(fd, cb3) {
-          return fs$close.call(fs11, fd, function(err) {
+          return fs$close.call(fs12, fd, function(err) {
             if (!err) {
               resetQueue();
             }
@@ -40072,48 +40069,48 @@ var require_graceful_fs = __commonJS({
           value: fs$close
         });
         return close;
-      })(fs11.close);
-      fs11.closeSync = (function(fs$closeSync) {
+      })(fs12.close);
+      fs12.closeSync = (function(fs$closeSync) {
         function closeSync(fd) {
-          fs$closeSync.apply(fs11, arguments);
+          fs$closeSync.apply(fs12, arguments);
           resetQueue();
         }
         Object.defineProperty(closeSync, previousSymbol, {
           value: fs$closeSync
         });
         return closeSync;
-      })(fs11.closeSync);
+      })(fs12.closeSync);
       if (/\bgfs4\b/i.test(process.env.NODE_DEBUG || "")) {
         process.on("exit", function() {
-          debug2(fs11[gracefulQueue]);
-          require("assert").equal(fs11[gracefulQueue].length, 0);
+          debug2(fs12[gracefulQueue]);
+          require("assert").equal(fs12[gracefulQueue].length, 0);
         });
       }
     }
     var queue;
     if (!global[gracefulQueue]) {
-      publishQueue(global, fs11[gracefulQueue]);
+      publishQueue(global, fs12[gracefulQueue]);
     }
-    module2.exports = patch(clone2(fs11));
-    if (process.env.TEST_GRACEFUL_FS_GLOBAL_PATCH && !fs11.__patched) {
-      module2.exports = patch(fs11);
-      fs11.__patched = true;
+    module2.exports = patch(clone2(fs12));
+    if (process.env.TEST_GRACEFUL_FS_GLOBAL_PATCH && !fs12.__patched) {
+      module2.exports = patch(fs12);
+      fs12.__patched = true;
     }
-    function patch(fs12) {
-      polyfills(fs12);
-      fs12.gracefulify = patch;
-      fs12.createReadStream = createReadStream;
-      fs12.createWriteStream = createWriteStream;
-      var fs$readFile = fs12.readFile;
-      fs12.readFile = readFile;
-      function readFile(path14, options2, cb3) {
+    function patch(fs13) {
+      polyfills(fs13);
+      fs13.gracefulify = patch;
+      fs13.createReadStream = createReadStream;
+      fs13.createWriteStream = createWriteStream;
+      var fs$readFile = fs13.readFile;
+      fs13.readFile = readFile;
+      function readFile(path15, options2, cb3) {
         if (typeof options2 === "function")
           cb3 = options2, options2 = null;
-        return go$readFile(path14, options2, cb3);
-        function go$readFile(path15, options3, cb4, startTime) {
-          return fs$readFile(path15, options3, function(err) {
+        return go$readFile(path15, options2, cb3);
+        function go$readFile(path16, options3, cb4, startTime) {
+          return fs$readFile(path16, options3, function(err) {
             if (err && (err.code === "EMFILE" || err.code === "ENFILE"))
-              enqueue([go$readFile, [path15, options3, cb4], err, startTime || Date.now(), Date.now()]);
+              enqueue([go$readFile, [path16, options3, cb4], err, startTime || Date.now(), Date.now()]);
             else {
               if (typeof cb4 === "function")
                 cb4.apply(this, arguments);
@@ -40121,16 +40118,16 @@ var require_graceful_fs = __commonJS({
           });
         }
       }
-      var fs$writeFile = fs12.writeFile;
-      fs12.writeFile = writeFile;
-      function writeFile(path14, data, options2, cb3) {
+      var fs$writeFile = fs13.writeFile;
+      fs13.writeFile = writeFile;
+      function writeFile(path15, data, options2, cb3) {
         if (typeof options2 === "function")
           cb3 = options2, options2 = null;
-        return go$writeFile(path14, data, options2, cb3);
-        function go$writeFile(path15, data2, options3, cb4, startTime) {
-          return fs$writeFile(path15, data2, options3, function(err) {
+        return go$writeFile(path15, data, options2, cb3);
+        function go$writeFile(path16, data2, options3, cb4, startTime) {
+          return fs$writeFile(path16, data2, options3, function(err) {
             if (err && (err.code === "EMFILE" || err.code === "ENFILE"))
-              enqueue([go$writeFile, [path15, data2, options3, cb4], err, startTime || Date.now(), Date.now()]);
+              enqueue([go$writeFile, [path16, data2, options3, cb4], err, startTime || Date.now(), Date.now()]);
             else {
               if (typeof cb4 === "function")
                 cb4.apply(this, arguments);
@@ -40138,17 +40135,17 @@ var require_graceful_fs = __commonJS({
           });
         }
       }
-      var fs$appendFile = fs12.appendFile;
+      var fs$appendFile = fs13.appendFile;
       if (fs$appendFile)
-        fs12.appendFile = appendFile;
-      function appendFile(path14, data, options2, cb3) {
+        fs13.appendFile = appendFile;
+      function appendFile(path15, data, options2, cb3) {
         if (typeof options2 === "function")
           cb3 = options2, options2 = null;
-        return go$appendFile(path14, data, options2, cb3);
-        function go$appendFile(path15, data2, options3, cb4, startTime) {
-          return fs$appendFile(path15, data2, options3, function(err) {
+        return go$appendFile(path15, data, options2, cb3);
+        function go$appendFile(path16, data2, options3, cb4, startTime) {
+          return fs$appendFile(path16, data2, options3, function(err) {
             if (err && (err.code === "EMFILE" || err.code === "ENFILE"))
-              enqueue([go$appendFile, [path15, data2, options3, cb4], err, startTime || Date.now(), Date.now()]);
+              enqueue([go$appendFile, [path16, data2, options3, cb4], err, startTime || Date.now(), Date.now()]);
             else {
               if (typeof cb4 === "function")
                 cb4.apply(this, arguments);
@@ -40156,9 +40153,9 @@ var require_graceful_fs = __commonJS({
           });
         }
       }
-      var fs$copyFile = fs12.copyFile;
+      var fs$copyFile = fs13.copyFile;
       if (fs$copyFile)
-        fs12.copyFile = copyFile;
+        fs13.copyFile = copyFile;
       function copyFile(src, dest, flags, cb3) {
         if (typeof flags === "function") {
           cb3 = flags;
@@ -40176,34 +40173,34 @@ var require_graceful_fs = __commonJS({
           });
         }
       }
-      var fs$readdir = fs12.readdir;
-      fs12.readdir = readdir2;
+      var fs$readdir = fs13.readdir;
+      fs13.readdir = readdir2;
       var noReaddirOptionVersions = /^v[0-5]\./;
-      function readdir2(path14, options2, cb3) {
+      function readdir2(path15, options2, cb3) {
         if (typeof options2 === "function")
           cb3 = options2, options2 = null;
-        var go$readdir = noReaddirOptionVersions.test(process.version) ? function go$readdir2(path15, options3, cb4, startTime) {
-          return fs$readdir(path15, fs$readdirCallback(
-            path15,
+        var go$readdir = noReaddirOptionVersions.test(process.version) ? function go$readdir2(path16, options3, cb4, startTime) {
+          return fs$readdir(path16, fs$readdirCallback(
+            path16,
             options3,
             cb4,
             startTime
           ));
-        } : function go$readdir2(path15, options3, cb4, startTime) {
-          return fs$readdir(path15, options3, fs$readdirCallback(
-            path15,
+        } : function go$readdir2(path16, options3, cb4, startTime) {
+          return fs$readdir(path16, options3, fs$readdirCallback(
+            path16,
             options3,
             cb4,
             startTime
           ));
         };
-        return go$readdir(path14, options2, cb3);
-        function fs$readdirCallback(path15, options3, cb4, startTime) {
+        return go$readdir(path15, options2, cb3);
+        function fs$readdirCallback(path16, options3, cb4, startTime) {
           return function(err, files) {
             if (err && (err.code === "EMFILE" || err.code === "ENFILE"))
               enqueue([
                 go$readdir,
-                [path15, options3, cb4],
+                [path16, options3, cb4],
                 err,
                 startTime || Date.now(),
                 Date.now()
@@ -40218,21 +40215,21 @@ var require_graceful_fs = __commonJS({
         }
       }
       if (process.version.substr(0, 4) === "v0.8") {
-        var legStreams = legacy(fs12);
+        var legStreams = legacy(fs13);
         ReadStream = legStreams.ReadStream;
         WriteStream = legStreams.WriteStream;
       }
-      var fs$ReadStream = fs12.ReadStream;
+      var fs$ReadStream = fs13.ReadStream;
       if (fs$ReadStream) {
         ReadStream.prototype = Object.create(fs$ReadStream.prototype);
         ReadStream.prototype.open = ReadStream$open;
       }
-      var fs$WriteStream = fs12.WriteStream;
+      var fs$WriteStream = fs13.WriteStream;
       if (fs$WriteStream) {
         WriteStream.prototype = Object.create(fs$WriteStream.prototype);
         WriteStream.prototype.open = WriteStream$open;
       }
-      Object.defineProperty(fs12, "ReadStream", {
+      Object.defineProperty(fs13, "ReadStream", {
         get: function() {
           return ReadStream;
         },
@@ -40242,7 +40239,7 @@ var require_graceful_fs = __commonJS({
         enumerable: true,
         configurable: true
       });
-      Object.defineProperty(fs12, "WriteStream", {
+      Object.defineProperty(fs13, "WriteStream", {
         get: function() {
           return WriteStream;
         },
@@ -40253,7 +40250,7 @@ var require_graceful_fs = __commonJS({
         configurable: true
       });
       var FileReadStream = ReadStream;
-      Object.defineProperty(fs12, "FileReadStream", {
+      Object.defineProperty(fs13, "FileReadStream", {
         get: function() {
           return FileReadStream;
         },
@@ -40264,7 +40261,7 @@ var require_graceful_fs = __commonJS({
         configurable: true
       });
       var FileWriteStream = WriteStream;
-      Object.defineProperty(fs12, "FileWriteStream", {
+      Object.defineProperty(fs13, "FileWriteStream", {
         get: function() {
           return FileWriteStream;
         },
@@ -40274,7 +40271,7 @@ var require_graceful_fs = __commonJS({
         enumerable: true,
         configurable: true
       });
-      function ReadStream(path14, options2) {
+      function ReadStream(path15, options2) {
         if (this instanceof ReadStream)
           return fs$ReadStream.apply(this, arguments), this;
         else
@@ -40294,7 +40291,7 @@ var require_graceful_fs = __commonJS({
           }
         });
       }
-      function WriteStream(path14, options2) {
+      function WriteStream(path15, options2) {
         if (this instanceof WriteStream)
           return fs$WriteStream.apply(this, arguments), this;
         else
@@ -40312,22 +40309,22 @@ var require_graceful_fs = __commonJS({
           }
         });
       }
-      function createReadStream(path14, options2) {
-        return new fs12.ReadStream(path14, options2);
+      function createReadStream(path15, options2) {
+        return new fs13.ReadStream(path15, options2);
       }
-      function createWriteStream(path14, options2) {
-        return new fs12.WriteStream(path14, options2);
+      function createWriteStream(path15, options2) {
+        return new fs13.WriteStream(path15, options2);
       }
-      var fs$open = fs12.open;
-      fs12.open = open;
-      function open(path14, flags, mode, cb3) {
+      var fs$open = fs13.open;
+      fs13.open = open;
+      function open(path15, flags, mode, cb3) {
         if (typeof mode === "function")
           cb3 = mode, mode = null;
-        return go$open(path14, flags, mode, cb3);
-        function go$open(path15, flags2, mode2, cb4, startTime) {
-          return fs$open(path15, flags2, mode2, function(err, fd) {
+        return go$open(path15, flags, mode, cb3);
+        function go$open(path16, flags2, mode2, cb4, startTime) {
+          return fs$open(path16, flags2, mode2, function(err, fd) {
             if (err && (err.code === "EMFILE" || err.code === "ENFILE"))
-              enqueue([go$open, [path15, flags2, mode2, cb4], err, startTime || Date.now(), Date.now()]);
+              enqueue([go$open, [path16, flags2, mode2, cb4], err, startTime || Date.now(), Date.now()]);
             else {
               if (typeof cb4 === "function")
                 cb4.apply(this, arguments);
@@ -40335,20 +40332,20 @@ var require_graceful_fs = __commonJS({
           });
         }
       }
-      return fs12;
+      return fs13;
     }
     function enqueue(elem) {
       debug2("ENQUEUE", elem[0].name, elem[1]);
-      fs11[gracefulQueue].push(elem);
+      fs12[gracefulQueue].push(elem);
       retry();
     }
     var retryTimer;
     function resetQueue() {
       var now2 = Date.now();
-      for (var i = 0; i < fs11[gracefulQueue].length; ++i) {
-        if (fs11[gracefulQueue][i].length > 2) {
-          fs11[gracefulQueue][i][3] = now2;
-          fs11[gracefulQueue][i][4] = now2;
+      for (var i = 0; i < fs12[gracefulQueue].length; ++i) {
+        if (fs12[gracefulQueue][i].length > 2) {
+          fs12[gracefulQueue][i][3] = now2;
+          fs12[gracefulQueue][i][4] = now2;
         }
       }
       retry();
@@ -40356,9 +40353,9 @@ var require_graceful_fs = __commonJS({
     function retry() {
       clearTimeout(retryTimer);
       retryTimer = void 0;
-      if (fs11[gracefulQueue].length === 0)
+      if (fs12[gracefulQueue].length === 0)
         return;
-      var elem = fs11[gracefulQueue].shift();
+      var elem = fs12[gracefulQueue].shift();
       var fn2 = elem[0];
       var args = elem[1];
       var err = elem[2];
@@ -40380,7 +40377,7 @@ var require_graceful_fs = __commonJS({
           debug2("RETRY", fn2.name, args);
           fn2.apply(null, args.concat([startTime]));
         } else {
-          fs11[gracefulQueue].push(elem);
+          fs12[gracefulQueue].push(elem);
         }
       }
       if (retryTimer === void 0) {
@@ -40395,13 +40392,13 @@ var require_fs2 = __commonJS({
   "../../node_modules/.pnpm/less@3.13.1/node_modules/less/lib/less-node/fs.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var fs11;
+    var fs12;
     try {
-      fs11 = require_graceful_fs();
+      fs12 = require_graceful_fs();
     } catch (e) {
-      fs11 = require("fs");
+      fs12 = require("fs");
     }
-    exports2.default = fs11;
+    exports2.default = fs12;
   }
 });
 
@@ -40429,11 +40426,11 @@ var require_abstract_file_manager = __commonJS({
           }
           return filename.slice(0, j3 + 1);
         };
-        AbstractFileManager2.prototype.tryAppendExtension = function(path14, ext) {
-          return /(\.[a-z]*$)|([\?;].*)$/.test(path14) ? path14 : path14 + ext;
+        AbstractFileManager2.prototype.tryAppendExtension = function(path15, ext) {
+          return /(\.[a-z]*$)|([\?;].*)$/.test(path15) ? path15 : path15 + ext;
         };
-        AbstractFileManager2.prototype.tryAppendLessExtension = function(path14) {
-          return this.tryAppendExtension(path14, ".less");
+        AbstractFileManager2.prototype.tryAppendLessExtension = function(path15) {
+          return this.tryAppendExtension(path15, ".less");
         };
         ;
         AbstractFileManager2.prototype.supportsSync = function() {
@@ -40748,8 +40745,8 @@ var require_Request = __commonJS({
     var http3 = require("http");
     var https2 = require("https");
     var jsonToURL = require_jsonToParameter();
-    function getProtocol(path14) {
-      return url6.parse(path14).protocol === "http:" ? http3 : https2;
+    function getProtocol(path15) {
+      return url6.parse(path15).protocol === "http:" ? http3 : https2;
     }
     var Request3 = function() {
       let _options = {};
@@ -40808,12 +40805,12 @@ var require_Request = __commonJS({
         }
         _options.headers.Cookie = body;
       };
-      this._parsePath = function(path14) {
-        if (!!_parsedUrl && !!path14 && path14.indexOf("http") == -1) {
-          path14 = _parsedUrl.protocol + "//" + _parsedUrl.host + path14;
+      this._parsePath = function(path15) {
+        if (!!_parsedUrl && !!path15 && path15.indexOf("http") == -1) {
+          path15 = _parsedUrl.protocol + "//" + _parsedUrl.host + path15;
         }
-        _originalPath = path14;
-        _parsedUrl = url6.parse(path14);
+        _originalPath = path15;
+        _parsedUrl = url6.parse(path15);
         _options.hostname = _parsedUrl.hostname;
         _options.port = _parsedUrl.port;
         _options.path = _parsedUrl.pathname + (!!_parsedUrl.search ? _parsedUrl.search : "");
@@ -40832,7 +40829,7 @@ var require_Request = __commonJS({
           req.write(_postData);
         req.end();
       };
-      this.createRequest = function(path14, method, data, headers = {}, requestOptions = {}, callback) {
+      this.createRequest = function(path15, method, data, headers = {}, requestOptions = {}, callback) {
         if (typeof data === "function") {
           callback = data;
           data = "";
@@ -40847,7 +40844,7 @@ var require_Request = __commonJS({
           method,
           headers
         };
-        this._parsePath(path14);
+        this._parsePath(path15);
         _postData = postData;
         for (const key of Object.keys(_requestOptions)) {
           if (key in requestOptions) {
@@ -40865,15 +40862,15 @@ var require_Request = __commonJS({
 var require_native_request = __commonJS({
   "../../node_modules/.pnpm/native-request@1.1.2/node_modules/native-request/index.js"(exports2, module2) {
     var Request3 = require_Request();
-    function get2(path14, headers, callback) {
+    function get2(path15, headers, callback) {
       const request4 = new Request3();
-      request4.createRequest(path14, "GET", null, headers, callback);
+      request4.createRequest(path15, "GET", null, headers, callback);
       request4.sendRequest();
       return request4;
     }
-    function post(path14, data, headers, callback) {
+    function post(path15, data, headers, callback) {
       const request4 = new Request3();
-      request4.createRequest(path14, "POST", data, headers, callback);
+      request4.createRequest(path15, "POST", data, headers, callback);
       request4.sendRequest();
       return request4;
     }
@@ -42696,11 +42693,11 @@ var require_contexts = __commonJS({
       "rewriteUrls"
       // option - whether to adjust URL's to be relative
     ];
-    function isPathRelative(path14) {
-      return !/^(?:[a-z-]+:|\/|#)/i.test(path14);
+    function isPathRelative(path15) {
+      return !/^(?:[a-z-]+:|\/|#)/i.test(path15);
     }
-    function isPathLocalRelative(path14) {
-      return path14.charAt(0) === ".";
+    function isPathLocalRelative(path15) {
+      return path15.charAt(0) === ".";
     }
     contexts.Eval = /** @class */
     (function() {
@@ -42750,41 +42747,41 @@ var require_contexts = __commonJS({
         }
         return true;
       };
-      Eval.prototype.pathRequiresRewrite = function(path14) {
+      Eval.prototype.pathRequiresRewrite = function(path15) {
         var isRelative = this.rewriteUrls === Constants.RewriteUrls.LOCAL ? isPathLocalRelative : isPathRelative;
-        return isRelative(path14);
+        return isRelative(path15);
       };
-      Eval.prototype.rewritePath = function(path14, rootpath) {
+      Eval.prototype.rewritePath = function(path15, rootpath) {
         var newPath;
         rootpath = rootpath || "";
-        newPath = this.normalizePath(rootpath + path14);
-        if (isPathLocalRelative(path14) && isPathRelative(rootpath) && isPathLocalRelative(newPath) === false) {
+        newPath = this.normalizePath(rootpath + path15);
+        if (isPathLocalRelative(path15) && isPathRelative(rootpath) && isPathLocalRelative(newPath) === false) {
           newPath = "./" + newPath;
         }
         return newPath;
       };
-      Eval.prototype.normalizePath = function(path14) {
-        var segments = path14.split("/").reverse();
+      Eval.prototype.normalizePath = function(path15) {
+        var segments = path15.split("/").reverse();
         var segment;
-        path14 = [];
+        path15 = [];
         while (segments.length !== 0) {
           segment = segments.pop();
           switch (segment) {
             case ".":
               break;
             case "..":
-              if (path14.length === 0 || path14[path14.length - 1] === "..") {
-                path14.push(segment);
+              if (path15.length === 0 || path15[path15.length - 1] === "..") {
+                path15.push(segment);
               } else {
-                path14.pop();
+                path15.pop();
               }
               break;
             default:
-              path14.push(segment);
+              path15.push(segment);
               break;
           }
         }
-        return path14.join("/");
+        return path15.join("/");
       };
       return Eval;
     })();
@@ -43274,7 +43271,7 @@ var require_ruleset = __commonJS({
       var ruleNodes = [];
       var debugInfo;
       var rule;
-      var path14;
+      var path15;
       context.tabLevel = context.tabLevel || 0;
       if (!this.root) {
         context.tabLevel++;
@@ -43313,18 +43310,18 @@ var require_ruleset = __commonJS({
         var pathSubCnt = void 0;
         sep = context.compress ? "," : ",\n" + tabSetStr;
         for (i = 0; i < pathCnt; i++) {
-          path14 = paths[i];
-          if (!(pathSubCnt = path14.length)) {
+          path15 = paths[i];
+          if (!(pathSubCnt = path15.length)) {
             continue;
           }
           if (i > 0) {
             output.add(sep);
           }
           context.firstSelector = true;
-          path14[0].genCSS(context, output);
+          path15[0].genCSS(context, output);
           context.firstSelector = false;
           for (j3 = 1; j3 < pathSubCnt; j3++) {
-            path14[j3].genCSS(context, output);
+            path15[j3].genCSS(context, output);
           }
         }
         output.add((context.compress ? "{" : " {\n") + tabRuleStr);
@@ -44681,8 +44678,8 @@ var require_url = __commonJS({
       return new URL3(val, this.getIndex(), this.fileInfo(), true);
     };
     URL3.prototype.type = "Url";
-    function escapePath(path14) {
-      return path14.replace(/[\(\)'"\s]/g, function(match) {
+    function escapePath(path15) {
+      return path15.replace(/[\(\)'"\s]/g, function(match) {
         return "\\" + match;
       });
     }
@@ -44794,19 +44791,19 @@ var require_media = __commonJS({
     Media.prototype.evalNested = function(context) {
       var i;
       var value;
-      var path14 = context.mediaPath.concat([this]);
-      for (i = 0; i < path14.length; i++) {
-        value = path14[i].features instanceof value_1.default ? path14[i].features.value : path14[i].features;
-        path14[i] = Array.isArray(value) ? value : [value];
+      var path15 = context.mediaPath.concat([this]);
+      for (i = 0; i < path15.length; i++) {
+        value = path15[i].features instanceof value_1.default ? path15[i].features.value : path15[i].features;
+        path15[i] = Array.isArray(value) ? value : [value];
       }
-      this.features = new value_1.default(this.permute(path14).map(function(path15) {
-        path15 = path15.map(function(fragment) {
+      this.features = new value_1.default(this.permute(path15).map(function(path16) {
+        path16 = path16.map(function(fragment) {
           return fragment.toCSS ? fragment : new anonymous_1.default(fragment);
         });
-        for (i = path15.length - 1; i > 0; i--) {
-          path15.splice(i, 0, new anonymous_1.default("and"));
+        for (i = path16.length - 1; i > 0; i--) {
+          path16.splice(i, 0, new anonymous_1.default("and"));
         }
-        return new expression_1.default(path15);
+        return new expression_1.default(path16);
       }));
       this.setParent(this.features, this);
       return new ruleset_1.default([], []);
@@ -44878,11 +44875,11 @@ var require_import = __commonJS({
     var anonymous_1 = __importDefault(require_anonymous());
     var utils = __importStar(require_utils2());
     var less_error_1 = __importDefault(require_less_error());
-    var Import = function(path14, features, options2, index, currentFileInfo, visibilityInfo) {
+    var Import = function(path15, features, options2, index, currentFileInfo, visibilityInfo) {
       this.options = options2;
       this._index = index;
       this._fileInfo = currentFileInfo;
-      this.path = path14;
+      this.path = path15;
       this.features = features;
       this.allowRoot = true;
       if (this.options.less !== void 0 || this.options.inline) {
@@ -44922,34 +44919,34 @@ var require_import = __commonJS({
       return this.path instanceof url_1.default ? this.path.value.value : this.path.value;
     };
     Import.prototype.isVariableImport = function() {
-      var path14 = this.path;
-      if (path14 instanceof url_1.default) {
-        path14 = path14.value;
+      var path15 = this.path;
+      if (path15 instanceof url_1.default) {
+        path15 = path15.value;
       }
-      if (path14 instanceof quoted_1.default) {
-        return path14.containsVariables();
+      if (path15 instanceof quoted_1.default) {
+        return path15.containsVariables();
       }
       return true;
     };
     Import.prototype.evalForImport = function(context) {
-      var path14 = this.path;
-      if (path14 instanceof url_1.default) {
-        path14 = path14.value;
+      var path15 = this.path;
+      if (path15 instanceof url_1.default) {
+        path15 = path15.value;
       }
-      return new Import(path14.eval(context), this.features, this.options, this._index, this._fileInfo, this.visibilityInfo());
+      return new Import(path15.eval(context), this.features, this.options, this._index, this._fileInfo, this.visibilityInfo());
     };
     Import.prototype.evalPath = function(context) {
-      var path14 = this.path.eval(context);
+      var path15 = this.path.eval(context);
       var fileInfo = this._fileInfo;
-      if (!(path14 instanceof url_1.default)) {
-        var pathValue = path14.value;
+      if (!(path15 instanceof url_1.default)) {
+        var pathValue = path15.value;
         if (fileInfo && pathValue && context.pathRequiresRewrite(pathValue)) {
-          path14.value = context.rewritePath(pathValue, fileInfo.rootpath);
+          path15.value = context.rewritePath(pathValue, fileInfo.rootpath);
         } else {
-          path14.value = context.normalizePath(path14.value);
+          path15.value = context.normalizePath(path15.value);
         }
       }
-      return path14;
+      return path15;
     };
     Import.prototype.eval = function(context) {
       var result2 = this.doEval(context);
@@ -47004,7 +47001,7 @@ var require_extend_visitor = __commonJS({
         ProcessExtendsVisitor2.prototype.extendSelector = function(matches, selectorPath, replacementSelector, isVisible) {
           var currentSelectorPathIndex = 0;
           var currentSelectorPathElementIndex = 0;
-          var path14 = [];
+          var path15 = [];
           var matchIndex;
           var selector;
           var firstElement;
@@ -47015,16 +47012,16 @@ var require_extend_visitor = __commonJS({
             selector = selectorPath[match.pathIndex];
             firstElement = new tree_1.default.Element(match.initialCombinator, replacementSelector.elements[0].value, replacementSelector.elements[0].isVariable, replacementSelector.elements[0].getIndex(), replacementSelector.elements[0].fileInfo());
             if (match.pathIndex > currentSelectorPathIndex && currentSelectorPathElementIndex > 0) {
-              path14[path14.length - 1].elements = path14[path14.length - 1].elements.concat(selectorPath[currentSelectorPathIndex].elements.slice(currentSelectorPathElementIndex));
+              path15[path15.length - 1].elements = path15[path15.length - 1].elements.concat(selectorPath[currentSelectorPathIndex].elements.slice(currentSelectorPathElementIndex));
               currentSelectorPathElementIndex = 0;
               currentSelectorPathIndex++;
             }
             newElements = selector.elements.slice(currentSelectorPathElementIndex, match.index).concat([firstElement]).concat(replacementSelector.elements.slice(1));
             if (currentSelectorPathIndex === match.pathIndex && matchIndex > 0) {
-              path14[path14.length - 1].elements = path14[path14.length - 1].elements.concat(newElements);
+              path15[path15.length - 1].elements = path15[path15.length - 1].elements.concat(newElements);
             } else {
-              path14 = path14.concat(selectorPath.slice(currentSelectorPathIndex, match.pathIndex));
-              path14.push(new tree_1.default.Selector(newElements));
+              path15 = path15.concat(selectorPath.slice(currentSelectorPathIndex, match.pathIndex));
+              path15.push(new tree_1.default.Selector(newElements));
             }
             currentSelectorPathIndex = match.endPathIndex;
             currentSelectorPathElementIndex = match.endPathElementIndex;
@@ -47034,11 +47031,11 @@ var require_extend_visitor = __commonJS({
             }
           }
           if (currentSelectorPathIndex < selectorPath.length && currentSelectorPathElementIndex > 0) {
-            path14[path14.length - 1].elements = path14[path14.length - 1].elements.concat(selectorPath[currentSelectorPathIndex].elements.slice(currentSelectorPathElementIndex));
+            path15[path15.length - 1].elements = path15[path15.length - 1].elements.concat(selectorPath[currentSelectorPathIndex].elements.slice(currentSelectorPathElementIndex));
             currentSelectorPathIndex++;
           }
-          path14 = path14.concat(selectorPath.slice(currentSelectorPathIndex, selectorPath.length));
-          path14 = path14.map(function(currentValue) {
+          path15 = path15.concat(selectorPath.slice(currentSelectorPathIndex, selectorPath.length));
+          path15 = path15.map(function(currentValue) {
             var derived = currentValue.createDerived(currentValue.elements);
             if (isVisible) {
               derived.ensureVisibility();
@@ -47047,7 +47044,7 @@ var require_extend_visitor = __commonJS({
             }
             return derived;
           });
-          return path14;
+          return path15;
         };
         ProcessExtendsVisitor2.prototype.visitMedia = function(mediaNode, visitArgs) {
           var newAllExtends = mediaNode.allExtends.concat(this.allExtendsStack[this.allExtendsStack.length - 1]);
@@ -49371,20 +49368,20 @@ var require_parser2 = __commonJS({
           // stored in `import`, which we pass to the Import constructor.
           //
           "import": function() {
-            var path14;
+            var path15;
             var features;
             var index = parserInput.i;
             var dir = parserInput.$re(/^@import?\s+/);
             if (dir) {
               var options2 = (dir ? this.importOptions() : null) || {};
-              if (path14 = this.entities.quoted() || this.entities.url()) {
+              if (path15 = this.entities.quoted() || this.entities.url()) {
                 features = this.mediaFeatures();
                 if (!parserInput.$char(";")) {
                   parserInput.i = index;
                   error("missing semi-colon or unrecognised media features on import");
                 }
                 features = features && new tree_1.default.Value(features);
-                return new tree_1.default.Import(path14, features, options2, index, fileInfo);
+                return new tree_1.default.Import(path15, features, options2, index, fileInfo);
               } else {
                 parserInput.i = index;
                 error("malformed import statement");
@@ -49514,7 +49511,7 @@ var require_parser2 = __commonJS({
           //     @plugin (args) "lib";
           //
           plugin: function() {
-            var path14;
+            var path15;
             var args;
             var options2;
             var index = parserInput.i;
@@ -49529,12 +49526,12 @@ var require_parser2 = __commonJS({
               } else {
                 options2 = { isPlugin: true };
               }
-              if (path14 = this.entities.quoted() || this.entities.url()) {
+              if (path15 = this.entities.quoted() || this.entities.url()) {
                 if (!parserInput.$char(";")) {
                   parserInput.i = index;
                   error("missing semi-colon on @plugin");
                 }
-                return new tree_1.default.Import(path14, null, options2, index, fileInfo);
+                return new tree_1.default.Import(path15, null, options2, index, fileInfo);
               } else {
                 parserInput.i = index;
                 error("malformed @plugin statement");
@@ -51190,14 +51187,14 @@ var require_source_map_output = __commonJS({
             this._lineNumber = 0;
             this._column = 0;
           }
-          SourceMapOutput2.prototype.removeBasepath = function(path14) {
-            if (this._sourceMapBasepath && path14.indexOf(this._sourceMapBasepath) === 0) {
-              path14 = path14.substring(this._sourceMapBasepath.length);
-              if (path14.charAt(0) === "\\" || path14.charAt(0) === "/") {
-                path14 = path14.substring(1);
+          SourceMapOutput2.prototype.removeBasepath = function(path15) {
+            if (this._sourceMapBasepath && path15.indexOf(this._sourceMapBasepath) === 0) {
+              path15 = path15.substring(this._sourceMapBasepath.length);
+              if (path15.charAt(0) === "\\" || path15.charAt(0) === "/") {
+                path15 = path15.substring(1);
               }
             }
-            return path14;
+            return path15;
           };
           SourceMapOutput2.prototype.normalizeFilename = function(filename) {
             filename = filename.replace(/\\/g, "/");
@@ -51579,11 +51576,11 @@ var require_import_manager = __commonJS({
             this.queue = [];
             this.files = {};
           }
-          ImportManager2.prototype.push = function(path14, tryAppendExtension, currentFileInfo, importOptions, callback) {
+          ImportManager2.prototype.push = function(path15, tryAppendExtension, currentFileInfo, importOptions, callback) {
             var importManager = this, pluginLoader = this.context.pluginManager.Loader;
-            this.queue.push(path14);
+            this.queue.push(path15);
             var fileParsedFunc = function(e, root2, fullPath) {
-              importManager.queue.splice(importManager.queue.indexOf(path14), 1);
+              importManager.queue.splice(importManager.queue.indexOf(path15), 1);
               var importedEqualsRoot = fullPath === importManager.rootFilename;
               if (importOptions.optional && e) {
                 callback(null, { rules: [] }, false, null);
@@ -51604,9 +51601,9 @@ var require_import_manager = __commonJS({
               rootpath: currentFileInfo.rootpath,
               rootFilename: currentFileInfo.rootFilename
             };
-            var fileManager = environment.getFileManager(path14, currentFileInfo.currentDirectory, this.context, environment);
+            var fileManager = environment.getFileManager(path15, currentFileInfo.currentDirectory, this.context, environment);
             if (!fileManager) {
-              fileParsedFunc({ message: "Could not find a file-manager for " + path14 });
+              fileParsedFunc({ message: "Could not find a file-manager for " + path15 });
               return;
             }
             var loadFileCallback = function(loadedFile2) {
@@ -51655,15 +51652,15 @@ var require_import_manager = __commonJS({
             if (importOptions.isPlugin) {
               context.mime = "application/javascript";
               if (context.syncImport) {
-                loadedFile = pluginLoader.loadPluginSync(path14, currentFileInfo.currentDirectory, context, environment, fileManager);
+                loadedFile = pluginLoader.loadPluginSync(path15, currentFileInfo.currentDirectory, context, environment, fileManager);
               } else {
-                promise = pluginLoader.loadPlugin(path14, currentFileInfo.currentDirectory, context, environment, fileManager);
+                promise = pluginLoader.loadPlugin(path15, currentFileInfo.currentDirectory, context, environment, fileManager);
               }
             } else {
               if (context.syncImport) {
-                loadedFile = fileManager.loadFileSync(path14, currentFileInfo.currentDirectory, context, environment);
+                loadedFile = fileManager.loadFileSync(path15, currentFileInfo.currentDirectory, context, environment);
               } else {
-                promise = fileManager.loadFile(path14, currentFileInfo.currentDirectory, context, environment, function(err, loadedFile2) {
+                promise = fileManager.loadFile(path15, currentFileInfo.currentDirectory, context, environment, function(err, loadedFile2) {
                   if (err) {
                     fileParsedFunc(err);
                   } else {
@@ -52591,7 +52588,7 @@ var require_readUInt = __commonJS({
 var require_tiff = __commonJS({
   "../../node_modules/.pnpm/image-size@0.5.5/node_modules/image-size/lib/types/tiff.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var readUInt = require_readUInt();
     function isTIFF(buffer) {
       var hex4 = buffer.toString("hex", 0, 4);
@@ -52600,13 +52597,13 @@ var require_tiff = __commonJS({
     function readIFD(buffer, filepath, isBigEndian) {
       var ifdOffset = readUInt(buffer, 32, 4, isBigEndian);
       var bufferSize = 1024;
-      var fileSize = fs11.statSync(filepath).size;
+      var fileSize = fs12.statSync(filepath).size;
       if (ifdOffset + bufferSize > fileSize) {
         bufferSize = fileSize - ifdOffset - 10;
       }
       var endBuffer = new Buffer(bufferSize);
-      var descriptor = fs11.openSync(filepath, "r");
-      fs11.readSync(descriptor, endBuffer, 0, bufferSize, ifdOffset);
+      var descriptor = fs12.openSync(filepath, "r");
+      fs12.readSync(descriptor, endBuffer, 0, bufferSize, ifdOffset);
       var ifdBuffer = endBuffer.slice(2);
       return ifdBuffer;
     }
@@ -52808,8 +52805,8 @@ var require_lib = __commonJS({
   "../../node_modules/.pnpm/image-size@0.5.5/node_modules/image-size/lib/index.js"(exports2, module2) {
     "use strict";
     init_();
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var detector = require_detector();
     var handlers = {};
     var types2 = require_types3();
@@ -52829,33 +52826,33 @@ var require_lib = __commonJS({
       throw new TypeError("unsupported file type: " + type2 + " (file: " + filepath + ")");
     }
     function asyncFileToBuffer(filepath, callback) {
-      fs11.open(filepath, "r", function(err, descriptor) {
+      fs12.open(filepath, "r", function(err, descriptor) {
         if (err) {
           return callback(err);
         }
-        var size2 = fs11.fstatSync(descriptor).size;
+        var size2 = fs12.fstatSync(descriptor).size;
         if (size2 <= 0) {
           return callback(new Error("File size is not greater than 0 \u2014\u2014 " + filepath));
         }
         var bufferSize = Math.min(size2, MaxBufferSize);
         var buffer = new Buffer(bufferSize);
-        fs11.read(descriptor, buffer, 0, bufferSize, 0, function(err2) {
+        fs12.read(descriptor, buffer, 0, bufferSize, 0, function(err2) {
           if (err2) {
             return callback(err2);
           }
-          fs11.close(descriptor, function(err3) {
+          fs12.close(descriptor, function(err3) {
             callback(err3, buffer);
           });
         });
       });
     }
     function syncFileToBuffer(filepath) {
-      var descriptor = fs11.openSync(filepath, "r");
-      var size2 = fs11.fstatSync(descriptor).size;
+      var descriptor = fs12.openSync(filepath, "r");
+      var size2 = fs12.fstatSync(descriptor).size;
       var bufferSize = Math.min(size2, MaxBufferSize);
       var buffer = new Buffer(bufferSize);
-      fs11.readSync(descriptor, buffer, 0, bufferSize, 0);
-      fs11.closeSync(descriptor);
+      fs12.readSync(descriptor, buffer, 0, bufferSize, 0);
+      fs12.closeSync(descriptor);
       return buffer;
     }
     module2.exports = function(input, callback) {
@@ -52865,7 +52862,7 @@ var require_lib = __commonJS({
       if (typeof input !== "string") {
         throw new TypeError("invalid invocation");
       }
-      var filepath = path14.resolve(input);
+      var filepath = path15.resolve(input);
       if (typeof callback === "function") {
         asyncFileToBuffer(filepath, function(err, buffer2) {
           if (err) {
@@ -52987,11 +52984,11 @@ var require_less2 = __commonJS({
 var require_less_cache = __commonJS({
   "../../node_modules/.pnpm/less-cache@1.1.1/node_modules/less-cache/lib/less-cache.js"(exports2, module2) {
     (function() {
-      var LessCache2, _4, basename2, cacheVersion, crypto7, dirname4, extname, fs11, join, less, lessFs, ref, relative, walkdir, slice2 = [].slice;
+      var LessCache2, _4, basename2, cacheVersion, crypto7, dirname4, extname, fs12, join, less, lessFs, ref, relative, walkdir, slice2 = [].slice;
       crypto7 = require("crypto");
       ref = require("path"), basename2 = ref.basename, dirname4 = ref.dirname, extname = ref.extname, join = ref.join, relative = ref.relative;
       _4 = require_underscore_plus();
-      fs11 = require_fs_plus2();
+      fs12 = require_fs_plus2();
       less = null;
       lessFs = null;
       walkdir = require_walkdir().sync;
@@ -53097,12 +53094,12 @@ var require_less_cache = __commonJS({
             }
           } else if (filesChanged) {
             try {
-              fs11.removeSync(this.importsCacheDir);
+              fs12.removeSync(this.importsCacheDir);
             } catch (error1) {
               error = error1;
               if ((error != null ? error.code : void 0) === "ENOENT") {
                 try {
-                  fs11.removeSync(this.importsCacheDir);
+                  fs12.removeSync(this.importsCacheDir);
                 } catch (error12) {
                 }
               }
@@ -53156,10 +53153,10 @@ var require_less_cache = __commonJS({
           return importedPaths;
         };
         LessCache3.prototype.readJson = function(filePath) {
-          return JSON.parse(fs11.readFileSync(filePath));
+          return JSON.parse(fs12.readFileSync(filePath));
         };
         LessCache3.prototype.writeJson = function(filePath, object2) {
-          return fs11.writeFileSync(filePath, JSON.stringify(object2));
+          return fs12.writeFileSync(filePath, JSON.stringify(object2));
         };
         LessCache3.prototype.digestForPath = function(relativeFilePath) {
           var absoluteFilePath, lessSource;
@@ -53168,12 +53165,12 @@ var require_less_cache = __commonJS({
             return lessSource.digest;
           } else {
             absoluteFilePath = null;
-            if (this.resourcePath && !fs11.isAbsolute(relativeFilePath)) {
+            if (this.resourcePath && !fs12.isAbsolute(relativeFilePath)) {
               absoluteFilePath = join(this.resourcePath, relativeFilePath);
             } else {
               absoluteFilePath = relativeFilePath;
             }
-            return LessCache3.digestForContent(fs11.readFileSync(absoluteFilePath));
+            return LessCache3.digestForContent(fs12.readFileSync(absoluteFilePath));
           }
         };
         LessCache3.prototype.relativize = function(from, to) {
@@ -53198,7 +53195,7 @@ var require_less_cache = __commonJS({
           return join(directory, "content", directoryPath, cacheFile);
         };
         LessCache3.prototype.getCachedCss = function(filePath, digest) {
-          var cacheEntry, error, fallbackDirUsed, i, len, path14, ref1, ref2;
+          var cacheEntry, error, fallbackDirUsed, i, len, path15, ref1, ref2;
           try {
             cacheEntry = this.readJson(this.getCachePath(this.importsCacheDir, filePath));
           } catch (error1) {
@@ -53216,9 +53213,9 @@ var require_less_cache = __commonJS({
           }
           ref1 = cacheEntry.imports;
           for (i = 0, len = ref1.length; i < len; i++) {
-            ref2 = ref1[i], path14 = ref2.path, digest = ref2.digest;
+            ref2 = ref1[i], path15 = ref2.path, digest = ref2.digest;
             try {
-              if (this.digestForPath(path14) !== digest) {
+              if (this.digestForPath(path15) !== digest) {
                 return;
               }
             } catch (error1) {
@@ -53279,14 +53276,14 @@ var require_less_cache = __commonJS({
         LessCache3.prototype.readFileSync = function(absoluteFilePath) {
           var lessSource, relativeFilePath;
           lessSource = null;
-          if (this.resourcePath && fs11.isAbsolute(absoluteFilePath)) {
+          if (this.resourcePath && fs12.isAbsolute(absoluteFilePath)) {
             relativeFilePath = this.relativize(this.resourcePath, absoluteFilePath);
             lessSource = this.lessSourcesByRelativeFilePath[relativeFilePath];
           }
           if (lessSource != null) {
             return this.cssForFile(absoluteFilePath, lessSource.content, lessSource.digest);
           } else {
-            return this.cssForFile(absoluteFilePath, fs11.readFileSync(absoluteFilePath, "utf8"));
+            return this.cssForFile(absoluteFilePath, fs12.readFileSync(absoluteFilePath, "utf8"));
           }
         };
         LessCache3.prototype.cssForFile = function(filePath, lessContent, digest) {
@@ -53364,382 +53361,16 @@ var init_less_compile_cache = __esm({
   }
 });
 
-// src/theme-manager.js
-var require_theme_manager = __commonJS({
-  "src/theme-manager.js"(exports2, module2) {
-    var ThemeManager2;
-    var path14 = require("path");
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var EmitterMixin = require_emissary().Emitter;
-    var { Emitter: Emitter3, Disposable, CompositeDisposable } = require_event_kit();
-    var File2 = null;
-    try {
-      ({ File: File2 } = require("pathwatcher"));
-    } catch (_e2) {
-    }
-    var fs11 = require_fs_plus();
-    var Q2 = require_q();
-    var _Package = require_package3();
-    module2.exports = ThemeManager2 = (() => {
-      ThemeManager2 = class ThemeManager3 {
-        static initClass() {
-          EmitterMixin.includeInto(ThemeManager3);
-        }
-        constructor({ packageManager, resourcePath: resourcePath2, configDirPath, safeMode }) {
-          this.packageManager = packageManager;
-          this.resourcePath = resourcePath2;
-          this.configDirPath = configDirPath;
-          this.safeMode = safeMode;
-          this.emitter = new Emitter3();
-          this.styleSheetDisposablesBySourcePath = {};
-          this.lessCache = null;
-          this.initialLoadComplete = false;
-          this.packageManager.registerPackageActivator(this, ["theme"]);
-          this.sheetsByStyleElement = /* @__PURE__ */ new WeakMap();
-          const stylesElement = document.head.querySelector("nylas-styles");
-          stylesElement.onDidAddStyleElement(this.styleElementAdded.bind(this));
-          stylesElement.onDidRemoveStyleElement(
-            this.styleElementRemoved.bind(this)
-          );
-          stylesElement.onDidUpdateStyleElement(
-            this.styleElementUpdated.bind(this)
-          );
-        }
-        baseThemeName() {
-          return "ui-light";
-        }
-        watchCoreStyles() {
-          console.log("Watching /static and /internal_packages for LESS changes");
-          const watchStylesIn = (folder) => {
-            const stylePaths = fs11.listTreeSync(folder);
-            let PathWatcher = null;
-            try {
-              PathWatcher = require("pathwatcher");
-            } catch (_e2) {
-              return null;
-            }
-            return (() => {
-              const result2 = [];
-              for (var stylePath of Array.from(stylePaths)) {
-                if (path14.extname(stylePath) !== ".less") {
-                  continue;
-                }
-                result2.push(
-                  PathWatcher.watch(stylePath, () => {
-                    return this.activateThemes();
-                  })
-                );
-              }
-              return result2;
-            })();
-          };
-          watchStylesIn(`${this.resourcePath}/static`);
-          return watchStylesIn(`${this.resourcePath}/internal_packages`);
-        }
-        styleElementAdded(styleElement) {
-          const { sheet } = styleElement;
-          this.sheetsByStyleElement.set(styleElement, sheet);
-          this.emitter.emit("did-add-stylesheet", sheet);
-          return this.emitter.emit("did-change-stylesheets");
-        }
-        styleElementRemoved(styleElement) {
-          const sheet = this.sheetsByStyleElement.get(styleElement);
-          this.emitter.emit("did-remove-stylesheet", sheet);
-          return this.emitter.emit("did-change-stylesheets");
-        }
-        styleElementUpdated({ sheet }) {
-          this.emitter.emit("did-remove-stylesheet", sheet);
-          this.emitter.emit("did-add-stylesheet", sheet);
-          return this.emitter.emit("did-change-stylesheets");
-        }
-        /*
-          Section: Event Subscription
-          */
-        // Essential: Invoke `callback` when style sheet changes associated with
-        // updating the list of active themes have completed.
-        //
-        // * `callback` {Function}
-        onDidChangeActiveThemes(callback) {
-          return this.emitter.on("did-change-active-themes", callback);
-        }
-        /*
-          Section: Accessing Available Themes
-          */
-        getAvailableNames() {
-          return this.getLoadedNames();
-        }
-        /*
-          Section: Accessing Loaded Themes
-          */
-        // Public: Get an array of all the loaded theme names.
-        getLoadedThemeNames() {
-          return Array.from(this.getLoadedThemes()).map((theme) => theme.name);
-        }
-        // Public: Get an array of all the loaded themes.
-        getLoadedThemes() {
-          return (() => {
-            const result2 = [];
-            for (var pack of Array.from(this.packageManager.getLoadedPackages())) {
-              if (pack.isTheme()) {
-                result2.push(pack);
-              }
-            }
-            return result2;
-          })();
-        }
-        /*
-          Section: Accessing Active Themes
-          */
-        // Public: Get an array of all the active theme names.
-        getActiveThemeNames() {
-          return Array.from(this.getActiveThemes()).map((theme) => theme.name);
-        }
-        // Public: Get an array of all the active themes.
-        getActiveThemes() {
-          return (() => {
-            const result2 = [];
-            for (var pack of Array.from(this.packageManager.getActivePackages())) {
-              if (pack.isTheme()) {
-                result2.push(pack);
-              }
-            }
-            return result2;
-          })();
-        }
-        getActiveTheme() {
-          return this.getActiveThemes()[0];
-        }
-        activatePackages() {
-          return this.activateThemes();
-        }
-        /*
-          Section: Managing Enabled Themes
-          */
-        // Public: Get the enabled theme names from the config.
-        //
-        // Returns an array of theme names in the order that they should be activated.
-        getEnabledThemeNames() {
-          let left;
-          let themeNames = (left = NylasEnv.config.get("core.themes")) != null ? left : [];
-          if (!_4.isArray(themeNames)) {
-            themeNames = [themeNames];
-          }
-          themeNames = themeNames.filter((themeName) => {
-            if (themeName && typeof themeName === "string") {
-              if (NylasEnv.packages.resolvePackagePath(themeName)) {
-                return true;
-              }
-              console.warn(`Enabled theme '${themeName}' is not installed.`);
-            }
-            return false;
-          });
-          if (themeNames.length === 0) {
-            const builtInThemeNames = ["ui-light", "ui-dark"];
-            themeNames = _4.intersection(themeNames, builtInThemeNames);
-            if (themeNames.length === 0) {
-              themeNames = ["ui-light"];
-            }
-          }
-          return themeNames.reverse();
-        }
-        // Set the active theme.
-        // Because of how theme-manager works, we always need to set the
-        // base theme first, and the newly activated theme after it to override the
-        // styles. We don't want to have more than 1 theme active at a time, so the
-        // array of active themes should always be of size 2.
-        //
-        // * `theme` {string} - the theme to activate
-        setActiveTheme(theme) {
-          const base = this.baseThemeName();
-          return NylasEnv.config.set("core.themes", _4.uniq([base, theme]));
-        }
-        /*
-          Section: Private
-          */
-        // Resolve and apply the stylesheet specified by the path.
-        //
-        // This supports both CSS and Less stylsheets.
-        //
-        // * `stylesheetPath` A {String} path to the stylesheet that can be an absolute
-        //   path or a relative path that will be resolved against the load path.
-        //
-        // Returns a {Disposable} on which `.dispose()` can be called to remove the
-        // required stylesheet.
-        requireStylesheet(stylesheetPath) {
-          let fullPath;
-          if (fullPath = this.resolveStylesheet(stylesheetPath)) {
-            const content = this.loadStylesheet(fullPath);
-            return this.applyStylesheet(fullPath, content);
-          } else {
-            throw new Error(`Could not find a file at path '${stylesheetPath}'`);
-          }
-        }
-        loadBaseStylesheets() {
-          return this.reloadBaseStylesheets();
-        }
-        reloadBaseStylesheets() {
-          let nativeStylesheetPath;
-          this.requireStylesheet("../static/index");
-          this.requireStylesheet("../static/email-frame");
-          if (nativeStylesheetPath = fs11.resolveOnLoadPath(process.platform, [
-            "css",
-            "less"
-          ])) {
-            return this.requireStylesheet(nativeStylesheetPath);
-          }
-        }
-        stylesheetElementForId(id) {
-          return document.head.querySelector(
-            `nylas-styles style[source-path="${id}"]`
-          );
-        }
-        resolveStylesheet(stylesheetPath) {
-          if (path14.extname(stylesheetPath).length > 0) {
-            return fs11.resolveOnLoadPath(stylesheetPath);
-          } else {
-            return fs11.resolveOnLoadPath(stylesheetPath, ["css", "less"]);
-          }
-        }
-        loadStylesheet(stylesheetPath, importFallbackVariables) {
-          if (path14.extname(stylesheetPath) === ".less") {
-            return this.loadLessStylesheet(stylesheetPath, importFallbackVariables);
-          } else {
-            return fs11.readFileSync(stylesheetPath, "utf8");
-          }
-        }
-        loadLessStylesheet(lessStylesheetPath, importFallbackVariables) {
-          let detail, message;
-          if (importFallbackVariables == null) {
-            importFallbackVariables = false;
-          }
-          if (this.lessCache == null) {
-            const LessCompileCache2 = (init_less_compile_cache(), __toCommonJS(less_compile_cache_exports)).default;
-            this.lessCache = new LessCompileCache2({
-              configDirPath: this.configDirPath,
-              resourcePath: this.resourcePath,
-              importPaths: this.getImportPaths()
-            });
-          }
-          try {
-            if (importFallbackVariables) {
-              const baseVarImports = `@import "variables/ui-variables";`;
-              const less = fs11.readFileSync(lessStylesheetPath, "utf8");
-              return this.lessCache.cssForFile(
-                lessStylesheetPath,
-                [baseVarImports, less].join("\n")
-              );
-            } else {
-              return this.lessCache.read(lessStylesheetPath);
-            }
-          } catch (error) {
-            if (error.line != null) {
-              message = `Error compiling Less stylesheet: \`${lessStylesheetPath}\``;
-              detail = `Line number: ${error.line}
-${error.message}`;
-            } else {
-              message = `Error loading Less stylesheet: \`${lessStylesheetPath}\``;
-              detail = error.message;
-            }
-            console.error(message, { detail, dismissable: true });
-            console.error(detail);
-            throw error;
-          }
-        }
-        removeStylesheet(stylesheetPath) {
-          return this.styleSheetDisposablesBySourcePath[stylesheetPath] != null ? this.styleSheetDisposablesBySourcePath[stylesheetPath].dispose() : void 0;
-        }
-        applyStylesheet(path15, text) {
-          return this.styleSheetDisposablesBySourcePath[path15] = NylasEnv.styles.addStyleSheet(text, { sourcePath: path15 });
-        }
-        stringToId(string) {
-          return string.replace(/\\/g, "/");
-        }
-        activateThemes() {
-          const deferred = Q2.defer();
-          NylasEnv.config.observe("core.themes", () => {
-            this.deactivateThemes();
-            const promises2 = [];
-            for (var themeName of Array.from(this.getEnabledThemeNames())) {
-              if (this.packageManager.resolvePackagePath(themeName)) {
-                promises2.push(this.packageManager.activatePackage(themeName));
-              } else {
-                console.warn(
-                  `Failed to activate theme '${themeName}' because it isn't installed.`
-                );
-              }
-            }
-            return Q2.all(promises2).then(() => {
-              this.addActiveThemeClasses();
-              this.refreshLessCache();
-              this.reloadBaseStylesheets();
-              this.initialLoadComplete = true;
-              this.emitter.emit("did-change-active-themes");
-              return deferred.resolve();
-            });
-          });
-          return deferred.promise;
-        }
-        deactivateThemes() {
-          this.removeActiveThemeClasses();
-          for (var pack of Array.from(this.getActiveThemes())) {
-            this.packageManager.deactivatePackage(pack.name);
-          }
-          return null;
-        }
-        isInitialLoadComplete() {
-          return this.initialLoadComplete;
-        }
-        addActiveThemeClasses() {
-          for (var pack of Array.from(this.getActiveThemes())) {
-            document.body.classList.add(`theme-${pack.name}`);
-          }
-        }
-        removeActiveThemeClasses() {
-          for (var pack of Array.from(this.getActiveThemes())) {
-            document.body.classList.remove(`theme-${pack.name}`);
-          }
-        }
-        refreshLessCache() {
-          return this.lessCache != null ? this.lessCache.setImportPaths(this.getImportPaths()) : void 0;
-        }
-        getImportPaths() {
-          let themePaths;
-          const activeThemes = this.getActiveThemes();
-          if (activeThemes.length > 0) {
-            themePaths = Array.from(activeThemes).filter((theme) => theme).map((theme) => theme.getStylesheetsPath());
-          } else {
-            themePaths = [];
-            for (var themeName of Array.from(this.getEnabledThemeNames())) {
-              var themePath;
-              if (themePath = this.packageManager.resolvePackagePath(themeName)) {
-                var deprecatedPath = path14.join(themePath, "stylesheets");
-                if (fs11.isDirectorySync(deprecatedPath)) {
-                  themePaths.push(deprecatedPath);
-                } else {
-                  themePaths.push(path14.join(themePath, "styles"));
-                }
-              }
-            }
-          }
-          return themePaths.filter((themePath2) => fs11.isDirectorySync(themePath2));
-        }
-      };
-      ThemeManager2.initClass();
-      return ThemeManager2;
-    })();
-  }
-});
-
 // src/style-manager.js
 var require_style_manager = __commonJS({
   "src/style-manager.js"(exports2, module2) {
     var StyleManager2;
     var _fs = require_fs_plus();
     var _path = require("path");
-    var { Emitter: Emitter3, Disposable } = require_event_kit();
+    var { Emitter: Emitter5, Disposable: Disposable2 } = require_event_kit();
     module2.exports = StyleManager2 = class StyleManager {
       constructor() {
-        this.emitter = new Emitter3();
+        this.emitter = new Emitter5();
         this.styleElements = [];
         this.styleElementsBySourcePath = {};
       }
@@ -53846,7 +53477,7 @@ var require_style_manager = __commonJS({
         } else {
           this.addStyleElement(styleElement);
         }
-        return new Disposable(() => this.removeStyleElement(styleElement));
+        return new Disposable2(() => this.removeStyleElement(styleElement));
       }
       addStyleElement(styleElement) {
         let insertIndex;
@@ -53928,19 +53559,19 @@ var require_nslog = __commonJS({
 var require_error_logger = __commonJS({
   "src/error-logger.js"(exports2, module2) {
     var ErrorLogger2;
-    var fs11;
-    var path14;
+    var fs12;
+    var path15;
     var app2;
     var os7;
-    var remote9;
+    var remote10;
     os7 = require("os");
-    fs11 = require_fs_plus();
-    path14 = require("path");
+    fs12 = require_fs_plus();
+    path15 = require("path");
     var ipcRenderer8 = null;
     if (process.type === "renderer") {
       ipcRenderer8 = require("electron").ipcRenderer;
-      remote9 = require_at_electron_remote();
-      app2 = remote9.app;
+      remote10 = require_at_electron_remote();
+      app2 = remote10.app;
     } else {
       app2 = require("electron").app;
     }
@@ -54043,15 +53674,15 @@ var require_error_logger = __commonJS({
           args = {};
         }
         extensions = [];
-        extensionsPath = path14.join(
+        extensionsPath = path15.join(
           args.resourcePath,
           "src",
           "error-logger-extensions"
         );
-        ref = fs11.listSync(extensionsPath);
+        ref = fs12.listSync(extensionsPath);
         for (i = 0, len = ref.length; i < len; i++) {
           extensionPath = ref[i];
-          if (path14.basename(extensionPath)[0] === ".") {
+          if (path15.basename(extensionPath)[0] === ".") {
             continue;
           }
           extensionConstructor = require(extensionPath);
@@ -54073,14 +53704,14 @@ var require_error_logger = __commonJS({
         var tmpPath = app2.getPath("temp");
         var logpid = process.pid;
         if (process.type === "renderer") {
-          logpid = `${remote9.process.pid}.${process.pid}`;
+          logpid = `${remote10.process.pid}.${process.pid}`;
         }
-        return path14.join(tmpPath, `Nylas-Mail-${logpid}.log`);
+        return path15.join(tmpPath, `Nylas-Mail-${logpid}.log`);
       };
       ErrorLogger3.prototype._cleanOldLogFiles = () => {
         if (process.type === "browser") {
           var tmpPath = app2.getPath("temp");
-          fs11.readdir(tmpPath, (err, files) => {
+          fs12.readdir(tmpPath, (err, files) => {
             if (err) {
               console.error(err);
               return;
@@ -54088,13 +53719,13 @@ var require_error_logger = __commonJS({
             var logFilter = /Nylas-Mail-[.0-9]*.log$/;
             files.forEach((file) => {
               if (logFilter.test(file) === true) {
-                var filepath = path14.join(tmpPath, file);
-                fs11.stat(filepath, (err2, stats) => {
+                var filepath = path15.join(tmpPath, file);
+                fs12.stat(filepath, (err2, stats) => {
                   if (!err2 && stats) {
                     var lastModified = new Date(stats.mtime);
                     var fileAge = Date.now() - lastModified.getTime();
                     if (fileAge > 1e3 * 60 * 60 * 24 * 2) {
-                      fs11.unlink(filepath);
+                      fs12.unlink(filepath);
                     }
                   }
                 });
@@ -54106,7 +53737,7 @@ var require_error_logger = __commonJS({
       ErrorLogger3.prototype._setupNewLogFile = function() {
         console.log(`Streaming log data to ${this._logPath()}`);
         this.loghost = os7.hostname();
-        this.logstream = fs11.createWriteStream(this._logPath(), {
+        this.logstream = fs12.createWriteStream(this._logPath(), {
           flags: "a",
           encoding: "utf8",
           fd: null,
@@ -58885,7 +58516,7 @@ var init_attributes = __esm({
 var require_model = __commonJS({
   "src/flux/models/model.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils25 = require_utils();
+    var Utils26 = require_utils();
     var Attributes2 = (init_attributes(), __toCommonJS(attributes_exports)).default;
     var Model14 = class _Model {
       static initClass() {
@@ -58932,7 +58563,7 @@ var require_model = __commonJS({
         if (values2 == null) {
           values2 = {};
         }
-        if (values2.id && Utils25.isTempId(values2.id)) {
+        if (values2.id && Utils26.isTempId(values2.id)) {
           if (values2.clientId == null) {
             values2.clientId = values2.id;
           }
@@ -58951,7 +58582,7 @@ var require_model = __commonJS({
           this[key] = values2[key];
         }
         if (this.clientId == null) {
-          this.clientId = Utils25.generateTempId();
+          this.clientId = Utils26.generateTempId();
         }
         this;
       }
@@ -58977,7 +58608,7 @@ var require_model = __commonJS({
       // This method is chainable.
       //
       fromJSON(json2) {
-        if (json2.id && !Utils25.isTempId(json2.id)) {
+        if (json2.id && !Utils26.isTempId(json2.id)) {
           this.serverId = json2.id;
         }
         for (var key of Array.from(Object.keys(this.constructor.attributes))) {
@@ -61033,8 +60664,8 @@ var require_req = __commonJS({
       if (req.originalUrl) {
         _req.url = req.originalUrl;
       } else {
-        const path14 = req.path;
-        _req.url = typeof path14 === "string" ? path14 : req.url ? req.url.path || req.url : void 0;
+        const path15 = req.path;
+        _req.url = typeof path15 === "string" ? path15 : req.url ? req.url.path || req.url : void 0;
       }
       if (req.query) {
         _req.query = req.query;
@@ -61199,14 +60830,14 @@ var require_redact = __commonJS({
       }
       return obj2;
     }
-    function parsePath(path14) {
+    function parsePath(path15) {
       const parts = [];
       let current = "";
       let inBrackets = false;
       let inQuotes = false;
       let quoteChar = "";
-      for (let i = 0; i < path14.length; i++) {
-        const char = path14[i];
+      for (let i = 0; i < path15.length; i++) {
+        const char = path15[i];
         if (!inBrackets && char === ".") {
           if (current) {
             parts.push(current);
@@ -61337,10 +60968,10 @@ var require_redact = __commonJS({
       return current;
     }
     function redactPaths(obj2, paths, censor, remove = false) {
-      for (const path14 of paths) {
-        const parts = parsePath(path14);
+      for (const path15 of paths) {
+        const parts = parsePath(path15);
         if (parts.includes("*")) {
-          redactWildcardPath(obj2, parts, censor, path14, remove);
+          redactWildcardPath(obj2, parts, censor, path15, remove);
         } else {
           if (remove) {
             removeKey(obj2, parts);
@@ -61425,8 +61056,8 @@ var require_redact = __commonJS({
           }
         } else {
           if (afterWildcard.includes("*")) {
-            const wrappedCensor = typeof censor === "function" ? (value, path14) => {
-              const fullPath = [...pathArray.slice(0, pathLength), ...path14];
+            const wrappedCensor = typeof censor === "function" ? (value, path15) => {
+              const fullPath = [...pathArray.slice(0, pathLength), ...path15];
               return censor(value, fullPath);
             } : censor;
             redactWildcardPath(current, afterWildcard, wrappedCensor, originalPath, remove);
@@ -61461,8 +61092,8 @@ var require_redact = __commonJS({
         return null;
       }
       const pathStructure = /* @__PURE__ */ new Map();
-      for (const path14 of pathsToClone) {
-        const parts = parsePath(path14);
+      for (const path15 of pathsToClone) {
+        const parts = parsePath(path15);
         let current = pathStructure;
         for (let i = 0; i < parts.length; i++) {
           const part = parts[i];
@@ -61514,24 +61145,24 @@ var require_redact = __commonJS({
       }
       return cloneSelectively(obj2, pathStructure);
     }
-    function validatePath(path14) {
-      if (typeof path14 !== "string") {
+    function validatePath(path15) {
+      if (typeof path15 !== "string") {
         throw new Error("Paths must be (non-empty) strings");
       }
-      if (path14 === "") {
+      if (path15 === "") {
         throw new Error("Invalid redaction path ()");
       }
-      if (path14.includes("..")) {
-        throw new Error(`Invalid redaction path (${path14})`);
+      if (path15.includes("..")) {
+        throw new Error(`Invalid redaction path (${path15})`);
       }
-      if (path14.includes(",")) {
-        throw new Error(`Invalid redaction path (${path14})`);
+      if (path15.includes(",")) {
+        throw new Error(`Invalid redaction path (${path15})`);
       }
       let bracketCount = 0;
       let inQuotes = false;
       let quoteChar = "";
-      for (let i = 0; i < path14.length; i++) {
-        const char = path14[i];
+      for (let i = 0; i < path15.length; i++) {
+        const char = path15[i];
         if ((char === '"' || char === "'") && bracketCount > 0) {
           if (!inQuotes) {
             inQuotes = true;
@@ -61545,20 +61176,20 @@ var require_redact = __commonJS({
         } else if (char === "]" && !inQuotes) {
           bracketCount--;
           if (bracketCount < 0) {
-            throw new Error(`Invalid redaction path (${path14})`);
+            throw new Error(`Invalid redaction path (${path15})`);
           }
         }
       }
       if (bracketCount !== 0) {
-        throw new Error(`Invalid redaction path (${path14})`);
+        throw new Error(`Invalid redaction path (${path15})`);
       }
     }
     function validatePaths(paths) {
       if (!Array.isArray(paths)) {
         throw new TypeError("paths must be an array");
       }
-      for (const path14 of paths) {
-        validatePath(path14);
+      for (const path15 of paths) {
+        validatePath(path15);
       }
     }
     function slowRedact(options2 = {}) {
@@ -61726,8 +61357,8 @@ var require_redaction = __commonJS({
         if (shape[k3] === null) {
           o[k3] = (value) => topCensor(value, [k3]);
         } else {
-          const wrappedCensor = typeof censor === "function" ? (value, path14) => {
-            return censor(value, [k3, ...path14]);
+          const wrappedCensor = typeof censor === "function" ? (value, path15) => {
+            return censor(value, [k3, ...path15]);
           } : censor;
           o[k3] = Redact({
             paths: shape[k3],
@@ -61945,10 +61576,10 @@ var require_atomic_sleep = __commonJS({
 var require_sonic_boom = __commonJS({
   "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var EventEmitter5 = require("events");
     var inherits2 = require("util").inherits;
-    var path14 = require("path");
+    var path15 = require("path");
     var sleep = require_atomic_sleep();
     var assert2 = require("assert");
     var BUSY_WRITE_TIMEOUT = 100;
@@ -62002,20 +61633,20 @@ var require_sonic_boom = __commonJS({
       const mode = sonic.mode;
       if (sonic.sync) {
         try {
-          if (sonic.mkdir) fs11.mkdirSync(path14.dirname(file), { recursive: true });
-          const fd = fs11.openSync(file, flags, mode);
+          if (sonic.mkdir) fs12.mkdirSync(path15.dirname(file), { recursive: true });
+          const fd = fs12.openSync(file, flags, mode);
           fileOpened(null, fd);
         } catch (err) {
           fileOpened(err);
           throw err;
         }
       } else if (sonic.mkdir) {
-        fs11.mkdir(path14.dirname(file), { recursive: true }, (err) => {
+        fs12.mkdir(path15.dirname(file), { recursive: true }, (err) => {
           if (err) return fileOpened(err);
-          fs11.open(file, flags, mode, fileOpened);
+          fs12.open(file, flags, mode, fileOpened);
         });
       } else {
-        fs11.open(file, flags, mode, fileOpened);
+        fs12.open(file, flags, mode, fileOpened);
       }
     }
     function SonicBoom(opts) {
@@ -62056,8 +61687,8 @@ var require_sonic_boom = __commonJS({
         this.flush = flushBuffer;
         this.flushSync = flushBufferSync;
         this._actualWrite = actualWriteBuffer;
-        fsWriteSync = () => fs11.writeSync(this.fd, this._writingBuf);
-        fsWrite = () => fs11.write(this.fd, this._writingBuf, this.release);
+        fsWriteSync = () => fs12.writeSync(this.fd, this._writingBuf);
+        fsWrite = () => fs12.write(this.fd, this._writingBuf, this.release);
       } else if (contentMode === void 0 || contentMode === kContentModeUtf8) {
         this._writingBuf = "";
         this.write = write;
@@ -62066,15 +61697,15 @@ var require_sonic_boom = __commonJS({
         this._actualWrite = actualWrite;
         fsWriteSync = () => {
           if (Buffer.isBuffer(this._writingBuf)) {
-            return fs11.writeSync(this.fd, this._writingBuf);
+            return fs12.writeSync(this.fd, this._writingBuf);
           }
-          return fs11.writeSync(this.fd, this._writingBuf, "utf8");
+          return fs12.writeSync(this.fd, this._writingBuf, "utf8");
         };
         fsWrite = () => {
           if (Buffer.isBuffer(this._writingBuf)) {
-            return fs11.write(this.fd, this._writingBuf, this.release);
+            return fs12.write(this.fd, this._writingBuf, this.release);
           }
-          return fs11.write(this.fd, this._writingBuf, "utf8", this.release);
+          return fs12.write(this.fd, this._writingBuf, "utf8", this.release);
         };
       } else {
         throw new Error(`SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`);
@@ -62131,7 +61762,7 @@ var require_sonic_boom = __commonJS({
           }
         }
         if (this._fsync) {
-          fs11.fsyncSync(this.fd);
+          fs12.fsyncSync(this.fd);
         }
         const len = this._len;
         if (this._reopening) {
@@ -62245,7 +61876,7 @@ var require_sonic_boom = __commonJS({
       const onDrain = () => {
         if (!this._fsync) {
           try {
-            fs11.fsync(this.fd, (err) => {
+            fs12.fsync(this.fd, (err) => {
               this._flushPending = false;
               cb3(err);
             });
@@ -62347,7 +61978,7 @@ var require_sonic_boom = __commonJS({
       const fd = this.fd;
       this.once("ready", () => {
         if (fd !== this.fd) {
-          fs11.close(fd, (err) => {
+          fs12.close(fd, (err) => {
             if (err) {
               return this.emit("error", err);
             }
@@ -62396,7 +62027,7 @@ var require_sonic_boom = __commonJS({
           buf = this._bufs[0];
         }
         try {
-          const n7 = Buffer.isBuffer(buf) ? fs11.writeSync(this.fd, buf) : fs11.writeSync(this.fd, buf, "utf8");
+          const n7 = Buffer.isBuffer(buf) ? fs12.writeSync(this.fd, buf) : fs12.writeSync(this.fd, buf, "utf8");
           const releasedBufObj = releaseWritingBuf(buf, this._len, n7);
           buf = releasedBufObj.writingBuf;
           this._len = releasedBufObj.len;
@@ -62412,7 +62043,7 @@ var require_sonic_boom = __commonJS({
         }
       }
       try {
-        fs11.fsyncSync(this.fd);
+        fs12.fsyncSync(this.fd);
       } catch {
       }
     }
@@ -62433,7 +62064,7 @@ var require_sonic_boom = __commonJS({
           buf = mergeBuf(this._bufs[0], this._lens[0]);
         }
         try {
-          const n7 = fs11.writeSync(this.fd, buf);
+          const n7 = fs12.writeSync(this.fd, buf);
           buf = buf.subarray(n7);
           this._len = Math.max(this._len - n7, 0);
           if (buf.length <= 0) {
@@ -62461,13 +62092,13 @@ var require_sonic_boom = __commonJS({
       this._writingBuf = this._writingBuf.length ? this._writingBuf : this._bufs.shift() || "";
       if (this.sync) {
         try {
-          const written = Buffer.isBuffer(this._writingBuf) ? fs11.writeSync(this.fd, this._writingBuf) : fs11.writeSync(this.fd, this._writingBuf, "utf8");
+          const written = Buffer.isBuffer(this._writingBuf) ? fs12.writeSync(this.fd, this._writingBuf) : fs12.writeSync(this.fd, this._writingBuf, "utf8");
           release(null, written);
         } catch (err) {
           release(err);
         }
       } else {
-        fs11.write(this.fd, this._writingBuf, release);
+        fs12.write(this.fd, this._writingBuf, release);
       }
     }
     function actualWriteBuffer() {
@@ -62476,7 +62107,7 @@ var require_sonic_boom = __commonJS({
       this._writingBuf = this._writingBuf.length ? this._writingBuf : mergeBuf(this._bufs.shift(), this._lens.shift());
       if (this.sync) {
         try {
-          const written = fs11.writeSync(this.fd, this._writingBuf);
+          const written = fs12.writeSync(this.fd, this._writingBuf);
           release(null, written);
         } catch (err) {
           release(err);
@@ -62485,7 +62116,7 @@ var require_sonic_boom = __commonJS({
         if (kCopyBuffer) {
           this._writingBuf = Buffer.from(this._writingBuf);
         }
-        fs11.write(this.fd, this._writingBuf, release);
+        fs12.write(this.fd, this._writingBuf, release);
       }
     }
     function actualClose(sonic) {
@@ -62501,12 +62132,12 @@ var require_sonic_boom = __commonJS({
       sonic._lens = [];
       assert2(typeof sonic.fd === "number", `sonic.fd must be a number, got ${typeof sonic.fd}`);
       try {
-        fs11.fsync(sonic.fd, closeWrapped);
+        fs12.fsync(sonic.fd, closeWrapped);
       } catch {
       }
       function closeWrapped() {
         if (sonic.fd !== 1 && sonic.fd !== 2) {
-          fs11.close(sonic.fd, done);
+          fs12.close(sonic.fd, done);
         } else {
           done();
         }
@@ -63342,15 +62973,15 @@ var require_transport = __commonJS({
       if (!unquoted) {
         return false;
       }
-      let path14 = unquoted;
-      if (path14.startsWith("file://")) {
+      let path15 = unquoted;
+      if (path15.startsWith("file://")) {
         try {
-          path14 = fileURLToPath(path14);
+          path15 = fileURLToPath(path15);
         } catch {
           return false;
         }
       }
-      return isAbsolute(path14) && !existsSync(path14);
+      return isAbsolute(path15) && !existsSync(path15);
     }
     function stripQuotes(value) {
       const first2 = value[0];
@@ -97562,15 +97193,15 @@ var require_tools2 = __commonJS({
        * @param {String} path - Mailbox path to encode
        * @returns {String} Encoded mailbox path
        */
-      encodePath(connection, path14) {
-        path14 = (path14 || "").toString();
-        if (!connection.enabled.has("UTF8=ACCEPT") && !tools.isRev2Active(connection) && /[&\x00-\x08\x0b-\x0c\x0e-\x1f\u0080-\uffff]/.test(path14)) {
+      encodePath(connection, path15) {
+        path15 = (path15 || "").toString();
+        if (!connection.enabled.has("UTF8=ACCEPT") && !tools.isRev2Active(connection) && /[&\x00-\x08\x0b-\x0c\x0e-\x1f\u0080-\uffff]/.test(path15)) {
           try {
-            path14 = iconv2.encode(path14, "utf-7-imap").toString();
+            path15 = iconv2.encode(path15, "utf-7-imap").toString();
           } catch {
           }
         }
-        return path14;
+        return path15;
       },
       /**
        * Decodes a mailbox path from modified UTF-7 if the server does not support UTF8=ACCEPT.
@@ -97579,15 +97210,15 @@ var require_tools2 = __commonJS({
        * @param {String} path - Mailbox path to decode
        * @returns {String} Decoded mailbox path
        */
-      decodePath(connection, path14) {
-        path14 = (path14 || "").toString();
-        if (!connection.enabled.has("UTF8=ACCEPT") && !tools.isRev2Active(connection) && /[&]/.test(path14)) {
+      decodePath(connection, path15) {
+        path15 = (path15 || "").toString();
+        if (!connection.enabled.has("UTF8=ACCEPT") && !tools.isRev2Active(connection) && /[&]/.test(path15)) {
           try {
-            path14 = iconv2.decode(Buffer.from(path14), "utf-7-imap").toString();
+            path15 = iconv2.decode(Buffer.from(path15), "utf-7-imap").toString();
           } catch {
           }
         }
-        return path14;
+        return path15;
       },
       /**
        * Normalizes a mailbox path by joining array segments with the namespace delimiter,
@@ -97598,17 +97229,17 @@ var require_tools2 = __commonJS({
        * @param {Boolean} [skipNamespace] - If true, skips prepending the namespace prefix
        * @returns {String} Normalized mailbox path
        */
-      normalizePath(connection, path14, skipNamespace) {
-        if (Array.isArray(path14)) {
-          path14 = path14.join(connection.namespace && connection.namespace.delimiter || "");
+      normalizePath(connection, path15, skipNamespace) {
+        if (Array.isArray(path15)) {
+          path15 = path15.join(connection.namespace && connection.namespace.delimiter || "");
         }
-        if (path14.toUpperCase() === "INBOX") {
+        if (path15.toUpperCase() === "INBOX") {
           return "INBOX";
         }
-        if (!skipNamespace && connection.namespace && connection.namespace.prefix && !path14.startsWith(connection.namespace.prefix)) {
-          path14 = connection.namespace.prefix + path14;
+        if (!skipNamespace && connection.namespace && connection.namespace.prefix && !path15.startsWith(connection.namespace.prefix)) {
+          path15 = connection.namespace.prefix + path15;
         }
-        return path14;
+        return path15;
       },
       /**
        * Compares two mailbox paths for equality after normalization.
@@ -97939,14 +97570,14 @@ var require_tools2 = __commonJS({
           }
         }
         if (map2.emailId || map2.uid) {
-          let path14 = mailbox.path;
-          if (/[\u0080-\uffff]/.test(path14)) {
+          let path15 = mailbox.path;
+          if (/[\u0080-\uffff]/.test(path15)) {
             try {
-              path14 = iconv2.encode(path14, "utf-7-imap").toString();
+              path15 = iconv2.encode(path15, "utf-7-imap").toString();
             } catch {
             }
           }
-          map2.id = map2.emailId || createHash("md5").update([path14, mailbox.uidValidity?.toString() || "", map2.uid.toString()].join(":")).digest("hex");
+          map2.id = map2.emailId || createHash("md5").update([path15, mailbox.uidValidity?.toString() || "", map2.uid.toString()].join(":")).digest("hex");
         }
         if (map2.flags) {
           let flagColor = tools.getFlagColor(map2.flags);
@@ -98130,16 +97761,16 @@ var require_tools2 = __commonJS({
        * @returns {Object} Parsed body structure tree with part numbers, types, parameters, and child nodes
        */
       parseBodystructure(entry) {
-        let walk = (node, path14) => {
-          path14 = path14 || [];
+        let walk = (node, path15) => {
+          path15 = path15 || [];
           let curNode = {}, i = 0, part = 0;
-          if (path14.length) {
-            curNode.part = path14.join(".");
+          if (path15.length) {
+            curNode.part = path15.join(".");
           }
           if (Array.isArray(node[0])) {
             curNode.childNodes = [];
             while (Array.isArray(node[i])) {
-              curNode.childNodes.push(walk(node[i], path14.concat(++part)));
+              curNode.childNodes.push(walk(node[i], path15.concat(++part)));
               i++;
             }
             curNode.type = "multipart/" + ((node[i++] || {}).value || "").toString().toLowerCase();
@@ -98182,7 +97813,7 @@ var require_tools2 = __commonJS({
                   // the encapsulated message shares the part number with its wrapper.
                   // Distinction is via suffixes: path.MIME = wrapper headers,
                   // path.HEADER = encapsulated message headers.
-                  walk(node[i], path14)
+                  walk(node[i], path15)
                 ];
               }
               i++;
@@ -100144,14 +99775,14 @@ var require_select = __commonJS({
       // update into a silent no-op for the rest of the session.
       permanentflags: { key: "permanentFlags", parse: (value) => Array.isArray(value) && new Set(value) }
     });
-    module2.exports = async (connection, path14, options2) => {
+    module2.exports = async (connection, path15, options2) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
       options2 = options2 || {};
-      path14 = normalizePath(connection, path14);
-      if (!connection.folders.has(path14)) {
-        let folders = await connection.run("LIST", "", path14);
+      path15 = normalizePath(connection, path15);
+      if (!connection.folders.has(path15)) {
+        let folders = await connection.run("LIST", "", path15);
         if (!folders) {
           throw new Error("Failed to fetch folders");
         }
@@ -100159,10 +99790,10 @@ var require_select = __commonJS({
           connection.folders.set(folder.path, folder);
         });
       }
-      let folderListData = connection.folders.has(path14) ? connection.folders.get(path14) : false;
+      let folderListData = connection.folders.has(path15) ? connection.folders.get(path15) : false;
       let response;
       try {
-        let map2 = { path: path14 };
+        let map2 = { path: path15 };
         if (folderListData) {
           ["delimiter", "specialUse", "subscribed", "listed"].forEach((key) => {
             if (folderListData[key]) {
@@ -100181,7 +99812,7 @@ var require_select = __commonJS({
           ]);
           map2.qresync = true;
         }
-        let encodedPath = encodePath(connection, path14);
+        let encodedPath = encodePath(connection, path15);
         let selectCommand = {
           command: !options2.readOnly ? "SELECT" : "EXAMINE",
           /* c8 ignore next */
@@ -100241,12 +99872,12 @@ var require_select = __commonJS({
             // since the client's last known state. Only received when QRESYNC was requested.
             // A dummy mailbox object is passed because the mailbox isn't officially open yet.
             VANISHED: async (untagged) => {
-              await connection.untaggedVanished(untagged, { path: path14, uidNext: false, uidValidity: false });
+              await connection.untaggedVanished(untagged, { path: path15, uidNext: false, uidValidity: false });
             },
             // Untagged FETCH during SELECT/EXAMINE: only occurs with QRESYNC, delivering
             // updated flags for messages that changed since the client's last modseq.
             FETCH: async (untagged) => {
-              await connection.untaggedFetch(untagged, { path: path14, uidNext: false, uidValidity: false });
+              await connection.untaggedFetch(untagged, { path: path15, uidNext: false, uidValidity: false });
             }
           }
         });
@@ -100260,13 +99891,13 @@ var require_select = __commonJS({
         }
         let currentMailbox = connection.mailbox;
         connection.mailbox = false;
-        if (currentMailbox && currentMailbox.path !== path14) {
+        if (currentMailbox && currentMailbox.path !== path15) {
           connection.emit("mailboxClose", currentMailbox);
         }
         connection.mailbox = map2;
         connection.currentSelectCommand = selectCommand;
         connection.state = connection.states.SELECTED;
-        if (!currentMailbox || currentMailbox.path !== path14) {
+        if (!currentMailbox || currentMailbox.path !== path15) {
           connection.emit("mailboxOpen", connection.mailbox);
         }
         response.next();
@@ -100481,17 +100112,17 @@ var require_create2 = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/create.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, getStatusCode, enhanceCommandError } = require_tools2();
-    module2.exports = async (connection, path14) => {
+    module2.exports = async (connection, path15) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
-      path14 = normalizePath(connection, path14);
+      path15 = normalizePath(connection, path15);
       let response;
       try {
         let map2 = {
-          path: path14
+          path: path15
         };
-        response = await connection.exec("CREATE", [{ type: "ATOM", value: encodePath(connection, path14) }]);
+        response = await connection.exec("CREATE", [{ type: "ATOM", value: encodePath(connection, path15) }]);
         let section = response.response.attributes && response.response.attributes[0] && response.response.attributes[0].section && response.response.attributes[0].section.length ? response.response.attributes[0].section : false;
         if (section) {
           let key;
@@ -100517,13 +100148,13 @@ var require_create2 = __commonJS({
         }
         map2.created = true;
         response.next();
-        await connection.run("SUBSCRIBE", path14);
+        await connection.run("SUBSCRIBE", path15);
         return map2;
       } catch (err) {
         let errorCode2 = getStatusCode(err.response);
         if (errorCode2 === "ALREADYEXISTS") {
           return {
-            path: path14,
+            path: path15,
             created: false
           };
         }
@@ -100540,20 +100171,20 @@ var require_delete = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/delete.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, enhanceCommandError } = require_tools2();
-    module2.exports = async (connection, path14) => {
+    module2.exports = async (connection, path15) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
-      path14 = normalizePath(connection, path14);
-      if (connection.state === connection.states.SELECTED && connection.mailbox.path === path14) {
+      path15 = normalizePath(connection, path15);
+      if (connection.state === connection.states.SELECTED && connection.mailbox.path === path15) {
         await connection.run("CLOSE");
       }
       let response;
       try {
         let map2 = {
-          path: path14
+          path: path15
         };
-        response = await connection.exec("DELETE", [{ type: "ATOM", value: encodePath(connection, path14) }]);
+        response = await connection.exec("DELETE", [{ type: "ATOM", value: encodePath(connection, path15) }]);
         response.next();
         return map2;
       } catch (err) {
@@ -100570,23 +100201,23 @@ var require_rename = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/rename.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, enhanceCommandError } = require_tools2();
-    module2.exports = async (connection, path14, newPath) => {
+    module2.exports = async (connection, path15, newPath) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
-      path14 = normalizePath(connection, path14);
+      path15 = normalizePath(connection, path15);
       newPath = normalizePath(connection, newPath);
-      if (connection.state === connection.states.SELECTED && connection.mailbox.path === path14) {
+      if (connection.state === connection.states.SELECTED && connection.mailbox.path === path15) {
         await connection.run("CLOSE");
       }
       let response;
       try {
         let map2 = {
-          path: path14,
+          path: path15,
           newPath
         };
         response = await connection.exec("RENAME", [
-          { type: "ATOM", value: encodePath(connection, path14) },
+          { type: "ATOM", value: encodePath(connection, path15) },
           { type: "ATOM", value: encodePath(connection, newPath) }
         ]);
         response.next();
@@ -100633,14 +100264,14 @@ var require_subscribe = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/subscribe.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, enhanceCommandError } = require_tools2();
-    module2.exports = async (connection, path14) => {
+    module2.exports = async (connection, path15) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
-      path14 = normalizePath(connection, path14);
+      path15 = normalizePath(connection, path15);
       let response;
       try {
-        response = await connection.exec("SUBSCRIBE", [{ type: "ATOM", value: encodePath(connection, path14) }]);
+        response = await connection.exec("SUBSCRIBE", [{ type: "ATOM", value: encodePath(connection, path15) }]);
         response.next();
         return true;
       } catch (err) {
@@ -100657,14 +100288,14 @@ var require_unsubscribe = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/unsubscribe.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, enhanceCommandError } = require_tools2();
-    module2.exports = async (connection, path14) => {
+    module2.exports = async (connection, path15) => {
       if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state)) {
         return;
       }
-      path14 = normalizePath(connection, path14);
+      path15 = normalizePath(connection, path15);
       let response;
       try {
-        response = await connection.exec("UNSUBSCRIBE", [{ type: "ATOM", value: encodePath(connection, path14) }]);
+        response = await connection.exec("UNSUBSCRIBE", [{ type: "ATOM", value: encodePath(connection, path15) }]);
         response.next();
         return true;
       } catch (err) {
@@ -101478,11 +101109,11 @@ var require_status = __commonJS({
     var { encodePath, normalizePath, buildStatusQueryAttributes, isRev2Active } = require_tools2();
     var { parseStatusList } = require_status_fields();
     var MAILBOX_UPDATERS = {
-      messages: (value, connection, path14) => {
+      messages: (value, connection, path15) => {
         let prevCount = connection.mailbox.exists;
         if (prevCount !== value) {
           connection.mailbox.exists = value;
-          connection.emit("exists", { path: path14, count: value, prevCount });
+          connection.emit("exists", { path: path15, count: value, prevCount });
         }
       },
       uidNext: (value, connection) => {
@@ -101492,28 +101123,28 @@ var require_status = __commonJS({
         connection.mailbox.highestModseq = value;
       }
     };
-    module2.exports = async (connection, path14, query) => {
-      if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state) || !path14) {
+    module2.exports = async (connection, path15, query) => {
+      if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state) || !path15) {
         return false;
       }
-      path14 = normalizePath(connection, path14);
-      let encodedPath = encodePath(connection, path14);
+      path15 = normalizePath(connection, path15);
+      let encodedPath = encodePath(connection, path15);
       let attributes = [{ type: encodedPath.indexOf("&") >= 0 ? "STRING" : "ATOM", value: encodedPath }];
       let queryAttributes = buildStatusQueryAttributes(connection, query);
       let syntheticRecent = query && query.recent && isRev2Active(connection);
       if (!queryAttributes.length) {
-        return syntheticRecent ? { path: path14, recent: 0 } : false;
+        return syntheticRecent ? { path: path15, recent: 0 } : false;
       }
       attributes.push(queryAttributes);
       let response;
       try {
-        let map2 = { path: path14 };
+        let map2 = { path: path15 };
         response = await connection.exec("STATUS", attributes, {
           untagged: {
             // STATUS response: * STATUS <mailbox> (<key> <value> <key> <value> ...)
             // Parsed as alternating key-value pairs (i % 2 pattern).
             STATUS: async (untagged) => {
-              let updateCurrent = connection.state === connection.states.SELECTED && path14 === connection.mailbox.path;
+              let updateCurrent = connection.state === connection.states.SELECTED && path15 === connection.mailbox.path;
               let list = untagged.attributes && Array.isArray(untagged.attributes[1]) ? untagged.attributes[1] : false;
               if (!list) {
                 return;
@@ -101521,7 +101152,7 @@ var require_status = __commonJS({
               parseStatusList(list, (key, value) => {
                 map2[key] = value;
                 if (updateCurrent && MAILBOX_UPDATERS[key]) {
-                  MAILBOX_UPDATERS[key](value, connection, path14);
+                  MAILBOX_UPDATERS[key](value, connection, path15);
                 }
               });
             }
@@ -101534,9 +101165,9 @@ var require_status = __commonJS({
         return map2;
       } catch (err) {
         if (err.responseStatus === "NO") {
-          let folders = await connection.run("LIST", "", path14, { listOnly: true });
+          let folders = await connection.run("LIST", "", path15, { listOnly: true });
           if (folders && !folders.length) {
-            let error = new Error(`Mailbox doesn't exist: ${path14}`);
+            let error = new Error(`Mailbox doesn't exist: ${path15}`);
             error.code = "NotFound";
             error.response = err;
             throw error;
@@ -101683,15 +101314,15 @@ var require_quota = __commonJS({
   "../../node_modules/.pnpm/imapflow@1.7.6/node_modules/imapflow/lib/commands/quota.js"(exports2, module2) {
     "use strict";
     var { encodePath, normalizePath, enhanceCommandError, parseUintValue, isUnsafeKey } = require_tools2();
-    module2.exports = async (connection, path14) => {
-      if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state) || !path14) {
+    module2.exports = async (connection, path15) => {
+      if (![connection.states.AUTHENTICATED, connection.states.SELECTED].includes(connection.state) || !path15) {
         return;
       }
       if (!connection.capabilities.has("QUOTA")) {
         return false;
       }
-      path14 = normalizePath(connection, path14);
-      let map2 = { path: path14 };
+      path15 = normalizePath(connection, path15);
+      let map2 = { path: path15 };
       let processQuotaResponse = (untagged) => {
         let attributes = untagged.attributes && untagged.attributes[1];
         if (!attributes || !attributes.length) {
@@ -101731,7 +101362,7 @@ var require_quota = __commonJS({
       let quotaFound = false;
       let response;
       try {
-        response = await connection.exec("GETQUOTAROOT", [{ type: "ATOM", value: encodePath(connection, path14) }], {
+        response = await connection.exec("GETQUOTAROOT", [{ type: "ATOM", value: encodePath(connection, path15) }], {
           untagged: {
             // QUOTAROOT response tells us which quota root applies to this mailbox.
             // A mailbox may have zero or one quota root.
@@ -101884,15 +101515,15 @@ var require_idle = __commonJS({
       }
     }
     async function pollOnce(connection, session) {
-      let path14 = connection.mailbox && connection.mailbox.path;
+      let path15 = connection.mailbox && connection.mailbox.path;
       switch (connection.missingIdleCommand) {
         case "SELECT":
           connection.log.debug({ msg: `Running SELECT to detect changes in folder`, cid: connection.id });
-          await connection.runInternal("SELECT", path14, { readOnly: session.selectCommand.command === "EXAMINE" });
+          await connection.runInternal("SELECT", path15, { readOnly: session.selectCommand.command === "EXAMINE" });
           break;
         case "STATUS": {
           connection.log.debug({ msg: `Running STATUS to detect changes in folder`, cid: connection.id });
-          let status = await connection.runInternal("STATUS", path14, {
+          let status = await connection.runInternal("STATUS", path15, {
             messages: true,
             uidNext: true,
             uidValidity: true,
@@ -103662,12 +103293,12 @@ var require_imap_flow = __commonJS({
           this.emit("flags", updateEvent);
         }
       }
-      async ensureSelectedMailbox(path14) {
-        if (!path14) {
+      async ensureSelectedMailbox(path15) {
+        if (!path15) {
           return false;
         }
-        if (!this.mailbox || !comparePaths(this, this.mailbox.path, path14)) {
-          return await this.mailboxOpen(path14);
+        if (!this.mailbox || !comparePaths(this, this.mailbox.path, path15)) {
+          return await this.mailboxOpen(path15);
         }
         return true;
       }
@@ -104095,9 +103726,9 @@ var require_imap_flow = __commonJS({
        * let quota = await client.getQuota();
        * console.log(quota.storage.used, quota.storage.limit)
        */
-      async getQuota(path14) {
-        path14 = path14 || "INBOX";
-        return await this.run("QUOTA", path14);
+      async getQuota(path15) {
+        path15 = path15 || "INBOX";
+        return await this.run("QUOTA", path15);
       }
       /**
        * @typedef {Object} ListResponse
@@ -104207,8 +103838,8 @@ var require_imap_flow = __commonJS({
        * console.log(info.path);
        * // "INBOX.parent.child" // assumes "INBOX." as namespace prefix and "." as delimiter
        */
-      async mailboxCreate(path14) {
-        return await this.run("CREATE", path14);
+      async mailboxCreate(path15) {
+        return await this.run("CREATE", path15);
       }
       /**
        * @typedef {Object} MailboxRenameResponse
@@ -104229,8 +103860,8 @@ var require_imap_flow = __commonJS({
        * console.log(info.newPath);
        * // "INBOX.Important stuff ❗️" // assumes "INBOX." as namespace prefix
        */
-      async mailboxRename(path14, newPath) {
-        return await this.run("RENAME", path14, newPath);
+      async mailboxRename(path15, newPath) {
+        return await this.run("RENAME", path15, newPath);
       }
       /**
        * @typedef {Object} MailboxDeleteResponse
@@ -104249,8 +103880,8 @@ var require_imap_flow = __commonJS({
        * console.log(info.path);
        * // "INBOX.Important stuff ❗️" // assumes "INBOX." as namespace prefix
        */
-      async mailboxDelete(path14) {
-        return await this.run("DELETE", path14);
+      async mailboxDelete(path15) {
+        return await this.run("DELETE", path15);
       }
       /**
        * Subscribes to a mailbox
@@ -104261,8 +103892,8 @@ var require_imap_flow = __commonJS({
        * @example
        * await client.mailboxSubscribe('Important stuff ❗️');
        */
-      async mailboxSubscribe(path14) {
-        return await this.run("SUBSCRIBE", path14);
+      async mailboxSubscribe(path15) {
+        return await this.run("SUBSCRIBE", path15);
       }
       /**
        * Unsubscribes from a mailbox
@@ -104273,8 +103904,8 @@ var require_imap_flow = __commonJS({
        * @example
        * await client.mailboxUnsubscribe('Important stuff ❗️');
        */
-      async mailboxUnsubscribe(path14) {
-        return await this.run("UNSUBSCRIBE", path14);
+      async mailboxUnsubscribe(path15) {
+        return await this.run("UNSUBSCRIBE", path15);
       }
       /**
        * Opens a mailbox to access messages. You can perform message operations only against an opened mailbox.
@@ -104292,8 +103923,8 @@ var require_imap_flow = __commonJS({
        * console.log(mailbox.exists);
        * // 125
        */
-      async mailboxOpen(path14, options2) {
-        return await this.run("SELECT", path14, options2);
+      async mailboxOpen(path15, options2) {
+        return await this.run("SELECT", path15, options2);
       }
       /**
        * Closes a previously opened mailbox
@@ -104340,8 +103971,8 @@ var require_imap_flow = __commonJS({
        * console.log(status.unseen);
        * // 123
        */
-      async status(path14, query) {
-        return await this.run("STATUS", path14, query);
+      async status(path15, query) {
+        return await this.run("STATUS", path15, query);
       }
       /**
        * Starts listening for new or deleted messages from the currently opened mailbox. Only required if {@link ImapFlow#disableAutoIdle} is set to `true`
@@ -104595,8 +104226,8 @@ var require_imap_flow = __commonJS({
        * @example
        * await client.append('INBOX', rawMessageBuffer, ['\\Seen'], new Date(2000, 1, 1));
        */
-      async append(path14, content, flags, idate) {
-        return await this.run("APPEND", path14, content, flags, idate) || false;
+      async append(path15, content, flags, idate) {
+        return await this.run("APPEND", path15, content, flags, idate) || false;
       }
       /**
        * @typedef {Object} CopyResponseObject
@@ -105453,7 +105084,7 @@ var require_imap_flow = __commonJS({
               await new Promise((resolve8) => setImmediate(resolve8));
             }
             const lock = this.locks.shift();
-            const { resolve: resolve7, reject: reject2, path: path14, options: options2, lockId } = lock;
+            const { resolve: resolve7, reject: reject2, path: path15, options: options2, lockId } = lock;
             if (lock.acquireTimer) {
               clearTimeout(lock.acquireTimer);
               lock.acquireTimer = null;
@@ -105469,7 +105100,7 @@ var require_imap_flow = __commonJS({
                 this.log.warn({
                   msg: "Mailbox lock held for a long time",
                   lockId: lock.lockId,
-                  path: path14,
+                  path: path15,
                   heldFor: Date.now() - lock.heldAt,
                   /* c8 ignore next */
                   // the held-lock-warning diagnostic with a description set is a timing-dependent log detail
@@ -105506,20 +105137,20 @@ var require_imap_flow = __commonJS({
               }
             };
             if (!this.usable || !this.socket || this.socket.destroyed) {
-              this.log.trace({ msg: "Failed to acquire mailbox lock", path: path14, lockId, idling: this.idling });
-              reject2(this.createNoConnectionError(false, { rejectedFrom: "mailboxLock", path: path14 }));
+              this.log.trace({ msg: "Failed to acquire mailbox lock", path: path15, lockId, idling: this.idling });
+              reject2(this.createNoConnectionError(false, { rejectedFrom: "mailboxLock", path: path15 }));
               continue;
             }
             const grantLock = () => {
               this.currentLock = lock;
               armHeldTimer();
               this.autoidle();
-              resolve7({ path: path14, release });
+              resolve7({ path: path15, release });
             };
-            if (this.mailbox && this.mailbox.path === path14 && !!this.mailbox.readOnly === !!options2.readOnly) {
+            if (this.mailbox && this.mailbox.path === path15 && !!this.mailbox.readOnly === !!options2.readOnly) {
               this.log.trace({
                 msg: "Mailbox lock acquired [existing]",
-                path: path14,
+                path: path15,
                 lockId,
                 idling: this.idling,
                 ...options2.description && { description: options2.description }
@@ -105528,10 +105159,10 @@ var require_imap_flow = __commonJS({
               break;
             }
             try {
-              await this.mailboxOpen(path14, options2);
+              await this.mailboxOpen(path15, options2);
               this.log.trace({
                 msg: "Mailbox lock acquired [selected]",
-                path: path14,
+                path: path15,
                 lockId,
                 idling: this.idling,
                 ...options2.description && { description: options2.description }
@@ -105541,17 +105172,17 @@ var require_imap_flow = __commonJS({
             } catch (err) {
               if (err.responseStatus === "NO") {
                 try {
-                  let folders = await this.run("LIST", "", path14, { listOnly: true });
+                  let folders = await this.run("LIST", "", path15, { listOnly: true });
                   if (!folders || !folders.length) {
                     err.mailboxMissing = true;
                   }
                 } catch (E) {
-                  this.log.trace({ msg: "Failed to verify failed mailbox", path: path14, err: E });
+                  this.log.trace({ msg: "Failed to verify failed mailbox", path: path15, err: E });
                 }
               }
               this.log.trace({
                 msg: "Failed to acquire mailbox lock",
-                path: path14,
+                path: path15,
                 lockId,
                 idling: this.idling,
                 ...options2.description && { description: options2.description },
@@ -105590,13 +105221,13 @@ var require_imap_flow = __commonJS({
        *   lock.release();
        * }
        */
-      getMailboxLock(path14, options2) {
+      getMailboxLock(path15, options2) {
         options2 = options2 || {};
-        path14 = normalizePath(this, path14);
+        path15 = normalizePath(this, path15);
         let lockId = ++this.lockCounter;
         this.log.trace({
           msg: "Requesting lock",
-          path: path14,
+          path: path15,
           lockId,
           ...options2.description && { description: options2.description },
           activeLock: this.currentLock ? {
@@ -105605,7 +105236,7 @@ var require_imap_flow = __commonJS({
           } : null
         });
         let lockPromise = guardedPromise((resolve7, reject2) => {
-          let lockEntry = { resolve: resolve7, reject: reject2, path: path14, options: options2, lockId };
+          let lockEntry = { resolve: resolve7, reject: reject2, path: path15, options: options2, lockId };
           this.locks.push(lockEntry);
           if (Number(options2.acquireTimeout) > 0) {
             lockEntry.acquireTimer = setTimeout(() => {
@@ -105832,15 +105463,15 @@ var init_smtp_errors = __esm({
 });
 
 // ../isomorphic-core/src/load-models.js
-var import_node_path3, import_meta4, __dirname2;
+var import_node_path4, import_meta4, __dirname2;
 var init_load_models = __esm({
   "../isomorphic-core/src/load-models.js"() {
-    import_node_path3 = __toESM(require("path"), 1);
+    import_node_path4 = __toESM(require("path"), 1);
     import_meta4 = {};
     try {
-      __dirname2 = import_node_path3.default.dirname(new URL(".", import_meta4.url).pathname);
+      __dirname2 = import_node_path4.default.dirname(new URL(".", import_meta4.url).pathname);
     } catch (_e2) {
-      __dirname2 = import_node_path3.default.dirname(
+      __dirname2 = import_node_path4.default.dirname(
         (typeof require !== "undefined" ? require : () => null)?.main?.filename || process.cwd()
       );
     }
@@ -105914,10 +105545,10 @@ var require_reach = __commonJS({
       }
       const isChainArray = Array.isArray(chain2);
       Assert(!isChainArray || !options2.separator, "Separator option is not valid for array-based chain");
-      const path14 = isChainArray ? chain2 : chain2.split(options2.separator || ".");
+      const path15 = isChainArray ? chain2 : chain2.split(options2.separator || ".");
       let ref = obj2;
-      for (let i = 0; i < path14.length; ++i) {
-        let key = path14[i];
+      for (let i = 0; i < path15.length; ++i) {
+        let key = path15[i];
         const type2 = options2.iterables && internals.iterables(ref);
         if (Array.isArray(ref) || type2 === "set") {
           const number = Number(key);
@@ -105927,7 +105558,7 @@ var require_reach = __commonJS({
         }
         if (!ref || typeof ref === "function" && options2.functions === false || // Defaults to true
         !type2 && ref[key] === void 0) {
-          Assert(!options2.strict || i + 1 === path14.length, "Missing segment", key, "in reach path ", chain2);
+          Assert(!options2.strict || i + 1 === path15.length, "Missing segment", key, "in reach path ", chain2);
           Assert(typeof ref === "object" || options2.functions === true || typeof ref !== "function", "Invalid segment", key, "in reach path ", chain2);
           ref = options2.default;
           break;
@@ -106020,7 +105651,7 @@ var require_clone2 = __commonJS({
     "use strict";
     var Reach = require_reach();
     var Types2 = require_types4();
-    var Utils25 = require_utils5();
+    var Utils26 = require_utils5();
     var internals = {
       needsProtoHack: /* @__PURE__ */ new Set([Types2.set, Types2.map, Types2.weakSet, Types2.weakMap]),
       structuredCloneExists: typeof structuredClone === "function"
@@ -106070,7 +105701,7 @@ var require_clone2 = __commonJS({
           newObj.set(key, clone2(value, options2, seen));
         }
       }
-      const keys2 = Utils25.keys(obj2, options2);
+      const keys2 = Utils26.keys(obj2, options2);
       for (const key of keys2) {
         if (key === "__proto__") {
           continue;
@@ -106157,7 +105788,7 @@ var require_merge = __commonJS({
     "use strict";
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Utils25 = require_utils5();
+    var Utils26 = require_utils5();
     var internals = {};
     module2.exports = internals.merge = function(target, source, options2) {
       Assert(target && typeof target === "object", "Invalid target value: must be an object");
@@ -106176,7 +105807,7 @@ var require_merge = __commonJS({
         }
         return target;
       }
-      const keys2 = Utils25.keys(source, options2);
+      const keys2 = Utils26.keys(source, options2);
       for (let i = 0; i < keys2.length; ++i) {
         const key = keys2[i];
         if (key === "__proto__" || !Object.prototype.propertyIsEnumerable.call(source, key)) {
@@ -106256,8 +105887,8 @@ var require_applyToDefaults = __commonJS({
       const nullOverride = options2.nullOverride !== void 0 ? options2.nullOverride : false;
       return Merge(copy, source, { nullOverride, mergeArrays: false });
     };
-    internals.reachCopy = function(dst, src, path14) {
-      for (const segment of path14) {
+    internals.reachCopy = function(dst, src, path15) {
+      for (const segment of path15) {
         if (!(segment in src)) {
           return;
         }
@@ -106269,14 +105900,14 @@ var require_applyToDefaults = __commonJS({
       }
       const value = src;
       let ref = dst;
-      for (let i = 0; i < path14.length - 1; ++i) {
-        const segment = path14[i];
+      for (let i = 0; i < path15.length - 1; ++i) {
+        const segment = path15[i];
         if (typeof ref[segment] !== "object") {
           ref[segment] = {};
         }
         ref = ref[segment];
       }
-      ref[path14[path14.length - 1]] = value;
+      ref[path15[path15.length - 1]] = value;
     };
   }
 });
@@ -106560,7 +106191,7 @@ var require_contain = __commonJS({
     var Assert = require_assert();
     var DeepEqual = require_deepEqual();
     var EscapeRegex = require_escapeRegex();
-    var Utils25 = require_utils5();
+    var Utils26 = require_utils5();
     var internals = {};
     module2.exports = function(ref, values2, options2 = {}) {
       if (typeof values2 !== "object") {
@@ -106648,7 +106279,7 @@ var require_contain = __commonJS({
     };
     internals.object = function(ref, values2, options2) {
       Assert(options2.once === void 0, "Cannot use option once with object");
-      const keys2 = Utils25.keys(ref, options2);
+      const keys2 = Utils26.keys(ref, options2);
       if (!keys2.length) {
         return false;
       }
@@ -107654,14 +107285,14 @@ var require_annotate = __commonJS({
       for (let i = this.details.length - 1; i >= 0; --i) {
         const pos = i + 1;
         const error = this.details[i];
-        const path14 = error.path;
+        const path15 = error.path;
         let node = obj2;
         for (let j3 = 0; ; ++j3) {
-          const seg = path14[j3];
+          const seg = path15[j3];
           if (Common.isSchema(node)) {
             node = node.clone();
           }
-          if (j3 + 1 < path14.length && typeof node[seg] !== "string") {
+          if (j3 + 1 < path15.length && typeof node[seg] !== "string") {
             node = node[seg];
           } else {
             const refAnnotations = node[internals.annotations] || { errors: {}, missing: {} };
@@ -107818,9 +107449,9 @@ var require_errors = __commonJS({
         return exports2.template(this.value, messages, code || this.code, this.state, this.prefs);
       }
     };
-    exports2.path = function(path14) {
+    exports2.path = function(path15) {
       let label = "";
-      for (const segment of path14) {
+      for (const segment of path15) {
         if (typeof segment === "object") {
           continue;
         }
@@ -107866,11 +107497,11 @@ var require_errors = __commonJS({
       if (flags.label) {
         return flags.label;
       }
-      let path14 = state.path;
+      let path15 = state.path;
       if (prefs.errors.label === "key" && state.path.length > 1) {
-        path14 = state.path.slice(-1);
+        path15 = state.path.slice(-1);
       }
-      const normalized = exports2.path(path14);
+      const normalized = exports2.path(path15);
       if (normalized) {
         return normalized;
       }
@@ -109858,7 +109489,7 @@ var require_trace = __commonJS({
         }
       }
       _scan(schema, _path) {
-        const path14 = _path || [];
+        const path15 = _path || [];
         let log = this._sources.get(schema);
         if (!log) {
           log = {
@@ -109870,12 +109501,12 @@ var require_trace = __commonJS({
           };
           this._sources.set(schema, log);
         }
-        if (path14.length) {
-          log.paths.add(path14);
+        if (path15.length) {
+          log.paths.add(path15);
         }
         const each2 = (sub, source) => {
           const subId = internals.id(sub, source);
-          this._scan(sub, path14.concat(subId));
+          this._scan(sub, path15.concat(subId));
         };
         schema.$_modify({ each: each2, ref: false });
       }
@@ -109884,10 +109515,10 @@ var require_trace = __commonJS({
       }
     };
     internals.message = function(item) {
-      const path14 = item.paths ? Errors.path(item.paths[0]) + (item.rule ? ":" : "") : "";
-      return `${path14}${item.rule || ""} (${item.status})`;
+      const path15 = item.paths ? Errors.path(item.paths[0]) + (item.rule ? ":" : "") : "";
+      return `${path15}${item.rule || ""} (${item.status})`;
     };
-    internals.id = function(schema, { source, name: name2, path: path14, key }) {
+    internals.id = function(schema, { source, name: name2, path: path15, key }) {
       if (schema._flags.id) {
         return schema._flags.id;
       }
@@ -109896,14 +109527,14 @@ var require_trace = __commonJS({
       }
       name2 = `@${name2}`;
       if (source === "terms") {
-        return [name2, path14[Math.min(path14.length - 1, 1)]];
+        return [name2, path15[Math.min(path15.length - 1, 1)]];
       }
       return name2;
     };
     internals.sub = function(paths, skipped) {
-      for (const path14 of paths) {
+      for (const path15 of paths) {
         for (const skip of skipped) {
-          if (deepEqual(path14.slice(0, skip.length), skip)) {
+          if (deepEqual(path15.slice(0, skip.length), skip)) {
             return true;
           }
         }
@@ -109953,8 +109584,8 @@ var require_modify = __commonJS({
           this._byKey.set(key, value);
         }
       }
-      fork(path14, adjuster, root2) {
-        const chain2 = this._collect(path14);
+      fork(path15, adjuster, root2) {
+        const chain2 = this._collect(path15);
         chain2.push({ schema: root2 });
         const tail = chain2.shift();
         let adjusted = { id: tail.id, schema: adjuster(tail.schema) };
@@ -109964,24 +109595,24 @@ var require_modify = __commonJS({
         }
         return adjusted.schema;
       }
-      labels(path14, behind = []) {
-        const current = path14[0];
+      labels(path15, behind = []) {
+        const current = path15[0];
         const node = this._get(current);
         if (!node) {
-          return [...behind, ...path14].join(".");
+          return [...behind, ...path15].join(".");
         }
-        const forward = path14.slice(1);
+        const forward = path15.slice(1);
         behind = [...behind, node.schema._flags.label || current];
         if (!forward.length) {
           return behind.join(".");
         }
         return node.schema._ids.labels(forward, behind);
       }
-      reach(path14, behind = []) {
-        const current = path14[0];
+      reach(path15, behind = []) {
+        const current = path15[0];
         const node = this._get(current);
-        assert2(node, "Schema does not contain path", [...behind, ...path14].join("."));
-        const forward = path14.slice(1);
+        assert2(node, "Schema does not contain path", [...behind, ...path15].join("."));
+        const forward = path15.slice(1);
         if (!forward.length) {
           return node.schema;
         }
@@ -110012,12 +109643,12 @@ var require_modify = __commonJS({
         this._byKey = /* @__PURE__ */ new Map();
         this._schemaChain = false;
       }
-      _collect(path14, behind = [], nodes = []) {
-        const current = path14[0];
+      _collect(path15, behind = [], nodes = []) {
+        const current = path15[0];
         const node = this._get(current);
-        assert2(node, "Schema does not contain path", [...behind, ...path14].join("."));
+        assert2(node, "Schema does not contain path", [...behind, ...path15].join("."));
         nodes = [node, ...nodes];
-        const forward = path14.slice(1);
+        const forward = path15.slice(1);
         if (!forward.length) {
           return nodes;
         }
@@ -110075,7 +109706,7 @@ var require_modify = __commonJS({
       return obj2;
     };
     internals.scan = function(item, source, options2, _path, _key) {
-      const path14 = _path || [];
+      const path15 = _path || [];
       if (item === null || typeof item !== "object") {
         return;
       }
@@ -110083,7 +109714,7 @@ var require_modify = __commonJS({
       if (Array.isArray(item)) {
         for (let i = 0; i < item.length; ++i) {
           const key = source.source === "terms" && source.name === "keys" && item[i].key;
-          const result2 = internals.scan(item[i], source, options2, [i, ...path14], key);
+          const result2 = internals.scan(item[i], source, options2, [i, ...path15], key);
           if (result2 !== void 0) {
             clone2 = clone2 || item.slice();
             clone2[i] = result2;
@@ -110092,7 +109723,7 @@ var require_modify = __commonJS({
         return clone2;
       }
       if (options2.schema !== false && Common.isSchema(item) || options2.ref !== false && Ref.isRef(item)) {
-        const result2 = options2.each(item, { ...source, path: path14, key: _key });
+        const result2 = options2.each(item, { ...source, path: path15, key: _key });
         if (result2 === item) {
           return;
         }
@@ -110102,7 +109733,7 @@ var require_modify = __commonJS({
         if (key[0] === "_") {
           continue;
         }
-        const result2 = internals.scan(item[key], source, options2, [key, ...path14], _key);
+        const result2 = internals.scan(item[key], source, options2, [key, ...path15], _key);
         if (result2 !== void 0) {
           clone2 = clone2 || Object.assign({}, item);
           clone2[key] = result2;
@@ -110123,15 +109754,15 @@ var require_state = __commonJS({
       value: /* @__PURE__ */ Symbol("value")
     };
     module2.exports = internals.State = class {
-      constructor(path14, ancestors, state) {
-        this.path = path14;
+      constructor(path15, ancestors, state) {
+        this.path = path15;
         this.ancestors = ancestors;
         this.mainstay = state.mainstay;
         this.schemas = state.schemas;
         this.debug = null;
       }
-      localize(path14, ancestors = null, schema = null) {
-        const state = new internals.State(path14, ancestors, this);
+      localize(path15, ancestors = null, schema = null) {
+        const state = new internals.State(path15, ancestors, this);
         if (schema && state.schemas) {
           state.schemas = [internals.schemas(schema), ...state.schemas];
         }
@@ -110178,17 +109809,17 @@ var require_state = __commonJS({
       constructor() {
         this._values = null;
       }
-      set(path14, value, reason) {
-        if (!path14.length) {
+      set(path15, value, reason) {
+        if (!path15.length) {
           return;
         }
-        if (reason === "strip" && typeof path14[path14.length - 1] === "number") {
+        if (reason === "strip" && typeof path15[path15.length - 1] === "number") {
           return;
         }
         this._values = this._values || /* @__PURE__ */ new Map();
         let node = this._values;
-        for (let i = 0; i < path14.length; ++i) {
-          const segment = path14[i];
+        for (let i = 0; i < path15.length; ++i) {
+          const segment = path15[i];
           let next = node.get(segment);
           if (!next) {
             next = /* @__PURE__ */ new Map();
@@ -110198,24 +109829,24 @@ var require_state = __commonJS({
         }
         node[internals.value] = value;
       }
-      get(path14) {
-        const node = this.node(path14);
+      get(path15) {
+        const node = this.node(path15);
         if (node) {
           return node[internals.value];
         }
       }
-      node(path14) {
+      node(path15) {
         if (!this._values) {
           return;
         }
-        return reach(this._values, path14, { iterables: true });
+        return reach(this._values, path15, { iterables: true });
       }
-      override(path14, node) {
+      override(path15, node) {
         if (!this._values) {
           return;
         }
-        const parents = path14.slice(0, -1);
-        const own = path14[path14.length - 1];
+        const parents = path15.slice(0, -1);
+        const own = path15[path15.length - 1];
         const parent = reach(this._values, parents, { iterables: true });
         if (node) {
           parent.set(own, node);
@@ -110281,17 +109912,17 @@ var require_validator = __commonJS({
         let root2 = result2.value;
         const errors = [];
         for (const external of mainstay.externals) {
-          const path14 = external.state.path;
+          const path15 = external.state.path;
           const linked = external.schema.type === "link" ? mainstay.links.get(external.schema) : null;
           let node = root2;
           let key;
           let parent;
-          const ancestors = path14.length ? [root2] : [];
-          const original = path14.length ? reach(value, path14) : value;
-          if (path14.length) {
-            key = path14[path14.length - 1];
+          const ancestors = path15.length ? [root2] : [];
+          const original = path15.length ? reach(value, path15) : value;
+          if (path15.length) {
+            key = path15[path15.length - 1];
             let current = root2;
-            for (const segment of path14.slice(0, -1)) {
+            for (const segment of path15.slice(0, -1)) {
               current = current[segment];
               ancestors.unshift(current);
             }
@@ -111321,16 +110952,16 @@ var require_base = __commonJS({
         assert2(!options2.base, "Cannot extend type with another base");
         return Extend.type(this, options2);
       }
-      extract(path14) {
-        path14 = Array.isArray(path14) ? path14 : path14.split(".");
-        return this._ids.reach(path14);
+      extract(path15) {
+        path15 = Array.isArray(path15) ? path15 : path15.split(".");
+        return this._ids.reach(path15);
       }
       fork(paths, adjuster) {
         assert2(!this._inRuleset(), "Cannot fork inside a ruleset");
         let obj2 = this;
-        for (let path14 of [].concat(paths)) {
-          path14 = Array.isArray(path14) ? path14 : path14.split(".");
-          obj2 = obj2._ids.fork(path14, adjuster, obj2);
+        for (let path15 of [].concat(paths)) {
+          path15 = Array.isArray(path15) ? path15 : path15.split(".");
+          obj2 = obj2._ids.fork(path15, adjuster, obj2);
         }
         obj2.$_temp.ruleset = false;
         return obj2;
@@ -111489,9 +111120,9 @@ var require_base = __commonJS({
       $_getRule(name2) {
         return this._singleRules.get(name2);
       }
-      $_mapLabels(path14) {
-        path14 = Array.isArray(path14) ? path14 : path14.split(".");
-        return this._ids.labels(path14);
+      $_mapLabels(path15) {
+        path15 = Array.isArray(path15) ? path15 : path15.split(".");
+        return this._ids.labels(path15);
       }
       $_match(value, state, prefs, overrides) {
         prefs = Object.assign({}, prefs);
@@ -111510,7 +111141,7 @@ var require_base = __commonJS({
         assert2(!this._inRuleset(), "Cannot add this rule inside a ruleset");
         this._refs.reset();
         this._ids.reset();
-        const each2 = (item, { source, name: name2, path: path14, key }) => {
+        const each2 = (item, { source, name: name2, path: path15, key }) => {
           const family = this._definition[source][name2] && this._definition[source][name2].register;
           if (family !== false) {
             this.$_mutateRegister(item, { family, key });
@@ -111530,8 +111161,8 @@ var require_base = __commonJS({
       $_property(name2) {
         return this._definition.properties[name2];
       }
-      $_reach(path14) {
-        return this._ids.reach(path14);
+      $_reach(path15) {
+        return this._ids.reach(path15);
       }
       $_rootReferences() {
         return this._refs.roots();
@@ -111749,9 +111380,9 @@ var require_base = __commonJS({
         const mapToStandardError = (error) => {
           let issues;
           if (Errors.ValidationError.isError(error)) {
-            issues = error.details.map(({ message, path: path14 }) => ({
+            issues = error.details.map(({ message, path: path15 }) => ({
               message,
-              path: path14
+              path: path15
             }));
           } else {
             issues = [{
@@ -112370,9 +112001,9 @@ var require_array2 = __commonJS({
               let errored = false;
               let isValid = false;
               const key = wasArray ? i : new Number(i);
-              const path14 = [...state.path, key];
+              const path15 = [...state.path, key];
               if (!schema._flags.sparse && item === void 0) {
-                errors.push(error("array.sparse", { key, path: path14, pos: i, value: void 0 }, state.localize(path14)));
+                errors.push(error("array.sparse", { key, path: path15, pos: i, value: void 0 }, state.localize(path15)));
                 if (prefs.abortEarly) {
                   return errors;
                 }
@@ -112381,10 +112012,10 @@ var require_array2 = __commonJS({
               }
               const ancestors = [value, ...state.ancestors];
               for (const exclusion of schema.$_terms._exclusions) {
-                if (!exclusion.$_match(item, state.localize(path14, ancestors, exclusion), prefs, { presence: "ignore" })) {
+                if (!exclusion.$_match(item, state.localize(path15, ancestors, exclusion), prefs, { presence: "ignore" })) {
                   continue;
                 }
-                errors.push(error("array.excludes", { pos: i, value: item }, state.localize(path14)));
+                errors.push(error("array.excludes", { pos: i, value: item }, state.localize(path15)));
                 if (prefs.abortEarly) {
                   return errors;
                 }
@@ -112398,14 +112029,14 @@ var require_array2 = __commonJS({
               if (schema.$_terms.ordered.length) {
                 if (ordereds.length) {
                   const ordered = ordereds.shift();
-                  const res = ordered.$_validate(item, state.localize(path14, ancestors, ordered), prefs);
+                  const res = ordered.$_validate(item, state.localize(path15, ancestors, ordered), prefs);
                   if (!res.errors) {
                     if (ordered._flags.result === "strip") {
                       internals.fastSplice(value, i);
                       --i;
                       --il;
                     } else if (!schema._flags.sparse && res.value === void 0) {
-                      errors.push(error("array.sparse", { key, path: path14, pos: i, value: void 0 }, state.localize(path14)));
+                      errors.push(error("array.sparse", { key, path: path15, pos: i, value: void 0 }, state.localize(path15)));
                       if (prefs.abortEarly) {
                         return errors;
                       }
@@ -112431,7 +112062,7 @@ var require_array2 = __commonJS({
               const requiredChecks = [];
               let jl = requireds.length;
               for (let j3 = 0; j3 < jl; ++j3) {
-                const localState = state.localize(path14, ancestors, requireds[j3]);
+                const localState = state.localize(path15, ancestors, requireds[j3]);
                 localState.snapshot();
                 const res = requireds[j3].$_validate(item, localState, prefs);
                 requiredChecks[j3] = res;
@@ -112443,7 +112074,7 @@ var require_array2 = __commonJS({
                   --j3;
                   --jl;
                   if (!schema._flags.sparse && res.value === void 0) {
-                    errors.push(error("array.sparse", { key, path: path14, pos: i, value: void 0 }, state.localize(path14)));
+                    errors.push(error("array.sparse", { key, path: path15, pos: i, value: void 0 }, state.localize(path15)));
                     if (prefs.abortEarly) {
                       return errors;
                     }
@@ -112463,7 +112094,7 @@ var require_array2 = __commonJS({
                 if (previousCheck !== -1) {
                   res = requiredChecks[previousCheck];
                 } else {
-                  const localState = state.localize(path14, ancestors, inclusion);
+                  const localState = state.localize(path15, ancestors, inclusion);
                   localState.snapshot();
                   res = inclusion.$_validate(item, localState, prefs);
                   if (!res.errors) {
@@ -112473,7 +112104,7 @@ var require_array2 = __commonJS({
                       --i;
                       --il;
                     } else if (!schema._flags.sparse && res.value === void 0) {
-                      errors.push(error("array.sparse", { key, path: path14, pos: i, value: void 0 }, state.localize(path14)));
+                      errors.push(error("array.sparse", { key, path: path15, pos: i, value: void 0 }, state.localize(path15)));
                       errored = true;
                     } else {
                       value[i] = res.value;
@@ -112509,7 +112140,7 @@ var require_array2 = __commonJS({
                   --il;
                   continue;
                 }
-                errors.push(error("array.includes", { pos: i, value: item }, state.localize(path14)));
+                errors.push(error("array.includes", { pos: i, value: item }, state.localize(path15)));
                 if (prefs.abortEarly) {
                   return errors;
                 }
@@ -112642,7 +112273,7 @@ var require_array2 = __commonJS({
             }
             return this.$_addRule(rule);
           },
-          validate(value, { state, error, schema }, { comparator: raw, options: options2 }, { comparator, path: path14 }) {
+          validate(value, { state, error, schema }, { comparator: raw, options: options2 }, { comparator, path: path15 }) {
             const found = {
               string: /* @__PURE__ */ Object.create(null),
               number: /* @__PURE__ */ Object.create(null),
@@ -112656,7 +112287,7 @@ var require_array2 = __commonJS({
             const compare = comparator || deepEqual;
             const ignoreUndefined = options2.ignoreUndefined;
             for (let i = 0; i < value.length; ++i) {
-              const item = path14 ? reach(value[i], path14) : value[i];
+              const item = path15 ? reach(value[i], path15) : value[i];
               const records = comparator ? found.custom : found[typeof item];
               assert2(records, "Failed to find unique map container for type", typeof item);
               if (records instanceof Map) {
@@ -112671,7 +112302,7 @@ var require_array2 = __commonJS({
                       dupePos: current.value[1],
                       dupeValue: value[current.value[1]]
                     };
-                    if (path14) {
+                    if (path15) {
                       context.path = raw;
                     }
                     return error("array.unique", context, localState);
@@ -112686,7 +112317,7 @@ var require_array2 = __commonJS({
                     dupePos: records[item],
                     dupeValue: value[records[item]]
                   };
-                  if (path14) {
+                  if (path15) {
                     context.path = raw;
                   }
                   const localState = state.localize([...state.path, i], [value, ...state.ancestors]);
@@ -113557,8 +113188,8 @@ var require_keys2 = __commonJS({
           },
           validate(value, { error, prefs, state }, { subject, schema, message }) {
             const about = subject.resolve(value, state, prefs);
-            const path14 = Ref.isRef(subject) ? subject.absolute(state) : [];
-            if (schema.$_match(about, state.localize(path14, [value, ...state.ancestors], schema), prefs)) {
+            const path15 = Ref.isRef(subject) ? subject.absolute(state) : [];
+            if (schema.$_match(about, state.localize(path15, [value, ...state.ancestors], schema), prefs)) {
               return value;
             }
             return error("object.assert", { subject, message });
@@ -114109,7 +113740,7 @@ var require_keys2 = __commonJS({
         const ancestors = [value, ...state.ancestors];
         for (const key of unprocessed) {
           const item = value[key];
-          const path14 = [...state.path, key];
+          const path15 = [...state.path, key];
           for (let i = 0; i < schema.$_terms.patterns.length; ++i) {
             const pattern = schema.$_terms.patterns[i];
             if (pattern.regex) {
@@ -114124,7 +113755,7 @@ var require_keys2 = __commonJS({
               }
             }
             unprocessed.delete(key);
-            const localState = state.localize(path14, ancestors, { schema: pattern.rule, key });
+            const localState = state.localize(path15, ancestors, { schema: pattern.rule, key });
             const result2 = pattern.rule.$_validate(item, localState, prefs);
             if (result2.errors) {
               if (prefs.abortEarly) {
@@ -114416,10 +114047,10 @@ var require_link = __commonJS({
         return linked._generate(value, state, prefs).schema;
       }
       const ref = schema.$_terms.link[0].ref;
-      const { perspective, path: path14 } = internals.perspective(ref, state);
+      const { perspective, path: path15 } = internals.perspective(ref, state);
       internals.assert(perspective, "which is outside of schema boundaries", ref, schema, state, prefs);
       try {
-        linked = path14.length ? perspective.$_reach(path14) : perspective;
+        linked = path15.length ? perspective.$_reach(path15) : perspective;
       } catch {
         internals.assert(false, "to non-existing schema", ref, schema, state, prefs);
       }
@@ -118707,8 +118338,8 @@ var require_cookies = __commonJS({
         if (urlparts.hostname !== cookie.domain && (cookie.domain.charAt(0) !== "." || ("." + urlparts.hostname).substr(-cookie.domain.length) !== cookie.domain)) {
           return false;
         }
-        const path14 = this.getPath(urlparts.pathname);
-        if (path14.substr(0, cookie.path.length) !== cookie.path) {
+        const path15 = this.getPath(urlparts.pathname);
+        if (path15.substr(0, cookie.path.length) !== cookie.path) {
           return false;
         }
         if (cookie.secure && urlparts.protocol !== "https:") {
@@ -118766,16 +118397,16 @@ var require_cookies = __commonJS({
        * @returns {String} Normalized path
        */
       getPath(pathname) {
-        let path14 = (pathname || "/").split("/");
-        path14.pop();
-        path14 = path14.join("/").trim();
-        if (path14.charAt(0) !== "/") {
-          path14 = "/" + path14;
+        let path15 = (pathname || "/").split("/");
+        path15.pop();
+        path15 = path15.join("/").trim();
+        if (path15.charAt(0) !== "/") {
+          path15 = "/" + path15;
         }
-        if (path14.substr(-1) !== "/") {
-          path14 += "/";
+        if (path15.substr(-1) !== "/") {
+          path15 += "/";
         }
-        return path14;
+        return path15;
       }
     };
     module2.exports = Cookies;
@@ -119134,7 +118765,7 @@ var require_shared = __commonJS({
     "use strict";
     var urllib = require_url2();
     var util = require("util");
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var nmfetch = require_fetch2();
     var errors = require_errors3();
     var dns2 = require("dns");
@@ -119562,7 +119193,7 @@ var require_shared = __commonJS({
               callback(err);
             });
           }
-          return resolveStream(fs11.createReadStream(content.path), callback);
+          return resolveStream(fs12.createReadStream(content.path), callback);
         }
       }
       if (typeof data[key].content === "string" && !["utf8", "usascii", "ascii"].includes(encoding)) {
@@ -119675,7 +119306,7 @@ var require_shared = __commonJS({
 var require_mime_types = __commonJS({
   "../../node_modules/.pnpm/nodemailer@9.0.5/node_modules/nodemailer/lib/mime-funcs/mime-types.js"(exports2, module2) {
     "use strict";
-    var path14 = require("path");
+    var path15 = require("path");
     var defaultMimeType = "application/octet-stream";
     var defaultExtension = "bin";
     var mimeTypes = /* @__PURE__ */ new Map([
@@ -121742,7 +121373,7 @@ var require_mime_types = __commonJS({
         if (!filename) {
           return defaultMimeType;
         }
-        const parsed = path14.parse(filename);
+        const parsed = path15.parse(filename);
         const extension = (parsed.ext.substr(1) || parsed.name || "").split("?").shift().trim().toLowerCase();
         const value = extensions.has(extension) ? extensions.get(extension) : defaultMimeType;
         if (Array.isArray(value)) {
@@ -122970,7 +122601,7 @@ var require_mime_node2 = __commonJS({
   "../../node_modules/.pnpm/nodemailer@9.0.5/node_modules/nodemailer/lib/mime-node/index.js"(exports2, module2) {
     "use strict";
     var crypto7 = require("crypto");
-    var fs11 = require("fs");
+    var fs12 = require("fs");
     var punycode = require_punycode();
     var { PassThrough } = require("stream");
     var shared = require_shared();
@@ -123698,7 +123329,7 @@ var require_mime_node2 = __commonJS({
             });
             return contentStream;
           }
-          return fs11.createReadStream(content.path);
+          return fs12.createReadStream(content.path);
         }
         if (content && typeof content.href === "string") {
           if (this.disableUrlAccess) {
@@ -124841,8 +124472,8 @@ var require_dkim = __commonJS({
     var RelaxedBody = require_relaxed_body();
     var sign = require_sign2();
     var { PassThrough } = require("stream");
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var crypto7 = require("crypto");
     var DKIM_ALGO = "sha256";
     var MAX_MESSAGE_SIZE = 2 * 1024 * 1024;
@@ -124856,7 +124487,7 @@ var require_dkim = __commonJS({
         this.chunks = [];
         this.chunklen = 0;
         this.readPos = 0;
-        this.cachePath = this.cacheDir ? path14.join(this.cacheDir, "message." + Date.now() + "-" + crypto7.randomBytes(14).toString("hex")) : false;
+        this.cachePath = this.cacheDir ? path15.join(this.cacheDir, "message." + Date.now() + "-" + crypto7.randomBytes(14).toString("hex")) : false;
         this.cache = false;
         this.headers = false;
         this.bodyHash = false;
@@ -124876,10 +124507,10 @@ var require_dkim = __commonJS({
         if (!this.cache || !this.cachePath) {
           return;
         }
-        fs11.unlink(this.cachePath, () => false);
+        fs12.unlink(this.cachePath, () => false);
       }
       createReadCache() {
-        this.cache = fs11.createReadStream(this.cachePath);
+        this.cache = fs12.createReadStream(this.cachePath);
         this.cache.once("error", (err) => {
           this.cleanup();
           this.output.emit("error", err);
@@ -124935,7 +124566,7 @@ var require_dkim = __commonJS({
       }
       createWriteCache() {
         this.output.usingCache = true;
-        this.cache = fs11.createWriteStream(this.cachePath);
+        this.cache = fs12.createWriteStream(this.cachePath);
         this.cache.once("error", (err) => {
           this.cleanup();
           this.relaxedBody.unpipe(this.cache);
@@ -130826,9 +130457,9 @@ var init_imap_box = __esm({
         if (!this._conn._imap) {
           throw new IMAPConnectionNotReadyError(`IMAPBox::append`);
         }
-        const path14 = options2.mailbox || this._box.name;
+        const path15 = options2.mailbox || this._box.name;
         return this._withPreparedConnection(
-          (imap) => imap.append(path14, rawMime, { flags: options2.flags, date: options2.date })
+          (imap) => imap.append(path15, rawMime, { flags: options2.flags, date: options2.date })
         );
       }
       search(criteria) {
@@ -131024,19 +130655,19 @@ var init_imap_connection = __esm({
         this._imap.on("error", () => {
           this.end();
         });
-        this._imap.on("exists", ({ path: path14 } = {}) => {
+        this._imap.on("exists", ({ path: path15 } = {}) => {
           if (this._isOpeningBox) {
             return;
           }
           if (!this._imap) {
             return;
           }
-          if (!path14 || path14 === this.getOpenBoxName()) {
+          if (!path15 || path15 === this.getOpenBoxName()) {
             this.emit("mail");
           }
         });
-        this._imap.on("flags", ({ path: path14 } = {}) => {
-          if (!path14 || path14 === this.getOpenBoxName()) {
+        this._imap.on("flags", ({ path: path15 } = {}) => {
+          if (!path15 || path15 === this.getOpenBoxName()) {
             this.emit("update");
           }
         });
@@ -131162,8 +130793,8 @@ var init_imap_connection = __esm({
           }
         });
       }
-      _boxFor(path14) {
-        return new imap_box_default(this, { name: path14 });
+      _boxFor(path15) {
+        return new imap_box_default(this, { name: path15 });
       }
       async getLatestBoxStatus(folderName) {
         if (!folderName) {
@@ -131444,15 +131075,15 @@ var require_pg_connection_string = __commonJS({
       if (config.sslnegotiation === "direct" && config.ssl === void 0) {
         config.ssl = true;
       }
-      const fs11 = config.sslcert || config.sslkey || config.sslrootcert ? require("fs") : null;
+      const fs12 = config.sslcert || config.sslkey || config.sslrootcert ? require("fs") : null;
       if (config.sslcert) {
-        config.ssl.cert = fs11.readFileSync(config.sslcert).toString();
+        config.ssl.cert = fs12.readFileSync(config.sslcert).toString();
       }
       if (config.sslkey) {
-        config.ssl.key = fs11.readFileSync(config.sslkey).toString();
+        config.ssl.key = fs12.readFileSync(config.sslkey).toString();
       }
       if (config.sslrootcert) {
-        config.ssl.ca = fs11.readFileSync(config.sslrootcert).toString();
+        config.ssl.ca = fs12.readFileSync(config.sslrootcert).toString();
       }
       if (options2.useLibpqCompat && config.uselibpqcompat) {
         throw new Error("Both useLibpqCompat and uselibpqcompat are set. Please use only one of them.");
@@ -133013,11 +132644,11 @@ var require_lodash = __commonJS({
             return isFunction3(object2[key]);
           });
         }
-        function baseGet(object2, path14) {
-          path14 = castPath(path14, object2);
-          var index = 0, length = path14.length;
+        function baseGet(object2, path15) {
+          path15 = castPath(path15, object2);
+          var index = 0, length = path15.length;
           while (object2 != null && index < length) {
-            object2 = object2[toKey(path14[index++])];
+            object2 = object2[toKey(path15[index++])];
           }
           return index && index == length ? object2 : undefined2;
         }
@@ -133081,10 +132712,10 @@ var require_lodash = __commonJS({
           });
           return accumulator;
         }
-        function baseInvoke(object2, path14, args) {
-          path14 = castPath(path14, object2);
-          object2 = parent(object2, path14);
-          var func = object2 == null ? object2 : object2[toKey(last2(path14))];
+        function baseInvoke(object2, path15, args) {
+          path15 = castPath(path15, object2);
+          object2 = parent(object2, path15);
+          var func = object2 == null ? object2 : object2[toKey(last2(path15))];
           return func == null ? undefined2 : apply(func, object2, args);
         }
         function baseIsArguments(value) {
@@ -133240,13 +132871,13 @@ var require_lodash = __commonJS({
             return object2 === source || baseIsMatch(object2, source, matchData);
           };
         }
-        function baseMatchesProperty(path14, srcValue) {
-          if (isKey(path14) && isStrictComparable(srcValue)) {
-            return matchesStrictComparable(toKey(path14), srcValue);
+        function baseMatchesProperty(path15, srcValue) {
+          if (isKey(path15) && isStrictComparable(srcValue)) {
+            return matchesStrictComparable(toKey(path15), srcValue);
           }
           return function(object2) {
-            var objValue = get2(object2, path14);
-            return objValue === undefined2 && objValue === srcValue ? hasIn(object2, path14) : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
+            var objValue = get2(object2, path15);
+            return objValue === undefined2 && objValue === srcValue ? hasIn(object2, path15) : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
           };
         }
         function baseMerge(object2, source, srcIndex, customizer, stack) {
@@ -133343,23 +132974,23 @@ var require_lodash = __commonJS({
           });
         }
         function basePick(object2, paths) {
-          return basePickBy(object2, paths, function(value, path14) {
-            return hasIn(object2, path14);
+          return basePickBy(object2, paths, function(value, path15) {
+            return hasIn(object2, path15);
           });
         }
         function basePickBy(object2, paths, predicate) {
           var index = -1, length = paths.length, result3 = {};
           while (++index < length) {
-            var path14 = paths[index], value = baseGet(object2, path14);
-            if (predicate(value, path14)) {
-              baseSet(result3, castPath(path14, object2), value);
+            var path15 = paths[index], value = baseGet(object2, path15);
+            if (predicate(value, path15)) {
+              baseSet(result3, castPath(path15, object2), value);
             }
           }
           return result3;
         }
-        function basePropertyDeep(path14) {
+        function basePropertyDeep(path15) {
           return function(object2) {
-            return baseGet(object2, path14);
+            return baseGet(object2, path15);
           };
         }
         function basePullAll(array, values3, iteratee3, comparator) {
@@ -133433,14 +133064,14 @@ var require_lodash = __commonJS({
           var array = values2(collection);
           return shuffleSelf(array, baseClamp(n7, 0, array.length));
         }
-        function baseSet(object2, path14, value, customizer) {
+        function baseSet(object2, path15, value, customizer) {
           if (!isObject3(object2)) {
             return object2;
           }
-          path14 = castPath(path14, object2);
-          var index = -1, length = path14.length, lastIndex = length - 1, nested = object2;
+          path15 = castPath(path15, object2);
+          var index = -1, length = path15.length, lastIndex = length - 1, nested = object2;
           while (nested != null && ++index < length) {
-            var key = toKey(path14[index]), newValue = value;
+            var key = toKey(path15[index]), newValue = value;
             if (key === "__proto__" || key === "constructor" || key === "prototype") {
               return object2;
             }
@@ -133448,7 +133079,7 @@ var require_lodash = __commonJS({
               var objValue = nested[key];
               newValue = customizer ? customizer(objValue, key, nested) : undefined2;
               if (newValue === undefined2) {
-                newValue = isObject3(objValue) ? objValue : isIndex(path14[index + 1]) ? [] : {};
+                newValue = isObject3(objValue) ? objValue : isIndex(path15[index + 1]) ? [] : {};
               }
             }
             assignValue(nested, key, newValue);
@@ -133614,14 +133245,14 @@ var require_lodash = __commonJS({
             }
           return result3;
         }
-        function baseUnset(object2, path14) {
-          path14 = castPath(path14, object2);
-          var index = -1, length = path14.length;
+        function baseUnset(object2, path15) {
+          path15 = castPath(path15, object2);
+          var index = -1, length = path15.length;
           if (!length) {
             return true;
           }
           while (++index < length) {
-            var key = toKey(path14[index]);
+            var key = toKey(path15[index]);
             if (key === "__proto__" && !hasOwnProperty3.call(object2, "__proto__")) {
               return false;
             }
@@ -133629,11 +133260,11 @@ var require_lodash = __commonJS({
               return false;
             }
           }
-          var obj2 = parent(object2, path14);
-          return obj2 == null || delete obj2[toKey(last2(path14))];
+          var obj2 = parent(object2, path15);
+          return obj2 == null || delete obj2[toKey(last2(path15))];
         }
-        function baseUpdate(object2, path14, updater, customizer) {
-          return baseSet(object2, path14, updater(baseGet(object2, path14)), customizer);
+        function baseUpdate(object2, path15, updater, customizer) {
+          return baseSet(object2, path15, updater(baseGet(object2, path15)), customizer);
         }
         function baseWhile(array, predicate, isDrop, fromRight) {
           var length = array.length, index = fromRight ? length : -1;
@@ -134516,11 +134147,11 @@ var require_lodash = __commonJS({
           var match = source.match(reWrapDetails);
           return match ? match[1].split(reSplitDetails) : [];
         }
-        function hasPath(object2, path14, hasFunc) {
-          path14 = castPath(path14, object2);
-          var index = -1, length = path14.length, result3 = false;
+        function hasPath(object2, path15, hasFunc) {
+          path15 = castPath(path15, object2);
+          var index = -1, length = path15.length, result3 = false;
           while (++index < length) {
-            var key = toKey(path14[index]);
+            var key = toKey(path15[index]);
             if (!(result3 = object2 != null && hasFunc(object2, key))) {
               break;
             }
@@ -134722,8 +134353,8 @@ var require_lodash = __commonJS({
             return apply(func, this, otherArgs);
           };
         }
-        function parent(object2, path14) {
-          return path14.length < 2 ? object2 : baseGet(object2, baseSlice(path14, 0, -1));
+        function parent(object2, path15) {
+          return path15.length < 2 ? object2 : baseGet(object2, baseSlice(path15, 0, -1));
         }
         function reorder(array, indexes) {
           var arrLength = array.length, length = nativeMin(indexes.length, arrLength), oldArray = copyArray(array);
@@ -135358,10 +134989,10 @@ var require_lodash = __commonJS({
           }
           return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
         }
-        var invokeMap = baseRest(function(collection, path14, args) {
-          var index = -1, isFunc = typeof path14 == "function", result3 = isArrayLike(collection) ? Array2(collection.length) : [];
+        var invokeMap = baseRest(function(collection, path15, args) {
+          var index = -1, isFunc = typeof path15 == "function", result3 = isArrayLike(collection) ? Array2(collection.length) : [];
           baseEach(collection, function(value) {
-            result3[++index] = isFunc ? apply(path14, value, args) : baseInvoke(value, path14, args);
+            result3[++index] = isFunc ? apply(path15, value, args) : baseInvoke(value, path15, args);
           });
           return result3;
         });
@@ -136013,15 +135644,15 @@ var require_lodash = __commonJS({
         function functionsIn(object2) {
           return object2 == null ? [] : baseFunctions(object2, keysIn(object2));
         }
-        function get2(object2, path14, defaultValue) {
-          var result3 = object2 == null ? undefined2 : baseGet(object2, path14);
+        function get2(object2, path15, defaultValue) {
+          var result3 = object2 == null ? undefined2 : baseGet(object2, path15);
           return result3 === undefined2 ? defaultValue : result3;
         }
-        function has3(object2, path14) {
-          return object2 != null && hasPath(object2, path14, baseHas);
+        function has3(object2, path15) {
+          return object2 != null && hasPath(object2, path15, baseHas);
         }
-        function hasIn(object2, path14) {
-          return object2 != null && hasPath(object2, path14, baseHasIn);
+        function hasIn(object2, path15) {
+          return object2 != null && hasPath(object2, path15, baseHasIn);
         }
         var invert2 = createInverter(function(result3, value, key) {
           if (value != null && typeof value.toString != "function") {
@@ -136074,10 +135705,10 @@ var require_lodash = __commonJS({
             return result3;
           }
           var isDeep = false;
-          paths = arrayMap(paths, function(path14) {
-            path14 = castPath(path14, object2);
-            isDeep || (isDeep = path14.length > 1);
-            return path14;
+          paths = arrayMap(paths, function(path15) {
+            path15 = castPath(path15, object2);
+            isDeep || (isDeep = path15.length > 1);
+            return path15;
           });
           copyObject(object2, getAllKeysIn(object2), result3);
           if (isDeep) {
@@ -136103,19 +135734,19 @@ var require_lodash = __commonJS({
             return [prop];
           });
           predicate = getIteratee(predicate);
-          return basePickBy(object2, props, function(value, path14) {
-            return predicate(value, path14[0]);
+          return basePickBy(object2, props, function(value, path15) {
+            return predicate(value, path15[0]);
           });
         }
-        function result2(object2, path14, defaultValue) {
-          path14 = castPath(path14, object2);
-          var index = -1, length = path14.length;
+        function result2(object2, path15, defaultValue) {
+          path15 = castPath(path15, object2);
+          var index = -1, length = path15.length;
           if (!length) {
             length = 1;
             object2 = undefined2;
           }
           while (++index < length) {
-            var value = object2 == null ? undefined2 : object2[toKey(path14[index])];
+            var value = object2 == null ? undefined2 : object2[toKey(path15[index])];
             if (value === undefined2) {
               index = length;
               value = defaultValue;
@@ -136124,12 +135755,12 @@ var require_lodash = __commonJS({
           }
           return object2;
         }
-        function set(object2, path14, value) {
-          return object2 == null ? object2 : baseSet(object2, path14, value);
+        function set(object2, path15, value) {
+          return object2 == null ? object2 : baseSet(object2, path15, value);
         }
-        function setWith(object2, path14, value, customizer) {
+        function setWith(object2, path15, value, customizer) {
           customizer = typeof customizer == "function" ? customizer : undefined2;
-          return object2 == null ? object2 : baseSet(object2, path14, value, customizer);
+          return object2 == null ? object2 : baseSet(object2, path15, value, customizer);
         }
         var toPairs = createToPairs(keys2);
         var toPairsIn = createToPairs(keysIn);
@@ -136151,15 +135782,15 @@ var require_lodash = __commonJS({
           });
           return accumulator;
         }
-        function unset(object2, path14) {
-          return object2 == null ? true : baseUnset(object2, path14);
+        function unset(object2, path15) {
+          return object2 == null ? true : baseUnset(object2, path15);
         }
-        function update(object2, path14, updater) {
-          return object2 == null ? object2 : baseUpdate(object2, path14, castFunction(updater));
+        function update(object2, path15, updater) {
+          return object2 == null ? object2 : baseUpdate(object2, path15, castFunction(updater));
         }
-        function updateWith(object2, path14, updater, customizer) {
+        function updateWith(object2, path15, updater, customizer) {
           customizer = typeof customizer == "function" ? customizer : undefined2;
-          return object2 == null ? object2 : baseUpdate(object2, path14, castFunction(updater), customizer);
+          return object2 == null ? object2 : baseUpdate(object2, path15, castFunction(updater), customizer);
         }
         function values2(object2) {
           return object2 == null ? [] : baseValues(object2, keys2(object2));
@@ -136545,17 +136176,17 @@ var require_lodash = __commonJS({
         function matches(source) {
           return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
         }
-        function matchesProperty(path14, srcValue) {
-          return baseMatchesProperty(path14, baseClone(srcValue, CLONE_DEEP_FLAG));
+        function matchesProperty(path15, srcValue) {
+          return baseMatchesProperty(path15, baseClone(srcValue, CLONE_DEEP_FLAG));
         }
-        var method = baseRest(function(path14, args) {
+        var method = baseRest(function(path15, args) {
           return function(object2) {
-            return baseInvoke(object2, path14, args);
+            return baseInvoke(object2, path15, args);
           };
         });
         var methodOf = baseRest(function(object2, args) {
-          return function(path14) {
-            return baseInvoke(object2, path14, args);
+          return function(path15) {
+            return baseInvoke(object2, path15, args);
           };
         });
         function mixin2(object2, source, options2) {
@@ -136602,12 +136233,12 @@ var require_lodash = __commonJS({
         var over = createOver(arrayMap);
         var overEvery = createOver(arrayEvery);
         var overSome = createOver(arraySome);
-        function property2(path14) {
-          return isKey(path14) ? baseProperty(toKey(path14)) : basePropertyDeep(path14);
+        function property2(path15) {
+          return isKey(path15) ? baseProperty(toKey(path15)) : basePropertyDeep(path15);
         }
         function propertyOf2(object2) {
-          return function(path14) {
-            return object2 == null ? undefined2 : baseGet(object2, path14);
+          return function(path15) {
+            return object2 == null ? undefined2 : baseGet(object2, path15);
           };
         }
         var range2 = createRange();
@@ -137060,12 +136691,12 @@ var require_lodash = __commonJS({
         LazyWrapper.prototype.findLast = function(predicate) {
           return this.reverse().find(predicate);
         };
-        LazyWrapper.prototype.invokeMap = baseRest(function(path14, args) {
-          if (typeof path14 == "function") {
+        LazyWrapper.prototype.invokeMap = baseRest(function(path15, args) {
+          if (typeof path15 == "function") {
             return new LazyWrapper(this);
           }
           return this.map(function(value) {
-            return baseInvoke(value, path14, args);
+            return baseInvoke(value, path15, args);
           });
         });
         LazyWrapper.prototype.reject = function(predicate) {
@@ -139435,7 +139066,7 @@ var require_validation_error = __commonJS({
       return ValidationErrorItemOrigin22;
     })(ValidationErrorItemOrigin2 || {});
     var ValidationErrorItem2 = class {
-      constructor(message, type2, path14, value, instance, validatorKey, fnName, fnArgs) {
+      constructor(message, type2, path15, value, instance, validatorKey, fnName, fnArgs) {
         __publicField(this, "message");
         __publicField(this, "type");
         __publicField(this, "path");
@@ -139447,7 +139078,7 @@ var require_validation_error = __commonJS({
         __publicField(this, "validatorArgs");
         this.message = message || "";
         this.type = null;
-        this.path = path14 || null;
+        this.path = path15 || null;
         this.value = value !== void 0 ? value : null;
         this.origin = null;
         this.instance = instance || null;
@@ -139506,9 +139137,9 @@ var require_validation_error = __commonJS({
           this.stack = options2.stack;
         }
       }
-      get(path14) {
+      get(path15) {
         return this.errors.reduce((reduced, error) => {
-          if (error.path === path14) {
+          if (error.path === path15) {
             reduced.push(error);
           }
           return reduced;
@@ -141691,11 +141322,11 @@ var require_isAlpha = __commonJS({
     function _interopRequireDefault(e) {
       return e && e.__esModule ? e : { default: e };
     }
-    function isAlpha(_str3) {
+    function isAlpha(_str4) {
       var locale = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "en-US";
       var options2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-      (0, _assertString.default)(_str3);
-      var str = _str3;
+      (0, _assertString.default)(_str4);
+      var str = _str4;
       var ignore = options2.ignore;
       if (ignore) {
         if (ignore instanceof RegExp) {
@@ -141729,11 +141360,11 @@ var require_isAlphanumeric = __commonJS({
     function _interopRequireDefault(e) {
       return e && e.__esModule ? e : { default: e };
     }
-    function isAlphanumeric(_str3) {
+    function isAlphanumeric(_str4) {
       var locale = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "en-US";
       var options2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-      (0, _assertString.default)(_str3);
-      var str = _str3;
+      (0, _assertString.default)(_str4);
+      var str = _str4;
       var ignore = options2.ignore;
       if (ignore) {
         if (ignore instanceof RegExp) {
@@ -149156,13 +148787,13 @@ var require_data_types = __commonJS({
       BaseTypes.ARRAY.prototype._stringify = function _stringify(values2, options2) {
         let str = `ARRAY[${this._value(values2, options2).join(",")}]`;
         if (this.type) {
-          const Utils25 = require_utils6();
+          const Utils26 = require_utils6();
           let castKey = this.toSql();
           if (this.type instanceof BaseTypes.ENUM) {
             const table = options2.field.Model.getTableName();
             const useSchema = table.schema !== void 0;
-            const schemaWithDelimiter = useSchema ? `${Utils25.addTicks(table.schema, '"')}${table.delimiter}` : "";
-            castKey = `${Utils25.addTicks(Utils25.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
+            const schemaWithDelimiter = useSchema ? `${Utils26.addTicks(table.schema, '"')}${table.delimiter}` : "";
+            castKey = `${Utils26.addTicks(Utils26.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
             str += `::${schemaWithDelimiter}${castKey}`;
           } else {
             str += `::${castKey}`;
@@ -153437,39 +153068,39 @@ var require_dottie = __commonJS({
         }
         return Dottie.transform.apply(this, args);
       };
-      Dottie.find = function(path14, object2) {
-        return Dottie.get(object2, path14);
+      Dottie.find = function(path15, object2) {
+        return Dottie.get(object2, path15);
       };
       Dottie.memoizePath = true;
       var memoized = {};
-      Dottie.get = function(object2, path14, defaultVal) {
-        if (object2 === undefined2 || object2 === null || path14 === undefined2 || path14 === null) {
+      Dottie.get = function(object2, path15, defaultVal) {
+        if (object2 === undefined2 || object2 === null || path15 === undefined2 || path15 === null) {
           return defaultVal;
         }
         var names;
-        if (typeof path14 === "string") {
+        if (typeof path15 === "string") {
           if (Dottie.memoizePath) {
-            if (memoized[path14]) {
-              names = memoized[path14].slice(0);
+            if (memoized[path15]) {
+              names = memoized[path15].slice(0);
             } else {
-              names = path14.split(".").reverse();
-              memoized[path14] = names.slice(0);
+              names = path15.split(".").reverse();
+              memoized[path15] = names.slice(0);
             }
           } else {
-            names = path14.split(".").reverse();
+            names = path15.split(".").reverse();
           }
-        } else if (Array.isArray(path14)) {
-          names = reverseDupArray(path14);
+        } else if (Array.isArray(path15)) {
+          names = reverseDupArray(path15);
         }
         while (names.length && (object2 = object2[names.pop()]) !== undefined2 && object2 !== null) ;
         if (object2 === null && names.length) object2 = undefined2;
         return object2 === undefined2 ? defaultVal : object2;
       };
-      Dottie.exists = function(object2, path14) {
-        return Dottie.get(object2, path14) !== undefined2;
+      Dottie.exists = function(object2, path15) {
+        return Dottie.get(object2, path15) !== undefined2;
       };
-      Dottie.set = function(object2, path14, value, options2) {
-        var pieces = Array.isArray(path14) ? path14 : path14.split("."), current = object2, piece, length = pieces.length;
+      Dottie.set = function(object2, path15, value, options2) {
+        var pieces = Array.isArray(path15) ? path15 : path15.split("."), current = object2, piece, length = pieces.length;
         var DANGEROUS_KEYS = ["__proto__", "constructor", "prototype"];
         if (pieces.some(function(p) {
           return DANGEROUS_KEYS.indexOf(p) !== -1;
@@ -153493,9 +153124,9 @@ var require_dottie = __commonJS({
         }
         current[piece] = value;
       };
-      Dottie["default"] = function(object2, path14, value) {
-        if (Dottie.get(object2, path14) === undefined2) {
-          Dottie.set(object2, path14, value);
+      Dottie["default"] = function(object2, path15, value) {
+        if (Dottie.get(object2, path15) === undefined2) {
+          Dottie.set(object2, path15, value);
         }
       };
       Dottie.transform = function Dottie$transformfunction(object2, options2) {
@@ -153685,7 +153316,7 @@ var require_belongs_to = __commonJS({
         }
       return a;
     };
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153712,7 +153343,7 @@ var require_belongs_to = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils25.camelize([
+          this.foreignKey = Utils26.camelize([
             this.as,
             this.target.primaryKeyAttribute
           ].join("_"));
@@ -153750,7 +153381,7 @@ var require_belongs_to = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.target, this.source, this.options, this.targetKeyField);
-        Utils25.mergeDefaults(this.source.rawAttributes, newAttributes);
+        Utils26.mergeDefaults(this.source.rawAttributes, newAttributes);
         this.source.refreshAttributes();
         this.identifierField = this.source.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -153764,7 +153395,7 @@ var require_belongs_to = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -153865,7 +153496,7 @@ var require_has_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153892,7 +153523,7 @@ var require_has_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils25.singularize(this.as)
+              singular: Utils26.singularize(this.as)
             };
           }
         } else {
@@ -153906,7 +153537,7 @@ var require_has_many = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils25.camelize([
+          this.foreignKey = Utils26.camelize([
             this.source.options.name.singular,
             this.source.primaryKeyAttribute
           ].join("_"));
@@ -153953,7 +153584,7 @@ var require_has_many = __commonJS({
           constraintOptions.onUpdate = constraintOptions.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, constraintOptions, this.sourceKeyField);
-        Utils25.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils26.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.source.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
@@ -154027,7 +153658,7 @@ var require_has_many = __commonJS({
         return result2;
       }
       async count(instance, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2.attributes = [
           [
             this.sequelize.fn("COUNT", this.sequelize.col(`${this.target.name}.${this.target.primaryKeyField}`)),
@@ -154186,7 +153817,7 @@ var require_has_one = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154213,8 +153844,8 @@ var require_has_one = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils25.camelize([
-            Utils25.singularize(this.options.as || this.source.name),
+          this.foreignKey = Utils26.camelize([
+            Utils26.singularize(this.options.as || this.source.name),
             this.source.primaryKeyAttribute
           ].join("_"));
         }
@@ -154249,7 +153880,7 @@ var require_has_one = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, this.options, this.sourceKeyField);
-        Utils25.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils26.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -154263,7 +153894,7 @@ var require_has_one = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -154382,7 +154013,7 @@ var require_belongs_to_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154420,14 +154051,14 @@ var require_belongs_to_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils25.singularize(this.as)
+              singular: Utils26.singularize(this.as)
             };
           }
         } else {
           this.as = this.target.options.name.plural;
           this.options.name = this.target.options.name;
         }
-        this.combinedTableName = Utils25.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
+        this.combinedTableName = Utils26.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
         if (this.isSelfAssociation) {
           this.targetAssociation = this;
         }
@@ -154527,7 +154158,7 @@ var require_belongs_to_many = __commonJS({
           this.foreignKey = this.foreignKeyAttribute.name || this.foreignKeyAttribute.fieldName;
         } else {
           this.foreignKeyAttribute = {};
-          this.foreignKey = this.options.foreignKey || Utils25.camelize([
+          this.foreignKey = this.options.foreignKey || Utils26.camelize([
             this.source.options.name.singular,
             this.sourceKey
           ].join("_"));
@@ -154540,8 +154171,8 @@ var require_belongs_to_many = __commonJS({
             this.otherKeyDefault = true;
           }
           this.otherKeyAttribute = {};
-          this.otherKey = this.options.otherKey || Utils25.camelize([
-            this.isSelfAssociation ? Utils25.singularize(this.as) : this.target.options.name.singular,
+          this.otherKey = this.options.otherKey || Utils26.camelize([
+            this.isSelfAssociation ? Utils26.singularize(this.as) : this.target.options.name.singular,
             this.targetKey
           ].join("_"));
         }
@@ -154667,7 +154298,7 @@ var require_belongs_to_many = __commonJS({
         Helpers.mixinMethods(this, obj2, methods, aliases2);
       }
       async get(instance, options2) {
-        options2 = Utils25.cloneDeep(options2) || {};
+        options2 = Utils26.cloneDeep(options2) || {};
         const through = this.through;
         let scopeWhere;
         let throughWhere;
@@ -154715,7 +154346,7 @@ var require_belongs_to_many = __commonJS({
       }
       async count(instance, options2) {
         const sequelize = this.target.sequelize;
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2.attributes = [
           [sequelize.fn("COUNT", sequelize.col([this.target.name, this.targetKeyField].join("."))), "count"]
         ];
@@ -154951,7 +154582,7 @@ var require_instance_validator = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var sequelizeError = require_errors4();
     var DataTypes2 = require_data_types9();
     var BelongsTo2 = require_belongs_to();
@@ -155007,7 +154638,7 @@ var require_instance_validator = __commonJS({
             return;
           }
           const value = this.modelInstance.dataValues[field];
-          if (value instanceof Utils25.SequelizeMethod) {
+          if (value instanceof Utils26.SequelizeMethod) {
             return;
           }
           if (!rawAttribute._autoGenerated && !rawAttribute.autoIncrement) {
@@ -155129,7 +154760,7 @@ var require_instance_validator = __commonJS({
           }
         }
         if (rawAttribute.type instanceof DataTypes2.STRING || rawAttribute.type instanceof DataTypes2.TEXT || rawAttribute.type instanceof DataTypes2.CITEXT) {
-          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils25.SequelizeMethod) && !Buffer.isBuffer(value)) {
+          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils26.SequelizeMethod) && !Buffer.isBuffer(value)) {
             this.errors.push(new sequelizeError.ValidationErrorItem(`${field} cannot be an array or an object`, "string violation", field, value, this.modelInstance, "not_a_string"));
           }
         }
@@ -155486,7 +155117,7 @@ var require_model2 = __commonJS({
     var assert2 = require("assert");
     var _4 = require_lodash();
     var Dottie = require_dottie();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var { logger } = require_logger3();
     var BelongsTo2 = require_belongs_to();
     var BelongsToMany2 = require_belongs_to_many();
@@ -155589,7 +155220,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.constructor._hasDefaultValues) {
             defaults3 = _4.mapValues(this.constructor._defaultValues, (valueFn) => {
               const value = valueFn();
-              return value && value instanceof Utils25.SequelizeMethod ? value : _4.cloneDeep(value);
+              return value && value instanceof Utils26.SequelizeMethod ? value : _4.cloneDeep(value);
             });
           }
           if (this.constructor.primaryKeyAttributes.length) {
@@ -155600,20 +155231,20 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
           if (this.constructor._timestampAttributes.createdAt && defaults3[this.constructor._timestampAttributes.createdAt]) {
-            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.createdAt];
           }
           if (this.constructor._timestampAttributes.updatedAt && defaults3[this.constructor._timestampAttributes.updatedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.updatedAt];
           }
           if (this.constructor._timestampAttributes.deletedAt && defaults3[this.constructor._timestampAttributes.deletedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.deletedAt];
           }
           for (key in defaults3) {
             if (values2[key] === void 0) {
-              this.set(key, Utils25.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
+              this.set(key, Utils26.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
               delete values2[key];
             }
           }
@@ -155643,7 +155274,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           [Op2.eq]: null
         };
         deletedAtObject[deletedAtAttribute.field || deletedAtCol] = deletedAtDefaultValue;
-        if (Utils25.isWhereEmpty(options2.where)) {
+        if (Utils26.isWhereEmpty(options2.where)) {
           options2.where = deletedAtObject;
         } else {
           options2.where = { [Op2.and]: [deletedAtObject, options2.where] };
@@ -155852,7 +155483,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             }
             used.push(parent);
-            const thisInclude = Utils25.cloneDeep(include);
+            const thisInclude = Utils26.cloneDeep(include);
             thisInclude.model = model;
             if (as2) {
               thisInclude.as = as2;
@@ -155942,7 +155573,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (include.attributes && !options2.raw) {
           include.model._expandAttributes(include);
           include.originalAttributes = include.model._injectDependentVirtualAttributes(include.attributes);
-          include = Utils25.mapFinderOptions(include, include.model);
+          include = Utils26.mapFinderOptions(include, include.model);
           if (include.attributes.length) {
             _4.each(include.model.primaryKeys, (attr, key) => {
               if (!include.attributes.some((includeAttr) => {
@@ -155956,13 +155587,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
         } else {
-          include = Utils25.mapFinderOptions(include, include.model);
+          include = Utils26.mapFinderOptions(include, include.model);
         }
         if (include._pseudo) {
           if (!include.attributes) {
             include.attributes = Object.keys(include.model.tableAttributes);
           }
-          return Utils25.mapFinderOptions(include, include.model);
+          return Utils26.mapFinderOptions(include, include.model);
         }
         const association = include.association || this._getIncludedAssociation(include.model, include.as);
         include.association = association;
@@ -155996,7 +155627,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!include.attributes) {
           include.attributes = Object.keys(include.model.tableAttributes);
         }
-        include = Utils25.mapFinderOptions(include, include.model);
+        include = Utils26.mapFinderOptions(include, include.model);
         if (include.required === void 0) {
           include.required = !!include.where;
         }
@@ -156096,7 +155727,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.options && this.options.whereMergeStrategy === "and") {
             return combineWheresWithAnd(objValue, srcValue);
           }
-          if (srcValue instanceof Utils25.SequelizeMethod) {
+          if (srcValue instanceof Utils26.SequelizeMethod) {
             srcValue = { [Op2.and]: srcValue };
           }
           if (_4.isPlainObject(objValue) && _4.isPlainObject(srcValue)) {
@@ -156110,7 +155741,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           });
         }
         if (srcValue) {
-          return Utils25.cloneDeep(srcValue, true);
+          return Utils26.cloneDeep(srcValue, true);
         }
         return srcValue === void 0 ? objValue : srcValue;
       }
@@ -156128,14 +155759,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this.sequelize = options2.sequelize;
         const globalOptions = this.sequelize.options;
-        options2 = Utils25.merge(_4.cloneDeep(globalOptions.define), options2);
+        options2 = Utils26.merge(_4.cloneDeep(globalOptions.define), options2);
         if (!options2.modelName) {
           options2.modelName = this.name;
         }
-        options2 = Utils25.merge({
+        options2 = Utils26.merge({
           name: {
-            plural: Utils25.pluralize(options2.modelName),
-            singular: Utils25.singularize(options2.modelName)
+            plural: Utils26.pluralize(options2.modelName),
+            singular: Utils26.singularize(options2.modelName)
           },
           indexes: [],
           omitNull: globalOptions.omitNull,
@@ -156168,7 +155799,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this._setupHooks(options2.hooks);
         this.underscored = this.options.underscored;
         if (!this.options.tableName) {
-          this.tableName = this.options.freezeTableName ? this.name : Utils25.underscoredIf(Utils25.pluralize(this.name), this.underscored);
+          this.tableName = this.options.freezeTableName ? this.name : Utils26.underscoredIf(Utils26.pluralize(this.name), this.underscored);
         } else {
           this.tableName = this.options.tableName;
         }
@@ -156199,7 +155830,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return attribute;
         });
         const tableName = this.getTableName();
-        this._indexes = this.options.indexes.map((index) => Utils25.nameIndex(this._conformIndex(index), tableName));
+        this._indexes = this.options.indexes.map((index) => Utils26.nameIndex(this._conformIndex(index), tableName));
         this.primaryKeys = {};
         this._readOnlyAttributes = /* @__PURE__ */ new Set();
         this._timestampAttributes = {};
@@ -156301,7 +155932,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           definition.fieldName = name2;
           definition._modelAttribute = true;
           if (definition.field === void 0) {
-            definition.field = Utils25.underscoredIf(name2, this.underscored);
+            definition.field = Utils26.underscoredIf(name2, this.underscored);
           }
           if (definition.primaryKey === true) {
             this.primaryKeys[name2] = definition;
@@ -156323,7 +155954,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this._virtualAttributes.add(name2);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "defaultValue")) {
-            this._defaultValues[name2] = () => Utils25.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
+            this._defaultValues[name2] = () => Utils26.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "unique") && definition.unique) {
             let idxName;
@@ -156346,7 +155977,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this.prototype.validators[name2] = definition.validate;
           }
           if (definition.index === true && definition.type instanceof DataTypes2.JSONB) {
-            this._indexes.push(Utils25.nameIndex(this._conformIndex({
+            this._indexes.push(Utils26.nameIndex(this._conformIndex({
               fields: [definition.field || name2],
               using: "gin"
             }), this.getTableName()));
@@ -156544,7 +156175,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
           if (scope) {
             this._conformIncludes(scope, this);
-            this._assignOptions(self2._scope, Utils25.cloneDeep(scope));
+            this._assignOptions(self2._scope, Utils26.cloneDeep(scope));
             self2._scopeNames.push(scopeName ? scopeName : "defaultScope");
           } else {
             throw new sequelizeErrors.SequelizeScopeError(`Invalid scope ${scopeName} called.`);
@@ -156564,7 +156195,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this.warnOnInvalidOptions(options2, Object.keys(this.rawAttributes));
         const tableNames = {};
         tableNames[this.getTableName(options2)] = true;
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156596,7 +156227,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           options2.originalAttributes = this._injectDependentVirtualAttributes(options2.attributes);
         }
         this.options.whereCollection = options2.where || null;
-        Utils25.mapFinderOptions(options2, this);
+        Utils26.mapFinderOptions(options2, this);
         options2 = this._paranoidClause(this, options2);
         if (options2.hooks) {
           await this.runHooks("beforeFindAfterOptions", options2);
@@ -156675,7 +156306,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if ([null, void 0].includes(param)) {
           return null;
         }
-        options2 = Utils25.cloneDeep(options2) || {};
+        options2 = Utils26.cloneDeep(options2) || {};
         if (typeof param === "number" || typeof param === "bigint" || typeof param === "string" || Buffer.isBuffer(param)) {
           options2.where = {
             [this.primaryKeyAttribute]: param
@@ -156689,7 +156320,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findOne must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156698,7 +156329,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         if (options2.limit === void 0) {
           const uniqueSingleColumns = _4.chain(this.uniqueKeys).values().filter((c) => c.fields.length === 1).map("column").value();
-          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils25.isPrimitive(value) || Buffer.isBuffer(value)))) {
+          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils26.isPrimitive(value) || Buffer.isBuffer(value)))) {
             options2.limit = 1;
           }
         }
@@ -156707,7 +156338,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }));
       }
       static async aggregate(attribute, aggregateFunction, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         const prevAttributes = options2.attributes;
         this._injectScope(options2);
         options2.attributes = prevAttributes;
@@ -156737,13 +156368,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else {
           options2.dataType = this.sequelize.normalizeDataType(options2.dataType);
         }
-        Utils25.mapOptionFieldNames(options2, this);
+        Utils26.mapOptionFieldNames(options2, this);
         options2 = this._paranoidClause(this, options2);
         const value = await this.queryInterface.rawSelect(this.getTableName(options2), options2, aggregateFunction, this);
         return value;
       }
       static async count(options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2 = _4.defaults(options2, { hooks: true });
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
@@ -156780,7 +156411,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findAndCountAll must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        const countOptions = Utils25.cloneDeep(options2);
+        const countOptions = Utils26.cloneDeep(options2);
         if (countOptions.attributes) {
           countOptions.attributes = void 0;
         }
@@ -156823,7 +156454,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return valueSets.map((values2) => this.build(values2, options2));
       }
       static async create(values2, options2) {
-        options2 = Utils25.cloneDeep(options2 || {});
+        options2 = Utils26.cloneDeep(options2 || {});
         return await this.build(values2, {
           isNewRecord: true,
           attributes: options2.fields,
@@ -156841,7 +156472,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (instance === null) {
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils25.defaults(values2, options2.where);
+            values2 = Utils26.defaults(values2, options2.where);
           }
           instance = this.build(values2, options2);
           return [instance, true];
@@ -156873,13 +156504,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const t = await this.sequelize.transaction(options2);
           transaction = t;
           options2.transaction = t;
-          const found = await this.findOne(Utils25.defaults({ transaction }, options2));
+          const found = await this.findOne(Utils26.defaults({ transaction }, options2));
           if (found !== null) {
             return [found, false];
           }
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils25.defaults(values2, options2.where);
+            values2 = Utils26.defaults(values2, options2.where);
           }
           options2.exception = true;
           options2.returning = true;
@@ -156892,13 +156523,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           } catch (err) {
             if (!(err instanceof sequelizeErrors.UniqueConstraintError))
               throw err;
-            const flattenedWhere = Utils25.flattenObjectDeep(options2.where);
+            const flattenedWhere = Utils26.flattenObjectDeep(options2.where);
             const flattenedWhereKeys = Object.keys(flattenedWhere).map((name2) => _4.last(name2.split(".")));
             const whereFields = flattenedWhereKeys.map((name2) => _4.get(this.rawAttributes, `${name2}.field`, name2));
             const defaultFields = options2.defaults && Object.keys(options2.defaults).filter((name2) => this.rawAttributes[name2]).map((name2) => this.rawAttributes[name2].field || name2);
             const errFieldKeys = Object.keys(err.fields);
-            const errFieldsWhereIntersects = Utils25.intersects(errFieldKeys, whereFields);
-            if (defaultFields && !errFieldsWhereIntersects && Utils25.intersects(errFieldKeys, defaultFields)) {
+            const errFieldsWhereIntersects = Utils26.intersects(errFieldKeys, whereFields);
+            if (defaultFields && !errFieldsWhereIntersects && Utils26.intersects(errFieldKeys, defaultFields)) {
               throw err;
             }
             if (errFieldsWhereIntersects) {
@@ -156909,7 +156540,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 }
               });
             }
-            const otherCreated = await this.findOne(Utils25.defaults({
+            const otherCreated = await this.findOne(Utils26.defaults({
               transaction: internalTransaction ? null : transaction
             }, options2));
             if (otherCreated === null)
@@ -156928,7 +156559,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         let values2 = __spreadValues({}, options2.defaults);
         if (_4.isPlainObject(options2.where)) {
-          values2 = Utils25.defaults(values2, options2.where);
+          values2 = Utils26.defaults(values2, options2.where);
         }
         const found = await this.findOne(options2);
         if (found)
@@ -156953,7 +156584,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           hooks: true,
           returning: true,
           validate: true
-        }, Utils25.cloneDeep(options2));
+        }, Utils26.cloneDeep(options2));
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156974,9 +156605,9 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           await instance.validate(options2);
         }
         const updatedDataValues = _4.pick(instance.dataValues, changed);
-        const insertValues = Utils25.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
-        const updateValues = Utils25.mapValueFieldNames(updatedDataValues, options2.fields, this);
-        const now2 = Utils25.now(this.sequelize.options.dialect);
+        const insertValues = Utils26.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
+        const updateValues = Utils26.mapValueFieldNames(updatedDataValues, options2.fields, this);
+        const now2 = Utils26.now(this.sequelize.options.dialect);
         if (createdAtAttr && !insertValues[createdAtAttr]) {
           const field = this.rawAttributes[createdAtAttr].field || createdAtAttr;
           insertValues[field] = this._getDefaultTimestamp(createdAtAttr) || now2;
@@ -157009,8 +156640,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return [];
         }
         const dialect = this.sequelize.options.dialect;
-        const now2 = Utils25.now(this.sequelize.options.dialect);
-        options2 = Utils25.cloneDeep(options2);
+        const now2 = Utils26.now(this.sequelize.options.dialect);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157102,7 +156733,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 if (!associationInstances.length) {
                   return;
                 }
-                const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
+                const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157128,7 +156759,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   options22.fields.push(updatedAtAttr);
                 }
               }
-              const out = Utils25.mapValueFieldNames(values2, options22.fields, model);
+              const out = Utils26.mapValueFieldNames(values2, options22.fields, model);
               for (const key of model._virtualAttributes) {
                 delete out[key];
               }
@@ -157198,7 +156829,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               if (!associationInstances.length) {
                 return;
               }
-              const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
+              const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
                 transaction: options22.transaction,
                 logging: options22.logging
               }).value();
@@ -157222,7 +156853,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   }
                   valueSets.push(values2);
                 }
-                const throughOptions = _4(Utils25.cloneDeep(include)).omit(["association", "attributes"]).defaults({
+                const throughOptions = _4(Utils26.cloneDeep(include)).omit(["association", "attributes"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157251,12 +156882,12 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return await recursiveBulkCreate(instances, options2);
       }
       static async truncate(options2) {
-        options2 = Utils25.cloneDeep(options2) || {};
+        options2 = Utils26.cloneDeep(options2) || {};
         options2.truncate = true;
         return await this.destroy(options2);
       }
       static async destroy(options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157267,7 +156898,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!options2 || !(options2.where || options2.truncate)) {
           throw new Error("Missing where or truncate attribute in the options parameter of model.destroy.");
         }
-        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils25.SequelizeMethod)) {
+        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils26.SequelizeMethod)) {
           throw new Error("Expected plain object, array or sequelize method in the options.where parameter of model.destroy.");
         }
         options2 = _4.defaults(options2, {
@@ -157278,7 +156909,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           restartIdentity: false
         });
         options2.type = QueryTypes2.BULKDELETE;
-        Utils25.mapOptionFieldNames(options2, this);
+        Utils26.mapOptionFieldNames(options2, this);
         options2.model = this;
         if (options2.hooks) {
           await this.runHooks("beforeBulkDestroy", options2);
@@ -157297,7 +156928,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const where3 = {
             [field]: Object.prototype.hasOwnProperty.call(deletedAtAttribute, "defaultValue") ? deletedAtAttribute.defaultValue : null
           };
-          attrValueHash[field] = Utils25.now(this.sequelize.options.dialect);
+          attrValueHash[field] = Utils26.now(this.sequelize.options.dialect);
           result2 = await this.queryInterface.bulkUpdate(this.getTableName(options2), attrValueHash, Object.assign(where3, options2.where), options2, this.rawAttributes);
         } else {
           result2 = await this.queryInterface.bulkDelete(this.getTableName(options2), options2.where, options2, this);
@@ -157325,7 +156956,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         options2.type = QueryTypes2.RAW;
         options2.model = this;
-        Utils25.mapOptionFieldNames(options2, this);
+        Utils26.mapOptionFieldNames(options2, this);
         if (options2.hooks) {
           await this.runHooks("beforeBulkRestore", options2);
         }
@@ -157350,7 +156981,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       static async update(values2, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157383,7 +157014,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
         }
         if (this._timestampAttributes.updatedAt && !options2.silent) {
-          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils25.now(this.sequelize.options.dialect);
+          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils26.now(this.sequelize.options.dialect);
         }
         options2.model = this;
         let valuesUse;
@@ -157469,8 +157100,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else if (_4.isEmpty(valuesUse) || Object.keys(valuesUse).length === 1 && valuesUse[this._timestampAttributes.updatedAt]) {
           result2 = [0];
         } else {
-          valuesUse = Utils25.mapValueFieldNames(valuesUse, options2.fields, this);
-          options2 = Utils25.mapOptionFieldNames(options2, this);
+          valuesUse = Utils26.mapValueFieldNames(valuesUse, options2.fields, this);
+          options2 = Utils26.mapOptionFieldNames(options2, this);
           options2.hasTrigger = this.options ? this.options.hasTrigger : false;
           const affectedRows = await this.queryInterface.bulkUpdate(this.getTableName(options2), valuesUse, options2.where, options2, this.tableAttributes);
           if (options2.returning) {
@@ -157496,7 +157127,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _getDefaultTimestamp(attr) {
         if (!!this.rawAttributes[attr] && !!this.rawAttributes[attr].defaultValue) {
-          return Utils25.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
+          return Utils26.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
         }
         return void 0;
       }
@@ -157514,7 +157145,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2.attributes = attributes;
       }
       static _injectScope(options2) {
-        const scope = Utils25.cloneDeep(this._scope);
+        const scope = Utils26.cloneDeep(this._scope);
         this._defaultsOptions(options2, scope);
       }
       static [/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")]() {
@@ -157546,13 +157177,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this._injectScope(options2);
         this._optionsMustContainWhere(options2);
-        options2 = Utils25.defaults({}, options2, {
+        options2 = Utils26.defaults({}, options2, {
           by: 1,
           where: {},
           increment: true
         });
         const isSubtraction = !options2.increment;
-        Utils25.mapOptionFieldNames(options2, this);
+        Utils26.mapOptionFieldNames(options2, this);
         const where3 = __spreadValues({}, options2.where);
         let incrementAmountsByField = {};
         if (Array.isArray(fields)) {
@@ -157570,7 +157201,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const updatedAtAttr = this._timestampAttributes.updatedAt;
         if (!options2.silent && updatedAtAttr && !incrementAmountsByField[updatedAtAttr]) {
           const attrName = this.rawAttributes[updatedAtAttr].field || updatedAtAttr;
-          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils25.now(this.sequelize.options.dialect);
+          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils26.now(this.sequelize.options.dialect);
         }
         const tableName = this.getTableName(options2);
         let affectedRows;
@@ -157593,7 +157224,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _optionsMustContainWhere(options2) {
         assert2(options2 && options2.where, "Missing where attribute in the options parameter");
-        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils25.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
+        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils26.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
       }
       where(checkVersion) {
         const where3 = this.constructor.primaryKeyAttributes.reduce((result2, attribute) => {
@@ -157607,7 +157238,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (checkVersion && versionAttr) {
           where3[versionAttr] = this.get(versionAttr, { raw: true });
         }
-        return Utils25.mapWhereFieldNames(where3, this.constructor);
+        return Utils26.mapWhereFieldNames(where3, this.constructor);
       }
       toString() {
         return `[object SequelizeInstance:${this.constructor.name}]`;
@@ -157747,10 +157378,10 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return this;
             }
           }
-          if (!(value instanceof Utils25.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
+          if (!(value instanceof Utils26.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
             value = this.constructor._dataTypeSanitizers[key].call(this, value, options2);
           }
-          if (!options2.raw && (value instanceof Utils25.SequelizeMethod || !(value instanceof Utils25.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
+          if (!options2.raw && (value instanceof Utils26.SequelizeMethod || !(value instanceof Utils26.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
             this._previousDataValues[key] = originalValue;
             this.changed(key, true);
           }
@@ -157821,7 +157452,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (arguments.length > 1) {
           throw new Error("The second argument was removed in favor of the options object.");
         }
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157853,7 +157484,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const versionAttr = this.constructor._versionAttribute;
         const hook = this.isNewRecord ? "Create" : "Update";
         const wasNewRecord = this.isNewRecord;
-        const now2 = Utils25.now(this.sequelize.options.dialect);
+        const now2 = Utils26.now(this.sequelize.options.dialect);
         let updatedAtAttr = this.constructor._timestampAttributes.updatedAt;
         if (updatedAtAttr && options2.fields.length > 0 && !options2.fields.includes(updatedAtAttr)) {
           options2.fields.push(updatedAtAttr);
@@ -157922,7 +157553,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             const instance = this.get(include.as);
             if (!instance)
               return;
-            const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -157937,7 +157568,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!this.changed() && !this.isNewRecord)
           return this;
         const versionFieldName = _4.get(this.constructor.rawAttributes[versionAttr], "field") || versionAttr;
-        const values2 = Utils25.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
+        const values2 = Utils26.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
         let query = null;
         let args = [];
         let where3;
@@ -157979,7 +157610,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             if (!Array.isArray(instances))
               instances = [instances];
-            const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -158019,7 +157650,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       async reload(options2) {
-        options2 = Utils25.defaults({
+        options2 = Utils26.defaults({
           where: this.where()
         }, options2, {
           include: this._options.include || void 0
@@ -158044,14 +157675,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2 = options2 || {};
         if (Array.isArray(options2))
           options2 = { fields: options2 };
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
             options2.transaction = t;
           }
         }
-        const setOptions = Utils25.cloneDeep(options2);
+        const setOptions = Utils26.cloneDeep(options2);
         setOptions.attributes = options2.fields;
         this.set(values2, setOptions);
         const sideEffects = _4.without(this.changed(), ...changedBefore);
@@ -158135,7 +157766,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       async increment(fields, options2) {
         const identifier2 = this.where();
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2.where = __spreadValues(__spreadValues({}, options2.where), identifier2);
         options2.instance = this;
         await this.constructor.increment(fields, options2);
@@ -158181,7 +157812,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       if (!_4.isObject(where3)) {
         return where3;
       }
-      const keys2 = Utils25.getComplexKeys(where3);
+      const keys2 = Utils26.getComplexKeys(where3);
       if (keys2.length === 0) {
         return;
       }
@@ -158795,7 +158426,7 @@ var require_query_interface = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var DataTypes2 = require_data_types9();
     var Transaction2 = require_transaction();
     var QueryTypes2 = require_query_types();
@@ -159020,7 +158651,7 @@ var require_query_interface = __commonJS({
         if (!rawTablename) {
           rawTablename = tableName;
         }
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2.fields = attributes;
         const sql = this.queryGenerator.addIndexQuery(tableName, options2, rawTablename);
         return await this.sequelize.query(sql, __spreadProps(__spreadValues({}, options2), { supportsSearchPath: false }));
@@ -159064,7 +158695,7 @@ var require_query_interface = __commonJS({
         if (!options2.type) {
           throw new Error("Constraint type must be specified through options.type");
         }
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         const sql = this.queryGenerator.addConstraintQuery(tableName, options2);
         return await this.sequelize.query(sql, options2);
       }
@@ -159076,7 +158707,7 @@ var require_query_interface = __commonJS({
         return this.sequelize.query(this.queryGenerator.removeConstraintQuery(tableName, constraintName), options2);
       }
       async insert(instance, tableName, values2, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2.hasTrigger = instance && instance.constructor.options.hasTrigger;
         const sql = this.queryGenerator.insertQuery(tableName, values2, instance && instance.constructor.rawAttributes, options2);
         options2.type = QueryTypes2.INSERT;
@@ -159131,9 +158762,9 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkUpdate(tableName, values2, identifier2, options2, attributes) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         if (typeof identifier2 === "object")
-          identifier2 = Utils25.cloneDeep(identifier2);
+          identifier2 = Utils26.cloneDeep(identifier2);
         const sql = this.queryGenerator.updateQuery(tableName, values2, identifier2, options2, attributes);
         const table = _4.isObject(tableName) ? tableName : { tableName };
         const model = options2.model ? options2.model : _4.find(this.sequelize.modelManager.models, { tableName: table.tableName });
@@ -159169,13 +158800,13 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkDelete(tableName, where3, options2, model) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2 = _4.defaults(options2, { limit: null });
         if (options2.truncate === true) {
           return this.sequelize.query(this.queryGenerator.truncateTableQuery(tableName, options2), options2);
         }
         if (typeof identifier === "object")
-          where3 = Utils25.cloneDeep(where3);
+          where3 = Utils26.cloneDeep(where3);
         return await this.sequelize.query(this.queryGenerator.deleteQuery(tableName, where3, options2, model), options2);
       }
       async select(model, tableName, optionsArg) {
@@ -159183,21 +158814,21 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(this.queryGenerator.selectQuery(tableName, options2, model), options2);
       }
       async increment(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("+", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async decrement(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("-", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async rawSelect(tableName, options2, attributeSelector, Model14) {
-        options2 = Utils25.cloneDeep(options2);
+        options2 = Utils26.cloneDeep(options2);
         options2 = _4.defaults(options2, {
           raw: true,
           plain: true,
@@ -161289,7 +160920,7 @@ var require_operators2 = __commonJS({
     };
     var _4 = require_lodash();
     var Op2 = require_operators();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var OperatorHelpers = {
       OperatorMap: {
         [Op2.eq]: "=",
@@ -161344,7 +160975,7 @@ var require_operators2 = __commonJS({
         if (!this.OperatorsAliasMap) {
           return orig;
         }
-        Utils25.getOperators(orig).forEach((op) => {
+        Utils26.getOperators(orig).forEach((op) => {
           const item = orig[op];
           if (_4.isPlainObject(item)) {
             obj2[op] = this._replaceAliases(item);
@@ -161438,7 +161069,7 @@ var require_query_generator = __commonJS({
     var util = require("util");
     var _4 = require_lodash();
     var uuidv4 = (init_esm_node(), __toCommonJS(esm_node_exports)).v4;
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var deprecations = require_deprecations();
     var SqlString = require_sql_string();
     var DataTypes2 = require_data_types9();
@@ -161577,7 +161208,7 @@ var require_query_generator = __commonJS({
         if (this._dialect.supports.EXCEPTION && options2.exception) {
           options2.bindParam = false;
         }
-        valueHash = Utils25.removeNullValuesFromHash(valueHash, this.options.omitNull);
+        valueHash = Utils26.removeNullValuesFromHash(valueHash, this.options.omitNull);
         for (const key in valueHash) {
           if (Object.prototype.hasOwnProperty.call(valueHash, key)) {
             const value = valueHash[key];
@@ -161594,7 +161225,7 @@ var require_query_generator = __commonJS({
               if (modelAttributeMap && modelAttributeMap[key] && modelAttributeMap[key].autoIncrement === true) {
                 identityWrapperRequired = true;
               }
-              if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
+              if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
                 values2.push(this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }));
               } else {
                 values2.push(this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }, bindParam));
@@ -161624,7 +161255,7 @@ var require_query_generator = __commonJS({
             } else {
               fragments.push("DO UPDATE SET", updateKeys.join(","));
             }
-            onDuplicateKeyUpdate = ` ${Utils25.joinSQLFragments(fragments)}`;
+            onDuplicateKeyUpdate = ` ${Utils26.joinSQLFragments(fragments)}`;
           } else {
             const valueKeys = options2.updateOnDuplicate.map((attr) => `${this.quoteIdentifier(attr)}=VALUES(${this.quoteIdentifier(attr)})`);
             if (_4.isEmpty(valueKeys) && options2.upsertKeys) {
@@ -161737,7 +161368,7 @@ var require_query_generator = __commonJS({
           const returnValues = this.generateReturnValues(fieldMappedAttributes, options2);
           returning += returnValues.returningFragment;
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "INSERT",
           ignoreDuplicates,
           "INTO",
@@ -161754,7 +161385,7 @@ var require_query_generator = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const values2 = [];
         const bind = [];
         const modelAttributeMap = {};
@@ -161799,7 +161430,7 @@ var require_query_generator = __commonJS({
             continue;
           }
           const value = attrValueHash[key];
-          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -161819,7 +161450,7 @@ var require_query_generator = __commonJS({
       arithmeticQuery(operator, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
         options2 = options2 || {};
         _4.defaults(options2, { returning: true });
-        extraAttributesToBeUpdated = Utils25.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
+        extraAttributesToBeUpdated = Utils26.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
         let outputFragment = "";
         let returningFragment = "";
         if (this._dialect.supports.returnValues && options2.returning) {
@@ -161840,7 +161471,7 @@ var require_query_generator = __commonJS({
           const escapedValue = this.escape(newValue);
           updateSetSqlFragments.push(`${quotedField}=${escapedValue}`);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "UPDATE",
           this.quoteTable(tableName),
           "SET",
@@ -161864,7 +161495,7 @@ var require_query_generator = __commonJS({
           options2.prefix = options2.prefix.replace(/("|')/g, "");
         }
         const fieldsSql = options2.fields.map((field) => {
-          if (field instanceof Utils25.SequelizeMethod) {
+          if (field instanceof Utils26.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (typeof field === "string") {
@@ -161898,7 +161529,7 @@ var require_query_generator = __commonJS({
           return result2;
         });
         if (!options2.name) {
-          options2 = Utils25.nameIndex(options2, options2.prefix);
+          options2 = Utils26.nameIndex(options2, options2.prefix);
         }
         options2 = Model14._conformIndex(options2);
         if (!this._dialect.supports.index.type) {
@@ -161933,7 +161564,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "ADD",
@@ -161947,7 +161578,7 @@ var require_query_generator = __commonJS({
           if (typeof field === "string") {
             return this.quoteIdentifier(field);
           }
-          if (field instanceof Utils25.SequelizeMethod) {
+          if (field instanceof Utils26.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (field.attribute) {
@@ -162015,7 +161646,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "DROP CONSTRAINT",
@@ -162086,8 +161717,8 @@ var require_query_generator = __commonJS({
                   const itemSplit = item2.split(".");
                   if (previousModel.rawAttributes[itemSplit[0]].type instanceof DataTypes2.JSON) {
                     const identifier2 = this.quoteIdentifiers(`${previousModel.name}.${previousModel.rawAttributes[itemSplit[0]].field}`);
-                    const path14 = itemSplit.slice(1);
-                    item2 = this.jsonPathExtractionQuery(identifier2, path14);
+                    const path15 = itemSplit.slice(1);
+                    item2 = this.jsonPathExtractionQuery(identifier2, path15);
                     item2 = this.sequelize.literal(item2);
                   }
                 }
@@ -162101,7 +161732,7 @@ var require_query_generator = __commonJS({
           let i = 0;
           for (i = 0; i < collectionLength - 1; i++) {
             item = collection[i];
-            if (typeof item === "string" || item._modelAttribute || item instanceof Utils25.SequelizeMethod) {
+            if (typeof item === "string" || item._modelAttribute || item instanceof Utils26.SequelizeMethod) {
               break;
             } else if (item instanceof Association2) {
               tableNames[i] = item.as;
@@ -162121,7 +161752,7 @@ var require_query_generator = __commonJS({
         if (collection._modelAttribute) {
           return `${this.quoteTable(collection.Model.name)}.${this.quoteIdentifier(collection.fieldName)}`;
         }
-        if (collection instanceof Utils25.SequelizeMethod) {
+        if (collection instanceof Utils26.SequelizeMethod) {
           return this.handleSequelizeMethod(collection);
         }
         if (_4.isPlainObject(collection) && collection.raw) {
@@ -162187,7 +161818,7 @@ var require_query_generator = __commonJS({
       escape(value, field, options2) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils25.SequelizeMethod) {
+          if (value instanceof Utils26.SequelizeMethod) {
             return this.handleSequelizeMethod(value);
           }
           if (field && field.type) {
@@ -162215,7 +161846,7 @@ var require_query_generator = __commonJS({
       format(value, field, options2, bindParam) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils25.SequelizeMethod) {
+          if (value instanceof Utils26.SequelizeMethod) {
             throw new Error("Cannot pass SequelizeMethod as a bind parameter - use escape instead");
           }
           if (field && field.type) {
@@ -162248,8 +161879,8 @@ var require_query_generator = __commonJS({
       isIdentifierQuoted(identifier2) {
         return /^\s*(?:([`"'])(?:(?!\1).|\1{2})*\1\.?)+\s*$/i.test(identifier2);
       }
-      jsonPathExtractionQuery(column, path14, isJson) {
-        let paths = _4.toPath(path14);
+      jsonPathExtractionQuery(column, path15, isJson) {
+        let paths = _4.toPath(path15);
         let pathStr;
         const quotedColumn = this.isIdentifierQuoted(column) ? column : this.quoteIdentifier(column);
         switch (this.dialect) {
@@ -162258,7 +161889,7 @@ var require_query_generator = __commonJS({
           case "sqlite":
             if (this.dialect === "mysql") {
               paths = paths.map((subPath) => {
-                return /\D/.test(subPath) ? Utils25.addTicks(subPath, '"') : subPath;
+                return /\D/.test(subPath) ? Utils26.addTicks(subPath, '"') : subPath;
               });
             }
             pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
@@ -162421,7 +162052,7 @@ var require_query_generator = __commonJS({
                   [options2.groupedLimit.on.foreignIdentifierField]: value
                 };
               }
-              return Utils25.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
+              return Utils26.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
             }).join(this._dialect.supports["UNION ALL"] ? " UNION ALL " : " UNION ")})`, mainTable.as));
           } else {
             mainQueryItems.push(this.selectFromTableFragment(options2, mainTable.model, attributes.main, mainTable.quotedName, mainTable.as));
@@ -162512,7 +162143,7 @@ var require_query_generator = __commonJS({
       escapeAttributes(attributes, options2, mainTableAs) {
         return attributes && attributes.map((attr) => {
           let addTable = true;
-          if (attr instanceof Utils25.SequelizeMethod) {
+          if (attr instanceof Utils26.SequelizeMethod) {
             return this.handleSequelizeMethod(attr);
           }
           if (Array.isArray(attr)) {
@@ -162520,7 +162151,7 @@ var require_query_generator = __commonJS({
               throw new Error(`${JSON.stringify(attr)} is not a valid attribute definition. Please use the following format: ['attribute definition', 'alias']`);
             }
             attr = attr.slice();
-            if (attr[0] instanceof Utils25.SequelizeMethod) {
+            if (attr[0] instanceof Utils26.SequelizeMethod) {
               attr[0] = this.handleSequelizeMethod(attr[0]);
               addTable = false;
             } else if (this.options.attributeBehavior === "escape" || !attr[0].includes("(") && !attr[0].includes(")")) {
@@ -162546,7 +162177,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             }
             attr = [attr[0], this.quoteIdentifier(alias)].join(" AS ");
           } else {
-            attr = !attr.includes(Utils25.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
+            attr = !attr.includes(Utils26.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
           }
           if (!_4.isEmpty(options2.include) && (!attr.includes(".") || options2.dotNotation) && addTable) {
             attr = `${mainTableAs}.${attr}`;
@@ -162578,22 +162209,22 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         if (topLevelInfo.options.includeIgnoreAttributes !== false) {
           include.model._expandAttributes(include);
-          Utils25.mapFinderOptions(include, include.model);
+          Utils26.mapFinderOptions(include, include.model);
           const includeAttributes = include.attributes.map((attr) => {
             let attrAs = attr;
             let verbatim = false;
             if (Array.isArray(attr) && attr.length === 2) {
-              if (attr[0] instanceof Utils25.SequelizeMethod && (attr[0] instanceof Utils25.Literal || attr[0] instanceof Utils25.Cast || attr[0] instanceof Utils25.Fn)) {
+              if (attr[0] instanceof Utils26.SequelizeMethod && (attr[0] instanceof Utils26.Literal || attr[0] instanceof Utils26.Cast || attr[0] instanceof Utils26.Fn)) {
                 verbatim = true;
               }
-              attr = attr.map((attr2) => attr2 instanceof Utils25.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
+              attr = attr.map((attr2) => attr2 instanceof Utils26.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
               attrAs = attr[1];
               attr = attr[0];
             }
-            if (attr instanceof Utils25.Literal) {
+            if (attr instanceof Utils26.Literal) {
               return attr.val;
             }
-            if (attr instanceof Utils25.Cast || attr instanceof Utils25.Fn) {
+            if (attr instanceof Utils26.Cast || attr instanceof Utils26.Fn) {
               throw new Error("Tried to select attributes using Sequelize.cast or Sequelize.fn without specifying an alias for the result, during eager loading. This means the attribute will not be added to the returned instance");
             }
             let prefix;
@@ -162612,7 +162243,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             if (this.options.minifyAliases) {
               alias = this._getMinifiedAlias(alias, includeAs.internalAs, topLevelInfo.options);
             }
-            return Utils25.joinSQLFragments([
+            return Utils26.joinSQLFragments([
               prefix,
               "AS",
               this.quoteIdentifier(alias, true)
@@ -162825,7 +162456,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           if (this.options.minifyAliases) {
             alias = this._getMinifiedAlias(alias, throughAs, topLevelInfo.options);
           }
-          return Utils25.joinSQLFragments([
+          return Utils26.joinSQLFragments([
             `${this.quoteIdentifier(throughAs)}.${this.quoteIdentifier(Array.isArray(attr) ? attr[0] : attr)}`,
             "AS",
             this.quoteIdentifier(alias)
@@ -163020,12 +162651,12 @@ https://github.com/sequelize/sequelize/discussions/15694`);
               if (aliasedAttribute) {
                 const modelName = this.quoteIdentifier(model.name);
                 const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-                order[0] = new Utils25.Col(alias || aliasedAttribute[1]);
+                order[0] = new Utils26.Col(alias || aliasedAttribute[1]);
               }
             }
             mainQueryOrder.push(this.quote(order, model, "->"));
           }
-        } else if (options2.order instanceof Utils25.SequelizeMethod) {
+        } else if (options2.order instanceof Utils26.SequelizeMethod) {
           const sql = this.quote(options2.order, model, "->");
           if (subQuery) {
             subQueryOrder.push(sql);
@@ -163077,15 +162708,15 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Object.prototype.hasOwnProperty.call(this.OperatorMap, smth.comparator)) {
           smth.comparator = this.OperatorMap[smth.comparator];
         }
-        if (smth instanceof Utils25.Where) {
+        if (smth instanceof Utils26.Where) {
           let value = smth.logic;
           let key;
-          if (smth.attribute instanceof Utils25.SequelizeMethod) {
+          if (smth.attribute instanceof Utils26.SequelizeMethod) {
             key = this.getWhereConditions(smth.attribute, tableName, factory, options2, prepend2);
           } else {
             key = `${this.quoteTable(smth.attribute.Model.name)}.${this.quoteIdentifier(smth.attribute.field || smth.attribute.fieldName)}`;
           }
-          if (value && value instanceof Utils25.SequelizeMethod) {
+          if (value && value instanceof Utils26.SequelizeMethod) {
             value = this.getWhereConditions(value, tableName, factory, options2, prepend2);
             if (value === "NULL") {
               if (smth.comparator === "=") {
@@ -163119,11 +162750,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return [key, value].join(` ${smth.comparator} `);
         }
-        if (smth instanceof Utils25.Literal) {
+        if (smth instanceof Utils26.Literal) {
           return smth.val;
         }
-        if (smth instanceof Utils25.Cast) {
-          if (smth.val instanceof Utils25.SequelizeMethod) {
+        if (smth instanceof Utils26.Cast) {
+          if (smth.val instanceof Utils26.SequelizeMethod) {
             result2 = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
           } else if (_4.isPlainObject(smth.val)) {
             result2 = this.whereItemsQuery(smth.val);
@@ -163132,9 +162763,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return `CAST(${result2} AS ${smth.type.toUpperCase()})`;
         }
-        if (smth instanceof Utils25.Fn) {
+        if (smth instanceof Utils26.Fn) {
           return `${smth.fn}(${smth.args.map((arg) => {
-            if (arg instanceof Utils25.SequelizeMethod) {
+            if (arg instanceof Utils26.SequelizeMethod) {
               return this.handleSequelizeMethod(arg, tableName, factory, options2, prepend2);
             }
             if (_4.isPlainObject(arg)) {
@@ -163143,7 +162774,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             return this.escape(typeof arg === "string" ? arg.replace(/\$/g, "$$$") : arg);
           }).join(", ")})`;
         }
-        if (smth instanceof Utils25.Col) {
+        if (smth instanceof Utils26.Col) {
           if (Array.isArray(smth.col) && !factory) {
             throw new Error("Cannot call Sequelize.col() with array outside of order / group clause");
           }
@@ -163162,7 +162793,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return "";
       }
       whereItemsQuery(where3, options2, binding) {
-        if (where3 === null || where3 === void 0 || Utils25.getComplexSize(where3) === 0) {
+        if (where3 === null || where3 === void 0 || Utils26.getComplexSize(where3) === 0) {
           return "";
         }
         if (typeof where3 === "string") {
@@ -163173,7 +162804,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (binding[0] !== " ")
           binding = ` ${binding} `;
         if (_4.isPlainObject(where3)) {
-          Utils25.getComplexKeys(where3).forEach((prop) => {
+          Utils26.getComplexKeys(where3).forEach((prop) => {
             const item = where3[prop];
             items.push(this.whereItemQuery(prop, item, options2));
           });
@@ -163203,7 +162834,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (isPlainObject2) {
           value = this._replaceAliases(value);
         }
-        const valueKeys = isPlainObject2 && Utils25.getComplexKeys(value);
+        const valueKeys = isPlainObject2 && Utils26.getComplexKeys(value);
         if (key === void 0) {
           if (typeof value === "string") {
             return value;
@@ -163220,11 +162851,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           const opValue2 = options2.bindParam ? this.format(value, field, options2, options2.bindParam) : this.escape(value, field);
           return this._joinKeyValue(key, opValue2, this.OperatorMap[Op2.eq], options2.prefix);
         }
-        if (value instanceof Utils25.SequelizeMethod && !(key !== void 0 && value instanceof Utils25.Fn)) {
+        if (value instanceof Utils26.SequelizeMethod && !(key !== void 0 && value instanceof Utils26.Fn)) {
           return this.handleSequelizeMethod(value);
         }
         if (key === void 0 && isArray) {
-          if (Utils25.canTreatArrayAsAnd(value)) {
+          if (Utils26.canTreatArrayAsAnd(value)) {
             key = Op2.and;
           } else {
             throw new Error("Support for literal replacements in the `where` object has been removed.");
@@ -163282,7 +162913,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(value)) {
           value = value.map((item) => {
             let itemQuery = this.whereItemsQuery(item, options2, this.OperatorMap[Op2.and]);
-            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils25.getComplexSize(item) > 1) {
+            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils26.getComplexSize(item) > 1) {
               itemQuery = `(${itemQuery})`;
             }
             return itemQuery;
@@ -163298,7 +162929,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _whereBind(binding, key, value, options2) {
         if (_4.isPlainObject(value)) {
-          value = Utils25.getComplexKeys(value).map((prop) => {
+          value = Utils26.getComplexKeys(value).map((prop) => {
             const item = value[prop];
             return this.whereItemQuery(key, { [prop]: item }, options2);
           });
@@ -163312,13 +162943,13 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         const items = [];
         let baseKey = this.quoteIdentifier(key);
         if (options2.prefix) {
-          if (options2.prefix instanceof Utils25.Literal) {
+          if (options2.prefix instanceof Utils26.Literal) {
             baseKey = `${this.handleSequelizeMethod(options2.prefix)}.${baseKey}`;
           } else {
             baseKey = `${this.quoteTable(options2.prefix)}.${baseKey}`;
           }
         }
-        Utils25.getOperators(value).forEach((op) => {
+        Utils26.getOperators(value).forEach((op) => {
           const where3 = {
             [op]: value[op]
           };
@@ -163330,17 +162961,17 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         const result2 = items.join(this.OperatorMap[Op2.and]);
         return items.length > 1 ? `(${result2})` : result2;
       }
-      _traverseJSON(items, baseKey, prop, item, path14) {
+      _traverseJSON(items, baseKey, prop, item, path15) {
         let cast2;
-        if (path14[path14.length - 1].includes("::")) {
-          const tmp = path14[path14.length - 1].split("::");
+        if (path15[path15.length - 1].includes("::")) {
+          const tmp = path15[path15.length - 1].split("::");
           cast2 = tmp[1];
-          path14[path14.length - 1] = tmp[0];
+          path15[path15.length - 1] = tmp[0];
           this._validateCastType(cast2);
         }
-        let pathKey = this.jsonPathExtractionQuery(baseKey, path14);
+        let pathKey = this.jsonPathExtractionQuery(baseKey, path15);
         if (_4.isPlainObject(item)) {
-          Utils25.getOperators(item).forEach((op) => {
+          Utils26.getOperators(item).forEach((op) => {
             const value = this._toJSONValue(item[op]);
             let isJson = false;
             if (typeof value === "string" && op === Op2.contains) {
@@ -163350,11 +162981,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
               } catch (e) {
               }
             }
-            pathKey = this.jsonPathExtractionQuery(baseKey, path14, isJson);
+            pathKey = this.jsonPathExtractionQuery(baseKey, path15, isJson);
             items.push(this.whereItemQuery(this._castKey(pathKey, value, cast2), { [op]: value }));
           });
           _4.forOwn(item, (value, itemProp) => {
-            this._traverseJSON(items, baseKey, itemProp, value, path14.concat([itemProp]));
+            this._traverseJSON(items, baseKey, itemProp, value, path15.concat([itemProp]));
           });
           return;
         }
@@ -163367,9 +162998,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       _castKey(key, value, cast2, json2) {
         cast2 = cast2 || this._getJsonCast(Array.isArray(value) ? value[0] : value);
         if (cast2) {
-          return new Utils25.Literal(this.handleSequelizeMethod(new Utils25.Cast(new Utils25.Literal(key), cast2, json2)));
+          return new Utils26.Literal(this.handleSequelizeMethod(new Utils26.Cast(new Utils26.Literal(key), cast2, json2)));
         }
-        return new Utils25.Literal(key);
+        return new Utils26.Literal(key);
       }
       _getJsonCast(value) {
         if (typeof value === "number") {
@@ -163399,11 +163030,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return [key, value].join(` ${comparator} `);
       }
       _getSafeKey(key, prefix) {
-        if (key instanceof Utils25.SequelizeMethod) {
+        if (key instanceof Utils26.SequelizeMethod) {
           key = this.handleSequelizeMethod(key);
           return this._prefixKey(this.handleSequelizeMethod(key), prefix);
         }
-        if (Utils25.isColString(key)) {
+        if (Utils26.isColString(key)) {
           key = key.substr(1, key.length - 2).split(".");
           if (key.length > 2) {
             key = [
@@ -163417,7 +163048,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _prefixKey(key, prefix) {
         if (prefix) {
-          if (prefix instanceof Utils25.Literal) {
+          if (prefix instanceof Utils26.Literal) {
             return [this.handleSequelizeMethod(prefix), key].join(".");
           }
           return [this.quoteTable(prefix), key].join(".");
@@ -163436,7 +163067,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         switch (prop) {
           case Op2.in:
           case Op2.notIn:
-            if (value instanceof Utils25.Literal) {
+            if (value instanceof Utils26.Literal) {
               return this._joinKeyValue(key, value.val, comparator, options2.prefix);
             }
             if (value.length) {
@@ -163472,7 +163103,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           case Op2.endsWith:
           case Op2.substring:
             comparator = this.OperatorMap[Op2.like];
-            if (value instanceof Utils25.Literal) {
+            if (value instanceof Utils26.Literal) {
               value = value.val;
             }
             let pattern = `${value}%`;
@@ -163518,7 +163149,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (prepend2 === void 0) {
           prepend2 = true;
         }
-        if (smth && smth instanceof Utils25.SequelizeMethod) {
+        if (smth && smth instanceof Utils26.SequelizeMethod) {
           return this.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
         if (_4.isPlainObject(smth)) {
@@ -163553,7 +163184,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(smth)) {
           if (smth.length === 0 || smth.length > 0 && smth[0].length === 0)
             return "1=1";
-          if (Utils25.canTreatArrayAsAnd(smth)) {
+          if (Utils26.canTreatArrayAsAnd(smth)) {
             const _smth = { [Op2.and]: smth };
             return this.getWhereConditions(_smth, tableName, factory, options2, prepend2);
           }
@@ -163567,13 +163198,13 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         throw new Error(`Unsupported where option value: ${util.inspect(smth)}. Please refer to the Sequelize documentation to learn more about which values are accepted as part of the where option.`);
       }
-      parseConditionObject(conditions, path14) {
-        path14 = path14 || [];
+      parseConditionObject(conditions, path15) {
+        path15 = path15 || [];
         return _4.reduce(conditions, (result2, value, key) => {
           if (_4.isObject(value)) {
-            return result2.concat(this.parseConditionObject(value, path14.concat(key)));
+            return result2.concat(this.parseConditionObject(value, path15.concat(key)));
           }
-          result2.push({ path: path14.concat(key), value });
+          result2.push({ path: path15.concat(key), value });
           return result2;
         }, []);
       }
@@ -163614,7 +163245,7 @@ var require_query_generator2 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -163649,7 +163280,7 @@ var require_query_generator2 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -163721,7 +163352,7 @@ var require_query_generator2 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -163756,7 +163387,7 @@ var require_query_generator2 = __commonJS({
         return `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = ${tableName} AND TABLE_SCHEMA = ${this.escape(this.sequelize.config.database)}`;
       }
       addColumnQuery(table, key, dataType) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -163770,7 +163401,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -163791,7 +163422,7 @@ var require_query_generator2 = __commonJS({
             attrString.push(`\`${attributeName}\` \`${attributeName}\` ${definition}`);
           }
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `CHANGE ${attrString.join(", ")}`,
@@ -163805,7 +163436,7 @@ var require_query_generator2 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`\`${attrBefore}\` \`${attrName}\` ${definition}`);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "CHANGE",
@@ -163814,7 +163445,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils25.Json) {
+        if (smth instanceof Utils26.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -163833,7 +163464,7 @@ var require_query_generator2 = __commonJS({
             }
             return str;
           }
-        } else if (smth instanceof Utils25.Cast) {
+        } else if (smth instanceof Utils26.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           } else if (smth.json && /boolean/i.test(smth.type)) {
@@ -163871,7 +163502,7 @@ var require_query_generator2 = __commonJS({
         return query + limit;
       }
       showIndexesQuery(tableName, options2) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           `SHOW INDEX FROM ${this.quoteTable(tableName)}`,
           options2 && options2.database && `FROM \`${options2.database}\``
         ]);
@@ -163879,7 +163510,7 @@ var require_query_generator2 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -163896,9 +163527,9 @@ var require_query_generator2 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -163919,7 +163550,7 @@ var require_query_generator2 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " auto_increment";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -164012,7 +163643,7 @@ var require_query_generator2 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -164025,7 +163656,7 @@ var require_query_generator2 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -164046,7 +163677,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -164055,11 +163686,11 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       quoteIdentifier(identifier2, force) {
-        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
+        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils25.addTicks(identifier2, "'");
+      return Utils26.addTicks(identifier2, "'");
     }
     module2.exports = MySQLQueryGenerator;
   }
@@ -164086,14 +163717,14 @@ var require_query_generator3 = __commonJS({
       return a;
     };
     var MySQLQueryGenerator = require_query_generator2();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var MariaDBQueryGenerator = class extends MySQLQueryGenerator {
       createSchema(schema, options2) {
         options2 = __spreadValues({
           charset: null,
           collate: null
         }, options2);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "CREATE SCHEMA IF NOT EXISTS",
           this.quoteIdentifier(schema),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -164115,7 +163746,7 @@ var require_query_generator3 = __commonJS({
             schemasToSkip.push(this.escape(schemaName));
           }
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT SCHEMA_NAME as schema_name",
           "FROM INFORMATION_SCHEMA.SCHEMATA",
           `WHERE SCHEMA_NAME NOT IN (${schemasToSkip.join(", ")})`,
@@ -164132,7 +163763,7 @@ var require_query_generator3 = __commonJS({
         return `${query};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
+        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = MariaDBQueryGenerator;
@@ -164784,7 +164415,7 @@ var require_query_generator4 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var DataTypes2 = require_data_types9();
     var TableHints2 = require_table_hints();
     var AbstractQueryGenerator = require_query_generator();
@@ -164942,7 +164573,7 @@ var require_query_generator4 = __commonJS({
           }
         }
         const quotedTableName = this.quoteTable(tableName);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           `IF OBJECT_ID('${quotedTableName}', 'U') IS NULL`,
           `CREATE TABLE ${quotedTableName} (${attributesClauseParts.join(", ")})`,
           ";",
@@ -165000,7 +164631,7 @@ var require_query_generator4 = __commonJS({
       }
       dropTableQuery(tableName) {
         const quoteTbl = this.quoteTable(tableName);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           `IF OBJECT_ID('${quoteTbl}', 'U') IS NOT NULL`,
           "DROP TABLE",
           quoteTbl,
@@ -165014,7 +164645,7 @@ var require_query_generator4 = __commonJS({
           commentStr = this.commentTemplate(dataType.comment, table, key);
           delete dataType["comment"];
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -165028,7 +164659,7 @@ var require_query_generator4 = __commonJS({
         return ` EXEC sp_addextendedproperty @name = N'MS_Description', @value = ${this.escape(comment)}, @level0type = N'Schema', @level0name = 'dbo', @level1type = N'Table', @level1name = ${this.quoteIdentifier(table)}, @level2type = N'Column', @level2name = ${this.quoteIdentifier(column)};`;
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -165054,7 +164685,7 @@ var require_query_generator4 = __commonJS({
             attrString.push(`${quotedAttrName} ${definition}`);
           }
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `ALTER COLUMN ${attrString.join(", ")}`,
@@ -165065,7 +164696,7 @@ var require_query_generator4 = __commonJS({
       }
       renameColumnQuery(tableName, attrBefore, attributes) {
         const newName = Object.keys(attributes)[0];
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "EXEC sp_rename",
           `'${this.quoteTable(tableName)}.${attrBefore}',`,
           `'${newName}',`,
@@ -165223,7 +164854,7 @@ var require_query_generator4 = __commonJS({
       deleteQuery(tableName, where3, options2 = {}, model) {
         const table = this.quoteTable(tableName);
         const whereClause = this.getWhereConditions(where3, null, model, options2);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "DELETE",
           options2.limit && `TOP(${this.escape(options2.limit)})`,
           "FROM",
@@ -165243,7 +164874,7 @@ var require_query_generator4 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifiers(indexName)} ON ${this.quoteIdentifiers(tableName)}`;
       }
@@ -165273,13 +164904,13 @@ var require_query_generator4 = __commonJS({
         template2 = attribute.type.toString();
         if (attribute.allowNull === false) {
           template2 += " NOT NULL";
-        } else if (!attribute.primaryKey && !Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        } else if (!attribute.primaryKey && !Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += " NULL";
         }
         if (attribute.autoIncrement) {
           template2 += " IDENTITY(1,1)";
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -165358,7 +164989,7 @@ var require_query_generator4 = __commonJS({
       }
       getForeignKeyQuery(table, attributeName) {
         const tableName = table.tableName || table;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           this._getForeignKeysQueryPrefix(),
           "WHERE",
           `TB.NAME =${wrapSingleQuote(tableName)}`,
@@ -165369,7 +165000,7 @@ var require_query_generator4 = __commonJS({
       }
       getPrimaryKeyConstraintQuery(table, attributeName) {
         const tableName = wrapSingleQuote(table.tableName || table);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT K.TABLE_NAME AS tableName,",
           "K.COLUMN_NAME AS columnName,",
           "K.CONSTRAINT_NAME AS constraintName",
@@ -165386,7 +165017,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -165395,7 +165026,7 @@ var require_query_generator4 = __commonJS({
       }
       getDefaultConstraintQuery(tableName, attributeName) {
         const quotedTable = this.quoteTable(tableName);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT name FROM sys.default_constraints",
           `WHERE PARENT_OBJECT_ID = OBJECT_ID('${quotedTable}', 'U')`,
           `AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = ('${attributeName}')`,
@@ -165404,7 +165035,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropConstraintQuery(tableName, constraintName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP CONSTRAINT",
@@ -165471,7 +165102,7 @@ var require_query_generator4 = __commonJS({
               const joinQueries = this.generateInclude(include, { externalAs: mainTableAs, internalAs: mainTableAs }, topLevelInfo);
               mainJoinQueries = mainJoinQueries.concat(joinQueries.mainQuery);
             }
-            return Utils25.joinSQLFragments([
+            return Utils26.joinSQLFragments([
               "SELECT TOP 100 PERCENT",
               attributes.join(", "),
               "FROM (",
@@ -165499,7 +165130,7 @@ var require_query_generator4 = __commonJS({
               `) AS ${tmpTable}`
             ]);
           }
-          return Utils25.joinSQLFragments([
+          return Utils26.joinSQLFragments([
             "SELECT TOP 100 PERCENT",
             attributes.join(", "),
             "FROM (",
@@ -165521,7 +165152,7 @@ var require_query_generator4 = __commonJS({
             `) AS ${tmpTable}`
           ]);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT",
           isSQLServer2008 && options2.limit && `TOP ${options2.limit}`,
           attributes.join(", "),
@@ -165549,17 +165180,17 @@ var require_query_generator4 = __commonJS({
             if (aliasedAttribute) {
               const modelName = this.quoteIdentifier(options2.tableAs || model.name);
               const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-              primaryKey = new Utils25.Col(alias || aliasedAttribute[1]);
+              primaryKey = new Utils26.Col(alias || aliasedAttribute[1]);
             }
             if (!options2.order || !options2.order.length) {
               fragment += ` ORDER BY ${tablePkFragment}`;
             } else {
               const orderFieldNames = (options2.order || []).map((order) => {
                 const value = Array.isArray(order) ? order[0] : order;
-                if (value instanceof Utils25.Col) {
+                if (value instanceof Utils26.Col) {
                   return value.col;
                 }
-                if (value instanceof Utils25.Literal) {
+                if (value instanceof Utils26.Literal) {
                   return value.val;
                 }
                 return value;
@@ -165588,7 +165219,7 @@ var require_query_generator4 = __commonJS({
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils25.addTicks(Utils25.removeTicks(identifier2, "'"), "'");
+      return Utils26.addTicks(Utils26.removeTicks(identifier2, "'"), "'");
     }
     module2.exports = MSSQLQueryGenerator;
   }
@@ -165615,7 +165246,7 @@ var require_query_interface3 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var QueryTypes2 = require_query_types();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
@@ -165647,7 +165278,7 @@ var require_query_interface3 = __commonJS({
         const model = options2.model;
         const wheres = [];
         options2 = __spreadValues({}, options2);
-        if (!Utils25.isWhereEmpty(where3)) {
+        if (!Utils26.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         let indexes = Object.values(model.uniqueKeys).map((item) => item.fields);
@@ -166362,7 +165993,7 @@ var require_query5 = __commonJS({
     var SequelizeErrors = require_errors4();
     var parserStore = require_parserStore()("oracle");
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var { logger } = require_logger3();
     var debug2 = logger.debugContext("sql:oracle");
     var OracleQuery = class extends AbstractQuery {
@@ -166822,7 +166453,7 @@ var require_query5 = __commonJS({
           const columns = {};
           columns.fields = acc[accKey].fields;
           if (acc[accKey].name.match(/sys_c[0-9]*/)) {
-            acc[accKey].name = Utils25.nameIndex(columns, acc[accKey].tableName).name;
+            acc[accKey].name = Utils26.nameIndex(columns, acc[accKey].tableName).name;
           }
           returnIndexes.push(acc[accKey]);
         }
@@ -166878,7 +166509,7 @@ var require_query_generator5 = __commonJS({
     __export2(exports2, {
       OracleQueryGenerator: () => OracleQueryGenerator
     });
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var _4 = require_lodash();
@@ -167101,12 +166732,12 @@ var require_query_generator5 = __commonJS({
             }
           });
         }
-        const query = Utils25.joinSQLFragments([
+        const query = Utils26.joinSQLFragments([
           "CREATE TABLE",
           values2.table,
           `(${values2.attributes})`
         ]);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "BEGIN",
           "EXECUTE IMMEDIATE",
           `${this.escape(query)};`,
@@ -167136,7 +166767,7 @@ var require_query_generator5 = __commonJS({
         ].join("");
       }
       renameTableQuery(before2, after2) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(before2),
           "RENAME TO",
@@ -167151,7 +166782,7 @@ var require_query_generator5 = __commonJS({
         return `SELECT owner as table_schema, table_name, 0 as lvl FROM all_tables where OWNER IN(SELECT USERNAME AS "schema_name" FROM ALL_USERS WHERE ORACLE_MAINTAINED = 'N')`;
       }
       dropTableQuery(tableName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "BEGIN ",
           "EXECUTE IMMEDIATE 'DROP TABLE",
           this.quoteTable(tableName),
@@ -167183,14 +166814,14 @@ var require_query_generator5 = __commonJS({
       }
       addColumnQuery(table, key, dataType) {
         dataType.field = key;
-        const attribute = Utils25.joinSQLFragments([
+        const attribute = Utils26.joinSQLFragments([
           this.quoteIdentifier(key),
           this.attributeToSQL(dataType, {
             attributeName: key,
             context: "addColumn"
           })
         ]);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -167198,7 +166829,7 @@ var require_query_generator5 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -167230,7 +166861,7 @@ var require_query_generator5 = __commonJS({
           attributeNameConstant,
           ";"
         ].join(" ");
-        const secondQuery = Utils25.joinSQLFragments([
+        const secondQuery = Utils26.joinSQLFragments([
           `ALTER TABLE ${this.quoteIdentifier(tableName)}`,
           "ADD FOREIGN KEY",
           `(${this.quoteIdentifier(attributeName)})`,
@@ -167251,7 +166882,7 @@ var require_query_generator5 = __commonJS({
       }
       _modifyQuery(definition, table, attributeName) {
         definition = definition.startsWith("BLOB") ? definition.replace("BLOB ", "") : definition;
-        const query = Utils25.joinSQLFragments([
+        const query = Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "MODIFY",
@@ -167394,7 +167025,7 @@ var require_query_generator5 = __commonJS({
           }
           insertColumns.push(this.quoteIdentifier(key));
         }
-        let query = Utils25.joinSQLFragments([
+        let query = Utils26.joinSQLFragments([
           "INSERT",
           "INTO",
           this.quoteTable(tableName),
@@ -167404,7 +167035,7 @@ var require_query_generator5 = __commonJS({
         ]);
         if (returnColumn.length > 0) {
           options2.outBindAttributes = outBindBindDefMap;
-          query = Utils25.joinSQLFragments([
+          query = Utils26.joinSQLFragments([
             query,
             "RETURNING",
             `${returnColumn.join(",")}`,
@@ -167453,7 +167084,7 @@ var require_query_generator5 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifier(indexName)}`;
       }
@@ -167476,7 +167107,7 @@ var require_query_generator5 = __commonJS({
           template2 += ` CHECK (${this.quoteIdentifier(options2.attributeName)} IS JSON)`;
           return template2;
         }
-        if (Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.allowNull === false) {
@@ -167505,13 +167136,13 @@ var require_query_generator5 = __commonJS({
             unsignedTemplate += ` check(${this.quoteIdentifier(options2.attributeName)} >= 0)`;
           }
           template2 = attribute.type.toString();
-          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
+          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
             template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
           }
           if (!attribute.autoIncrement) {
             if (attribute.allowNull === false) {
               template2 += " NOT NULL";
-            } else if (!attribute.primaryKey && !Utils25.defaultValueSchemable(attribute.defaultValue)) {
+            } else if (!attribute.primaryKey && !Utils26.defaultValueSchemable(attribute.defaultValue)) {
               template2 += " NULL";
             }
           }
@@ -167656,7 +167287,7 @@ var require_query_generator5 = __commonJS({
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
         let str;
-        if (smth instanceof Utils25.Json) {
+        if (smth instanceof Utils26.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -167675,8 +167306,8 @@ var require_query_generator5 = __commonJS({
             return str;
           }
         }
-        if (smth instanceof Utils25.Cast) {
-          if (smth.val instanceof Utils25.SequelizeMethod) {
+        if (smth instanceof Utils26.Cast) {
+          if (smth.val instanceof Utils26.SequelizeMethod) {
             str = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
             if (smth.type === "boolean") {
               str = `(CASE WHEN ${str}='true' THEN 1 ELSE 0 END)`;
@@ -167734,11 +167365,11 @@ var require_query_generator5 = __commonJS({
         }
         return hasJsonFunction;
       }
-      jsonPathExtractionQuery(column, path14) {
-        let paths = _4.toPath(path14);
+      jsonPathExtractionQuery(column, path15) {
+        let paths = _4.toPath(path15);
         const quotedColumn = this.isIdentifierQuoted(column) ? column : this.quoteIdentifier(column);
         paths = paths.map((subPath) => {
-          return /\D/.test(subPath) ? Utils25.addTicks(subPath, '"') : subPath;
+          return /\D/.test(subPath) ? Utils26.addTicks(subPath, '"') : subPath;
         });
         const pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
         return `json_value(${quotedColumn},${pathStr})`;
@@ -167770,12 +167401,12 @@ var require_query_generator5 = __commonJS({
       quoteIdentifier(identifier2, force = false) {
         const optForceQuote = force;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
         const regExp = /^(([\w][\w\d_]*))$/g;
         if (optForceQuote !== true && optQuoteIdentifiers === false && regExp.test(rawIdentifier) && !ORACLE_RESERVED_WORDS.includes(rawIdentifier.toUpperCase())) {
           return rawIdentifier;
         }
-        return Utils25.addTicks(rawIdentifier, '"');
+        return Utils26.addTicks(rawIdentifier, '"');
       }
       bindParam(bind, posOffset = 0) {
         return (value) => {
@@ -168537,7 +168168,7 @@ var require_query_generator6 = __commonJS({
         }
       return a;
     };
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var util = require("util");
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
@@ -168687,7 +168318,7 @@ var require_query_generator6 = __commonJS({
         return hasJsonFunction;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils25.Json) {
+        if (smth instanceof Utils26.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -168834,7 +168465,7 @@ var require_query_generator6 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes, options2) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return [
           "DROP INDEX",
@@ -168888,7 +168519,7 @@ var require_query_generator6 = __commonJS({
             sql += " SERIAL";
           }
         }
-        if (Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils26.defaultValueSchemable(attribute.defaultValue)) {
           sql += ` DEFAULT ${this.escape(attribute.defaultValue, attribute)}`;
         }
         if (attribute.unique === true) {
@@ -168998,7 +168629,7 @@ var require_query_generator6 = __commonJS({
         return `ALTER FUNCTION ${oldFunctionName}(${paramList}) RENAME TO ${newFunctionName};`;
       }
       pgEscapeAndQuote(val) {
-        return this.quoteIdentifier(Utils25.removeTicks(this.escape(val), "'"));
+        return this.quoteIdentifier(Utils26.removeTicks(this.escape(val), "'"));
       }
       _expandFunctionParamList(params) {
         if (params === void 0 || !Array.isArray(params)) {
@@ -169086,7 +168717,7 @@ var require_query_generator6 = __commonJS({
       pgEnumName(tableName, attr, options2) {
         options2 = options2 || {};
         const tableDetails = this.extractTableDetails(tableName, options2);
-        let enumName = Utils25.addTicks(Utils25.generateEnumName(tableDetails.tableName, attr), '"');
+        let enumName = Utils26.addTicks(Utils26.generateEnumName(tableDetails.tableName, attr), '"');
         if (options2.schema !== false && tableDetails.schema) {
           enumName = this.quoteIdentifier(tableDetails.schema) + tableDetails.delimiter + enumName;
         }
@@ -169182,9 +168813,9 @@ var require_query_generator6 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || POSTGRES_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils25.addTicks(rawIdentifier, '"');
+          return Utils26.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
@@ -169231,7 +168862,7 @@ var require_query_interface5 = __commonJS({
     var DataTypes2 = require_data_types9();
     var QueryTypes2 = require_query_types();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Deferrable2 = require_deferrable();
     var PostgresQueryInterface = class extends QueryInterface2 {
       async ensureEnums(tableName, attributes, options2, model) {
@@ -169325,7 +168956,7 @@ var require_query_interface5 = __commonJS({
         const query = this.queryGenerator.getForeignKeyReferencesQuery(table.tableName || table, this.sequelize.config.database, table.schema);
         const result2 = await this.sequelize.query(query, queryOptions);
         return result2.map((fkMeta) => {
-          const _a = Utils25.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
+          const _a = Utils26.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
           return __spreadProps(__spreadValues({}, remaining), {
             deferrable: isDeferrable === "NO" ? Deferrable2.NOT : initiallyDeferred === "NO" ? Deferrable2.INITIALLY_IMMEDIATE : Deferrable2.INITIALLY_DEFERRED
           });
@@ -169455,8 +169086,8 @@ var require_postgres = __commonJS({
 var require_connection_manager7 = __commonJS({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/dialects/sqlite/connection-manager.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var AbstractConnectionManager = require_connection_manager();
     var { logger } = require_logger3();
     var debug2 = logger.debugContext("connection:sqlite");
@@ -169500,7 +169131,7 @@ var require_connection_manager7 = __commonJS({
           return this.connections[options2.inMemory || options2.uuid];
         }
         if (!options2.inMemory && (options2.readWriteMode & this.lib.OPEN_CREATE) !== 0) {
-          fs11.mkdirSync(path14.dirname(options2.storage), { recursive: true });
+          fs12.mkdirSync(path15.dirname(options2.storage), { recursive: true });
         }
         const connection = await new Promise((resolve7, reject2) => {
           this.connections[options2.inMemory || options2.uuid] = new this.lib.Database(options2.storage, options2.readWriteMode, (err) => {
@@ -169539,7 +169170,7 @@ var require_query7 = __commonJS({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/dialects/sqlite/query.js"(exports2, module2) {
     "use strict";
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var AbstractQuery = require_query();
     var QueryTypes2 = require_query_types();
     var sequelizeErrors = require_errors4();
@@ -169793,10 +169424,10 @@ var require_query7 = __commonJS({
             }
             const referencesRegex = /REFERENCES.+\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
             const referenceConditions = constraintSql.match(referencesRegex)[0].split(" ");
-            referenceTableName = Utils25.removeTicks(referenceConditions[1]);
+            referenceTableName = Utils26.removeTicks(referenceConditions[1]);
             let columnNames = referenceConditions[2];
             columnNames = columnNames.replace(/\(|\)/g, "").split(", ");
-            referenceTableKeys = columnNames.map((column) => Utils25.removeTicks(column));
+            referenceTableKeys = columnNames.map((column) => Utils26.removeTicks(column));
           }
           const constraintCondition = constraintSql.match(/\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/)[0];
           constraintSql = constraintSql.replace(/\(.+\)/, "");
@@ -169805,7 +169436,7 @@ var require_query7 = __commonJS({
             constraint[1] += " KEY";
           }
           return {
-            constraintName: Utils25.removeTicks(constraint[0]),
+            constraintName: Utils26.removeTicks(constraint[0]),
             constraintType: constraint[1],
             updateAction,
             deleteAction,
@@ -169926,7 +169557,7 @@ var require_query_generator7 = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Transaction2 = require_transaction();
     var _4 = require_lodash();
     var MySqlQueryGenerator = require_query_generator2();
@@ -170040,10 +169671,10 @@ var require_query_generator7 = __commonJS({
         return value;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils25.Json) {
+        if (smth instanceof Utils26.Json) {
           return super.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
-        if (smth instanceof Utils25.Cast) {
+        if (smth instanceof Utils26.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           }
@@ -170064,7 +169695,7 @@ var require_query_generator7 = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -170079,7 +169710,7 @@ var require_query_generator7 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -170097,7 +169728,7 @@ var require_query_generator7 = __commonJS({
       truncateTableQuery(tableName, options2 = {}) {
         return [
           `DELETE FROM ${this.quoteTable(tableName)}`,
-          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils25.addTicks(Utils25.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
+          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils26.addTicks(Utils26.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
         ].join("");
       }
       deleteQuery(tableName, where3, options2 = {}, model) {
@@ -170121,7 +169752,7 @@ var require_query_generator7 = __commonJS({
             if (Object.prototype.hasOwnProperty.call(dataType, "allowNull") && !dataType.allowNull) {
               sql += " NOT NULL";
             }
-            if (Utils25.defaultValueSchemable(dataType.defaultValue)) {
+            if (Utils26.defaultValueSchemable(dataType.defaultValue)) {
               sql += ` DEFAULT ${this.escape(dataType.defaultValue, dataType)}`;
             }
             if (dataType.unique === true) {
@@ -170169,7 +169800,7 @@ var require_query_generator7 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX IF EXISTS ${this.quoteIdentifier(indexName)}`;
       }
@@ -170263,7 +169894,7 @@ var require_query_generator7 = __commonJS({
         return `SELECT name FROM sqlite_master WHERE type='table' AND name=${this.escape(this.addSchema(tableName))};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
+        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = SQLiteQueryGenerator;
@@ -171062,7 +170693,7 @@ var require_query_generator8 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var randomBytes = require("crypto").randomBytes;
@@ -171350,7 +170981,7 @@ var require_query_generator8 = __commonJS({
           sql.query = `SELECT * FROM FINAL TABLE (${sql.query});`;
           return sql;
         }
-        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -171365,7 +170996,7 @@ var require_query_generator8 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -171508,7 +171139,7 @@ var require_query_generator8 = __commonJS({
         const sql = "DROP INDEX <%= indexName %>";
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         const values2 = {
           tableName: this.quoteIdentifiers(tableName),
@@ -171547,7 +171178,7 @@ var require_query_generator8 = __commonJS({
           }
           template2 += ` GENERATED BY DEFAULT AS IDENTITY(START WITH ${initialValue}, INCREMENT BY 1)`;
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -171727,7 +171358,7 @@ var require_query_generator8 = __commonJS({
         for (const key in rawAttributes) {
           if (rawAttributes[key].unique && dataValues[key] === void 0) {
             if (rawAttributes[key].type instanceof DataTypes2.DATE) {
-              dataValues[key] = Utils25.now("db2");
+              dataValues[key] = Utils26.now("db2");
             } else if (rawAttributes[key].type instanceof DataTypes2.STRING) {
               dataValues[key] = `unique${uniqno++}`;
             } else if (rawAttributes[key].type instanceof DataTypes2.INTEGER) {
@@ -171740,7 +171371,7 @@ var require_query_generator8 = __commonJS({
         return uniqno;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils25.addTicks(Utils25.removeTicks(identifier2, '"'), '"');
+        return Utils26.addTicks(Utils26.removeTicks(identifier2, '"'), '"');
       }
     };
     function wrapSingleQuote(identifier2) {
@@ -171777,7 +171408,7 @@ var require_query_interface7 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
     var QueryTypes2 = require_query_types();
@@ -171797,7 +171428,7 @@ var require_query_interface7 = __commonJS({
         let indexes = [];
         let indexFields;
         options2 = _4.clone(options2);
-        if (!Utils25.isWhereEmpty(where3)) {
+        if (!Utils26.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         indexes = _4.map(model.uniqueKeys, (value) => {
@@ -172353,7 +171984,7 @@ var require_query_generator9 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -172389,7 +172020,7 @@ var require_query_generator9 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -172460,7 +172091,7 @@ var require_query_generator9 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -172480,7 +172111,7 @@ var require_query_generator9 = __commonJS({
         return `SHOW FULL COLUMNS FROM ${table};`;
       }
       showTablesQuery(database) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           database ? `AND TABLE_SCHEMA = ${this.escape(database)}` : "AND TABLE_SCHEMA NOT IN ( 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA', 'SYS')",
           ";"
@@ -172489,7 +172120,7 @@ var require_query_generator9 = __commonJS({
       tableExistsQuery(table) {
         const tableName = table.tableName || table;
         const schema = table.schema;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           `AND TABLE_SCHEMA = ${schema !== void 0 ? this.escape(schema) : "CURRENT_SCHEMA()"}`,
           `AND TABLE_NAME = ${this.escape(tableName)}`,
@@ -172497,7 +172128,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       addColumnQuery(table, key, dataType) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -172511,7 +172142,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -172520,7 +172151,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       changeColumnQuery(tableName, attributes) {
-        const query = (...subQuerys) => Utils25.joinSQLFragments([
+        const query = (...subQuerys) => Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "ALTER COLUMN",
@@ -172563,7 +172194,7 @@ var require_query_generator9 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`'${attrBefore}' '${attrName}' ${definition}`);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "RENAME COLUMN",
@@ -172572,7 +172203,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       handleSequelizeMethod(attr, tableName, factory, options2, prepend2) {
-        if (attr instanceof Utils25.Json) {
+        if (attr instanceof Utils26.Json) {
           if (attr.conditions) {
             const conditions = this.parseConditionObject(attr.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -172591,7 +172222,7 @@ var require_query_generator9 = __commonJS({
             }
             return str;
           }
-        } else if (attr instanceof Utils25.Cast) {
+        } else if (attr instanceof Utils26.Cast) {
           if (/timestamp/i.test(attr.type)) {
             attr.type = "datetime";
           } else if (attr.json && /boolean/i.test(attr.type)) {
@@ -172605,7 +172236,7 @@ var require_query_generator9 = __commonJS({
         return super.handleSequelizeMethod(attr, tableName, factory, options2, prepend2);
       }
       truncateTableQuery(tableName) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "TRUNCATE",
           this.quoteTable(tableName)
         ]);
@@ -172626,7 +172257,7 @@ var require_query_generator9 = __commonJS({
           const pks = Object.values(model.primaryKeys).map((pk) => this.quoteIdentifier(pk.field)).join(",");
           primaryKeys = model.primaryKeyAttributes.length > 1 ? `(${pks})` : pks;
           primaryKeysSelection = pks;
-          return Utils25.joinSQLFragments([
+          return Utils26.joinSQLFragments([
             "DELETE FROM",
             table,
             "WHERE",
@@ -172641,7 +172272,7 @@ var require_query_generator9 = __commonJS({
             ";"
           ]);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "DELETE FROM",
           table,
           whereClause,
@@ -172654,7 +172285,7 @@ var require_query_generator9 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -172671,9 +172302,9 @@ var require_query_generator9 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -172695,7 +172326,7 @@ var require_query_generator9 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " AUTOINCREMENT";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -172806,7 +172437,7 @@ var require_query_generator9 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -172819,7 +172450,7 @@ var require_query_generator9 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -172840,7 +172471,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils25.joinSQLFragments([
+        return Utils26.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -172860,15 +172491,15 @@ var require_query_generator9 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || SNOWFLAKE_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils25.addTicks(rawIdentifier, '"');
+          return Utils26.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils25.addTicks(identifier2, "'");
+      return Utils26.addTicks(identifier2, "'");
     }
     module2.exports = SnowflakeQueryGenerator;
   }
@@ -173353,11 +172984,11 @@ var require_sequelize = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var url6 = require("url");
-    var path14 = require("path");
+    var path15 = require("path");
     var pgConnectionString = require_pg_connection_string();
     var retry = require_dist3().default;
     var _4 = require_lodash();
-    var Utils25 = require_utils6();
+    var Utils26 = require_utils6();
     var Model14 = require_model2();
     var DataTypes2 = require_data_types9();
     var Deferrable2 = require_deferrable();
@@ -173392,8 +173023,8 @@ var require_sequelize = __commonJS({
           options2.dialect = urlParts.protocol.replace(/:$/, "");
           options2.host = urlParts.hostname;
           if (options2.dialect === "sqlite" && urlParts.pathname && !urlParts.pathname.startsWith("/:memory")) {
-            const storagePath = path14.join(options2.host, urlParts.pathname);
-            options2.storage = path14.resolve(options2.storage || storagePath);
+            const storagePath = path15.join(options2.host, urlParts.pathname);
+            options2.storage = path15.resolve(options2.storage || storagePath);
           }
           if (urlParts.pathname) {
             config.database = urlParts.pathname.replace(/^\//, "");
@@ -173801,16 +173432,16 @@ var require_sequelize = __commonJS({
         return this.fn("RAND");
       }
       static fn(fn2, ...args) {
-        return new Utils25.Fn(fn2, args);
+        return new Utils26.Fn(fn2, args);
       }
       static col(col2) {
-        return new Utils25.Col(col2);
+        return new Utils26.Col(col2);
       }
       static cast(val, type2) {
-        return new Utils25.Cast(val, type2);
+        return new Utils26.Cast(val, type2);
       }
       static literal(val) {
-        return new Utils25.Literal(val);
+        return new Utils26.Literal(val);
       }
       static and(...args) {
         return { [Op2.and]: args };
@@ -173819,10 +173450,10 @@ var require_sequelize = __commonJS({
         return { [Op2.or]: args };
       }
       static json(conditionsOrPath, value) {
-        return new Utils25.Json(conditionsOrPath, value);
+        return new Utils26.Json(conditionsOrPath, value);
       }
       static where(attr, comparator, logic) {
-        return new Utils25.Where(attr, comparator, logic);
+        return new Utils26.Where(attr, comparator, logic);
       }
       async transaction(options2, autoCallback) {
         if (typeof options2 === "function") {
@@ -173946,7 +173577,7 @@ var require_sequelize = __commonJS({
       }
     });
     Sequelize2.options = { hooks: {} };
-    Sequelize2.Utils = Utils25;
+    Sequelize2.Utils = Utils26;
     Sequelize2.Op = Op2;
     Sequelize2.TableHints = TableHints2;
     Sequelize2.IndexHints = IndexHints2;
@@ -173966,7 +173597,7 @@ var require_sequelize = __commonJS({
     }
     Sequelize2.Deferrable = Deferrable2;
     Sequelize2.prototype.Association = Sequelize2.Association = Association2;
-    Sequelize2.useInflection = Utils25.useInflection;
+    Sequelize2.useInflection = Utils26.useInflection;
     Hooks.applyTo(Sequelize2);
     Hooks.applyTo(Sequelize2.prototype);
     Sequelize2.Error = sequelizeErrors.BaseError;
@@ -174263,11 +173894,11 @@ var init_opts_arg = __esm({
       const resolved = opts;
       const optsFs = opts.fs || {};
       opts.mkdir = opts.mkdir || optsFs.mkdir || import_fs.mkdir;
-      opts.mkdirAsync = opts.mkdirAsync ? opts.mkdirAsync : async (path14, options2) => {
-        return new Promise((res, rej) => resolved.mkdir(path14, options2, (er, made) => er ? rej(er) : res(made)));
+      opts.mkdirAsync = opts.mkdirAsync ? opts.mkdirAsync : async (path15, options2) => {
+        return new Promise((res, rej) => resolved.mkdir(path15, options2, (er, made) => er ? rej(er) : res(made)));
       };
       opts.stat = opts.stat || optsFs.stat || import_fs.stat;
-      opts.statAsync = opts.statAsync ? opts.statAsync : async (path14) => new Promise((res, rej) => resolved.stat(path14, (err, stats) => err ? rej(err) : res(stats)));
+      opts.statAsync = opts.statAsync ? opts.statAsync : async (path15) => new Promise((res, rej) => resolved.stat(path15, (err, stats) => err ? rej(err) : res(stats)));
       opts.statSync = opts.statSync || optsFs.statSync || import_fs.statSync;
       opts.mkdirSync = opts.mkdirSync || optsFs.mkdirSync || import_fs.mkdirSync;
       return resolved;
@@ -174281,12 +173912,12 @@ var init_mkdirp_manual = __esm({
   "../../node_modules/.pnpm/mkdirp@3.0.1/node_modules/mkdirp/dist/mjs/mkdirp-manual.js"() {
     import_path = require("path");
     init_opts_arg();
-    mkdirpManualSync = (path14, options2, made) => {
-      const parent = (0, import_path.dirname)(path14);
+    mkdirpManualSync = (path15, options2, made) => {
+      const parent = (0, import_path.dirname)(path15);
       const opts = { ...optsArg(options2), recursive: false };
-      if (parent === path14) {
+      if (parent === path15) {
         try {
-          return opts.mkdirSync(path14, opts);
+          return opts.mkdirSync(path15, opts);
         } catch (er) {
           const fer = er;
           if (fer && fer.code !== "EISDIR") {
@@ -174296,45 +173927,45 @@ var init_mkdirp_manual = __esm({
         }
       }
       try {
-        opts.mkdirSync(path14, opts);
-        return made || path14;
+        opts.mkdirSync(path15, opts);
+        return made || path15;
       } catch (er) {
         const fer = er;
         if (fer && fer.code === "ENOENT") {
-          return mkdirpManualSync(path14, opts, mkdirpManualSync(parent, opts, made));
+          return mkdirpManualSync(path15, opts, mkdirpManualSync(parent, opts, made));
         }
         if (fer && fer.code !== "EEXIST" && fer && fer.code !== "EROFS") {
           throw er;
         }
         try {
-          if (!opts.statSync(path14).isDirectory())
+          if (!opts.statSync(path15).isDirectory())
             throw er;
         } catch (_4) {
           throw er;
         }
       }
     };
-    mkdirpManual = Object.assign(async (path14, options2, made) => {
+    mkdirpManual = Object.assign(async (path15, options2, made) => {
       const opts = optsArg(options2);
       opts.recursive = false;
-      const parent = (0, import_path.dirname)(path14);
-      if (parent === path14) {
-        return opts.mkdirAsync(path14, opts).catch((er) => {
+      const parent = (0, import_path.dirname)(path15);
+      if (parent === path15) {
+        return opts.mkdirAsync(path15, opts).catch((er) => {
           const fer = er;
           if (fer && fer.code !== "EISDIR") {
             throw er;
           }
         });
       }
-      return opts.mkdirAsync(path14, opts).then(() => made || path14, async (er) => {
+      return opts.mkdirAsync(path15, opts).then(() => made || path15, async (er) => {
         const fer = er;
         if (fer && fer.code === "ENOENT") {
-          return mkdirpManual(parent, opts).then((made2) => mkdirpManual(path14, opts, made2));
+          return mkdirpManual(parent, opts).then((made2) => mkdirpManual(path15, opts, made2));
         }
         if (fer && fer.code !== "EEXIST" && fer.code !== "EROFS") {
           throw er;
         }
-        return opts.statAsync(path14).then((st2) => {
+        return opts.statAsync(path15).then((st2) => {
           if (st2.isDirectory()) {
             return made;
           } else {
@@ -174353,12 +173984,12 @@ var import_path2, findMade, findMadeSync;
 var init_find_made = __esm({
   "../../node_modules/.pnpm/mkdirp@3.0.1/node_modules/mkdirp/dist/mjs/find-made.js"() {
     import_path2 = require("path");
-    findMade = async (opts, parent, path14) => {
-      if (path14 === parent) {
+    findMade = async (opts, parent, path15) => {
+      if (path15 === parent) {
         return;
       }
       return opts.statAsync(parent).then(
-        (st2) => st2.isDirectory() ? path14 : void 0,
+        (st2) => st2.isDirectory() ? path15 : void 0,
         // will fail later
         // will fail later
         (er) => {
@@ -174367,12 +173998,12 @@ var init_find_made = __esm({
         }
       );
     };
-    findMadeSync = (opts, parent, path14) => {
-      if (path14 === parent) {
+    findMadeSync = (opts, parent, path15) => {
+      if (path15 === parent) {
         return void 0;
       }
       try {
-        return opts.statSync(parent).isDirectory() ? path14 : void 0;
+        return opts.statSync(parent).isDirectory() ? path15 : void 0;
       } catch (er) {
         const fer = er;
         return fer && fer.code === "ENOENT" ? findMadeSync(opts, (0, import_path2.dirname)(parent), parent) : void 0;
@@ -174389,36 +174020,36 @@ var init_mkdirp_native = __esm({
     init_find_made();
     init_mkdirp_manual();
     init_opts_arg();
-    mkdirpNativeSync = (path14, options2) => {
+    mkdirpNativeSync = (path15, options2) => {
       const opts = optsArg(options2);
       opts.recursive = true;
-      const parent = (0, import_path3.dirname)(path14);
-      if (parent === path14) {
-        return opts.mkdirSync(path14, opts);
+      const parent = (0, import_path3.dirname)(path15);
+      if (parent === path15) {
+        return opts.mkdirSync(path15, opts);
       }
-      const made = findMadeSync(opts, path14);
+      const made = findMadeSync(opts, path15);
       try {
-        opts.mkdirSync(path14, opts);
+        opts.mkdirSync(path15, opts);
         return made;
       } catch (er) {
         const fer = er;
         if (fer && fer.code === "ENOENT") {
-          return mkdirpManualSync(path14, opts);
+          return mkdirpManualSync(path15, opts);
         } else {
           throw er;
         }
       }
     };
-    mkdirpNative = Object.assign(async (path14, options2) => {
+    mkdirpNative = Object.assign(async (path15, options2) => {
       const opts = { ...optsArg(options2), recursive: true };
-      const parent = (0, import_path3.dirname)(path14);
-      if (parent === path14) {
-        return await opts.mkdirAsync(path14, opts);
+      const parent = (0, import_path3.dirname)(path15);
+      if (parent === path15) {
+        return await opts.mkdirAsync(path15, opts);
       }
-      return findMade(opts, path14).then((made) => opts.mkdirAsync(path14, opts).then((m) => made || m).catch((er) => {
+      return findMade(opts, path15).then((made) => opts.mkdirAsync(path15, opts).then((m) => made || m).catch((er) => {
         const fer = er;
         if (fer && fer.code === "ENOENT") {
-          return mkdirpManual(path14, opts);
+          return mkdirpManual(path15, opts);
         } else {
           throw er;
         }
@@ -174433,25 +174064,25 @@ var init_path_arg = __esm({
   "../../node_modules/.pnpm/mkdirp@3.0.1/node_modules/mkdirp/dist/mjs/path-arg.js"() {
     import_path4 = require("path");
     platform = process.env.__TESTING_MKDIRP_PLATFORM__ || process.platform;
-    pathArg = (path14) => {
-      if (/\0/.test(path14)) {
+    pathArg = (path15) => {
+      if (/\0/.test(path15)) {
         throw Object.assign(new TypeError("path must be a string without null bytes"), {
-          path: path14,
+          path: path15,
           code: "ERR_INVALID_ARG_VALUE"
         });
       }
-      path14 = (0, import_path4.resolve)(path14);
+      path15 = (0, import_path4.resolve)(path15);
       if (platform === "win32") {
         const badWinChars = /[*|"<>?:]/;
-        const { root: root2 } = (0, import_path4.parse)(path14);
-        if (badWinChars.test(path14.substring(root2.length))) {
+        const { root: root2 } = (0, import_path4.parse)(path15);
+        if (badWinChars.test(path15.substring(root2.length))) {
           throw Object.assign(new Error("Illegal characters in path."), {
-            path: path14,
+            path: path15,
             code: "EINVAL"
           });
         }
       }
-      return path14;
+      return path15;
     };
   }
 });
@@ -174484,15 +174115,15 @@ var init_mjs = __esm({
     init_mkdirp_manual();
     init_mkdirp_native();
     init_use_native();
-    mkdirpSync = (path14, opts) => {
-      path14 = pathArg(path14);
+    mkdirpSync = (path15, opts) => {
+      path15 = pathArg(path15);
       const resolved = optsArg(opts);
-      return useNativeSync(resolved) ? mkdirpNativeSync(path14, resolved) : mkdirpManualSync(path14, resolved);
+      return useNativeSync(resolved) ? mkdirpNativeSync(path15, resolved) : mkdirpManualSync(path15, resolved);
     };
-    mkdirp = Object.assign(async (path14, opts) => {
-      path14 = pathArg(path14);
+    mkdirp = Object.assign(async (path15, opts) => {
+      path15 = pathArg(path15);
       const resolved = optsArg(opts);
-      return useNative(resolved) ? mkdirpNative(path14, resolved) : mkdirpManual(path14, resolved);
+      return useNative(resolved) ? mkdirpNative(path15, resolved) : mkdirpManual(path15, resolved);
     }, {
       mkdirpSync,
       mkdirpNative,
@@ -174518,7 +174149,7 @@ __export(message_body_utils_exports, {
   writeBody: () => writeBody
 });
 function baseMessagePath() {
-  return import_node_path4.default.join(process.env.NYLAS_HOME, "messages");
+  return import_node_path5.default.join(process.env.NYLAS_HOME, "messages");
 }
 function tryReadBody(val) {
   try {
@@ -174540,8 +174171,8 @@ function pathForBodyFile(msgId) {
     pathGroups.push(remainingId.substring(0, 2));
     remainingId = remainingId.substring(2);
   }
-  const bodyPath = import_node_path4.default.join(...pathGroups);
-  return import_node_path4.default.join(
+  const bodyPath = import_node_path5.default.join(...pathGroups);
+  return import_node_path5.default.join(
     baseMessagePath(),
     bodyPath,
     `${remainingId}.${FILE_EXTENSION}`
@@ -174549,7 +174180,7 @@ function pathForBodyFile(msgId) {
 }
 function writeBody({ msgId, body } = {}) {
   const bodyPath = pathForBodyFile(msgId);
-  const bodyDir = import_node_path4.default.dirname(bodyPath);
+  const bodyDir = import_node_path5.default.dirname(bodyPath);
   const compressedBody = import_node_zlib.default.gzipSync(body);
   const dbEntry = {
     path: bodyPath,
@@ -174574,12 +174205,12 @@ function writeBody({ msgId, body } = {}) {
     return body;
   }
 }
-var import_node_fs2, import_node_path4, import_node_zlib, MAX_PATH_DIRS, FILE_EXTENSION;
+var import_node_fs2, import_node_path5, import_node_zlib, MAX_PATH_DIRS, FILE_EXTENSION;
 var init_message_body_utils = __esm({
   "../isomorphic-core/src/message-body-utils.js"() {
     import_node_fs2 = __toESM(require("fs"), 1);
     init_mjs();
-    import_node_path4 = __toESM(require("path"), 1);
+    import_node_path5 = __toESM(require("path"), 1);
     import_node_zlib = __toESM(require("zlib"), 1);
     MAX_PATH_DIRS = 5;
     FILE_EXTENSION = "nylasmail";
@@ -185896,11 +185527,11 @@ var require_explain = __commonJS({
 var require_backup = __commonJS({
   "../../node_modules/.pnpm/better-sqlite3@13.0.3/node_modules/better-sqlite3/lib/methods/backup.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var { promisify: promisify5 } = require("util");
     var { cppdb } = require_util4();
-    var fsAccess = promisify5(fs11.access);
+    var fsAccess = promisify5(fs12.access);
     module2.exports = async function backup(filename, options2) {
       if (options2 == null) options2 = {};
       if (typeof filename !== "string") throw new TypeError("Expected first argument to be a string");
@@ -185913,7 +185544,7 @@ var require_backup = __commonJS({
       if (typeof attachedName !== "string") throw new TypeError('Expected the "attached" option to be a string');
       if (!attachedName) throw new TypeError('The "attached" option cannot be an empty string');
       if (handler != null && typeof handler !== "function") throw new TypeError('Expected the "progress" option to be a function');
-      await fsAccess(path14.dirname(filename)).catch(() => {
+      await fsAccess(path15.dirname(filename)).catch(() => {
         throw new TypeError("Cannot save backup because the directory does not exist");
       });
       const isNewFile = await fsAccess(filename).then(() => false, () => true);
@@ -186224,8 +185855,8 @@ var require_inspect = __commonJS({
 var require_database = __commonJS({
   "../../node_modules/.pnpm/better-sqlite3@13.0.3/node_modules/better-sqlite3/lib/database.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var util = require_util4();
     var SqliteError = require_sqlite_error();
     module2.exports = function createDatabase(getAddon, allowNativeBinding) {
@@ -186262,7 +185893,7 @@ var require_database = __commonJS({
           addon.initialize(SqliteError, arrayFactory, arrayAppender, rowFactory, recordFactory);
           addon.isInitialized = true;
         }
-        if (!anonymous && !filename.startsWith("file:") && !fs11.existsSync(path14.dirname(filename))) {
+        if (!anonymous && !filename.startsWith("file:") && !fs12.existsSync(path15.dirname(filename))) {
           throw new TypeError("Cannot open database because the directory does not exist");
         }
         Object.defineProperties(this, {
@@ -186319,15 +185950,15 @@ var require_database = __commonJS({
 var require_binding = __commonJS({
   "../../node_modules/.pnpm/better-sqlite3@13.0.3/node_modules/better-sqlite3/lib/binding.js"(exports2, module2) {
     "use strict";
-    var fs11 = require("fs");
-    var path14 = require("path");
+    var fs12 = require("fs");
+    var path15 = require("path");
     var PREBUILD_PLATFORMS = ["linux", "darwin", "win32"];
     var PREBUILD_ARCHS = ["x64", "arm64"];
     var DEFAULT_ADDON;
     function getBinding(nativeBinding) {
       if (typeof nativeBinding === "string") {
         const requireFunc = typeof __non_webpack_require__ === "function" ? __non_webpack_require__ : require;
-        return requireFunc(path14.resolve(nativeBinding).replace(/(\.node)?$/, ".node"));
+        return requireFunc(path15.resolve(nativeBinding).replace(/(\.node)?$/, ".node"));
       }
       if (typeof nativeBinding === "object" && nativeBinding !== null) {
         return nativeBinding;
@@ -186339,17 +185970,17 @@ var require_binding = __commonJS({
       if (filename) {
         return DEFAULT_ADDON = require(filename);
       }
-      filename = path14.join(__dirname, "..", "build", "Debug", "better_sqlite3.node");
-      if (!fs11.existsSync(filename)) {
-        filename = path14.join(__dirname, "..", "build", "Release", "better_sqlite3.node");
+      filename = path15.join(__dirname, "..", "build", "Debug", "better_sqlite3.node");
+      if (!fs12.existsSync(filename)) {
+        filename = path15.join(__dirname, "..", "build", "Release", "better_sqlite3.node");
       }
       return DEFAULT_ADDON = require(filename);
     }
     function getPrebuildPath() {
       if (PREBUILD_PLATFORMS.includes(process.platform) && PREBUILD_ARCHS.includes(process.arch)) {
         const target = `${isLinuxMusl() ? "linuxmusl" : process.platform}-${process.arch}`;
-        const filename = path14.join(__dirname, "..", "prebuilds", `${target}.node`);
-        if (fs11.existsSync(filename)) {
+        const filename = path15.join(__dirname, "..", "prebuilds", `${target}.node`);
+        if (fs12.existsSync(filename)) {
           return filename;
         }
       }
@@ -186408,23 +186039,23 @@ async function openDatabase(dbPath) {
   }
 }
 function databasePath(configDirPath, specMode = false) {
-  let dbPath = import_node_path5.default.join(configDirPath, "edgehill.db");
+  let dbPath = import_node_path6.default.join(configDirPath, "edgehill.db");
   if (specMode) {
-    dbPath = import_node_path5.default.join(configDirPath, "edgehill.test.db");
+    dbPath = import_node_path6.default.join(configDirPath, "edgehill.test.db");
   }
   return dbPath;
 }
-var import_node_module7, import_node_path5, import_better_sqlite3, import_meta8, nodeRequire8, app, errorLogger;
+var import_node_module7, import_node_path6, import_better_sqlite3, import_meta8, nodeRequire8, app, errorLogger;
 var init_database_helpers = __esm({
   "src/database-helpers.js"() {
     import_node_module7 = require("module");
-    import_node_path5 = __toESM(require("path"));
+    import_node_path6 = __toESM(require("path"));
     import_better_sqlite3 = __toESM(require_lib12());
     import_meta8 = {};
     nodeRequire8 = typeof import_meta8.url === "string" && import_meta8.url.startsWith("file:") ? (0, import_node_module7.createRequire)(import_meta8.url) : require;
     if (process.type === "renderer") {
-      const remote9 = nodeRequire8("@electron/remote");
-      app = remote9.getGlobal("application");
+      const remote10 = nodeRequire8("@electron/remote");
+      app = remote10.getGlobal("application");
       errorLogger = new Proxy(
         {},
         {
@@ -186504,11 +186135,11 @@ var database_store_exports = {};
 __export(database_store_exports, {
   default: () => database_store_default
 });
-var import_node_module8, import_node_path6, import_debug, import_node_child_process2, import_promise_queue, import_electron, import_remote3, import_nylas_store, import_utils7, import_meta9, nodeRequire9, debug, debugVerbose, DatabaseVersion, DatabasePhase, DEBUG_QUERY_PLANS, BASE_RETRY_LOCK_DELAY, MAX_RETRY_LOCK_DELAY, JSONBlob2, DatabaseStore2, database_store_default;
+var import_node_module8, import_node_path7, import_debug, import_node_child_process2, import_promise_queue, import_electron, import_remote3, import_nylas_store, import_utils7, import_meta9, nodeRequire9, debug, debugVerbose, DatabaseVersion, DatabasePhase, DEBUG_QUERY_PLANS, BASE_RETRY_LOCK_DELAY, MAX_RETRY_LOCK_DELAY, JSONBlob2, DatabaseStore2, database_store_default;
 var init_database_store = __esm({
   "src/flux/stores/database-store.js"() {
     import_node_module8 = require("module");
-    import_node_path6 = __toESM(require("path"));
+    import_node_path7 = __toESM(require("path"));
     import_debug = __toESM(require_src2());
     import_node_child_process2 = __toESM(require("child_process"));
     import_promise_queue = __toESM(require_promise_queue());
@@ -186830,7 +186461,7 @@ var init_database_store = __esm({
         if (!this._agent) {
           this._agentOpenQueries = {};
           this._agent = import_node_child_process2.default.fork(
-            import_node_path6.default.join(import_node_path6.default.dirname(__filename), "database-agent.js"),
+            import_node_path7.default.join(import_node_path7.default.dirname(__filename), "database-agent.js"),
             [],
             {
               silent: true
@@ -187244,7 +186875,7 @@ var account_store_exports = {};
 __export(account_store_exports, {
   default: () => account_store_default
 });
-var import_node_module9, import_nylas_store2, import_actions, import_utils8, import_fs_plus, import_node_path7, import_meta10, nodeRequire10, configAccountsKey, configVersionKey, AccountStore, account_store_default;
+var import_node_module9, import_nylas_store2, import_actions, import_utils8, import_fs_plus2, import_node_path8, import_meta10, nodeRequire10, configAccountsKey, configVersionKey, AccountStore, account_store_default;
 var init_account_store = __esm({
   "src/flux/stores/account-store.js"() {
     import_node_module9 = require("module");
@@ -187255,8 +186886,8 @@ var init_account_store = __esm({
     init_account();
     import_utils8 = __toESM(require_utils());
     init_database_store();
-    import_fs_plus = __toESM(require_fs_plus());
-    import_node_path7 = __toESM(require("path"));
+    import_fs_plus2 = __toESM(require_fs_plus());
+    import_node_path8 = __toESM(require("path"));
     import_meta10 = {};
     nodeRequire10 = typeof import_meta10.url === "string" && import_meta10.url.startsWith("file:") ? (0, import_node_module9.createRequire)(import_meta10.url) : require;
     configAccountsKey = "nylas.accounts";
@@ -187613,9 +187244,9 @@ ${message}`
           json2.token = "nope";
           this.addAccountFromJSON(json2);
         }
-        const filenames = import_fs_plus.default.readdirSync(import_node_path7.default.join(dir, "threads"));
+        const filenames = import_fs_plus2.default.readdirSync(import_node_path8.default.join(dir, "threads"));
         for (const filename of filenames) {
-          const threadJSON = import_fs_plus.default.readFileSync(import_node_path7.default.join(dir, "threads", filename));
+          const threadJSON = import_fs_plus2.default.readFileSync(import_node_path8.default.join(dir, "threads", filename));
           const threadMessages = JSON.parse(threadJSON).map(
             (j3) => new Message3().fromJSON(j3)
           );
@@ -187656,18 +187287,18 @@ ${message}`
           messages = messages.concat(threadMessages);
           threads.push(thread);
         }
-        const downloadsDir = import_node_path7.default.join(dir, "downloads");
-        if (import_fs_plus.default.existsSync(downloadsDir)) {
-          for (const filename of import_fs_plus.default.readdirSync(downloadsDir)) {
-            const destPath = import_node_path7.default.join(
+        const downloadsDir = import_node_path8.default.join(dir, "downloads");
+        if (import_fs_plus2.default.existsSync(downloadsDir)) {
+          for (const filename of import_fs_plus2.default.readdirSync(downloadsDir)) {
+            const destPath = import_node_path8.default.join(
               NylasEnv.getConfigDirPath(),
               "downloads",
               filename
             );
-            if (import_fs_plus.default.existsSync(destPath)) {
-              import_fs_plus.default.removeSync(destPath);
+            if (import_fs_plus2.default.existsSync(destPath)) {
+              import_fs_plus2.default.removeSync(destPath);
             }
-            import_fs_plus.default.copySync(import_node_path7.default.join(downloadsDir, filename), destPath);
+            import_fs_plus2.default.copySync(import_node_path8.default.join(downloadsDir, filename), destPath);
           }
         }
         database_store_default.inTransaction(
@@ -188149,7 +187780,7 @@ var require_rx_lite = __commonJS({
         }
         return a;
       }
-      var CompositeDisposable = Rx11.CompositeDisposable = function() {
+      var CompositeDisposable2 = Rx11.CompositeDisposable = function() {
         var args = [], i, len;
         if (Array.isArray(arguments[0])) {
           args = arguments[0];
@@ -188164,7 +187795,7 @@ var require_rx_lite = __commonJS({
         this.isDisposed = false;
         this.length = args.length;
       };
-      var CompositeDisposablePrototype = CompositeDisposable.prototype;
+      var CompositeDisposablePrototype = CompositeDisposable2.prototype;
       CompositeDisposablePrototype.add = function(item) {
         if (this.isDisposed) {
           item.dispose();
@@ -188200,29 +187831,29 @@ var require_rx_lite = __commonJS({
           }
         }
       };
-      var Disposable = Rx11.Disposable = function(action) {
+      var Disposable2 = Rx11.Disposable = function(action) {
         this.isDisposed = false;
         this.action = action || noop4;
       };
-      Disposable.prototype.dispose = function() {
+      Disposable2.prototype.dispose = function() {
         if (!this.isDisposed) {
           this.action();
           this.isDisposed = true;
         }
       };
-      var disposableCreate = Disposable.create = function(action) {
-        return new Disposable(action);
+      var disposableCreate = Disposable2.create = function(action) {
+        return new Disposable2(action);
       };
-      var disposableEmpty = Disposable.empty = { dispose: noop4 };
-      var isDisposable = Disposable.isDisposable = function(d3) {
+      var disposableEmpty = Disposable2.empty = { dispose: noop4 };
+      var isDisposable = Disposable2.isDisposable = function(d3) {
         return d3 && isFunction3(d3.dispose);
       };
-      var checkDisposed = Disposable.checkDisposed = function(disposable) {
+      var checkDisposed = Disposable2.checkDisposed = function(disposable) {
         if (disposable.isDisposed) {
           throw new ObjectDisposedError();
         }
       };
-      var disposableFixup = Disposable._fixup = function(result2) {
+      var disposableFixup = Disposable2._fixup = function(result2) {
         return isDisposable(result2) ? result2 : disposableEmpty;
       };
       var SingleAssignmentDisposable = Rx11.SingleAssignmentDisposable = function() {
@@ -188390,7 +188021,7 @@ var require_rx_lite = __commonJS({
       var normalizeTime = Scheduler.normalize, isScheduler = Scheduler.isScheduler;
       (function(schedulerProto) {
         function invokeRecImmediate(scheduler, pair) {
-          var state = pair[0], action = pair[1], group2 = new CompositeDisposable();
+          var state = pair[0], action = pair[1], group2 = new CompositeDisposable2();
           action(state, innerAction);
           return group2;
           function innerAction(state2) {
@@ -188412,7 +188043,7 @@ var require_rx_lite = __commonJS({
           }
         }
         function invokeRecDate(scheduler, pair) {
-          var state = pair[0], action = pair[1], group2 = new CompositeDisposable();
+          var state = pair[0], action = pair[1], group2 = new CompositeDisposable2();
           action(state, innerAction);
           return group2;
           function innerAction(state2, dueTime1) {
@@ -188658,7 +188289,7 @@ var require_rx_lite = __commonJS({
         }
         function scheduleAction(disposable, action, scheduler, state) {
           return function schedule() {
-            disposable.setDisposable(Disposable._fixup(action(scheduler, state)));
+            disposable.setDisposable(Disposable2._fixup(action(scheduler, state)));
           };
         }
         function ClearDisposable(id) {
@@ -189915,7 +189546,7 @@ var require_rx_lite = __commonJS({
           __super__.call(this);
         }
         MergeObservable2.prototype.subscribeCore = function(observer) {
-          var g = new CompositeDisposable();
+          var g = new CompositeDisposable2();
           g.add(this.source.subscribe(new MergeObserver(observer, this.maxConcurrent, g)));
           return g;
         };
@@ -190016,7 +189647,7 @@ var require_rx_lite = __commonJS({
           __super__.call(this);
         }
         MergeDelayErrorObservable2.prototype.subscribeCore = function(o) {
-          var group2 = new CompositeDisposable(), m = new SingleAssignmentDisposable(), state = { isStopped: false, errors: [], o };
+          var group2 = new CompositeDisposable2(), m = new SingleAssignmentDisposable(), state = { isStopped: false, errors: [], o };
           group2.add(m);
           m.setDisposable(this.source.subscribe(new MergeDelayErrorObserver(group2, state)));
           return group2;
@@ -190096,7 +189727,7 @@ var require_rx_lite = __commonJS({
           __super__.call(this);
         }
         MergeAllObservable2.prototype.subscribeCore = function(o) {
-          var g = new CompositeDisposable(), m = new SingleAssignmentDisposable();
+          var g = new CompositeDisposable2(), m = new SingleAssignmentDisposable();
           g.add(m);
           m.setDisposable(this.source.subscribe(new MergeAllObserver(o, g)));
           return g;
@@ -191527,7 +191158,7 @@ var require_rx_lite = __commonJS({
         }
       };
       function createEventListener(el, eventName, handler) {
-        var disposables = new CompositeDisposable();
+        var disposables = new CompositeDisposable2();
         var elemToString = Object.prototype.toString.call(el);
         if (isNodeList(el) || elemToString === "[object HTMLCollection]") {
           for (var i = 0, len = el.length; i < len; i++) {
@@ -191932,7 +191563,7 @@ var require_rx_lite = __commonJS({
           selector = delayDurationSelector;
         }
         return new AnonymousObservable(function(o) {
-          var delays = new CompositeDisposable(), atEnd = false, subscription = new SerialDisposable();
+          var delays = new CompositeDisposable2(), atEnd = false, subscription = new SerialDisposable();
           function start() {
             subscription.setDisposable(source.subscribe(
               function(x3) {
@@ -193297,13 +192928,13 @@ var nylas_long_connection_exports = {};
 __export(nylas_long_connection_exports, {
   default: () => nylas_long_connection_default
 });
-var import_node_module10, import_node_url2, import_event_kit, import_meta11, nodeRequire11, IdentityStore, CONNECTION_TIMEOUT, PROCESS_BUFFER_THROTTLE, Status, NylasLongConnection, nylas_long_connection_default;
+var import_node_module10, import_node_url2, import_event_kit2, import_meta11, nodeRequire11, IdentityStore, CONNECTION_TIMEOUT, PROCESS_BUFFER_THROTTLE, Status, NylasLongConnection, nylas_long_connection_default;
 var init_nylas_long_connection = __esm({
   "src/flux/nylas-long-connection.js"() {
     import_node_module10 = require("module");
     init_index_all();
     import_node_url2 = __toESM(require("url"));
-    import_event_kit = __toESM(require_event_kit());
+    import_event_kit2 = __toESM(require_event_kit());
     init_nylas_exports();
     init_errors2();
     import_meta11 = {};
@@ -193324,7 +192955,7 @@ var init_nylas_long_connection = __esm({
       static Status = Status;
       constructor({ api, accountId, ...opts } = {}) {
         const {
-          path: path14,
+          path: path15,
           timeout: timeout2,
           onError,
           onResults,
@@ -193335,13 +192966,13 @@ var init_nylas_long_connection = __esm({
         this._api = api;
         this._accountId = accountId;
         this._status = Status.None;
-        this._emitter = new import_event_kit.Emitter();
+        this._emitter = new import_event_kit2.Emitter();
         this._req = null;
         this._buffer = "";
         this._results = [];
         this._pingTimeout = null;
         this._httpStatusCode = null;
-        this._path = path14;
+        this._path = path15;
         this._timeout = timeout2 || CONNECTION_TIMEOUT;
         this._onError = onError || (() => {
         });
@@ -193885,7 +193516,7 @@ var init_identity_store = __esm({
        * https://paper.dropbox.com/doc/Analytics-ID-Unification-oVDTkakFsiBBbk9aeuiA3
        * for the full list of utm_ labels.
        */
-      fetchSingleSignOnURL(path14, { source, campaign, content } = {}) {
+      fetchSingleSignOnURL(path15, { source, campaign, content } = {}) {
         if (!this._identity) {
           return Promise.reject(
             new Error("fetchSingleSignOnURL: no identity set.")
@@ -193901,7 +193532,7 @@ var init_identity_store = __esm({
         if (content) {
           qs2.utm_content = content;
         }
-        let pathWithUtm = url3.parse(path14, true);
+        let pathWithUtm = url3.parse(path15, true);
         pathWithUtm.query = Object.assign({}, qs2, pathWithUtm.query || {});
         pathWithUtm = url3.format({
           pathname: pathWithUtm.pathname,
@@ -193929,7 +193560,7 @@ var init_identity_store = __esm({
             },
             (error, _response = {}, body) => {
               if (error || !body.startsWith("http")) {
-                resolve7(`${this.URLRoot}${path14}`);
+                resolve7(`${this.URLRoot}${path15}`);
               } else {
                 resolve7(body);
               }
@@ -193957,17 +193588,17 @@ var init_identity_store = __esm({
         const nextIdentity = Object.assign({}, this._identity, json2);
         return this.saveIdentity(nextIdentity);
       }
-      fetchPath = async (path14) => {
+      fetchPath = async (path15) => {
         const options2 = {
           method: "GET",
-          url: `${this.URLRoot}${path14}`,
+          url: `${this.URLRoot}${path15}`,
           startTime: Date.now()
         };
         try {
           const newIdentity = await this.nylasIDRequest(options2);
           return newIdentity;
         } catch (err) {
-          const error = err || new Error(`IdentityStore.fetchPath: ${path14} ${err.message}.`);
+          const error = err || new Error(`IdentityStore.fetchPath: ${path15} ${err.message}.`);
           NylasEnv.reportError(error);
           return null;
         }
@@ -194183,19 +193814,19 @@ var init_nylas_api_request = __esm({
 // src/flux/models/file.js
 var file_exports = {};
 __export(file_exports, {
-  default: () => File
+  default: () => File2
 });
-var import_node_module12, import_node_path8, import_model4, import_meta13, nodeRequire13, RegExpUtils, File;
+var import_node_module12, import_node_path9, import_model4, import_meta13, nodeRequire13, RegExpUtils, File2;
 var init_file = __esm({
   "src/flux/models/file.js"() {
     import_node_module12 = require("module");
-    import_node_path8 = __toESM(require("path"));
+    import_node_path9 = __toESM(require("path"));
     import_model4 = __toESM(require_model());
     init_attributes();
     import_meta13 = {};
     nodeRequire13 = typeof import_meta13.url === "string" && import_meta13.url.startsWith("file:") ? (0, import_node_module12.createRequire)(import_meta13.url) : require;
     RegExpUtils = null;
-    File = class extends import_model4.default {
+    File2 = class extends import_model4.default {
       static attributes = Object.assign({}, import_model4.default.attributes, {
         filename: attributes_default.String({
           modelKey: "filename",
@@ -194251,7 +193882,7 @@ var init_file = __esm({
       // on contentType and is always lowercase.
       // Returns the extension without the leading '.' (ex: 'png', 'pdf')
       displayExtension() {
-        return import_node_path8.default.extname(this.displayName().toLowerCase()).substr(1);
+        return import_node_path9.default.extname(this.displayName().toLowerCase()).substr(1);
       }
       displayFileSize(bytes = this.size) {
         const units = ["B", "KB", "MB", "GB"];
@@ -198157,10 +197788,10 @@ var require_emoji_data = __commonJS({
     var EmojiChar;
     var EmojiData;
     var punycode;
-    var _str3;
+    var _str4;
     EmojiChar = require_emoji_char();
     punycode = require("punycode");
-    _str3 = require_underscore_string();
+    _str4 = require_underscore_string();
     EmojiData = (function() {
       var EMOJICHAR_KEYWORD_MAP, EMOJICHAR_UNIFIED_MAP, EMOJI_CHARS, EMOJI_MAP, FBS_REGEXP, char_blob, ec, keyword, variant, _i2, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1;
       function EmojiData2() {
@@ -198293,7 +197924,7 @@ var require_emoji_data = __commonJS({
           _results = [];
           for (_m = 0, _len4 = cps.length; _m < _len4; _m++) {
             cp = cps[_m];
-            _results.push(_str3.rjust(cp.toString(16), 4, "0"));
+            _results.push(_str4.rjust(cp.toString(16), 4, "0"));
           }
           return _results;
         })();
@@ -198635,11 +198266,11 @@ var contact_exports = {};
 __export(contact_exports, {
   default: () => Contact2
 });
-var import_node_module13, import_underscore26, import_model5, import_utils10, import_regexp_utils, import_meta14, nodeRequire14, FocusedPerspectiveStore, namePrefixes, nameSuffixes, Contact2;
+var import_node_module13, import_underscore27, import_model5, import_utils10, import_regexp_utils, import_meta14, nodeRequire14, FocusedPerspectiveStore, namePrefixes, nameSuffixes, Contact2;
 var init_contact = __esm({
   "src/flux/models/contact.js"() {
     import_node_module13 = require("module");
-    import_underscore26 = __toESM(require_underscore());
+    import_underscore27 = __toESM(require_underscore());
     import_model5 = __toESM(require_model());
     init_attributes();
     import_utils10 = __toESM(require_utils());
@@ -199056,7 +198687,7 @@ var init_contact = __esm({
         const domain = email.toLowerCase().trim().split("@").pop();
         const domainParts = domain.split(".");
         if (domainParts.length >= 2) {
-          return import_underscore26.default.titleize(import_underscore26.default.humanize(domainParts[domainParts.length - 2]));
+          return import_underscore27.default.titleize(import_underscore27.default.humanize(domainParts[domainParts.length - 2]));
         }
         return "";
       }
@@ -200611,7 +200242,7 @@ var init_message = __esm({
         }),
         files: attributes_default.Collection({
           modelKey: "files",
-          itemClass: File
+          itemClass: File2
         }),
         uploads: attributes_default.Object({
           queryable: false,
@@ -202874,7 +202505,7 @@ var require_prop_types = __commonJS({
 var require_react_dom_production = __commonJS({
   "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
     "use strict";
-    var React52 = require_react();
+    var React54 = require_react();
     function formatProdErrorMessage(code) {
       var url6 = "https://react.dev/errors/" + code;
       if (1 < arguments.length) {
@@ -202914,7 +202545,7 @@ var require_react_dom_production = __commonJS({
         implementation
       };
     }
-    var ReactSharedInternals = React52.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    var ReactSharedInternals = React54.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
     function getCrossOriginStringAs(as2, input) {
       if ("font" === as2) return "";
       if ("string" === typeof input)
@@ -203068,7 +202699,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React52 = require_react(), Internals = {
+      var React54 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -203086,7 +202717,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React52.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React54.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -203352,13 +202983,13 @@ var require_classnames = __commonJS({
 // src/components/menu.jsx
 var require_menu = __commonJS({
   "src/components/menu.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_index_all();
     init_nylas_exports();
-    var MenuItem2 = class _MenuItem extends import_react63.default.Component {
+    var MenuItem2 = class _MenuItem extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203366,15 +202997,15 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuItem.displayName = "MenuItem";
         _MenuItem.propTypes = {
-          divider: import_prop_types66.default.oneOfType([import_prop_types66.default.string, import_prop_types66.default.bool]),
-          selected: import_prop_types66.default.bool,
-          checked: import_prop_types66.default.bool
+          divider: import_prop_types68.default.oneOfType([import_prop_types68.default.string, import_prop_types68.default.bool]),
+          selected: import_prop_types68.default.bool,
+          checked: import_prop_types68.default.bool
         };
       }
       render() {
         if (this.props.divider) {
           const dividerLabel = index_default_default.isString(this.props.divider) ? this.props.divider : "";
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className: "item divider" },
             dividerLabel
@@ -203385,7 +203016,7 @@ var require_menu = __commonJS({
             selected: this.props.selected,
             checked: this.props.checked
           });
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className, onMouseDown: this.props.onMouseDown },
             this.props.content
@@ -203394,7 +203025,7 @@ var require_menu = __commonJS({
       }
     };
     MenuItem2.initClass();
-    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react63.default.Component {
+    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203402,24 +203033,24 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuNameEmailItem.displayName = "MenuNameEmailItem";
         _MenuNameEmailItem.propTypes = {
-          name: import_prop_types66.default.string,
-          email: import_prop_types66.default.string
+          name: import_prop_types68.default.string,
+          email: import_prop_types68.default.string
         };
       }
       render() {
         if ((this.props.name != null ? this.props.name.length : void 0) > 0 && this.props.name !== this.props.email) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "span",
             null,
-            import_react63.default.createElement("span", { className: "primary" }, this.props.name),
-            import_react63.default.createElement(
+            import_react65.default.createElement("span", { className: "primary" }, this.props.name),
+            import_react65.default.createElement(
               "span",
               { className: "secondary" },
               `(${this.props.email})`
             )
           );
         } else {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "span",
             { className: "primary" },
             this.props.email
@@ -203428,21 +203059,21 @@ var require_menu = __commonJS({
       }
     };
     MenuNameEmailItem.initClass();
-    var Menu7 = class _Menu extends import_react63.default.Component {
+    var Menu7 = class _Menu extends import_react65.default.Component {
       static initClass() {
         _Menu.displayName = "Menu";
         _Menu.propTypes = {
-          className: import_prop_types66.default.string,
-          footerComponents: import_prop_types66.default.node,
-          headerComponents: import_prop_types66.default.node,
-          itemContext: import_prop_types66.default.object,
-          itemContent: import_prop_types66.default.func.isRequired,
-          itemKey: import_prop_types66.default.func.isRequired,
-          itemChecked: import_prop_types66.default.func,
-          items: import_prop_types66.default.array.isRequired,
-          onSelect: import_prop_types66.default.func.isRequired,
-          onEscape: import_prop_types66.default.func,
-          defaultSelectedIndex: import_prop_types66.default.number
+          className: import_prop_types68.default.string,
+          footerComponents: import_prop_types68.default.node,
+          headerComponents: import_prop_types68.default.node,
+          itemContext: import_prop_types68.default.object,
+          itemContent: import_prop_types68.default.func.isRequired,
+          itemKey: import_prop_types68.default.func.isRequired,
+          itemChecked: import_prop_types68.default.func,
+          items: import_prop_types68.default.array.isRequired,
+          onSelect: import_prop_types68.default.func.isRequired,
+          onEscape: import_prop_types68.default.func,
+          defaultSelectedIndex: import_prop_types68.default.number
         };
         _Menu.defaultProps = { onEscape() {
         } };
@@ -203510,8 +203141,8 @@ var require_menu = __commonJS({
         });
       }
       componentDidUpdate() {
-        const item = import_react_dom29.default.findDOMNode(this).querySelector(".selected");
-        const container = import_react_dom29.default.findDOMNode(this).querySelector(".content-container");
+        const item = import_react_dom30.default.findDOMNode(this).querySelector(".selected");
+        const container = import_react_dom30.default.findDOMNode(this).querySelector(".content-container");
         const adjustment = DOMUtils4.scrollAdjustmentToMakeNodeVisibleInContainer(
           item,
           container
@@ -203521,19 +203152,19 @@ var require_menu = __commonJS({
         }
       }
       render() {
-        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react63.default.createElement("span", null);
-        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react63.default.createElement("span", null);
+        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react65.default.createElement("span", null);
+        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react65.default.createElement("span", null);
         const className = this.props.className ? this.props.className : "";
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             onKeyDown: this._onKeyDown,
             className: `menu ${className}`,
             tabIndex: "-1"
           },
-          import_react63.default.createElement("div", { className: "header-container" }, hc),
+          import_react65.default.createElement("div", { className: "header-container" }, hc),
           this._contentContainer(),
-          import_react63.default.createElement("div", { className: "footer-container" }, fc)
+          import_react65.default.createElement("div", { className: "footer-container" }, fc)
         );
       }
       _onKeyDown(event2) {
@@ -203558,7 +203189,7 @@ var require_menu = __commonJS({
         const seenItemKeys = {};
         const items = (this.props.items || []).map((item, i) => {
           const content = this.props.itemContent(item);
-          if (import_react63.default.isValidElement(content) && content.type === MenuItem2) {
+          if (import_react65.default.isValidElement(content) && content.type === MenuItem2) {
             return content;
           }
           const onMouseDown = (event2) => {
@@ -203580,7 +203211,7 @@ var require_menu = __commonJS({
             );
           }
           seenItemKeys[key] = item;
-          return import_react63.default.createElement(MenuItem2, {
+          return import_react65.default.createElement(MenuItem2, {
             key,
             onMouseDown,
             checked: typeof this.props.itemChecked === "function" ? this.props.itemChecked(item) : void 0,
@@ -203592,7 +203223,7 @@ var require_menu = __commonJS({
           "content-container": true,
           empty: items.length === 0
         });
-        return import_react63.default.createElement("div", { className: contentClass }, items);
+        return import_react65.default.createElement("div", { className: contentClass }, items);
       }
       _onShiftSelectedIndex(delta) {
         if (this.props.items.length === 0) {
@@ -203605,7 +203236,7 @@ var require_menu = __commonJS({
           if (!item) {
             break;
           }
-          if (__guard__2(
+          if (__guard__3(
             this.props.itemContent(item, this.props.itemContext).props,
             (x3) => x3.divider
           )) {
@@ -203635,7 +203266,7 @@ var require_menu = __commonJS({
     Menu7.Item = MenuItem2;
     Menu7.NameEmailItem = MenuNameEmailItem;
     module2.exports = Menu7;
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -203728,16 +203359,16 @@ var init_drop_zone = __esm({
 // src/components/spinner.jsx
 var require_spinner = __commonJS({
   "src/components/spinner.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var Spinner4 = class _Spinner extends import_react63.default.Component {
+    var Spinner4 = class _Spinner extends import_react65.default.Component {
       static initClass() {
         _Spinner.propTypes = {
-          visible: import_prop_types66.default.bool,
-          withCover: import_prop_types66.default.bool,
-          style: import_prop_types66.default.object
+          visible: import_prop_types68.default.bool,
+          withCover: import_prop_types68.default.bool,
+          style: import_prop_types68.default.object
         };
       }
       constructor(props) {
@@ -203831,7 +203462,7 @@ var require_spinner = __commonJS({
             zIndex: 1e3
           }
         );
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: coverClasses, style },
           this._renderSpinnerDots()
@@ -203858,13 +203489,13 @@ var require_spinner = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           Object.assign({ className: spinnerClass }, otherProps, { style }),
-          import_react63.default.createElement("div", { className: "bounce1" }),
-          import_react63.default.createElement("div", { className: "bounce2" }),
-          import_react63.default.createElement("div", { className: "bounce3" }),
-          import_react63.default.createElement("div", { className: "bounce4" })
+          import_react65.default.createElement("div", { className: "bounce1" }),
+          import_react65.default.createElement("div", { className: "bounce2" }),
+          import_react65.default.createElement("div", { className: "bounce3" }),
+          import_react65.default.createElement("div", { className: "bounce4" })
         );
       }
     };
@@ -204613,8 +204244,8 @@ var init_retina_img = __esm({
         return Utils13.imageNamed(pathName, this.props.resourcePath);
       };
       render() {
-        const path14 = this.props.url || this._pathFor(this.props.name) || this._pathFor(this.props.fallback) || "";
-        const pathIsRetina = path14.indexOf("@2x") > 0;
+        const path15 = this.props.url || this._pathFor(this.props.name) || this._pathFor(this.props.fallback) || "";
+        const pathIsRetina = path15.indexOf("@2x") > 0;
         let className = this.props.className || "";
         const style = this.props.style || {};
         style.WebkitUserDrag = "none";
@@ -204622,7 +204253,7 @@ var init_retina_img = __esm({
         if (style.width) style.width /= style.zoom;
         if (style.height) style.height /= style.zoom;
         if (this.props.mode === Mode.ContentIsMask) {
-          style.WebkitMaskImage = `url('${path14}')`;
+          style.WebkitMaskImage = `url('${path15}')`;
           style.WebkitMaskRepeat = "no-repeat";
           style.objectPosition = "10000px";
           className += " content-mask";
@@ -204646,7 +204277,7 @@ var init_retina_img = __esm({
           {
             alt: this.props.name,
             className,
-            src: path14,
+            src: path15,
             style,
             ...otherProps
           }
@@ -210090,21 +209721,21 @@ var init_syncing_list_state = __esm({
 // src/components/empty-list-state.jsx
 var require_empty_list_state = __commonJS({
   "src/components/empty-list-state.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_index_all();
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_retina_img();
     init_nylas_exports();
     init_nylas_component_kit();
     var INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
-    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react63.default.Component {
+    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react65.default.Component {
       static initClass() {
         _EmptyPerspectiveState.displayName = "EmptyPerspectiveState";
         _EmptyPerspectiveState.propTypes = {
-          perspective: import_prop_types66.default.object,
-          messageContent: import_prop_types66.default.node
+          perspective: import_prop_types68.default.object,
+          messageContent: import_prop_types68.default.node
         };
       }
       render() {
@@ -210119,19 +209750,19 @@ var require_empty_list_state = __commonJS({
         if (name2) {
           name2 = name2.toLowerCase();
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "perspective-empty-state" },
-          name2 ? import_react63.default.createElement(retina_img_default, {
+          name2 ? import_react65.default.createElement(retina_img_default, {
             name: `ic-emptystate-${name2}.png`,
             mode: retina_img_default.Mode.ContentIsMask
           }) : void 0,
-          import_react63.default.createElement("div", { className: "message" }, messageContent)
+          import_react65.default.createElement("div", { className: "message" }, messageContent)
         );
       }
     };
     EmptyPerspectiveState.initClass();
-    var EmptyInboxState = class _EmptyInboxState extends import_react63.default.Component {
+    var EmptyInboxState = class _EmptyInboxState extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this._getScalingFactor = this._getScalingFactor.bind(this);
@@ -210139,7 +209770,7 @@ var require_empty_list_state = __commonJS({
       }
       static initClass() {
         _EmptyInboxState.displayName = "EmptyInboxState";
-        _EmptyInboxState.propTypes = { containerRect: import_prop_types66.default.object };
+        _EmptyInboxState.propTypes = { containerRect: import_prop_types68.default.object };
       }
       _getScalingFactor() {
         const { width } = this.props.containerRect;
@@ -210165,16 +209796,16 @@ var require_empty_list_state = __commonJS({
         const animationName = this._getAnimationName();
         const factor = this._getScalingFactor();
         const style = factor ? { transform: `scale(${factor})` } : {};
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "inbox-zero-animation" },
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             { className: "animation-wrapper", style },
-            import_react63.default.createElement("iframe", {
+            import_react65.default.createElement("iframe", {
               src: `animations/inbox-zero/${animationName}/${animationName}.html`
             }),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "message" },
               "Hooray! You\u2019re done."
@@ -210184,10 +209815,10 @@ var require_empty_list_state = __commonJS({
       }
     };
     EmptyInboxState.initClass();
-    var EmptyListState = class _EmptyListState extends import_react63.default.Component {
+    var EmptyListState = class _EmptyListState extends import_react65.default.Component {
       static initClass() {
         _EmptyListState.displayName = "EmptyListState";
-        _EmptyListState.propTypes = { visible: import_prop_types66.default.bool.isRequired };
+        _EmptyListState.propTypes = { visible: import_prop_types68.default.bool.isRequired };
       }
       constructor(props) {
         this._getDimensions = this._getDimensions.bind(this);
@@ -210249,13 +209880,13 @@ var require_empty_list_state = __commonJS({
       }
       render() {
         if (!this.props.visible) {
-          return import_react63.default.createElement("span", null);
+          return import_react65.default.createElement("span", null);
         }
         let ContentComponent = EmptyPerspectiveState;
         const current = FocusedPerspectiveStore3.current();
         let messageContent = current.emptyMessage();
         if (this.state.syncing) {
-          messageContent = import_react63.default.createElement(void 0, { empty: true });
+          messageContent = import_react65.default.createElement(void 0, { empty: true });
         } else if (current.isInbox()) {
           ContentComponent = EmptyInboxState;
         }
@@ -210263,10 +209894,10 @@ var require_empty_list_state = __commonJS({
           "empty-state": true,
           active: this.state.active
         });
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: classes },
-          import_react63.default.createElement(ContentComponent, {
+          import_react65.default.createElement(ContentComponent, {
             perspective: current,
             containerRect: this.state.rect,
             messageContent
@@ -210277,7 +209908,7 @@ var require_empty_list_state = __commonJS({
         if (!this._mounted) {
           return null;
         }
-        const node = import_react_dom29.default.findDOMNode(this);
+        const node = import_react_dom30.default.findDOMNode(this);
         const rect = node.getBoundingClientRect();
         return { width: rect.width, height: rect.height };
       }
@@ -210340,18 +209971,18 @@ var init_scrollbar_ticks = __esm({
 // src/components/scroll-region.jsx
 var require_scroll_region = __commonJS({
   "src/components/scroll-region.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_index_all();
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     init_nylas_exports();
     var import_classnames19 = __toESM(require_classnames());
     init_scrollbar_ticks();
-    var Scrollbar = class _Scrollbar extends import_react63.default.Component {
+    var Scrollbar = class _Scrollbar extends import_react65.default.Component {
       static initClass() {
         _Scrollbar.displayName = "Scrollbar";
         _Scrollbar.propTypes = {
-          scrollTooltipComponent: import_prop_types66.default.func,
+          scrollTooltipComponent: import_prop_types68.default.func,
           // A scrollbarTickProvider is any object that has the `listen` and
           // `scrollbarTicks` method. Since ScrollRegions tend to encompass large
           // render trees it's more efficent for the scrollbar to listen for its
@@ -210360,8 +209991,8 @@ var require_scroll_region = __commonJS({
           // method must return an array of numbers between 0 and 1 which
           // represent the height percentages at which tick marks will be
           // rendered.
-          scrollbarTickProvider: import_prop_types66.default.object,
-          getScrollRegion: import_prop_types66.default.func
+          scrollbarTickProvider: import_prop_types68.default.object,
+          getScrollRegion: import_prop_types68.default.func
         };
       }
       constructor(props) {
@@ -210417,19 +210048,19 @@ var require_scroll_region = __commonJS({
         });
         let tooltip = [];
         if (this.props.scrollTooltipComponent && this.state.dragging) {
-          tooltip = import_react63.default.createElement(this.props.scrollTooltipComponent, {
+          tooltip = import_react65.default.createElement(this.props.scrollTooltipComponent, {
             viewportCenter: this.state.viewportScrollTop + this.state.viewportHeight / 2,
             totalHeight: this.state.totalHeight
           });
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             className: containerClasses,
             style: this._scrollbarWrapStyles(),
             onMouseEnter: this.recomputeDimensions
           },
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             {
               className: "scrollbar-track-inner",
@@ -210437,7 +210068,7 @@ var require_scroll_region = __commonJS({
               onClick: this._onScrollJump
             },
             this._renderScrollbarTicks(),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               {
                 className: "scrollbar-handle",
@@ -210446,7 +210077,7 @@ var require_scroll_region = __commonJS({
                 ref: "handle",
                 onClick: this._onHandleClick
               },
-              import_react63.default.createElement("div", { className: "tooltip" }, tooltip)
+              import_react65.default.createElement("div", { className: "tooltip" }, tooltip)
             )
           )
         );
@@ -210474,13 +210105,13 @@ var require_scroll_region = __commonJS({
         if (!(this.state.scrollbarTicks.length > 0)) {
           return false;
         }
-        return import_react63.default.createElement(ScrollbarTicks, {
+        return import_react65.default.createElement(ScrollbarTicks, {
           ticks: this.state.scrollbarTicks
         });
       }
       _recomputeDimensions({ useCachedValues }) {
         if (!useCachedValues) {
-          const trackNode = import_react_dom29.default.findDOMNode(this.refs.track);
+          const trackNode = import_react_dom30.default.findDOMNode(this.refs.track);
           if (!trackNode) {
             return;
           }
@@ -210510,8 +210141,8 @@ var require_scroll_region = __commonJS({
         };
       }
       _onHandleDown(event2) {
-        const handleNode = import_react_dom29.default.findDOMNode(this.refs.handle);
-        this._trackOffset = import_react_dom29.default.findDOMNode(
+        const handleNode = import_react_dom30.default.findDOMNode(this.refs.handle);
+        this._trackOffset = import_react_dom30.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = event2.pageY - handleNode.getBoundingClientRect().top;
@@ -210536,7 +210167,7 @@ var require_scroll_region = __commonJS({
         return event2.stopPropagation();
       }
       _onScrollJump(event2) {
-        this._trackOffset = import_react_dom29.default.findDOMNode(
+        this._trackOffset = import_react_dom30.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = this._getHandleHeight() / 2;
@@ -210553,17 +210184,17 @@ var require_scroll_region = __commonJS({
       }
     };
     Scrollbar.initClass();
-    var ScrollRegion5 = class _ScrollRegion extends import_react63.default.Component {
+    var ScrollRegion5 = class _ScrollRegion extends import_react65.default.Component {
       static initClass() {
         _ScrollRegion.displayName = "ScrollRegion";
         _ScrollRegion.propTypes = {
-          onScroll: import_prop_types66.default.func,
-          onScrollEnd: import_prop_types66.default.func,
-          className: import_prop_types66.default.string,
-          scrollTooltipComponent: import_prop_types66.default.func,
-          scrollbarTickProvider: import_prop_types66.default.object,
-          children: import_prop_types66.default.oneOfType([import_prop_types66.default.element, import_prop_types66.default.array]),
-          getScrollbar: import_prop_types66.default.func
+          onScroll: import_prop_types68.default.func,
+          onScrollEnd: import_prop_types68.default.func,
+          className: import_prop_types68.default.string,
+          scrollTooltipComponent: import_prop_types68.default.func,
+          scrollbarTickProvider: import_prop_types68.default.object,
+          children: import_prop_types68.default.oneOfType([import_prop_types68.default.element, import_prop_types68.default.array]),
+          getScrollbar: import_prop_types68.default.func
         };
         _ScrollRegion.ScrollPosition = {
           // Scroll so that the desired region is at the top of the viewport
@@ -210605,10 +210236,10 @@ var require_scroll_region = __commonJS({
         };
         Object.defineProperty(this, "scrollTop", {
           get() {
-            return import_react_dom29.default.findDOMNode(this.refs.content).scrollTop;
+            return import_react_dom30.default.findDOMNode(this.refs.content).scrollTop;
           },
           set(val) {
-            return import_react_dom29.default.findDOMNode(this.refs.content).scrollTop = val;
+            return import_react_dom30.default.findDOMNode(this.refs.content).scrollTop = val;
           }
         });
       }
@@ -210625,7 +210256,7 @@ var require_scroll_region = __commonJS({
           }
         });
         return this._heightObserver.observe(
-          import_react_dom29.default.findDOMNode(this.refs.content),
+          import_react_dom30.default.findDOMNode(this.refs.content),
           {
             subtree: true,
             attributes: true,
@@ -210668,7 +210299,7 @@ var require_scroll_region = __commonJS({
         });
         if (!this.props.getScrollbar) {
           if (this._scrollbarComponent == null) {
-            this._scrollbarComponent = import_react63.default.createElement(Scrollbar, {
+            this._scrollbarComponent = import_react65.default.createElement(Scrollbar, {
               ref: "scrollbar",
               scrollbarTickProvider: this.props.scrollbarTickProvider,
               scrollTooltipComponent: this.props.scrollTooltipComponent,
@@ -210680,18 +210311,18 @@ var require_scroll_region = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           Object.assign({ className: containerClasses }, otherProps),
           this._scrollbarComponent,
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             {
               className: "scroll-region-content",
               onScroll: this._onScroll,
               ref: "content"
             },
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "scroll-region-content-inner" },
               this.props.children
@@ -210706,8 +210337,8 @@ var require_scroll_region = __commonJS({
           param = {};
         }
         const { position, settle, done } = param;
-        if (node instanceof import_react63.default.Component) {
-          node = import_react_dom29.default.findDOMNode(node);
+        if (node instanceof import_react65.default.Component) {
+          node = import_react_dom30.default.findDOMNode(node);
         }
         if (!(node instanceof Node)) {
           throw new Error(
@@ -210741,7 +210372,7 @@ var require_scroll_region = __commonJS({
       }
       _scroll({ position, settle, done }, clientRectProviderCallback) {
         let settleFn;
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
         if (position == null) {
           position = _ScrollRegion.ScrollPosition.Visible;
         }
@@ -210786,7 +210417,7 @@ var require_scroll_region = __commonJS({
         });
       }
       _settleHeight(callback) {
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
         let lastContentHeight = -1;
         var scrollIfSettled = () => {
           if (!this._mounted) {
@@ -210818,7 +210449,7 @@ var require_scroll_region = __commonJS({
         if (!this.refs.content) {
           return;
         }
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom30.default.findDOMNode(this.refs.content);
         if (!contentNode) {
           return;
         }
@@ -210848,7 +210479,7 @@ var require_scroll_region = __commonJS({
         return this.setState(state);
       }
       _onScroll(event2) {
-        if (event2.target !== import_react_dom29.default.findDOMNode(this.refs.content)) {
+        if (event2.target !== import_react_dom30.default.findDOMNode(this.refs.content)) {
           return;
         }
         if (this.state.scrolling) {
@@ -211174,11 +210805,11 @@ var init_list_data_source = __esm({
 // src/components/list-tabular-item.jsx
 var require_list_tabular_item = __commonJS({
   "src/components/list-tabular-item.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
     init_swipe_container();
     init_nylas_exports();
-    var ListTabularItem2 = class _ListTabularItem extends import_react63.default.Component {
+    var ListTabularItem2 = class _ListTabularItem extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -211189,13 +210820,13 @@ var require_list_tabular_item = __commonJS({
       static initClass() {
         _ListTabularItem.displayName = "ListTabularItem";
         _ListTabularItem.propTypes = {
-          metrics: import_prop_types66.default.object,
-          columns: import_prop_types66.default.arrayOf(import_prop_types66.default.object).isRequired,
-          item: import_prop_types66.default.object.isRequired,
-          itemProps: import_prop_types66.default.object,
-          onSelect: import_prop_types66.default.func,
-          onClick: import_prop_types66.default.func,
-          onDoubleClick: import_prop_types66.default.func
+          metrics: import_prop_types68.default.object,
+          columns: import_prop_types68.default.arrayOf(import_prop_types68.default.object).isRequired,
+          item: import_prop_types68.default.object.isRequired,
+          itemProps: import_prop_types68.default.object,
+          onSelect: import_prop_types68.default.func,
+          onClick: import_prop_types68.default.func,
+          onDoubleClick: import_prop_types68.default.func
         };
       }
       // DO NOT DELETE unless you know what you're doing! This method cuts
@@ -211223,7 +210854,7 @@ var require_list_tabular_item = __commonJS({
         if (this._columnCache == null) {
           this._columnCache = this._columns();
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           SwipeContainer,
           Object.assign({}, props, {
             onClick: this._onClick,
@@ -211234,7 +210865,7 @@ var require_list_tabular_item = __commonJS({
               height: this.props.metrics.height
             }
           }),
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             { className, style: { height: this.props.metrics.height } },
             this._columnCache
@@ -211251,7 +210882,7 @@ var require_list_tabular_item = __commonJS({
               );
             }
             names[column.name] = true;
-            return import_react63.default.createElement(
+            return import_react65.default.createElement(
               "div",
               {
                 key: column.name,
@@ -213811,7 +213442,7 @@ var require_search_constants = __commonJS({
 // src/searchable-components/unified-dom-parser.js
 var require_unified_dom_parser = __commonJS({
   "src/searchable-components/unified-dom-parser.js"(exports2, module2) {
-    var { Utils: Utils25 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Utils: Utils26 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { MAX_MATCHES, CHAR_THRESHOLD } = require_search_constants();
     var UnifiedDOMParser = class {
       constructor(regionId) {
@@ -213894,7 +213525,7 @@ var require_unified_dom_parser = __commonJS({
             const reText = matches[1];
             re2 = new RegExp(reText, "ig");
           } else {
-            re2 = new RegExp(Utils25.escapeRegExp(searchTerm), "ig");
+            re2 = new RegExp(Utils26.escapeRegExp(searchTerm), "ig");
           }
         } catch (_e2) {
           return null;
@@ -214130,23 +213761,23 @@ var require_iframe_searcher = __commonJS({
 // src/components/evented-iframe.jsx
 var require_evented_iframe = __commonJS({
   "src/components/evented-iframe.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     var import_iframe_searcher = __toESM(require_iframe_searcher());
     var url6 = __toESM(require("url"));
     init_index_all();
     var {
-      Utils: Utils25,
+      Utils: Utils26,
       RegExpUtils: RegExpUtils6,
       IdentityStore: IdentityStore4,
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var EventedIFrame = class _EventedIFrame extends import_react63.default.Component {
+    var EventedIFrame = class _EventedIFrame extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
-        this._nodeRef = import_react63.default.createRef();
+        this._nodeRef = import_react65.default.createRef();
         this.render = this.render.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -214169,23 +213800,23 @@ var require_evented_iframe = __commonJS({
       static initClass() {
         _EventedIFrame.displayName = "EventedIFrame";
         _EventedIFrame.propTypes = {
-          searchable: import_prop_types66.default.bool,
-          onResize: import_prop_types66.default.func
+          searchable: import_prop_types68.default.bool,
+          onResize: import_prop_types68.default.func
         };
       }
       render() {
-        const otherProps = Utils25.fastOmit(
+        const otherProps = Utils26.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "iframe",
           Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps)
         );
       }
       componentDidMount() {
         if (this.props.searchable) {
-          this._regionId = Utils25.generateTempId();
+          this._regionId = Utils26.generateTempId();
           this._searchUsub = SearchableComponentStore2.listen(
             this._onSearchableStoreChange
           );
@@ -214212,7 +213843,7 @@ var require_evented_iframe = __commonJS({
         }
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state);
+        return !Utils26.isEqualReact(nextProps, this.props) || !Utils26.isEqualReact(nextState, this.state);
       }
       /*
        Public: Call this method if you replace the contents of the iframe's document.
@@ -214340,8 +213971,8 @@ var require_evented_iframe = __commonJS({
           }
           e.preventDefault();
           if (rawHref.startsWith(IdentityStore4.URLRoot)) {
-            const path14 = rawHref.split(IdentityStore4.URLRoot).pop();
-            IdentityStore4.fetchSingleSignOnURL(path14, {
+            const path15 = rawHref.split(IdentityStore4.URLRoot).pop();
+            IdentityStore4.fetchSingleSignOnURL(path15, {
               source: "SingleSignOnEmail"
             }).then((href) => {
               return NylasEnv.windowEventHandler.openLink({
@@ -214408,10 +214039,10 @@ var require_evented_iframe = __commonJS({
       }
       _onIFrameContextualMenu(event2) {
         event2.preventDefault();
-        const { remote: remote9, clipboard: clipboard3, shell: shell6, nativeImage } = require("electron");
-        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
-        const path14 = require("path");
-        const fs11 = require("fs");
+        const { remote: remote10, clipboard: clipboard3, shell: shell6, nativeImage } = require("electron");
+        const { Menu: Menu7, MenuItem: MenuItem2 } = remote10;
+        const path15 = require("path");
+        const fs12 = require("fs");
         const menu = new Menu7();
         const linkTarget = this._getContainingTarget(event2, { with: "href" });
         if (linkTarget) {
@@ -214456,15 +214087,15 @@ var require_evented_iframe = __commonJS({
         const imageTarget = this._getContainingTarget(event2, { with: "src" });
         if (imageTarget) {
           const src = imageTarget.getAttribute("src");
-          const srcFilename = path14.basename(src);
+          const srcFilename = path15.basename(src);
           menu.append(
             new MenuItem2({
               label: "Save Image...",
               click() {
                 return NylasEnv.showSaveDialog(
                   { defaultPath: srcFilename },
-                  (path15) => {
-                    if (!path15) {
+                  (path16) => {
+                    if (!path16) {
                       return;
                     }
                     const oReq = new XMLHttpRequest();
@@ -214472,10 +214103,10 @@ var require_evented_iframe = __commonJS({
                     oReq.responseType = "arraybuffer";
                     oReq.onload = () => {
                       const buffer = new Buffer(new Uint8Array(oReq.response));
-                      return fs11.writeFile(
-                        path15,
+                      return fs12.writeFile(
+                        path16,
                         buffer,
-                        (_err) => shell6.showItemInFolder(path15)
+                        (_err) => shell6.showItemInFolder(path16)
                       );
                     };
                     return oReq.send();
@@ -214557,7 +214188,7 @@ var require_evented_iframe = __commonJS({
         if (process.platform === "darwin") {
           menu.append(new MenuItem2({ type: "separator" }));
         }
-        return menu.popup(remote9.getCurrentWindow());
+        return menu.popup(remote10.getCurrentWindow());
       }
     };
     EventedIFrame.initClass();
@@ -214568,28 +214199,28 @@ var require_evented_iframe = __commonJS({
 // src/components/button-dropdown.jsx
 var require_button_dropdown = __commonJS({
   "src/components/button-dropdown.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_retina_img();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
-    var ButtonDropdown2 = class _ButtonDropdown extends import_react63.default.Component {
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
+    var ButtonDropdown2 = class _ButtonDropdown extends import_react65.default.Component {
       static initClass() {
         _ButtonDropdown.displayName = "ButtonDropdown";
         _ButtonDropdown.propTypes = {
-          primaryItem: import_prop_types66.default.element,
-          primaryClick: import_prop_types66.default.func,
-          bordered: import_prop_types66.default.bool,
-          menu: import_prop_types66.default.element,
-          style: import_prop_types66.default.object,
-          closeOnMenuClick: import_prop_types66.default.bool
+          primaryItem: import_prop_types68.default.element,
+          primaryClick: import_prop_types68.default.func,
+          bordered: import_prop_types68.default.bool,
+          menu: import_prop_types68.default.element,
+          style: import_prop_types68.default.object,
+          closeOnMenuClick: import_prop_types68.default.bool
         };
         _ButtonDropdown.defaultProps = { style: {} };
       }
       constructor(props) {
         super();
-        this.buttonRef = import_react63.default.createRef();
-        this.secondaryItemsRef = import_react63.default.createRef();
+        this.buttonRef = import_react65.default.createRef();
+        this.secondaryItemsRef = import_react65.default.createRef();
         this.render = this.render.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this._onMenuClick = this._onMenuClick.bind(this);
@@ -214605,7 +214236,7 @@ var require_button_dropdown = __commonJS({
           bordered: this.props.bordered !== false
         });
         if (this.props.primaryClick) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214614,7 +214245,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               {
                 className: "primary-item",
@@ -214623,15 +214254,15 @@ var require_button_dropdown = __commonJS({
               },
               this.props.primaryItem
             ),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "secondary-picker", onClick: this.toggleDropdown },
-              import_react63.default.createElement(retina_img_default, {
+              import_react65.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214642,7 +214273,7 @@ var require_button_dropdown = __commonJS({
             )
           );
         } else {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214651,7 +214282,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               {
                 className: "only-item",
@@ -214659,13 +214290,13 @@ var require_button_dropdown = __commonJS({
                 onClick: this.toggleDropdown
               },
               this.props.primaryItem,
-              import_react63.default.createElement(retina_img_default, {
+              import_react65.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 style: { marginLeft: 12 },
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214681,8 +214312,8 @@ var require_button_dropdown = __commonJS({
         if (this.state.open !== false) {
           return this.setState({ open: false });
         } else {
-          const buttonBottom = import_react_dom29.default.findDOMNode(this).getBoundingClientRect().bottom;
-          const openHeight = import_react_dom29.default.findDOMNode(
+          const buttonBottom = import_react_dom30.default.findDOMNode(this).getBoundingClientRect().bottom;
+          const openHeight = import_react_dom30.default.findDOMNode(
             this.secondaryItemsRef?.current
           ).getBoundingClientRect().height;
           if (buttonBottom + openHeight > window.innerHeight) {
@@ -215345,10 +214976,10 @@ var init_multiselect_dropdown = __esm({
 // src/components/tab-group-region.jsx
 var require_tab_group_region = __commonJS({
   "src/components/tab-group-region.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
-    var TabGroupRegion = class _TabGroupRegion extends import_react63.default.Component {
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
+    var TabGroupRegion = class _TabGroupRegion extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -215356,7 +214987,7 @@ var require_tab_group_region = __commonJS({
         this.getChildContext = this.getChildContext.bind(this);
       }
       static initClass() {
-        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types66.default.object };
+        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types68.default.object };
       }
       _onKeyDown(event2) {
         if (event2.key === "Tab" && !event2.defaultPrevented) {
@@ -215367,7 +214998,7 @@ var require_tab_group_region = __commonJS({
         }
       }
       shiftFocus(dir) {
-        const nodes = import_react_dom29.default.findDOMNode(this).querySelectorAll(
+        const nodes = import_react_dom30.default.findDOMNode(this).querySelectorAll(
           "input, textarea, [contenteditable], [tabIndex]"
         );
         const current = document.activeElement;
@@ -215399,7 +215030,7 @@ var require_tab_group_region = __commonJS({
         return { parentTabGroup: this };
       }
       render() {
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
           this.props.children
@@ -215590,25 +215221,25 @@ var init_injected_component_label = __esm({
 // src/components/injected-component.jsx
 var require_injected_component = __commonJS({
   "src/components/injected-component.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
     init_unsafe_component();
     init_injected_component_label();
-    var InjectedComponent2 = class _InjectedComponent extends import_react63.default.Component {
+    var InjectedComponent2 = class _InjectedComponent extends import_react65.default.Component {
       static initClass() {
         _InjectedComponent.displayName = "InjectedComponent";
         _InjectedComponent.propTypes = {
-          matching: import_prop_types66.default.object.isRequired,
-          className: import_prop_types66.default.string,
-          exposedProps: import_prop_types66.default.object,
-          fallback: import_prop_types66.default.func,
-          onComponentDidRender: import_prop_types66.default.func,
-          style: import_prop_types66.default.object,
-          requiredMethods: import_prop_types66.default.arrayOf(import_prop_types66.default.string),
-          onComponentDidChange: import_prop_types66.default.func
+          matching: import_prop_types68.default.object.isRequired,
+          className: import_prop_types68.default.string,
+          exposedProps: import_prop_types68.default.object,
+          fallback: import_prop_types68.default.func,
+          onComponentDidRender: import_prop_types68.default.func,
+          style: import_prop_types68.default.object,
+          requiredMethods: import_prop_types68.default.arrayOf(import_prop_types68.default.string),
+          onComponentDidChange: import_prop_types68.default.func
         };
         _InjectedComponent.defaultProps = {
           style: {},
@@ -215622,7 +215253,7 @@ var require_injected_component = __commonJS({
       }
       constructor(props) {
         super();
-        this.innerRef = import_react63.default.createRef();
+        this.innerRef = import_react65.default.createRef();
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -215673,7 +215304,7 @@ var require_injected_component = __commonJS({
       render() {
         let element;
         if (!this.state.component) {
-          return import_react63.default.createElement("div", null);
+          return import_react65.default.createElement("div", null);
         }
         const exposedProps = Object.assign({}, this.props.exposedProps, {
           fallback: this.props.fallback
@@ -215687,15 +215318,15 @@ var require_injected_component = __commonJS({
           const privateProps = {
             key: Component20.displayName
           };
-          if (import_react63.default.Component.isPrototypeOf(Component20)) {
+          if (import_react65.default.Component.isPrototypeOf(Component20)) {
             privateProps.ref = "inner";
           }
-          element = import_react63.default.createElement(
+          element = import_react65.default.createElement(
             Component20,
             Object.assign({}, privateProps, exposedProps)
           );
         } else {
-          element = import_react63.default.createElement(
+          element = import_react65.default.createElement(
             unsafe_component_default,
             Object.assign(
               {
@@ -215711,18 +215342,18 @@ var require_injected_component = __commonJS({
           );
         }
         if (this.state.visible) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className, style: this.props.style },
             element,
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               InjectedComponentLabel,
               Object.assign({ matching: this.props.matching }, exposedProps)
             ),
-            import_react63.default.createElement("span", { style: { clear: "both" } })
+            import_react65.default.createElement("span", { style: { clear: "both" } })
           );
         } else {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className, style: this.props.style },
             element
@@ -215747,9 +215378,9 @@ var require_injected_component = __commonJS({
         } else if (this.innerRef?.current && this.innerRef?.current[method] != null) {
           target = this.innerRef?.current;
         } else if (this.innerRef?.current) {
-          target = import_react_dom29.default.findDOMNode(this.innerRef?.current);
+          target = import_react_dom30.default.findDOMNode(this.innerRef?.current);
         } else {
-          target = import_react_dom29.default.findDOMNode(this);
+          target = import_react_dom30.default.findDOMNode(this);
         }
         if (target[method]) {
           return target[method].bind(target)(...Array.from(args || []));
@@ -218496,29 +218127,29 @@ var init_multiselect_toolbar = __esm({
 // src/components/injected-component-set.jsx
 var require_injected_component_set = __commonJS({
   "src/components/injected-component-set.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_injected_component_label();
-    var React52 = require_react();
+    var React54 = require_react();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var UnsafeComponent2 = (init_unsafe_component(), __toCommonJS(unsafe_component_exports));
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var {
-      Utils: Utils25,
+      Utils: Utils26,
       Actions: Actions39,
       WorkspaceStore: WorkspaceStore6,
       ComponentRegistry: ComponentRegistry3
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var InjectedComponentSet4 = class _InjectedComponentSet extends React52.Component {
+    var InjectedComponentSet5 = class _InjectedComponentSet extends React54.Component {
       static initClass() {
         _InjectedComponentSet.displayName = "InjectedComponentSet";
         _InjectedComponentSet.propTypes = {
-          matching: import_prop_types66.default.object.isRequired,
-          children: import_prop_types66.default.array,
-          className: import_prop_types66.default.string,
-          matchLimit: import_prop_types66.default.number,
-          exposedProps: import_prop_types66.default.object,
-          containersRequired: import_prop_types66.default.bool,
-          onComponentsDidRender: import_prop_types66.default.func
+          matching: import_prop_types68.default.object.isRequired,
+          children: import_prop_types68.default.array,
+          className: import_prop_types68.default.string,
+          matchLimit: import_prop_types68.default.number,
+          exposedProps: import_prop_types68.default.object,
+          containersRequired: import_prop_types68.default.bool,
+          onComponentsDidRender: import_prop_types68.default.func
         };
         _InjectedComponentSet.defaultProps = {
           direction: "row",
@@ -218565,7 +218196,7 @@ var require_injected_component_set = __commonJS({
       }
       render() {
         this._renderedComponents = /* @__PURE__ */ new Set();
-        const flexboxProps = Utils25.fastOmit(
+        const flexboxProps = Utils26.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -218573,12 +218204,12 @@ var require_injected_component_set = __commonJS({
         const exposedProps = this.props.exposedProps != null ? this.props.exposedProps : {};
         const elements = this.state.components.map((Component20) => {
           if (this.props.containersRequired === false || Component20.containerRequired === false) {
-            return React52.createElement(
+            return React54.createElement(
               Component20,
               Object.assign({ key: Component20.displayName }, exposedProps)
             );
           } else {
-            return React52.createElement(
+            return React54.createElement(
               UnsafeComponent2,
               Object.assign(
                 {
@@ -218599,7 +218230,7 @@ var require_injected_component_set = __commonJS({
           elements.splice(
             0,
             0,
-            React52.createElement(
+            React54.createElement(
               InjectedComponentLabel,
               Object.assign(
                 { key: "_label", matching: this.props.matching },
@@ -218608,13 +218239,13 @@ var require_injected_component_set = __commonJS({
             )
           );
           elements.push(
-            React52.createElement("span", {
+            React54.createElement("span", {
               key: "_clear",
               style: { clear: "both" }
             })
           );
         }
-        return React52.createElement(
+        return React54.createElement(
           Flexbox3,
           Object.assign({ className: flexboxClassName }, flexboxProps),
           elements,
@@ -218640,8 +218271,8 @@ var require_injected_component_set = __commonJS({
         };
       }
     };
-    InjectedComponentSet4.initClass();
-    module2.exports = InjectedComponentSet4;
+    InjectedComponentSet5.initClass();
+    module2.exports = InjectedComponentSet5;
   }
 });
 
@@ -218719,15 +218350,15 @@ var init_config_prop_container = __esm({
 // src/components/disclosure-triangle.jsx
 var require_disclosure_triangle = __commonJS({
   "src/components/disclosure-triangle.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react63.default.Component {
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react65.default.Component {
       static initClass() {
         _DisclosureTriangle.displayName = "DisclosureTriangle";
         _DisclosureTriangle.propTypes = {
-          collapsed: import_prop_types66.default.bool,
-          visible: import_prop_types66.default.bool,
-          onCollapseToggled: import_prop_types66.default.func
+          collapsed: import_prop_types68.default.bool,
+          visible: import_prop_types68.default.bool,
+          onCollapseToggled: import_prop_types68.default.func
         };
         _DisclosureTriangle.defaultProps = { onCollapseToggled() {
         } };
@@ -218740,10 +218371,10 @@ var require_disclosure_triangle = __commonJS({
         if (this.props.collapsed) {
           classnames14 += " collapsed";
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: classnames14, onClick: this.props.onCollapseToggled },
-          import_react63.default.createElement("div", null)
+          import_react65.default.createElement("div", null)
         );
       }
     };
@@ -219424,8 +219055,8 @@ var init_outline_view_item = __esm({
         event2.stopPropagation();
         const item = this.props.item;
         const contextMenuLabel = item.contextMenuLabel || item.name;
-        const { remote: remote9 } = nodeRequire17("electron");
-        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
+        const { remote: remote10 } = nodeRequire17("electron");
+        const { Menu: Menu7, MenuItem: MenuItem2 } = remote10;
         const menu = new Menu7();
         if (this.props.item.onEdited) {
           menu.append(
@@ -219443,7 +219074,7 @@ var init_outline_view_item = __esm({
             })
           );
         }
-        menu.popup(remote9.getCurrentWindow());
+        menu.popup(remote10.getCurrentWindow());
       };
       // Renderers
       _renderCount(item = this.props.item) {
@@ -222086,11 +221717,11 @@ function AttachmentActionIcon(props) {
   };
   return /* @__PURE__ */ React.createElement("div", { className: "file-action-icon", onClick: onClickActionIcon }, /* @__PURE__ */ React.createElement(retina_img_default, { name: actionIconName, mode: retinaImgMode }));
 }
-var import_node_fs3, import_node_path9, import_classnames18, import_react54, import_prop_types57, import_react_dom23, import_pick_react_known_prop3, import_spinner3, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
+var import_node_fs3, import_node_path10, import_classnames18, import_react54, import_prop_types57, import_react_dom23, import_pick_react_known_prop3, import_spinner3, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
 var init_attachment_items = __esm({
   "src/components/attachment-items.jsx"() {
     import_node_fs3 = __toESM(require("fs"));
-    import_node_path9 = __toESM(require("path"));
+    import_node_path10 = __toESM(require("path"));
     import_classnames18 = __toESM(require_classnames());
     import_react54 = __toESM(require_react());
     import_prop_types57 = __toESM(require_prop_types());
@@ -222151,7 +221782,7 @@ var init_attachment_items = __esm({
       _onDragStart = (event2) => {
         const { contentType, filePath } = this.props;
         if (import_node_fs3.default.existsSync(filePath)) {
-          const downloadURL = `${contentType}:${import_node_path9.default.basename(filePath)}:file://${filePath}`;
+          const downloadURL = `${contentType}:${import_node_path10.default.basename(filePath)}:file://${filePath}`;
           event2.dataTransfer.setData("DownloadURL", downloadURL);
           event2.dataTransfer.setData("text/nylas-file-url", downloadURL);
           const fileIconImg = import_react_dom23.default.findDOMNode(this.fileIconImgRef?.current);
@@ -222352,6 +221983,7 @@ var init_dropdown_menu = __esm({
     import_prop_types59 = __toESM(require_prop_types());
     init_nylas_component_kit();
     DropdownMenu = class extends React43.Component {
+      _rootRef = React43.createRef();
       static propTypes = {
         intitialSelectionItem: import_prop_types59.default.object,
         onSelect: import_prop_types59.default.func,
@@ -222384,7 +222016,7 @@ var init_dropdown_menu = __esm({
         this._close();
       };
       _onBlur = (e) => {
-        const node = ReactDOM21.findDOMNode(this);
+        const node = this._rootRef.current;
         let otherNode = e.relatedTarget;
         if (otherNode) {
           while (otherNode.parentElement) {
@@ -222411,6 +222043,7 @@ var init_dropdown_menu = __esm({
         return /* @__PURE__ */ React43.createElement(
           "div",
           {
+            ref: this._rootRef,
             tabIndex: "-1",
             onBlur: this._onBlur,
             style: { display: "inline-block" }
@@ -222433,12 +222066,12 @@ var init_dropdown_menu = __esm({
 // src/components/resizable-region.jsx
 var require_resizable_region = __commonJS({
   "src/components/resizable-region.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var React52 = require_react();
-    var ReactDOM27 = require_react_dom();
+    var import_prop_types68 = __toESM(require_prop_types());
+    var React54 = require_react();
+    var ReactDOM28 = require_react_dom();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var {
-      Utils: Utils25,
+      Utils: Utils26,
       Actions: Actions39,
       ComponentRegistry: ComponentRegistry3,
       PriorityUICoordinator: PriorityUICoordinator2
@@ -222505,19 +222138,19 @@ var require_resizable_region = __commonJS({
         }
       }
     };
-    var ResizableRegion2 = class _ResizableRegion extends React52.Component {
+    var ResizableRegion3 = class _ResizableRegion extends React54.Component {
       static initClass() {
         _ResizableRegion.displayName = "ResizableRegion";
         _ResizableRegion.propTypes = {
-          handle: import_prop_types66.default.object.isRequired,
-          onResize: import_prop_types66.default.func,
-          initialWidth: import_prop_types66.default.number,
-          minWidth: import_prop_types66.default.number,
-          maxWidth: import_prop_types66.default.number,
-          initialHeight: import_prop_types66.default.number,
-          minHeight: import_prop_types66.default.number,
-          maxHeight: import_prop_types66.default.number,
-          style: import_prop_types66.default.object
+          handle: import_prop_types68.default.object.isRequired,
+          onResize: import_prop_types68.default.func,
+          initialWidth: import_prop_types68.default.number,
+          minWidth: import_prop_types68.default.number,
+          maxWidth: import_prop_types68.default.number,
+          initialHeight: import_prop_types68.default.number,
+          minHeight: import_prop_types68.default.number,
+          maxHeight: import_prop_types68.default.number,
+          style: import_prop_types68.default.object
         };
       }
       constructor(props) {
@@ -222568,21 +222201,21 @@ var require_resizable_region = __commonJS({
             containerStyle.flex = 1;
           }
         }
-        const otherProps = Utils25.fastOmit(
+        const otherProps = Utils26.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return React52.createElement(
+        return React54.createElement(
           "div",
           Object.assign({ style: containerStyle }, otherProps),
           this.props.children,
-          React52.createElement(
+          React54.createElement(
             "div",
             {
               className: this.props.handle.className,
               onMouseDown: this._mouseDown
             },
-            React52.createElement("div", null)
+            React54.createElement("div", null)
           )
         );
       }
@@ -222613,7 +222246,7 @@ var require_resizable_region = __commonJS({
         if (event2.button !== 0) {
           return;
         }
-        const bcr = ReactDOM27.findDOMNode(this).getBoundingClientRect();
+        const bcr = ReactDOM28.findDOMNode(this).getBoundingClientRect();
         this.setState({
           dragging: true,
           bcr
@@ -222656,9 +222289,9 @@ var require_resizable_region = __commonJS({
         return event2.preventDefault();
       }
     };
-    ResizableRegion2.initClass();
-    ResizableRegion2.Handle = ResizableHandle;
-    module2.exports = ResizableRegion2;
+    ResizableRegion3.initClass();
+    ResizableRegion3.Handle = ResizableHandle;
+    module2.exports = ResizableRegion3;
   }
 });
 
@@ -223291,7 +222924,7 @@ var init_syncback_task_api_request = __esm({
 var require_sound_registry = __commonJS({
   "src/registries/sound-registry.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var path14 = require("path");
+    var path15 = require("path");
     var SoundRegistry4 = class {
       constructor() {
         this._sounds = {};
@@ -223309,28 +222942,28 @@ var require_sound_registry = __commonJS({
           if (src.indexOf("nylas://") === 0) {
             a.src = src;
           } else {
-            a.src = path14.join(resourcePath, "static", "sounds", src);
+            a.src = path15.join(resourcePath, "static", "sounds", src);
           }
         } else if (_4.isArray(src)) {
           const { resourcePath: resolvedPath } = NylasEnv.getLoadSettings();
           const args = [resolvedPath].concat(src);
-          a.src = path14.join.apply(this, args);
+          a.src = path15.join.apply(this, args);
         }
         a.autoplay = true;
         return a.play();
       }
-      register(name2, path15) {
+      register(name2, path16) {
         if (_4.isObject(name2)) {
           return (() => {
             const result2 = [];
             for (var key in name2) {
-              path15 = name2[key];
-              result2.push(this._sounds[key] = path15);
+              path16 = name2[key];
+              result2.push(this._sounds[key] = path16);
             }
             return result2;
           })();
         } else if (_4.isString(name2)) {
-          return this._sounds[name2] = path15;
+          return this._sounds[name2] = path16;
         }
       }
       unregister(name2) {
@@ -229098,27 +228731,27 @@ var require_util5 = __commonJS({
       };
     }
     var normalize = lruMemoize(function normalize2(aPath) {
-      var path14 = aPath;
+      var path15 = aPath;
       var url6 = urlParse(aPath);
       if (url6) {
         if (!url6.path) {
           return aPath;
         }
-        path14 = url6.path;
+        path15 = url6.path;
       }
-      var isAbsolute = exports2.isAbsolute(path14);
+      var isAbsolute = exports2.isAbsolute(path15);
       var parts = [];
       var start = 0;
       var i = 0;
       while (true) {
         start = i;
-        i = path14.indexOf("/", start);
+        i = path15.indexOf("/", start);
         if (i === -1) {
-          parts.push(path14.slice(start));
+          parts.push(path15.slice(start));
           break;
         } else {
-          parts.push(path14.slice(start, i));
-          while (i < path14.length && path14[i] === "/") {
+          parts.push(path15.slice(start, i));
+          while (i < path15.length && path15[i] === "/") {
             i++;
           }
         }
@@ -229139,15 +228772,15 @@ var require_util5 = __commonJS({
           }
         }
       }
-      path14 = parts.join("/");
-      if (path14 === "") {
-        path14 = isAbsolute ? "/" : ".";
+      path15 = parts.join("/");
+      if (path15 === "") {
+        path15 = isAbsolute ? "/" : ".";
       }
       if (url6) {
-        url6.path = path14;
+        url6.path = path15;
         return urlGenerate(url6);
       }
-      return path14;
+      return path15;
     });
     exports2.normalize = normalize;
     function join(aRoot, aPath) {
@@ -230839,11 +230472,11 @@ var require_previous_map = __commonJS({
     var { existsSync, readFileSync, realpathSync } = require("fs");
     var { dirname: dirname4, isAbsolute, join, relative, sep } = require("path");
     var { SourceMapConsumer, SourceMapGenerator } = require_source_map3();
-    function realPath(path14) {
+    function realPath(path15) {
       try {
-        return realpathSync(path14);
+        return realpathSync(path15);
       } catch {
-        return path14;
+        return path15;
       }
     }
     function fromBase64(str) {
@@ -230906,19 +230539,19 @@ var require_previous_map = __commonJS({
           this.annotation = this.getAnnotationURL(css.substring(start, end));
         }
       }
-      loadFile(path14, cssFile, trusted) {
+      loadFile(path15, cssFile, trusted) {
         if (!trusted && !this.unsafeMap) {
-          if (!/\.map$/i.test(path14)) return void 0;
+          if (!/\.map$/i.test(path15)) return void 0;
           if (!cssFile) return void 0;
-          let rel = relative(realPath(dirname4(cssFile)), realPath(path14));
+          let rel = relative(realPath(dirname4(cssFile)), realPath(path15));
           if (rel === ".." || rel.startsWith(".." + sep) || isAbsolute(rel)) {
             return void 0;
           }
         }
-        this.root = dirname4(path14);
-        if (existsSync(path14)) {
-          this.mapFile = path14;
-          return readFileSync(path14, "utf-8").toString().trim();
+        this.root = dirname4(path15);
+        if (existsSync(path15)) {
+          this.mapFile = path15;
+          return readFileSync(path15, "utf-8").toString().trim();
         }
       }
       loadMap(file, prev) {
@@ -231691,9 +231324,9 @@ var require_map_generator = __commonJS({
         if (typeof this.mapOpts.annotation === "string") {
           from = dirname4(resolve7(from, this.mapOpts.annotation));
         }
-        let path14 = relative(from, file);
-        this.memoizedPaths.set(file, path14);
-        return path14;
+        let path15 = relative(from, file);
+        this.memoizedPaths.set(file, path15);
+        return path15;
       }
       previous() {
         if (!this.previousMaps) {
@@ -231748,12 +231381,12 @@ var require_map_generator = __commonJS({
           return window.btoa(unescape(encodeURIComponent(str)));
         }
       }
-      toFileUrl(path14) {
-        let cached = this.memoizedFileURLs.get(path14);
+      toFileUrl(path15) {
+        let cached = this.memoizedFileURLs.get(path15);
         if (cached) return cached;
         if (pathToFileURL) {
-          let fileURL = pathToFileURL(path14).toString();
-          this.memoizedFileURLs.set(path14, fileURL);
+          let fileURL = pathToFileURL(path15).toString();
+          this.memoizedFileURLs.set(path15, fileURL);
           return fileURL;
         } else {
           throw new Error(
@@ -231761,14 +231394,14 @@ var require_map_generator = __commonJS({
           );
         }
       }
-      toUrl(path14) {
-        let cached = this.memoizedURLs.get(path14);
+      toUrl(path15) {
+        let cached = this.memoizedURLs.get(path15);
         if (cached) return cached;
         if (sep === "\\") {
-          path14 = path14.replace(/\\/g, "/");
+          path15 = path15.replace(/\\/g, "/");
         }
-        let url6 = encodeURI(path14).replace(/[#?]/g, encodeURIComponent);
-        this.memoizedURLs.set(path14, url6);
+        let url6 = encodeURI(path15).replace(/[#?]/g, encodeURIComponent);
+        this.memoizedURLs.set(path15, url6);
         return url6;
       }
     };
@@ -236489,7 +236122,7 @@ var init_syncback_category_task = __esm({
         const account = account_store_default.accountForId(accountId);
         const collection = account.usesLabels() ? "labels" : "folders";
         const method = serverId ? "PUT" : "POST";
-        const path14 = serverId ? `/${collection}/${serverId}` : `/${collection}`;
+        const path15 = serverId ? `/${collection}/${serverId}` : `/${collection}`;
         let runPromise = Promise.resolve();
         if (this._syncbackRequestId) {
           runPromise = syncback_task_api_request_default.waitForQueuedRequest(
@@ -236499,7 +236132,7 @@ var init_syncback_category_task = __esm({
           runPromise = new syncback_task_api_request_default({
             api: nylas_api_default,
             options: {
-              path: path14,
+              path: path15,
               method,
               accountId,
               body: {
@@ -238063,7 +237696,7 @@ var require_mailbox_perspective = __commonJS({
     init_thread();
     init_category();
     var import_actions38 = __toESM(require_actions());
-    var Utils25 = UtilsNS6.default || UtilsNS6;
+    var Utils26 = UtilsNS6.default || UtilsNS6;
     var ChangeUnreadTask2 = null;
     var MailboxPerspective3 = class _MailboxPerspective {
       static initClass() {
@@ -238076,13 +237709,13 @@ var require_mailbox_perspective = __commonJS({
             if (json2.type === CategoryMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils25.registeredObjectReviver
+                Utils26.registeredObjectReviver
               );
               return _MailboxPerspective.forCategories(categories);
             } else if (json2.type === UnreadMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils25.registeredObjectReviver
+                Utils26.registeredObjectReviver
               );
               return _MailboxPerspective.forUnread(categories);
             } else if (json2.type === StarredMailboxPerspective.name) {
@@ -238399,7 +238032,7 @@ var require_mailbox_perspective = __commonJS({
         const json2 = super.toJSON(...arguments);
         json2.serializedCategories = JSON.stringify(
           this._categories,
-          Utils25.registeredObjectReplacer
+          Utils26.registeredObjectReplacer
         );
         return json2;
       }
@@ -238452,8 +238085,8 @@ var require_mailbox_perspective = __commonJS({
         return super.canReceiveThreadsFromAccountIds(...arguments) && !index_default_default.any(this._categories, (c) => c.isLockedCategory());
       }
       receiveThreads(threadIds) {
-        const FocusedPerspectiveStore4 = (init_focused_perspective_store(), __toCommonJS(focused_perspective_store_exports)).default;
-        const current = FocusedPerspectiveStore4.current();
+        const FocusedPerspectiveStore5 = (init_focused_perspective_store(), __toCommonJS(focused_perspective_store_exports)).default;
+        const current = FocusedPerspectiveStore5.current();
         return database_store_default.modelify(thread_default, threadIds).then((threads) => {
           const tasks = task_factory_default.tasksForApplyingCategories({
             source: "Dragged Into List",
@@ -239701,26 +239334,26 @@ var init_mail_label_set = __esm({
 // src/components/mail-important-icon.jsx
 var require_mail_important_icon = __commonJS({
   "src/components/mail-important-icon.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React52 = require_react();
+    var React54 = require_react();
     var classNames6 = require_classnames();
     var {
       Actions: Actions39,
-      Utils: Utils25,
+      Utils: Utils26,
       Thread: Thread4,
       TaskFactory: TaskFactory3,
       CategoryStore: CategoryStore4,
-      FocusedPerspectiveStore: FocusedPerspectiveStore4,
+      FocusedPerspectiveStore: FocusedPerspectiveStore5,
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ShowImportantKey = "core.workspace.showImportant";
-    var MailImportantIcon = class _MailImportantIcon extends React52.Component {
+    var MailImportantIcon = class _MailImportantIcon extends React54.Component {
       static initClass() {
         _MailImportantIcon.displayName = "MailImportantIcon";
         _MailImportantIcon.propTypes = {
-          thread: import_prop_types66.default.object,
-          showIfAvailableForAnyAccount: import_prop_types66.default.bool
+          thread: import_prop_types68.default.object,
+          showIfAvailableForAnyAccount: import_prop_types68.default.bool
         };
       }
       constructor(props) {
@@ -239743,7 +239376,7 @@ var require_mail_important_icon = __commonJS({
         let category = null;
         let visible = false;
         if (props.showIfAvailableForAnyAccount) {
-          const perspective = FocusedPerspectiveStore4.current();
+          const perspective = FocusedPerspectiveStore5.current();
           for (accountId of Array.from(perspective.accountIds)) {
             var account = AccountStore5.accountForId(accountId);
             var accountImportant = CategoryStore4.getStandardCategory(
@@ -239771,7 +239404,7 @@ var require_mail_important_icon = __commonJS({
         return { visible, category, isImportant };
       }
       componentDidMount() {
-        this.unsubscribe = FocusedPerspectiveStore4.listen(() => {
+        this.unsubscribe = FocusedPerspectiveStore5.listen(() => {
           return this.setState(this.getState());
         });
         return this.subscription = NylasEnv.config.onDidChange(
@@ -239810,7 +239443,7 @@ var require_mail_important_icon = __commonJS({
         } else {
           title = "Mark as important";
         }
-        return React52.createElement("div", {
+        return React54.createElement("div", {
           className: classes,
           title,
           onClick: this._onToggleImportant
@@ -239847,21 +239480,21 @@ var require_mail_important_icon = __commonJS({
 // src/components/generated-form.jsx
 var require_generated_form = __commonJS({
   "src/components/generated-form.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react63 = __toESM(require_react());
+    var import_react65 = __toESM(require_react());
     init_nylas_exports();
     init_date_picker();
     var import_tab_group_region = __toESM(require_tab_group_region());
-    var idPropType = import_prop_types66.default.oneOfType([import_prop_types66.default.string, import_prop_types66.default.number]);
-    var FormItem = class _FormItem extends import_react63.default.Component {
+    var idPropType = import_prop_types68.default.oneOfType([import_prop_types68.default.string, import_prop_types68.default.number]);
+    var FormItem = class _FormItem extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
-        this.inputRef = import_react63.default.createRef();
-        this.formRef = import_react63.default.createRef();
-        this.inputWrapRef = import_react63.default.createRef();
-        this.formHeaderErrorRef = import_react63.default.createRef();
+        this.inputRef = import_react65.default.createRef();
+        this.formRef = import_react65.default.createRef();
+        this.inputWrapRef = import_react65.default.createRef();
+        this.formHeaderErrorRef = import_react65.default.createRef();
         this.render = this.render.bind(this);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
         this._renderError = this._renderError.bind(this);
@@ -239897,63 +239530,63 @@ var require_generated_form = __commonJS({
           id: idPropType.isRequired,
           // Either a type of input or any type that can be passed into
           // `React.createElement(type, ...)`
-          type: import_prop_types66.default.string.isRequired,
+          type: import_prop_types68.default.string.isRequired,
           // The name as POSTed to the eventual endpoint.
-          name: import_prop_types66.default.string,
+          name: import_prop_types68.default.string,
           // The human-readable display label for the formItem
-          label: import_prop_types66.default.node,
+          label: import_prop_types68.default.node,
           // Most input types take strings, numbers, and bools. Some types (like
           // "reference" can get passed arrays)
-          value: import_prop_types66.default.oneOfType([
-            import_prop_types66.default.string,
-            import_prop_types66.default.number,
-            import_prop_types66.default.bool
+          value: import_prop_types68.default.oneOfType([
+            import_prop_types68.default.string,
+            import_prop_types68.default.number,
+            import_prop_types68.default.bool
           ]),
-          defaultValue: import_prop_types66.default.string,
+          defaultValue: import_prop_types68.default.string,
           // A function that takes two arguments:
           //   - The id of this FormItem
           //   - The new value of the FormItem
-          onChange: import_prop_types66.default.func,
+          onChange: import_prop_types68.default.func,
           // FormItems can either explicitly set the disabled state, or determine
           // the disabled state by whether or not this is a 'new' or 'update'
           // form.
-          formType: import_prop_types66.default.oneOf(["new", "update"]),
-          disabled: import_prop_types66.default.bool,
-          editableForNew: import_prop_types66.default.bool,
-          editableForUpdate: import_prop_types66.default.bool,
-          formItemError: import_prop_types66.default.shape({
+          formType: import_prop_types68.default.oneOf(["new", "update"]),
+          disabled: import_prop_types68.default.bool,
+          editableForNew: import_prop_types68.default.bool,
+          editableForUpdate: import_prop_types68.default.bool,
+          formItemError: import_prop_types68.default.shape({
             id: idPropType,
             // The formItemId
-            message: import_prop_types66.default.string
+            message: import_prop_types68.default.string
           }),
           // selectOptions
           // An array of options.
-          selectOptions: import_prop_types66.default.arrayOf(
-            import_prop_types66.default.shape({
-              label: import_prop_types66.default.node,
-              value: import_prop_types66.default.string
+          selectOptions: import_prop_types68.default.arrayOf(
+            import_prop_types68.default.shape({
+              label: import_prop_types68.default.node,
+              value: import_prop_types68.default.string
             })
           ),
           // Common <input> props.
           // Anything that can be passed into a standard React <input> item will
           // be passed along. Here are some common ones. There can be many more
-          multiple: import_prop_types66.default.bool,
-          required: import_prop_types66.default.bool,
-          prefilled: import_prop_types66.default.bool,
-          maxlength: import_prop_types66.default.number,
-          placeholder: import_prop_types66.default.node,
-          tabIndex: import_prop_types66.default.oneOfType([import_prop_types66.default.number, import_prop_types66.default.string]),
+          multiple: import_prop_types68.default.bool,
+          required: import_prop_types68.default.bool,
+          prefilled: import_prop_types68.default.bool,
+          maxlength: import_prop_types68.default.number,
+          placeholder: import_prop_types68.default.node,
+          tabIndex: import_prop_types68.default.oneOfType([import_prop_types68.default.number, import_prop_types68.default.string]),
           //### Used by "reference" type objects
-          customComponent: import_prop_types66.default.func,
-          contextData: import_prop_types66.default.object,
-          referenceTo: import_prop_types66.default.oneOfType([import_prop_types66.default.array, import_prop_types66.default.string]),
-          referenceType: import_prop_types66.default.oneOf([
+          customComponent: import_prop_types68.default.func,
+          contextData: import_prop_types68.default.object,
+          referenceTo: import_prop_types68.default.oneOfType([import_prop_types68.default.array, import_prop_types68.default.string]),
+          referenceType: import_prop_types68.default.oneOf([
             "belongsTo",
             "hasMany",
             "hasManyThrough"
           ]),
-          referenceThrough: import_prop_types66.default.string,
-          currentFormValues: import_prop_types66.default.object
+          referenceThrough: import_prop_types68.default.string,
+          currentFormValues: import_prop_types68.default.object
         };
       }
       render() {
@@ -239965,25 +239598,25 @@ var require_generated_form = __commonJS({
         });
         let { label } = this.props;
         if (this.props.required) {
-          label = import_react63.default.createElement(
+          label = import_react65.default.createElement(
             "strong",
             null,
-            import_react63.default.createElement("span", { className: "required" }, "*"),
+            import_react65.default.createElement("span", { className: "required" }, "*"),
             this.props.label
           );
         }
         if (this.props.type === "hidden") {
           return this._renderInput();
         } else {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className: classes, ref: this.inputWrapRef },
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "label-area" },
-              import_react63.default.createElement("label", { htmlFor: this.props.id }, label)
+              import_react65.default.createElement("label", { htmlFor: this.props.id }, label)
             ),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "input-area" },
               this._renderInput(),
@@ -240008,7 +239641,7 @@ var require_generated_form = __commonJS({
           return false;
         }
         const msg = this.props.formItemError.message;
-        return import_react63.default.createElement("div", { className: "form-error" }, msg);
+        return import_react65.default.createElement("div", { className: "form-error" }, msg);
       }
       _isDisabled() {
         return this.props.disabled || this.props.formType === "new" && this.props.editableForNew === false || this.props.formType === "update" && this.props.editableForUpdate === false;
@@ -240019,10 +239652,10 @@ var require_generated_form = __commonJS({
           onChange: (eventOrValue) => {
             return this.props.onChange(
               this.props.id,
-              __guard__2(
+              __guard__3(
                 eventOrValue != null ? eventOrValue.target : void 0,
                 (x3) => x3.value
-              ) != null ? __guard__2(
+              ) != null ? __guard__3(
                 eventOrValue != null ? eventOrValue.target : void 0,
                 (x3) => x3.value
               ) : eventOrValue
@@ -240033,10 +239666,10 @@ var require_generated_form = __commonJS({
           inputProps.disabled = true;
         }
         if (_FormItem.inputElementTypes[this.props.type]) {
-          return import_react63.default.createElement("input", inputProps);
+          return import_react65.default.createElement("input", inputProps);
         } else if (this.props.type === "select") {
           const options2 = (this.props.selectOptions != null ? this.props.selectOptions : []).map(
-            (optionData) => import_react63.default.createElement(
+            (optionData) => import_react65.default.createElement(
               "option",
               Object.assign({}, optionData, {
                 key: `${Utils13.generateTempId()}-optionData.value`
@@ -240045,24 +239678,24 @@ var require_generated_form = __commonJS({
             )
           );
           options2.unshift(
-            import_react63.default.createElement("option", {
+            import_react65.default.createElement("option", {
               key: `${Utils13.generateTempId()}-blank-option`
             })
           );
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "select",
             Object.assign({}, inputProps),
             options2
           );
         } else if (this.props.type === "textarea") {
-          return import_react63.default.createElement("textarea", inputProps);
+          return import_react65.default.createElement("textarea", inputProps);
         } else if (this.props.type === "date") {
           inputProps.dateFormat = "YYYY-MM-DD";
-          return import_react63.default.createElement(DatePicker, inputProps);
+          return import_react65.default.createElement(DatePicker, inputProps);
         } else if (this.props.type === "EmptySpace") {
-          return import_react63.default.createElement("div", { className: "empty-space" });
+          return import_react65.default.createElement("div", { className: "empty-space" });
         } else if (index_default_default.isFunction(this.props.customComponent)) {
-          return import_react63.default.createElement(this.props.customComponent, inputProps);
+          return import_react65.default.createElement(this.props.customComponent, inputProps);
         } else {
           return console.warn(
             `We do not support type ${this.props.type} with attributes:`,
@@ -240072,7 +239705,7 @@ var require_generated_form = __commonJS({
       }
     };
     FormItem.initClass();
-    var GeneratedFieldset = class _GeneratedFieldset extends import_react63.default.Component {
+    var GeneratedFieldset = class _GeneratedFieldset extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -240088,28 +239721,28 @@ var require_generated_form = __commonJS({
         _GeneratedFieldset.propTypes = {
           // Some sort of unique identifier
           id: idPropType.isRequired,
-          formItems: import_prop_types66.default.arrayOf(
-            import_prop_types66.default.shape(
+          formItems: import_prop_types68.default.arrayOf(
+            import_prop_types68.default.shape(
               index_default_default.extend(FormItem.propTypes, {
-                row: import_prop_types66.default.number,
-                column: import_prop_types66.default.number
+                row: import_prop_types68.default.number,
+                column: import_prop_types68.default.number
               })
             )
           ),
           // The key is the formItem id, the value is the error object
-          formItemErrors: import_prop_types66.default.arrayOf(FormItem.propTypes.formItemError),
+          formItemErrors: import_prop_types68.default.arrayOf(FormItem.propTypes.formItemError),
           // A function that takes two arguments:
           //   - The id of this GeneratedFieldset
           //   - A new array of updated formItems with the correct value.
-          onChange: import_prop_types66.default.func,
-          heading: import_prop_types66.default.node,
-          useHeading: import_prop_types66.default.bool,
-          formType: import_prop_types66.default.oneOf(["new", "update"]),
-          zIndex: import_prop_types66.default.number,
-          lastFieldset: import_prop_types66.default.bool,
-          firstFieldset: import_prop_types66.default.bool,
-          contextData: import_prop_types66.default.object,
-          currentFormValues: import_prop_types66.default.object
+          onChange: import_prop_types68.default.func,
+          heading: import_prop_types68.default.node,
+          useHeading: import_prop_types68.default.bool,
+          formType: import_prop_types68.default.oneOf(["new", "update"]),
+          zIndex: import_prop_types68.default.number,
+          lastFieldset: import_prop_types68.default.bool,
+          firstFieldset: import_prop_types68.default.bool,
+          contextData: import_prop_types68.default.object,
+          currentFormValues: import_prop_types68.default.object
         };
       }
       render() {
@@ -240117,14 +239750,14 @@ var require_generated_form = __commonJS({
           "first-fieldset": this.props.firstFieldset,
           "last-fieldset": this.props.lastFieldset
         });
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "fieldset",
           {
             style: { zIndex: this.props.zIndex != null ? this.props.zIndex : 0 },
             className: classStr
           },
           this._renderHeader(),
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             { className: "fieldset-form-items" },
             this._renderFormItems()
@@ -240137,13 +239770,13 @@ var require_generated_form = __commonJS({
       }
       _renderHeader() {
         if (this.props.useHeading) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "header",
             null,
-            import_react63.default.createElement("legend", null, this.props.heading)
+            import_react65.default.createElement("legend", null, this.props.heading)
           );
         } else {
-          return import_react63.default.createElement("div", null);
+          return import_react65.default.createElement("div", null);
         }
       }
       _renderFormItems() {
@@ -240159,7 +239792,7 @@ var require_generated_form = __commonJS({
           if (allHidden) {
             style.display = "none";
           }
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className: "row", "data-row-num": rowNum, style, key: rowNum },
             index_default_default.map(byCol, (itemsInCol, colNum) => {
@@ -240167,12 +239800,12 @@ var require_generated_form = __commonJS({
                 itemsInCol = [];
               }
               const colEls = [
-                import_react63.default.createElement(
+                import_react65.default.createElement(
                   "div",
                   { className: "column", "data-col-num": colNum, key: colNum },
                   itemsInCol.map((formItemData) => {
                     const props = this._propsFromFormItemData(formItemData);
-                    return import_react63.default.createElement(
+                    return import_react65.default.createElement(
                       FormItem,
                       Object.assign({}, props, {
                         key: `form-item-${formItemData.id}`
@@ -240183,7 +239816,7 @@ var require_generated_form = __commonJS({
               ];
               if (colNum !== numCols - 1) {
                 colEls.push(
-                  import_react63.default.createElement("div", {
+                  import_react65.default.createElement("div", {
                     className: "column-spacer",
                     "data-col-num": `${colNum}-spacer`,
                     key: `${colNum}-spacer`
@@ -240223,11 +239856,11 @@ var require_generated_form = __commonJS({
         return this.props.onChange(this.props.id, newFormItems);
       }
       _renderFooter() {
-        return import_react63.default.createElement("footer", null);
+        return import_react65.default.createElement("footer", null);
       }
     };
     GeneratedFieldset.initClass();
-    var GeneratedForm = class _GeneratedForm extends import_react63.default.Component {
+    var GeneratedForm = class _GeneratedForm extends import_react65.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -240245,24 +239878,24 @@ var require_generated_form = __commonJS({
         _GeneratedForm.propTypes = {
           // Some sort of unique identifier
           id: idPropType,
-          errors: import_prop_types66.default.shape({
-            formError: import_prop_types66.default.shape({
-              message: import_prop_types66.default.string,
-              location: import_prop_types66.default.string
+          errors: import_prop_types68.default.shape({
+            formError: import_prop_types68.default.shape({
+              message: import_prop_types68.default.string,
+              location: import_prop_types68.default.string
               // Can be "header" (default) or "footer"
             }),
             formItemErrors: GeneratedFieldset.propTypes.formItemErrors
           }),
-          fieldsets: import_prop_types66.default.arrayOf(
-            import_prop_types66.default.shape(GeneratedFieldset.propTypes)
+          fieldsets: import_prop_types68.default.arrayOf(
+            import_prop_types68.default.shape(GeneratedFieldset.propTypes)
           ),
           // A function whose argument is a new set of Props
-          onChange: import_prop_types66.default.func.isRequired,
-          onSubmit: import_prop_types66.default.func.isRequired,
-          style: import_prop_types66.default.object,
-          formType: import_prop_types66.default.oneOf(["new", "update"]),
-          prefilled: import_prop_types66.default.bool,
-          contextData: import_prop_types66.default.object
+          onChange: import_prop_types68.default.func.isRequired,
+          onSubmit: import_prop_types68.default.func.isRequired,
+          style: import_prop_types68.default.object,
+          formType: import_prop_types68.default.oneOf(["new", "update"]),
+          prefilled: import_prop_types68.default.bool,
+          contextData: import_prop_types68.default.object
         };
         _GeneratedForm.defaultProps = {
           style: {},
@@ -240272,7 +239905,7 @@ var require_generated_form = __commonJS({
       }
       render() {
         const submitText = this.props.formType === "new" ? "Create" : "Update";
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "form",
           {
             className: "generated-form",
@@ -240282,20 +239915,20 @@ var require_generated_form = __commonJS({
             onKeyDown: this._onKeyDown,
             noValidate: true
           },
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             import_tab_group_region.default,
             null,
             this._renderHeaderFormError(),
             this._renderPrefilledMessage(),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "fieldsets" },
               this._renderFieldsets()
             ),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "div",
               { className: "form-footer" },
-              import_react63.default.createElement(
+              import_react65.default.createElement(
                 "button",
                 {
                   type: "button",
@@ -240323,11 +239956,11 @@ var require_generated_form = __commonJS({
       }
       _renderPrefilledMessage() {
         if (this.props.prefilled) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             { className: "prefilled-message" },
             `The `,
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               "span",
               { className: "highlighted" },
               "highlighted"
@@ -240338,7 +239971,7 @@ var require_generated_form = __commonJS({
       }
       _renderHeaderFormError() {
         if (this.props.errors != null ? this.props.errors.formError : void 0) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "div",
             {
               ref: this.formHeaderErrorRef,
@@ -240359,7 +239992,7 @@ var require_generated_form = __commonJS({
             props.currentFormValues = this._currentFormValues();
             props.firstFieldset = i === 0;
             props.lastFieldset = i !== 0 && i === this.props.fieldsets.length - 1;
-            return import_react63.default.createElement(
+            return import_react65.default.createElement(
               GeneratedFieldset,
               Object.assign({}, props, { ref: `fieldset-${fieldset.id}` })
             );
@@ -240407,7 +240040,7 @@ var require_generated_form = __commonJS({
       GeneratedForm,
       GeneratedFieldset
     };
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -240540,18 +240173,18 @@ var init_scenario_editor_models = __esm({
 // src/components/scenario-editor-row.jsx
 var require_scenario_editor_row = __commonJS({
   "src/components/scenario-editor-row.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
     init_index_all();
     var import_rx_lite10 = __toESM(require_rx_lite());
     var SOURCE_SELECT_NULL = "NULL";
-    var SourceSelect = class _SourceSelect extends import_react63.default.Component {
+    var SourceSelect = class _SourceSelect extends import_react65.default.Component {
       static initClass() {
         _SourceSelect.displayName = "SourceSelect";
         _SourceSelect.propTypes = {
-          value: import_prop_types66.default.string,
-          onChange: import_prop_types66.default.func.isRequired,
-          options: import_prop_types66.default.oneOfType([import_prop_types66.default.object, import_prop_types66.default.array]).isRequired
+          value: import_prop_types68.default.string,
+          onChange: import_prop_types68.default.func.isRequired,
+          options: import_prop_types68.default.oneOfType([import_prop_types68.default.object, import_prop_types68.default.array]).isRequired
         };
       }
       constructor(props) {
@@ -240595,18 +240228,18 @@ var require_scenario_editor_row = __commonJS({
       }
       render() {
         const { options: options2 } = this.state;
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "select",
           {
             value: this.props.value || SOURCE_SELECT_NULL,
             onChange: this._onChange
           },
-          import_react63.default.createElement("option", {
+          import_react65.default.createElement("option", {
             key: SOURCE_SELECT_NULL,
             value: SOURCE_SELECT_NULL
           }),
           this.state.options.map(({ value, name: name2 }) => {
-            return import_react63.default.createElement(
+            return import_react65.default.createElement(
               "option",
               { key: value, value },
               name2
@@ -240623,16 +240256,16 @@ var require_scenario_editor_row = __commonJS({
       }
     };
     SourceSelect.initClass();
-    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react63.default.Component {
+    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react65.default.Component {
       static initClass() {
         _ScenarioEditorRow.displayName = "ScenarioEditorRow";
         _ScenarioEditorRow.propTypes = {
-          instance: import_prop_types66.default.object.isRequired,
-          removable: import_prop_types66.default.bool,
-          templates: import_prop_types66.default.array.isRequired,
-          onChange: import_prop_types66.default.func,
-          onInsert: import_prop_types66.default.func,
-          onRemove: import_prop_types66.default.func
+          instance: import_prop_types68.default.object.isRequired,
+          removable: import_prop_types68.default.bool,
+          templates: import_prop_types68.default.array.isRequired,
+          onChange: import_prop_types68.default.func,
+          onInsert: import_prop_types68.default.func,
+          onRemove: import_prop_types68.default.func
         };
       }
       constructor(props) {
@@ -240651,33 +240284,33 @@ var require_scenario_editor_row = __commonJS({
           key: this.props.instance.templateKey
         });
         if (!template2) {
-          return import_react63.default.createElement(
+          return import_react65.default.createElement(
             "span",
             null,
             " Could not find template for instance key: ",
             this.props.instance.templateKey
           );
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           Flexbox,
           { direction: "row", className: "well-row" },
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "span",
             null,
             this._renderTemplateSelect(template2),
             this._renderComparator(template2),
-            import_react63.default.createElement("span", null, template2.valueLabel),
+            import_react65.default.createElement("span", null, template2.valueLabel),
             this._renderValue(template2)
           ),
-          import_react63.default.createElement("div", { style: { flex: 1 } }),
+          import_react65.default.createElement("div", { style: { flex: 1 } }),
           this._renderActions()
         );
       }
       _renderTemplateSelect(_template) {
         const options2 = this.props.templates.map(({ key, name: name2 }) => {
-          return import_react63.default.createElement("option", { value: key, key }, name2);
+          return import_react65.default.createElement("option", { value: key, key }, name2);
         });
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "select",
           {
             value: this.props.instance.templateKey,
@@ -240688,12 +240321,12 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderComparator(template2) {
         const options2 = index_default_default.map(template2.comparators, ({ name: name2 }, key) => {
-          return import_react63.default.createElement("option", { key, value: key }, name2);
+          return import_react65.default.createElement("option", { key, value: key }, name2);
         });
         if (!(options2.length > 0)) {
           return false;
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "select",
           {
             value: this.props.instance.comparatorKey,
@@ -240704,13 +240337,13 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderValue(template2) {
         if (template2.type === Template.Type.Enum) {
-          return import_react63.default.createElement(SourceSelect, {
+          return import_react65.default.createElement(SourceSelect, {
             value: this.props.instance.value,
             onChange: this._onChangeValue,
             options: template2.values
           });
         } else if (template2.type === Template.Type.String) {
-          return import_react63.default.createElement("input", {
+          return import_react65.default.createElement("input", {
             type: "text",
             value: this.props.instance.value,
             onChange: this._onChangeValue
@@ -240720,15 +240353,15 @@ var require_scenario_editor_row = __commonJS({
         }
       }
       _renderActions() {
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "actions" },
-          this.props.removable ? import_react63.default.createElement(
+          this.props.removable ? import_react65.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onRemove },
             "\u2212"
           ) : void 0,
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onInsert },
             "+"
@@ -240765,18 +240398,18 @@ var require_scenario_editor_row = __commonJS({
 // src/components/scenario-editor.jsx
 var require_scenario_editor = __commonJS({
   "src/components/scenario-editor.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
     init_scenario_editor_models();
     var import_scenario_editor_row = __toESM(require_scenario_editor_row());
-    var ScenarioEditor = class _ScenarioEditor extends import_react63.default.Component {
+    var ScenarioEditor = class _ScenarioEditor extends import_react65.default.Component {
       static initClass() {
         _ScenarioEditor.displayName = "ScenarioEditor";
         _ScenarioEditor.propTypes = {
-          instances: import_prop_types66.default.array,
-          className: import_prop_types66.default.string,
-          onChange: import_prop_types66.default.func,
-          templates: import_prop_types66.default.array
+          instances: import_prop_types68.default.array,
+          className: import_prop_types68.default.string,
+          onChange: import_prop_types68.default.func,
+          templates: import_prop_types68.default.array
         };
         _ScenarioEditor.Template = Template2;
         _ScenarioEditor.Comparator = Comparator;
@@ -240792,11 +240425,11 @@ var require_scenario_editor = __commonJS({
         this.state = { collapsed: true };
       }
       render() {
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: this.props.className },
           (this.props.instances || []).map((instance, idx) => {
-            return import_react63.default.createElement(import_scenario_editor_row.default, {
+            return import_react65.default.createElement(import_scenario_editor_row.default, {
               key: idx,
               instance,
               removable: this.props.instances.length > 1,
@@ -241075,10 +240708,10 @@ var init_nylas_component_kit = __esm({
       if (jsxModuleCache.has(absPath)) {
         return jsxModuleCache.get(absPath).exports;
       }
-      const fs11 = nodeRequire21("fs");
+      const fs12 = nodeRequire21("fs");
       const { transformSync } = nodeRequire21("esbuild");
       const { Module } = nodeRequire21("module");
-      const code = transformSync(fs11.readFileSync(absPath, "utf8"), {
+      const code = transformSync(fs12.readFileSync(absPath, "utf8"), {
         loader: "jsx",
         format: "cjs"
       }).code;
@@ -242420,7 +242053,7 @@ var init_destroy_category_task = __esm({
         }
         const { serverId, accountId } = this.category;
         const account = account_store_default.accountForId(accountId);
-        const path14 = account.usesLabels() ? `/labels/${serverId}` : `/folders/${serverId}`;
+        const path15 = account.usesLabels() ? `/labels/${serverId}` : `/folders/${serverId}`;
         nylas_api_default.incrementRemoteChangeLock(Category2, this.category.serverId);
         let runPromise = Promise.resolve();
         if (this._syncbackRequestId) {
@@ -242432,7 +242065,7 @@ var init_destroy_category_task = __esm({
             api: nylas_api_default,
             options: {
               accountId,
-              path: path14,
+              path: path15,
               method: "DELETE",
               onSyncbackRequestCreated: (syncbackRequest) => {
                 this._syncbackRequestId = syncbackRequest.id;
@@ -242489,7 +242122,7 @@ function verifySendAction(sendAction = {}, extension = {}) {
   return true;
 }
 function configKeyFromTitle(title) {
-  return import_underscore69.default.dasherize(title.toLowerCase());
+  return import_underscore70.default.dasherize(title.toLowerCase());
 }
 function getSendActions() {
   return [DefaultSendAction].concat(
@@ -242508,11 +242141,11 @@ function getSendActions() {
     }, [])
   );
 }
-var import_underscore69, import_nylas_store9, import_actions17, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
+var import_underscore70, import_nylas_store9, import_actions17, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
 var init_send_actions_store = __esm({
   "src/flux/stores/send-actions-store.js"() {
     init_index_all();
-    import_underscore69 = __toESM(require_underscore());
+    import_underscore70 = __toESM(require_underscore());
     import_nylas_store9 = __toESM(require_nylas_store());
     import_actions17 = __toESM(require_actions());
     init_send_draft_task();
@@ -243299,7 +242932,7 @@ var require_window_bridge = __commonJS({
   "src/window-bridge.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { ipcRenderer: ipcRenderer8 } = require("electron");
-    var Utils25 = require_utils();
+    var Utils26 = require_utils();
     var WindowBridge = class {
       constructor() {
         this._onResults = this._onResults.bind(this);
@@ -243309,10 +242942,10 @@ var require_window_bridge = __commonJS({
         ipcRenderer8.on("run-in-window", this._onRunInWindow);
       }
       runInWindow(window2, objectName, methodName, args) {
-        const taskId = Utils25.generateTempId();
+        const taskId = Utils26.generateTempId();
         return new Promise((resolve7, reject2) => {
           this._tasks[taskId] = { resolve: resolve7, reject: reject2 };
-          args = JSON.stringify(args, Utils25.registeredObjectReplacer);
+          args = JSON.stringify(args, Utils26.registeredObjectReplacer);
           const params = { window: window2, objectName, methodName, args, taskId };
           return ipcRenderer8.send("run-in-window", params);
         });
@@ -243328,7 +242961,7 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { returnValue, taskId } = param;
-        returnValue = JSON.parse(returnValue, Utils25.registeredObjectReviver);
+        returnValue = JSON.parse(returnValue, Utils26.registeredObjectReviver);
         this._tasks[taskId].resolve(returnValue);
         return delete this._tasks[taskId];
       }
@@ -243337,20 +242970,20 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { objectName, methodName, args, taskId } = param;
-        args = JSON.parse(args, Utils25.registeredObjectReviver);
+        args = JSON.parse(args, Utils26.registeredObjectReviver);
         const exports3 = globalThis.$n || (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
         const result2 = exports3[objectName][methodName].apply(null, args);
         if (_4.isFunction(result2.then)) {
           return result2.then((returnValue) => {
             returnValue = JSON.stringify(
               returnValue,
-              Utils25.registeredObjectReplacer
+              Utils26.registeredObjectReplacer
             );
             return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
           });
         } else {
           let returnValue = result2;
-          returnValue = JSON.stringify(returnValue, Utils25.registeredObjectReplacer);
+          returnValue = JSON.stringify(returnValue, Utils26.registeredObjectReplacer);
           return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
         }
       }
@@ -244018,7 +243651,7 @@ var require_draft_editing_session = __commonJS({
 var require_draft_factory = __commonJS({
   "src/flux/stores/draft-factory.js"(exports2, module2) {
     init_index_all();
-    var import_node_path15 = __toESM(require("path"));
+    var import_node_path16 = __toESM(require("path"));
     init_nylas_exports();
     var import_actions38 = __toESM(require_actions());
     init_database_store();
@@ -244028,8 +243661,8 @@ var require_draft_factory = __commonJS({
     init_focused_perspective_store();
     init_draft_helpers();
     init_message();
-    var import_utils26 = __toESM(require_utils());
     var import_utils27 = __toESM(require_utils());
+    var import_utils28 = __toESM(require_utils());
     var import_dom_utils3 = __toESM(require_dom_utils());
     var DraftStore3 = null;
     var DraftFactory2 = class {
@@ -244055,7 +243688,7 @@ var require_draft_factory = __commonJS({
               {
                 body: "",
                 subject: "",
-                clientId: import_utils26.default.generateTempId(),
+                clientId: import_utils27.default.generateTempId(),
                 from: [account.defaultMe()],
                 date: /* @__PURE__ */ new Date(),
                 draft: true,
@@ -244151,7 +243784,7 @@ var require_draft_factory = __commonJS({
           ({ to, cc } = message.participantsForReplyAll());
         }
         return this.createDraft({
-          subject: (0, import_utils27.subjectWithPrefix)(message.subject, "Re:"),
+          subject: (0, import_utils28.subjectWithPrefix)(message.subject, "Re:"),
           to,
           cc,
           from: [this._fromContactForReply(message)],
@@ -244179,7 +243812,7 @@ var require_draft_factory = __commonJS({
         }
         return draft_helpers_default.prepareBodyForQuoting(message.body).then((body) => {
           return this.createDraft({
-            subject: (0, import_utils27.subjectWithPrefix)(message.subject, "Fwd:"),
+            subject: (0, import_utils28.subjectWithPrefix)(message.subject, "Fwd:"),
             from: [this._fromContactForReply(message)],
             threadId: thread.id,
             accountId: message.accountId,
@@ -244201,7 +243834,7 @@ var require_draft_factory = __commonJS({
                 filename,
                 size: filesize,
                 targetPath,
-                targetDir: import_node_path15.default.dirname(targetPath)
+                targetDir: import_node_path16.default.dirname(targetPath)
               };
             });
             return draft;
@@ -244614,9 +244247,9 @@ ${draft.body}`;
               this._onPopoutDraftClientId(draftClientId, { timerId });
             }
           };
-          paths.forEach((path14) => {
+          paths.forEach((path15) => {
             import_actions21.default.addAttachment({
-              filePath: path14,
+              filePath: path15,
               messageClientId: draftClientId,
               onUploadCreated: callback
             });
@@ -245283,7 +244916,7 @@ function Ht(n7) {
   return isNaN(n7) ? n7.charCodeAt(0) : parseInt(n7, 10);
 }
 function ps(n7) {
-  return n7.replace(as, fe).replace(ls, ue).replace(cs2, qt).replace(fs5, de).replace(us, pe);
+  return n7.replace(as, fe).replace(ls, ue).replace(cs2, qt).replace(fs6, de).replace(us, pe);
 }
 function ms(n7) {
   return n7.replace(is, "\\").replace(rs, "{").replace(ns, "}").replace(os, ",").replace(hs, ".");
@@ -245375,11 +245008,11 @@ function Ut(n7, t = {}) {
 function es(n7, t = {}) {
   return new I2(n7, t).iterate();
 }
-var import_node_url5, import_node_path10, import_node_url6, import_fs3, xi, import_promises, import_node_events3, import_node_stream, import_node_string_decoder, Gt, ce, ss, fe, ue, qt, de, pe, is, rs, ns, os, hs, as, ls, cs2, fs5, us, ds, at, Ss, lt, Es, we, ye, W2, xs, be, vs, Ct, Cs, Ts, As, ks, Kt, Se, Ee, Q, tt, O2, Rs, Os, Fs, Ds, Ms, Ns, _s, Ls, Ws, Ps, js, Is, zs, Bs, Us, $s, Gs, Hs, Ce, Te, Ae, xe, qs, A, Ks, Vs, Ys, Xs, Js, N, Zs, ke, Qs, ti, ve, ei, D, si, Oe, Vt, Fe, At, Re, ii, q, De, Tt, ri, ft, Ne, oi, hi, ai, G2, H2, K, kt, ut, Rt, _e, Ot, Le, P2, et, v, dt, st, C, F, T2, Yt, Ft, k2, x2, Xt, Jt, We, Zt, B, Qt, Dt, pt, Y, M2, mt, li, ci, fi, ui, Mt, te, di, pi, V, vi, wt, Ue, $e, Ri, Oi, L2, Ge, He, U2, qe, Ke, X, Ve, _3, gt, se, je, yt, j2, Nt, Lt, Ie, Fi, ie, ze, bt, Be, _t, Wt, ne, Ye, R2, Pt, jt, It, it, rt, St, Cr, Xe, Di, Mi, Ni, nt, _i, ot, oe, he2, ae, Et, Li, zt, xt, vt, Pi, I2, le, ji, Ii, zi, Bi, Ui, Ze;
+var import_node_url5, import_node_path11, import_node_url6, import_fs3, xi, import_promises, import_node_events3, import_node_stream, import_node_string_decoder, Gt, ce, ss, fe, ue, qt, de, pe, is, rs, ns, os, hs, as, ls, cs2, fs6, us, ds, at, Ss, lt, Es, we, ye, W2, xs, be, vs, Ct, Cs, Ts, As, ks, Kt, Se, Ee, Q2, tt, O2, Rs, Os, Fs, Ds, Ms, Ns, _s, Ls, Ws, Ps, js, Is, zs, Bs, Us, $s, Gs, Hs, Ce, Te, Ae, xe, qs, A, Ks, Vs, Ys, Xs, Js, N, Zs, ke, Qs, ti, ve, ei, D, si, Oe, Vt, Fe, At, Re, ii, q, De, Tt, ri, ft, Ne, oi, hi, ai, G2, H2, K, kt, ut, Rt, _e, Ot, Le, P2, et, v, dt, st, C, F, T2, Yt, Ft, k2, x2, Xt, Jt, We, Zt, B, Qt, Dt, pt, Y, M2, mt, li, ci, fi, ui, Mt, te, di, pi, V, vi, wt, Ue, $e, Ri, Oi, L2, Ge, He, U2, qe, Ke, X, Ve, _3, gt, se, je, yt, j2, Nt, Lt, Ie, Fi, ie, ze, bt, Be, _t, Wt, ne, Ye, R2, Pt, jt, It, it, rt, St, Cr, Xe, Di, Mi, Ni, nt, _i, ot, oe, he2, ae, Et, Li, zt, xt, vt, Pi, I2, le, ji, Ii, zi, Bi, Ui, Ze;
 var init_index_min2 = __esm({
   "../../node_modules/.pnpm/glob@13.0.6/node_modules/glob/dist/esm/index.min.js"() {
     import_node_url5 = require("url");
-    import_node_path10 = require("path");
+    import_node_path11 = require("path");
     import_node_url6 = require("url");
     import_fs3 = require("fs");
     xi = __toESM(require("fs"), 1);
@@ -245424,7 +245057,7 @@ var init_index_min2 = __esm({
     as = /\\\\/g;
     ls = /\\{/g;
     cs2 = /\\}/g;
-    fs5 = /\\,/g;
+    fs6 = /\\,/g;
     us = /\\./g;
     ds = 1e5;
     at = (n7) => {
@@ -245495,7 +245128,7 @@ var init_index_min2 = __esm({
     Kt = "[^/]";
     Se = Kt + "*?";
     Ee = Kt + "+?";
-    Q = class n {
+    Q2 = class n {
       type;
       #t;
       #s;
@@ -246013,7 +245646,7 @@ globstar while`, t, d3, e, f, m), this.matchOne(t.slice(d3), e.slice(f), s)) ret
         if (t === "") return "";
         let s, i = null;
         (s = t.match(js)) ? i = e.dot ? zs : Is : (s = t.match(Rs)) ? i = (e.nocase ? e.dot ? Ms : Ds : e.dot ? Fs : Os)(s[1]) : (s = t.match(Bs)) ? i = (e.nocase ? e.dot ? $s : Us : e.dot ? Gs : Hs)(s) : (s = t.match(Ns)) ? i = e.dot ? Ls : _s : (s = t.match(Ws)) && (i = Ps);
-        let r = Q.fromGlob(t, this.options).toMMPattern();
+        let r = Q2.fromGlob(t, this.options).toMMPattern();
         return i && typeof r == "object" && Reflect.defineProperty(r, "test", { value: i }), r;
       }
       makeRe() {
@@ -246070,7 +245703,7 @@ globstar while`, t, d3, e, f, m), this.matchOne(t.slice(d3), e.slice(f), s)) ret
         return O2.defaults(t).Minimatch;
       }
     };
-    O2.AST = Q;
+    O2.AST = Q2;
     O2.Minimatch = D;
     O2.escape = tt;
     O2.unescape = W2;
@@ -247425,7 +247058,7 @@ globstar while`, t, d3, e, f, m), this.matchOne(t.slice(d3), e.slice(f), s)) ret
         return new n2(t, e, this.root, this.roots, this.nocase, this.childrenCache(), s);
       }
       getRootString(t) {
-        return import_node_path10.win32.parse(t).root;
+        return import_node_path11.win32.parse(t).root;
       }
       getRoot(t) {
         if (t = Ri(t.toUpperCase()), t === this.root.name) return this.root;
@@ -247697,11 +247330,11 @@ globstar while`, t, d3, e, f, m), this.matchOne(t.slice(d3), e.slice(f), s)) ret
       sep = "\\";
       constructor(t = process.cwd(), e = {}) {
         let { nocase: s = true } = e;
-        super(t, import_node_path10.win32, "\\", { ...e, nocase: s }), this.nocase = s;
+        super(t, import_node_path11.win32, "\\", { ...e, nocase: s }), this.nocase = s;
         for (let i = this.cwd; i; i = i.parent) i.nocase = this.nocase;
       }
       parseRootPath(t) {
-        return import_node_path10.win32.parse(t).root.toUpperCase();
+        return import_node_path11.win32.parse(t).root.toUpperCase();
       }
       newRoot(t) {
         return new Pt(this.rootPath, U2, void 0, this.roots, this.nocase, this.childrenCache(), { fs: t });
@@ -247714,7 +247347,7 @@ globstar while`, t, d3, e, f, m), this.matchOne(t.slice(d3), e.slice(f), s)) ret
       sep = "/";
       constructor(t = process.cwd(), e = {}) {
         let { nocase: s = false } = e;
-        super(t, import_node_path10.posix, "/", { ...e, nocase: s }), this.nocase = s;
+        super(t, import_node_path11.posix, "/", { ...e, nocase: s }), this.nocase = s;
       }
       parseRootPath(t) {
         return "/";
@@ -248310,44 +247943,44 @@ var init_path_arg2 = __esm({
   "../../node_modules/.pnpm/rimraf@6.1.3/node_modules/rimraf/dist/esm/path-arg.js"() {
     import_path5 = require("path");
     import_util = require("util");
-    pathArg2 = (path14, opt = {}) => {
-      const type2 = typeof path14;
+    pathArg2 = (path15, opt = {}) => {
+      const type2 = typeof path15;
       if (type2 !== "string") {
-        const ctor2 = path14 && type2 === "object" && path14.constructor;
-        const received = ctor2 && ctor2.name ? `an instance of ${ctor2.name}` : type2 === "object" ? (0, import_util.inspect)(path14) : `type ${type2} ${path14}`;
+        const ctor2 = path15 && type2 === "object" && path15.constructor;
+        const received = ctor2 && ctor2.name ? `an instance of ${ctor2.name}` : type2 === "object" ? (0, import_util.inspect)(path15) : `type ${type2} ${path15}`;
         const msg = `The "path" argument must be of type string. Received ${received}`;
         throw Object.assign(new TypeError(msg), {
-          path: path14,
+          path: path15,
           code: "ERR_INVALID_ARG_TYPE"
         });
       }
-      if (/\0/.test(path14)) {
+      if (/\0/.test(path15)) {
         const msg = "path must be a string without null bytes";
         throw Object.assign(new TypeError(msg), {
-          path: path14,
+          path: path15,
           code: "ERR_INVALID_ARG_VALUE"
         });
       }
-      path14 = (0, import_path5.resolve)(path14);
-      const { root: root2 } = (0, import_path5.parse)(path14);
-      if (path14 === root2 && opt.preserveRoot !== false) {
+      path15 = (0, import_path5.resolve)(path15);
+      const { root: root2 } = (0, import_path5.parse)(path15);
+      if (path15 === root2 && opt.preserveRoot !== false) {
         const msg = "refusing to remove root directory without preserveRoot:false";
         throw Object.assign(new Error(msg), {
-          path: path14,
+          path: path15,
           code: "ERR_PRESERVE_ROOT"
         });
       }
       if (process.platform === "win32") {
         const badWinChars = /[*|"<>?:]/;
-        const { root: root3 } = (0, import_path5.parse)(path14);
-        if (badWinChars.test(path14.substring(root3.length))) {
+        const { root: root3 } = (0, import_path5.parse)(path15);
+        if (badWinChars.test(path15.substring(root3.length))) {
           throw Object.assign(new Error("Illegal characters in path."), {
-            path: path14,
+            path: path15,
             code: "EINVAL"
           });
         }
       }
-      return path14;
+      return path15;
     };
     path_arg_default = pathArg2;
   }
@@ -248360,11 +247993,11 @@ var init_fs = __esm({
     import_fs4 = require("fs");
     import_promises2 = __toESM(require("fs/promises"), 1);
     import_fs5 = require("fs");
-    readdirSync = (path14) => (0, import_fs4.readdirSync)(path14, { withFileTypes: true });
+    readdirSync = (path15) => (0, import_fs4.readdirSync)(path15, { withFileTypes: true });
     promises = {
       chmod: import_promises2.default.chmod,
       mkdir: import_promises2.default.mkdir,
-      readdir: (path14) => import_promises2.default.readdir(path14, { withFileTypes: true }),
+      readdir: (path15) => import_promises2.default.readdir(path15, { withFileTypes: true }),
       rename: import_promises2.default.rename,
       rm: import_promises2.default.rm,
       rmdir: import_promises2.default.rmdir,
@@ -248381,10 +248014,10 @@ var init_readdir_or_error = __esm({
   "../../node_modules/.pnpm/rimraf@6.1.3/node_modules/rimraf/dist/esm/readdir-or-error.js"() {
     init_fs();
     ({ readdir } = promises);
-    readdirOrError = (path14) => readdir(path14).catch((er) => er);
-    readdirOrErrorSync = (path14) => {
+    readdirOrError = (path15) => readdir(path15).catch((er) => er);
+    readdirOrErrorSync = (path15) => {
       try {
-        return readdirSync(path14);
+        return readdirSync(path15);
       } catch (er) {
         return er;
       }
@@ -248437,17 +248070,17 @@ var init_rimraf_posix = __esm({
     init_ignore_enoent();
     init_error();
     ({ lstat, rmdir, unlink } = promises);
-    rimrafPosix = async (path14, opt) => {
+    rimrafPosix = async (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return await ignoreENOENT(lstat(path14).then((stat3) => rimrafPosixDir(path14, opt, stat3))) ?? true;
+      return await ignoreENOENT(lstat(path15).then((stat3) => rimrafPosixDir(path15, opt, stat3))) ?? true;
     };
-    rimrafPosixSync = (path14, opt) => {
+    rimrafPosixSync = (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return ignoreENOENTSync(() => rimrafPosixDirSync(path14, opt, (0, import_fs5.lstatSync)(path14))) ?? true;
+      return ignoreENOENTSync(() => rimrafPosixDirSync(path15, opt, (0, import_fs5.lstatSync)(path15))) ?? true;
     };
-    rimrafPosixDir = async (path14, opt, ent) => {
+    rimrafPosixDir = async (path15, opt, ent) => {
       opt?.signal?.throwIfAborted();
-      const entries2 = ent.isDirectory() ? await readdirOrError(path14) : null;
+      const entries2 = ent.isDirectory() ? await readdirOrError(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248457,28 +248090,28 @@ var init_rimraf_posix = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !await opt.filter(path14, ent)) {
+        if (opt.filter && !await opt.filter(path15, ent)) {
           return false;
         }
-        await ignoreENOENT(unlink(path14));
+        await ignoreENOENT(unlink(path15));
         return true;
       }
-      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafPosixDir((0, import_path6.resolve)(path14, ent2.name), opt, ent2)))).every((v2) => v2 === true);
+      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafPosixDir((0, import_path6.resolve)(path15, ent2.name), opt, ent2)))).every((v2) => v2 === true);
       if (!removedAll) {
         return false;
       }
-      if (opt.preserveRoot === false && path14 === (0, import_path6.parse)(path14).root) {
+      if (opt.preserveRoot === false && path15 === (0, import_path6.parse)(path15).root) {
         return false;
       }
-      if (opt.filter && !await opt.filter(path14, ent)) {
+      if (opt.filter && !await opt.filter(path15, ent)) {
         return false;
       }
-      await ignoreENOENT(rmdir(path14));
+      await ignoreENOENT(rmdir(path15));
       return true;
     };
-    rimrafPosixDirSync = (path14, opt, ent) => {
+    rimrafPosixDirSync = (path15, opt, ent) => {
       opt?.signal?.throwIfAborted();
-      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path14) : null;
+      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248488,27 +248121,27 @@ var init_rimraf_posix = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !opt.filter(path14, ent)) {
+        if (opt.filter && !opt.filter(path15, ent)) {
           return false;
         }
-        ignoreENOENTSync(() => (0, import_fs5.unlinkSync)(path14));
+        ignoreENOENTSync(() => (0, import_fs5.unlinkSync)(path15));
         return true;
       }
       let removedAll = true;
       for (const ent2 of entries2) {
-        const p = (0, import_path6.resolve)(path14, ent2.name);
+        const p = (0, import_path6.resolve)(path15, ent2.name);
         removedAll = rimrafPosixDirSync(p, opt, ent2) && removedAll;
       }
-      if (opt.preserveRoot === false && path14 === (0, import_path6.parse)(path14).root) {
+      if (opt.preserveRoot === false && path15 === (0, import_path6.parse)(path15).root) {
         return false;
       }
       if (!removedAll) {
         return false;
       }
-      if (opt.filter && !opt.filter(path14, ent)) {
+      if (opt.filter && !opt.filter(path15, ent)) {
         return false;
       }
-      ignoreENOENTSync(() => (0, import_fs5.rmdirSync)(path14));
+      ignoreENOENTSync(() => (0, import_fs5.rmdirSync)(path15));
       return true;
     };
   }
@@ -248522,28 +248155,28 @@ var init_fix_eperm = __esm({
     init_fs();
     init_ignore_enoent();
     ({ chmod } = promises);
-    fixEPERM = (fn2) => async (path14) => {
+    fixEPERM = (fn2) => async (path15) => {
       try {
-        return void await ignoreENOENT(fn2(path14));
+        return void await ignoreENOENT(fn2(path15));
       } catch (er) {
         if (errorCode(er) === "EPERM") {
-          if (!await ignoreENOENT(chmod(path14, 438).then(() => true), er)) {
+          if (!await ignoreENOENT(chmod(path15, 438).then(() => true), er)) {
             return;
           }
-          return void await fn2(path14);
+          return void await fn2(path15);
         }
         throw er;
       }
     };
-    fixEPERMSync = (fn2) => (path14) => {
+    fixEPERMSync = (fn2) => (path15) => {
       try {
-        return void ignoreENOENTSync(() => fn2(path14));
+        return void ignoreENOENTSync(() => fn2(path15));
       } catch (er) {
         if (errorCode(er) === "EPERM") {
-          if (!ignoreENOENTSync(() => ((0, import_fs5.chmodSync)(path14, 438), true), er)) {
+          if (!ignoreENOENTSync(() => ((0, import_fs5.chmodSync)(path15, 438), true), er)) {
             return;
           }
-          return void fn2(path14);
+          return void fn2(path15);
         }
         throw er;
       }
@@ -248562,21 +248195,21 @@ var init_retry_busy = __esm({
     MAXRETRIES = 10;
     codes = /* @__PURE__ */ new Set(["EMFILE", "ENFILE", "EBUSY"]);
     retryBusy = (fn2) => {
-      const method = async (path14, opt, backoff = 1, total = 0) => {
+      const method = async (path15, opt, backoff = 1, total = 0) => {
         const mbo = opt.maxBackoff || MAXBACKOFF;
         const rate = opt.backoff || RATE;
         const max2 = opt.maxRetries || MAXRETRIES;
         let retries = 0;
         while (true) {
           try {
-            return await fn2(path14);
+            return await fn2(path15);
           } catch (er) {
-            if (isFsError(er) && er.path === path14 && codes.has(er.code)) {
+            if (isFsError(er) && er.path === path15 && codes.has(er.code)) {
               backoff = Math.ceil(backoff * rate);
               total = backoff + total;
               if (total < mbo) {
                 await (0, import_promises3.setTimeout)(backoff);
-                return method(path14, opt, backoff, total);
+                return method(path15, opt, backoff, total);
               }
               if (retries < max2) {
                 retries++;
@@ -248590,14 +248223,14 @@ var init_retry_busy = __esm({
       return method;
     };
     retryBusySync = (fn2) => {
-      const method = (path14, opt) => {
+      const method = (path15, opt) => {
         const max2 = opt.maxRetries || MAXRETRIES;
         let retries = 0;
         while (true) {
           try {
-            return fn2(path14);
+            return fn2(path15);
           } catch (er) {
-            if (isFsError(er) && er.path === path14 && codes.has(er.code) && retries < max2) {
+            if (isFsError(er) && er.path === path15 && codes.has(er.code) && retries < max2) {
               retries++;
               continue;
             }
@@ -248618,16 +248251,16 @@ var init_default_tmp = __esm({
     import_path7 = require("path");
     init_fs();
     ({ stat: stat2 } = promises);
-    isDirSync = (path14) => {
+    isDirSync = (path15) => {
       try {
-        return (0, import_fs5.statSync)(path14).isDirectory();
+        return (0, import_fs5.statSync)(path15).isDirectory();
       } catch {
         return false;
       }
     };
-    isDir = (path14) => stat2(path14).then((st2) => st2.isDirectory(), () => false);
-    win32DefaultTmp = async (path14) => {
-      const { root: root2 } = (0, import_path7.parse)(path14);
+    isDir = (path15) => stat2(path15).then((st2) => st2.isDirectory(), () => false);
+    win32DefaultTmp = async (path15) => {
+      const { root: root2 } = (0, import_path7.parse)(path15);
       const tmp = (0, import_os.tmpdir)();
       const { root: tmpRoot } = (0, import_path7.parse)(tmp);
       if (root2.toLowerCase() === tmpRoot.toLowerCase()) {
@@ -248639,8 +248272,8 @@ var init_default_tmp = __esm({
       }
       return root2;
     };
-    win32DefaultTmpSync = (path14) => {
-      const { root: root2 } = (0, import_path7.parse)(path14);
+    win32DefaultTmpSync = (path15) => {
+      const { root: root2 } = (0, import_path7.parse)(path15);
       const tmp = (0, import_os.tmpdir)();
       const { root: tmpRoot } = (0, import_path7.parse)(tmp);
       if (root2.toLowerCase() === tmpRoot.toLowerCase()) {
@@ -248671,22 +248304,22 @@ var init_rimraf_move_remove = __esm({
     init_fix_eperm();
     init_error();
     ({ lstat: lstat2, rename, unlink: unlink2, rmdir: rmdir2 } = promises);
-    uniqueFilename = (path14) => `.${(0, import_path8.basename)(path14)}.${Math.random()}`;
+    uniqueFilename = (path15) => `.${(0, import_path8.basename)(path15)}.${Math.random()}`;
     unlinkFixEPERM = fixEPERM(unlink2);
     unlinkFixEPERMSync = fixEPERMSync(import_fs5.unlinkSync);
-    rimrafMoveRemove = async (path14, opt) => {
+    rimrafMoveRemove = async (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return await ignoreENOENT(lstat2(path14).then((stat3) => rimrafMoveRemoveDir(path14, opt, stat3))) ?? true;
+      return await ignoreENOENT(lstat2(path15).then((stat3) => rimrafMoveRemoveDir(path15, opt, stat3))) ?? true;
     };
-    rimrafMoveRemoveDir = async (path14, opt, ent) => {
+    rimrafMoveRemoveDir = async (path15, opt, ent) => {
       opt?.signal?.throwIfAborted();
       if (!opt.tmp) {
-        return rimrafMoveRemoveDir(path14, { ...opt, tmp: await defaultTmp(path14) }, ent);
+        return rimrafMoveRemoveDir(path15, { ...opt, tmp: await defaultTmp(path15) }, ent);
       }
-      if (path14 === opt.tmp && (0, import_path8.parse)(path14).root !== path14) {
+      if (path15 === opt.tmp && (0, import_path8.parse)(path15).root !== path15) {
         throw new Error("cannot delete temp directory used for deletion");
       }
-      const entries2 = ent.isDirectory() ? await readdirOrError(path14) : null;
+      const entries2 = ent.isDirectory() ? await readdirOrError(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248696,44 +248329,44 @@ var init_rimraf_move_remove = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !await opt.filter(path14, ent)) {
+        if (opt.filter && !await opt.filter(path15, ent)) {
           return false;
         }
-        await ignoreENOENT(tmpUnlink(path14, opt.tmp, unlinkFixEPERM));
+        await ignoreENOENT(tmpUnlink(path15, opt.tmp, unlinkFixEPERM));
         return true;
       }
-      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafMoveRemoveDir((0, import_path8.resolve)(path14, ent2.name), opt, ent2)))).every((v2) => v2 === true);
+      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafMoveRemoveDir((0, import_path8.resolve)(path15, ent2.name), opt, ent2)))).every((v2) => v2 === true);
       if (!removedAll) {
         return false;
       }
-      if (opt.preserveRoot === false && path14 === (0, import_path8.parse)(path14).root) {
+      if (opt.preserveRoot === false && path15 === (0, import_path8.parse)(path15).root) {
         return false;
       }
-      if (opt.filter && !await opt.filter(path14, ent)) {
+      if (opt.filter && !await opt.filter(path15, ent)) {
         return false;
       }
-      await ignoreENOENT(tmpUnlink(path14, opt.tmp, rmdir2));
+      await ignoreENOENT(tmpUnlink(path15, opt.tmp, rmdir2));
       return true;
     };
-    tmpUnlink = async (path14, tmp, rm2) => {
-      const tmpFile = (0, import_path8.resolve)(tmp, uniqueFilename(path14));
-      await rename(path14, tmpFile);
+    tmpUnlink = async (path15, tmp, rm2) => {
+      const tmpFile = (0, import_path8.resolve)(tmp, uniqueFilename(path15));
+      await rename(path15, tmpFile);
       return await rm2(tmpFile);
     };
-    rimrafMoveRemoveSync = (path14, opt) => {
+    rimrafMoveRemoveSync = (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return ignoreENOENTSync(() => rimrafMoveRemoveDirSync(path14, opt, (0, import_fs5.lstatSync)(path14))) ?? true;
+      return ignoreENOENTSync(() => rimrafMoveRemoveDirSync(path15, opt, (0, import_fs5.lstatSync)(path15))) ?? true;
     };
-    rimrafMoveRemoveDirSync = (path14, opt, ent) => {
+    rimrafMoveRemoveDirSync = (path15, opt, ent) => {
       opt?.signal?.throwIfAborted();
       if (!opt.tmp) {
-        return rimrafMoveRemoveDirSync(path14, { ...opt, tmp: defaultTmpSync(path14) }, ent);
+        return rimrafMoveRemoveDirSync(path15, { ...opt, tmp: defaultTmpSync(path15) }, ent);
       }
       const tmp = opt.tmp;
-      if (path14 === opt.tmp && (0, import_path8.parse)(path14).root !== path14) {
+      if (path15 === opt.tmp && (0, import_path8.parse)(path15).root !== path15) {
         throw new Error("cannot delete temp directory used for deletion");
       }
-      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path14) : null;
+      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248743,32 +248376,32 @@ var init_rimraf_move_remove = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !opt.filter(path14, ent)) {
+        if (opt.filter && !opt.filter(path15, ent)) {
           return false;
         }
-        ignoreENOENTSync(() => tmpUnlinkSync(path14, tmp, unlinkFixEPERMSync));
+        ignoreENOENTSync(() => tmpUnlinkSync(path15, tmp, unlinkFixEPERMSync));
         return true;
       }
       let removedAll = true;
       for (const ent2 of entries2) {
-        const p = (0, import_path8.resolve)(path14, ent2.name);
+        const p = (0, import_path8.resolve)(path15, ent2.name);
         removedAll = rimrafMoveRemoveDirSync(p, opt, ent2) && removedAll;
       }
       if (!removedAll) {
         return false;
       }
-      if (opt.preserveRoot === false && path14 === (0, import_path8.parse)(path14).root) {
+      if (opt.preserveRoot === false && path15 === (0, import_path8.parse)(path15).root) {
         return false;
       }
-      if (opt.filter && !opt.filter(path14, ent)) {
+      if (opt.filter && !opt.filter(path15, ent)) {
         return false;
       }
-      ignoreENOENTSync(() => tmpUnlinkSync(path14, tmp, import_fs5.rmdirSync));
+      ignoreENOENTSync(() => tmpUnlinkSync(path15, tmp, import_fs5.rmdirSync));
       return true;
     };
-    tmpUnlinkSync = (path14, tmp, rmSync2) => {
-      const tmpFile = (0, import_path8.resolve)(tmp, uniqueFilename(path14));
-      (0, import_fs5.renameSync)(path14, tmpFile);
+    tmpUnlinkSync = (path15, tmp, rmSync2) => {
+      const tmpFile = (0, import_path8.resolve)(tmp, uniqueFilename(path15));
+      (0, import_fs5.renameSync)(path15, tmpFile);
       return rmSync2(tmpFile);
     };
   }
@@ -248791,26 +248424,26 @@ var init_rimraf_windows = __esm({
     rimrafWindowsFileSync = retryBusySync(fixEPERMSync(import_fs5.unlinkSync));
     rimrafWindowsDirRetry = retryBusy(fixEPERM(rmdir3));
     rimrafWindowsDirRetrySync = retryBusySync(fixEPERMSync(import_fs5.rmdirSync));
-    rimrafWindowsDirMoveRemoveFallback = async (path14, { filter: filter3, ...opt }) => {
+    rimrafWindowsDirMoveRemoveFallback = async (path15, { filter: filter3, ...opt }) => {
       opt?.signal?.throwIfAborted();
       try {
-        await rimrafWindowsDirRetry(path14, opt);
+        await rimrafWindowsDirRetry(path15, opt);
         return true;
       } catch (er) {
         if (errorCode(er) === "ENOTEMPTY") {
-          return rimrafMoveRemove(path14, opt);
+          return rimrafMoveRemove(path15, opt);
         }
         throw er;
       }
     };
-    rimrafWindowsDirMoveRemoveFallbackSync = (path14, { filter: filter3, ...opt }) => {
+    rimrafWindowsDirMoveRemoveFallbackSync = (path15, { filter: filter3, ...opt }) => {
       opt?.signal?.throwIfAborted();
       try {
-        rimrafWindowsDirRetrySync(path14, opt);
+        rimrafWindowsDirRetrySync(path15, opt);
         return true;
       } catch (er) {
         if (errorCode(er) === "ENOTEMPTY") {
-          return rimrafMoveRemoveSync(path14, opt);
+          return rimrafMoveRemoveSync(path15, opt);
         }
         throw er;
       }
@@ -248818,17 +248451,17 @@ var init_rimraf_windows = __esm({
     START = /* @__PURE__ */ Symbol("start");
     CHILD = /* @__PURE__ */ Symbol("child");
     FINISH = /* @__PURE__ */ Symbol("finish");
-    rimrafWindows = async (path14, opt) => {
+    rimrafWindows = async (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return await ignoreENOENT(lstat3(path14).then((stat3) => rimrafWindowsDir(path14, opt, stat3, START))) ?? true;
+      return await ignoreENOENT(lstat3(path15).then((stat3) => rimrafWindowsDir(path15, opt, stat3, START))) ?? true;
     };
-    rimrafWindowsSync = (path14, opt) => {
+    rimrafWindowsSync = (path15, opt) => {
       opt?.signal?.throwIfAborted();
-      return ignoreENOENTSync(() => rimrafWindowsDirSync(path14, opt, (0, import_fs5.lstatSync)(path14), START)) ?? true;
+      return ignoreENOENTSync(() => rimrafWindowsDirSync(path15, opt, (0, import_fs5.lstatSync)(path15), START)) ?? true;
     };
-    rimrafWindowsDir = async (path14, opt, ent, state = START) => {
+    rimrafWindowsDir = async (path15, opt, ent, state = START) => {
       opt?.signal?.throwIfAborted();
-      const entries2 = ent.isDirectory() ? await readdirOrError(path14) : null;
+      const entries2 = ent.isDirectory() ? await readdirOrError(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248838,32 +248471,32 @@ var init_rimraf_windows = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !await opt.filter(path14, ent)) {
+        if (opt.filter && !await opt.filter(path15, ent)) {
           return false;
         }
-        await ignoreENOENT(rimrafWindowsFile(path14, opt));
+        await ignoreENOENT(rimrafWindowsFile(path15, opt));
         return true;
       }
       const s = state === START ? CHILD : state;
-      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafWindowsDir((0, import_path9.resolve)(path14, ent2.name), opt, ent2, s)))).every((v2) => v2 === true);
+      const removedAll = (await Promise.all(entries2.map((ent2) => rimrafWindowsDir((0, import_path9.resolve)(path15, ent2.name), opt, ent2, s)))).every((v2) => v2 === true);
       if (state === START) {
-        return rimrafWindowsDir(path14, opt, ent, FINISH);
+        return rimrafWindowsDir(path15, opt, ent, FINISH);
       } else if (state === FINISH) {
-        if (opt.preserveRoot === false && path14 === (0, import_path9.parse)(path14).root) {
+        if (opt.preserveRoot === false && path15 === (0, import_path9.parse)(path15).root) {
           return false;
         }
         if (!removedAll) {
           return false;
         }
-        if (opt.filter && !await opt.filter(path14, ent)) {
+        if (opt.filter && !await opt.filter(path15, ent)) {
           return false;
         }
-        await ignoreENOENT(rimrafWindowsDirMoveRemoveFallback(path14, opt));
+        await ignoreENOENT(rimrafWindowsDirMoveRemoveFallback(path15, opt));
       }
       return true;
     };
-    rimrafWindowsDirSync = (path14, opt, ent, state = START) => {
-      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path14) : null;
+    rimrafWindowsDirSync = (path15, opt, ent, state = START) => {
+      const entries2 = ent.isDirectory() ? readdirOrErrorSync(path15) : null;
       if (!Array.isArray(entries2)) {
         if (entries2) {
           if (errorCode(entries2) === "ENOENT") {
@@ -248873,31 +248506,31 @@ var init_rimraf_windows = __esm({
             throw entries2;
           }
         }
-        if (opt.filter && !opt.filter(path14, ent)) {
+        if (opt.filter && !opt.filter(path15, ent)) {
           return false;
         }
-        ignoreENOENTSync(() => rimrafWindowsFileSync(path14, opt));
+        ignoreENOENTSync(() => rimrafWindowsFileSync(path15, opt));
         return true;
       }
       let removedAll = true;
       for (const ent2 of entries2) {
         const s = state === START ? CHILD : state;
-        const p = (0, import_path9.resolve)(path14, ent2.name);
+        const p = (0, import_path9.resolve)(path15, ent2.name);
         removedAll = rimrafWindowsDirSync(p, opt, ent2, s) && removedAll;
       }
       if (state === START) {
-        return rimrafWindowsDirSync(path14, opt, ent, FINISH);
+        return rimrafWindowsDirSync(path15, opt, ent, FINISH);
       } else if (state === FINISH) {
-        if (opt.preserveRoot === false && path14 === (0, import_path9.parse)(path14).root) {
+        if (opt.preserveRoot === false && path15 === (0, import_path9.parse)(path15).root) {
           return false;
         }
         if (!removedAll) {
           return false;
         }
-        if (opt.filter && !opt.filter(path14, ent)) {
+        if (opt.filter && !opt.filter(path15, ent)) {
           return false;
         }
-        ignoreENOENTSync(() => rimrafWindowsDirMoveRemoveFallbackSync(path14, opt));
+        ignoreENOENTSync(() => rimrafWindowsDirMoveRemoveFallbackSync(path15, opt));
       }
       return true;
     };
@@ -248921,16 +248554,16 @@ var init_rimraf_native = __esm({
   "../../node_modules/.pnpm/rimraf@6.1.3/node_modules/rimraf/dist/esm/rimraf-native.js"() {
     init_fs();
     ({ rm } = promises);
-    rimrafNative = async (path14, opt) => {
-      await rm(path14, {
+    rimrafNative = async (path15, opt) => {
+      await rm(path15, {
         ...opt,
         force: true,
         recursive: true
       });
       return true;
     };
-    rimrafNativeSync = (path14, opt) => {
-      (0, import_fs5.rmSync)(path14, {
+    rimrafNativeSync = (path15, opt) => {
+      (0, import_fs5.rmSync)(path15, {
         ...opt,
         force: true,
         recursive: true
@@ -248965,26 +248598,26 @@ var init_esm2 = __esm({
     init_rimraf_windows();
     init_use_native2();
     init_opt_arg();
-    wrap2 = (fn2) => async (path14, opt) => {
+    wrap2 = (fn2) => async (path15, opt) => {
       const options2 = optArg(opt);
       if (options2.glob) {
-        path14 = await Ze(path14, options2.glob);
+        path15 = await Ze(path15, options2.glob);
       }
-      if (Array.isArray(path14)) {
-        return !!(await Promise.all(path14.map((p) => fn2(path_arg_default(p, options2), options2)))).reduce((a, b) => a && b, true);
+      if (Array.isArray(path15)) {
+        return !!(await Promise.all(path15.map((p) => fn2(path_arg_default(p, options2), options2)))).reduce((a, b) => a && b, true);
       } else {
-        return !!await fn2(path_arg_default(path14, options2), options2);
+        return !!await fn2(path_arg_default(path15, options2), options2);
       }
     };
-    wrapSync = (fn2) => (path14, opt) => {
+    wrapSync = (fn2) => (path15, opt) => {
       const options2 = optArgSync(opt);
       if (options2.glob) {
-        path14 = ts(path14, options2.glob);
+        path15 = ts(path15, options2.glob);
       }
-      if (Array.isArray(path14)) {
-        return !!path14.map((p) => fn2(path_arg_default(p, options2), options2)).reduce((a, b) => a && b, true);
+      if (Array.isArray(path15)) {
+        return !!path15.map((p) => fn2(path_arg_default(p, options2), options2)).reduce((a, b) => a && b, true);
       } else {
-        return !!fn2(path_arg_default(path14, options2), options2);
+        return !!fn2(path_arg_default(path15, options2), options2);
       }
     };
     nativeSync = wrapSync(rimrafNativeSync);
@@ -249005,8 +248638,8 @@ var init_esm2 = __esm({
     moveRemove = Object.assign(wrap2(rimrafMoveRemove), {
       sync: moveRemoveSync
     });
-    rimrafSync = wrapSync((path14, opt) => useNativeSync2(opt) ? rimrafNativeSync(path14, opt) : rimrafManualSync(path14, opt));
-    rimraf_ = wrap2((path14, opt) => useNative2(opt) ? rimrafNative(path14, opt) : rimrafManual(path14, opt));
+    rimrafSync = wrapSync((path15, opt) => useNativeSync2(opt) ? rimrafNativeSync(path15, opt) : rimrafManualSync(path15, opt));
+    rimraf_ = wrap2((path15, opt) => useNative2(opt) ? rimrafNative(path15, opt) : rimrafManual(path15, opt));
     rimraf = Object.assign(rimraf_, {
       rimraf: rimraf_,
       sync: rimrafSync,
@@ -249031,12 +248664,12 @@ var file_upload_store_exports = {};
 __export(file_upload_store_exports, {
   default: () => file_upload_store_default
 });
-var import_node_fs4, import_node_path11, import_nylas_store20, import_actions27, import_utils18, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
+var import_node_fs4, import_node_path12, import_nylas_store20, import_actions27, import_utils18, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
 var init_file_upload_store = __esm({
   "src/flux/stores/file-upload-store.js"() {
     init_index_all();
     import_node_fs4 = __toESM(require("fs"));
-    import_node_path11 = __toESM(require("path"));
+    import_node_path12 = __toESM(require("path"));
     init_esm2();
     init_mjs();
     import_nylas_store20 = __toESM(require_nylas_store());
@@ -249047,7 +248680,7 @@ var init_file_upload_store = __esm({
     init_database_store();
     Promise.promisifyAll(import_node_fs4.default);
     mkdirpAsync = Promise.promisify(mkdirp);
-    UPLOAD_DIR = import_node_path11.default.join(NylasEnv.getConfigDirPath(), "uploads");
+    UPLOAD_DIR = import_node_path12.default.join(NylasEnv.getConfigDirPath(), "uploads");
     MAX_UPLOAD_SIZE = 25 * 1e6;
     Upload = class {
       constructor({
@@ -249064,13 +248697,13 @@ var init_file_upload_store = __esm({
         this.messageClientId = messageClientId;
         this.originPath = filePath;
         this.id = id || import_utils18.default.generateTempId();
-        this.filename = import_node_path11.default.basename(filePath);
-        this.targetDir = import_node_path11.default.join(this.uploadDir, this.messageClientId, this.id);
-        this.targetPath = import_node_path11.default.join(this.targetDir, this.filename);
+        this.filename = import_node_path12.default.basename(filePath);
+        this.targetDir = import_node_path12.default.join(this.uploadDir, this.messageClientId, this.id);
+        this.targetPath = import_node_path12.default.join(this.targetDir, this.filename);
         this.size = this.stats.size;
       }
       get extension() {
-        const ext = import_node_path11.default.extname(this.filename.toLowerCase());
+        const ext = import_node_path12.default.extname(this.filename.toLowerCase());
         return ext.slice(1);
       }
     };
@@ -249113,7 +248746,7 @@ var init_file_upload_store = __esm({
         const items = await import_node_fs4.default.readdirAsync(dirpath);
         let total = 0;
         for (const filename of items) {
-          const filepath = import_node_path11.default.join(dirpath, filename);
+          const filepath = import_node_path12.default.join(dirpath, filename);
           const stats = await this._getFileStats(filepath);
           total += stats.size;
         }
@@ -249143,7 +248776,7 @@ var init_file_upload_store = __esm({
           () => (
             // Delete the containing folder
             import_node_fs4.default.rmdirAsync(upload.targetDir).then(() => {
-              import_node_fs4.default.rmdir(import_node_path11.default.join(UPLOAD_DIR, upload.messageClientId), () => {
+              import_node_fs4.default.rmdir(import_node_path12.default.join(UPLOAD_DIR, upload.messageClientId), () => {
               });
               return Promise.resolve(upload);
             })
@@ -249160,7 +248793,7 @@ ${err.message}`
       }
       _deleteUploadsForClientId(messageClientId) {
         rimraf(
-          import_node_path11.default.join(UPLOAD_DIR, messageClientId),
+          import_node_path12.default.join(UPLOAD_DIR, messageClientId),
           { disableGlob: true },
           (err) => {
             if (err) {
@@ -254836,14 +254469,14 @@ __export(file_download_store_exports, {
   Download: () => Download,
   default: () => file_download_store_default
 });
-var import_bluebird, import_node_os, import_node_fs5, import_node_path12, import_electron8, import_remote6, import_request_progress, import_nylas_store22, import_actions29, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
+var import_bluebird, import_node_os, import_node_fs5, import_node_path13, import_electron8, import_remote6, import_request_progress, import_nylas_store22, import_actions29, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
 var init_file_download_store = __esm({
   "src/flux/stores/file-download-store.js"() {
     import_bluebird = __toESM(require_bluebird());
     init_index_all();
     import_node_os = __toESM(require("os"));
     import_node_fs5 = __toESM(require("fs"));
-    import_node_path12 = __toESM(require("path"));
+    import_node_path13 = __toESM(require("path"));
     init_isomorphic_core();
     import_electron8 = require("electron");
     import_remote6 = __toESM(require_at_electron_remote());
@@ -255034,7 +254667,7 @@ var init_file_download_store = __esm({
         this.listenTo(import_actions29.default.abortFetchFile, this._abortFetchFile);
         this._downloads = {};
         this._filePreviewPaths = {};
-        this._downloadDirectory = import_node_path12.default.join(
+        this._downloadDirectory = import_node_path13.default.join(
           NylasEnv.getConfigDirPath(),
           "downloads"
         );
@@ -255048,7 +254681,7 @@ var init_file_download_store = __esm({
         if (!file) {
           return null;
         }
-        return import_node_path12.default.join(this._downloadDirectory, file.id, file.safeDisplayName());
+        return import_node_path13.default.join(this._downloadDirectory, file.id, file.safeDisplayName());
       }
       getDownloadDataForFile(fileId) {
         const download = this._downloads[fileId];
@@ -255129,7 +254762,7 @@ var init_file_download_store = __esm({
             this._filePreviewPaths[file.id] = previewPath;
             this.trigger();
           }).catch(() => {
-            const fileDir = import_node_path12.default.dirname(filePath);
+            const fileDir = import_node_path13.default.dirname(filePath);
             const previewSize = THUMBNAIL_WIDTH * (11 / 8.5);
             const qlManageArgs = [
               "-t",
@@ -255167,7 +254800,7 @@ var init_file_download_store = __esm({
       // resolves when the download directory for the file has been created.
       //
       _prepareFolder(file) {
-        const targetFolder = import_node_path12.default.join(this._downloadDirectory, file.id);
+        const targetFolder = import_node_path13.default.join(this._downloadDirectory, file.id);
         return import_node_fs5.default.statAsync(targetFolder).catch(() => {
           return mkdirpAsync2(targetFolder);
         });
@@ -255191,13 +254824,13 @@ var init_file_download_store = __esm({
       };
       _fetchAndSave = (file) => {
         const defaultPath = this._defaultSavePath(file);
-        const defaultExtension = import_node_path12.default.extname(defaultPath);
+        const defaultExtension = import_node_path13.default.extname(defaultPath);
         NylasEnv.showSaveDialog({ defaultPath }, (savePath) => {
           if (!savePath) {
             return;
           }
-          const saveExtension = import_node_path12.default.extname(savePath);
-          const newDownloadDirectory = import_node_path12.default.dirname(savePath);
+          const saveExtension = import_node_path13.default.extname(savePath);
+          const newDownloadDirectory = import_node_path13.default.dirname(savePath);
           const didLoseExtension = defaultExtension !== "" && saveExtension === "";
           let actualSavePath = savePath;
           if (didLoseExtension) {
@@ -255233,7 +254866,7 @@ var init_file_download_store = __esm({
             NylasEnv.savedState.lastDownloadDirectory = dirPath;
             const lastSavePaths = [];
             const savePromises = files.map((file) => {
-              const savePath = import_node_path12.default.join(dirPath, file.safeDisplayName());
+              const savePath = import_node_path13.default.join(dirPath, file.safeDisplayName());
               return this._runDownload(file).then((download) => this._saveDownload(download, savePath)).then(() => lastSavePaths.push(savePath));
             });
             import_bluebird.default.all(savePromises).then(() => {
@@ -255268,7 +254901,7 @@ var init_file_download_store = __esm({
         } else {
           home = process.env.HOME;
         }
-        let downloadDir = import_node_path12.default.join(home, "Downloads");
+        let downloadDir = import_node_path13.default.join(home, "Downloads");
         if (!import_node_fs5.default.existsSync(downloadDir)) {
           downloadDir = import_node_os.default.tmpdir();
         }
@@ -255281,7 +254914,7 @@ var init_file_download_store = __esm({
       }
       _defaultSavePath(file) {
         const downloadDir = this._defaultSaveDir();
-        return import_node_path12.default.join(downloadDir, file.safeDisplayName());
+        return import_node_path13.default.join(downloadDir, file.safeDisplayName());
       }
       _presentError({ file, error } = {}) {
         const name2 = file ? file.displayName() : "one or more files";
@@ -262703,7 +262336,7 @@ var require_auto = __commonJS({
             const result2 = await queue2.get(name2);
             return { alpnProtocol: result2.alpnProtocol };
           }
-          const { path: path14 } = options2;
+          const { path: path15 } = options2;
           options2.path = options2.socketPath;
           const resultPromise = resolveALPN(options2, connect);
           queue2.set(name2, resultPromise);
@@ -262711,11 +262344,11 @@ var require_auto = __commonJS({
             const result2 = await resultPromise;
             cache2.set(name2, result2.alpnProtocol);
             queue2.delete(name2);
-            options2.path = path14;
+            options2.path = path15;
             return result2;
           } catch (error) {
             queue2.delete(name2);
-            options2.path = path14;
+            options2.path = path15;
             throw error;
           }
         }
@@ -263880,10 +263513,10 @@ var init_options = __esm({
           }
           const matches = /(?<socketPath>.+?):(?<path>.+)/.exec(`${url6.pathname}${url6.search}`);
           if (matches?.groups) {
-            const { socketPath, path: path14 } = matches.groups;
+            const { socketPath, path: path15 } = matches.groups;
             this._unixOptions = {
               socketPath,
-              path: path14,
+              path: path15,
               host: ""
             };
           } else {
@@ -274356,7 +273989,7 @@ var require_menu_helpers = __commonJS({
             return menu[matchingItemIndex] = item;
           }
         }
-      } else if (item.type !== "separator" || __guard__2(_4.last(menu), (x3) => x3.type) !== "separator") {
+      } else if (item.type !== "separator" || __guard__3(_4.last(menu), (x3) => x3.type) !== "separator") {
         return menu.push(item);
       }
     };
@@ -274425,7 +274058,7 @@ var require_menu_helpers = __commonJS({
       cloneMenuItem,
       forEachMenuItem
     };
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -275062,23 +274695,23 @@ var init_paragraph_formatting_extension = __esm({
 // src/components/contenteditable/floating-toolbar.jsx
 var require_floating_toolbar = __commonJS({
   "src/components/contenteditable/floating-toolbar.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react63 = __toESM(require_react());
-    var FloatingToolbar = class _FloatingToolbar extends import_react63.default.Component {
+    var import_react65 = __toESM(require_react());
+    var FloatingToolbar = class _FloatingToolbar extends import_react65.default.Component {
       static initClass() {
         _FloatingToolbar.displayName = "FloatingToolbar";
         _FloatingToolbar.propTypes = {
-          atomicEdit: import_prop_types66.default.func,
-          extensions: import_prop_types66.default.array
+          atomicEdit: import_prop_types68.default.func,
+          extensions: import_prop_types68.default.array
         };
         _FloatingToolbar.innerPropTypes = {
-          dragging: import_prop_types66.default.bool,
-          selection: import_prop_types66.default.object,
-          doubleDown: import_prop_types66.default.bool,
-          hoveringOver: import_prop_types66.default.object,
-          editableNode: import_prop_types66.default.object
+          dragging: import_prop_types68.default.bool,
+          selection: import_prop_types68.default.object,
+          doubleDown: import_prop_types68.default.bool,
+          hoveringOver: import_prop_types68.default.object,
+          editableNode: import_prop_types68.default.object
         };
         _FloatingToolbar.defaultProps = { extensions: [] };
         _FloatingToolbar.defaultInnerProps = {
@@ -275152,10 +274785,10 @@ var require_floating_toolbar = __commonJS({
         if (!ToolbarComponent) {
           return false;
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "floating-toolbar-container" },
-          import_react63.default.createElement(
+          import_react65.default.createElement(
             "div",
             {
               ref: "floatingToolbar",
@@ -275163,7 +274796,7 @@ var require_floating_toolbar = __commonJS({
               style: this._toolbarStyles()
             },
             this._renderPointer(),
-            import_react63.default.createElement(
+            import_react65.default.createElement(
               ToolbarComponent,
               Object.assign({}, this.state.toolbarComponentProps)
             )
@@ -275323,14 +274956,14 @@ var require_floating_toolbar = __commonJS({
         if (this.state.hidePointer) {
           return false;
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           {
             className: "toolbar-pointer-container",
             style: this._toolbarPointerStyles()
           },
-          import_react63.default.createElement("div", { className: "shadow" }),
-          import_react63.default.createElement("div", { className: "foreground" })
+          import_react65.default.createElement("div", { className: "shadow" }),
+          import_react65.default.createElement("div", { className: "foreground" })
         );
       }
     };
@@ -275396,21 +275029,21 @@ var init_tab_manager = __esm({
 // src/components/contenteditable/link-editor.jsx
 var require_link_editor = __commonJS({
   "src/components/contenteditable/link-editor.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var import_react63 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types68 = __toESM(require_prop_types());
+    var import_react65 = __toESM(require_react());
+    var import_react_dom30 = __toESM(require_react_dom());
     init_nylas_exports();
-    var LinkEditor2 = class _LinkEditor extends import_react63.default.Component {
+    var LinkEditor2 = class _LinkEditor extends import_react65.default.Component {
       static initClass() {
         _LinkEditor.displayName = "LinkEditor";
         _LinkEditor.propTypes = {
           // A callback function we use to save the URL to the Contenteditable
-          onSaveUrl: import_prop_types66.default.func,
+          onSaveUrl: import_prop_types68.default.func,
           // The current DOM link we are modifying
-          linkToModify: import_prop_types66.default.object,
+          linkToModify: import_prop_types68.default.object,
           // A callback used when a link has been cancled, completed, or escaped
           // from. Used to notify our parent to switch modes.
-          onDoneWithLink: import_prop_types66.default.func
+          onDoneWithLink: import_prop_types68.default.func
         };
       }
       constructor(props) {
@@ -275433,7 +275066,7 @@ var require_link_editor = __commonJS({
       }
       componentDidMount() {
         if (this.props.focusOnMount) {
-          return import_react_dom29.default.findDOMNode(this.refs.urlInput).focus();
+          return import_react_dom30.default.findDOMNode(this.refs.urlInput).focus();
         }
       }
       render() {
@@ -275442,7 +275075,7 @@ var require_link_editor = __commonJS({
         let removeBtn = "";
         if (this._initialUrl()) {
           widthCorrection += 32;
-          removeBtn = import_react63.default.createElement(
+          removeBtn = import_react65.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275450,12 +275083,12 @@ var require_link_editor = __commonJS({
               style: { float: "right" },
               onMouseDown: this._removeUrl
             },
-            import_react63.default.createElement("i", { className: "fa fa-times" })
+            import_react65.default.createElement("i", { className: "fa fa-times" })
           );
         }
         if (this.state.urlInputValue.length === 0 || this.state.urlInputValue !== this._initialUrl()) {
           widthCorrection += 32;
-          checkBtn = import_react63.default.createElement(
+          checkBtn = import_react65.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275464,14 +275097,14 @@ var require_link_editor = __commonJS({
               onKeyPress: this._saveUrlOnEnter,
               onMouseDown: this._saveUrl
             },
-            import_react63.default.createElement("i", { className: "fa fa-check" })
+            import_react65.default.createElement("i", { className: "fa fa-check" })
           );
         }
-        return import_react63.default.createElement(
+        return import_react65.default.createElement(
           "div",
           { className: "toolbar-new-link" },
-          import_react63.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
-          import_react63.default.createElement("input", {
+          import_react65.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
+          import_react65.default.createElement("input", {
             type: "text",
             ref: "urlInput",
             style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
@@ -275492,10 +275125,10 @@ var require_link_editor = __commonJS({
       _onBlur(event2) {
         const targets = [];
         if (this.refs.saveBtn) {
-          targets.push(import_react_dom29.default.findDOMNode(this.refs.saveBtn));
+          targets.push(import_react_dom30.default.findDOMNode(this.refs.saveBtn));
         }
         if (this.refs.removeBtn) {
-          targets.push(import_react_dom29.default.findDOMNode(this.refs.removeBtn));
+          targets.push(import_react_dom30.default.findDOMNode(this.refs.removeBtn));
         }
         if (Array.from(targets).includes(event2.relatedTarget)) {
           event2.preventDefault();
@@ -276209,8 +275842,8 @@ var init_clipboard_service = __esm({
         const item = event2.clipboardData.items[0];
         if (item.kind === "file") {
           const temp = nodeRequire26("temp");
-          const path14 = nodeRequire26("node:path");
-          const fs11 = nodeRequire26("node:fs");
+          const path15 = nodeRequire26("node:path");
+          const fs12 = nodeRequire26("node:fs");
           const blob = item.getAsFile();
           const ext = {
             "image/png": ".png",
@@ -276221,9 +275854,9 @@ var init_clipboard_service = __esm({
           reader.addEventListener("loadend", () => {
             const buffer = new Buffer(new Uint8Array(reader.result));
             const tmpFolder = temp.path("-nylas-attachment");
-            const tmpPath = path14.join(tmpFolder, `Pasted File${ext}`);
-            fs11.mkdir(tmpFolder, () => {
-              fs11.writeFile(tmpPath, buffer, () => {
+            const tmpPath = path15.join(tmpFolder, `Pasted File${ext}`);
+            fs12.mkdir(tmpFolder, () => {
+              fs12.writeFile(tmpPath, buffer, () => {
                 if (this.onFilePaste) {
                   this.onFilePaste(tmpPath);
                 }
@@ -276463,13 +276096,13 @@ var init_toolbar_button_manager = __esm({
 // src/components/contenteditable/contenteditable.jsx
 var require_contenteditable = __commonJS({
   "src/components/contenteditable/contenteditable.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
+    var import_prop_types68 = __toESM(require_prop_types());
     init_emphasis_formatting_extension();
     init_paragraph_formatting_extension();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React52 = require_react();
-    var ReactDOM27 = require_react_dom();
-    var { Utils: Utils25, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var React54 = require_react();
+    var ReactDOM28 = require_react_dom();
+    var { Utils: Utils26, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { KeyCommandsRegion: KeyCommandsRegion3 } = (init_nylas_component_kit(), __toCommonJS(nylas_component_kit_exports));
     var FloatingToolbar = require_floating_toolbar();
     var EditorAPI2 = require_editor_api();
@@ -276482,20 +276115,20 @@ var require_contenteditable = __commonJS({
     var ClipboardService2 = (init_clipboard_service(), __toCommonJS(clipboard_service_exports)).default;
     var BlockquoteManager2 = (init_blockquote_manager(), __toCommonJS(blockquote_manager_exports)).default;
     var ToolbarButtonManager2 = (init_toolbar_button_manager(), __toCommonJS(toolbar_button_manager_exports)).default;
-    var Contenteditable = class _Contenteditable extends React52.Component {
+    var Contenteditable = class _Contenteditable extends React54.Component {
       static initClass() {
         _Contenteditable.displayName = "Contenteditable";
         _Contenteditable.IgnoreMutationClassName = "ignore-mutations";
         _Contenteditable.propTypes = {
           // The current html state, as a string, of the contenteditable.
-          value: import_prop_types66.default.string,
+          value: import_prop_types68.default.string,
           // Handlers
-          onChange: import_prop_types66.default.func.isRequired,
-          onFilePaste: import_prop_types66.default.func,
+          onChange: import_prop_types68.default.func.isRequired,
+          onFilePaste: import_prop_types68.default.func,
           // A list of objects that extend {ContenteditableExtension}
-          extensions: import_prop_types66.default.array,
-          spellcheck: import_prop_types66.default.bool,
-          floatingToolbar: import_prop_types66.default.bool
+          extensions: import_prop_types68.default.array,
+          spellcheck: import_prop_types68.default.bool,
+          floatingToolbar: import_prop_types68.default.bool
         };
         _Contenteditable.defaultProps = {
           extensions: [],
@@ -276624,7 +276257,7 @@ var require_contenteditable = __commonJS({
       // When we have a composition event in progress, we should not update
       // because otherwise our composition event will be blown away.
       shouldComponentUpdate(nextProps, nextState) {
-        return !this._inCompositionEvent && (!Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state));
+        return !this._inCompositionEvent && (!Utils26.isEqualReact(nextProps, this.props) || !Utils26.isEqualReact(nextState, this.state));
       }
       componentDidUpdate() {
         if (this._shouldRestoreSelectionOnUpdate()) {
@@ -276694,14 +276327,14 @@ var require_contenteditable = __commonJS({
       //############################# Render ################################
       //#####################################################################
       render() {
-        return React52.createElement(
+        return React54.createElement(
           KeyCommandsRegion3,
           {
             className: "contenteditable-container",
             localHandlers: this._keymapHandlers()
           },
           this._renderFloatingToolbar(),
-          React52.createElement(
+          React54.createElement(
             "div",
             Object.assign(
               {
@@ -276721,14 +276354,14 @@ var require_contenteditable = __commonJS({
         if (!this.props.floatingToolbar) {
           return;
         }
-        return React52.createElement(FloatingToolbar, {
+        return React54.createElement(FloatingToolbar, {
           ref: "toolbarController",
           atomicEdit: this.atomicEdit,
           extensions: this._extensions()
         });
       }
       _editableNode() {
-        return ReactDOM27.findDOMNode(this.refs.contenteditable);
+        return ReactDOM28.findDOMNode(this.refs.contenteditable);
       }
       //#####################################################################
       //########################## Listener Setup ###########################
@@ -276859,7 +276492,7 @@ var require_contenteditable = __commonJS({
         }
         let runCallbacks = true;
         for (var mutation of Array.from(mutations)) {
-          if (__guard__2(
+          if (__guard__3(
             mutation.target != null ? mutation.target.className : void 0,
             (x3) => x3.includes(_Contenteditable.IgnoreMutationClassName)
           )) {
@@ -276951,8 +276584,8 @@ var require_contenteditable = __commonJS({
           this.refs.toolbarController.forceClose();
         }
         event2.preventDefault();
-        const { remote: remote9 } = require("electron");
-        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
+        const { remote: remote10 } = require("electron");
+        const { Menu: Menu7, MenuItem: MenuItem2 } = remote10;
         const menu = new Menu7();
         this.dispatchEventToExtensions("onShowContextMenu", event2, { menu });
         menu.append(new MenuItem2({ label: "Cut", role: "cut" }));
@@ -276964,7 +276597,7 @@ var require_contenteditable = __commonJS({
             role: "pasteandmatchstyle"
           })
         );
-        return menu.popup(remote9.getCurrentWindow());
+        return menu.popup(remote10.getCurrentWindow());
       }
       //#####################################################################
       //########################### Extensions ##############################
@@ -277162,7 +276795,7 @@ var require_contenteditable = __commonJS({
     };
     Contenteditable.initClass();
     module2.exports = Contenteditable;
-    function __guard__2(value, transform) {
+    function __guard__3(value, transform) {
       return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
     }
   }
@@ -278038,8 +277671,8 @@ var init_battery_status_manager = __esm({
 var require_default_client_helper = __commonJS({
   "src/default-client-helper.js"(exports2, module2) {
     var { exec: exec4 } = require("child_process");
-    var fs11 = require("fs");
-    var { remote: remote9, shell: shell6 } = require("electron");
+    var fs12 = require("fs");
+    var { remote: remote10, shell: shell6 } = require("electron");
     var bundleIdentifier = "com.nylas.nylas-mail";
     var Windows = class {
       available() {
@@ -278068,7 +277701,7 @@ var require_default_client_helper = __commonJS({
         );
       }
       resetURLScheme(_scheme, _callback) {
-        return remote9.dialog.showMessageBox(
+        return remote10.dialog.showMessageBox(
           null,
           {
             type: "info",
@@ -278082,7 +277715,7 @@ var require_default_client_helper = __commonJS({
         );
       }
       registerForURLScheme(_scheme, callback) {
-        const WindowsUpdater = remote9.require("./windows-updater");
+        const WindowsUpdater = remote10.require("./windows-updater");
         return WindowsUpdater.createRegistryEntries(
           {
             allowEscalation: true,
@@ -278090,7 +277723,7 @@ var require_default_client_helper = __commonJS({
           },
           (err, didMakeDefault) => {
             if (err) {
-              remote9.dialog.showMessageBox(null, {
+              remote10.dialog.showMessageBox(null, {
                 type: "error",
                 buttons: ["OK"],
                 message: "Sorry, an error occurred.",
@@ -278098,7 +277731,7 @@ var require_default_client_helper = __commonJS({
               });
             }
             if (!didMakeDefault) {
-              remote9.dialog.showMessageBox(
+              remote10.dialog.showMessageBox(
                 null,
                 {
                   type: "info",
@@ -278174,7 +277807,7 @@ var require_default_client_helper = __commonJS({
       getLaunchServicesPlistPath(callback) {
         const secure = `${process.env.HOME}/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist`;
         const insecure = `${process.env.HOME}/Library/Preferences/com.apple.LaunchServices.plist`;
-        return fs11.exists(secure, (exists) => {
+        return fs12.exists(secure, (exists) => {
           if (exists) {
             return callback(secure);
           } else {
@@ -278191,14 +277824,14 @@ var require_default_client_helper = __commonJS({
               if (callback && err) {
                 return callback(err);
               }
-              return fs11.readFile(tmpPath, (err2, data) => {
+              return fs12.readFile(tmpPath, (err2, data) => {
                 if (callback && err2) {
                   return callback(err2);
                 }
                 try {
                   data = JSON.parse(data);
                   callback(data.LSHandlers, data);
-                  return fs11.unlink(tmpPath);
+                  return fs12.unlink(tmpPath);
                 } catch (e) {
                   if (callback && err2) {
                     return callback(e);
@@ -278219,11 +277852,11 @@ var require_default_client_helper = __commonJS({
                 return callback(err);
               }
               try {
-                let data = fs11.readFileSync(tmpPath);
+                let data = fs12.readFileSync(tmpPath);
                 data = JSON.parse(data);
                 data.LSHandlers = defaults3;
                 data = JSON.stringify(data);
-                fs11.writeFileSync(tmpPath, data);
+                fs12.writeFileSync(tmpPath, data);
               } catch (error) {
                 if (callback && error) {
                   return callback(error);
@@ -278232,7 +277865,7 @@ var require_default_client_helper = __commonJS({
               return exec4(
                 `plutil -convert binary1 "${tmpPath}" -o "${plistPath}"`,
                 () => {
-                  fs11.unlink(tmpPath);
+                  fs12.unlink(tmpPath);
                   return exec4(
                     "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user",
                     (err2, _stdout2, _stderr2) => {
@@ -278306,8 +277939,8 @@ var require_buffered_process = __commonJS({
     var BufferedProcess;
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var ChildProcess = require("child_process");
-    var { Emitter: Emitter3 } = require_event_kit();
-    var path14 = require("path");
+    var { Emitter: Emitter5 } = require_event_kit();
+    var path15 = require("path");
     module2.exports = BufferedProcess = class BufferedProcess {
       /*
        Section: Construction
@@ -278339,7 +277972,7 @@ var require_buffered_process = __commonJS({
           param = {};
         }
         let { command, args, options: options2, stdout, stderr, exit } = param;
-        this.emitter = new Emitter3();
+        this.emitter = new Emitter5();
         if (options2 == null) {
           options2 = {};
         }
@@ -278472,7 +278105,7 @@ var require_buffered_process = __commonJS({
         if (command === "explorer.exe" || command === "explorer") {
           return true;
         } else if (process.env.SystemRoot) {
-          return command === path14.join(process.env.SystemRoot, "explorer.exe") || command === path14.join(process.env.SystemRoot, "explorer");
+          return command === path15.join(process.env.SystemRoot, "explorer.exe") || command === path15.join(process.env.SystemRoot, "explorer");
         } else {
           return false;
         }
@@ -278481,7 +278114,7 @@ var require_buffered_process = __commonJS({
         if (process.env.comspec) {
           return process.env.comspec;
         } else if (process.env.SystemRoot) {
-          return path14.join(process.env.SystemRoot, "System32", "cmd.exe");
+          return path15.join(process.env.SystemRoot, "System32", "cmd.exe");
         } else {
           return "cmd.exe";
         }
@@ -278570,10 +278203,10 @@ var system_start_service_exports = {};
 __export(system_start_service_exports, {
   default: () => system_start_service_default
 });
-var import_node_path13, import_node_fs7, import_node_os4, import_node_child_process4, import_windows_shortcuts, SystemStartServiceBase, SystemStartServiceDarwin, SystemStartServiceWin32, SystemStartServiceLinux, SystemStartService, system_start_service_default;
+var import_node_path14, import_node_fs7, import_node_os4, import_node_child_process4, import_windows_shortcuts, SystemStartServiceBase, SystemStartServiceDarwin, SystemStartServiceWin32, SystemStartServiceLinux, SystemStartService, system_start_service_default;
 var init_system_start_service = __esm({
   "src/system-start-service.js"() {
-    import_node_path13 = __toESM(require("path"));
+    import_node_path14 = __toESM(require("path"));
     import_node_fs7 = __toESM(require("fs"));
     import_node_os4 = __toESM(require("os"));
     import_node_child_process4 = require("child_process");
@@ -278630,7 +278263,7 @@ var init_system_start_service = __esm({
         return import_node_fs7.default.unlink(this._plistPath());
       }
       _launcherPath() {
-        return import_node_path13.default.join(
+        return import_node_path14.default.join(
           "/",
           "Applications",
           "Nylas Mail.app",
@@ -278640,7 +278273,7 @@ var init_system_start_service = __esm({
         );
       }
       _plistPath() {
-        return import_node_path13.default.join(
+        return import_node_path14.default.join(
           process.env.HOME,
           "Library",
           "LaunchAgents",
@@ -278697,10 +278330,10 @@ var init_system_start_service = __esm({
         return import_node_fs7.default.unlink(this._shortcutPath());
       }
       _launcherPath() {
-        return import_node_path13.default.join(process.env.LOCALAPPDATA, "nylas", "Update.exe");
+        return import_node_path14.default.join(process.env.LOCALAPPDATA, "nylas", "Update.exe");
       }
       _shortcutPath() {
-        return import_node_path13.default.join(
+        return import_node_path14.default.join(
           process.env.APPDATA,
           "Microsoft",
           "Windows",
@@ -278745,11 +278378,11 @@ var init_system_start_service = __esm({
         return import_node_fs7.default.unlink(this._shortcutPath());
       }
       _launcherPath() {
-        return import_node_path13.default.join("/", "usr", "share", "applications", "nylas.desktop");
+        return import_node_path14.default.join("/", "usr", "share", "applications", "nylas.desktop");
       }
       _shortcutPath() {
-        const configDir = process.env.XDG_CONFIG_HOME || import_node_path13.default.join(import_node_os4.default.homedir(), ".config");
-        return import_node_path13.default.join(configDir, "autostart", "nylas-mail.desktop");
+        const configDir = process.env.XDG_CONFIG_HOME || import_node_path14.default.join(import_node_os4.default.homedir(), ".config");
+        return import_node_path14.default.join(configDir, "autostart", "nylas-mail.desktop");
       }
     };
     if (process.platform === "darwin") {
@@ -279767,8 +279400,8 @@ var require_nylas_observables = __commonJS({
   "src/global/nylas-observables.js"(exports2, module2) {
     var Rx11 = require_rx_lite();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Category4 = null;
-    var getCategory = () => Category4 || (Category4 = (init_category(), __toCommonJS(category_exports)).default);
+    var Category5 = null;
+    var getCategory = () => Category5 || (Category5 = (init_category(), __toCommonJS(category_exports)).default);
     var DatabaseStore5 = null;
     var QuerySubscriptionPool2 = null;
     var getDatabaseStore = () => DatabaseStore5 || (DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default);
@@ -280136,7 +279769,7 @@ var require_workspace_store = __commonJS({
     init_category_store();
     var _MailboxPerspectiveNS2 = __toESM(require_mailbox_perspective());
     var import_nylas_store29 = __toESM(require_nylas_store());
-    var Sheet = {};
+    var Sheet2 = {};
     var Location = {};
     var WorkspaceStore6 = class _WorkspaceStore extends import_nylas_store29.default {
       static initClass() {
@@ -280221,7 +279854,7 @@ var require_workspace_store = __commonJS({
       }
       _resetInstanceVars() {
         this.Location = Location = {};
-        this.Sheet = Sheet = {};
+        this.Sheet = Sheet2 = {};
         this._hiddenLocations = NylasEnv.config.get("core.workspace.hiddenLocations") || {};
         this._sheetStack = [];
         if (NylasEnv.isMainWindow()) {
@@ -280292,20 +279925,20 @@ var require_workspace_store = __commonJS({
       _onSetFocus({ collection, item }) {
         if (collection === "thread") {
           if (this.layoutMode() === "list") {
-            if (item && this.topSheet() !== Sheet.Thread) {
-              this.pushSheet(Sheet.Thread);
+            if (item && this.topSheet() !== Sheet2.Thread) {
+              this.pushSheet(Sheet2.Thread);
             }
-            if (!item && this.topSheet() === Sheet.Thread) {
+            if (!item && this.topSheet() === Sheet2.Thread) {
               this.popSheet();
             }
           }
         }
         if (collection === "file") {
           if (this.layoutMode() === "list") {
-            if (item && this.topSheet() !== Sheet.File) {
-              this.pushSheet(Sheet.File);
+            if (item && this.topSheet() !== Sheet2.File) {
+              this.pushSheet(Sheet2.File);
             }
-            if (!item && this.topSheet() === Sheet.File) {
+            if (!item && this.topSheet() === Sheet2.File) {
               return this.popSheet();
             }
           }
@@ -280394,7 +280027,7 @@ var require_workspace_store = __commonJS({
             cols[idx] = Location[col2];
           }
         }
-        Sheet[id] = {
+        Sheet2[id] = {
           id,
           columns,
           supportedModes: Object.keys(columns),
@@ -280410,12 +280043,12 @@ var require_workspace_store = __commonJS({
           Footer: { id: `Sheet:${id}:Footer` }
         };
         if (options2.root && !this.rootSheet() && !options2.silent) {
-          this._onSelectRootSheet(Sheet[id]);
+          this._onSelectRootSheet(Sheet2[id]);
         }
         return this.triggerDebounced();
       }
       undefineSheet(id) {
-        delete Sheet[id];
+        delete Sheet2[id];
         return this.triggerDebounced();
       }
       // Push the sheet on top of the current sheet, with a quick animation.
@@ -280436,7 +280069,7 @@ var require_workspace_store = __commonJS({
           this._sheetStack.pop();
           this.trigger();
         }
-        if (Sheet.Thread && sheet === Sheet.Thread) {
+        if (Sheet2.Thread && sheet === Sheet2.Thread) {
           return import_actions38.default.setFocus({ collection: "thread", item: null });
         }
       }
@@ -280455,18 +280088,23 @@ var require_workspace_store = __commonJS({
 });
 
 // src/sheet.jsx
-var require_sheet = __commonJS({
-  "src/sheet.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var React52 = require_react();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
-    var InjectedComponentSet4 = require_injected_component_set();
-    var ResizableRegion2 = require_resizable_region();
-    var FLEX = 1e4;
-    var Sheet = class _Sheet extends React52.Component {
+var sheet_exports = {};
+__export(sheet_exports, {
+  default: () => sheet_default
+});
+var import_prop_types66, import_react62, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
+var init_sheet = __esm({
+  "src/sheet.jsx"() {
+    import_prop_types66 = __toESM(require_prop_types());
+    import_react62 = __toESM(require_react());
+    init_index_all();
+    init_nylas_exports();
+    init_retina_img();
+    init_flexbox();
+    import_injected_component_set2 = __toESM(require_injected_component_set());
+    import_resizable_region = __toESM(require_resizable_region());
+    FLEX = 1e4;
+    Sheet = class _Sheet extends import_react62.default.Component {
       static initClass() {
         _Sheet.displayName = "Sheet";
         _Sheet.propTypes = {
@@ -280501,12 +280139,12 @@ var require_sheet = __commonJS({
           this.unlisteners = [];
         }
         this.unlisteners.push(
-          ComponentRegistry3.listen((_event) => {
+          ComponentRegistry2.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
         return this.unlisteners.push(
-          WorkspaceStore6.listen((_event) => {
+          WorkspaceStore.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
@@ -280520,7 +280158,7 @@ var require_sheet = __commonJS({
         return NylasEnv.setMinimumWidth(minWidth);
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !_4.isEqual(nextProps, this.props) || !_4.isEqual(nextState, this.state);
+        return !index_default_default.isEqual(nextProps, this.props) || !index_default_default.isEqual(nextState, this.state);
       }
       componentWillUnmount() {
         return Array.from(this.unlisteners).map((unlisten) => unlisten());
@@ -280532,7 +280170,7 @@ var require_sheet = __commonJS({
           height: "100%",
           zIndex: 1
         };
-        return React52.createElement(
+        return import_react62.default.createElement(
           "div",
           {
             name: "Sheet",
@@ -280540,8 +280178,8 @@ var require_sheet = __commonJS({
             className: `sheet mode-${this.state.mode}`,
             "data-id": this.props.data.id
           },
-          React52.createElement(
-            Flexbox3,
+          import_react62.default.createElement(
+            Flexbox2,
             { direction: "row", style: { overflow: "hidden" } },
             this._columnFlexboxElements()
           )
@@ -280551,8 +280189,8 @@ var require_sheet = __commonJS({
         return this.state.columns.map((column, idx) => {
           const { maxWidth, minWidth, handle, location: location2, width } = column;
           if (minWidth !== maxWidth && maxWidth < FLEX) {
-            return React52.createElement(
-              ResizableRegion2,
+            return import_react62.default.createElement(
+              import_resizable_region.default,
               {
                 key: `${this.props.data.id}:${idx}`,
                 name: `${this.props.data.id}:${idx}`,
@@ -280565,7 +280203,7 @@ var require_sheet = __commonJS({
                 maxWidth,
                 handle
               },
-              React52.createElement(InjectedComponentSet4, {
+              import_react62.default.createElement(import_injected_component_set2.default, {
                 direction: "column",
                 matching: { location: location2, mode: this.state.mode }
               })
@@ -280581,7 +280219,7 @@ var require_sheet = __commonJS({
             } else {
               style.flex = 1;
             }
-            return React52.createElement(InjectedComponentSet4, {
+            return import_react62.default.createElement(import_injected_component_set2.default, {
               direction: "column",
               key: `${this.props.data.id}:${idx}`,
               name: `${this.props.data.id}:${idx}`,
@@ -280600,7 +280238,7 @@ var require_sheet = __commonJS({
       _getStateFromStores() {
         let maxWidth;
         const state = {
-          mode: WorkspaceStore6.layoutMode(),
+          mode: WorkspaceStore.layoutMode(),
           columns: []
         };
         let widest = -1;
@@ -280608,14 +280246,14 @@ var require_sheet = __commonJS({
         if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
           for (let idx = 0; idx < this.props.data.columns[state.mode].length; idx++) {
             var location2 = this.props.data.columns[state.mode][idx];
-            if (WorkspaceStore6.isLocationHidden(location2)) {
+            if (WorkspaceStore.isLocationHidden(location2)) {
               continue;
             }
-            var entries2 = ComponentRegistry3.findComponentsMatching({
+            var entries2 = ComponentRegistry2.findComponentsMatching({
               location: location2,
               mode: state.mode
             });
-            maxWidth = _4.reduce(
+            maxWidth = index_default_default.reduce(
               entries2,
               (m, component) => Math.min(
                 (component.containerStyles != null ? component.containerStyles.maxWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.maxWidth : void 0 : 1e4,
@@ -280623,7 +280261,7 @@ var require_sheet = __commonJS({
               ),
               1e4
             );
-            var minWidth = _4.reduce(
+            var minWidth = index_default_default.reduce(
               entries2,
               (m, component) => Math.max(
                 (component.containerStyles != null ? component.containerStyles.minWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.minWidth : void 0 : 0,
@@ -280646,48 +280284,56 @@ var require_sheet = __commonJS({
           let end1;
           state.columns[widest].maxWidth = FLEX;
           for (i = 0, end = widest - 1; i <= end; i++) {
-            state.columns[i].handle = ResizableRegion2.Handle.Right;
+            state.columns[i].handle = import_resizable_region.default.Handle.Right;
           }
           for (i = widest, end1 = state.columns.length - 1; i <= end1; i++) {
-            state.columns[i].handle = ResizableRegion2.Handle.Left;
+            state.columns[i].handle = import_resizable_region.default.Handle.Left;
           }
         }
         return state;
       }
       _pop() {
-        return Actions39.popSheet();
+        return Actions5.popSheet();
       }
     };
     Sheet.initClass();
-    module2.exports = Sheet;
+    sheet_default = Sheet;
   }
 });
 
 // src/sheet-toolbar.jsx
-var require_sheet_toolbar = __commonJS({
-  "src/sheet-toolbar.jsx"(exports2, module2) {
-    var import_prop_types66 = __toESM(require_prop_types());
-    var React52 = require_react();
-    var ReactDOM27 = require_react_dom();
-    var _Sheet = require_sheet();
-    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
-    var RetinaImg5 = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var Utils25 = require_utils();
-    var { remote: remote9 } = require("electron");
-    var _str3 = require_underscore();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var ToolbarSpacer = class _ToolbarSpacer extends React52.Component {
+var sheet_toolbar_exports = {};
+__export(sheet_toolbar_exports, {
+  default: () => sheet_toolbar_default
+});
+function __guard__2(value, transform) {
+  return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
+}
+var import_prop_types67, import_react63, import_react_dom28, import_utils25, import_electron10, import_underscore93, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
+var init_sheet_toolbar = __esm({
+  "src/sheet-toolbar.jsx"() {
+    import_prop_types67 = __toESM(require_prop_types());
+    import_react63 = __toESM(require_react());
+    import_react_dom28 = __toESM(require_react_dom());
+    init_sheet();
+    init_flexbox();
+    init_retina_img();
+    import_utils25 = __toESM(require_utils());
+    import_electron10 = require("electron");
+    import_underscore93 = __toESM(require_underscore());
+    init_index_all();
+    init_nylas_exports();
+    ToolbarSpacer = class _ToolbarSpacer extends import_react63.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         super(...args);
       }
       static initClass() {
         _ToolbarSpacer.displayName = "ToolbarSpacer";
-        _ToolbarSpacer.propTypes = { order: import_prop_types66.default.number };
+        _ToolbarSpacer.propTypes = { order: import_prop_types67.default.number };
       }
       render() {
-        return React52.createElement("div", {
+        return import_react63.default.createElement("div", {
           className: "item-spacer",
           style: {
             flex: 1,
@@ -280697,7 +280343,7 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarSpacer.initClass();
-    var WindowTitle = class _WindowTitle extends React52.Component {
+    WindowTitle = class _WindowTitle extends import_react63.default.Component {
       static initClass() {
         _WindowTitle.displayName = "WindowTitle";
       }
@@ -280714,7 +280360,7 @@ var require_sheet_toolbar = __commonJS({
         return typeof this.unlisten === "function" ? this.unlisten() : void 0;
       }
       render() {
-        return React52.createElement(
+        return import_react63.default.createElement(
           "div",
           { className: "window-title" },
           this.state.title
@@ -280722,9 +280368,9 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     WindowTitle.initClass();
-    var Category4 = null;
-    var FocusedPerspectiveStore4 = null;
-    var ToolbarBack = class _ToolbarBack extends React52.Component {
+    Category4 = null;
+    FocusedPerspectiveStore4 = null;
+    ToolbarBack = class _ToolbarBack extends import_react63.default.Component {
       static initClass() {
         _ToolbarBack.displayName = "ToolbarBack";
       }
@@ -280761,30 +280407,30 @@ var require_sheet_toolbar = __commonJS({
         if (this.state.categoryName === Category4.AllMailName) {
           title = "All Mail";
         } else if (this.state.categoryName) {
-          title = _str3.titleize(this.state.categoryName);
+          title = import_underscore93.default.titleize(this.state.categoryName);
         } else {
           title = "Back";
         }
-        return React52.createElement(
+        return import_react63.default.createElement(
           "div",
           {
             className: "item-back",
             onClick: this._onClick,
             title: `Return to ${title}`
           },
-          React52.createElement(RetinaImg5, {
+          import_react63.default.createElement(retina_img_default, {
             name: "sheet-back.png",
-            mode: RetinaImg5.Mode.ContentIsMask
+            mode: retina_img_default.Mode.ContentIsMask
           }),
-          React52.createElement("div", { className: "item-back-title" }, title)
+          import_react63.default.createElement("div", { className: "item-back-title" }, title)
         );
       }
       _onClick() {
-        return Actions39.popSheet();
+        return Actions5.popSheet();
       }
     };
     ToolbarBack.initClass();
-    var ToolbarWindowControls = class _ToolbarWindowControls extends React52.Component {
+    ToolbarWindowControls = class _ToolbarWindowControls extends import_react63.default.Component {
       static initClass() {
         _ToolbarWindowControls.displayName = "ToolbarWindowControls";
       }
@@ -280810,27 +280456,27 @@ var require_sheet_toolbar = __commonJS({
         }
       }
       render() {
-        return React52.createElement(
+        return import_react63.default.createElement(
           "div",
           {
             name: "ToolbarWindowControls",
             className: `toolbar-window-controls alt-${this.state.alt}`
           },
-          React52.createElement("button", {
+          import_react63.default.createElement("button", {
             tabIndex: -1,
             className: "close",
             onClick() {
               return NylasEnv.close();
             }
           }),
-          React52.createElement("button", {
+          import_react63.default.createElement("button", {
             tabIndex: -1,
             className: "minimize",
             onClick() {
               return NylasEnv.minimize();
             }
           }),
-          React52.createElement("button", {
+          import_react63.default.createElement("button", {
             tabIndex: -1,
             className: "maximize",
             onClick: this._onMaximize
@@ -280851,7 +280497,7 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarWindowControls.initClass();
-    var ToolbarMenuControl = class _ToolbarMenuControl extends React52.Component {
+    ToolbarMenuControl = class _ToolbarMenuControl extends import_react63.default.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         this._openMenu = this._openMenu.bind(this);
@@ -280861,39 +280507,39 @@ var require_sheet_toolbar = __commonJS({
         _ToolbarMenuControl.displayName = "ToolbarMenuControl";
       }
       render() {
-        return React52.createElement(
+        return import_react63.default.createElement(
           "div",
           { className: "toolbar-menu-control" },
-          React52.createElement(
+          import_react63.default.createElement(
             "button",
             { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
-            React52.createElement(RetinaImg5, {
+            import_react63.default.createElement(retina_img_default, {
               name: "windows-menu-icon.png",
-              mode: RetinaImg5.Mode.ContentIsMask
+              mode: retina_img_default.Mode.ContentIsMask
             })
           )
         );
       }
       _openMenu() {
-        const { applicationMenu } = remote9.getGlobal("application");
+        const { applicationMenu } = import_electron10.remote.getGlobal("application");
         return applicationMenu.menu.popup(NylasEnv.getCurrentWindow());
       }
     };
     ToolbarMenuControl.initClass();
-    ComponentRegistry3.register(ToolbarWindowControls, {
-      location: WorkspaceStore6.Sheet.Global.Toolbar.Left
+    ComponentRegistry2.register(ToolbarWindowControls, {
+      location: WorkspaceStore.Sheet.Global.Toolbar.Left
     });
-    ComponentRegistry3.register(ToolbarMenuControl, {
-      location: WorkspaceStore6.Sheet.Global.Toolbar.Right
+    ComponentRegistry2.register(ToolbarMenuControl, {
+      location: WorkspaceStore.Sheet.Global.Toolbar.Right
     });
-    var Toolbar = class _Toolbar extends React52.Component {
+    Toolbar = class _Toolbar extends import_react63.default.Component {
       static initClass() {
         _Toolbar.displayName = "Toolbar";
         _Toolbar.propTypes = {
-          data: import_prop_types66.default.object,
-          depth: import_prop_types66.default.number
+          data: import_prop_types67.default.object,
+          depth: import_prop_types67.default.number
         };
-        _Toolbar.childContextTypes = { sheetDepth: import_prop_types66.default.number };
+        _Toolbar.childContextTypes = { sheetDepth: import_prop_types67.default.number };
       }
       getChildContext() {
         return { sheetDepth: this.props.depth };
@@ -280917,12 +280563,12 @@ var require_sheet_toolbar = __commonJS({
         this.mounted = true;
         this.unlisteners = [];
         this.unlisteners.push(
-          WorkspaceStore6.listen((_event) => {
+          WorkspaceStore.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
         this.unlisteners.push(
-          ComponentRegistry3.listen((_event) => {
+          ComponentRegistry2.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
@@ -280941,7 +280587,7 @@ var require_sheet_toolbar = __commonJS({
         return window.requestAnimationFrame(() => this.recomputeLayout());
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state);
+        return !import_utils25.default.isEqualReact(nextProps, this.props) || !import_utils25.default.isEqualReact(nextState, this.state);
       }
       render() {
         const style = {
@@ -280951,7 +280597,7 @@ var require_sheet_toolbar = __commonJS({
           zIndex: 1
         };
         const toolbars = this.state.columns.map((components, idx) => {
-          return React52.createElement(
+          return import_react63.default.createElement(
             "div",
             {
               style: { position: "absolute", top: 0, display: "none" },
@@ -280962,7 +280608,7 @@ var require_sheet_toolbar = __commonJS({
             this._flexboxForComponents(components)
           );
         });
-        return React52.createElement(
+        return import_react63.default.createElement(
           "div",
           {
             style,
@@ -280974,24 +280620,24 @@ var require_sheet_toolbar = __commonJS({
       }
       _flexboxForComponents(components) {
         const elements = components.map((Component20) => {
-          return React52.createElement(
+          return import_react63.default.createElement(
             Component20,
             Object.assign({ key: Component20.displayName }, this.props)
           );
         });
-        return React52.createElement(
-          Flexbox3,
+        return import_react63.default.createElement(
+          Flexbox2,
           { className: "item-container", direction: "row" },
           elements,
-          React52.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
-          React52.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
+          import_react63.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
+          import_react63.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
         );
       }
       recomputeLayout() {
         if (!this.mounted) {
           return;
         }
-        const el = ReactDOM27.findDOMNode(this);
+        const el = import_react_dom28.default.findDOMNode(this);
         const columnToolbarEls = el.querySelectorAll("[data-column]");
         const sheet = document.querySelectorAll("[name='Sheet']")[this.props.depth];
         if (!sheet) {
@@ -281007,7 +280653,7 @@ var require_sheet_toolbar = __commonJS({
           columnToolbarEl.style.left = `${columnEl.offsetLeft}px`;
           columnToolbarEl.style.width = `${columnEl.offsetWidth}px`;
         }
-        return remote9.getCurrentWindow().setSheetOffset(el.clientHeight);
+        return import_electron10.remote.getCurrentWindow().setSheetOffset(el.clientHeight);
       }
       _onWindowResize() {
         return this.recomputeLayout();
@@ -281018,16 +280664,16 @@ var require_sheet_toolbar = __commonJS({
           ({ props } = this);
         }
         const state = {
-          mode: WorkspaceStore6.layoutMode(),
+          mode: WorkspaceStore.layoutMode(),
           columns: [],
           columnNames: []
         };
         if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
           for (loc of Array.from(this.props.data.columns[state.mode])) {
-            if (WorkspaceStore6.isLocationHidden(loc)) {
+            if (WorkspaceStore.isLocationHidden(loc)) {
               continue;
             }
-            entries2 = ComponentRegistry3.findComponentsMatching({
+            entries2 = ComponentRegistry2.findComponentsMatching({
               location: loc.Toolbar,
               mode: state.mode
             });
@@ -281037,8 +280683,8 @@ var require_sheet_toolbar = __commonJS({
             }
           }
         }
-        for (loc of [WorkspaceStore6.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry3.findComponentsMatching({
+        for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
+          entries2 = ComponentRegistry2.findComponentsMatching({
             location: loc.Toolbar.Left,
             mode: state.mode
           });
@@ -281051,8 +280697,8 @@ var require_sheet_toolbar = __commonJS({
             state.columns[0].push(ToolbarBack);
           }
         }
-        for (loc of [WorkspaceStore6.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry3.findComponentsMatching({
+        for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
+          entries2 = ComponentRegistry2.findComponentsMatching({
             location: loc.Toolbar.Right,
             mode: state.mode
           });
@@ -281070,28 +280716,25 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     Toolbar.initClass();
-    module2.exports = Toolbar;
-    function __guard__2(value, transform) {
-      return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
-    }
+    sheet_toolbar_default = Toolbar;
   }
 });
 
 // src/sheet-container.jsx
 var require_sheet_container = __commonJS({
   "src/sheet-container.jsx"(exports2, module2) {
-    var React52 = require_react();
+    var React54 = require_react();
     var ReactCSSTransitionGroup2 = (init_css_transition_group_compat(), __toCommonJS(css_transition_group_compat_exports));
-    var Sheet = require_sheet();
-    var Toolbar = require_sheet_toolbar();
+    var Sheet2 = (init_sheet(), __toCommonJS(sheet_exports));
+    var Toolbar2 = (init_sheet_toolbar(), __toCommonJS(sheet_toolbar_exports));
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var InjectedComponentSet4 = require_injected_component_set();
+    var InjectedComponentSet5 = require_injected_component_set();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var SheetContainer2 = (() => {
       let _displayName;
-      SheetContainer2 = class SheetContainer extends React52.Component {
+      SheetContainer2 = class SheetContainer extends React54.Component {
         static initClass() {
           _displayName = "SheetContainer";
         }
@@ -281120,10 +280763,10 @@ var require_sheet_container = __commonJS({
           const totalSheets = this.state.stack.length;
           const topSheet = this.state.stack[totalSheets - 1];
           if (!topSheet) {
-            return React52.createElement("div", null);
+            return React54.createElement("div", null);
           }
           const sheetElements = this._sheetElements();
-          return React52.createElement(
+          return React54.createElement(
             Flexbox3,
             {
               direction: "column",
@@ -281131,10 +280774,10 @@ var require_sheet_container = __commonJS({
               style: { overflow: "hidden" }
             },
             this._toolbarContainerElement(),
-            React52.createElement(
+            React54.createElement(
               "div",
               { name: "Header", style: { order: 1, zIndex: 2 } },
-              React52.createElement(InjectedComponentSet4, {
+              React54.createElement(InjectedComponentSet5, {
                 matching: {
                   locations: [topSheet.Header, WorkspaceStore6.Sheet.Global.Header]
                 },
@@ -281142,14 +280785,14 @@ var require_sheet_container = __commonJS({
                 id: topSheet.id
               })
             ),
-            React52.createElement(
+            React54.createElement(
               "div",
               {
                 name: "Center",
                 style: { order: 2, flex: 1, position: "relative", zIndex: 1 }
               },
               sheetElements[0],
-              React52.createElement(
+              React54.createElement(
                 ReactCSSTransitionGroup2,
                 {
                   transitionLeaveTimeout: 125,
@@ -281159,10 +280802,10 @@ var require_sheet_container = __commonJS({
                 sheetElements.slice(1)
               )
             ),
-            React52.createElement(
+            React54.createElement(
               "div",
               { name: "Footer", style: { order: 3, zIndex: 4 } },
-              React52.createElement(InjectedComponentSet4, {
+              React54.createElement(InjectedComponentSet5, {
                 matching: {
                   locations: [topSheet.Footer, WorkspaceStore6.Sheet.Global.Footer]
                 },
@@ -281178,7 +280821,7 @@ var require_sheet_container = __commonJS({
             return [];
           }
           const toolbarElements = this._toolbarElements();
-          return React52.createElement(
+          return React54.createElement(
             "div",
             {
               name: "Toolbar",
@@ -281186,7 +280829,7 @@ var require_sheet_container = __commonJS({
               className: "sheet-toolbar"
             },
             toolbarElements[0],
-            React52.createElement(
+            React54.createElement(
               ReactCSSTransitionGroup2,
               {
                 transitionLeaveTimeout: 125,
@@ -281199,7 +280842,7 @@ var require_sheet_container = __commonJS({
         }
         _toolbarElements() {
           return this.state.stack.map(
-            (sheet, index) => React52.createElement(Toolbar, {
+            (sheet, index) => React54.createElement(Toolbar2, {
               data: sheet,
               ref: `toolbar-${index}`,
               key: `${index}:${sheet.id}:toolbar`,
@@ -281209,7 +280852,7 @@ var require_sheet_container = __commonJS({
         }
         _sheetElements() {
           return this.state.stack.map((sheet, index) => {
-            return React52.createElement(Sheet, {
+            return React54.createElement(Sheet2, {
               data: sheet,
               depth: index,
               key: `${index}:${sheet.id}`,
@@ -281245,25 +280888,389 @@ var import_node_module29 = require("module");
 
 // src/nylas-env.js
 var import_node_module28 = require("module");
-var import_node_path14 = __toESM(require("path"));
-var import_electron10 = require("electron");
+var import_node_path15 = __toESM(require("path"));
+var import_electron11 = require("electron");
 var import_remote7 = __toESM(require_at_electron_remote());
 init_index_all();
-var import_event_kit2 = __toESM(require_event_kit());
-var import_fs_plus2 = __toESM(require_fs_plus());
+var import_event_kit3 = __toESM(require_event_kit());
+var import_fs_plus3 = __toESM(require_fs_plus());
 var import_coffeestack = __toESM(require_coffeestack());
 var import_source_map_support = __toESM(require_source_map_support());
 var import_window_event_handler = __toESM(require_window_event_handler());
 var import_styles_element = __toESM(require_styles_element());
 var import_store_registry2 = __toESM(require_store_registry());
-var import_utils25 = __toESM(require_utils());
+var import_utils26 = __toESM(require_utils());
 var import_config = __toESM(require_config());
-var import_theme_manager = __toESM(require_theme_manager());
+
+// src/theme-manager.js
+var import_node_path3 = __toESM(require("path"));
+init_index_all();
+var _emissary = __toESM(require_emissary());
+var import_event_kit = __toESM(require_event_kit());
+var import_fs_plus = __toESM(require_fs_plus());
+var import_q = __toESM(require_q());
+var import_package = __toESM(require_package3());
+var EmitterMixin = _emissary.Emitter || _emissary.default?.Emitter;
+var File = null;
+try {
+  ({ File } = require("pathwatcher"));
+} catch (_e2) {
+}
+var ThemeManager = (() => {
+  class ThemeManager2 {
+    static initClass() {
+      EmitterMixin.includeInto(ThemeManager2);
+    }
+    constructor({ packageManager, resourcePath: resourcePath2, configDirPath, safeMode }) {
+      this.packageManager = packageManager;
+      this.resourcePath = resourcePath2;
+      this.configDirPath = configDirPath;
+      this.safeMode = safeMode;
+      this.emitter = new import_event_kit.Emitter();
+      this.styleSheetDisposablesBySourcePath = {};
+      this.lessCache = null;
+      this.initialLoadComplete = false;
+      this.packageManager.registerPackageActivator(this, ["theme"]);
+      this.sheetsByStyleElement = /* @__PURE__ */ new WeakMap();
+      const stylesElement = document.head.querySelector("nylas-styles");
+      stylesElement.onDidAddStyleElement(this.styleElementAdded.bind(this));
+      stylesElement.onDidRemoveStyleElement(
+        this.styleElementRemoved.bind(this)
+      );
+      stylesElement.onDidUpdateStyleElement(
+        this.styleElementUpdated.bind(this)
+      );
+    }
+    baseThemeName() {
+      return "ui-light";
+    }
+    watchCoreStyles() {
+      console.log("Watching /static and /internal_packages for LESS changes");
+      const watchStylesIn = (folder) => {
+        const stylePaths = import_fs_plus.default.listTreeSync(folder);
+        let PathWatcher = null;
+        try {
+          PathWatcher = require("pathwatcher");
+        } catch (_e2) {
+          return null;
+        }
+        return (() => {
+          const result2 = [];
+          for (var stylePath of Array.from(stylePaths)) {
+            if (import_node_path3.default.extname(stylePath) !== ".less") {
+              continue;
+            }
+            result2.push(
+              PathWatcher.watch(stylePath, () => {
+                return this.activateThemes();
+              })
+            );
+          }
+          return result2;
+        })();
+      };
+      watchStylesIn(`${this.resourcePath}/static`);
+      return watchStylesIn(`${this.resourcePath}/internal_packages`);
+    }
+    styleElementAdded(styleElement) {
+      const { sheet } = styleElement;
+      this.sheetsByStyleElement.set(styleElement, sheet);
+      this.emitter.emit("did-add-stylesheet", sheet);
+      return this.emitter.emit("did-change-stylesheets");
+    }
+    styleElementRemoved(styleElement) {
+      const sheet = this.sheetsByStyleElement.get(styleElement);
+      this.emitter.emit("did-remove-stylesheet", sheet);
+      return this.emitter.emit("did-change-stylesheets");
+    }
+    styleElementUpdated({ sheet }) {
+      this.emitter.emit("did-remove-stylesheet", sheet);
+      this.emitter.emit("did-add-stylesheet", sheet);
+      return this.emitter.emit("did-change-stylesheets");
+    }
+    /*
+      Section: Event Subscription
+      */
+    // Essential: Invoke `callback` when style sheet changes associated with
+    // updating the list of active themes have completed.
+    //
+    // * `callback` {Function}
+    onDidChangeActiveThemes(callback) {
+      return this.emitter.on("did-change-active-themes", callback);
+    }
+    /*
+      Section: Accessing Available Themes
+      */
+    getAvailableNames() {
+      return this.getLoadedNames();
+    }
+    /*
+      Section: Accessing Loaded Themes
+      */
+    // Public: Get an array of all the loaded theme names.
+    getLoadedThemeNames() {
+      return Array.from(this.getLoadedThemes()).map((theme) => theme.name);
+    }
+    // Public: Get an array of all the loaded themes.
+    getLoadedThemes() {
+      return (() => {
+        const result2 = [];
+        for (var pack of Array.from(this.packageManager.getLoadedPackages())) {
+          if (pack.isTheme()) {
+            result2.push(pack);
+          }
+        }
+        return result2;
+      })();
+    }
+    /*
+      Section: Accessing Active Themes
+      */
+    // Public: Get an array of all the active theme names.
+    getActiveThemeNames() {
+      return Array.from(this.getActiveThemes()).map((theme) => theme.name);
+    }
+    // Public: Get an array of all the active themes.
+    getActiveThemes() {
+      return (() => {
+        const result2 = [];
+        for (var pack of Array.from(this.packageManager.getActivePackages())) {
+          if (pack.isTheme()) {
+            result2.push(pack);
+          }
+        }
+        return result2;
+      })();
+    }
+    getActiveTheme() {
+      return this.getActiveThemes()[0];
+    }
+    activatePackages() {
+      return this.activateThemes();
+    }
+    /*
+      Section: Managing Enabled Themes
+      */
+    // Public: Get the enabled theme names from the config.
+    //
+    // Returns an array of theme names in the order that they should be activated.
+    getEnabledThemeNames() {
+      let left;
+      let themeNames = (left = NylasEnv.config.get("core.themes")) != null ? left : [];
+      if (!index_default_default.isArray(themeNames)) {
+        themeNames = [themeNames];
+      }
+      themeNames = themeNames.filter((themeName) => {
+        if (themeName && typeof themeName === "string") {
+          if (NylasEnv.packages.resolvePackagePath(themeName)) {
+            return true;
+          }
+          console.warn(`Enabled theme '${themeName}' is not installed.`);
+        }
+        return false;
+      });
+      if (themeNames.length === 0) {
+        const builtInThemeNames = ["ui-light", "ui-dark"];
+        themeNames = index_default_default.intersection(themeNames, builtInThemeNames);
+        if (themeNames.length === 0) {
+          themeNames = ["ui-light"];
+        }
+      }
+      return themeNames.reverse();
+    }
+    // Set the active theme.
+    // Because of how theme-manager works, we always need to set the
+    // base theme first, and the newly activated theme after it to override the
+    // styles. We don't want to have more than 1 theme active at a time, so the
+    // array of active themes should always be of size 2.
+    //
+    // * `theme` {string} - the theme to activate
+    setActiveTheme(theme) {
+      const base = this.baseThemeName();
+      return NylasEnv.config.set("core.themes", index_default_default.uniq([base, theme]));
+    }
+    /*
+      Section: Private
+      */
+    // Resolve and apply the stylesheet specified by the path.
+    //
+    // This supports both CSS and Less stylsheets.
+    //
+    // * `stylesheetPath` A {String} path to the stylesheet that can be an absolute
+    //   path or a relative path that will be resolved against the load path.
+    //
+    // Returns a {Disposable} on which `.dispose()` can be called to remove the
+    // required stylesheet.
+    requireStylesheet(stylesheetPath) {
+      let fullPath;
+      if (fullPath = this.resolveStylesheet(stylesheetPath)) {
+        const content = this.loadStylesheet(fullPath);
+        return this.applyStylesheet(fullPath, content);
+      } else {
+        throw new Error(`Could not find a file at path '${stylesheetPath}'`);
+      }
+    }
+    loadBaseStylesheets() {
+      return this.reloadBaseStylesheets();
+    }
+    reloadBaseStylesheets() {
+      let nativeStylesheetPath;
+      this.requireStylesheet("../static/index");
+      this.requireStylesheet("../static/email-frame");
+      if (nativeStylesheetPath = import_fs_plus.default.resolveOnLoadPath(process.platform, [
+        "css",
+        "less"
+      ])) {
+        return this.requireStylesheet(nativeStylesheetPath);
+      }
+    }
+    stylesheetElementForId(id) {
+      return document.head.querySelector(
+        `nylas-styles style[source-path="${id}"]`
+      );
+    }
+    resolveStylesheet(stylesheetPath) {
+      if (import_node_path3.default.extname(stylesheetPath).length > 0) {
+        return import_fs_plus.default.resolveOnLoadPath(stylesheetPath);
+      } else {
+        return import_fs_plus.default.resolveOnLoadPath(stylesheetPath, ["css", "less"]);
+      }
+    }
+    loadStylesheet(stylesheetPath, importFallbackVariables) {
+      if (import_node_path3.default.extname(stylesheetPath) === ".less") {
+        return this.loadLessStylesheet(stylesheetPath, importFallbackVariables);
+      } else {
+        return import_fs_plus.default.readFileSync(stylesheetPath, "utf8");
+      }
+    }
+    loadLessStylesheet(lessStylesheetPath, importFallbackVariables) {
+      let detail, message;
+      if (importFallbackVariables == null) {
+        importFallbackVariables = false;
+      }
+      if (this.lessCache == null) {
+        const LessCompileCache2 = (init_less_compile_cache(), __toCommonJS(less_compile_cache_exports)).default;
+        this.lessCache = new LessCompileCache2({
+          configDirPath: this.configDirPath,
+          resourcePath: this.resourcePath,
+          importPaths: this.getImportPaths()
+        });
+      }
+      try {
+        if (importFallbackVariables) {
+          const baseVarImports = `@import "variables/ui-variables";`;
+          const less = import_fs_plus.default.readFileSync(lessStylesheetPath, "utf8");
+          return this.lessCache.cssForFile(
+            lessStylesheetPath,
+            [baseVarImports, less].join("\n")
+          );
+        } else {
+          return this.lessCache.read(lessStylesheetPath);
+        }
+      } catch (error) {
+        if (error.line != null) {
+          message = `Error compiling Less stylesheet: \`${lessStylesheetPath}\``;
+          detail = `Line number: ${error.line}
+${error.message}`;
+        } else {
+          message = `Error loading Less stylesheet: \`${lessStylesheetPath}\``;
+          detail = error.message;
+        }
+        console.error(message, { detail, dismissable: true });
+        console.error(detail);
+        throw error;
+      }
+    }
+    removeStylesheet(stylesheetPath) {
+      return this.styleSheetDisposablesBySourcePath[stylesheetPath] != null ? this.styleSheetDisposablesBySourcePath[stylesheetPath].dispose() : void 0;
+    }
+    applyStylesheet(path15, text) {
+      return this.styleSheetDisposablesBySourcePath[path15] = NylasEnv.styles.addStyleSheet(text, { sourcePath: path15 });
+    }
+    stringToId(string) {
+      return string.replace(/\\/g, "/");
+    }
+    activateThemes() {
+      const deferred = import_q.default.defer();
+      NylasEnv.config.observe("core.themes", () => {
+        this.deactivateThemes();
+        const promises2 = [];
+        for (var themeName of Array.from(this.getEnabledThemeNames())) {
+          if (this.packageManager.resolvePackagePath(themeName)) {
+            promises2.push(this.packageManager.activatePackage(themeName));
+          } else {
+            console.warn(
+              `Failed to activate theme '${themeName}' because it isn't installed.`
+            );
+          }
+        }
+        return import_q.default.all(promises2).then(() => {
+          this.addActiveThemeClasses();
+          this.refreshLessCache();
+          this.reloadBaseStylesheets();
+          this.initialLoadComplete = true;
+          this.emitter.emit("did-change-active-themes");
+          return deferred.resolve();
+        });
+      });
+      return deferred.promise;
+    }
+    deactivateThemes() {
+      this.removeActiveThemeClasses();
+      for (var pack of Array.from(this.getActiveThemes())) {
+        this.packageManager.deactivatePackage(pack.name);
+      }
+      return null;
+    }
+    isInitialLoadComplete() {
+      return this.initialLoadComplete;
+    }
+    addActiveThemeClasses() {
+      for (var pack of Array.from(this.getActiveThemes())) {
+        document.body.classList.add(`theme-${pack.name}`);
+      }
+    }
+    removeActiveThemeClasses() {
+      for (var pack of Array.from(this.getActiveThemes())) {
+        document.body.classList.remove(`theme-${pack.name}`);
+      }
+    }
+    refreshLessCache() {
+      return this.lessCache != null ? this.lessCache.setImportPaths(this.getImportPaths()) : void 0;
+    }
+    getImportPaths() {
+      let themePaths;
+      const activeThemes = this.getActiveThemes();
+      if (activeThemes.length > 0) {
+        themePaths = Array.from(activeThemes).filter((theme) => theme).map((theme) => theme.getStylesheetsPath());
+      } else {
+        themePaths = [];
+        for (var themeName of Array.from(this.getEnabledThemeNames())) {
+          var themePath;
+          if (themePath = this.packageManager.resolvePackagePath(themeName)) {
+            var deprecatedPath = import_node_path3.default.join(themePath, "stylesheets");
+            if (import_fs_plus.default.isDirectorySync(deprecatedPath)) {
+              themePaths.push(deprecatedPath);
+            } else {
+              themePaths.push(import_node_path3.default.join(themePath, "styles"));
+            }
+          }
+        }
+      }
+      return themePaths.filter((themePath2) => import_fs_plus.default.isDirectorySync(themePath2));
+    }
+  }
+  ThemeManager2.initClass();
+  return ThemeManager2;
+})();
+var theme_manager_default = ThemeManager;
+
+// src/nylas-env.js
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
 var import_workspace_store4 = __toESM(require_workspace_store());
-var import_react62 = __toESM(require_react());
-var import_react_dom28 = __toESM(require_react_dom());
+var import_react64 = __toESM(require_react());
+var import_react_dom29 = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
 init_nylas_exports();
 init_nylas_component_kit();
@@ -281322,9 +281329,9 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   static _loadSavedState() {
     let stateString;
     const statePath = _NylasEnvConstructor.getStatePath();
-    if (import_fs_plus2.default.existsSync(statePath)) {
+    if (import_fs_plus3.default.existsSync(statePath)) {
       try {
-        stateString = import_fs_plus2.default.readFileSync(statePath, "utf8");
+        stateString = import_fs_plus3.default.readFileSync(statePath, "utf8");
       } catch (error) {
         console.warn(
           `Error reading window state: ${statePath}`,
@@ -281354,7 +281361,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     if (isSpec) {
       return "spec-saved-state.json";
     } else if (mainWindow) {
-      return import_node_path14.default.join(configDirPath, "main-window-state.json");
+      return import_node_path15.default.join(configDirPath, "main-window-state.json");
     }
     return null;
   }
@@ -281365,7 +281372,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
         decodeURIComponent(location.search.substr(14))
       );
     }
-    const cloned = import_utils25.default.deepClone(_NylasEnvConstructor.loadSettings);
+    const cloned = import_utils26.default.deepClone(_NylasEnvConstructor.loadSettings);
     Object.defineProperty(cloned, "windowState", {
       get: () => {
         const win = _NylasEnvConstructor.getCurrentWindow?.();
@@ -281394,7 +281401,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.populateHotWindow = this.populateHotWindow.bind(this);
     this.savedState = savedState;
     ({ version: this.version } = this.savedState);
-    this.emitter = new import_event_kit2.Emitter();
+    this.emitter = new import_event_kit3.Emitter();
   }
   // Sets up the basic services that should be available in all modes
   // (both spec and application).
@@ -281418,10 +281425,10 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     } = this.getLoadSettings();
     document.body.classList.add(`platform-${process.platform}`);
     document.body.classList.add(`window-type-${windowType}`);
-    const globalPath = import_node_path14.default.join(resourcePath2, "src", "global");
+    const globalPath = import_node_path15.default.join(resourcePath2, "src", "global");
     require("module").globalPaths.push(globalPath);
     require("module").globalPaths.push(
-      import_node_path14.default.join(resourcePath2, "node_modules")
+      import_node_path15.default.join(resourcePath2, "node_modules")
     );
     process.env.NODE_PATH = globalPath;
     if (!devMode && process.env.NODE_ENV == null)
@@ -281441,7 +281448,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     });
     this.styles = new import_style_manager.default();
     document.head.appendChild(new import_styles_element.default());
-    this.themes = new import_theme_manager.default({
+    this.themes = new theme_manager_default({
       packageManager: this.packages,
       configDirPath,
       resourcePath: resourcePath2,
@@ -281455,9 +281462,9 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.packages.onDidActivateInitialPackages(() => this.watchThemes());
     this.windowEventHandler = new import_window_event_handler.default();
     this.timer = import_remote7.remote.getGlobal("application").timer;
-    this.globalWindowEmitter = new import_event_kit2.Emitter();
+    this.globalWindowEmitter = new import_event_kit3.Emitter();
     if (!this.inSpecMode()) {
-      this.actionBridge = new ActionBridge(import_electron10.ipcRenderer);
+      this.actionBridge = new ActionBridge(import_electron11.ipcRenderer);
     }
     this.extendRxObservables();
     nodeRequire29("nylas-exports");
@@ -281838,7 +281845,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   // * `x` The {Number} of pixels.
   // * `y` The {Number} of pixels.
   setPosition(x3, y) {
-    return import_electron10.ipcRenderer.send(
+    return import_electron11.ipcRenderer.send(
       "call-window-method",
       "setPosition",
       ensureInteger(x3, 0),
@@ -281851,29 +281858,29 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   }
   // Extended: Move current window to the center of the screen.
   center() {
-    return import_electron10.ipcRenderer.send("call-window-method", "center");
+    return import_electron11.ipcRenderer.send("call-window-method", "center");
   }
   // Extended: Focus the current window. Note: this will not open the window
   // if it is hidden.
   focus() {
-    import_electron10.ipcRenderer.send("call-window-method", "focus");
+    import_electron11.ipcRenderer.send("call-window-method", "focus");
     return window.focus();
   }
   // Extended: Show the current window.
   show() {
-    return import_electron10.ipcRenderer.send("call-window-method", "show");
+    return import_electron11.ipcRenderer.send("call-window-method", "show");
   }
   isVisible() {
     return this.getCurrentWindow().isVisible();
   }
   // Extended: Hide the current window.
   hide() {
-    return import_electron10.ipcRenderer.send("call-window-method", "hide");
+    return import_electron11.ipcRenderer.send("call-window-method", "hide");
   }
   // Extended: Reload the current window.
   reload() {
     this.isReloading = true;
-    return import_electron10.ipcRenderer.send("call-webcontents-method", "reload");
+    return import_electron11.ipcRenderer.send("call-webcontents-method", "reload");
   }
   // Public: The windowProps passed when creating the window via `newWindow`.
   //
@@ -281895,10 +281902,10 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     return this.getCurrentWindow().isMaximized();
   }
   maximize() {
-    return import_electron10.ipcRenderer.send("call-window-method", "maximize");
+    return import_electron11.ipcRenderer.send("call-window-method", "maximize");
   }
   minimize() {
-    return import_electron10.ipcRenderer.send("call-window-method", "minimize");
+    return import_electron11.ipcRenderer.send("call-window-method", "minimize");
   }
   // Extended: Is the current window in full screen mode?
   isFullScreen() {
@@ -281906,7 +281913,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   }
   // Extended: Set the full screen state of the current window.
   setFullScreen(fullScreen = false) {
-    import_electron10.ipcRenderer.send("call-window-method", "setFullScreen", fullScreen);
+    import_electron11.ipcRenderer.send("call-window-method", "setFullScreen", fullScreen);
     if (fullScreen) {
       return document.body.classList.add("fullscreen");
     }
@@ -282041,7 +282048,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
                   this.requireUserInitScript();
                 }
                 this.showMainWindow();
-                return import_electron10.ipcRenderer.send("window-command", "window:loaded");
+                return import_electron11.ipcRenderer.send("window-command", "window:loaded");
               });
             });
           });
@@ -282058,8 +282065,8 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     if (elt) elt.remove();
     return this.startWindow().then(() => {
       this.initializeBasicSheet();
-      import_electron10.ipcRenderer.on("load-settings-changed", this.populateHotWindow);
-      return import_electron10.ipcRenderer.send("window-command", "window:loaded");
+      import_electron11.ipcRenderer.on("load-settings-changed", this.populateHotWindow);
+      return import_electron11.ipcRenderer.send("window-command", "window:loaded");
     });
   }
   // We setup the initial Sheet for hot windows. This is the default title
@@ -282124,7 +282131,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   //
   // `options` are documented in browser/WindowLauncher
   newWindow(options2 = {}) {
-    return import_electron10.ipcRenderer.send("new-window", options2);
+    return import_electron11.ipcRenderer.send("new-window", options2);
   }
   saveStateAndUnloadWindow() {
     this.packages.deactivatePackages();
@@ -282146,7 +282153,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   // Essential: Visually and audibly trigger a beep.
   beep() {
     if (this.config.get("core.audioBeep")) {
-      import_electron10.shell.beep();
+      import_electron11.shell.beep();
     }
     return this.emitter.emit("did-beep");
   }
@@ -282194,18 +282201,18 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
    */
   // Extended: Open the dev tools for the current window.
   openDevTools() {
-    return import_electron10.ipcRenderer.send("call-webcontents-method", "openDevTools");
+    return import_electron11.ipcRenderer.send("call-webcontents-method", "openDevTools");
   }
   isDevToolsOpened() {
     return this.getCurrentWindow().webContents.isDevToolsOpened();
   }
   // Extended: Toggle the visibility of the dev tools for the current window.
   toggleDevTools() {
-    return import_electron10.ipcRenderer.send("call-webcontents-method", "toggleDevTools");
+    return import_electron11.ipcRenderer.send("call-webcontents-method", "toggleDevTools");
   }
   // Extended: Execute code in dev tools.
   executeJavaScriptInDevTools(code) {
-    return import_electron10.ipcRenderer.send(
+    return import_electron11.ipcRenderer.send(
       "call-devtools-webcontents-method",
       "executeJavaScript",
       code
@@ -282219,7 +282226,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.item.setAttribute("id", "sheet-container");
     this.item.setAttribute("class", "sheet-container");
     this.item.setAttribute("tabIndex", "-1");
-    import_react_dom28.default.render(import_react62.default.createElement(import_sheet_container.default), this.item);
+    import_react_dom29.default.render(import_react64.default.createElement(import_sheet_container.default), this.item);
     return document.querySelector(this.workspaceViewParentSelector).appendChild(this.item);
   }
   deserializePackageStates() {
@@ -282318,7 +282325,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     const stateString = JSON.stringify(this.savedState);
     const statePath = this.constructor.getStatePath();
     if (statePath) {
-      return import_fs_plus2.default.writeFileSync(statePath, stateString, "utf8");
+      return import_fs_plus3.default.writeFileSync(statePath, stateString, "utf8");
     }
     this.getCurrentWindow().loadSettings.windowState = stateString;
     return stateString;
@@ -282330,17 +282337,17 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     return process.crash();
   }
   getUserInitScriptPath() {
-    const initScriptPath = import_fs_plus2.default.resolve(this.getConfigDirPath(), "init", [
+    const initScriptPath = import_fs_plus3.default.resolve(this.getConfigDirPath(), "init", [
       "js",
       "coffee"
     ]);
-    return initScriptPath != null ? initScriptPath : import_node_path14.default.join(this.getConfigDirPath(), "init.coffee");
+    return initScriptPath != null ? initScriptPath : import_node_path15.default.join(this.getConfigDirPath(), "init.coffee");
   }
   requireUserInitScript() {
     const userInitScriptPath = this.getUserInitScriptPath();
     if (userInitScriptPath) {
       try {
-        if (import_fs_plus2.default.isFileSync(userInitScriptPath)) {
+        if (import_fs_plus3.default.isFileSync(userInitScriptPath)) {
           require(userInitScriptPath);
         }
       } catch (error) {

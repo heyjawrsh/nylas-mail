@@ -12,6 +12,7 @@
 let isAbsolute;
 const Module = require("node:module");
 const path = require("node:path");
+const fs = require("fs-plus");
 const semver = require("semver");
 
 // Extend semver.Range to memoize matched versions for speed
@@ -69,8 +70,6 @@ const isCorePath = (pathToCheck) =>
 	pathToCheck.startsWith(cache.resourcePathWithTrailingSlash);
 
 var loadDependencies = (modulePath, rootPath, rootMetadata, moduleCache) => {
-	const fs = require("fs-plus");
-
 	for (var childPath of Array.from(
 		fs.listSync(path.join(modulePath, "node_modules")),
 	)) {
@@ -123,8 +122,6 @@ var loadFolderCompatibility = (
 	moduleCache,
 ) => {
 	let left;
-	const fs = require("fs-plus");
-
 	const metadataPath = path.join(modulePath, "package.json");
 	if (!fs.isFileSync(metadataPath)) {
 		return;
@@ -192,7 +189,6 @@ var loadFolderCompatibility = (
 };
 
 const loadExtensions = (_modulePath, rootPath, rootMetadata, moduleCache) => {
-	const fs = require("fs-plus");
 	const extensions = [".js", ".coffee", ".json", ".node"];
 	const nodeModulesPath = path.join(rootPath, "node_modules");
 
@@ -414,8 +410,6 @@ if (cache.debug) {
 }
 
 exports.create = (modulePath) => {
-	const fs = require("fs-plus");
-
 	modulePath = fs.realpathSync(modulePath);
 	const metadataPath = path.join(modulePath, "package.json");
 	const metadata = JSON.parse(fs.readFileSync(metadataPath));

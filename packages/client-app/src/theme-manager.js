@@ -8,28 +8,28 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-let ThemeManager;
-const path = require("node:path");
+import path from "node:path";
 
-const _ = require("underscore");
-const EmitterMixin = require("emissary").Emitter;
-const { Emitter, Disposable, CompositeDisposable } = require("event-kit");
+import _ from "underscore";
+import * as _emissary from "emissary";
+const EmitterMixin = _emissary.Emitter || _emissary.default?.Emitter;
+import { Emitter, Disposable, CompositeDisposable } from "event-kit";
 let File = null;
 try {
 	({ File } = require("pathwatcher"));
 } catch (_e) {
 	/* optional native */
 }
-const fs = require("fs-plus");
-const Q = require("q");
+import fs from "fs-plus";
+import Q from "q";
 
-const _Package = require("./package.js");
+import _Package from "./package.js";
 
 // Extended: Handles loading and activating available themes.
 //
 // An instance of this class is always available as the `NylasEnv.themes` global.
-module.exports = ThemeManager = (() => {
-	ThemeManager = class ThemeManager {
+const ThemeManager = (() => {
+	class ThemeManager {
 		static initClass() {
 			EmitterMixin.includeInto(ThemeManager);
 		}
@@ -446,7 +446,9 @@ ${error.message}\
 
 			return themePaths.filter((themePath) => fs.isDirectorySync(themePath));
 		}
-	};
+	}
 	ThemeManager.initClass();
 	return ThemeManager;
 })();
+
+export default ThemeManager;

@@ -8,13 +8,13 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const _ = require("underscore");
-const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
-const _RetinaImg = require("./components/retina-img.jsx").default;
-const Flexbox = require("./components/flexbox.jsx").default;
-const InjectedComponentSet = require("./components/injected-component-set.jsx");
-const ResizableRegion = require("./components/resizable-region.jsx");
+import React from "react";
+import _ from "underscore";
+import { Actions, ComponentRegistry, WorkspaceStore } from "nylas-exports";
+import _RetinaImg from "./components/retina-img.jsx";
+import Flexbox from "./components/flexbox.jsx";
+import InjectedComponentSet from "./components/injected-component-set.jsx";
+import ResizableRegion from "./components/resizable-region.jsx";
 
 const FLEX = 10000;
 
@@ -267,4 +267,4 @@ class Sheet extends React.Component {
 }
 Sheet.initClass();
 
-module.exports = Sheet;
+export default Sheet;

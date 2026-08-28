@@ -32,6 +32,8 @@ vi.mock("@electron/remote", () => ({
 	ipcRenderer: { send: m.send }, shell: { beep: m.beep },
 	screen: { getPrimaryDisplay: () => ({ workArea: { width: 1440, height: 900 } }) },
 	dialog: { showMessageBox: m.showMessageBox },
+	getCurrentWindow: () => m.win, getGlobal: () => m.application,
+	app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
 	remote: {
 		app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
 		screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1440, height: 900 }, workArea: { width: 1440, height: 900 } }) },

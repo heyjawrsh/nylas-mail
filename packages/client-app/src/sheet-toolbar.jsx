@@ -9,17 +9,17 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactDOM = require("react-dom");
-const _Sheet = require("./sheet.jsx");
-const Flexbox = require("./components/flexbox.jsx").default;
-const RetinaImg = require("./components/retina-img.jsx").default;
-const Utils = require("./flux/models/utils.js");
-const { remote } = require("electron");
-const _str = require("underscore.string");
-const _ = require("underscore");
+import React from "react";
+import ReactDOM from "react-dom";
+import _Sheet from "./sheet.jsx";
+import Flexbox from "./components/flexbox.jsx";
+import RetinaImg from "./components/retina-img.jsx";
+import Utils from "./flux/models/utils.js";
+import { remote } from "electron";
+import _str from "underscore.string";
+import _ from "underscore";
 
-const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
+import { Actions, ComponentRegistry, WorkspaceStore } from "nylas-exports";
 
 class ToolbarSpacer extends React.Component {
 	constructor(...args) {
@@ -486,7 +486,7 @@ class Toolbar extends React.Component {
 }
 Toolbar.initClass();
 
-module.exports = Toolbar;
+export default Toolbar;
 
 function __guard__(value, transform) {
 	return typeof value !== "undefined" && value !== null

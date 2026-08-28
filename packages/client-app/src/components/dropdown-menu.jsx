@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Menu } from "nylas-component-kit";
 
 export default class DropdownMenu extends React.Component {
+	_rootRef = React.createRef();
 	static propTypes = {
 		intitialSelectionItem: PropTypes.object,
 		onSelect: PropTypes.func,
@@ -41,7 +42,7 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	_onBlur = (e) => {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._rootRef.current;
 		let otherNode = e.relatedTarget;
 		if (otherNode) {
 			while (otherNode.parentElement) {
@@ -68,6 +69,7 @@ export default class DropdownMenu extends React.Component {
 		}
 		return (
 			<div
+				ref={this._rootRef}
 				tabIndex="-1"
 				onBlur={this._onBlur}
 				style={{ display: "inline-block" }}
