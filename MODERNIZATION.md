@@ -364,3 +364,21 @@ bridge names, rimraf/mkdirp/uuid named-import fixes.
 
 Verified: 997 tests green, lint green, bundle clean, smoke SMOKE_PASS rc=0,
 5 server packages green, `pnpm outdated -r` clean.
+
+
+## Loop 21 — Coverage round 6 (commit 397797918)
+
+client-app: 20.13% → **21.33% lines** (1,134 tests, 56/56 files green).
+Electron stubs now carry the real application surfaces specs exercise
+(Menu.setApplicationMenu, BrowserWindow.getFocusedWindow, app.quit) — the
+gap between "jsdom stub" and "what main-process modules actually call" was
+the round's main integration cost.
+
+Cumulative: 11 → 1134 client-app tests across six swarm rounds; coverage
+0.32% → 21.33%. Every round verified: tests green, lint green, bundle OK,
+smoke SMOKE_PASS, server packages green.
+
+Remaining mass (uncovered): components ~2.2k lines, stores remainder
+~2k, browser/ ~1.2k, services remainder. At ~1.5 pts/round, the 60% gate
+needs ~25 more rounds — mechanical now that the harness and dual-context
+contract are stable.
