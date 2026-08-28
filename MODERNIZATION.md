@@ -529,3 +529,27 @@ still CJS-require the converted modules. The trap is now self-revealing:
 
 Cumulative: **0.32% → 34.63%**, 11 → 2,150 tests, thirteen swarm rounds.
 ~25 points remain to the 60% gate.
+
+
+## Loop 29 — Coverage round 14: config/theme/module-cache (commit b26d4209f)
+
+client-app: 34.63% → **37.27% lines** (2,285 tests, 122/122 files green).
+
+Round 14 sharpened the dual-context boundary. module-cache and apm-wrapper
+converted to ESM killed the smoke boot — they load through the NATIVE
+renderer require pipeline where `import` statements are a hard syntax
+error (ContextifyScript). Both reverted to dual-CJS; their specs now cover
+only what's natively mockable. Conversely theme-manager, config, sheet,
+sheet-toolbar are bridge-loaded and converted cleanly.
+
+Also learned: vi.mock cannot intercept CJS require() executed through
+vite's module-runner shim, and require.cache injection misses too —
+native-CJS modules get spec coverage only at their exported-function
+seams. The smoke gate caught the regression the test suite couldn't —
+exactly what it's for.
+
+dropdown-menu findDOMNode port (unhandled-error sweep), nylas-env
+parallel-worker mock surfaces, mutation-hook wrap semantics documented.
+
+Cumulative: **0.32% → 37.27%**, 11 → 2,285 tests, fourteen swarm rounds.
+~23 points remain to the 60% gate.
