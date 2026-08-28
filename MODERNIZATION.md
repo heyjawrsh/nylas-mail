@@ -467,3 +467,24 @@ Two structural findings this round, both now codified:
    first starred/folder toggle without it.
 
 Cumulative: **0.32% → 25.97%**, 11 → 1,744 tests, ten swarm rounds.
+
+
+## Loop 26 — Coverage round 11: flux stores (commit f50f8183d)
+
+client-app: 25.97% → **29.22% lines** (1,860 tests, 105/105 files green).
+**+3.25 points — the biggest single-round jump of the campaign.** The flux
+store family (focused-content, contact, mail-rules, contact-ranking,
+draft-editing-session) is high-line-count, logic-dense, and mockable:
+exactly where coverage points come cheapest.
+
+Round 11's structural work was the store-family ESM cutover — the same
+contract database-store established, now applied across the remaining
+singleton stores. Notable: the draft-store ⇄ draft-editing-session
+circular dependency, originally handled by lazy CJS require, hoists
+cleanly to a top-level ESM import because all usage is constructor-time
+(live bindings settle before first instantiation). And the bundle gate
+caught a missing named export (ActionTemplates) that tests alone missed —
+the esbuild pass in the battery is earning its keep.
+
+Cumulative: **0.32% → 29.22%**, 11 → 1,860 tests, eleven swarm rounds.
+~31 points remain to the 60% gate.
