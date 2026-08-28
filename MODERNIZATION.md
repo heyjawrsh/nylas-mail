@@ -667,3 +667,15 @@ export statement flips the module for esbuild and breaks the bundle.
 
 Cumulative: **0.32% → 45.59%**, 11 → 2,947 tests, twenty-one swarm
 rounds. ~14.4 points (~3,340 lines) remain.
+
+
+## Loop 37 — Coverage round 22: fourth-pass sweep (commit e4fc178c8)
+
+client-app: 45.59% → **46.49% lines** (3,057 tests, 156/156 files green).
+
+dom-utils-deep-2 (41) — the workers CAN write dom-utils specs when the
+scope is precise; only the broad all-of-it prompt crashes them.
+env-services (33), package-manager second spec (19), iframe third (17).
+
+Cumulative: **0.32% → 46.49%**, 11 → 3,057 tests, twenty-two swarm
+rounds. ~13.5 points (~3,130 lines) remain.
