@@ -29,8 +29,13 @@ module.exports.remote = {
 };
 
 module.exports.shell = { openExternal: () => {}, showItemInFolder: () => {} };
-module.exports.app = { getVersion: () => "0.0.0-test", getPath: () => "/tmp" };
+module.exports.app = {
+	getVersion: () => "0.0.0-test",
+	getPath: () => "/tmp",
+	quit: () => {},
+};
 module.exports.BrowserWindow = class {};
+module.exports.BrowserWindow.getFocusedWindow = () => null;
 module.exports.clipboard = { readText: () => "", writeText: () => {} };
 module.exports.dialog = { showMessage: () => {} };
 module.exports.crashReporter = { start: () => {} };
@@ -38,6 +43,7 @@ module.exports.Menu = class {
 	static buildFromTemplate() {
 		return new module.exports.Menu();
 	}
+	static setApplicationMenu() {}
 	append() {}
 	popup() {}
 };

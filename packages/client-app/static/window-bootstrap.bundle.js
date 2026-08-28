@@ -237162,7 +237162,7 @@ var require_task_queue = __commonJS({
     var _fs = require_fs_plus();
     var _path = require("path");
     var { Listener: Listener2, Publisher: Publisher2 } = require_reflux_coffee();
-    var CoffeeHelpers = require_coffee_helpers();
+    var CoffeeHelpers = require_coffee_helpers().default || require_coffee_helpers();
     var Task3 = (init_task(), __toCommonJS(task_exports)).default;
     var TaskRegistry2 = require_task_registry().default;
     var _Utils2 = require_utils();
@@ -241067,81 +241067,225 @@ var init_nylas_component_kit = __esm({
     NylasComponentKit = class _NylasComponentKit {
       static initClass() {
         _NylasComponentKit.load("Menu", () => require_menu());
-        _NylasComponentKit.load("DropZone", () => (init_drop_zone(), __toCommonJS(drop_zone_exports)));
-        _NylasComponentKit.load("Spinner", () => require_spinner());
+        _NylasComponentKit.load(
+          "DropZone",
+          () => (init_drop_zone(), __toCommonJS(drop_zone_exports))
+        );
+        _NylasComponentKit.load(
+          "Spinner",
+          () => require_spinner()
+        );
         _NylasComponentKit.load("Switch", () => (init_switch(), __toCommonJS(switch_exports)));
         _NylasComponentKit.loadDeprecated("Popover", "popover", {
           instead: "Actions.openPopover"
         });
-        _NylasComponentKit.load("FixedPopover", () => (init_fixed_popover(), __toCommonJS(fixed_popover_exports)));
-        _NylasComponentKit.load("DatePickerPopover", () => (init_date_picker_popover(), __toCommonJS(date_picker_popover_exports)));
+        _NylasComponentKit.load(
+          "FixedPopover",
+          () => (init_fixed_popover(), __toCommonJS(fixed_popover_exports))
+        );
+        _NylasComponentKit.load(
+          "DatePickerPopover",
+          () => (init_date_picker_popover(), __toCommonJS(date_picker_popover_exports))
+        );
         _NylasComponentKit.load("Modal", () => (init_modal(), __toCommonJS(modal_exports)));
-        _NylasComponentKit.load("Webview", () => (init_webview(), __toCommonJS(webview_exports)));
-        _NylasComponentKit.load("FeatureUsedUpModal", () => (init_feature_used_up_modal(), __toCommonJS(feature_used_up_modal_exports)));
-        _NylasComponentKit.load("BillingModal", () => (init_billing_modal(), __toCommonJS(billing_modal_exports)));
+        _NylasComponentKit.load(
+          "Webview",
+          () => (init_webview(), __toCommonJS(webview_exports))
+        );
+        _NylasComponentKit.load(
+          "FeatureUsedUpModal",
+          () => (init_feature_used_up_modal(), __toCommonJS(feature_used_up_modal_exports))
+        );
+        _NylasComponentKit.load(
+          "BillingModal",
+          () => (init_billing_modal(), __toCommonJS(billing_modal_exports))
+        );
         _NylasComponentKit.load(
           "OpenIdentityPageButton",
           "open-identity-page-button"
         );
-        _NylasComponentKit.load("Flexbox", () => (init_flexbox(), __toCommonJS(flexbox_exports)));
-        _NylasComponentKit.load("RetinaImg", () => (init_retina_img(), __toCommonJS(retina_img_exports)));
-        _NylasComponentKit.load("SwipeContainer", () => (init_swipe_container(), __toCommonJS(swipe_container_exports)));
-        _NylasComponentKit.load("FluxContainer", () => (init_flux_container(), __toCommonJS(flux_container_exports)));
-        _NylasComponentKit.load("FocusContainer", () => (init_focus_container(), __toCommonJS(focus_container_exports)));
-        _NylasComponentKit.load("SyncingListState", () => (init_syncing_list_state(), __toCommonJS(syncing_list_state_exports)));
-        _NylasComponentKit.load("EmptyListState", () => require_empty_list_state());
-        _NylasComponentKit.load("ListTabular", () => (init_list_tabular(), __toCommonJS(list_tabular_exports)));
-        _NylasComponentKit.load("Notification", () => (init_notification(), __toCommonJS(notification_exports)));
-        _NylasComponentKit.load("NylasCalendar", () => (init_nylas_calendar(), __toCommonJS(nylas_calendar_exports)));
-        _NylasComponentKit.load("MiniMonthView", () => (init_mini_month_view(), __toCommonJS(mini_month_view_exports)));
+        _NylasComponentKit.load(
+          "Flexbox",
+          () => (init_flexbox(), __toCommonJS(flexbox_exports))
+        );
+        _NylasComponentKit.load(
+          "RetinaImg",
+          () => (init_retina_img(), __toCommonJS(retina_img_exports))
+        );
+        _NylasComponentKit.load(
+          "SwipeContainer",
+          () => (init_swipe_container(), __toCommonJS(swipe_container_exports))
+        );
+        _NylasComponentKit.load(
+          "FluxContainer",
+          () => (init_flux_container(), __toCommonJS(flux_container_exports))
+        );
+        _NylasComponentKit.load(
+          "FocusContainer",
+          () => (init_focus_container(), __toCommonJS(focus_container_exports))
+        );
+        _NylasComponentKit.load(
+          "SyncingListState",
+          () => (init_syncing_list_state(), __toCommonJS(syncing_list_state_exports))
+        );
+        _NylasComponentKit.load(
+          "EmptyListState",
+          () => require_empty_list_state()
+        );
+        _NylasComponentKit.load(
+          "ListTabular",
+          () => (init_list_tabular(), __toCommonJS(list_tabular_exports))
+        );
+        _NylasComponentKit.load(
+          "Notification",
+          () => (init_notification(), __toCommonJS(notification_exports))
+        );
+        _NylasComponentKit.load(
+          "NylasCalendar",
+          () => (init_nylas_calendar(), __toCommonJS(nylas_calendar_exports))
+        );
+        _NylasComponentKit.load(
+          "MiniMonthView",
+          () => (init_mini_month_view(), __toCommonJS(mini_month_view_exports))
+        );
         _NylasComponentKit.load(
           "CalendarEventPopover",
           "nylas-calendar/calendar-event-popover"
         );
-        _NylasComponentKit.load("EventedIFrame", () => require_evented_iframe());
-        _NylasComponentKit.load("ButtonDropdown", () => require_button_dropdown());
+        _NylasComponentKit.load(
+          "EventedIFrame",
+          () => require_evented_iframe()
+        );
+        _NylasComponentKit.load(
+          "ButtonDropdown",
+          () => require_button_dropdown()
+        );
         _NylasComponentKit.load(
           "Contenteditable",
           "contenteditable/contenteditable"
         );
-        _NylasComponentKit.load("MultiselectList", () => require_multiselect_list());
-        _NylasComponentKit.load("BoldedSearchResult", () => (init_bolded_search_result(), __toCommonJS(bolded_search_result_exports)));
-        _NylasComponentKit.load("MultiselectDropdown", () => (init_multiselect_dropdown(), __toCommonJS(multiselect_dropdown_exports)));
-        _NylasComponentKit.load("KeyCommandsRegion", () => (init_key_commands_region(), __toCommonJS(key_commands_region_exports)));
-        _NylasComponentKit.load("TabGroupRegion", () => require_tab_group_region());
-        _NylasComponentKit.load("InjectedComponent", () => require_injected_component());
-        _NylasComponentKit.load("TokenizingTextField", () => (init_tokenizing_text_field(), __toCommonJS(tokenizing_text_field_exports)));
-        _NylasComponentKit.load("ParticipantsTextField", () => (init_participants_text_field(), __toCommonJS(participants_text_field_exports)));
+        _NylasComponentKit.load(
+          "MultiselectList",
+          () => require_multiselect_list()
+        );
+        _NylasComponentKit.load(
+          "BoldedSearchResult",
+          () => (init_bolded_search_result(), __toCommonJS(bolded_search_result_exports))
+        );
+        _NylasComponentKit.load(
+          "MultiselectDropdown",
+          () => (init_multiselect_dropdown(), __toCommonJS(multiselect_dropdown_exports))
+        );
+        _NylasComponentKit.load(
+          "KeyCommandsRegion",
+          () => (init_key_commands_region(), __toCommonJS(key_commands_region_exports))
+        );
+        _NylasComponentKit.load(
+          "TabGroupRegion",
+          () => require_tab_group_region()
+        );
+        _NylasComponentKit.load(
+          "InjectedComponent",
+          () => require_injected_component()
+        );
+        _NylasComponentKit.load(
+          "TokenizingTextField",
+          () => (init_tokenizing_text_field(), __toCommonJS(tokenizing_text_field_exports))
+        );
+        _NylasComponentKit.load(
+          "ParticipantsTextField",
+          () => (init_participants_text_field(), __toCommonJS(participants_text_field_exports))
+        );
         _NylasComponentKit.loadDeprecated(
           "MultiselectActionBar",
           "multiselect-action-bar",
           { instead: "MultiselectToolbar" }
         );
-        _NylasComponentKit.load("MultiselectToolbar", () => (init_multiselect_toolbar(), __toCommonJS(multiselect_toolbar_exports)));
-        _NylasComponentKit.load("InjectedComponentSet", () => require_injected_component_set());
+        _NylasComponentKit.load(
+          "MultiselectToolbar",
+          () => (init_multiselect_toolbar(), __toCommonJS(multiselect_toolbar_exports))
+        );
+        _NylasComponentKit.load(
+          "InjectedComponentSet",
+          () => require_injected_component_set()
+        );
         _NylasComponentKit.load(
           "MetadataComposerToggleButton",
           "metadata-composer-toggle-button"
         );
-        _NylasComponentKit.load("ConfigPropContainer", () => (init_config_prop_container(), __toCommonJS(config_prop_container_exports)));
-        _NylasComponentKit.load("DisclosureTriangle", () => require_disclosure_triangle());
-        _NylasComponentKit.load("EditableList", () => (init_editable_list(), __toCommonJS(editable_list_exports)));
-        _NylasComponentKit.load("OutlineViewItem", () => (init_outline_view_item(), __toCommonJS(outline_view_item_exports)));
-        _NylasComponentKit.load("OutlineView", () => (init_outline_view(), __toCommonJS(outline_view_exports)));
-        _NylasComponentKit.load("DateInput", () => (init_date_input(), __toCommonJS(date_input_exports)));
-        _NylasComponentKit.load("DatePicker", () => (init_date_picker(), __toCommonJS(date_picker_exports)));
-        _NylasComponentKit.load("TimePicker", () => (init_time_picker(), __toCommonJS(time_picker_exports)));
-        _NylasComponentKit.load("Table", () => (init_table(), __toCommonJS(table_exports)));
-        _NylasComponentKit.loadFrom("TableRow", () => (init_table(), __toCommonJS(table_exports)));
-        _NylasComponentKit.loadFrom("TableCell", () => (init_table(), __toCommonJS(table_exports)));
-        _NylasComponentKit.load("SelectableTable", () => (init_selectable_table(), __toCommonJS(selectable_table_exports)));
-        _NylasComponentKit.loadFrom("SelectableTableRow", () => (init_selectable_table(), __toCommonJS(selectable_table_exports)));
-        _NylasComponentKit.loadFrom("SelectableTableCell", () => (init_selectable_table(), __toCommonJS(selectable_table_exports)));
-        _NylasComponentKit.load("EditableTable", () => (init_editable_table(), __toCommonJS(editable_table_exports)));
-        _NylasComponentKit.loadFrom("EditableTableCell", () => (init_editable_table(), __toCommonJS(editable_table_exports)));
+        _NylasComponentKit.load(
+          "ConfigPropContainer",
+          () => (init_config_prop_container(), __toCommonJS(config_prop_container_exports))
+        );
+        _NylasComponentKit.load(
+          "DisclosureTriangle",
+          () => require_disclosure_triangle()
+        );
+        _NylasComponentKit.load(
+          "EditableList",
+          () => (init_editable_list(), __toCommonJS(editable_list_exports))
+        );
+        _NylasComponentKit.load(
+          "OutlineViewItem",
+          () => (init_outline_view_item(), __toCommonJS(outline_view_item_exports))
+        );
+        _NylasComponentKit.load(
+          "OutlineView",
+          () => (init_outline_view(), __toCommonJS(outline_view_exports))
+        );
+        _NylasComponentKit.load(
+          "DateInput",
+          () => (init_date_input(), __toCommonJS(date_input_exports))
+        );
+        _NylasComponentKit.load(
+          "DatePicker",
+          () => (init_date_picker(), __toCommonJS(date_picker_exports))
+        );
+        _NylasComponentKit.load(
+          "TimePicker",
+          () => (init_time_picker(), __toCommonJS(time_picker_exports))
+        );
+        _NylasComponentKit.load(
+          "Table",
+          () => (init_table(), __toCommonJS(table_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "TableRow",
+          () => (init_table(), __toCommonJS(table_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "TableCell",
+          () => (init_table(), __toCommonJS(table_exports))
+        );
+        _NylasComponentKit.load(
+          "SelectableTable",
+          () => (init_selectable_table(), __toCommonJS(selectable_table_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "SelectableTableRow",
+          () => (init_selectable_table(), __toCommonJS(selectable_table_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "SelectableTableCell",
+          () => (init_selectable_table(), __toCommonJS(selectable_table_exports))
+        );
+        _NylasComponentKit.load(
+          "EditableTable",
+          () => (init_editable_table(), __toCommonJS(editable_table_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "EditableTableCell",
+          () => (init_editable_table(), __toCommonJS(editable_table_exports))
+        );
         _NylasComponentKit.load("Toast", () => (init_toast(), __toCommonJS(toast_exports)));
-        _NylasComponentKit.load("UndoToast", () => (init_undo_toast(), __toCommonJS(undo_toast_exports)));
-        _NylasComponentKit.load("LazyRenderedList", () => (init_lazy_rendered_list(), __toCommonJS(lazy_rendered_list_exports)));
+        _NylasComponentKit.load(
+          "UndoToast",
+          () => (init_undo_toast(), __toCommonJS(undo_toast_exports))
+        );
+        _NylasComponentKit.load(
+          "LazyRenderedList",
+          () => (init_lazy_rendered_list(), __toCommonJS(lazy_rendered_list_exports))
+        );
         _NylasComponentKit.load(
           "OverlaidComponents",
           "overlaid-components/overlaid-components"
@@ -241150,22 +241294,70 @@ var init_nylas_component_kit = __esm({
           "OverlaidComposerExtension",
           "overlaid-components/overlaid-composer-extension"
         );
-        _NylasComponentKit.load("OAuthSignInPage", () => (init_oauth_signin_page(), __toCommonJS(oauth_signin_page_exports)));
-        _NylasComponentKit.requireFrom("AttachmentItem", () => (init_attachment_items(), __toCommonJS(attachment_items_exports)));
-        _NylasComponentKit.requireFrom("ImageAttachmentItem", () => (init_attachment_items(), __toCommonJS(attachment_items_exports)));
-        _NylasComponentKit.load("CodeSnippet", () => (init_code_snippet(), __toCommonJS(code_snippet_exports)));
-        _NylasComponentKit.load("DropdownMenu", () => (init_dropdown_menu(), __toCommonJS(dropdown_menu_exports)));
-        _NylasComponentKit.load("ScrollRegion", () => require_scroll_region());
-        _NylasComponentKit.load("ResizableRegion", () => require_resizable_region());
-        _NylasComponentKit.loadFrom("MailLabel", () => (init_mail_label(), __toCommonJS(mail_label_exports)));
-        _NylasComponentKit.loadFrom("LabelColorizer", () => (init_mail_label(), __toCommonJS(mail_label_exports)));
-        _NylasComponentKit.load("MailLabelSet", () => (init_mail_label_set(), __toCommonJS(mail_label_set_exports)));
-        _NylasComponentKit.load("MailImportantIcon", () => require_mail_important_icon());
-        _NylasComponentKit.loadFrom("FormItem", () => require_generated_form());
-        _NylasComponentKit.loadFrom("GeneratedForm", () => require_generated_form());
-        _NylasComponentKit.loadFrom("GeneratedFieldset", () => require_generated_form());
-        _NylasComponentKit.load("ScenarioEditor", () => require_scenario_editor());
-        _NylasComponentKit.load("SearchBar", () => (init_search_bar(), __toCommonJS(search_bar_exports)));
+        _NylasComponentKit.load(
+          "OAuthSignInPage",
+          () => (init_oauth_signin_page(), __toCommonJS(oauth_signin_page_exports))
+        );
+        _NylasComponentKit.requireFrom(
+          "AttachmentItem",
+          () => (init_attachment_items(), __toCommonJS(attachment_items_exports))
+        );
+        _NylasComponentKit.requireFrom(
+          "ImageAttachmentItem",
+          () => (init_attachment_items(), __toCommonJS(attachment_items_exports))
+        );
+        _NylasComponentKit.load(
+          "CodeSnippet",
+          () => (init_code_snippet(), __toCommonJS(code_snippet_exports))
+        );
+        _NylasComponentKit.load(
+          "DropdownMenu",
+          () => (init_dropdown_menu(), __toCommonJS(dropdown_menu_exports))
+        );
+        _NylasComponentKit.load(
+          "ScrollRegion",
+          () => require_scroll_region()
+        );
+        _NylasComponentKit.load(
+          "ResizableRegion",
+          () => require_resizable_region()
+        );
+        _NylasComponentKit.loadFrom(
+          "MailLabel",
+          () => (init_mail_label(), __toCommonJS(mail_label_exports))
+        );
+        _NylasComponentKit.loadFrom(
+          "LabelColorizer",
+          () => (init_mail_label(), __toCommonJS(mail_label_exports))
+        );
+        _NylasComponentKit.load(
+          "MailLabelSet",
+          () => (init_mail_label_set(), __toCommonJS(mail_label_set_exports))
+        );
+        _NylasComponentKit.load(
+          "MailImportantIcon",
+          () => require_mail_important_icon()
+        );
+        _NylasComponentKit.loadFrom(
+          "FormItem",
+          () => require_generated_form()
+        );
+        _NylasComponentKit.loadFrom(
+          "GeneratedForm",
+          () => require_generated_form()
+        );
+        _NylasComponentKit.loadFrom(
+          "GeneratedFieldset",
+          () => require_generated_form()
+        );
+        _NylasComponentKit.load(
+          "ScenarioEditor",
+          () => require_scenario_editor()
+        );
+        _NylasComponentKit.load(
+          "SearchBar",
+          () => (init_search_bar(), __toCommonJS(search_bar_exports))
+        );
         _NylasComponentKit.load(
           "ListensToObservable",
           "decorators/listens-to-observable"
@@ -241178,7 +241370,10 @@ var init_nylas_component_kit = __esm({
           "ListensToMovementKeys",
           "decorators/listens-to-movement-keys"
         );
-        _NylasComponentKit.load("HasTutorialTip", () => (init_has_tutorial_tip(), __toCommonJS(has_tutorial_tip_exports)));
+        _NylasComponentKit.load(
+          "HasTutorialTip",
+          () => (init_has_tutorial_tip(), __toCommonJS(has_tutorial_tip_exports))
+        );
       }
       static default(requireValue) {
         return requireValue.default != null ? requireValue.default : requireValue;
@@ -278680,67 +278875,220 @@ var init_nylas_exports = __esm({
         enumerable: true
       });
     };
-    lazyLoad(`Actions`, () => typeof require !== "undefined" && require.resolve ? require_actions().default || require_actions() : requireFromSrc2("../flux/actions.js").default || requireFromSrc2("../flux/actions.js"));
-    lazyLoad(`NylasAPI`, () => typeof require !== "undefined" && require.resolve ? (init_nylas_api(), __toCommonJS(nylas_api_exports)).default || (init_nylas_api(), __toCommonJS(nylas_api_exports)) : requireFromSrc2("../flux/nylas-api.js").default || requireFromSrc2("../flux/nylas-api.js"));
-    lazyLoad(`N1CloudAPI`, () => typeof require !== "undefined" && require.resolve ? (init_n1_cloud_api(), __toCommonJS(n1_cloud_api_exports)).default || (init_n1_cloud_api(), __toCommonJS(n1_cloud_api_exports)) : requireFromSrc2("../n1-cloud-api.js").default || requireFromSrc2("../n1-cloud-api.js"));
-    lazyLoad(`NylasAPIHelpers`, () => typeof require !== "undefined" && require.resolve ? (init_nylas_api_helpers(), __toCommonJS(nylas_api_helpers_exports)).default || (init_nylas_api_helpers(), __toCommonJS(nylas_api_helpers_exports)) : requireFromSrc2("../flux/nylas-api-helpers.js").default || requireFromSrc2("../flux/nylas-api-helpers.js"));
-    lazyLoad(`NylasAPIRequest`, () => typeof require !== "undefined" && require.resolve ? (init_nylas_api_request(), __toCommonJS(nylas_api_request_exports)).default || (init_nylas_api_request(), __toCommonJS(nylas_api_request_exports)) : requireFromSrc2("../flux/nylas-api-request.js").default || requireFromSrc2("../flux/nylas-api-request.js"));
-    lazyLoad(`NylasLongConnection`, () => typeof require !== "undefined" && require.resolve ? (init_nylas_long_connection(), __toCommonJS(nylas_long_connection_exports)).default || (init_nylas_long_connection(), __toCommonJS(nylas_long_connection_exports)) : requireFromSrc2("../flux/nylas-long-connection.js").default || requireFromSrc2("../flux/nylas-long-connection.js"));
-    lazyLoad(`PackageManager`, () => requireFromSrc2("../package-manager.js").default || requireFromSrc2("../package-manager.js"));
-    lazyLoad(`Matcher`, () => typeof require !== "undefined" && require.resolve ? (init_matcher2(), __toCommonJS(matcher_exports)).default || (init_matcher2(), __toCommonJS(matcher_exports)) : requireFromSrc2("../flux/attributes/matcher.js").default || requireFromSrc2("../flux/attributes/matcher.js"));
-    lazyLoad(`DatabaseStore`, () => typeof require !== "undefined" && require.resolve ? (init_database_store(), __toCommonJS(database_store_exports)).default || (init_database_store(), __toCommonJS(database_store_exports)) : requireFromSrc2("../flux/stores/database-store.js").default || requireFromSrc2("../flux/stores/database-store.js"));
-    lazyLoad(`QueryResultSet`, () => typeof require !== "undefined" && require.resolve ? (init_query_result_set(), __toCommonJS(query_result_set_exports)).default || (init_query_result_set(), __toCommonJS(query_result_set_exports)) : requireFromSrc2("../flux/models/query-result-set.js").default || requireFromSrc2("../flux/models/query-result-set.js"));
-    lazyLoad(`QuerySubscription`, () => typeof require !== "undefined" && require.resolve ? (init_query_subscription(), __toCommonJS(query_subscription_exports)).default || (init_query_subscription(), __toCommonJS(query_subscription_exports)) : requireFromSrc2("../flux/models/query-subscription.js").default || requireFromSrc2("../flux/models/query-subscription.js"));
+    lazyLoad(
+      `Actions`,
+      () => typeof require !== "undefined" && require.resolve ? require_actions().default || require_actions() : requireFromSrc2("../flux/actions.js").default || requireFromSrc2("../flux/actions.js")
+    );
+    lazyLoad(
+      `NylasAPI`,
+      () => typeof require !== "undefined" && require.resolve ? (init_nylas_api(), __toCommonJS(nylas_api_exports)).default || (init_nylas_api(), __toCommonJS(nylas_api_exports)) : requireFromSrc2("../flux/nylas-api.js").default || requireFromSrc2("../flux/nylas-api.js")
+    );
+    lazyLoad(
+      `N1CloudAPI`,
+      () => typeof require !== "undefined" && require.resolve ? (init_n1_cloud_api(), __toCommonJS(n1_cloud_api_exports)).default || (init_n1_cloud_api(), __toCommonJS(n1_cloud_api_exports)) : requireFromSrc2("../n1-cloud-api.js").default || requireFromSrc2("../n1-cloud-api.js")
+    );
+    lazyLoad(
+      `NylasAPIHelpers`,
+      () => typeof require !== "undefined" && require.resolve ? (init_nylas_api_helpers(), __toCommonJS(nylas_api_helpers_exports)).default || (init_nylas_api_helpers(), __toCommonJS(nylas_api_helpers_exports)) : requireFromSrc2("../flux/nylas-api-helpers.js").default || requireFromSrc2("../flux/nylas-api-helpers.js")
+    );
+    lazyLoad(
+      `NylasAPIRequest`,
+      () => typeof require !== "undefined" && require.resolve ? (init_nylas_api_request(), __toCommonJS(nylas_api_request_exports)).default || (init_nylas_api_request(), __toCommonJS(nylas_api_request_exports)) : requireFromSrc2("../flux/nylas-api-request.js").default || requireFromSrc2("../flux/nylas-api-request.js")
+    );
+    lazyLoad(
+      `NylasLongConnection`,
+      () => typeof require !== "undefined" && require.resolve ? (init_nylas_long_connection(), __toCommonJS(nylas_long_connection_exports)).default || (init_nylas_long_connection(), __toCommonJS(nylas_long_connection_exports)) : requireFromSrc2("../flux/nylas-long-connection.js").default || requireFromSrc2("../flux/nylas-long-connection.js")
+    );
+    lazyLoad(
+      `PackageManager`,
+      () => requireFromSrc2("../package-manager.js").default || requireFromSrc2("../package-manager.js")
+    );
+    lazyLoad(
+      `Matcher`,
+      () => typeof require !== "undefined" && require.resolve ? (init_matcher2(), __toCommonJS(matcher_exports)).default || (init_matcher2(), __toCommonJS(matcher_exports)) : requireFromSrc2("../flux/attributes/matcher.js").default || requireFromSrc2("../flux/attributes/matcher.js")
+    );
+    lazyLoad(
+      `DatabaseStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_database_store(), __toCommonJS(database_store_exports)).default || (init_database_store(), __toCommonJS(database_store_exports)) : requireFromSrc2("../flux/stores/database-store.js").default || requireFromSrc2("../flux/stores/database-store.js")
+    );
+    lazyLoad(
+      `QueryResultSet`,
+      () => typeof require !== "undefined" && require.resolve ? (init_query_result_set(), __toCommonJS(query_result_set_exports)).default || (init_query_result_set(), __toCommonJS(query_result_set_exports)) : requireFromSrc2("../flux/models/query-result-set.js").default || requireFromSrc2("../flux/models/query-result-set.js")
+    );
+    lazyLoad(
+      `QuerySubscription`,
+      () => typeof require !== "undefined" && require.resolve ? (init_query_subscription(), __toCommonJS(query_subscription_exports)).default || (init_query_subscription(), __toCommonJS(query_subscription_exports)) : requireFromSrc2("../flux/models/query-subscription.js").default || requireFromSrc2("../flux/models/query-subscription.js")
+    );
     lazyLoad(
       `CalendarDataSource`,
       "components/nylas-calendar/calendar-data-source"
     );
-    lazyLoad(`DatabaseWriter`, () => typeof require !== "undefined" && require.resolve ? (init_database_writer(), __toCommonJS(database_writer_exports)).default || (init_database_writer(), __toCommonJS(database_writer_exports)) : requireFromSrc2("../flux/stores/database-writer.js").default || requireFromSrc2("../flux/stores/database-writer.js"));
-    lazyLoad(`MutableQueryResultSet`, () => typeof require !== "undefined" && require.resolve ? (init_mutable_query_result_set(), __toCommonJS(mutable_query_result_set_exports)).default || (init_mutable_query_result_set(), __toCommonJS(mutable_query_result_set_exports)) : requireFromSrc2("../flux/models/mutable-query-result-set.js").default || requireFromSrc2("../flux/models/mutable-query-result-set.js"));
-    lazyLoad(`QuerySubscriptionPool`, () => typeof require !== "undefined" && require.resolve ? (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)).default || (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)) : requireFromSrc2("../flux/models/query-subscription-pool.js").default || requireFromSrc2("../flux/models/query-subscription-pool.js"));
-    lazyLoad(`ObservableListDataSource`, () => typeof require !== "undefined" && require.resolve ? (init_observable_list_data_source(), __toCommonJS(observable_list_data_source_exports)).default || (init_observable_list_data_source(), __toCommonJS(observable_list_data_source_exports)) : requireFromSrc2("../flux/stores/observable-list-data-source.js").default || requireFromSrc2("../flux/stores/observable-list-data-source.js"));
-    lazyLoad(`MutableQuerySubscription`, () => typeof require !== "undefined" && require.resolve ? (init_mutable_query_subscription(), __toCommonJS(mutable_query_subscription_exports)).default || (init_mutable_query_subscription(), __toCommonJS(mutable_query_subscription_exports)) : requireFromSrc2("../flux/models/mutable-query-subscription.js").default || requireFromSrc2("../flux/models/mutable-query-subscription.js"));
+    lazyLoad(
+      `DatabaseWriter`,
+      () => typeof require !== "undefined" && require.resolve ? (init_database_writer(), __toCommonJS(database_writer_exports)).default || (init_database_writer(), __toCommonJS(database_writer_exports)) : requireFromSrc2("../flux/stores/database-writer.js").default || requireFromSrc2("../flux/stores/database-writer.js")
+    );
+    lazyLoad(
+      `MutableQueryResultSet`,
+      () => typeof require !== "undefined" && require.resolve ? (init_mutable_query_result_set(), __toCommonJS(mutable_query_result_set_exports)).default || (init_mutable_query_result_set(), __toCommonJS(mutable_query_result_set_exports)) : requireFromSrc2("../flux/models/mutable-query-result-set.js").default || requireFromSrc2("../flux/models/mutable-query-result-set.js")
+    );
+    lazyLoad(
+      `QuerySubscriptionPool`,
+      () => typeof require !== "undefined" && require.resolve ? (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)).default || (init_query_subscription_pool(), __toCommonJS(query_subscription_pool_exports)) : requireFromSrc2("../flux/models/query-subscription-pool.js").default || requireFromSrc2("../flux/models/query-subscription-pool.js")
+    );
+    lazyLoad(
+      `ObservableListDataSource`,
+      () => typeof require !== "undefined" && require.resolve ? (init_observable_list_data_source(), __toCommonJS(observable_list_data_source_exports)).default || (init_observable_list_data_source(), __toCommonJS(observable_list_data_source_exports)) : requireFromSrc2("../flux/stores/observable-list-data-source.js").default || requireFromSrc2("../flux/stores/observable-list-data-source.js")
+    );
+    lazyLoad(
+      `MutableQuerySubscription`,
+      () => typeof require !== "undefined" && require.resolve ? (init_mutable_query_subscription(), __toCommonJS(mutable_query_subscription_exports)).default || (init_mutable_query_subscription(), __toCommonJS(mutable_query_subscription_exports)) : requireFromSrc2("../flux/models/mutable-query-subscription.js").default || requireFromSrc2("../flux/models/mutable-query-subscription.js")
+    );
     $n.DatabaseObjectRegistry = import_database_object_registry3.default;
-    lazyLoad(`Model`, () => typeof require !== "undefined" && require.resolve ? require_model().default || require_model() : requireFromSrc2("../flux/models/model.js").default || requireFromSrc2("../flux/models/model.js"));
-    lazyLoad(`Attributes`, () => typeof require !== "undefined" && require.resolve ? (init_attributes(), __toCommonJS(attributes_exports)).default || (init_attributes(), __toCommonJS(attributes_exports)) : requireFromSrc2("../flux/attributes.js").default || requireFromSrc2("../flux/attributes.js"));
-    lazyLoadAndRegisterModel(`File`, () => typeof require !== "undefined" && require.resolve ? (init_file(), __toCommonJS(file_exports)).default || (init_file(), __toCommonJS(file_exports)) : requireFromSrc2("../flux/models/file.js").default || requireFromSrc2("../flux/models/file.js"));
-    lazyLoadAndRegisterModel(`Event`, () => typeof require !== "undefined" && require.resolve ? (init_event(), __toCommonJS(event_exports)).default || (init_event(), __toCommonJS(event_exports)) : requireFromSrc2("../flux/models/event.js").default || requireFromSrc2("../flux/models/event.js"));
-    lazyLoadAndRegisterModel(`Label`, () => typeof require !== "undefined" && require.resolve ? (init_label(), __toCommonJS(label_exports)).default || (init_label(), __toCommonJS(label_exports)) : requireFromSrc2("../flux/models/label.js").default || requireFromSrc2("../flux/models/label.js"));
-    lazyLoadAndRegisterModel(`Folder`, () => typeof require !== "undefined" && require.resolve ? (init_folder(), __toCommonJS(folder_exports)).default || (init_folder(), __toCommonJS(folder_exports)) : requireFromSrc2("../flux/models/folder.js").default || requireFromSrc2("../flux/models/folder.js"));
-    lazyLoadAndRegisterModel(`Thread`, () => typeof require !== "undefined" && require.resolve ? (init_thread(), __toCommonJS(thread_exports)).default || (init_thread(), __toCommonJS(thread_exports)) : requireFromSrc2("../flux/models/thread.js").default || requireFromSrc2("../flux/models/thread.js"));
-    lazyLoadAndRegisterModel(`Account`, () => typeof require !== "undefined" && require.resolve ? (init_account(), __toCommonJS(account_exports)).default || (init_account(), __toCommonJS(account_exports)) : requireFromSrc2("../flux/models/account.js").default || requireFromSrc2("../flux/models/account.js"));
-    lazyLoadAndRegisterModel(`Message`, () => typeof require !== "undefined" && require.resolve ? (init_message(), __toCommonJS(message_exports)).default || (init_message(), __toCommonJS(message_exports)) : requireFromSrc2("../flux/models/message.js").default || requireFromSrc2("../flux/models/message.js"));
-    lazyLoadAndRegisterModel(`Contact`, () => typeof require !== "undefined" && require.resolve ? (init_contact(), __toCommonJS(contact_exports)).default || (init_contact(), __toCommonJS(contact_exports)) : requireFromSrc2("../flux/models/contact.js").default || requireFromSrc2("../flux/models/contact.js"));
-    lazyLoadAndRegisterModel(`Category`, () => typeof require !== "undefined" && require.resolve ? (init_category(), __toCommonJS(category_exports)).default || (init_category(), __toCommonJS(category_exports)) : requireFromSrc2("../flux/models/category.js").default || requireFromSrc2("../flux/models/category.js"));
-    lazyLoadAndRegisterModel(`Calendar`, () => typeof require !== "undefined" && require.resolve ? (init_calendar(), __toCommonJS(calendar_exports)).default || (init_calendar(), __toCommonJS(calendar_exports)) : requireFromSrc2("../flux/models/calendar.js").default || requireFromSrc2("../flux/models/calendar.js"));
-    lazyLoadAndRegisterModel(`JSONBlob`, () => typeof require !== "undefined" && require.resolve ? (init_json_blob(), __toCommonJS(json_blob_exports)).default || (init_json_blob(), __toCommonJS(json_blob_exports)) : requireFromSrc2("../flux/models/json-blob.js").default || requireFromSrc2("../flux/models/json-blob.js"));
+    lazyLoad(
+      `Model`,
+      () => typeof require !== "undefined" && require.resolve ? require_model().default || require_model() : requireFromSrc2("../flux/models/model.js").default || requireFromSrc2("../flux/models/model.js")
+    );
+    lazyLoad(
+      `Attributes`,
+      () => typeof require !== "undefined" && require.resolve ? (init_attributes(), __toCommonJS(attributes_exports)).default || (init_attributes(), __toCommonJS(attributes_exports)) : requireFromSrc2("../flux/attributes.js").default || requireFromSrc2("../flux/attributes.js")
+    );
+    lazyLoadAndRegisterModel(
+      `File`,
+      () => typeof require !== "undefined" && require.resolve ? (init_file(), __toCommonJS(file_exports)).default || (init_file(), __toCommonJS(file_exports)) : requireFromSrc2("../flux/models/file.js").default || requireFromSrc2("../flux/models/file.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Event`,
+      () => typeof require !== "undefined" && require.resolve ? (init_event(), __toCommonJS(event_exports)).default || (init_event(), __toCommonJS(event_exports)) : requireFromSrc2("../flux/models/event.js").default || requireFromSrc2("../flux/models/event.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Label`,
+      () => typeof require !== "undefined" && require.resolve ? (init_label(), __toCommonJS(label_exports)).default || (init_label(), __toCommonJS(label_exports)) : requireFromSrc2("../flux/models/label.js").default || requireFromSrc2("../flux/models/label.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Folder`,
+      () => typeof require !== "undefined" && require.resolve ? (init_folder(), __toCommonJS(folder_exports)).default || (init_folder(), __toCommonJS(folder_exports)) : requireFromSrc2("../flux/models/folder.js").default || requireFromSrc2("../flux/models/folder.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Thread`,
+      () => typeof require !== "undefined" && require.resolve ? (init_thread(), __toCommonJS(thread_exports)).default || (init_thread(), __toCommonJS(thread_exports)) : requireFromSrc2("../flux/models/thread.js").default || requireFromSrc2("../flux/models/thread.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Account`,
+      () => typeof require !== "undefined" && require.resolve ? (init_account(), __toCommonJS(account_exports)).default || (init_account(), __toCommonJS(account_exports)) : requireFromSrc2("../flux/models/account.js").default || requireFromSrc2("../flux/models/account.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Message`,
+      () => typeof require !== "undefined" && require.resolve ? (init_message(), __toCommonJS(message_exports)).default || (init_message(), __toCommonJS(message_exports)) : requireFromSrc2("../flux/models/message.js").default || requireFromSrc2("../flux/models/message.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Contact`,
+      () => typeof require !== "undefined" && require.resolve ? (init_contact(), __toCommonJS(contact_exports)).default || (init_contact(), __toCommonJS(contact_exports)) : requireFromSrc2("../flux/models/contact.js").default || requireFromSrc2("../flux/models/contact.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Category`,
+      () => typeof require !== "undefined" && require.resolve ? (init_category(), __toCommonJS(category_exports)).default || (init_category(), __toCommonJS(category_exports)) : requireFromSrc2("../flux/models/category.js").default || requireFromSrc2("../flux/models/category.js")
+    );
+    lazyLoadAndRegisterModel(
+      `Calendar`,
+      () => typeof require !== "undefined" && require.resolve ? (init_calendar(), __toCommonJS(calendar_exports)).default || (init_calendar(), __toCommonJS(calendar_exports)) : requireFromSrc2("../flux/models/calendar.js").default || requireFromSrc2("../flux/models/calendar.js")
+    );
+    lazyLoadAndRegisterModel(
+      `JSONBlob`,
+      () => typeof require !== "undefined" && require.resolve ? (init_json_blob(), __toCommonJS(json_blob_exports)).default || (init_json_blob(), __toCommonJS(json_blob_exports)) : requireFromSrc2("../flux/models/json-blob.js").default || requireFromSrc2("../flux/models/json-blob.js")
+    );
     lazyLoadAndRegisterModel(
       `ProviderSyncbackRequest`,
       "provider-syncback-request"
     );
-    lazyLoad(`SearchQueryAST`, () => typeof require !== "undefined" && require.resolve ? require_search_query_ast().default || require_search_query_ast() : requireFromSrc2("../services/search/search-query-ast.js").default || requireFromSrc2("../services/search/search-query-ast.js"));
-    lazyLoad(`SearchQueryParser`, () => typeof require !== "undefined" && require.resolve ? (init_search_query_parser(), __toCommonJS(search_query_parser_exports)).default || (init_search_query_parser(), __toCommonJS(search_query_parser_exports)) : requireFromSrc2("../services/search/search-query-parser.js").default || requireFromSrc2("../services/search/search-query-parser.js"));
-    lazyLoad(`IMAPSearchQueryBackend`, () => typeof require !== "undefined" && require.resolve ? (init_search_query_backend_imap(), __toCommonJS(search_query_backend_imap_exports)).default || (init_search_query_backend_imap(), __toCommonJS(search_query_backend_imap_exports)) : requireFromSrc2("../services/search/search-query-backend-imap.js").default || requireFromSrc2("../services/search/search-query-backend-imap.js"));
+    lazyLoad(
+      `SearchQueryAST`,
+      () => typeof require !== "undefined" && require.resolve ? require_search_query_ast().default || require_search_query_ast() : requireFromSrc2("../services/search/search-query-ast.js").default || requireFromSrc2("../services/search/search-query-ast.js")
+    );
+    lazyLoad(
+      `SearchQueryParser`,
+      () => typeof require !== "undefined" && require.resolve ? (init_search_query_parser(), __toCommonJS(search_query_parser_exports)).default || (init_search_query_parser(), __toCommonJS(search_query_parser_exports)) : requireFromSrc2("../services/search/search-query-parser.js").default || requireFromSrc2("../services/search/search-query-parser.js")
+    );
+    lazyLoad(
+      `IMAPSearchQueryBackend`,
+      () => typeof require !== "undefined" && require.resolve ? (init_search_query_backend_imap(), __toCommonJS(search_query_backend_imap_exports)).default || (init_search_query_backend_imap(), __toCommonJS(search_query_backend_imap_exports)) : requireFromSrc2("../services/search/search-query-backend-imap.js").default || requireFromSrc2("../services/search/search-query-backend-imap.js")
+    );
     $n.TaskRegistry = import_task_registry.default;
-    lazyLoad(`Task`, () => typeof require !== "undefined" && require.resolve ? (init_task(), __toCommonJS(task_exports)).default || (init_task(), __toCommonJS(task_exports)) : requireFromSrc2("../flux/tasks/task.js").default || requireFromSrc2("../flux/tasks/task.js"));
-    lazyLoad(`TaskFactory`, () => typeof require !== "undefined" && require.resolve ? (init_task_factory(), __toCommonJS(task_factory_exports)).default || (init_task_factory(), __toCommonJS(task_factory_exports)) : requireFromSrc2("../flux/tasks/task-factory.js").default || requireFromSrc2("../flux/tasks/task-factory.js"));
-    lazyLoadAndRegisterTask(`EventRSVPTask`, () => typeof require !== "undefined" && require.resolve ? (init_event_rsvp_task(), __toCommonJS(event_rsvp_task_exports)).default || (init_event_rsvp_task(), __toCommonJS(event_rsvp_task_exports)) : requireFromSrc2("../flux/tasks/event-rsvp-task.js").default || requireFromSrc2("../flux/tasks/event-rsvp-task.js"));
-    lazyLoadAndRegisterTask(`BaseDraftTask`, () => typeof require !== "undefined" && require.resolve ? (init_base_draft_task(), __toCommonJS(base_draft_task_exports)).default || (init_base_draft_task(), __toCommonJS(base_draft_task_exports)) : requireFromSrc2("../flux/tasks/base-draft-task.js").default || requireFromSrc2("../flux/tasks/base-draft-task.js"));
-    lazyLoadAndRegisterTask(`SendDraftTask`, () => typeof require !== "undefined" && require.resolve ? (init_send_draft_task(), __toCommonJS(send_draft_task_exports)).default || (init_send_draft_task(), __toCommonJS(send_draft_task_exports)) : requireFromSrc2("../flux/tasks/send-draft-task.js").default || requireFromSrc2("../flux/tasks/send-draft-task.js"));
-    lazyLoadAndRegisterTask(`ChangeMailTask`, () => typeof require !== "undefined" && require.resolve ? (init_change_mail_task(), __toCommonJS(change_mail_task_exports)).default || (init_change_mail_task(), __toCommonJS(change_mail_task_exports)) : requireFromSrc2("../flux/tasks/change-mail-task.js").default || requireFromSrc2("../flux/tasks/change-mail-task.js"));
-    lazyLoadAndRegisterTask(`DestroyDraftTask`, () => typeof require !== "undefined" && require.resolve ? (init_destroy_draft_task(), __toCommonJS(destroy_draft_task_exports)).default || (init_destroy_draft_task(), __toCommonJS(destroy_draft_task_exports)) : requireFromSrc2("../flux/tasks/destroy-draft-task.js").default || requireFromSrc2("../flux/tasks/destroy-draft-task.js"));
-    lazyLoadAndRegisterTask(`ChangeLabelsTask`, () => typeof require !== "undefined" && require.resolve ? (init_change_labels_task(), __toCommonJS(change_labels_task_exports)).default || (init_change_labels_task(), __toCommonJS(change_labels_task_exports)) : requireFromSrc2("../flux/tasks/change-labels-task.js").default || requireFromSrc2("../flux/tasks/change-labels-task.js"));
-    lazyLoadAndRegisterTask(`ChangeFolderTask`, () => typeof require !== "undefined" && require.resolve ? (init_change_folder_task(), __toCommonJS(change_folder_task_exports)).default || (init_change_folder_task(), __toCommonJS(change_folder_task_exports)) : requireFromSrc2("../flux/tasks/change-folder-task.js").default || requireFromSrc2("../flux/tasks/change-folder-task.js"));
-    lazyLoadAndRegisterTask(`ChangeUnreadTask`, () => typeof require !== "undefined" && require.resolve ? (init_change_unread_task(), __toCommonJS(change_unread_task_exports)).default || (init_change_unread_task(), __toCommonJS(change_unread_task_exports)) : requireFromSrc2("../flux/tasks/change-unread-task.js").default || requireFromSrc2("../flux/tasks/change-unread-task.js"));
-    lazyLoadAndRegisterTask(`DestroyModelTask`, () => typeof require !== "undefined" && require.resolve ? (init_destroy_model_task(), __toCommonJS(destroy_model_task_exports)).default || (init_destroy_model_task(), __toCommonJS(destroy_model_task_exports)) : requireFromSrc2("../flux/tasks/destroy-model-task.js").default || requireFromSrc2("../flux/tasks/destroy-model-task.js"));
-    lazyLoadAndRegisterTask(`ChangeStarredTask`, () => typeof require !== "undefined" && require.resolve ? (init_change_starred_task(), __toCommonJS(change_starred_task_exports)).default || (init_change_starred_task(), __toCommonJS(change_starred_task_exports)) : requireFromSrc2("../flux/tasks/change-starred-task.js").default || requireFromSrc2("../flux/tasks/change-starred-task.js"));
-    lazyLoadAndRegisterTask(`SyncbackModelTask`, () => typeof require !== "undefined" && require.resolve ? (init_syncback_model_task(), __toCommonJS(syncback_model_task_exports)).default || (init_syncback_model_task(), __toCommonJS(syncback_model_task_exports)) : requireFromSrc2("../flux/tasks/syncback-model-task.js").default || requireFromSrc2("../flux/tasks/syncback-model-task.js"));
-    lazyLoadAndRegisterTask(`SyncbackEventTask`, () => typeof require !== "undefined" && require.resolve ? (init_syncback_event_task(), __toCommonJS(syncback_event_task_exports)).default || (init_syncback_event_task(), __toCommonJS(syncback_event_task_exports)) : requireFromSrc2("../flux/tasks/syncback-event-task.js").default || requireFromSrc2("../flux/tasks/syncback-event-task.js"));
-    lazyLoadAndRegisterTask(`DestroyCategoryTask`, () => typeof require !== "undefined" && require.resolve ? (init_destroy_category_task(), __toCommonJS(destroy_category_task_exports)).default || (init_destroy_category_task(), __toCommonJS(destroy_category_task_exports)) : requireFromSrc2("../flux/tasks/destroy-category-task.js").default || requireFromSrc2("../flux/tasks/destroy-category-task.js"));
-    lazyLoadAndRegisterTask(`SyncbackCategoryTask`, () => typeof require !== "undefined" && require.resolve ? (init_syncback_category_task(), __toCommonJS(syncback_category_task_exports)).default || (init_syncback_category_task(), __toCommonJS(syncback_category_task_exports)) : requireFromSrc2("../flux/tasks/syncback-category-task.js").default || requireFromSrc2("../flux/tasks/syncback-category-task.js"));
-    lazyLoadAndRegisterTask(`SyncbackMetadataTask`, () => typeof require !== "undefined" && require.resolve ? (init_syncback_metadata_task(), __toCommonJS(syncback_metadata_task_exports)).default || (init_syncback_metadata_task(), __toCommonJS(syncback_metadata_task_exports)) : requireFromSrc2("../flux/tasks/syncback-metadata-task.js").default || requireFromSrc2("../flux/tasks/syncback-metadata-task.js"));
-    lazyLoadAndRegisterTask(`PerformSendActionTask`, () => typeof require !== "undefined" && require.resolve ? (init_perform_send_action_task(), __toCommonJS(perform_send_action_task_exports)).default || (init_perform_send_action_task(), __toCommonJS(perform_send_action_task_exports)) : requireFromSrc2("../flux/tasks/perform-send-action-task.js").default || requireFromSrc2("../flux/tasks/perform-send-action-task.js"));
-    lazyLoadAndRegisterTask(`ReprocessMailRulesTask`, () => typeof require !== "undefined" && require.resolve ? (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)).default || (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)) : requireFromSrc2("../flux/tasks/reprocess-mail-rules-task.js").default || requireFromSrc2("../flux/tasks/reprocess-mail-rules-task.js"));
+    lazyLoad(
+      `Task`,
+      () => typeof require !== "undefined" && require.resolve ? (init_task(), __toCommonJS(task_exports)).default || (init_task(), __toCommonJS(task_exports)) : requireFromSrc2("../flux/tasks/task.js").default || requireFromSrc2("../flux/tasks/task.js")
+    );
+    lazyLoad(
+      `TaskFactory`,
+      () => typeof require !== "undefined" && require.resolve ? (init_task_factory(), __toCommonJS(task_factory_exports)).default || (init_task_factory(), __toCommonJS(task_factory_exports)) : requireFromSrc2("../flux/tasks/task-factory.js").default || requireFromSrc2("../flux/tasks/task-factory.js")
+    );
+    lazyLoadAndRegisterTask(
+      `EventRSVPTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_event_rsvp_task(), __toCommonJS(event_rsvp_task_exports)).default || (init_event_rsvp_task(), __toCommonJS(event_rsvp_task_exports)) : requireFromSrc2("../flux/tasks/event-rsvp-task.js").default || requireFromSrc2("../flux/tasks/event-rsvp-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `BaseDraftTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_base_draft_task(), __toCommonJS(base_draft_task_exports)).default || (init_base_draft_task(), __toCommonJS(base_draft_task_exports)) : requireFromSrc2("../flux/tasks/base-draft-task.js").default || requireFromSrc2("../flux/tasks/base-draft-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `SendDraftTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_send_draft_task(), __toCommonJS(send_draft_task_exports)).default || (init_send_draft_task(), __toCommonJS(send_draft_task_exports)) : requireFromSrc2("../flux/tasks/send-draft-task.js").default || requireFromSrc2("../flux/tasks/send-draft-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ChangeMailTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_change_mail_task(), __toCommonJS(change_mail_task_exports)).default || (init_change_mail_task(), __toCommonJS(change_mail_task_exports)) : requireFromSrc2("../flux/tasks/change-mail-task.js").default || requireFromSrc2("../flux/tasks/change-mail-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `DestroyDraftTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_destroy_draft_task(), __toCommonJS(destroy_draft_task_exports)).default || (init_destroy_draft_task(), __toCommonJS(destroy_draft_task_exports)) : requireFromSrc2("../flux/tasks/destroy-draft-task.js").default || requireFromSrc2("../flux/tasks/destroy-draft-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ChangeLabelsTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_change_labels_task(), __toCommonJS(change_labels_task_exports)).default || (init_change_labels_task(), __toCommonJS(change_labels_task_exports)) : requireFromSrc2("../flux/tasks/change-labels-task.js").default || requireFromSrc2("../flux/tasks/change-labels-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ChangeFolderTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_change_folder_task(), __toCommonJS(change_folder_task_exports)).default || (init_change_folder_task(), __toCommonJS(change_folder_task_exports)) : requireFromSrc2("../flux/tasks/change-folder-task.js").default || requireFromSrc2("../flux/tasks/change-folder-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ChangeUnreadTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_change_unread_task(), __toCommonJS(change_unread_task_exports)).default || (init_change_unread_task(), __toCommonJS(change_unread_task_exports)) : requireFromSrc2("../flux/tasks/change-unread-task.js").default || requireFromSrc2("../flux/tasks/change-unread-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `DestroyModelTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_destroy_model_task(), __toCommonJS(destroy_model_task_exports)).default || (init_destroy_model_task(), __toCommonJS(destroy_model_task_exports)) : requireFromSrc2("../flux/tasks/destroy-model-task.js").default || requireFromSrc2("../flux/tasks/destroy-model-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ChangeStarredTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_change_starred_task(), __toCommonJS(change_starred_task_exports)).default || (init_change_starred_task(), __toCommonJS(change_starred_task_exports)) : requireFromSrc2("../flux/tasks/change-starred-task.js").default || requireFromSrc2("../flux/tasks/change-starred-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `SyncbackModelTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_syncback_model_task(), __toCommonJS(syncback_model_task_exports)).default || (init_syncback_model_task(), __toCommonJS(syncback_model_task_exports)) : requireFromSrc2("../flux/tasks/syncback-model-task.js").default || requireFromSrc2("../flux/tasks/syncback-model-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `SyncbackEventTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_syncback_event_task(), __toCommonJS(syncback_event_task_exports)).default || (init_syncback_event_task(), __toCommonJS(syncback_event_task_exports)) : requireFromSrc2("../flux/tasks/syncback-event-task.js").default || requireFromSrc2("../flux/tasks/syncback-event-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `DestroyCategoryTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_destroy_category_task(), __toCommonJS(destroy_category_task_exports)).default || (init_destroy_category_task(), __toCommonJS(destroy_category_task_exports)) : requireFromSrc2("../flux/tasks/destroy-category-task.js").default || requireFromSrc2("../flux/tasks/destroy-category-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `SyncbackCategoryTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_syncback_category_task(), __toCommonJS(syncback_category_task_exports)).default || (init_syncback_category_task(), __toCommonJS(syncback_category_task_exports)) : requireFromSrc2("../flux/tasks/syncback-category-task.js").default || requireFromSrc2("../flux/tasks/syncback-category-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `SyncbackMetadataTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_syncback_metadata_task(), __toCommonJS(syncback_metadata_task_exports)).default || (init_syncback_metadata_task(), __toCommonJS(syncback_metadata_task_exports)) : requireFromSrc2("../flux/tasks/syncback-metadata-task.js").default || requireFromSrc2("../flux/tasks/syncback-metadata-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `PerformSendActionTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_perform_send_action_task(), __toCommonJS(perform_send_action_task_exports)).default || (init_perform_send_action_task(), __toCommonJS(perform_send_action_task_exports)) : requireFromSrc2("../flux/tasks/perform-send-action-task.js").default || requireFromSrc2("../flux/tasks/perform-send-action-task.js")
+    );
+    lazyLoadAndRegisterTask(
+      `ReprocessMailRulesTask`,
+      () => typeof require !== "undefined" && require.resolve ? (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)).default || (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)) : requireFromSrc2("../flux/tasks/reprocess-mail-rules-task.js").default || requireFromSrc2("../flux/tasks/reprocess-mail-rules-task.js")
+    );
     lazyLoadAndRegisterTask(
       `SendFeatureUsageEventTask`,
       "send-feature-usage-event-task"
@@ -278749,39 +279097,126 @@ var init_nylas_exports = __esm({
       `EnsureMessageInSentFolderTask`,
       "ensure-message-in-sent-folder-task"
     );
-    lazyLoadAndRegisterStore(`TaskQueue`, () => typeof require !== "undefined" && require.resolve ? require_task_queue().default || require_task_queue() : requireFromSrc2("../flux/stores/task-queue.js").default || requireFromSrc2("../flux/stores/task-queue.js"));
-    lazyLoadAndRegisterStore(`BadgeStore`, () => typeof require !== "undefined" && require.resolve ? (init_badge_store(), __toCommonJS(badge_store_exports)).default || (init_badge_store(), __toCommonJS(badge_store_exports)) : requireFromSrc2("../flux/stores/badge-store.js").default || requireFromSrc2("../flux/stores/badge-store.js"));
-    lazyLoadAndRegisterStore(`DraftStore`, () => typeof require !== "undefined" && require.resolve ? (init_draft_store(), __toCommonJS(draft_store_exports)).default || (init_draft_store(), __toCommonJS(draft_store_exports)) : requireFromSrc2("../flux/stores/draft-store.js").default || requireFromSrc2("../flux/stores/draft-store.js"));
-    lazyLoadAndRegisterStore(`ModalStore`, () => typeof require !== "undefined" && require.resolve ? (init_modal_store(), __toCommonJS(modal_store_exports)).default || (init_modal_store(), __toCommonJS(modal_store_exports)) : requireFromSrc2("../flux/stores/modal-store.jsx").default || requireFromSrc2("../flux/stores/modal-store.jsx"));
-    lazyLoadAndRegisterStore(`OutboxStore`, () => typeof require !== "undefined" && require.resolve ? (init_outbox_store(), __toCommonJS(outbox_store_exports)).default || (init_outbox_store(), __toCommonJS(outbox_store_exports)) : requireFromSrc2("../flux/stores/outbox-store.js").default || requireFromSrc2("../flux/stores/outbox-store.js"));
-    lazyLoadAndRegisterStore(`PopoverStore`, () => typeof require !== "undefined" && require.resolve ? (init_popover_store(), __toCommonJS(popover_store_exports)).default || (init_popover_store(), __toCommonJS(popover_store_exports)) : requireFromSrc2("../flux/stores/popover-store.jsx").default || requireFromSrc2("../flux/stores/popover-store.jsx"));
-    lazyLoadAndRegisterStore(`AccountStore`, () => typeof require !== "undefined" && require.resolve ? (init_account_store(), __toCommonJS(account_store_exports)).default || (init_account_store(), __toCommonJS(account_store_exports)) : requireFromSrc2("../flux/stores/account-store.js").default || requireFromSrc2("../flux/stores/account-store.js"));
-    lazyLoadAndRegisterStore(`SignatureStore`, () => typeof require !== "undefined" && require.resolve ? (init_signature_store(), __toCommonJS(signature_store_exports)).default || (init_signature_store(), __toCommonJS(signature_store_exports)) : requireFromSrc2("../flux/stores/signature-store.js").default || requireFromSrc2("../flux/stores/signature-store.js"));
-    lazyLoadAndRegisterStore(`MessageStore`, () => typeof require !== "undefined" && require.resolve ? (init_message_store(), __toCommonJS(message_store_exports)).default || (init_message_store(), __toCommonJS(message_store_exports)) : requireFromSrc2("../flux/stores/message-store.js").default || requireFromSrc2("../flux/stores/message-store.js"));
-    lazyLoadAndRegisterStore(`ContactStore`, () => typeof require !== "undefined" && require.resolve ? require_contact_store().default || require_contact_store() : requireFromSrc2("../flux/stores/contact-store.js").default || requireFromSrc2("../flux/stores/contact-store.js"));
-    lazyLoadAndRegisterStore(`IdentityStore`, () => typeof require !== "undefined" && require.resolve ? (init_identity_store(), __toCommonJS(identity_store_exports)).default || (init_identity_store(), __toCommonJS(identity_store_exports)) : requireFromSrc2("../flux/stores/identity-store.js").default || requireFromSrc2("../flux/stores/identity-store.js"));
-    lazyLoadAndRegisterStore(`MetadataStore`, () => typeof require !== "undefined" && require.resolve ? (init_metadata_store(), __toCommonJS(metadata_store_exports)).default || (init_metadata_store(), __toCommonJS(metadata_store_exports)) : requireFromSrc2("../flux/stores/metadata-store.js").default || requireFromSrc2("../flux/stores/metadata-store.js"));
-    lazyLoadAndRegisterStore(`CategoryStore`, () => typeof require !== "undefined" && require.resolve ? (init_category_store(), __toCommonJS(category_store_exports)).default || (init_category_store(), __toCommonJS(category_store_exports)) : requireFromSrc2("../flux/stores/category-store.js").default || requireFromSrc2("../flux/stores/category-store.js"));
-    lazyLoadAndRegisterStore(`UndoRedoStore`, () => typeof require !== "undefined" && require.resolve ? (init_undo_redo_store(), __toCommonJS(undo_redo_store_exports)).default || (init_undo_redo_store(), __toCommonJS(undo_redo_store_exports)) : requireFromSrc2("../flux/stores/undo-redo-store.js").default || requireFromSrc2("../flux/stores/undo-redo-store.js"));
-    lazyLoadAndRegisterStore(`WorkspaceStore`, () => typeof require !== "undefined" && require.resolve ? require_workspace_store().default || require_workspace_store() : requireFromSrc2("../flux/stores/workspace-store.js").default || requireFromSrc2("../flux/stores/workspace-store.js"));
-    lazyLoadAndRegisterStore(`MailRulesStore`, () => typeof require !== "undefined" && require.resolve ? require_mail_rules_store().default || require_mail_rules_store() : requireFromSrc2("../flux/stores/mail-rules-store.js").default || requireFromSrc2("../flux/stores/mail-rules-store.js"));
-    lazyLoadAndRegisterStore(`FileUploadStore`, () => typeof require !== "undefined" && require.resolve ? (init_file_upload_store(), __toCommonJS(file_upload_store_exports)).default || (init_file_upload_store(), __toCommonJS(file_upload_store_exports)) : requireFromSrc2("../flux/stores/file-upload-store.js").default || requireFromSrc2("../flux/stores/file-upload-store.js"));
-    lazyLoadAndRegisterStore(`SendActionsStore`, () => typeof require !== "undefined" && require.resolve ? (init_send_actions_store(), __toCommonJS(send_actions_store_exports)).default || (init_send_actions_store(), __toCommonJS(send_actions_store_exports)) : requireFromSrc2("../flux/stores/send-actions-store.js").default || requireFromSrc2("../flux/stores/send-actions-store.js"));
-    lazyLoadAndRegisterStore(`FeatureUsageStore`, () => typeof require !== "undefined" && require.resolve ? (init_feature_usage_store(), __toCommonJS(feature_usage_store_exports)).default || (init_feature_usage_store(), __toCommonJS(feature_usage_store_exports)) : requireFromSrc2("../flux/stores/feature-usage-store.jsx").default || requireFromSrc2("../flux/stores/feature-usage-store.jsx"));
-    lazyLoadAndRegisterStore(`ThreadCountsStore`, () => typeof require !== "undefined" && require.resolve ? require_thread_counts_store().default || require_thread_counts_store() : requireFromSrc2("../flux/stores/thread-counts-store.js").default || requireFromSrc2("../flux/stores/thread-counts-store.js"));
-    lazyLoadAndRegisterStore(`FileDownloadStore`, () => typeof require !== "undefined" && require.resolve ? (init_file_download_store(), __toCommonJS(file_download_store_exports)).default || (init_file_download_store(), __toCommonJS(file_download_store_exports)) : requireFromSrc2("../flux/stores/file-download-store.js").default || requireFromSrc2("../flux/stores/file-download-store.js"));
-    lazyLoadAndRegisterStore(`OnlineStatusStore`, () => typeof require !== "undefined" && require.resolve ? (init_online_status_store(), __toCommonJS(online_status_store_exports)).default || (init_online_status_store(), __toCommonJS(online_status_store_exports)) : requireFromSrc2("../flux/stores/online-status-store.js").default || requireFromSrc2("../flux/stores/online-status-store.js"));
-    lazyLoadAndRegisterStore(`PreferencesUIStore`, () => typeof require !== "undefined" && require.resolve ? (init_preferences_ui_store(), __toCommonJS(preferences_ui_store_exports)).default || (init_preferences_ui_store(), __toCommonJS(preferences_ui_store_exports)) : requireFromSrc2("../flux/stores/preferences-ui-store.js").default || requireFromSrc2("../flux/stores/preferences-ui-store.js"));
-    lazyLoadAndRegisterStore(`FocusedContentStore`, () => typeof require !== "undefined" && require.resolve ? require_focused_content_store().default || require_focused_content_store() : requireFromSrc2("../flux/stores/focused-content-store.js").default || requireFromSrc2("../flux/stores/focused-content-store.js"));
-    lazyLoadAndRegisterStore(`MessageBodyProcessor`, () => typeof require !== "undefined" && require.resolve ? (init_message_body_processor(), __toCommonJS(message_body_processor_exports)).default || (init_message_body_processor(), __toCommonJS(message_body_processor_exports)) : requireFromSrc2("../flux/stores/message-body-processor.js").default || requireFromSrc2("../flux/stores/message-body-processor.js"));
-    lazyLoadAndRegisterStore(`FocusedContactsStore`, () => typeof require !== "undefined" && require.resolve ? (init_focused_contacts_store(), __toCommonJS(focused_contacts_store_exports)).default || (init_focused_contacts_store(), __toCommonJS(focused_contacts_store_exports)) : requireFromSrc2("../flux/stores/focused-contacts-store.js").default || requireFromSrc2("../flux/stores/focused-contacts-store.js"));
-    lazyLoadAndRegisterStore(`DeltaConnectionStore`, () => typeof require !== "undefined" && require.resolve ? (init_delta_connection_store(), __toCommonJS(delta_connection_store_exports)).default || (init_delta_connection_store(), __toCommonJS(delta_connection_store_exports)) : requireFromSrc2("../flux/stores/delta-connection-store.js").default || requireFromSrc2("../flux/stores/delta-connection-store.js"));
-    lazyLoadAndRegisterStore(`TaskQueueStatusStore`, () => typeof require !== "undefined" && require.resolve ? require_task_queue_status_store().default || require_task_queue_status_store() : requireFromSrc2("../flux/stores/task-queue-status-store.js").default || requireFromSrc2("../flux/stores/task-queue-status-store.js"));
+    lazyLoadAndRegisterStore(
+      `TaskQueue`,
+      () => typeof require !== "undefined" && require.resolve ? require_task_queue().default || require_task_queue() : requireFromSrc2("../flux/stores/task-queue.js").default || requireFromSrc2("../flux/stores/task-queue.js")
+    );
+    lazyLoadAndRegisterStore(
+      `BadgeStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_badge_store(), __toCommonJS(badge_store_exports)).default || (init_badge_store(), __toCommonJS(badge_store_exports)) : requireFromSrc2("../flux/stores/badge-store.js").default || requireFromSrc2("../flux/stores/badge-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `DraftStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_draft_store(), __toCommonJS(draft_store_exports)).default || (init_draft_store(), __toCommonJS(draft_store_exports)) : requireFromSrc2("../flux/stores/draft-store.js").default || requireFromSrc2("../flux/stores/draft-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `ModalStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_modal_store(), __toCommonJS(modal_store_exports)).default || (init_modal_store(), __toCommonJS(modal_store_exports)) : requireFromSrc2("../flux/stores/modal-store.jsx").default || requireFromSrc2("../flux/stores/modal-store.jsx")
+    );
+    lazyLoadAndRegisterStore(
+      `OutboxStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_outbox_store(), __toCommonJS(outbox_store_exports)).default || (init_outbox_store(), __toCommonJS(outbox_store_exports)) : requireFromSrc2("../flux/stores/outbox-store.js").default || requireFromSrc2("../flux/stores/outbox-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `PopoverStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_popover_store(), __toCommonJS(popover_store_exports)).default || (init_popover_store(), __toCommonJS(popover_store_exports)) : requireFromSrc2("../flux/stores/popover-store.jsx").default || requireFromSrc2("../flux/stores/popover-store.jsx")
+    );
+    lazyLoadAndRegisterStore(
+      `AccountStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_account_store(), __toCommonJS(account_store_exports)).default || (init_account_store(), __toCommonJS(account_store_exports)) : requireFromSrc2("../flux/stores/account-store.js").default || requireFromSrc2("../flux/stores/account-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `SignatureStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_signature_store(), __toCommonJS(signature_store_exports)).default || (init_signature_store(), __toCommonJS(signature_store_exports)) : requireFromSrc2("../flux/stores/signature-store.js").default || requireFromSrc2("../flux/stores/signature-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `MessageStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_message_store(), __toCommonJS(message_store_exports)).default || (init_message_store(), __toCommonJS(message_store_exports)) : requireFromSrc2("../flux/stores/message-store.js").default || requireFromSrc2("../flux/stores/message-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `ContactStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_contact_store().default || require_contact_store() : requireFromSrc2("../flux/stores/contact-store.js").default || requireFromSrc2("../flux/stores/contact-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `IdentityStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_identity_store(), __toCommonJS(identity_store_exports)).default || (init_identity_store(), __toCommonJS(identity_store_exports)) : requireFromSrc2("../flux/stores/identity-store.js").default || requireFromSrc2("../flux/stores/identity-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `MetadataStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_metadata_store(), __toCommonJS(metadata_store_exports)).default || (init_metadata_store(), __toCommonJS(metadata_store_exports)) : requireFromSrc2("../flux/stores/metadata-store.js").default || requireFromSrc2("../flux/stores/metadata-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `CategoryStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_category_store(), __toCommonJS(category_store_exports)).default || (init_category_store(), __toCommonJS(category_store_exports)) : requireFromSrc2("../flux/stores/category-store.js").default || requireFromSrc2("../flux/stores/category-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `UndoRedoStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_undo_redo_store(), __toCommonJS(undo_redo_store_exports)).default || (init_undo_redo_store(), __toCommonJS(undo_redo_store_exports)) : requireFromSrc2("../flux/stores/undo-redo-store.js").default || requireFromSrc2("../flux/stores/undo-redo-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `WorkspaceStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_workspace_store().default || require_workspace_store() : requireFromSrc2("../flux/stores/workspace-store.js").default || requireFromSrc2("../flux/stores/workspace-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `MailRulesStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_mail_rules_store().default || require_mail_rules_store() : requireFromSrc2("../flux/stores/mail-rules-store.js").default || requireFromSrc2("../flux/stores/mail-rules-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `FileUploadStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_file_upload_store(), __toCommonJS(file_upload_store_exports)).default || (init_file_upload_store(), __toCommonJS(file_upload_store_exports)) : requireFromSrc2("../flux/stores/file-upload-store.js").default || requireFromSrc2("../flux/stores/file-upload-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `SendActionsStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_send_actions_store(), __toCommonJS(send_actions_store_exports)).default || (init_send_actions_store(), __toCommonJS(send_actions_store_exports)) : requireFromSrc2("../flux/stores/send-actions-store.js").default || requireFromSrc2("../flux/stores/send-actions-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `FeatureUsageStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_feature_usage_store(), __toCommonJS(feature_usage_store_exports)).default || (init_feature_usage_store(), __toCommonJS(feature_usage_store_exports)) : requireFromSrc2("../flux/stores/feature-usage-store.jsx").default || requireFromSrc2("../flux/stores/feature-usage-store.jsx")
+    );
+    lazyLoadAndRegisterStore(
+      `ThreadCountsStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_thread_counts_store().default || require_thread_counts_store() : requireFromSrc2("../flux/stores/thread-counts-store.js").default || requireFromSrc2("../flux/stores/thread-counts-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `FileDownloadStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_file_download_store(), __toCommonJS(file_download_store_exports)).default || (init_file_download_store(), __toCommonJS(file_download_store_exports)) : requireFromSrc2("../flux/stores/file-download-store.js").default || requireFromSrc2("../flux/stores/file-download-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `OnlineStatusStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_online_status_store(), __toCommonJS(online_status_store_exports)).default || (init_online_status_store(), __toCommonJS(online_status_store_exports)) : requireFromSrc2("../flux/stores/online-status-store.js").default || requireFromSrc2("../flux/stores/online-status-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `PreferencesUIStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_preferences_ui_store(), __toCommonJS(preferences_ui_store_exports)).default || (init_preferences_ui_store(), __toCommonJS(preferences_ui_store_exports)) : requireFromSrc2("../flux/stores/preferences-ui-store.js").default || requireFromSrc2("../flux/stores/preferences-ui-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `FocusedContentStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_focused_content_store().default || require_focused_content_store() : requireFromSrc2("../flux/stores/focused-content-store.js").default || requireFromSrc2("../flux/stores/focused-content-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `MessageBodyProcessor`,
+      () => typeof require !== "undefined" && require.resolve ? (init_message_body_processor(), __toCommonJS(message_body_processor_exports)).default || (init_message_body_processor(), __toCommonJS(message_body_processor_exports)) : requireFromSrc2("../flux/stores/message-body-processor.js").default || requireFromSrc2("../flux/stores/message-body-processor.js")
+    );
+    lazyLoadAndRegisterStore(
+      `FocusedContactsStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_focused_contacts_store(), __toCommonJS(focused_contacts_store_exports)).default || (init_focused_contacts_store(), __toCommonJS(focused_contacts_store_exports)) : requireFromSrc2("../flux/stores/focused-contacts-store.js").default || requireFromSrc2("../flux/stores/focused-contacts-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `DeltaConnectionStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_delta_connection_store(), __toCommonJS(delta_connection_store_exports)).default || (init_delta_connection_store(), __toCommonJS(delta_connection_store_exports)) : requireFromSrc2("../flux/stores/delta-connection-store.js").default || requireFromSrc2("../flux/stores/delta-connection-store.js")
+    );
+    lazyLoadAndRegisterStore(
+      `TaskQueueStatusStore`,
+      () => typeof require !== "undefined" && require.resolve ? require_task_queue_status_store().default || require_task_queue_status_store() : requireFromSrc2("../flux/stores/task-queue-status-store.js").default || requireFromSrc2("../flux/stores/task-queue-status-store.js")
+    );
     lazyLoadAndRegisterStore(
       `FolderSyncProgressStore`,
       "folder-sync-progress-store"
     );
-    lazyLoadAndRegisterStore(`ThreadListActionsStore`, () => typeof require !== "undefined" && require.resolve ? (init_thread_list_actions_store(), __toCommonJS(thread_list_actions_store_exports)).default || (init_thread_list_actions_store(), __toCommonJS(thread_list_actions_store_exports)) : requireFromSrc2("../flux/stores/thread-list-actions-store.js").default || requireFromSrc2("../flux/stores/thread-list-actions-store.js"));
+    lazyLoadAndRegisterStore(
+      `ThreadListActionsStore`,
+      () => typeof require !== "undefined" && require.resolve ? (init_thread_list_actions_store(), __toCommonJS(thread_list_actions_store_exports)).default || (init_thread_list_actions_store(), __toCommonJS(thread_list_actions_store_exports)) : requireFromSrc2("../flux/stores/thread-list-actions-store.js").default || requireFromSrc2("../flux/stores/thread-list-actions-store.js")
+    );
     lazyLoadAndRegisterStore(
       `FocusedPerspectiveStore`,
       "focused-perspective-store"
@@ -278795,43 +279230,139 @@ var init_nylas_exports = __esm({
       "components/overlaid-components/custom-contenteditable-components"
     );
     lazyLoad(`ServiceRegistry`, `registries/service-registry`);
-    lazyLoad(`InflatesDraftClientId`, () => typeof require !== "undefined" && require.resolve ? (init_inflates_draft_client_id(), __toCommonJS(inflates_draft_client_id_exports)).default || (init_inflates_draft_client_id(), __toCommonJS(inflates_draft_client_id_exports)) : requireFromSrc2("../decorators/inflates-draft-client-id.jsx").default || requireFromSrc2("../decorators/inflates-draft-client-id.jsx"));
-    lazyLoad(`ExtensionRegistry`, () => typeof require !== "undefined" && require.resolve ? (init_extension_registry(), __toCommonJS(extension_registry_exports)).default || (init_extension_registry(), __toCommonJS(extension_registry_exports)) : requireFromSrc2("../registries/extension-registry.js").default || requireFromSrc2("../registries/extension-registry.js"));
-    lazyLoad(`ComposerExtension`, () => typeof require !== "undefined" && require.resolve ? require_composer_extension().default || require_composer_extension() : requireFromSrc2("../extensions/composer-extension.js").default || requireFromSrc2("../extensions/composer-extension.js"));
-    lazyLoad(`MessageViewExtension`, () => typeof require !== "undefined" && require.resolve ? require_message_view_extension().default || require_message_view_extension() : requireFromSrc2("../extensions/message-view-extension.js").default || requireFromSrc2("../extensions/message-view-extension.js"));
-    lazyLoad(`ContenteditableExtension`, () => typeof require !== "undefined" && require.resolve ? require_contenteditable_extension().default || require_contenteditable_extension() : requireFromSrc2("../extensions/contenteditable-extension.js").default || requireFromSrc2("../extensions/contenteditable-extension.js"));
+    lazyLoad(
+      `InflatesDraftClientId`,
+      () => typeof require !== "undefined" && require.resolve ? (init_inflates_draft_client_id(), __toCommonJS(inflates_draft_client_id_exports)).default || (init_inflates_draft_client_id(), __toCommonJS(inflates_draft_client_id_exports)) : requireFromSrc2("../decorators/inflates-draft-client-id.jsx").default || requireFromSrc2("../decorators/inflates-draft-client-id.jsx")
+    );
+    lazyLoad(
+      `ExtensionRegistry`,
+      () => typeof require !== "undefined" && require.resolve ? (init_extension_registry(), __toCommonJS(extension_registry_exports)).default || (init_extension_registry(), __toCommonJS(extension_registry_exports)) : requireFromSrc2("../registries/extension-registry.js").default || requireFromSrc2("../registries/extension-registry.js")
+    );
+    lazyLoad(
+      `ComposerExtension`,
+      () => typeof require !== "undefined" && require.resolve ? require_composer_extension().default || require_composer_extension() : requireFromSrc2("../extensions/composer-extension.js").default || requireFromSrc2("../extensions/composer-extension.js")
+    );
+    lazyLoad(
+      `MessageViewExtension`,
+      () => typeof require !== "undefined" && require.resolve ? require_message_view_extension().default || require_message_view_extension() : requireFromSrc2("../extensions/message-view-extension.js").default || requireFromSrc2("../extensions/message-view-extension.js")
+    );
+    lazyLoad(
+      `ContenteditableExtension`,
+      () => typeof require !== "undefined" && require.resolve ? require_contenteditable_extension().default || require_contenteditable_extension() : requireFromSrc2("../extensions/contenteditable-extension.js").default || requireFromSrc2("../extensions/contenteditable-extension.js")
+    );
     lazyLoadWithGetter(`Rx`, () => nodeRequire27("rxjs"));
     lazyLoadWithGetter(`React`, () => nodeRequire27("react"));
     lazyLoadWithGetter(`Reflux`, () => nodeRequire27("reflux"));
     lazyLoadWithGetter(`ReactDOM`, () => nodeRequire27("react-dom"));
     lazyLoadWithGetter(`ReactTestUtils`, () => nodeRequire27("react-dom/test-utils"));
-    lazyLoad(`ComponentRegistry`, () => typeof require !== "undefined" && require.resolve ? require_component_registry().default || require_component_registry() : requireFromSrc2("../registries/component-registry.js").default || requireFromSrc2("../registries/component-registry.js"));
-    lazyLoad(`PriorityUICoordinator`, () => typeof require !== "undefined" && require.resolve ? (init_priority_ui_coordinator(), __toCommonJS(priority_ui_coordinator_exports)).default || (init_priority_ui_coordinator(), __toCommonJS(priority_ui_coordinator_exports)) : requireFromSrc2("../priority-ui-coordinator.js").default || requireFromSrc2("../priority-ui-coordinator.js"));
-    lazyLoad(`Utils`, () => typeof require !== "undefined" && require.resolve ? require_utils().default || require_utils() : requireFromSrc2("../flux/models/utils.js").default || requireFromSrc2("../flux/models/utils.js"));
-    lazyLoad(`DOMUtils`, () => typeof require !== "undefined" && require.resolve ? require_dom_utils().default || require_dom_utils() : requireFromSrc2("../dom-utils.js").default || requireFromSrc2("../dom-utils.js"));
-    lazyLoad(`DateUtils`, () => typeof require !== "undefined" && require.resolve ? (init_date_utils(), __toCommonJS(date_utils_exports)).default || (init_date_utils(), __toCommonJS(date_utils_exports)) : requireFromSrc2("../date-utils.js").default || requireFromSrc2("../date-utils.js"));
-    lazyLoad(`FsUtils`, () => typeof require !== "undefined" && require.resolve ? (init_fs_utils(), __toCommonJS(fs_utils_exports)).default || (init_fs_utils(), __toCommonJS(fs_utils_exports)) : requireFromSrc2("../fs-utils.js").default || requireFromSrc2("../fs-utils.js"));
-    lazyLoad(`CanvasUtils`, () => typeof require !== "undefined" && require.resolve ? require_canvas_utils().default || require_canvas_utils() : requireFromSrc2("../canvas-utils.js").default || requireFromSrc2("../canvas-utils.js"));
-    lazyLoad(`RegExpUtils`, () => typeof require !== "undefined" && require.resolve ? require_regexp_utils().default || require_regexp_utils() : requireFromSrc2("../regexp-utils.js").default || requireFromSrc2("../regexp-utils.js"));
-    lazyLoad(`MenuHelpers`, () => typeof require !== "undefined" && require.resolve ? require_menu_helpers().default || require_menu_helpers() : requireFromSrc2("../menu-helpers.js").default || requireFromSrc2("../menu-helpers.js"));
-    lazyLoad(`DeprecateUtils`, () => typeof require !== "undefined" && require.resolve ? require_deprecate_utils().default || require_deprecate_utils() : requireFromSrc2("../deprecate-utils.js").default || requireFromSrc2("../deprecate-utils.js"));
-    lazyLoad(`VirtualDOMUtils`, () => typeof require !== "undefined" && require.resolve ? (init_virtual_dom_utils(), __toCommonJS(virtual_dom_utils_exports)).default || (init_virtual_dom_utils(), __toCommonJS(virtual_dom_utils_exports)) : requireFromSrc2("../virtual-dom-utils.js").default || requireFromSrc2("../virtual-dom-utils.js"));
-    lazyLoad(`Spellchecker`, () => typeof require !== "undefined" && require.resolve ? (init_spellchecker(), __toCommonJS(spellchecker_exports)).default || (init_spellchecker(), __toCommonJS(spellchecker_exports)) : requireFromSrc2("../spellchecker.js").default || requireFromSrc2("../spellchecker.js"));
-    lazyLoad(`DraftHelpers`, () => typeof require !== "undefined" && require.resolve ? (init_draft_helpers(), __toCommonJS(draft_helpers_exports)).default || (init_draft_helpers(), __toCommonJS(draft_helpers_exports)) : requireFromSrc2("../flux/stores/draft-helpers.js").default || requireFromSrc2("../flux/stores/draft-helpers.js"));
-    lazyLoad(`MessageUtils`, () => typeof require !== "undefined" && require.resolve ? (init_message_utils2(), __toCommonJS(message_utils_exports2)).default || (init_message_utils2(), __toCommonJS(message_utils_exports2)) : requireFromSrc2("../flux/models/message-utils.js").default || requireFromSrc2("../flux/models/message-utils.js"));
-    lazyLoad(`EditorAPI`, () => typeof require !== "undefined" && require.resolve ? require_editor_api().default || require_editor_api() : requireFromSrc2("../components/contenteditable/editor-api.js").default || requireFromSrc2("../components/contenteditable/editor-api.js"));
-    lazyLoad(`KeyManager`, () => typeof require !== "undefined" && require.resolve ? (init_key_manager(), __toCommonJS(key_manager_exports)).default || (init_key_manager(), __toCommonJS(key_manager_exports)) : requireFromSrc2("../key-manager.js").default || requireFromSrc2("../key-manager.js"));
-    lazyLoad(`SoundRegistry`, () => typeof require !== "undefined" && require.resolve ? require_sound_registry().default || require_sound_registry() : requireFromSrc2("../registries/sound-registry.js").default || requireFromSrc2("../registries/sound-registry.js"));
-    lazyLoad(`MailRulesTemplates`, () => typeof require !== "undefined" && require.resolve ? require_mail_rules_templates().default || require_mail_rules_templates() : requireFromSrc2("../mail-rules-templates.js").default || requireFromSrc2("../mail-rules-templates.js"));
-    lazyLoad(`MailRulesProcessor`, () => typeof require !== "undefined" && require.resolve ? (init_mail_rules_processor(), __toCommonJS(mail_rules_processor_exports)).default || (init_mail_rules_processor(), __toCommonJS(mail_rules_processor_exports)) : requireFromSrc2("../mail-rules-processor.js").default || requireFromSrc2("../mail-rules-processor.js"));
-    lazyLoad(`MailboxPerspective`, () => typeof require !== "undefined" && require.resolve ? require_mailbox_perspective().default || require_mailbox_perspective() : requireFromSrc2("../mailbox-perspective.js").default || requireFromSrc2("../mailbox-perspective.js"));
-    lazyLoad(`DeltaProcessor`, () => typeof require !== "undefined" && require.resolve ? (init_delta_processor(), __toCommonJS(delta_processor_exports)).default || (init_delta_processor(), __toCommonJS(delta_processor_exports)) : requireFromSrc2("../services/delta-processor.js").default || requireFromSrc2("../services/delta-processor.js"));
-    lazyLoad(`NativeNotifications`, () => typeof require !== "undefined" && require.resolve ? (init_native_notifications(), __toCommonJS(native_notifications_exports)).default || (init_native_notifications(), __toCommonJS(native_notifications_exports)) : requireFromSrc2("../native-notifications.js").default || requireFromSrc2("../native-notifications.js"));
-    lazyLoad(`ModelSearchIndexer`, () => typeof require !== "undefined" && require.resolve ? (init_model_search_indexer(), __toCommonJS(model_search_indexer_exports)).default || (init_model_search_indexer(), __toCommonJS(model_search_indexer_exports)) : requireFromSrc2("../services/model-search-indexer.js").default || requireFromSrc2("../services/model-search-indexer.js"));
-    lazyLoad(`SearchIndexScheduler`, () => typeof require !== "undefined" && require.resolve ? (init_search_index_scheduler(), __toCommonJS(search_index_scheduler_exports)).default || (init_search_index_scheduler(), __toCommonJS(search_index_scheduler_exports)) : requireFromSrc2("../services/search-index-scheduler.js").default || requireFromSrc2("../services/search-index-scheduler.js"));
-    lazyLoad(`SanitizeTransformer`, () => typeof require !== "undefined" && require.resolve ? (init_sanitize_transformer(), __toCommonJS(sanitize_transformer_exports)).default || (init_sanitize_transformer(), __toCommonJS(sanitize_transformer_exports)) : requireFromSrc2("../services/sanitize-transformer.js").default || requireFromSrc2("../services/sanitize-transformer.js"));
-    lazyLoad(`QuotedHTMLTransformer`, () => typeof require !== "undefined" && require.resolve ? (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)).default || (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)) : requireFromSrc2("../services/quoted-html-transformer.js").default || requireFromSrc2("../services/quoted-html-transformer.js"));
-    lazyLoad(`InlineStyleTransformer`, () => typeof require !== "undefined" && require.resolve ? (init_inline_style_transformer(), __toCommonJS(inline_style_transformer_exports)).default || (init_inline_style_transformer(), __toCommonJS(inline_style_transformer_exports)) : requireFromSrc2("../services/inline-style-transformer.js").default || requireFromSrc2("../services/inline-style-transformer.js"));
+    lazyLoad(
+      `ComponentRegistry`,
+      () => typeof require !== "undefined" && require.resolve ? require_component_registry().default || require_component_registry() : requireFromSrc2("../registries/component-registry.js").default || requireFromSrc2("../registries/component-registry.js")
+    );
+    lazyLoad(
+      `PriorityUICoordinator`,
+      () => typeof require !== "undefined" && require.resolve ? (init_priority_ui_coordinator(), __toCommonJS(priority_ui_coordinator_exports)).default || (init_priority_ui_coordinator(), __toCommonJS(priority_ui_coordinator_exports)) : requireFromSrc2("../priority-ui-coordinator.js").default || requireFromSrc2("../priority-ui-coordinator.js")
+    );
+    lazyLoad(
+      `Utils`,
+      () => typeof require !== "undefined" && require.resolve ? require_utils().default || require_utils() : requireFromSrc2("../flux/models/utils.js").default || requireFromSrc2("../flux/models/utils.js")
+    );
+    lazyLoad(
+      `DOMUtils`,
+      () => typeof require !== "undefined" && require.resolve ? require_dom_utils().default || require_dom_utils() : requireFromSrc2("../dom-utils.js").default || requireFromSrc2("../dom-utils.js")
+    );
+    lazyLoad(
+      `DateUtils`,
+      () => typeof require !== "undefined" && require.resolve ? (init_date_utils(), __toCommonJS(date_utils_exports)).default || (init_date_utils(), __toCommonJS(date_utils_exports)) : requireFromSrc2("../date-utils.js").default || requireFromSrc2("../date-utils.js")
+    );
+    lazyLoad(
+      `FsUtils`,
+      () => typeof require !== "undefined" && require.resolve ? (init_fs_utils(), __toCommonJS(fs_utils_exports)).default || (init_fs_utils(), __toCommonJS(fs_utils_exports)) : requireFromSrc2("../fs-utils.js").default || requireFromSrc2("../fs-utils.js")
+    );
+    lazyLoad(
+      `CanvasUtils`,
+      () => typeof require !== "undefined" && require.resolve ? require_canvas_utils().default || require_canvas_utils() : requireFromSrc2("../canvas-utils.js").default || requireFromSrc2("../canvas-utils.js")
+    );
+    lazyLoad(
+      `RegExpUtils`,
+      () => typeof require !== "undefined" && require.resolve ? require_regexp_utils().default || require_regexp_utils() : requireFromSrc2("../regexp-utils.js").default || requireFromSrc2("../regexp-utils.js")
+    );
+    lazyLoad(
+      `MenuHelpers`,
+      () => typeof require !== "undefined" && require.resolve ? require_menu_helpers().default || require_menu_helpers() : requireFromSrc2("../menu-helpers.js").default || requireFromSrc2("../menu-helpers.js")
+    );
+    lazyLoad(
+      `DeprecateUtils`,
+      () => typeof require !== "undefined" && require.resolve ? require_deprecate_utils().default || require_deprecate_utils() : requireFromSrc2("../deprecate-utils.js").default || requireFromSrc2("../deprecate-utils.js")
+    );
+    lazyLoad(
+      `VirtualDOMUtils`,
+      () => typeof require !== "undefined" && require.resolve ? (init_virtual_dom_utils(), __toCommonJS(virtual_dom_utils_exports)).default || (init_virtual_dom_utils(), __toCommonJS(virtual_dom_utils_exports)) : requireFromSrc2("../virtual-dom-utils.js").default || requireFromSrc2("../virtual-dom-utils.js")
+    );
+    lazyLoad(
+      `Spellchecker`,
+      () => typeof require !== "undefined" && require.resolve ? (init_spellchecker(), __toCommonJS(spellchecker_exports)).default || (init_spellchecker(), __toCommonJS(spellchecker_exports)) : requireFromSrc2("../spellchecker.js").default || requireFromSrc2("../spellchecker.js")
+    );
+    lazyLoad(
+      `DraftHelpers`,
+      () => typeof require !== "undefined" && require.resolve ? (init_draft_helpers(), __toCommonJS(draft_helpers_exports)).default || (init_draft_helpers(), __toCommonJS(draft_helpers_exports)) : requireFromSrc2("../flux/stores/draft-helpers.js").default || requireFromSrc2("../flux/stores/draft-helpers.js")
+    );
+    lazyLoad(
+      `MessageUtils`,
+      () => typeof require !== "undefined" && require.resolve ? (init_message_utils2(), __toCommonJS(message_utils_exports2)).default || (init_message_utils2(), __toCommonJS(message_utils_exports2)) : requireFromSrc2("../flux/models/message-utils.js").default || requireFromSrc2("../flux/models/message-utils.js")
+    );
+    lazyLoad(
+      `EditorAPI`,
+      () => typeof require !== "undefined" && require.resolve ? require_editor_api().default || require_editor_api() : requireFromSrc2("../components/contenteditable/editor-api.js").default || requireFromSrc2("../components/contenteditable/editor-api.js")
+    );
+    lazyLoad(
+      `KeyManager`,
+      () => typeof require !== "undefined" && require.resolve ? (init_key_manager(), __toCommonJS(key_manager_exports)).default || (init_key_manager(), __toCommonJS(key_manager_exports)) : requireFromSrc2("../key-manager.js").default || requireFromSrc2("../key-manager.js")
+    );
+    lazyLoad(
+      `SoundRegistry`,
+      () => typeof require !== "undefined" && require.resolve ? require_sound_registry().default || require_sound_registry() : requireFromSrc2("../registries/sound-registry.js").default || requireFromSrc2("../registries/sound-registry.js")
+    );
+    lazyLoad(
+      `MailRulesTemplates`,
+      () => typeof require !== "undefined" && require.resolve ? require_mail_rules_templates().default || require_mail_rules_templates() : requireFromSrc2("../mail-rules-templates.js").default || requireFromSrc2("../mail-rules-templates.js")
+    );
+    lazyLoad(
+      `MailRulesProcessor`,
+      () => typeof require !== "undefined" && require.resolve ? (init_mail_rules_processor(), __toCommonJS(mail_rules_processor_exports)).default || (init_mail_rules_processor(), __toCommonJS(mail_rules_processor_exports)) : requireFromSrc2("../mail-rules-processor.js").default || requireFromSrc2("../mail-rules-processor.js")
+    );
+    lazyLoad(
+      `MailboxPerspective`,
+      () => typeof require !== "undefined" && require.resolve ? require_mailbox_perspective().default || require_mailbox_perspective() : requireFromSrc2("../mailbox-perspective.js").default || requireFromSrc2("../mailbox-perspective.js")
+    );
+    lazyLoad(
+      `DeltaProcessor`,
+      () => typeof require !== "undefined" && require.resolve ? (init_delta_processor(), __toCommonJS(delta_processor_exports)).default || (init_delta_processor(), __toCommonJS(delta_processor_exports)) : requireFromSrc2("../services/delta-processor.js").default || requireFromSrc2("../services/delta-processor.js")
+    );
+    lazyLoad(
+      `NativeNotifications`,
+      () => typeof require !== "undefined" && require.resolve ? (init_native_notifications(), __toCommonJS(native_notifications_exports)).default || (init_native_notifications(), __toCommonJS(native_notifications_exports)) : requireFromSrc2("../native-notifications.js").default || requireFromSrc2("../native-notifications.js")
+    );
+    lazyLoad(
+      `ModelSearchIndexer`,
+      () => typeof require !== "undefined" && require.resolve ? (init_model_search_indexer(), __toCommonJS(model_search_indexer_exports)).default || (init_model_search_indexer(), __toCommonJS(model_search_indexer_exports)) : requireFromSrc2("../services/model-search-indexer.js").default || requireFromSrc2("../services/model-search-indexer.js")
+    );
+    lazyLoad(
+      `SearchIndexScheduler`,
+      () => typeof require !== "undefined" && require.resolve ? (init_search_index_scheduler(), __toCommonJS(search_index_scheduler_exports)).default || (init_search_index_scheduler(), __toCommonJS(search_index_scheduler_exports)) : requireFromSrc2("../services/search-index-scheduler.js").default || requireFromSrc2("../services/search-index-scheduler.js")
+    );
+    lazyLoad(
+      `SanitizeTransformer`,
+      () => typeof require !== "undefined" && require.resolve ? (init_sanitize_transformer(), __toCommonJS(sanitize_transformer_exports)).default || (init_sanitize_transformer(), __toCommonJS(sanitize_transformer_exports)) : requireFromSrc2("../services/sanitize-transformer.js").default || requireFromSrc2("../services/sanitize-transformer.js")
+    );
+    lazyLoad(
+      `QuotedHTMLTransformer`,
+      () => typeof require !== "undefined" && require.resolve ? (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)).default || (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)) : requireFromSrc2("../services/quoted-html-transformer.js").default || requireFromSrc2("../services/quoted-html-transformer.js")
+    );
+    lazyLoad(
+      `InlineStyleTransformer`,
+      () => typeof require !== "undefined" && require.resolve ? (init_inline_style_transformer(), __toCommonJS(inline_style_transformer_exports)).default || (init_inline_style_transformer(), __toCommonJS(inline_style_transformer_exports)) : requireFromSrc2("../services/inline-style-transformer.js").default || requireFromSrc2("../services/inline-style-transformer.js")
+    );
     lazyLoad(
       `SearchableComponentMaker`,
       "searchable-components/searchable-component-maker"
@@ -278840,22 +279371,42 @@ var init_nylas_exports = __esm({
       `QuotedPlainTextTransformer`,
       "services/quoted-plain-text-transformer"
     );
-    lazyLoad(`BatteryStatusManager`, () => typeof require !== "undefined" && require.resolve ? (init_battery_status_manager(), __toCommonJS(battery_status_manager_exports)).default || (init_battery_status_manager(), __toCommonJS(battery_status_manager_exports)) : requireFromSrc2("../services/battery-status-manager.js").default || requireFromSrc2("../services/battery-status-manager.js"));
+    lazyLoad(
+      `BatteryStatusManager`,
+      () => typeof require !== "undefined" && require.resolve ? (init_battery_status_manager(), __toCommonJS(battery_status_manager_exports)).default || (init_battery_status_manager(), __toCommonJS(battery_status_manager_exports)) : requireFromSrc2("../services/battery-status-manager.js").default || requireFromSrc2("../services/battery-status-manager.js")
+    );
     lazyLoadWithGetter(`APIError`, () => nodeRequire27("../flux/errors.js").APIError);
-    lazyLoad(`DefaultClientHelper`, () => typeof require !== "undefined" && require.resolve ? require_default_client_helper().default || require_default_client_helper() : requireFromSrc2("../default-client-helper.js").default || requireFromSrc2("../default-client-helper.js"));
-    lazyLoad(`BufferedProcess`, () => typeof require !== "undefined" && require.resolve ? require_buffered_process().default || require_buffered_process() : requireFromSrc2("../buffered-process.js").default || requireFromSrc2("../buffered-process.js"));
-    lazyLoad(`SystemStartService`, () => typeof require !== "undefined" && require.resolve ? (init_system_start_service(), __toCommonJS(system_start_service_exports)).default || (init_system_start_service(), __toCommonJS(system_start_service_exports)) : requireFromSrc2("../system-start-service.js").default || requireFromSrc2("../system-start-service.js"));
+    lazyLoad(
+      `DefaultClientHelper`,
+      () => typeof require !== "undefined" && require.resolve ? require_default_client_helper().default || require_default_client_helper() : requireFromSrc2("../default-client-helper.js").default || requireFromSrc2("../default-client-helper.js")
+    );
+    lazyLoad(
+      `BufferedProcess`,
+      () => typeof require !== "undefined" && require.resolve ? require_buffered_process().default || require_buffered_process() : requireFromSrc2("../buffered-process.js").default || requireFromSrc2("../buffered-process.js")
+    );
+    lazyLoad(
+      `SystemStartService`,
+      () => typeof require !== "undefined" && require.resolve ? (init_system_start_service(), __toCommonJS(system_start_service_exports)).default || (init_system_start_service(), __toCommonJS(system_start_service_exports)) : requireFromSrc2("../system-start-service.js").default || requireFromSrc2("../system-start-service.js")
+    );
     lazyLoadWithGetter(`APMWrapper`, () => nodeRequire27("../apm-wrapper.js"));
     lazyLoadWithGetter(
       `NylasTestUtils`,
       () => nodeRequire27("../../spec/nylas-test-utils.js")
     );
-    lazyLoadDeprecated(`QuotedHTMLParser`, () => typeof require !== "undefined" && require.resolve ? (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)).default || (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)) : requireFromSrc2("../services/quoted-html-transformer.js").default || requireFromSrc2("../services/quoted-html-transformer.js"), {
-      instead: "QuotedHTMLTransformer"
-    });
-    lazyLoadDeprecated(`DraftStoreExtension`, () => typeof require !== "undefined" && require.resolve ? require_draft_store_extension().default || require_draft_store_extension() : requireFromSrc2("../flux/stores/draft-store-extension.js").default || requireFromSrc2("../flux/stores/draft-store-extension.js"), {
-      instead: "ComposerExtension"
-    });
+    lazyLoadDeprecated(
+      `QuotedHTMLParser`,
+      () => typeof require !== "undefined" && require.resolve ? (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)).default || (init_quoted_html_transformer(), __toCommonJS(quoted_html_transformer_exports)) : requireFromSrc2("../services/quoted-html-transformer.js").default || requireFromSrc2("../services/quoted-html-transformer.js"),
+      {
+        instead: "QuotedHTMLTransformer"
+      }
+    );
+    lazyLoadDeprecated(
+      `DraftStoreExtension`,
+      () => typeof require !== "undefined" && require.resolve ? require_draft_store_extension().default || require_draft_store_extension() : requireFromSrc2("../flux/stores/draft-store-extension.js").default || requireFromSrc2("../flux/stores/draft-store-extension.js"),
+      {
+        instead: "ComposerExtension"
+      }
+    );
     lazyLoadDeprecated(
       `MessageStoreExtension`,
       "flux/stores/message-store-extension",

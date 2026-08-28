@@ -17,8 +17,13 @@ export const remote = {
 	require: (m) => require(m),
 };
 export const shell = { openExternal: () => {}, showItemInFolder: () => {} };
-export const app = { getVersion: () => "0.0.0-test", getPath: () => "/tmp" };
+export const app = {
+	getVersion: () => "0.0.0-test",
+	getPath: () => "/tmp",
+	quit: () => {},
+};
 export const BrowserWindow = class {};
+BrowserWindow.getFocusedWindow = () => null;
 export const clipboard = { readText: () => "", writeText: () => {} };
 export const dialog = { showMessage: () => {} };
 export const crashReporter = { start: () => {} };
@@ -26,6 +31,7 @@ export const Menu = class {
 	static buildFromTemplate() {
 		return new Menu();
 	}
+	static setApplicationMenu() {}
 	append() {}
 	popup() {}
 };

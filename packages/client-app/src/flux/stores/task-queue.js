@@ -14,7 +14,8 @@ const _fs = require("fs-plus");
 const _path = require("node:path");
 
 const { Listener, Publisher } = require("../modules/reflux-coffee.js");
-const CoffeeHelpers = require("../coffee-helpers.js");
+const CoffeeHelpers =
+	require("../coffee-helpers.js").default || require("../coffee-helpers.js");
 
 const Task = require("../tasks/task.js").default;
 const TaskRegistry = require("../../registries/task-registry.js").default;
