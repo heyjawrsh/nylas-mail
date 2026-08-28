@@ -382,3 +382,20 @@ Remaining mass (uncovered): components ~2.2k lines, stores remainder
 ~2k, browser/ ~1.2k, services remainder. At ~1.5 pts/round, the 60% gate
 needs ~25 more rounds — mechanical now that the harness and dual-context
 contract are stable.
+
+
+## Loop 22 — Coverage round 7 (commit b8658f0a3)
+
+client-app: 21.33% → **22.09% lines** (1,276 tests, 67/67 files green).
+Eleven new spec files from swarm round-18.
+
+The recurring integration cost is now one pattern: CJS store + ESM spec →
+vi.mock can't intercept CJS requires → convert the store's top-level
+requires to ESM imports (mail-rules-store, database-change-record this
+round). The bridge-thunk contract handles the renderer side: action-bridge
+now defers DatabaseChangeRecord through the registered bridge name after
+its native-ESM require broke smoke.
+
+Cumulative: 1,276 tests / 22.09% lines. Seven rounds in; ~1.3 pts/round
+lately. Gate at 60% needs ~28 more rounds at this mix — the harness,
+contract, and salvage pipeline are all stable, each round is mechanical.
