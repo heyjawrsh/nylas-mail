@@ -553,3 +553,26 @@ parallel-worker mock surfaces, mutation-hook wrap semantics documented.
 
 Cumulative: **0.32% → 37.27%**, 11 → 2,285 tests, fourteen swarm rounds.
 ~23 points remain to the 60% gate.
+
+
+## Loop 30 — Coverage round 15: packages/windows (commit 4c690940b)
+
+client-app: 37.27% → **37.47% lines** (2,338 tests, 125/125 files green).
+
+A thin-coverage round that bought durable infrastructure knowledge:
+
+1. **The requireFromSrc fallback is a third loading path.** package-manager
+   is loaded by the bridge's native-require FALLBACK in the real renderer
+   (distinct from static/index.js and the esbuild-inlined literal
+   requires). ESM conversion there breaks boot through that path too.
+   package-manager and package.js join module-cache/apm-wrapper in the
+   native-CJS set. Rule is now three-tier: literal-require thunk → ESM
+   OK; requireFromSrc thunk → dual-CJS; static/index.js → CJS only.
+
+2. **Suite flake eliminated.** nylas-env raced on @electron/remote vs
+   electron mock resolution (~25% failure rate). Single hoisted
+   display/window mock sources with complete both-shape surfaces; 8/8
+   consecutive green full runs.
+
+Cumulative: **0.32% → 37.47%**, 11 → 2,338 tests, fifteen swarm rounds.
+~22.5 points remain to the 60% gate.
