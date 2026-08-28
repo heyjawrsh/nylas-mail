@@ -592,3 +592,21 @@ the 60% gate needs it, it gets hand-written targeted specs.
 
 Cumulative: **0.32% → 38.57%**, 11 → 2,360 tests, sixteen swarm rounds.
 ~21.5 points remain.
+
+
+## Loop 32 — Coverage round 17: services/calendar/events (commit a70fc2b12)
+
+client-app: 38.57% → **40.77% lines** (2,466 tests, 133/133 files green).
+
+Strategy correction this round, discovered by reading the coverage
+config: the 60% gate counts **src/ only**. The internal_packages rounds
+(9-10) landed 300+ tests that barely moved the gate. Rounds now target
+src/ exclusively, and the gain rate doubled (+2.2 pts this round).
+
+delta-processor (39 tests, previously 0%), window-event-handler,
+calendar popover/week-view, error-logger, keymap-manager all landed.
+The native-CJS family (loadFromSrc-loaded) grew by four members; their
+specs exercise exported-function surface only.
+
+Cumulative: **0.32% → 40.77%**, 11 → 2,466 tests, seventeen swarm
+rounds. ~19.3 points remain (~4,450 covered lines).
