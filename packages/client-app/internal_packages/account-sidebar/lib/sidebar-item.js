@@ -20,7 +20,6 @@ import {
 	DestroyCategoryTask,
 	CategoryStore,
 	Actions,
-	Utils,
 	RegExpUtils,
 } from "nylas-exports";
 import { OutlineViewItem } from "nylas-component-kit";

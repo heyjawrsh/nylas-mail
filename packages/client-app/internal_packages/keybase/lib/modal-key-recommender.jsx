@@ -10,7 +10,6 @@
  */
 import PropTypes from "prop-types";
 let ModalKeyRecommender;
-import { Utils, React, Actions } from "nylas-exports";
 import PGPKeyStore from "./pgp-key-store";
 import KeybaseSearch from "./keybase-search";
 import KeybaseUser from "./keybase-user";

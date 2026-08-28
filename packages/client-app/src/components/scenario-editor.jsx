@@ -7,11 +7,8 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import _ from "underscore";
 import { Comparator, Template } from "./scenario-editor-models.js";
 import ScenarioEditorRow from "./scenario-editor-row.jsx";
-import { RetinaImg, Flexbox } from "nylas-component-kit";
-import { Actions, Utils } from "nylas-exports";
 
 /*
 The ScenarioEditor takes an array of ScenarioTemplate objects which define the

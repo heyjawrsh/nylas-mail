@@ -8,7 +8,6 @@
  */
 import PropTypes from "prop-types";
 import RetinaImg from "./retina-img.jsx";
-import { Utils } from "nylas-exports";
 import classnames from "classnames";
 
 import React from "react";
@@ -30,6 +29,8 @@ class ButtonDropdown extends React.Component {
 
 	constructor(props) {
 		super();
+		this.buttonRef = React.createRef();
+		this.secondaryItemsRef = React.createRef();
 		this.render = this.render.bind(this);
 		this.toggleDropdown = this.toggleDropdown.bind(this);
 		this._onMenuClick = this._onMenuClick.bind(this);
@@ -50,7 +51,7 @@ class ButtonDropdown extends React.Component {
 			return React.createElement(
 				"div",
 				{
-					ref: "button",
+					ref: this.buttonRef,
 					onBlur: this._onBlur,
 					tabIndex: -1,
 					className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
@@ -77,7 +78,7 @@ class ButtonDropdown extends React.Component {
 				React.createElement(
 					"div",
 					{
-						ref: "secondaryItems",
+						ref: this.secondaryItemsRef,
 						className: "secondary-items",
 						onMouseDown: this._onMenuClick,
 					},
@@ -88,7 +89,7 @@ class ButtonDropdown extends React.Component {
 			return React.createElement(
 				"div",
 				{
-					ref: "button",
+					ref: this.buttonRef,
 					onBlur: this._onBlur,
 					tabIndex: -1,
 					className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
@@ -112,7 +113,7 @@ class ButtonDropdown extends React.Component {
 				React.createElement(
 					"div",
 					{
-						ref: "secondaryItems",
+						ref: this.secondaryItemsRef,
 						className: "secondary-items left",
 						onMouseDown: this._onMenuClick,
 					},
@@ -129,7 +130,7 @@ class ButtonDropdown extends React.Component {
 			const buttonBottom =
 				ReactDOM.findDOMNode(this).getBoundingClientRect().bottom;
 			const openHeight = ReactDOM.findDOMNode(
-				this.refs.secondaryItems,
+				this.secondaryItemsRef?.current,
 			).getBoundingClientRect().height;
 			if (buttonBottom + openHeight > window.innerHeight) {
 				return this.setState({ open: "up" });
@@ -147,10 +148,7 @@ class ButtonDropdown extends React.Component {
 
 	_onBlur(event) {
 		const target = event.nativeEvent.relatedTarget;
-		if (
-			target != null &&
-			ReactDOM.findDOMNode(this.refs.button).contains(target)
-		) {
+		if (target != null && this.buttonRef?.current?.contains(target)) {
 			return;
 		}
 		return this.setState({ open: false });

@@ -1,8 +1,7 @@
 import _ from "underscore";
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Utils } from "nylas-exports";
-import ReactDOM from "react-dom";
 import ScrollRegion from "./scroll-region.jsx";
 import Spinner from "./spinner.jsx";
 
@@ -111,6 +110,7 @@ class ListTabular extends Component {
 
 	constructor(props) {
 		super(props);
+		this.containerRef = React.createRef();
 		if (!props.itemHeight) {
 			throw new Error(
 				"ListTabular: You must provide an itemHeight - raising to avoid divide by zero errors.",
@@ -140,7 +140,9 @@ class ListTabular extends Component {
 		// If our view has been swapped out for an entirely different one,
 		// reset our scroll position to the top.
 		if (prevProps.dataSource !== this.props.dataSource) {
-			this.refs.container.scrollTop = 0;
+			if (this.containerRef?.current) {
+				this.containerRef.current.scrollTop = 0;
+			}
 		}
 
 		if (!this.updateRangeStateFiring) {
@@ -234,16 +236,19 @@ class ListTabular extends Component {
 	}
 
 	scrollTo(node) {
-		this.refs.container.scrollTo(node);
+		this.containerRef?.current.scrollTo(node);
 	}
 
 	scrollByPage(direction) {
-		const height = ReactDOM.findDOMNode(this.refs.container).clientHeight;
-		this.refs.container.scrollTop += height * direction;
+		const height = this.containerRef?.current?.clientHeight ?? 0;
+		const el = this.containerRef?.current;
+		if (el) {
+			el.scrollTop += height * direction;
+		}
 	}
 
 	updateRangeState() {
-		const { scrollTop } = this.refs.container;
+		const { scrollTop } = this.containerRef?.current ?? {};
 		const { itemHeight } = this.props;
 
 		// Determine the exact range of rows we want onscreen
@@ -363,7 +368,7 @@ class ListTabular extends Component {
 		return (
 			<div className="list-container list-tabular #{@props.className}">
 				<ScrollRegion
-					ref="container"
+					ref={this.containerRef}
 					onScroll={this.onScroll}
 					tabIndex="-1"
 					scrollTooltipComponent={scrollTooltipComponent}

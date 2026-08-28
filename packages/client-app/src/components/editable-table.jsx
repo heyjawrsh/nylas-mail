@@ -65,6 +65,12 @@ import SelectableTable, { SelectableTableCell } from "./selectable-table.jsx";
  */
 
 export class EditableTableCell extends Component {
+	constructor(props) {
+		super(props);
+		this.cellRef = React.createRef();
+		this.inputContainerRef = React.createRef();
+	}
+
 	static propTypes = {
 		tableDataSource: SelectableTableCell.propTypes.tableDataSource,
 		rowIdx: SelectableTableCell.propTypes.colIdx,
@@ -85,7 +91,7 @@ export class EditableTableCell extends Component {
 
 	componentDidMount() {
 		if (this.shouldFocusInput()) {
-			ReactDOM.findDOMNode(this.refs.inputContainer)
+			ReactDOM.findDOMNode(this.inputContainerRef?.current)
 				.querySelector("input")
 				.focus();
 		}
@@ -93,7 +99,7 @@ export class EditableTableCell extends Component {
 
 	componentDidUpdate() {
 		if (this.shouldFocusInput()) {
-			ReactDOM.findDOMNode(this.refs.inputContainer)
+			ReactDOM.findDOMNode(this.inputContainerRef?.current)
 				.querySelector("input")
 				.focus();
 		}
@@ -116,21 +122,21 @@ export class EditableTableCell extends Component {
 		const { onAddRow } = this.props;
 
 		if (["Enter", "Return"].includes(key)) {
-			if (this.refs.cell.isInLastRow()) {
+			if (this.cellRef?.current.isInLastRow()) {
 				event.stopPropagation();
 				onAddRow();
 			}
 		} else if (key === "Escape") {
 			event.stopPropagation();
-			ReactDOM.findDOMNode(this.refs.inputContainer).focus();
+			ReactDOM.findDOMNode(this.inputContainerRef?.current).focus();
 		}
 	};
 
 	shouldFocusInput() {
 		return (
-			this.refs.cell.isSelectedUsingKey("Tab") ||
-			this.refs.cell.isSelectedUsingKey("Enter") ||
-			this.refs.cell.isSelectedUsingKey("Return")
+			this.cellRef?.current.isSelectedUsingKey("Tab") ||
+			this.cellRef?.current.isSelectedUsingKey("Enter") ||
+			this.cellRef?.current.isSelectedUsingKey("Return")
 		);
 	}
 
@@ -146,8 +152,8 @@ export class EditableTableCell extends Component {
 		const cellValue = tableDataSource.cellAt({ rowIdx, colIdx });
 
 		return (
-			<SelectableTableCell ref="cell" {...this.props}>
-				<div ref="inputContainer">
+			<SelectableTableCell ref={this.cellRef} {...this.props}>
+				<div ref={this.inputContainerRef}>
 					<InputRenderer
 						type="text"
 						rowIdx={rowIdx}

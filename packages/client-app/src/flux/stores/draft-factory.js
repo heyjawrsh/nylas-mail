@@ -20,8 +20,6 @@ import FocusedPerspectiveStore from "./focused-perspective-store.js";
 let DraftStore = null;
 import DraftHelpers from "./draft-helpers.js";
 
-import _Thread from "../models/thread.js";
-import _Contact from "../models/contact.js";
 import Message from "../models/message.js";
 import Utils from "../models/utils.js";
 

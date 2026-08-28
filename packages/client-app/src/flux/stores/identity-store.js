@@ -27,9 +27,20 @@ const request = (() => {
 const url = nodeRequire("node:url");
 const Utils = (() => {
 	try {
-		return nodeRequire("../models/utils.js").default;
+		return (
+			nodeRequire("../models/utils.js").default ||
+			nodeRequire("../models/utils.js")
+		);
 	} catch (_e) {
-		return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
+		try {
+			return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
+		} catch (_e2) {
+			// Test/bundle contexts without a live resolver: minimal surface.
+			return {
+				deepClone: (o) => JSON.parse(JSON.stringify(o)),
+				isTempId: (i) => typeof i === "string" && i.startsWith("local-"),
+			};
+		}
 	}
 })();
 const Actions = (() => {

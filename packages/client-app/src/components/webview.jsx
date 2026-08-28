@@ -17,6 +17,7 @@ class InitialLoadingCover extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.webviewRef = React.createRef();
 		this.state = {};
 	}
 
@@ -101,7 +102,7 @@ export default class Webview extends React.Component {
 
 	_setupWebview(props) {
 		if (!props.src) return;
-		const webview = ReactDOM.findDOMNode(this.refs.webview);
+		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
 		const listeners = {
 			"did-fail-load": this._webviewDidFailLoad,
 			"did-finish-load": this._webviewDidFinishLoad,
@@ -119,7 +120,7 @@ export default class Webview extends React.Component {
 	}
 
 	_onTryAgain = () => {
-		const webview = ReactDOM.findDOMNode(this.refs.webview);
+		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
 		webview.reload();
 	};
 
@@ -167,14 +168,14 @@ export default class Webview extends React.Component {
 		this.setState({ ready: true, webviewLoading: false });
 
 		if (!this.props.onDidFinishLoad) return;
-		const webview = ReactDOM.findDOMNode(this.refs.webview);
+		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
 		this.props.onDidFinishLoad(webview);
 	};
 
 	render() {
 		return (
 			<div className="webview-wrap">
-				<webview ref="webview" is partition="in-memory-only" />
+				<webview ref={this.webviewRef} is partition="in-memory-only" />
 				<div
 					className={`webview-loading-spinner loading-${this.state.webviewLoading}`}
 				>

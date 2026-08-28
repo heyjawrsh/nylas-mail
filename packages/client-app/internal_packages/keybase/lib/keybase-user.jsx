@@ -9,11 +9,9 @@
 import PropTypes from "prop-types";
 let KeybaseUser;
 import { Utils, React, Actions } from "nylas-exports";
-import { ParticipantsTextField } from "nylas-component-kit";
 import PGPKeyStore from "./pgp-key-store";
 import EmailPopover from "./email-popover";
 import Identity from "./identity";
-import _kb from "./keybase";
 import _ from "underscore";
 
 module.exports = KeybaseUser = (() => {

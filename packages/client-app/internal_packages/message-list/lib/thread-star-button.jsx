@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import _ from "underscore";
 import React from "react";
-import { Actions, Utils } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 
 class StarButton extends React.Component {

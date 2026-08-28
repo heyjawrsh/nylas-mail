@@ -12,7 +12,6 @@ import { React, Actions, AccountStore } from "nylas-exports";
 import { remote } from "electron";
 import Identity from "./identity";
 import PGPKeyStore from "./pgp-key-store";
-import _PassphrasePopover from "./passphrase-popover";
 import _ from "underscore";
 import fs from "node:fs";
 import pgp from "kbpgp";

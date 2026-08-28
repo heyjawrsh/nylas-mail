@@ -8,7 +8,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { RetinaImg } from "nylas-component-kit";
-import { Actions, FocusedContentStore } from "nylas-exports";
 
 class DraftDeleteButton extends React.Component {
 	constructor(...args) {

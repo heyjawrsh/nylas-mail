@@ -8,7 +8,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import _ from "underscore";
-import Rx from "rx-lite";
 import NylasStore from "nylas-store";
 import AccountStore from "./account-store.js";
 import Account from "../models/account.js";

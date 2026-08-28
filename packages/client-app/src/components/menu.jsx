@@ -13,7 +13,6 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import _ from "underscore";
 import { DOMUtils } from "nylas-exports";
-import { CompositeDisposable } from "event-kit";
 
 /*
 Public: `MenuItem` components can be provided to the {Menu} by the `itemContent` function.

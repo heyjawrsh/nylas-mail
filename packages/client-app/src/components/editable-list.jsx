@@ -119,6 +119,7 @@ class EditableList extends Component {
 
 	constructor(props) {
 		super(props);
+		this.itemsWrapperRef = React.createRef();
 		this.listId = uuid();
 		this.state = {
 			dropInsertionIndex: -1,
@@ -183,7 +184,7 @@ class EditableList extends Component {
 	 */
 	_scrollTo = (idx) => {
 		if (!idx) return;
-		const list = this.refs.itemsWrapper;
+		const list = this.itemsWrapperRef?.current;
 		const nodes = ReactDOM.findDOMNode(list).querySelectorAll(".list-item");
 		list.scrollTo(nodes[idx]);
 	};
@@ -297,7 +298,7 @@ class EditableList extends Component {
 	};
 
 	_onDragOver = (event) => {
-		const wrapperNode = ReactDOM.findDOMNode(this.refs.itemsWrapper);
+		const wrapperNode = ReactDOM.findDOMNode(this.itemsWrapperRef?.current);
 
 		// As of Chromium 53, we cannot access the contents of the drag pasteboard
 		// until the user drops for security reasons. Pull the list id from the
@@ -482,7 +483,7 @@ class EditableList extends Component {
 			>
 				<ScrollRegion
 					className="items-wrapper"
-					ref="itemsWrapper"
+					ref={this.itemsWrapperRef}
 					onDragOver={this._onDragOver}
 					onDragLeave={this._onDragLeave}
 					onDrop={this._onDrop}

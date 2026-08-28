@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Utils } from "nylas-exports";
-import _ from "underscore";
 
 /*
 Public: Renders a component provided via the `component` prop, and ensures that
@@ -182,4 +181,4 @@ class UnsafeComponent extends React.Component {
 }
 UnsafeComponent.initClass();
 
-module.exports = UnsafeComponent;
+export default UnsafeComponent;

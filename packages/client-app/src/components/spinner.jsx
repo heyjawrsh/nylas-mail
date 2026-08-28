@@ -8,7 +8,6 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import _ReactDOM from "react-dom";
 import _ from "underscore";
 import classNames from "classnames";
 

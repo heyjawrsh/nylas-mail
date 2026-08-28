@@ -1,3 +1,6 @@
+import _ from "underscore";
+import { Actions, WorkspaceStore } from "nylas-exports";
+
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -5,8 +8,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 let MultiselectSplitInteractionHandler;
-import _ from "underscore";
-import { Actions, WorkspaceStore } from "nylas-exports";
 
 module.exports =
 	MultiselectSplitInteractionHandler = class MultiselectSplitInteractionHandler {

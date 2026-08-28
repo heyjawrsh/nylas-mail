@@ -8,13 +8,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactDOM = require("react-dom");
-const _ = require("underscore");
-const UnsafeComponent = require("./unsafe-component.jsx");
+import React from "react";
+import ReactDOM from "react-dom";
+import _ from "underscore";
+import { Actions, WorkspaceStore, ComponentRegistry } from "nylas-exports";
+import UnsafeComponent from "./unsafe-component.jsx";
 import InjectedComponentLabel from "./injected-component-label.jsx";
-
-const { Actions, WorkspaceStore, ComponentRegistry } = require("nylas-exports");
 
 /*
 Public: InjectedComponent makes it easy to include dynamically registered
@@ -84,6 +83,7 @@ class InjectedComponent extends React.Component {
 
 	constructor(props) {
 		super();
+		this.innerRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
@@ -178,7 +178,7 @@ class InjectedComponent extends React.Component {
 				UnsafeComponent,
 				Object.assign(
 					{
-						ref: "inner",
+						ref: this.innerRef,
 						style: this.props.style,
 						className: className,
 						key: Component.displayName,
@@ -226,14 +226,17 @@ class InjectedComponent extends React.Component {
 	_runInnerDOMMethod(method, ...args) {
 		let target = null;
 		if (
-			this.refs.inner instanceof UnsafeComponent &&
-			this.refs.inner.injected[method] != null
+			this.innerRef?.current instanceof UnsafeComponent &&
+			this.innerRef?.current.injected[method] != null
 		) {
-			target = this.refs.inner.injected;
-		} else if (this.refs.inner && this.refs.inner[method] != null) {
-			target = this.refs.inner;
-		} else if (this.refs.inner) {
-			target = ReactDOM.findDOMNode(this.refs.inner);
+			target = this.innerRef?.current.injected;
+		} else if (
+			this.innerRef?.current &&
+			this.innerRef?.current[method] != null
+		) {
+			target = this.innerRef?.current;
+		} else if (this.innerRef?.current) {
+			target = ReactDOM.findDOMNode(this.innerRef?.current);
 		} else {
 			target = ReactDOM.findDOMNode(this);
 		}

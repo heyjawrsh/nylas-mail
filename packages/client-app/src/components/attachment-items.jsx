@@ -96,6 +96,11 @@ AttachmentActionIcon.propTypes = {
 };
 
 export class AttachmentItem extends Component {
+	constructor(props) {
+		super(props);
+		this.fileIconImgRef = React.createRef();
+	}
+
 	static displayName = "AttachmentItem";
 
 	static containerRequired = false;
@@ -125,7 +130,7 @@ export class AttachmentItem extends Component {
 			const downloadURL = `${contentType}:${path.basename(filePath)}:file://${filePath}`;
 			event.dataTransfer.setData("DownloadURL", downloadURL);
 			event.dataTransfer.setData("text/nylas-file-url", downloadURL);
-			const fileIconImg = ReactDOM.findDOMNode(this.refs.fileIconImg);
+			const fileIconImg = ReactDOM.findDOMNode(this.fileIconImgRef?.current);
 			const rect = fileIconImg.getBoundingClientRect();
 			const x = window.devicePixelRatio === 2 ? rect.height / 2 : rect.height;
 			const y = window.devicePixelRatio === 2 ? rect.width / 2 : rect.width;
@@ -213,7 +218,7 @@ export class AttachmentItem extends Component {
 					<Flexbox direction="row" style={{ alignItems: "center" }}>
 						<div className="file-info-wrap">
 							<RetinaImg
-								ref="fileIconImg"
+								ref={this.fileIconImgRef}
 								className="file-icon"
 								fallback="file-fallback.png"
 								mode={RetinaImg.Mode.ContentPreserve}

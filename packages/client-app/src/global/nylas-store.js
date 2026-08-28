@@ -23,5 +23,4 @@ class NylasStore {
 NylasStore.initClass();
 
 module.exports = NylasStore;
-// biome-ignore lint: dual CJS/ESM surface for transformed consumers
 module.exports.default = NylasStore;

@@ -13,8 +13,6 @@ import _ from "underscore";
 import classNames from "classnames";
 import React from "react";
 
-import { Utils, DOMUtils, ExtensionRegistry } from "nylas-exports";
-
 // Positions and renders a FloatingToolbar in the composer.
 //
 // The FloatingToolbar declaratively chooses a Component to render. Only

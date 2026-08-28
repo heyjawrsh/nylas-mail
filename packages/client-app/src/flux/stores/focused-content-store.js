@@ -6,8 +6,6 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-import _ from "underscore";
-import _Reflux from "reflux";
 import AccountStore from "./account-store.js";
 import WorkspaceStore from "./workspace-store.js";
 import DatabaseStore from "./database-store.js";
@@ -17,7 +15,6 @@ import * as _MailboxPerspectiveNS from "../../mailbox-perspective.js";
 const _MailboxPerspective =
 	_MailboxPerspectiveNS.default || _MailboxPerspectiveNS;
 import Actions from "../actions.js";
-import _Thread from "../models/thread.js";
 import Model from "../models/model.js";
 
 import RefluxCoffee from "../modules/reflux-coffee.js";

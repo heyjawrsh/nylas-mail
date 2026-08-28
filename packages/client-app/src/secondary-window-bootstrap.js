@@ -1,4 +1,3 @@
-// biome-ignore lint/correctness/noUnusedImports: createRequire IS used in the file:file branch below
 import { createRequire } from "node:module";
 
 const nodeRequire =
@@ -21,7 +20,6 @@ const nodeRequire =
 //
 // Swap out Node's native Promise for Bluebird, which allows us to
 // do fancy things like handle exceptions inside promise blocks
-// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: nodeRequire is declared at the top of this module
 global.Promise = nodeRequire("bluebird");
 const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));

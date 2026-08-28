@@ -5,10 +5,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-import { MessageStore, React } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 import PGPKeyStore from "./pgp-key-store";
-import _pgp from "kbpgp";
 import _ from "underscore";
 
 // Sits next to recipient chips in the composer and turns them green/red

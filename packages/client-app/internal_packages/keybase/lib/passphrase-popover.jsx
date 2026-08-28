@@ -12,7 +12,6 @@ let PassphrasePopover;
 import { React, Actions } from "nylas-exports";
 import Identity from "./identity";
 import PGPKeyStore from "./pgp-key-store";
-import _ from "underscore";
 import fs from "node:fs";
 import pgp from "kbpgp";
 

@@ -1,5 +1,5 @@
 import _ from "underscore";
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import Actions from "../flux/actions.js";
@@ -54,6 +54,9 @@ class FixedPopover extends Component {
 
 	constructor(props) {
 		super(props);
+		this.blurTrapRef = React.createRef();
+		this.popoverRef = React.createRef();
+		this.popoverContainerRef = React.createRef();
 		this.mounted = false;
 		this.updateCount = 0;
 		this.fallback = this.props.fallbackDirection;
@@ -66,7 +69,7 @@ class FixedPopover extends Component {
 
 	componentDidMount() {
 		this.mounted = true;
-		findDOMNode(this.refs.popoverContainer).addEventListener(
+		findDOMNode(this.popoverContainerRef?.current).addEventListener(
 			"animationend",
 			this.onAnimationEnd,
 		);
@@ -91,7 +94,7 @@ class FixedPopover extends Component {
 
 	componentWillUnmount() {
 		this.mounted = false;
-		findDOMNode(this.refs.popoverContainer).removeEventListener(
+		findDOMNode(this.popoverContainerRef?.current).removeEventListener(
 			"animationend",
 			this.onAnimationEnd,
 		);
@@ -155,7 +158,7 @@ class FixedPopover extends Component {
 	};
 
 	getCurrentRect = () => {
-		return findDOMNode(this.refs.popover).getBoundingClientRect();
+		return findDOMNode(this.popoverRef?.current).getBoundingClientRect();
 	};
 
 	getWindowDimensions = () => {
@@ -347,18 +350,22 @@ class FixedPopover extends Component {
 		return (
 			<div>
 				<div
-					ref="blurTrap"
+					ref={this.blurTrapRef}
 					className="fixed-popover-blur-trap"
 					style={blurTrapStyle}
 				/>
 				<div
-					ref="popoverContainer"
+					ref={this.popoverContainerRef}
 					style={containerStyle}
 					className={`fixed-popover-container${animateClass}`}
 					onKeyDown={this.onKeyDown}
 					onBlur={this.onBlur}
 				>
-					<div ref="popover" className={`fixed-popover`} style={popoverStyle}>
+					<div
+						ref={this.popoverRef}
+						className={`fixed-popover`}
+						style={popoverStyle}
+					>
 						{children}
 					</div>
 					<div className={`fixed-popover-pointer`} style={pointerStyle} />

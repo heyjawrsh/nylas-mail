@@ -10,7 +10,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Utils } from "nylas-exports";
-import _ from "underscore";
 
 class ThreadListParticipants extends React.Component {
 	constructor(...args) {

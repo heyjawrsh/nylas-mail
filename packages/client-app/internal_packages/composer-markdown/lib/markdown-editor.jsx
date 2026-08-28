@@ -7,7 +7,6 @@
 import PropTypes from "prop-types";
 import Utils from "./utils";
 import SimpleMDE from "simplemde";
-import { React, ReactDOM, QuotedHTMLTransformer } from "nylas-exports";
 
 // Keep a file-scope variable containing the contents of the markdown stylesheet.
 // This will be embedded in the markdown preview iFrame, as well as the email body.

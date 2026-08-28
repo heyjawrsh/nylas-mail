@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 import _ from "underscore";
 import classNames from "classnames";
 import React from "react";
-import ReactDOM from "react-dom";
 import { Utils } from "nylas-exports";
 import DatePicker from "./date-picker.jsx";
 import TabGroupRegion from "./tab-group-region.jsx";
@@ -28,6 +27,10 @@ const idPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 class FormItem extends React.Component {
 	constructor(...args) {
 		super(...args);
+		this.inputRef = React.createRef();
+		this.formRef = React.createRef();
+		this.inputWrapRef = React.createRef();
+		this.formHeaderErrorRef = React.createRef();
 		this.render = this.render.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this._renderError = this._renderError.bind(this);
@@ -158,7 +161,7 @@ class FormItem extends React.Component {
 		} else {
 			return React.createElement(
 				"div",
-				{ className: classes, ref: "inputWrap" },
+				{ className: classes, ref: this.inputWrapRef },
 				React.createElement(
 					"div",
 					{ className: "label-area" },
@@ -180,7 +183,7 @@ class FormItem extends React.Component {
 
 	componentDidUpdate(prevProps) {
 		if (!prevProps.formItemError && !this._isValid()) {
-			return ReactDOM.findDOMNode(this.refs.inputWrap).scrollIntoView(true);
+			this.inputWrapRef?.current?.scrollIntoView(true);
 		}
 	}
 
@@ -207,7 +210,7 @@ class FormItem extends React.Component {
 
 	_renderInput() {
 		const inputProps = _.extend({}, this.props, {
-			ref: "input",
+			ref: this.inputRef,
 			onChange: (eventOrValue) => {
 				return this.props.onChange(
 					this.props.id,
@@ -389,7 +392,7 @@ class GeneratedFieldset extends React.Component {
 								return React.createElement(
 									FormItem,
 									Object.assign({}, props, {
-										ref: `form-item-${formItemData.id}`,
+										key: `form-item-${formItemData.id}`,
 									}),
 								);
 							}),
@@ -505,7 +508,7 @@ class GeneratedForm extends React.Component {
 			"form",
 			{
 				className: "generated-form",
-				ref: "form",
+				ref: this.formRef,
 				style: this.props.style,
 				onSubmit: this.props.onSubmit,
 				onKeyDown: this._onKeyDown,
@@ -547,9 +550,7 @@ class GeneratedForm extends React.Component {
 			!(prevProps.errors != null ? prevProps.errors.formError : undefined) &&
 			(this.props.errors != null ? this.props.errors.formError : undefined)
 		) {
-			return ReactDOM.findDOMNode(this.refs.formHeaderError).scrollIntoView(
-				true,
-			);
+			return this.formHeaderErrorRef?.current?.scrollIntoView(true);
 		}
 	}
 
@@ -581,7 +582,10 @@ The `,
 		if (this.props.errors != null ? this.props.errors.formError : undefined) {
 			return React.createElement(
 				"div",
-				{ ref: "formHeaderError", className: "form-error form-header-error" },
+				{
+					ref: this.formHeaderErrorRef,
+					className: "form-error form-header-error",
+				},
 				this.props.errors.formError.message,
 			);
 		} else {

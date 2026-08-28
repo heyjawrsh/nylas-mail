@@ -34,6 +34,7 @@ export default class TimePicker extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.inputRef = React.createRef();
 		this.state = {
 			focused: false,
 			rawText: this._valToTimeString(props.value),
@@ -88,7 +89,7 @@ export default class TimePicker extends React.Component {
 	_onFocus = () => {
 		this.setState({ focused: true });
 		this._gotoScrollStartOnUpdate = true;
-		const el = ReactDOM.findDOMNode(this.refs.input);
+		const el = this.inputRef.current;
 		el.setSelectionRange(0, el.value.length);
 	};
 
@@ -226,7 +227,7 @@ export default class TimePicker extends React.Component {
 				<input
 					className={className}
 					type="text"
-					ref="input"
+					ref={this.inputRef}
 					value={this.state.rawText}
 					onChange={this._onRawTextChange}
 					onKeyDown={this._onKeyDown}

@@ -36,6 +36,11 @@ TokenRenderer.propTypes = {
 };
 
 export default class ParticipantsTextField extends React.Component {
+	constructor(props) {
+		super(props);
+		this.textFieldRef = React.createRef();
+	}
+
 	static displayName = "ParticipantsTextField";
 
 	static propTypes = {
@@ -78,7 +83,7 @@ export default class ParticipantsTextField extends React.Component {
 	// Public. Can be called by any component that has a ref to this one to
 	// focus the input field.
 	focus = () => {
-		this.refs.textField.focus();
+		this.textFieldRef?.current.focus();
 	};
 
 	_completionNode = (p) => {
@@ -231,7 +236,7 @@ export default class ParticipantsTextField extends React.Component {
 		return (
 			<div className={this.props.className}>
 				<InjectedComponent
-					ref="textField"
+					ref={this.textFieldRef}
 					matching={{ role: "Composer:ParticipantsTextField" }}
 					fallback={TokenizingTextField}
 					requiredMethods={["focus"]}

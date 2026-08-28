@@ -7,7 +7,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-import _ from "underscore";
 import React from "react";
 import SwipeContainer from "./swipe-container.jsx";
 import { Utils } from "nylas-exports";

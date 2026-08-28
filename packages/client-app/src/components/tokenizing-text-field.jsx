@@ -17,6 +17,9 @@ class SizeToFitInput extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.completionsRef = React.createRef();
+		this.inputRef = React.createRef();
+		this.measureRef = React.createRef();
 		this.state = {};
 	}
 
@@ -34,8 +37,8 @@ class SizeToFitInput extends React.Component {
 		}
 		// Measure the width of the text in the input and
 		// resize the input field to fit.
-		const inputEl = ReactDOM.findDOMNode(this.refs.input);
-		const measureEl = ReactDOM.findDOMNode(this.refs.measure);
+		const inputEl = ReactDOM.findDOMNode(this.inputRef?.current);
+		const measureEl = ReactDOM.findDOMNode(this.measureRef?.current);
 		measureEl.innerText = inputEl.value;
 		measureEl.style.top = `${inputEl.offsetTop}px`;
 		measureEl.style.left = `${inputEl.offsetLeft}px`;
@@ -45,11 +48,11 @@ class SizeToFitInput extends React.Component {
 	}
 
 	select() {
-		ReactDOM.findDOMNode(this.refs.input).select();
+		ReactDOM.findDOMNode(this.inputRef?.current).select();
 	}
 
 	selectionRange() {
-		const inputEl = ReactDOM.findDOMNode(this.refs.input);
+		const inputEl = ReactDOM.findDOMNode(this.inputRef?.current);
 		return {
 			start: inputEl.selectionStart,
 			end: inputEl.selectionEnd,
@@ -57,17 +60,22 @@ class SizeToFitInput extends React.Component {
 	}
 
 	focus() {
-		ReactDOM.findDOMNode(this.refs.input).focus();
+		ReactDOM.findDOMNode(this.inputRef?.current).focus();
 	}
 
 	render() {
 		return (
 			<span>
 				<span
-					ref="measure"
+					ref={this.measureRef}
 					style={{ visibility: "hidden", position: "absolute" }}
 				/>
-				<input ref="input" type="text" style={{ width: 1 }} {...this.props} />
+				<input
+					ref={this.inputRef}
+					type="text"
+					style={{ width: 1 }}
+					{...this.props}
+				/>
 			</span>
 		);
 	}
@@ -111,14 +119,14 @@ class Token extends React.Component {
 
 	componentDidUpdate(_prevProps, prevState) {
 		if (this.state.editing && !prevState.editing) {
-			this.refs.input.select();
+			this.inputRef?.current.select();
 		}
 	}
 
 	_renderEditing() {
 		return (
 			<SizeToFitInput
-				ref="input"
+				ref={this.inputRef}
 				className="token-editing-input"
 				spellCheck="false"
 				value={this.state.editingValue}
@@ -478,7 +486,9 @@ export default class TokenizingTextField extends React.Component {
 			this._onInputTrySubmit(event);
 		} else if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
 			const delta = event.key === "ArrowLeft" ? -1 : 1;
-			const { start } = this.refs.input.selectionRange();
+			const { start } = this.inputRef?.current?.selectionRange() ?? {
+				start: 0,
+			};
 
 			// with tokens selected, arrow keys manipulate the selection
 			if (this.state.selectedKeys.length > 0) {
@@ -571,7 +581,7 @@ export default class TokenizingTextField extends React.Component {
 		// default behavior
 		let token = null;
 		if (completions.length > 0) {
-			token = this.refs.completions.getSelectedItem() || completions[0];
+			token = this.completionsRef?.current.getSelectedItem() || completions[0];
 		}
 
 		// allow our container to override behavior
@@ -625,7 +635,7 @@ export default class TokenizingTextField extends React.Component {
 	}
 
 	focus() {
-		this.refs.input.focus();
+		this.inputRef?.current.focus();
 	}
 
 	// Managing Tokens
@@ -800,7 +810,7 @@ export default class TokenizingTextField extends React.Component {
 			event.clipboardData.setData("text/plain", text);
 			event.clipboardData.setData("nylas-token-items", json);
 
-			const range = this.refs.input.selectionRange();
+			const range = this.inputRef?.current.selectionRange();
 			if (range.end > 0) {
 				const inputSelection = this.state.inputValue.substr(
 					range.start,
@@ -894,7 +904,7 @@ export default class TokenizingTextField extends React.Component {
 			props.onChange = () => "noop";
 			props.value = "";
 		}
-		return <SizeToFitInput ref="input" spellCheck="false" {...props} />;
+		return <SizeToFitInput ref={this.inputRef} spellCheck="false" {...props} />;
 	}
 
 	_placeholderComponent() {
@@ -1005,7 +1015,7 @@ export default class TokenizingTextField extends React.Component {
 		return (
 			<Menu
 				className={classes}
-				ref="completions"
+				ref={this.completionsRef}
 				items={this.state.completions}
 				itemKey={(item) => item.id}
 				itemContext={{ inputValue: this.state.inputValue }}

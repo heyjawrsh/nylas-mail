@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Actions, DateUtils } from "nylas-exports";
 import DateInput from "./date-input.jsx";
@@ -7,6 +7,12 @@ import Menu from "./menu.jsx";
 const { DATE_FORMAT_SHORT, DATE_FORMAT_LONG } = DateUtils;
 
 class DatePickerPopover extends Component {
+	constructor(props) {
+		super(props);
+		this.dateInputRef = React.createRef();
+		this.menuRef = React.createRef();
+	}
+
 	static displayName = "DatePickerPopover";
 
 	static propTypes = {
@@ -29,21 +35,21 @@ class DatePickerPopover extends Component {
 	onSelectMenuOption = (optionKey) => {
 		const { dateOptions } = this.props;
 		const date = dateOptions[optionKey]();
-		this.refs.dateInput.clearInput();
+		this.dateInputRef?.current.clearInput();
 		this.selectDate(date, optionKey);
 	};
 
 	onCustomDateInterpreted = (date) => {
 		const { shouldSelectDateWhenInterpreted } = this.props;
 		if (date && shouldSelectDateWhenInterpreted) {
-			this.refs.menu.clearSelection();
+			this.menuRef?.current.clearSelection();
 			this.selectDate(date, "Custom");
 		}
 	};
 
 	onCustomDateSelected = (date, inputValue) => {
 		if (date) {
-			this.refs.menu.clearSelection();
+			this.menuRef?.current.clearSelection();
 			this.selectDate(date, "Custom");
 		} else {
 			NylasEnv.showErrorDialog(
@@ -75,7 +81,7 @@ class DatePickerPopover extends Component {
 		let footerComponents = [
 			<div key="divider" className="divider" />,
 			<DateInput
-				ref="dateInput"
+				ref={this.dateInputRef}
 				key="custom-section"
 				className="section date-input-section"
 				dateFormat={DATE_FORMAT_LONG}
@@ -94,7 +100,7 @@ class DatePickerPopover extends Component {
 		return (
 			<div className={`date-picker-popover ${className}`}>
 				<Menu
-					ref="menu"
+					ref={this.menuRef}
 					items={Object.keys(dateOptions)}
 					itemKey={(item) => item}
 					itemContent={this.renderMenuOption}

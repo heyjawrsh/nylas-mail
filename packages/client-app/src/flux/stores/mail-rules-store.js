@@ -9,7 +9,6 @@
 import NylasStore from "nylas-store";
 import _ from "underscore";
 import Rx from "rx-lite";
-import _AccountStore from "./account-store.js";
 import DatabaseStore from "./database-store.js";
 import TaskQueueStatusStore from "./task-queue-status-store.js";
 const ReprocessMailRulesTask =

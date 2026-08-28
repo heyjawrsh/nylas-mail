@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import Menu from "./menu.jsx";
 import RetinaImg from "./retina-img.jsx";
@@ -9,6 +8,7 @@ import KeyCommandsRegion from "./key-commands-region.jsx";
 class SearchBar extends Component {
 	constructor(props) {
 		super(props);
+		this.menuRef = React.createRef();
 		this.searchInputRef = React.createRef();
 	}
 
@@ -168,7 +168,7 @@ class SearchBar extends Component {
 			>
 				<div>
 					<Menu
-						ref="menu"
+						ref={this.menuRef}
 						className={classnames({
 							"showing-query": query && query.length > 0,
 							"search-container": true,

@@ -5,12 +5,11 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const Rx = require("rx-lite");
-const NylasStore = require("nylas-store").default || require("nylas-store");
-const DatabaseStore = require("./database-store.js").default;
-const _AccountStore = require("./account-store.js").default;
-const TaskQueue = require("./task-queue.js");
+import _ from "underscore";
+import Rx from "rx-lite";
+import NylasStore from "nylas-store";
+import DatabaseStore from "./database-store.js";
+import TaskQueue from "./task-queue.js";
 
 // Public: The TaskQueueStatusStore allows you to inspect the task queue from
 // any window, even though the queue itself only runs in the work window.
@@ -78,4 +77,4 @@ class TaskQueueStatusStore extends NylasStore {
 	}
 }
 
-module.exports = new TaskQueueStatusStore();
+export default new TaskQueueStatusStore();

@@ -11,7 +11,6 @@ import NylasStore from "nylas-store";
 import Actions from "../actions.js";
 import Message from "../models/message.js";
 import Thread from "../models/thread.js";
-import * as _Utils from "../models/utils.js";
 import DatabaseStore from "./database-store.js";
 import FocusedPerspectiveStore from "./focused-perspective-store.js";
 import FocusedContentStore from "./focused-content-store.js";
@@ -20,7 +19,6 @@ import * as ExtensionRegistryNS from "../../registries/extension-registry.js";
 const ExtensionRegistry = ExtensionRegistryNS.default || ExtensionRegistryNS;
 import DeprecateUtilsNS from "../../deprecate-utils.js";
 const { deprecate } = DeprecateUtilsNS.default || DeprecateUtilsNS;
-import _async from "async";
 import _ from "underscore";
 
 const CategoryNamesHiddenByDefault = ["spam", "trash"];

@@ -10,10 +10,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import _ from "underscore";
 import Rx from "rx-lite";
-import { RetinaImg, Flexbox } from "nylas-component-kit";
-import { CategoryStore, Actions, Utils } from "nylas-exports";
-
-import { Comparator, Template } from "./scenario-editor-models.js";
 
 const SOURCE_SELECT_NULL = "NULL";
 

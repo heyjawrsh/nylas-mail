@@ -26985,7 +26985,7 @@ var require_database_object_registry = __commonJS({
 // src/flux/models/utils.js
 var require_utils = __commonJS({
   "src/flux/models/utils.js"(exports2, module2) {
-    var Utils23;
+    var Utils24;
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var fs11 = require_fs_plus();
     var path14 = require("path");
@@ -26994,7 +26994,7 @@ var require_utils = __commonJS({
     var TaskRegistry2 = require_task_registry().default;
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     var imageData = null;
-    module2.exports = Utils23 = {
+    module2.exports = Utils24 = {
       waitFor(latch, options2) {
         if (options2 == null) {
           options2 = {};
@@ -27090,7 +27090,7 @@ var require_utils = __commonJS({
         if (str == null) {
           str = "";
         }
-        return new RegExp(`((?:^|\\W|$)${Utils23.escapeRegExp(str.trim())})`, "ig");
+        return new RegExp(`((?:^|\\W|$)${Utils24.escapeRegExp(str.trim())})`, "ig");
       },
       // Takes an optional customizer. The customizer is passed the key and the
       // new cloned value for that key. The customizer is expected to either
@@ -27123,7 +27123,7 @@ var require_utils = __commonJS({
         stackSeen.push(object2);
         stackRefs.push(newObject);
         for (var key of Array.from(Object.getOwnPropertyNames(object2))) {
-          var newVal = Utils23.deepClone(
+          var newVal = Utils24.deepClone(
             object2[key],
             customizer,
             stackSeen,
@@ -27181,7 +27181,7 @@ var require_utils = __commonJS({
         return Object.getOwnPropertyNames(o).forEach((key) => {
           const val = o[key];
           if (typeof val === "object" && val !== null && !Object.isFrozen(val)) {
-            return Utils23.modelFreeze(val);
+            return Utils24.modelFreeze(val);
           }
         });
       },
@@ -27214,30 +27214,30 @@ var require_utils = __commonJS({
         if (!imageData) {
           let left, left1;
           imageData = (left = NylasEnv.fileListCache().imageData) != null ? left : "{}";
-          Utils23.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
+          Utils24.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
         }
         if (!__guard__(
-          Utils23 != null ? Utils23.images : void 0,
+          Utils24 != null ? Utils24.images : void 0,
           (x3) => x3[resourcePath2]
         )) {
-          if (Utils23.images == null) {
-            Utils23.images = {};
+          if (Utils24.images == null) {
+            Utils24.images = {};
           }
-          if (Utils23.images[resourcePath2] == null) {
-            Utils23.images[resourcePath2] = {};
+          if (Utils24.images[resourcePath2] == null) {
+            Utils24.images[resourcePath2] = {};
           }
           const imagesPath = path14.join(resourcePath2, "static", "images");
           const files = fs11.listTreeSync(imagesPath);
           for (var file of Array.from(files)) {
             file = file.replace(/\\/g, "/");
             var _basename = path14.basename(file);
-            Utils23.images[resourcePath2][path14.basename(file)] = file;
+            Utils24.images[resourcePath2][path14.basename(file)] = file;
           }
-          NylasEnv.fileListCache().imageData = JSON.stringify(Utils23.images);
+          NylasEnv.fileListCache().imageData = JSON.stringify(Utils24.images);
         }
         const plat = process.platform != null ? process.platform : "";
         const ratio = window.devicePixelRatio != null ? window.devicePixelRatio : 1;
-        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils23.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils23.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils23.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils23.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils23.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils23.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils23.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils23.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils23.images[resourcePath2][`${name2}@1x.${ext}`];
+        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils24.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils24.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils24.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils24.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils24.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils24.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils24.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils24.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils24.images[resourcePath2][`${name2}@1x.${ext}`];
       },
       subjectWithPrefix(subject, prefix) {
         if (subject.search(/fwd:/i) === 0) {
@@ -27270,7 +27270,7 @@ var require_utils = __commonJS({
           email = "";
         }
         const domain = _4.last(email.toLowerCase().trim().split("@"));
-        return Utils23.commonDomains[domain] != null ? Utils23.commonDomains[domain] : false;
+        return Utils24.commonDomains[domain] != null ? Utils24.commonDomains[domain] : false;
       },
       // This looks for and removes plus-ing, it taks a VERY liberal approach
       // to match an email address. We'd rather let false positives through.
@@ -27292,8 +27292,8 @@ var require_utils = __commonJS({
         if (email1 === email2) {
           return true;
         }
-        email1 = Utils23.toEquivalentEmailForm(email1);
-        email2 = Utils23.toEquivalentEmailForm(email2);
+        email1 = Utils24.toEquivalentEmailForm(email1);
+        email2 = Utils24.toEquivalentEmailForm(email2);
         return email1 === email2;
       },
       rectVisibleInRect(r1, r2) {
@@ -27305,7 +27305,7 @@ var require_utils = __commonJS({
         }
         options2.functionsAreEqual = true;
         options2.ignoreKeys = (options2.ignoreKeys != null ? options2.ignoreKeys : []).push("clientId");
-        return Utils23.isEqual(a, b, options2);
+        return Utils24.isEqual(a, b, options2);
       },
       // Customized version of Underscore 1.8.2's isEqual function
       // You can pass the following options:
@@ -27316,7 +27316,7 @@ var require_utils = __commonJS({
         if (options2 == null) {
           options2 = {};
         }
-        const value = Utils23._isEqual(a, b, [], [], options2);
+        const value = Utils24._isEqual(a, b, [], [], options2);
         if (options2.logWhenFalse) {
           if (value === false) {
             console.log("isEqual is false", a, b, options2);
@@ -27401,7 +27401,7 @@ var require_utils = __commonJS({
             return false;
           }
           while (length--) {
-            if (!Utils23._isEqual(a[length], b[length], aStack, bStack, options2)) {
+            if (!Utils24._isEqual(a[length], b[length], aStack, bStack, options2)) {
               return false;
             }
           }
@@ -27423,7 +27423,7 @@ var require_utils = __commonJS({
             if (key in keysToIgnore) {
               continue;
             }
-            if (!(_4.has(b, key) && Utils23._isEqual(a[key], b[key], aStack, bStack, options2))) {
+            if (!(_4.has(b, key) && Utils24._isEqual(a[key], b[key], aStack, bStack, options2))) {
               return false;
             }
           }
@@ -27649,9 +27649,9 @@ var require_utils = __commonJS({
         if (values2.length === 0) {
           throw new Error("Can't stdev zero values");
         }
-        const avg = Utils23.mean(values2);
+        const avg = Utils24.mean(values2);
         const squareDiffs = values2.map((val) => (val - avg) ** 2);
-        return Math.sqrt(Utils23.mean(squareDiffs));
+        return Math.sqrt(Utils24.mean(squareDiffs));
       },
       // Resolves nested paths in objects of the form "key.subKey.subKey".
       // Null checks along the way.
@@ -38660,7 +38660,7 @@ var require_package3 = __commonJS({
     var packagesCache;
     var path14 = require("path");
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var _async2 = require_async2();
+    var _async = require_async2();
     var fs11 = require_fs_plus();
     var EmitterMixin = require_emissary().Emitter;
     var { Emitter: Emitter3, CompositeDisposable } = require_event_kit();
@@ -57529,16 +57529,16 @@ var require_nylas_store = __commonJS({
     var Publisher2 = RefluxCoffee2?.Publisher ?? RefluxCoffeeNS?.Publisher;
     var CoffeeHelpersNS = require_coffee_helpers();
     var CoffeeHelpers = CoffeeHelpersNS.default || CoffeeHelpersNS;
-    var NylasStore26 = class _NylasStore {
+    var NylasStore27 = class _NylasStore {
       static initClass() {
         _NylasStore.include = CoffeeHelpers.includeModule;
         _NylasStore.include(Publisher2);
         _NylasStore.include(Listener2);
       }
     };
-    NylasStore26.initClass();
-    module2.exports = NylasStore26;
-    module2.exports.default = NylasStore26;
+    NylasStore27.initClass();
+    module2.exports = NylasStore27;
+    module2.exports.default = NylasStore27;
   }
 });
 
@@ -58874,7 +58874,7 @@ var init_attributes = __esm({
 var require_model = __commonJS({
   "src/flux/models/model.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils23 = require_utils();
+    var Utils24 = require_utils();
     var Attributes2 = (init_attributes(), __toCommonJS(attributes_exports)).default;
     var Model13 = class _Model {
       static initClass() {
@@ -58921,7 +58921,7 @@ var require_model = __commonJS({
         if (values2 == null) {
           values2 = {};
         }
-        if (values2.id && Utils23.isTempId(values2.id)) {
+        if (values2.id && Utils24.isTempId(values2.id)) {
           if (values2.clientId == null) {
             values2.clientId = values2.id;
           }
@@ -58940,7 +58940,7 @@ var require_model = __commonJS({
           this[key] = values2[key];
         }
         if (this.clientId == null) {
-          this.clientId = Utils23.generateTempId();
+          this.clientId = Utils24.generateTempId();
         }
         this;
       }
@@ -58966,7 +58966,7 @@ var require_model = __commonJS({
       // This method is chainable.
       //
       fromJSON(json2) {
-        if (json2.id && !Utils23.isTempId(json2.id)) {
+        if (json2.id && !Utils24.isTempId(json2.id)) {
           this.serverId = json2.id;
         }
         for (var key of Array.from(Object.keys(this.constructor.attributes))) {
@@ -106009,7 +106009,7 @@ var require_clone2 = __commonJS({
     "use strict";
     var Reach = require_reach();
     var Types2 = require_types4();
-    var Utils23 = require_utils5();
+    var Utils24 = require_utils5();
     var internals = {
       needsProtoHack: /* @__PURE__ */ new Set([Types2.set, Types2.map, Types2.weakSet, Types2.weakMap]),
       structuredCloneExists: typeof structuredClone === "function"
@@ -106059,7 +106059,7 @@ var require_clone2 = __commonJS({
           newObj.set(key, clone2(value, options2, seen));
         }
       }
-      const keys2 = Utils23.keys(obj2, options2);
+      const keys2 = Utils24.keys(obj2, options2);
       for (const key of keys2) {
         if (key === "__proto__") {
           continue;
@@ -106146,7 +106146,7 @@ var require_merge = __commonJS({
     "use strict";
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Utils23 = require_utils5();
+    var Utils24 = require_utils5();
     var internals = {};
     module2.exports = internals.merge = function(target, source, options2) {
       Assert(target && typeof target === "object", "Invalid target value: must be an object");
@@ -106165,7 +106165,7 @@ var require_merge = __commonJS({
         }
         return target;
       }
-      const keys2 = Utils23.keys(source, options2);
+      const keys2 = Utils24.keys(source, options2);
       for (let i = 0; i < keys2.length; ++i) {
         const key = keys2[i];
         if (key === "__proto__" || !Object.prototype.propertyIsEnumerable.call(source, key)) {
@@ -106549,7 +106549,7 @@ var require_contain = __commonJS({
     var Assert = require_assert();
     var DeepEqual = require_deepEqual();
     var EscapeRegex = require_escapeRegex();
-    var Utils23 = require_utils5();
+    var Utils24 = require_utils5();
     var internals = {};
     module2.exports = function(ref, values2, options2 = {}) {
       if (typeof values2 !== "object") {
@@ -106637,7 +106637,7 @@ var require_contain = __commonJS({
     };
     internals.object = function(ref, values2, options2) {
       Assert(options2.once === void 0, "Cannot use option once with object");
-      const keys2 = Utils23.keys(ref, options2);
+      const keys2 = Utils24.keys(ref, options2);
       if (!keys2.length) {
         return false;
       }
@@ -107752,7 +107752,7 @@ var require_errors = __commonJS({
     "use strict";
     var Annotate = require_annotate();
     var Common = require_common4();
-    var Template2 = require_template();
+    var Template3 = require_template();
     exports2.Report = class {
       constructor(code, value, local, flags, messages, state, prefs) {
         this.code = code;
@@ -107828,7 +107828,7 @@ var require_errors = __commonJS({
       if (!messages) {
         return;
       }
-      if (Template2.isTemplate(messages)) {
+      if (Template3.isTemplate(messages)) {
         return code !== "root" ? messages : null;
       }
       let lang = prefs.errors.language;
@@ -107935,7 +107935,7 @@ var require_ref = __commonJS({
     "use strict";
     var { assert: assert2, clone: clone2, reach } = require_lib5();
     var Common = require_common4();
-    var Template2;
+    var Template3;
     var internals = {
       symbol: /* @__PURE__ */ Symbol("ref"),
       // Used to internally identify references (shared with other joi versions)
@@ -108195,8 +108195,8 @@ var require_ref = __commonJS({
         if (exports2.isRef(source) && source.type === "value" && source.ancestor - target >= 0) {
           this.refs.push({ ancestor: source.ancestor - target, root: source.root });
         }
-        Template2 = Template2 || require_template();
-        if (Template2.isTemplate(source)) {
+        Template3 = Template3 || require_template();
+        if (Template3.isTemplate(source)) {
           this.register(source.refs(), target);
         }
       }
@@ -108559,13 +108559,13 @@ var require_messages = __commonJS({
   "../../node_modules/.pnpm/joi@18.2.5/node_modules/joi/lib/messages.js"(exports2) {
     "use strict";
     var { assert: assert2, clone: clone2 } = require_lib5();
-    var Template2 = require_template();
+    var Template3 = require_template();
     exports2.compile = function(messages, target) {
       if (typeof messages === "string") {
         assert2(!target, "Cannot set single message string");
-        return new Template2(messages);
+        return new Template3(messages);
       }
-      if (Template2.isTemplate(messages)) {
+      if (Template3.isTemplate(messages)) {
         assert2(!target, "Cannot set single message template");
         return messages;
       }
@@ -108573,12 +108573,12 @@ var require_messages = __commonJS({
       target = target ? clone2(target) : {};
       for (const code of Object.keys(messages)) {
         const message = messages[code];
-        if (code === "root" || Template2.isTemplate(message)) {
+        if (code === "root" || Template3.isTemplate(message)) {
           target[code] = message;
           continue;
         }
         if (typeof message === "string") {
-          target[code] = new Template2(message);
+          target[code] = new Template3(message);
           continue;
         }
         assert2(typeof message === "object" && !Array.isArray(message), "Invalid message for", code);
@@ -108587,12 +108587,12 @@ var require_messages = __commonJS({
         target[language] = localizedTarget;
         for (const key of Object.keys(message)) {
           const localized = message[key];
-          if (key === "root" || Template2.isTemplate(localized)) {
+          if (key === "root" || Template3.isTemplate(localized)) {
             localizedTarget[key] = localized;
             continue;
           }
           assert2(typeof localized === "string", "Invalid message for", key, "in", language);
-          localizedTarget[key] = new Template2(localized);
+          localizedTarget[key] = new Template3(localized);
         }
       }
       return target;
@@ -108605,7 +108605,7 @@ var require_messages = __commonJS({
           target.root = message;
           continue;
         }
-        if (Template2.isTemplate(message)) {
+        if (Template3.isTemplate(message)) {
           target[code] = message.describe({ compact: true });
           continue;
         }
@@ -108630,20 +108630,20 @@ var require_messages = __commonJS({
         return base;
       }
       if (typeof extended === "string") {
-        return new Template2(extended);
+        return new Template3(extended);
       }
-      if (Template2.isTemplate(extended)) {
+      if (Template3.isTemplate(extended)) {
         return extended;
       }
       const target = clone2(base);
       for (const code of Object.keys(extended)) {
         const message = extended[code];
-        if (code === "root" || Template2.isTemplate(message)) {
+        if (code === "root" || Template3.isTemplate(message)) {
           target[code] = message;
           continue;
         }
         if (typeof message === "string") {
-          target[code] = new Template2(message);
+          target[code] = new Template3(message);
           continue;
         }
         assert2(typeof message === "object" && !Array.isArray(message), "Invalid message for", code);
@@ -108652,12 +108652,12 @@ var require_messages = __commonJS({
         target[language] = localizedTarget;
         for (const key of Object.keys(message)) {
           const localized = message[key];
-          if (key === "root" || Template2.isTemplate(localized)) {
+          if (key === "root" || Template3.isTemplate(localized)) {
             localizedTarget[key] = localized;
             continue;
           }
           assert2(typeof localized === "string", "Invalid message for", key, "in", language);
-          localizedTarget[key] = new Template2(localized);
+          localizedTarget[key] = new Template3(localized);
         }
       }
       return target;
@@ -109325,7 +109325,7 @@ var require_manifest = __commonJS({
     var Common = require_common4();
     var Messages = require_messages();
     var Ref = require_ref();
-    var Template2 = require_template();
+    var Template3 = require_template();
     var Schemas;
     var internals = {};
     exports2.describe = function(schema) {
@@ -109627,7 +109627,7 @@ var require_manifest = __commonJS({
           return this.parse(desc);
         }
         if (desc.template) {
-          return Template2.build(desc);
+          return Template3.build(desc);
         }
         const normalized = {};
         for (const key of Object.keys(desc)) {
@@ -113023,7 +113023,7 @@ var require_date = __commonJS({
     var { assert: assert2 } = require_lib5();
     var Any = require_any();
     var Common = require_common4();
-    var Template2 = require_template();
+    var Template3 = require_template();
     var internals = {
       formats: ["iso", "javascript", "unix"]
     };
@@ -113151,7 +113151,7 @@ var require_date = __commonJS({
         string: {
           from: internals.isDate,
           to(value, { prefs }) {
-            return Template2.date(value, prefs);
+            return Template3.date(value, prefs);
           }
         }
       },
@@ -113380,7 +113380,7 @@ var require_keys2 = __commonJS({
     var Compile = require_compile();
     var Errors = require_errors();
     var Ref = require_ref();
-    var Template2 = require_template();
+    var Template3 = require_template();
     var internals = {
       renameDefaults: {
         alias: false,
@@ -113534,7 +113534,7 @@ var require_keys2 = __commonJS({
         },
         assert: {
           method(subject, schema, message) {
-            if (!Template2.isTemplate(subject)) {
+            if (!Template3.isTemplate(subject)) {
               subject = Compile.ref(subject);
             }
             assert2(message === void 0 || typeof message === "string", "Message must be a string");
@@ -113702,7 +113702,7 @@ var require_keys2 = __commonJS({
         rename: {
           method(from, to, options2 = {}) {
             assert2(typeof from === "string" || from instanceof RegExp, "Rename missing the from argument");
-            assert2(typeof to === "string" || to instanceof Template2, "Invalid rename to argument");
+            assert2(typeof to === "string" || to instanceof Template3, "Invalid rename to argument");
             assert2(to !== from, "Cannot rename key to same name:", from);
             Common.assertOptions(options2, ["alias", "ignoreUndefined", "override", "multiple"]);
             const obj2 = this.clone();
@@ -113710,7 +113710,7 @@ var require_keys2 = __commonJS({
             for (const rename2 of obj2.$_terms.renames) {
               assert2(rename2.from !== from, "Cannot rename the same key multiple times");
             }
-            if (to instanceof Template2) {
+            if (to instanceof Template3) {
               obj2.$_mutateRegister(to);
             }
             obj2.$_terms.renames.push({
@@ -114048,7 +114048,7 @@ var require_keys2 = __commonJS({
         for (const match of matches) {
           const from = match.from;
           let to = match.to;
-          if (to instanceof Template2) {
+          if (to instanceof Template3) {
             to = to.render(value, state, prefs, match.match);
           }
           if (from === to) {
@@ -118053,7 +118053,7 @@ var require_lib9 = __commonJS({
     var Extend = require_extend2();
     var Manifest = require_manifest();
     var Ref = require_ref();
-    var Template2 = require_template();
+    var Template3 = require_template();
     var Trace = require_trace();
     var Schemas;
     var internals = {
@@ -118138,7 +118138,7 @@ var require_lib9 = __commonJS({
         return joi;
       },
       expression(...args) {
-        return new Template2(...args);
+        return new Template3(...args);
       },
       extend(...extensions) {
         Common.verifyFlat(extensions, "extend");
@@ -118166,7 +118166,7 @@ var require_lib9 = __commonJS({
         return joi;
       },
       isError: Errors.ValidationError.isError,
-      isExpression: Template2.isTemplate,
+      isExpression: Template3.isTemplate,
       isRef: Ref.isRef,
       isSchema: Common.isSchema,
       in(...args) {
@@ -149145,13 +149145,13 @@ var require_data_types = __commonJS({
       BaseTypes.ARRAY.prototype._stringify = function _stringify(values2, options2) {
         let str = `ARRAY[${this._value(values2, options2).join(",")}]`;
         if (this.type) {
-          const Utils23 = require_utils6();
+          const Utils24 = require_utils6();
           let castKey = this.toSql();
           if (this.type instanceof BaseTypes.ENUM) {
             const table = options2.field.Model.getTableName();
             const useSchema = table.schema !== void 0;
-            const schemaWithDelimiter = useSchema ? `${Utils23.addTicks(table.schema, '"')}${table.delimiter}` : "";
-            castKey = `${Utils23.addTicks(Utils23.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
+            const schemaWithDelimiter = useSchema ? `${Utils24.addTicks(table.schema, '"')}${table.delimiter}` : "";
+            castKey = `${Utils24.addTicks(Utils24.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
             str += `::${schemaWithDelimiter}${castKey}`;
           } else {
             str += `::${castKey}`;
@@ -153674,7 +153674,7 @@ var require_belongs_to = __commonJS({
         }
       return a;
     };
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153701,7 +153701,7 @@ var require_belongs_to = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils23.camelize([
+          this.foreignKey = Utils24.camelize([
             this.as,
             this.target.primaryKeyAttribute
           ].join("_"));
@@ -153739,7 +153739,7 @@ var require_belongs_to = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.target, this.source, this.options, this.targetKeyField);
-        Utils23.mergeDefaults(this.source.rawAttributes, newAttributes);
+        Utils24.mergeDefaults(this.source.rawAttributes, newAttributes);
         this.source.refreshAttributes();
         this.identifierField = this.source.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -153753,7 +153753,7 @@ var require_belongs_to = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -153854,7 +153854,7 @@ var require_has_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153881,7 +153881,7 @@ var require_has_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils23.singularize(this.as)
+              singular: Utils24.singularize(this.as)
             };
           }
         } else {
@@ -153895,7 +153895,7 @@ var require_has_many = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils23.camelize([
+          this.foreignKey = Utils24.camelize([
             this.source.options.name.singular,
             this.source.primaryKeyAttribute
           ].join("_"));
@@ -153942,7 +153942,7 @@ var require_has_many = __commonJS({
           constraintOptions.onUpdate = constraintOptions.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, constraintOptions, this.sourceKeyField);
-        Utils23.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils24.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.source.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
@@ -154016,7 +154016,7 @@ var require_has_many = __commonJS({
         return result2;
       }
       async count(instance, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2.attributes = [
           [
             this.sequelize.fn("COUNT", this.sequelize.col(`${this.target.name}.${this.target.primaryKeyField}`)),
@@ -154175,7 +154175,7 @@ var require_has_one = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154202,8 +154202,8 @@ var require_has_one = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils23.camelize([
-            Utils23.singularize(this.options.as || this.source.name),
+          this.foreignKey = Utils24.camelize([
+            Utils24.singularize(this.options.as || this.source.name),
             this.source.primaryKeyAttribute
           ].join("_"));
         }
@@ -154238,7 +154238,7 @@ var require_has_one = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, this.options, this.sourceKeyField);
-        Utils23.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils24.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -154252,7 +154252,7 @@ var require_has_one = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -154371,7 +154371,7 @@ var require_belongs_to_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154409,14 +154409,14 @@ var require_belongs_to_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils23.singularize(this.as)
+              singular: Utils24.singularize(this.as)
             };
           }
         } else {
           this.as = this.target.options.name.plural;
           this.options.name = this.target.options.name;
         }
-        this.combinedTableName = Utils23.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
+        this.combinedTableName = Utils24.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
         if (this.isSelfAssociation) {
           this.targetAssociation = this;
         }
@@ -154516,7 +154516,7 @@ var require_belongs_to_many = __commonJS({
           this.foreignKey = this.foreignKeyAttribute.name || this.foreignKeyAttribute.fieldName;
         } else {
           this.foreignKeyAttribute = {};
-          this.foreignKey = this.options.foreignKey || Utils23.camelize([
+          this.foreignKey = this.options.foreignKey || Utils24.camelize([
             this.source.options.name.singular,
             this.sourceKey
           ].join("_"));
@@ -154529,8 +154529,8 @@ var require_belongs_to_many = __commonJS({
             this.otherKeyDefault = true;
           }
           this.otherKeyAttribute = {};
-          this.otherKey = this.options.otherKey || Utils23.camelize([
-            this.isSelfAssociation ? Utils23.singularize(this.as) : this.target.options.name.singular,
+          this.otherKey = this.options.otherKey || Utils24.camelize([
+            this.isSelfAssociation ? Utils24.singularize(this.as) : this.target.options.name.singular,
             this.targetKey
           ].join("_"));
         }
@@ -154656,7 +154656,7 @@ var require_belongs_to_many = __commonJS({
         Helpers.mixinMethods(this, obj2, methods, aliases2);
       }
       async get(instance, options2) {
-        options2 = Utils23.cloneDeep(options2) || {};
+        options2 = Utils24.cloneDeep(options2) || {};
         const through = this.through;
         let scopeWhere;
         let throughWhere;
@@ -154704,7 +154704,7 @@ var require_belongs_to_many = __commonJS({
       }
       async count(instance, options2) {
         const sequelize = this.target.sequelize;
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2.attributes = [
           [sequelize.fn("COUNT", sequelize.col([this.target.name, this.targetKeyField].join("."))), "count"]
         ];
@@ -154940,7 +154940,7 @@ var require_instance_validator = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var sequelizeError = require_errors4();
     var DataTypes2 = require_data_types9();
     var BelongsTo2 = require_belongs_to();
@@ -154996,7 +154996,7 @@ var require_instance_validator = __commonJS({
             return;
           }
           const value = this.modelInstance.dataValues[field];
-          if (value instanceof Utils23.SequelizeMethod) {
+          if (value instanceof Utils24.SequelizeMethod) {
             return;
           }
           if (!rawAttribute._autoGenerated && !rawAttribute.autoIncrement) {
@@ -155118,7 +155118,7 @@ var require_instance_validator = __commonJS({
           }
         }
         if (rawAttribute.type instanceof DataTypes2.STRING || rawAttribute.type instanceof DataTypes2.TEXT || rawAttribute.type instanceof DataTypes2.CITEXT) {
-          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils23.SequelizeMethod) && !Buffer.isBuffer(value)) {
+          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils24.SequelizeMethod) && !Buffer.isBuffer(value)) {
             this.errors.push(new sequelizeError.ValidationErrorItem(`${field} cannot be an array or an object`, "string violation", field, value, this.modelInstance, "not_a_string"));
           }
         }
@@ -155475,7 +155475,7 @@ var require_model2 = __commonJS({
     var assert2 = require("assert");
     var _4 = require_lodash();
     var Dottie = require_dottie();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var { logger } = require_logger3();
     var BelongsTo2 = require_belongs_to();
     var BelongsToMany2 = require_belongs_to_many();
@@ -155578,7 +155578,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.constructor._hasDefaultValues) {
             defaults3 = _4.mapValues(this.constructor._defaultValues, (valueFn) => {
               const value = valueFn();
-              return value && value instanceof Utils23.SequelizeMethod ? value : _4.cloneDeep(value);
+              return value && value instanceof Utils24.SequelizeMethod ? value : _4.cloneDeep(value);
             });
           }
           if (this.constructor.primaryKeyAttributes.length) {
@@ -155589,20 +155589,20 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
           if (this.constructor._timestampAttributes.createdAt && defaults3[this.constructor._timestampAttributes.createdAt]) {
-            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils23.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.createdAt];
           }
           if (this.constructor._timestampAttributes.updatedAt && defaults3[this.constructor._timestampAttributes.updatedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils23.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.updatedAt];
           }
           if (this.constructor._timestampAttributes.deletedAt && defaults3[this.constructor._timestampAttributes.deletedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils23.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.deletedAt];
           }
           for (key in defaults3) {
             if (values2[key] === void 0) {
-              this.set(key, Utils23.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
+              this.set(key, Utils24.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
               delete values2[key];
             }
           }
@@ -155632,7 +155632,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           [Op2.eq]: null
         };
         deletedAtObject[deletedAtAttribute.field || deletedAtCol] = deletedAtDefaultValue;
-        if (Utils23.isWhereEmpty(options2.where)) {
+        if (Utils24.isWhereEmpty(options2.where)) {
           options2.where = deletedAtObject;
         } else {
           options2.where = { [Op2.and]: [deletedAtObject, options2.where] };
@@ -155841,7 +155841,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             }
             used.push(parent);
-            const thisInclude = Utils23.cloneDeep(include);
+            const thisInclude = Utils24.cloneDeep(include);
             thisInclude.model = model;
             if (as2) {
               thisInclude.as = as2;
@@ -155931,7 +155931,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (include.attributes && !options2.raw) {
           include.model._expandAttributes(include);
           include.originalAttributes = include.model._injectDependentVirtualAttributes(include.attributes);
-          include = Utils23.mapFinderOptions(include, include.model);
+          include = Utils24.mapFinderOptions(include, include.model);
           if (include.attributes.length) {
             _4.each(include.model.primaryKeys, (attr, key) => {
               if (!include.attributes.some((includeAttr) => {
@@ -155945,13 +155945,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
         } else {
-          include = Utils23.mapFinderOptions(include, include.model);
+          include = Utils24.mapFinderOptions(include, include.model);
         }
         if (include._pseudo) {
           if (!include.attributes) {
             include.attributes = Object.keys(include.model.tableAttributes);
           }
-          return Utils23.mapFinderOptions(include, include.model);
+          return Utils24.mapFinderOptions(include, include.model);
         }
         const association = include.association || this._getIncludedAssociation(include.model, include.as);
         include.association = association;
@@ -155985,7 +155985,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!include.attributes) {
           include.attributes = Object.keys(include.model.tableAttributes);
         }
-        include = Utils23.mapFinderOptions(include, include.model);
+        include = Utils24.mapFinderOptions(include, include.model);
         if (include.required === void 0) {
           include.required = !!include.where;
         }
@@ -156085,7 +156085,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.options && this.options.whereMergeStrategy === "and") {
             return combineWheresWithAnd(objValue, srcValue);
           }
-          if (srcValue instanceof Utils23.SequelizeMethod) {
+          if (srcValue instanceof Utils24.SequelizeMethod) {
             srcValue = { [Op2.and]: srcValue };
           }
           if (_4.isPlainObject(objValue) && _4.isPlainObject(srcValue)) {
@@ -156099,7 +156099,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           });
         }
         if (srcValue) {
-          return Utils23.cloneDeep(srcValue, true);
+          return Utils24.cloneDeep(srcValue, true);
         }
         return srcValue === void 0 ? objValue : srcValue;
       }
@@ -156117,14 +156117,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this.sequelize = options2.sequelize;
         const globalOptions = this.sequelize.options;
-        options2 = Utils23.merge(_4.cloneDeep(globalOptions.define), options2);
+        options2 = Utils24.merge(_4.cloneDeep(globalOptions.define), options2);
         if (!options2.modelName) {
           options2.modelName = this.name;
         }
-        options2 = Utils23.merge({
+        options2 = Utils24.merge({
           name: {
-            plural: Utils23.pluralize(options2.modelName),
-            singular: Utils23.singularize(options2.modelName)
+            plural: Utils24.pluralize(options2.modelName),
+            singular: Utils24.singularize(options2.modelName)
           },
           indexes: [],
           omitNull: globalOptions.omitNull,
@@ -156157,7 +156157,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this._setupHooks(options2.hooks);
         this.underscored = this.options.underscored;
         if (!this.options.tableName) {
-          this.tableName = this.options.freezeTableName ? this.name : Utils23.underscoredIf(Utils23.pluralize(this.name), this.underscored);
+          this.tableName = this.options.freezeTableName ? this.name : Utils24.underscoredIf(Utils24.pluralize(this.name), this.underscored);
         } else {
           this.tableName = this.options.tableName;
         }
@@ -156188,7 +156188,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return attribute;
         });
         const tableName = this.getTableName();
-        this._indexes = this.options.indexes.map((index) => Utils23.nameIndex(this._conformIndex(index), tableName));
+        this._indexes = this.options.indexes.map((index) => Utils24.nameIndex(this._conformIndex(index), tableName));
         this.primaryKeys = {};
         this._readOnlyAttributes = /* @__PURE__ */ new Set();
         this._timestampAttributes = {};
@@ -156290,7 +156290,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           definition.fieldName = name2;
           definition._modelAttribute = true;
           if (definition.field === void 0) {
-            definition.field = Utils23.underscoredIf(name2, this.underscored);
+            definition.field = Utils24.underscoredIf(name2, this.underscored);
           }
           if (definition.primaryKey === true) {
             this.primaryKeys[name2] = definition;
@@ -156312,7 +156312,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this._virtualAttributes.add(name2);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "defaultValue")) {
-            this._defaultValues[name2] = () => Utils23.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
+            this._defaultValues[name2] = () => Utils24.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "unique") && definition.unique) {
             let idxName;
@@ -156335,7 +156335,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this.prototype.validators[name2] = definition.validate;
           }
           if (definition.index === true && definition.type instanceof DataTypes2.JSONB) {
-            this._indexes.push(Utils23.nameIndex(this._conformIndex({
+            this._indexes.push(Utils24.nameIndex(this._conformIndex({
               fields: [definition.field || name2],
               using: "gin"
             }), this.getTableName()));
@@ -156533,7 +156533,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
           if (scope) {
             this._conformIncludes(scope, this);
-            this._assignOptions(self2._scope, Utils23.cloneDeep(scope));
+            this._assignOptions(self2._scope, Utils24.cloneDeep(scope));
             self2._scopeNames.push(scopeName ? scopeName : "defaultScope");
           } else {
             throw new sequelizeErrors.SequelizeScopeError(`Invalid scope ${scopeName} called.`);
@@ -156553,7 +156553,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this.warnOnInvalidOptions(options2, Object.keys(this.rawAttributes));
         const tableNames = {};
         tableNames[this.getTableName(options2)] = true;
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156585,7 +156585,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           options2.originalAttributes = this._injectDependentVirtualAttributes(options2.attributes);
         }
         this.options.whereCollection = options2.where || null;
-        Utils23.mapFinderOptions(options2, this);
+        Utils24.mapFinderOptions(options2, this);
         options2 = this._paranoidClause(this, options2);
         if (options2.hooks) {
           await this.runHooks("beforeFindAfterOptions", options2);
@@ -156664,7 +156664,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if ([null, void 0].includes(param)) {
           return null;
         }
-        options2 = Utils23.cloneDeep(options2) || {};
+        options2 = Utils24.cloneDeep(options2) || {};
         if (typeof param === "number" || typeof param === "bigint" || typeof param === "string" || Buffer.isBuffer(param)) {
           options2.where = {
             [this.primaryKeyAttribute]: param
@@ -156678,7 +156678,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findOne must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156687,7 +156687,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         if (options2.limit === void 0) {
           const uniqueSingleColumns = _4.chain(this.uniqueKeys).values().filter((c) => c.fields.length === 1).map("column").value();
-          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils23.isPrimitive(value) || Buffer.isBuffer(value)))) {
+          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils24.isPrimitive(value) || Buffer.isBuffer(value)))) {
             options2.limit = 1;
           }
         }
@@ -156696,7 +156696,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }));
       }
       static async aggregate(attribute, aggregateFunction, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         const prevAttributes = options2.attributes;
         this._injectScope(options2);
         options2.attributes = prevAttributes;
@@ -156726,13 +156726,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else {
           options2.dataType = this.sequelize.normalizeDataType(options2.dataType);
         }
-        Utils23.mapOptionFieldNames(options2, this);
+        Utils24.mapOptionFieldNames(options2, this);
         options2 = this._paranoidClause(this, options2);
         const value = await this.queryInterface.rawSelect(this.getTableName(options2), options2, aggregateFunction, this);
         return value;
       }
       static async count(options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2 = _4.defaults(options2, { hooks: true });
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
@@ -156769,7 +156769,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findAndCountAll must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        const countOptions = Utils23.cloneDeep(options2);
+        const countOptions = Utils24.cloneDeep(options2);
         if (countOptions.attributes) {
           countOptions.attributes = void 0;
         }
@@ -156812,7 +156812,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return valueSets.map((values2) => this.build(values2, options2));
       }
       static async create(values2, options2) {
-        options2 = Utils23.cloneDeep(options2 || {});
+        options2 = Utils24.cloneDeep(options2 || {});
         return await this.build(values2, {
           isNewRecord: true,
           attributes: options2.fields,
@@ -156830,7 +156830,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (instance === null) {
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils23.defaults(values2, options2.where);
+            values2 = Utils24.defaults(values2, options2.where);
           }
           instance = this.build(values2, options2);
           return [instance, true];
@@ -156862,13 +156862,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const t = await this.sequelize.transaction(options2);
           transaction = t;
           options2.transaction = t;
-          const found = await this.findOne(Utils23.defaults({ transaction }, options2));
+          const found = await this.findOne(Utils24.defaults({ transaction }, options2));
           if (found !== null) {
             return [found, false];
           }
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils23.defaults(values2, options2.where);
+            values2 = Utils24.defaults(values2, options2.where);
           }
           options2.exception = true;
           options2.returning = true;
@@ -156881,13 +156881,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           } catch (err) {
             if (!(err instanceof sequelizeErrors.UniqueConstraintError))
               throw err;
-            const flattenedWhere = Utils23.flattenObjectDeep(options2.where);
+            const flattenedWhere = Utils24.flattenObjectDeep(options2.where);
             const flattenedWhereKeys = Object.keys(flattenedWhere).map((name2) => _4.last(name2.split(".")));
             const whereFields = flattenedWhereKeys.map((name2) => _4.get(this.rawAttributes, `${name2}.field`, name2));
             const defaultFields = options2.defaults && Object.keys(options2.defaults).filter((name2) => this.rawAttributes[name2]).map((name2) => this.rawAttributes[name2].field || name2);
             const errFieldKeys = Object.keys(err.fields);
-            const errFieldsWhereIntersects = Utils23.intersects(errFieldKeys, whereFields);
-            if (defaultFields && !errFieldsWhereIntersects && Utils23.intersects(errFieldKeys, defaultFields)) {
+            const errFieldsWhereIntersects = Utils24.intersects(errFieldKeys, whereFields);
+            if (defaultFields && !errFieldsWhereIntersects && Utils24.intersects(errFieldKeys, defaultFields)) {
               throw err;
             }
             if (errFieldsWhereIntersects) {
@@ -156898,7 +156898,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 }
               });
             }
-            const otherCreated = await this.findOne(Utils23.defaults({
+            const otherCreated = await this.findOne(Utils24.defaults({
               transaction: internalTransaction ? null : transaction
             }, options2));
             if (otherCreated === null)
@@ -156917,7 +156917,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         let values2 = __spreadValues({}, options2.defaults);
         if (_4.isPlainObject(options2.where)) {
-          values2 = Utils23.defaults(values2, options2.where);
+          values2 = Utils24.defaults(values2, options2.where);
         }
         const found = await this.findOne(options2);
         if (found)
@@ -156942,7 +156942,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           hooks: true,
           returning: true,
           validate: true
-        }, Utils23.cloneDeep(options2));
+        }, Utils24.cloneDeep(options2));
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156963,9 +156963,9 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           await instance.validate(options2);
         }
         const updatedDataValues = _4.pick(instance.dataValues, changed);
-        const insertValues = Utils23.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
-        const updateValues = Utils23.mapValueFieldNames(updatedDataValues, options2.fields, this);
-        const now2 = Utils23.now(this.sequelize.options.dialect);
+        const insertValues = Utils24.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
+        const updateValues = Utils24.mapValueFieldNames(updatedDataValues, options2.fields, this);
+        const now2 = Utils24.now(this.sequelize.options.dialect);
         if (createdAtAttr && !insertValues[createdAtAttr]) {
           const field = this.rawAttributes[createdAtAttr].field || createdAtAttr;
           insertValues[field] = this._getDefaultTimestamp(createdAtAttr) || now2;
@@ -156998,8 +156998,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return [];
         }
         const dialect = this.sequelize.options.dialect;
-        const now2 = Utils23.now(this.sequelize.options.dialect);
-        options2 = Utils23.cloneDeep(options2);
+        const now2 = Utils24.now(this.sequelize.options.dialect);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157091,7 +157091,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 if (!associationInstances.length) {
                   return;
                 }
-                const includeOptions = _4(Utils23.cloneDeep(include)).omit(["association"]).defaults({
+                const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157117,7 +157117,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   options22.fields.push(updatedAtAttr);
                 }
               }
-              const out = Utils23.mapValueFieldNames(values2, options22.fields, model);
+              const out = Utils24.mapValueFieldNames(values2, options22.fields, model);
               for (const key of model._virtualAttributes) {
                 delete out[key];
               }
@@ -157187,7 +157187,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               if (!associationInstances.length) {
                 return;
               }
-              const includeOptions = _4(Utils23.cloneDeep(include)).omit(["association"]).defaults({
+              const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
                 transaction: options22.transaction,
                 logging: options22.logging
               }).value();
@@ -157211,7 +157211,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   }
                   valueSets.push(values2);
                 }
-                const throughOptions = _4(Utils23.cloneDeep(include)).omit(["association", "attributes"]).defaults({
+                const throughOptions = _4(Utils24.cloneDeep(include)).omit(["association", "attributes"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157240,12 +157240,12 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return await recursiveBulkCreate(instances, options2);
       }
       static async truncate(options2) {
-        options2 = Utils23.cloneDeep(options2) || {};
+        options2 = Utils24.cloneDeep(options2) || {};
         options2.truncate = true;
         return await this.destroy(options2);
       }
       static async destroy(options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157256,7 +157256,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!options2 || !(options2.where || options2.truncate)) {
           throw new Error("Missing where or truncate attribute in the options parameter of model.destroy.");
         }
-        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils23.SequelizeMethod)) {
+        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils24.SequelizeMethod)) {
           throw new Error("Expected plain object, array or sequelize method in the options.where parameter of model.destroy.");
         }
         options2 = _4.defaults(options2, {
@@ -157267,7 +157267,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           restartIdentity: false
         });
         options2.type = QueryTypes2.BULKDELETE;
-        Utils23.mapOptionFieldNames(options2, this);
+        Utils24.mapOptionFieldNames(options2, this);
         options2.model = this;
         if (options2.hooks) {
           await this.runHooks("beforeBulkDestroy", options2);
@@ -157286,7 +157286,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const where3 = {
             [field]: Object.prototype.hasOwnProperty.call(deletedAtAttribute, "defaultValue") ? deletedAtAttribute.defaultValue : null
           };
-          attrValueHash[field] = Utils23.now(this.sequelize.options.dialect);
+          attrValueHash[field] = Utils24.now(this.sequelize.options.dialect);
           result2 = await this.queryInterface.bulkUpdate(this.getTableName(options2), attrValueHash, Object.assign(where3, options2.where), options2, this.rawAttributes);
         } else {
           result2 = await this.queryInterface.bulkDelete(this.getTableName(options2), options2.where, options2, this);
@@ -157314,7 +157314,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         options2.type = QueryTypes2.RAW;
         options2.model = this;
-        Utils23.mapOptionFieldNames(options2, this);
+        Utils24.mapOptionFieldNames(options2, this);
         if (options2.hooks) {
           await this.runHooks("beforeBulkRestore", options2);
         }
@@ -157339,7 +157339,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       static async update(values2, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157372,7 +157372,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
         }
         if (this._timestampAttributes.updatedAt && !options2.silent) {
-          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils23.now(this.sequelize.options.dialect);
+          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils24.now(this.sequelize.options.dialect);
         }
         options2.model = this;
         let valuesUse;
@@ -157458,8 +157458,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else if (_4.isEmpty(valuesUse) || Object.keys(valuesUse).length === 1 && valuesUse[this._timestampAttributes.updatedAt]) {
           result2 = [0];
         } else {
-          valuesUse = Utils23.mapValueFieldNames(valuesUse, options2.fields, this);
-          options2 = Utils23.mapOptionFieldNames(options2, this);
+          valuesUse = Utils24.mapValueFieldNames(valuesUse, options2.fields, this);
+          options2 = Utils24.mapOptionFieldNames(options2, this);
           options2.hasTrigger = this.options ? this.options.hasTrigger : false;
           const affectedRows = await this.queryInterface.bulkUpdate(this.getTableName(options2), valuesUse, options2.where, options2, this.tableAttributes);
           if (options2.returning) {
@@ -157485,7 +157485,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _getDefaultTimestamp(attr) {
         if (!!this.rawAttributes[attr] && !!this.rawAttributes[attr].defaultValue) {
-          return Utils23.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
+          return Utils24.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
         }
         return void 0;
       }
@@ -157503,7 +157503,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2.attributes = attributes;
       }
       static _injectScope(options2) {
-        const scope = Utils23.cloneDeep(this._scope);
+        const scope = Utils24.cloneDeep(this._scope);
         this._defaultsOptions(options2, scope);
       }
       static [/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")]() {
@@ -157535,13 +157535,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this._injectScope(options2);
         this._optionsMustContainWhere(options2);
-        options2 = Utils23.defaults({}, options2, {
+        options2 = Utils24.defaults({}, options2, {
           by: 1,
           where: {},
           increment: true
         });
         const isSubtraction = !options2.increment;
-        Utils23.mapOptionFieldNames(options2, this);
+        Utils24.mapOptionFieldNames(options2, this);
         const where3 = __spreadValues({}, options2.where);
         let incrementAmountsByField = {};
         if (Array.isArray(fields)) {
@@ -157559,7 +157559,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const updatedAtAttr = this._timestampAttributes.updatedAt;
         if (!options2.silent && updatedAtAttr && !incrementAmountsByField[updatedAtAttr]) {
           const attrName = this.rawAttributes[updatedAtAttr].field || updatedAtAttr;
-          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils23.now(this.sequelize.options.dialect);
+          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils24.now(this.sequelize.options.dialect);
         }
         const tableName = this.getTableName(options2);
         let affectedRows;
@@ -157582,7 +157582,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _optionsMustContainWhere(options2) {
         assert2(options2 && options2.where, "Missing where attribute in the options parameter");
-        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils23.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
+        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils24.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
       }
       where(checkVersion) {
         const where3 = this.constructor.primaryKeyAttributes.reduce((result2, attribute) => {
@@ -157596,7 +157596,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (checkVersion && versionAttr) {
           where3[versionAttr] = this.get(versionAttr, { raw: true });
         }
-        return Utils23.mapWhereFieldNames(where3, this.constructor);
+        return Utils24.mapWhereFieldNames(where3, this.constructor);
       }
       toString() {
         return `[object SequelizeInstance:${this.constructor.name}]`;
@@ -157736,10 +157736,10 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return this;
             }
           }
-          if (!(value instanceof Utils23.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
+          if (!(value instanceof Utils24.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
             value = this.constructor._dataTypeSanitizers[key].call(this, value, options2);
           }
-          if (!options2.raw && (value instanceof Utils23.SequelizeMethod || !(value instanceof Utils23.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
+          if (!options2.raw && (value instanceof Utils24.SequelizeMethod || !(value instanceof Utils24.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
             this._previousDataValues[key] = originalValue;
             this.changed(key, true);
           }
@@ -157810,7 +157810,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (arguments.length > 1) {
           throw new Error("The second argument was removed in favor of the options object.");
         }
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157842,7 +157842,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const versionAttr = this.constructor._versionAttribute;
         const hook = this.isNewRecord ? "Create" : "Update";
         const wasNewRecord = this.isNewRecord;
-        const now2 = Utils23.now(this.sequelize.options.dialect);
+        const now2 = Utils24.now(this.sequelize.options.dialect);
         let updatedAtAttr = this.constructor._timestampAttributes.updatedAt;
         if (updatedAtAttr && options2.fields.length > 0 && !options2.fields.includes(updatedAtAttr)) {
           options2.fields.push(updatedAtAttr);
@@ -157911,7 +157911,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             const instance = this.get(include.as);
             if (!instance)
               return;
-            const includeOptions = _4(Utils23.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -157926,7 +157926,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!this.changed() && !this.isNewRecord)
           return this;
         const versionFieldName = _4.get(this.constructor.rawAttributes[versionAttr], "field") || versionAttr;
-        const values2 = Utils23.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
+        const values2 = Utils24.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
         let query = null;
         let args = [];
         let where3;
@@ -157968,7 +157968,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             if (!Array.isArray(instances))
               instances = [instances];
-            const includeOptions = _4(Utils23.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -158008,7 +158008,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       async reload(options2) {
-        options2 = Utils23.defaults({
+        options2 = Utils24.defaults({
           where: this.where()
         }, options2, {
           include: this._options.include || void 0
@@ -158033,14 +158033,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2 = options2 || {};
         if (Array.isArray(options2))
           options2 = { fields: options2 };
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
             options2.transaction = t;
           }
         }
-        const setOptions = Utils23.cloneDeep(options2);
+        const setOptions = Utils24.cloneDeep(options2);
         setOptions.attributes = options2.fields;
         this.set(values2, setOptions);
         const sideEffects = _4.without(this.changed(), ...changedBefore);
@@ -158124,7 +158124,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       async increment(fields, options2) {
         const identifier2 = this.where();
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2.where = __spreadValues(__spreadValues({}, options2.where), identifier2);
         options2.instance = this;
         await this.constructor.increment(fields, options2);
@@ -158170,7 +158170,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       if (!_4.isObject(where3)) {
         return where3;
       }
-      const keys2 = Utils23.getComplexKeys(where3);
+      const keys2 = Utils24.getComplexKeys(where3);
       if (keys2.length === 0) {
         return;
       }
@@ -158784,7 +158784,7 @@ var require_query_interface = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var DataTypes2 = require_data_types9();
     var Transaction2 = require_transaction();
     var QueryTypes2 = require_query_types();
@@ -159009,7 +159009,7 @@ var require_query_interface = __commonJS({
         if (!rawTablename) {
           rawTablename = tableName;
         }
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2.fields = attributes;
         const sql = this.queryGenerator.addIndexQuery(tableName, options2, rawTablename);
         return await this.sequelize.query(sql, __spreadProps(__spreadValues({}, options2), { supportsSearchPath: false }));
@@ -159053,7 +159053,7 @@ var require_query_interface = __commonJS({
         if (!options2.type) {
           throw new Error("Constraint type must be specified through options.type");
         }
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         const sql = this.queryGenerator.addConstraintQuery(tableName, options2);
         return await this.sequelize.query(sql, options2);
       }
@@ -159065,7 +159065,7 @@ var require_query_interface = __commonJS({
         return this.sequelize.query(this.queryGenerator.removeConstraintQuery(tableName, constraintName), options2);
       }
       async insert(instance, tableName, values2, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2.hasTrigger = instance && instance.constructor.options.hasTrigger;
         const sql = this.queryGenerator.insertQuery(tableName, values2, instance && instance.constructor.rawAttributes, options2);
         options2.type = QueryTypes2.INSERT;
@@ -159120,9 +159120,9 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkUpdate(tableName, values2, identifier2, options2, attributes) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         if (typeof identifier2 === "object")
-          identifier2 = Utils23.cloneDeep(identifier2);
+          identifier2 = Utils24.cloneDeep(identifier2);
         const sql = this.queryGenerator.updateQuery(tableName, values2, identifier2, options2, attributes);
         const table = _4.isObject(tableName) ? tableName : { tableName };
         const model = options2.model ? options2.model : _4.find(this.sequelize.modelManager.models, { tableName: table.tableName });
@@ -159158,13 +159158,13 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkDelete(tableName, where3, options2, model) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2 = _4.defaults(options2, { limit: null });
         if (options2.truncate === true) {
           return this.sequelize.query(this.queryGenerator.truncateTableQuery(tableName, options2), options2);
         }
         if (typeof identifier === "object")
-          where3 = Utils23.cloneDeep(where3);
+          where3 = Utils24.cloneDeep(where3);
         return await this.sequelize.query(this.queryGenerator.deleteQuery(tableName, where3, options2, model), options2);
       }
       async select(model, tableName, optionsArg) {
@@ -159172,21 +159172,21 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(this.queryGenerator.selectQuery(tableName, options2, model), options2);
       }
       async increment(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("+", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async decrement(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("-", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async rawSelect(tableName, options2, attributeSelector, Model13) {
-        options2 = Utils23.cloneDeep(options2);
+        options2 = Utils24.cloneDeep(options2);
         options2 = _4.defaults(options2, {
           raw: true,
           plain: true,
@@ -161278,7 +161278,7 @@ var require_operators2 = __commonJS({
     };
     var _4 = require_lodash();
     var Op2 = require_operators();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var OperatorHelpers = {
       OperatorMap: {
         [Op2.eq]: "=",
@@ -161333,7 +161333,7 @@ var require_operators2 = __commonJS({
         if (!this.OperatorsAliasMap) {
           return orig;
         }
-        Utils23.getOperators(orig).forEach((op) => {
+        Utils24.getOperators(orig).forEach((op) => {
           const item = orig[op];
           if (_4.isPlainObject(item)) {
             obj2[op] = this._replaceAliases(item);
@@ -161427,7 +161427,7 @@ var require_query_generator = __commonJS({
     var util = require("util");
     var _4 = require_lodash();
     var uuidv4 = (init_esm_node(), __toCommonJS(esm_node_exports)).v4;
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var deprecations = require_deprecations();
     var SqlString = require_sql_string();
     var DataTypes2 = require_data_types9();
@@ -161566,7 +161566,7 @@ var require_query_generator = __commonJS({
         if (this._dialect.supports.EXCEPTION && options2.exception) {
           options2.bindParam = false;
         }
-        valueHash = Utils23.removeNullValuesFromHash(valueHash, this.options.omitNull);
+        valueHash = Utils24.removeNullValuesFromHash(valueHash, this.options.omitNull);
         for (const key in valueHash) {
           if (Object.prototype.hasOwnProperty.call(valueHash, key)) {
             const value = valueHash[key];
@@ -161583,7 +161583,7 @@ var require_query_generator = __commonJS({
               if (modelAttributeMap && modelAttributeMap[key] && modelAttributeMap[key].autoIncrement === true) {
                 identityWrapperRequired = true;
               }
-              if (value instanceof Utils23.SequelizeMethod || options2.bindParam === false) {
+              if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
                 values2.push(this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }));
               } else {
                 values2.push(this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }, bindParam));
@@ -161613,7 +161613,7 @@ var require_query_generator = __commonJS({
             } else {
               fragments.push("DO UPDATE SET", updateKeys.join(","));
             }
-            onDuplicateKeyUpdate = ` ${Utils23.joinSQLFragments(fragments)}`;
+            onDuplicateKeyUpdate = ` ${Utils24.joinSQLFragments(fragments)}`;
           } else {
             const valueKeys = options2.updateOnDuplicate.map((attr) => `${this.quoteIdentifier(attr)}=VALUES(${this.quoteIdentifier(attr)})`);
             if (_4.isEmpty(valueKeys) && options2.upsertKeys) {
@@ -161726,7 +161726,7 @@ var require_query_generator = __commonJS({
           const returnValues = this.generateReturnValues(fieldMappedAttributes, options2);
           returning += returnValues.returningFragment;
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "INSERT",
           ignoreDuplicates,
           "INTO",
@@ -161743,7 +161743,7 @@ var require_query_generator = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils23.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const values2 = [];
         const bind = [];
         const modelAttributeMap = {};
@@ -161788,7 +161788,7 @@ var require_query_generator = __commonJS({
             continue;
           }
           const value = attrValueHash[key];
-          if (value instanceof Utils23.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -161808,7 +161808,7 @@ var require_query_generator = __commonJS({
       arithmeticQuery(operator, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
         options2 = options2 || {};
         _4.defaults(options2, { returning: true });
-        extraAttributesToBeUpdated = Utils23.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
+        extraAttributesToBeUpdated = Utils24.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
         let outputFragment = "";
         let returningFragment = "";
         if (this._dialect.supports.returnValues && options2.returning) {
@@ -161829,7 +161829,7 @@ var require_query_generator = __commonJS({
           const escapedValue = this.escape(newValue);
           updateSetSqlFragments.push(`${quotedField}=${escapedValue}`);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "UPDATE",
           this.quoteTable(tableName),
           "SET",
@@ -161853,7 +161853,7 @@ var require_query_generator = __commonJS({
           options2.prefix = options2.prefix.replace(/("|')/g, "");
         }
         const fieldsSql = options2.fields.map((field) => {
-          if (field instanceof Utils23.SequelizeMethod) {
+          if (field instanceof Utils24.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (typeof field === "string") {
@@ -161887,7 +161887,7 @@ var require_query_generator = __commonJS({
           return result2;
         });
         if (!options2.name) {
-          options2 = Utils23.nameIndex(options2, options2.prefix);
+          options2 = Utils24.nameIndex(options2, options2.prefix);
         }
         options2 = Model13._conformIndex(options2);
         if (!this._dialect.supports.index.type) {
@@ -161922,7 +161922,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "ADD",
@@ -161936,7 +161936,7 @@ var require_query_generator = __commonJS({
           if (typeof field === "string") {
             return this.quoteIdentifier(field);
           }
-          if (field instanceof Utils23.SequelizeMethod) {
+          if (field instanceof Utils24.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (field.attribute) {
@@ -162004,7 +162004,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "DROP CONSTRAINT",
@@ -162090,7 +162090,7 @@ var require_query_generator = __commonJS({
           let i = 0;
           for (i = 0; i < collectionLength - 1; i++) {
             item = collection[i];
-            if (typeof item === "string" || item._modelAttribute || item instanceof Utils23.SequelizeMethod) {
+            if (typeof item === "string" || item._modelAttribute || item instanceof Utils24.SequelizeMethod) {
               break;
             } else if (item instanceof Association2) {
               tableNames[i] = item.as;
@@ -162110,7 +162110,7 @@ var require_query_generator = __commonJS({
         if (collection._modelAttribute) {
           return `${this.quoteTable(collection.Model.name)}.${this.quoteIdentifier(collection.fieldName)}`;
         }
-        if (collection instanceof Utils23.SequelizeMethod) {
+        if (collection instanceof Utils24.SequelizeMethod) {
           return this.handleSequelizeMethod(collection);
         }
         if (_4.isPlainObject(collection) && collection.raw) {
@@ -162176,7 +162176,7 @@ var require_query_generator = __commonJS({
       escape(value, field, options2) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils23.SequelizeMethod) {
+          if (value instanceof Utils24.SequelizeMethod) {
             return this.handleSequelizeMethod(value);
           }
           if (field && field.type) {
@@ -162204,7 +162204,7 @@ var require_query_generator = __commonJS({
       format(value, field, options2, bindParam) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils23.SequelizeMethod) {
+          if (value instanceof Utils24.SequelizeMethod) {
             throw new Error("Cannot pass SequelizeMethod as a bind parameter - use escape instead");
           }
           if (field && field.type) {
@@ -162247,7 +162247,7 @@ var require_query_generator = __commonJS({
           case "sqlite":
             if (this.dialect === "mysql") {
               paths = paths.map((subPath) => {
-                return /\D/.test(subPath) ? Utils23.addTicks(subPath, '"') : subPath;
+                return /\D/.test(subPath) ? Utils24.addTicks(subPath, '"') : subPath;
               });
             }
             pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
@@ -162410,7 +162410,7 @@ var require_query_generator = __commonJS({
                   [options2.groupedLimit.on.foreignIdentifierField]: value
                 };
               }
-              return Utils23.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
+              return Utils24.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
             }).join(this._dialect.supports["UNION ALL"] ? " UNION ALL " : " UNION ")})`, mainTable.as));
           } else {
             mainQueryItems.push(this.selectFromTableFragment(options2, mainTable.model, attributes.main, mainTable.quotedName, mainTable.as));
@@ -162501,7 +162501,7 @@ var require_query_generator = __commonJS({
       escapeAttributes(attributes, options2, mainTableAs) {
         return attributes && attributes.map((attr) => {
           let addTable = true;
-          if (attr instanceof Utils23.SequelizeMethod) {
+          if (attr instanceof Utils24.SequelizeMethod) {
             return this.handleSequelizeMethod(attr);
           }
           if (Array.isArray(attr)) {
@@ -162509,7 +162509,7 @@ var require_query_generator = __commonJS({
               throw new Error(`${JSON.stringify(attr)} is not a valid attribute definition. Please use the following format: ['attribute definition', 'alias']`);
             }
             attr = attr.slice();
-            if (attr[0] instanceof Utils23.SequelizeMethod) {
+            if (attr[0] instanceof Utils24.SequelizeMethod) {
               attr[0] = this.handleSequelizeMethod(attr[0]);
               addTable = false;
             } else if (this.options.attributeBehavior === "escape" || !attr[0].includes("(") && !attr[0].includes(")")) {
@@ -162535,7 +162535,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             }
             attr = [attr[0], this.quoteIdentifier(alias)].join(" AS ");
           } else {
-            attr = !attr.includes(Utils23.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
+            attr = !attr.includes(Utils24.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
           }
           if (!_4.isEmpty(options2.include) && (!attr.includes(".") || options2.dotNotation) && addTable) {
             attr = `${mainTableAs}.${attr}`;
@@ -162567,22 +162567,22 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         if (topLevelInfo.options.includeIgnoreAttributes !== false) {
           include.model._expandAttributes(include);
-          Utils23.mapFinderOptions(include, include.model);
+          Utils24.mapFinderOptions(include, include.model);
           const includeAttributes = include.attributes.map((attr) => {
             let attrAs = attr;
             let verbatim = false;
             if (Array.isArray(attr) && attr.length === 2) {
-              if (attr[0] instanceof Utils23.SequelizeMethod && (attr[0] instanceof Utils23.Literal || attr[0] instanceof Utils23.Cast || attr[0] instanceof Utils23.Fn)) {
+              if (attr[0] instanceof Utils24.SequelizeMethod && (attr[0] instanceof Utils24.Literal || attr[0] instanceof Utils24.Cast || attr[0] instanceof Utils24.Fn)) {
                 verbatim = true;
               }
-              attr = attr.map((attr2) => attr2 instanceof Utils23.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
+              attr = attr.map((attr2) => attr2 instanceof Utils24.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
               attrAs = attr[1];
               attr = attr[0];
             }
-            if (attr instanceof Utils23.Literal) {
+            if (attr instanceof Utils24.Literal) {
               return attr.val;
             }
-            if (attr instanceof Utils23.Cast || attr instanceof Utils23.Fn) {
+            if (attr instanceof Utils24.Cast || attr instanceof Utils24.Fn) {
               throw new Error("Tried to select attributes using Sequelize.cast or Sequelize.fn without specifying an alias for the result, during eager loading. This means the attribute will not be added to the returned instance");
             }
             let prefix;
@@ -162601,7 +162601,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             if (this.options.minifyAliases) {
               alias = this._getMinifiedAlias(alias, includeAs.internalAs, topLevelInfo.options);
             }
-            return Utils23.joinSQLFragments([
+            return Utils24.joinSQLFragments([
               prefix,
               "AS",
               this.quoteIdentifier(alias, true)
@@ -162814,7 +162814,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           if (this.options.minifyAliases) {
             alias = this._getMinifiedAlias(alias, throughAs, topLevelInfo.options);
           }
-          return Utils23.joinSQLFragments([
+          return Utils24.joinSQLFragments([
             `${this.quoteIdentifier(throughAs)}.${this.quoteIdentifier(Array.isArray(attr) ? attr[0] : attr)}`,
             "AS",
             this.quoteIdentifier(alias)
@@ -163009,12 +163009,12 @@ https://github.com/sequelize/sequelize/discussions/15694`);
               if (aliasedAttribute) {
                 const modelName = this.quoteIdentifier(model.name);
                 const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-                order[0] = new Utils23.Col(alias || aliasedAttribute[1]);
+                order[0] = new Utils24.Col(alias || aliasedAttribute[1]);
               }
             }
             mainQueryOrder.push(this.quote(order, model, "->"));
           }
-        } else if (options2.order instanceof Utils23.SequelizeMethod) {
+        } else if (options2.order instanceof Utils24.SequelizeMethod) {
           const sql = this.quote(options2.order, model, "->");
           if (subQuery) {
             subQueryOrder.push(sql);
@@ -163066,15 +163066,15 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Object.prototype.hasOwnProperty.call(this.OperatorMap, smth.comparator)) {
           smth.comparator = this.OperatorMap[smth.comparator];
         }
-        if (smth instanceof Utils23.Where) {
+        if (smth instanceof Utils24.Where) {
           let value = smth.logic;
           let key;
-          if (smth.attribute instanceof Utils23.SequelizeMethod) {
+          if (smth.attribute instanceof Utils24.SequelizeMethod) {
             key = this.getWhereConditions(smth.attribute, tableName, factory, options2, prepend2);
           } else {
             key = `${this.quoteTable(smth.attribute.Model.name)}.${this.quoteIdentifier(smth.attribute.field || smth.attribute.fieldName)}`;
           }
-          if (value && value instanceof Utils23.SequelizeMethod) {
+          if (value && value instanceof Utils24.SequelizeMethod) {
             value = this.getWhereConditions(value, tableName, factory, options2, prepend2);
             if (value === "NULL") {
               if (smth.comparator === "=") {
@@ -163108,11 +163108,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return [key, value].join(` ${smth.comparator} `);
         }
-        if (smth instanceof Utils23.Literal) {
+        if (smth instanceof Utils24.Literal) {
           return smth.val;
         }
-        if (smth instanceof Utils23.Cast) {
-          if (smth.val instanceof Utils23.SequelizeMethod) {
+        if (smth instanceof Utils24.Cast) {
+          if (smth.val instanceof Utils24.SequelizeMethod) {
             result2 = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
           } else if (_4.isPlainObject(smth.val)) {
             result2 = this.whereItemsQuery(smth.val);
@@ -163121,9 +163121,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return `CAST(${result2} AS ${smth.type.toUpperCase()})`;
         }
-        if (smth instanceof Utils23.Fn) {
+        if (smth instanceof Utils24.Fn) {
           return `${smth.fn}(${smth.args.map((arg) => {
-            if (arg instanceof Utils23.SequelizeMethod) {
+            if (arg instanceof Utils24.SequelizeMethod) {
               return this.handleSequelizeMethod(arg, tableName, factory, options2, prepend2);
             }
             if (_4.isPlainObject(arg)) {
@@ -163132,7 +163132,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             return this.escape(typeof arg === "string" ? arg.replace(/\$/g, "$$$") : arg);
           }).join(", ")})`;
         }
-        if (smth instanceof Utils23.Col) {
+        if (smth instanceof Utils24.Col) {
           if (Array.isArray(smth.col) && !factory) {
             throw new Error("Cannot call Sequelize.col() with array outside of order / group clause");
           }
@@ -163151,7 +163151,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return "";
       }
       whereItemsQuery(where3, options2, binding) {
-        if (where3 === null || where3 === void 0 || Utils23.getComplexSize(where3) === 0) {
+        if (where3 === null || where3 === void 0 || Utils24.getComplexSize(where3) === 0) {
           return "";
         }
         if (typeof where3 === "string") {
@@ -163162,7 +163162,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (binding[0] !== " ")
           binding = ` ${binding} `;
         if (_4.isPlainObject(where3)) {
-          Utils23.getComplexKeys(where3).forEach((prop) => {
+          Utils24.getComplexKeys(where3).forEach((prop) => {
             const item = where3[prop];
             items.push(this.whereItemQuery(prop, item, options2));
           });
@@ -163192,7 +163192,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (isPlainObject2) {
           value = this._replaceAliases(value);
         }
-        const valueKeys = isPlainObject2 && Utils23.getComplexKeys(value);
+        const valueKeys = isPlainObject2 && Utils24.getComplexKeys(value);
         if (key === void 0) {
           if (typeof value === "string") {
             return value;
@@ -163209,11 +163209,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           const opValue2 = options2.bindParam ? this.format(value, field, options2, options2.bindParam) : this.escape(value, field);
           return this._joinKeyValue(key, opValue2, this.OperatorMap[Op2.eq], options2.prefix);
         }
-        if (value instanceof Utils23.SequelizeMethod && !(key !== void 0 && value instanceof Utils23.Fn)) {
+        if (value instanceof Utils24.SequelizeMethod && !(key !== void 0 && value instanceof Utils24.Fn)) {
           return this.handleSequelizeMethod(value);
         }
         if (key === void 0 && isArray) {
-          if (Utils23.canTreatArrayAsAnd(value)) {
+          if (Utils24.canTreatArrayAsAnd(value)) {
             key = Op2.and;
           } else {
             throw new Error("Support for literal replacements in the `where` object has been removed.");
@@ -163271,7 +163271,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(value)) {
           value = value.map((item) => {
             let itemQuery = this.whereItemsQuery(item, options2, this.OperatorMap[Op2.and]);
-            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils23.getComplexSize(item) > 1) {
+            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils24.getComplexSize(item) > 1) {
               itemQuery = `(${itemQuery})`;
             }
             return itemQuery;
@@ -163287,7 +163287,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _whereBind(binding, key, value, options2) {
         if (_4.isPlainObject(value)) {
-          value = Utils23.getComplexKeys(value).map((prop) => {
+          value = Utils24.getComplexKeys(value).map((prop) => {
             const item = value[prop];
             return this.whereItemQuery(key, { [prop]: item }, options2);
           });
@@ -163301,13 +163301,13 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         const items = [];
         let baseKey = this.quoteIdentifier(key);
         if (options2.prefix) {
-          if (options2.prefix instanceof Utils23.Literal) {
+          if (options2.prefix instanceof Utils24.Literal) {
             baseKey = `${this.handleSequelizeMethod(options2.prefix)}.${baseKey}`;
           } else {
             baseKey = `${this.quoteTable(options2.prefix)}.${baseKey}`;
           }
         }
-        Utils23.getOperators(value).forEach((op) => {
+        Utils24.getOperators(value).forEach((op) => {
           const where3 = {
             [op]: value[op]
           };
@@ -163329,7 +163329,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         let pathKey = this.jsonPathExtractionQuery(baseKey, path14);
         if (_4.isPlainObject(item)) {
-          Utils23.getOperators(item).forEach((op) => {
+          Utils24.getOperators(item).forEach((op) => {
             const value = this._toJSONValue(item[op]);
             let isJson = false;
             if (typeof value === "string" && op === Op2.contains) {
@@ -163356,9 +163356,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       _castKey(key, value, cast2, json2) {
         cast2 = cast2 || this._getJsonCast(Array.isArray(value) ? value[0] : value);
         if (cast2) {
-          return new Utils23.Literal(this.handleSequelizeMethod(new Utils23.Cast(new Utils23.Literal(key), cast2, json2)));
+          return new Utils24.Literal(this.handleSequelizeMethod(new Utils24.Cast(new Utils24.Literal(key), cast2, json2)));
         }
-        return new Utils23.Literal(key);
+        return new Utils24.Literal(key);
       }
       _getJsonCast(value) {
         if (typeof value === "number") {
@@ -163388,11 +163388,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return [key, value].join(` ${comparator} `);
       }
       _getSafeKey(key, prefix) {
-        if (key instanceof Utils23.SequelizeMethod) {
+        if (key instanceof Utils24.SequelizeMethod) {
           key = this.handleSequelizeMethod(key);
           return this._prefixKey(this.handleSequelizeMethod(key), prefix);
         }
-        if (Utils23.isColString(key)) {
+        if (Utils24.isColString(key)) {
           key = key.substr(1, key.length - 2).split(".");
           if (key.length > 2) {
             key = [
@@ -163406,7 +163406,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _prefixKey(key, prefix) {
         if (prefix) {
-          if (prefix instanceof Utils23.Literal) {
+          if (prefix instanceof Utils24.Literal) {
             return [this.handleSequelizeMethod(prefix), key].join(".");
           }
           return [this.quoteTable(prefix), key].join(".");
@@ -163425,7 +163425,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         switch (prop) {
           case Op2.in:
           case Op2.notIn:
-            if (value instanceof Utils23.Literal) {
+            if (value instanceof Utils24.Literal) {
               return this._joinKeyValue(key, value.val, comparator, options2.prefix);
             }
             if (value.length) {
@@ -163461,7 +163461,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           case Op2.endsWith:
           case Op2.substring:
             comparator = this.OperatorMap[Op2.like];
-            if (value instanceof Utils23.Literal) {
+            if (value instanceof Utils24.Literal) {
               value = value.val;
             }
             let pattern = `${value}%`;
@@ -163507,7 +163507,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (prepend2 === void 0) {
           prepend2 = true;
         }
-        if (smth && smth instanceof Utils23.SequelizeMethod) {
+        if (smth && smth instanceof Utils24.SequelizeMethod) {
           return this.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
         if (_4.isPlainObject(smth)) {
@@ -163542,7 +163542,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(smth)) {
           if (smth.length === 0 || smth.length > 0 && smth[0].length === 0)
             return "1=1";
-          if (Utils23.canTreatArrayAsAnd(smth)) {
+          if (Utils24.canTreatArrayAsAnd(smth)) {
             const _smth = { [Op2.and]: smth };
             return this.getWhereConditions(_smth, tableName, factory, options2, prepend2);
           }
@@ -163603,7 +163603,7 @@ var require_query_generator2 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -163638,7 +163638,7 @@ var require_query_generator2 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -163710,7 +163710,7 @@ var require_query_generator2 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -163745,7 +163745,7 @@ var require_query_generator2 = __commonJS({
         return `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = ${tableName} AND TABLE_SCHEMA = ${this.escape(this.sequelize.config.database)}`;
       }
       addColumnQuery(table, key, dataType) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -163759,7 +163759,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -163780,7 +163780,7 @@ var require_query_generator2 = __commonJS({
             attrString.push(`\`${attributeName}\` \`${attributeName}\` ${definition}`);
           }
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `CHANGE ${attrString.join(", ")}`,
@@ -163794,7 +163794,7 @@ var require_query_generator2 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`\`${attrBefore}\` \`${attrName}\` ${definition}`);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "CHANGE",
@@ -163803,7 +163803,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils23.Json) {
+        if (smth instanceof Utils24.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -163822,7 +163822,7 @@ var require_query_generator2 = __commonJS({
             }
             return str;
           }
-        } else if (smth instanceof Utils23.Cast) {
+        } else if (smth instanceof Utils24.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           } else if (smth.json && /boolean/i.test(smth.type)) {
@@ -163860,7 +163860,7 @@ var require_query_generator2 = __commonJS({
         return query + limit;
       }
       showIndexesQuery(tableName, options2) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           `SHOW INDEX FROM ${this.quoteTable(tableName)}`,
           options2 && options2.database && `FROM \`${options2.database}\``
         ]);
@@ -163868,7 +163868,7 @@ var require_query_generator2 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -163885,9 +163885,9 @@ var require_query_generator2 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -163908,7 +163908,7 @@ var require_query_generator2 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " auto_increment";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -164001,7 +164001,7 @@ var require_query_generator2 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -164014,7 +164014,7 @@ var require_query_generator2 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -164035,7 +164035,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -164044,11 +164044,11 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       quoteIdentifier(identifier2, force) {
-        return Utils23.addTicks(Utils23.removeTicks(identifier2, "`"), "`");
+        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils23.addTicks(identifier2, "'");
+      return Utils24.addTicks(identifier2, "'");
     }
     module2.exports = MySQLQueryGenerator;
   }
@@ -164075,14 +164075,14 @@ var require_query_generator3 = __commonJS({
       return a;
     };
     var MySQLQueryGenerator = require_query_generator2();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var MariaDBQueryGenerator = class extends MySQLQueryGenerator {
       createSchema(schema, options2) {
         options2 = __spreadValues({
           charset: null,
           collate: null
         }, options2);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "CREATE SCHEMA IF NOT EXISTS",
           this.quoteIdentifier(schema),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -164104,7 +164104,7 @@ var require_query_generator3 = __commonJS({
             schemasToSkip.push(this.escape(schemaName));
           }
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT SCHEMA_NAME as schema_name",
           "FROM INFORMATION_SCHEMA.SCHEMATA",
           `WHERE SCHEMA_NAME NOT IN (${schemasToSkip.join(", ")})`,
@@ -164121,7 +164121,7 @@ var require_query_generator3 = __commonJS({
         return `${query};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils23.addTicks(Utils23.removeTicks(identifier2, "`"), "`");
+        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = MariaDBQueryGenerator;
@@ -164773,7 +164773,7 @@ var require_query_generator4 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var DataTypes2 = require_data_types9();
     var TableHints2 = require_table_hints();
     var AbstractQueryGenerator = require_query_generator();
@@ -164931,7 +164931,7 @@ var require_query_generator4 = __commonJS({
           }
         }
         const quotedTableName = this.quoteTable(tableName);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           `IF OBJECT_ID('${quotedTableName}', 'U') IS NULL`,
           `CREATE TABLE ${quotedTableName} (${attributesClauseParts.join(", ")})`,
           ";",
@@ -164989,7 +164989,7 @@ var require_query_generator4 = __commonJS({
       }
       dropTableQuery(tableName) {
         const quoteTbl = this.quoteTable(tableName);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           `IF OBJECT_ID('${quoteTbl}', 'U') IS NOT NULL`,
           "DROP TABLE",
           quoteTbl,
@@ -165003,7 +165003,7 @@ var require_query_generator4 = __commonJS({
           commentStr = this.commentTemplate(dataType.comment, table, key);
           delete dataType["comment"];
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -165017,7 +165017,7 @@ var require_query_generator4 = __commonJS({
         return ` EXEC sp_addextendedproperty @name = N'MS_Description', @value = ${this.escape(comment)}, @level0type = N'Schema', @level0name = 'dbo', @level1type = N'Table', @level1name = ${this.quoteIdentifier(table)}, @level2type = N'Column', @level2name = ${this.quoteIdentifier(column)};`;
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -165043,7 +165043,7 @@ var require_query_generator4 = __commonJS({
             attrString.push(`${quotedAttrName} ${definition}`);
           }
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `ALTER COLUMN ${attrString.join(", ")}`,
@@ -165054,7 +165054,7 @@ var require_query_generator4 = __commonJS({
       }
       renameColumnQuery(tableName, attrBefore, attributes) {
         const newName = Object.keys(attributes)[0];
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "EXEC sp_rename",
           `'${this.quoteTable(tableName)}.${attrBefore}',`,
           `'${newName}',`,
@@ -165212,7 +165212,7 @@ var require_query_generator4 = __commonJS({
       deleteQuery(tableName, where3, options2 = {}, model) {
         const table = this.quoteTable(tableName);
         const whereClause = this.getWhereConditions(where3, null, model, options2);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "DELETE",
           options2.limit && `TOP(${this.escape(options2.limit)})`,
           "FROM",
@@ -165232,7 +165232,7 @@ var require_query_generator4 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifiers(indexName)} ON ${this.quoteIdentifiers(tableName)}`;
       }
@@ -165262,13 +165262,13 @@ var require_query_generator4 = __commonJS({
         template2 = attribute.type.toString();
         if (attribute.allowNull === false) {
           template2 += " NOT NULL";
-        } else if (!attribute.primaryKey && !Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        } else if (!attribute.primaryKey && !Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += " NULL";
         }
         if (attribute.autoIncrement) {
           template2 += " IDENTITY(1,1)";
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -165347,7 +165347,7 @@ var require_query_generator4 = __commonJS({
       }
       getForeignKeyQuery(table, attributeName) {
         const tableName = table.tableName || table;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           this._getForeignKeysQueryPrefix(),
           "WHERE",
           `TB.NAME =${wrapSingleQuote(tableName)}`,
@@ -165358,7 +165358,7 @@ var require_query_generator4 = __commonJS({
       }
       getPrimaryKeyConstraintQuery(table, attributeName) {
         const tableName = wrapSingleQuote(table.tableName || table);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT K.TABLE_NAME AS tableName,",
           "K.COLUMN_NAME AS columnName,",
           "K.CONSTRAINT_NAME AS constraintName",
@@ -165375,7 +165375,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -165384,7 +165384,7 @@ var require_query_generator4 = __commonJS({
       }
       getDefaultConstraintQuery(tableName, attributeName) {
         const quotedTable = this.quoteTable(tableName);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT name FROM sys.default_constraints",
           `WHERE PARENT_OBJECT_ID = OBJECT_ID('${quotedTable}', 'U')`,
           `AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = ('${attributeName}')`,
@@ -165393,7 +165393,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropConstraintQuery(tableName, constraintName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP CONSTRAINT",
@@ -165460,7 +165460,7 @@ var require_query_generator4 = __commonJS({
               const joinQueries = this.generateInclude(include, { externalAs: mainTableAs, internalAs: mainTableAs }, topLevelInfo);
               mainJoinQueries = mainJoinQueries.concat(joinQueries.mainQuery);
             }
-            return Utils23.joinSQLFragments([
+            return Utils24.joinSQLFragments([
               "SELECT TOP 100 PERCENT",
               attributes.join(", "),
               "FROM (",
@@ -165488,7 +165488,7 @@ var require_query_generator4 = __commonJS({
               `) AS ${tmpTable}`
             ]);
           }
-          return Utils23.joinSQLFragments([
+          return Utils24.joinSQLFragments([
             "SELECT TOP 100 PERCENT",
             attributes.join(", "),
             "FROM (",
@@ -165510,7 +165510,7 @@ var require_query_generator4 = __commonJS({
             `) AS ${tmpTable}`
           ]);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT",
           isSQLServer2008 && options2.limit && `TOP ${options2.limit}`,
           attributes.join(", "),
@@ -165538,17 +165538,17 @@ var require_query_generator4 = __commonJS({
             if (aliasedAttribute) {
               const modelName = this.quoteIdentifier(options2.tableAs || model.name);
               const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-              primaryKey = new Utils23.Col(alias || aliasedAttribute[1]);
+              primaryKey = new Utils24.Col(alias || aliasedAttribute[1]);
             }
             if (!options2.order || !options2.order.length) {
               fragment += ` ORDER BY ${tablePkFragment}`;
             } else {
               const orderFieldNames = (options2.order || []).map((order) => {
                 const value = Array.isArray(order) ? order[0] : order;
-                if (value instanceof Utils23.Col) {
+                if (value instanceof Utils24.Col) {
                   return value.col;
                 }
-                if (value instanceof Utils23.Literal) {
+                if (value instanceof Utils24.Literal) {
                   return value.val;
                 }
                 return value;
@@ -165577,7 +165577,7 @@ var require_query_generator4 = __commonJS({
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils23.addTicks(Utils23.removeTicks(identifier2, "'"), "'");
+      return Utils24.addTicks(Utils24.removeTicks(identifier2, "'"), "'");
     }
     module2.exports = MSSQLQueryGenerator;
   }
@@ -165604,7 +165604,7 @@ var require_query_interface3 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var QueryTypes2 = require_query_types();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
@@ -165636,7 +165636,7 @@ var require_query_interface3 = __commonJS({
         const model = options2.model;
         const wheres = [];
         options2 = __spreadValues({}, options2);
-        if (!Utils23.isWhereEmpty(where3)) {
+        if (!Utils24.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         let indexes = Object.values(model.uniqueKeys).map((item) => item.fields);
@@ -166351,7 +166351,7 @@ var require_query5 = __commonJS({
     var SequelizeErrors = require_errors4();
     var parserStore = require_parserStore()("oracle");
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var { logger } = require_logger3();
     var debug2 = logger.debugContext("sql:oracle");
     var OracleQuery = class extends AbstractQuery {
@@ -166811,7 +166811,7 @@ var require_query5 = __commonJS({
           const columns = {};
           columns.fields = acc[accKey].fields;
           if (acc[accKey].name.match(/sys_c[0-9]*/)) {
-            acc[accKey].name = Utils23.nameIndex(columns, acc[accKey].tableName).name;
+            acc[accKey].name = Utils24.nameIndex(columns, acc[accKey].tableName).name;
           }
           returnIndexes.push(acc[accKey]);
         }
@@ -166867,7 +166867,7 @@ var require_query_generator5 = __commonJS({
     __export2(exports2, {
       OracleQueryGenerator: () => OracleQueryGenerator
     });
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var _4 = require_lodash();
@@ -167090,12 +167090,12 @@ var require_query_generator5 = __commonJS({
             }
           });
         }
-        const query = Utils23.joinSQLFragments([
+        const query = Utils24.joinSQLFragments([
           "CREATE TABLE",
           values2.table,
           `(${values2.attributes})`
         ]);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "BEGIN",
           "EXECUTE IMMEDIATE",
           `${this.escape(query)};`,
@@ -167125,7 +167125,7 @@ var require_query_generator5 = __commonJS({
         ].join("");
       }
       renameTableQuery(before2, after2) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(before2),
           "RENAME TO",
@@ -167140,7 +167140,7 @@ var require_query_generator5 = __commonJS({
         return `SELECT owner as table_schema, table_name, 0 as lvl FROM all_tables where OWNER IN(SELECT USERNAME AS "schema_name" FROM ALL_USERS WHERE ORACLE_MAINTAINED = 'N')`;
       }
       dropTableQuery(tableName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "BEGIN ",
           "EXECUTE IMMEDIATE 'DROP TABLE",
           this.quoteTable(tableName),
@@ -167172,14 +167172,14 @@ var require_query_generator5 = __commonJS({
       }
       addColumnQuery(table, key, dataType) {
         dataType.field = key;
-        const attribute = Utils23.joinSQLFragments([
+        const attribute = Utils24.joinSQLFragments([
           this.quoteIdentifier(key),
           this.attributeToSQL(dataType, {
             attributeName: key,
             context: "addColumn"
           })
         ]);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -167187,7 +167187,7 @@ var require_query_generator5 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -167219,7 +167219,7 @@ var require_query_generator5 = __commonJS({
           attributeNameConstant,
           ";"
         ].join(" ");
-        const secondQuery = Utils23.joinSQLFragments([
+        const secondQuery = Utils24.joinSQLFragments([
           `ALTER TABLE ${this.quoteIdentifier(tableName)}`,
           "ADD FOREIGN KEY",
           `(${this.quoteIdentifier(attributeName)})`,
@@ -167240,7 +167240,7 @@ var require_query_generator5 = __commonJS({
       }
       _modifyQuery(definition, table, attributeName) {
         definition = definition.startsWith("BLOB") ? definition.replace("BLOB ", "") : definition;
-        const query = Utils23.joinSQLFragments([
+        const query = Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "MODIFY",
@@ -167383,7 +167383,7 @@ var require_query_generator5 = __commonJS({
           }
           insertColumns.push(this.quoteIdentifier(key));
         }
-        let query = Utils23.joinSQLFragments([
+        let query = Utils24.joinSQLFragments([
           "INSERT",
           "INTO",
           this.quoteTable(tableName),
@@ -167393,7 +167393,7 @@ var require_query_generator5 = __commonJS({
         ]);
         if (returnColumn.length > 0) {
           options2.outBindAttributes = outBindBindDefMap;
-          query = Utils23.joinSQLFragments([
+          query = Utils24.joinSQLFragments([
             query,
             "RETURNING",
             `${returnColumn.join(",")}`,
@@ -167442,7 +167442,7 @@ var require_query_generator5 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifier(indexName)}`;
       }
@@ -167465,7 +167465,7 @@ var require_query_generator5 = __commonJS({
           template2 += ` CHECK (${this.quoteIdentifier(options2.attributeName)} IS JSON)`;
           return template2;
         }
-        if (Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.allowNull === false) {
@@ -167494,13 +167494,13 @@ var require_query_generator5 = __commonJS({
             unsignedTemplate += ` check(${this.quoteIdentifier(options2.attributeName)} >= 0)`;
           }
           template2 = attribute.type.toString();
-          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils23.defaultValueSchemable(attribute.defaultValue)) {
+          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
             template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
           }
           if (!attribute.autoIncrement) {
             if (attribute.allowNull === false) {
               template2 += " NOT NULL";
-            } else if (!attribute.primaryKey && !Utils23.defaultValueSchemable(attribute.defaultValue)) {
+            } else if (!attribute.primaryKey && !Utils24.defaultValueSchemable(attribute.defaultValue)) {
               template2 += " NULL";
             }
           }
@@ -167645,7 +167645,7 @@ var require_query_generator5 = __commonJS({
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
         let str;
-        if (smth instanceof Utils23.Json) {
+        if (smth instanceof Utils24.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -167664,8 +167664,8 @@ var require_query_generator5 = __commonJS({
             return str;
           }
         }
-        if (smth instanceof Utils23.Cast) {
-          if (smth.val instanceof Utils23.SequelizeMethod) {
+        if (smth instanceof Utils24.Cast) {
+          if (smth.val instanceof Utils24.SequelizeMethod) {
             str = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
             if (smth.type === "boolean") {
               str = `(CASE WHEN ${str}='true' THEN 1 ELSE 0 END)`;
@@ -167727,7 +167727,7 @@ var require_query_generator5 = __commonJS({
         let paths = _4.toPath(path14);
         const quotedColumn = this.isIdentifierQuoted(column) ? column : this.quoteIdentifier(column);
         paths = paths.map((subPath) => {
-          return /\D/.test(subPath) ? Utils23.addTicks(subPath, '"') : subPath;
+          return /\D/.test(subPath) ? Utils24.addTicks(subPath, '"') : subPath;
         });
         const pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
         return `json_value(${quotedColumn},${pathStr})`;
@@ -167759,12 +167759,12 @@ var require_query_generator5 = __commonJS({
       quoteIdentifier(identifier2, force = false) {
         const optForceQuote = force;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils23.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
         const regExp = /^(([\w][\w\d_]*))$/g;
         if (optForceQuote !== true && optQuoteIdentifiers === false && regExp.test(rawIdentifier) && !ORACLE_RESERVED_WORDS.includes(rawIdentifier.toUpperCase())) {
           return rawIdentifier;
         }
-        return Utils23.addTicks(rawIdentifier, '"');
+        return Utils24.addTicks(rawIdentifier, '"');
       }
       bindParam(bind, posOffset = 0) {
         return (value) => {
@@ -168526,7 +168526,7 @@ var require_query_generator6 = __commonJS({
         }
       return a;
     };
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var util = require("util");
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
@@ -168676,7 +168676,7 @@ var require_query_generator6 = __commonJS({
         return hasJsonFunction;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils23.Json) {
+        if (smth instanceof Utils24.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -168823,7 +168823,7 @@ var require_query_generator6 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes, options2) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return [
           "DROP INDEX",
@@ -168877,7 +168877,7 @@ var require_query_generator6 = __commonJS({
             sql += " SERIAL";
           }
         }
-        if (Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils24.defaultValueSchemable(attribute.defaultValue)) {
           sql += ` DEFAULT ${this.escape(attribute.defaultValue, attribute)}`;
         }
         if (attribute.unique === true) {
@@ -168987,7 +168987,7 @@ var require_query_generator6 = __commonJS({
         return `ALTER FUNCTION ${oldFunctionName}(${paramList}) RENAME TO ${newFunctionName};`;
       }
       pgEscapeAndQuote(val) {
-        return this.quoteIdentifier(Utils23.removeTicks(this.escape(val), "'"));
+        return this.quoteIdentifier(Utils24.removeTicks(this.escape(val), "'"));
       }
       _expandFunctionParamList(params) {
         if (params === void 0 || !Array.isArray(params)) {
@@ -169075,7 +169075,7 @@ var require_query_generator6 = __commonJS({
       pgEnumName(tableName, attr, options2) {
         options2 = options2 || {};
         const tableDetails = this.extractTableDetails(tableName, options2);
-        let enumName = Utils23.addTicks(Utils23.generateEnumName(tableDetails.tableName, attr), '"');
+        let enumName = Utils24.addTicks(Utils24.generateEnumName(tableDetails.tableName, attr), '"');
         if (options2.schema !== false && tableDetails.schema) {
           enumName = this.quoteIdentifier(tableDetails.schema) + tableDetails.delimiter + enumName;
         }
@@ -169171,9 +169171,9 @@ var require_query_generator6 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils23.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || POSTGRES_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils23.addTicks(rawIdentifier, '"');
+          return Utils24.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
@@ -169220,7 +169220,7 @@ var require_query_interface5 = __commonJS({
     var DataTypes2 = require_data_types9();
     var QueryTypes2 = require_query_types();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Deferrable2 = require_deferrable();
     var PostgresQueryInterface = class extends QueryInterface2 {
       async ensureEnums(tableName, attributes, options2, model) {
@@ -169314,7 +169314,7 @@ var require_query_interface5 = __commonJS({
         const query = this.queryGenerator.getForeignKeyReferencesQuery(table.tableName || table, this.sequelize.config.database, table.schema);
         const result2 = await this.sequelize.query(query, queryOptions);
         return result2.map((fkMeta) => {
-          const _a = Utils23.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
+          const _a = Utils24.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
           return __spreadProps(__spreadValues({}, remaining), {
             deferrable: isDeferrable === "NO" ? Deferrable2.NOT : initiallyDeferred === "NO" ? Deferrable2.INITIALLY_IMMEDIATE : Deferrable2.INITIALLY_DEFERRED
           });
@@ -169528,7 +169528,7 @@ var require_query7 = __commonJS({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/dialects/sqlite/query.js"(exports2, module2) {
     "use strict";
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var AbstractQuery = require_query();
     var QueryTypes2 = require_query_types();
     var sequelizeErrors = require_errors4();
@@ -169782,10 +169782,10 @@ var require_query7 = __commonJS({
             }
             const referencesRegex = /REFERENCES.+\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
             const referenceConditions = constraintSql.match(referencesRegex)[0].split(" ");
-            referenceTableName = Utils23.removeTicks(referenceConditions[1]);
+            referenceTableName = Utils24.removeTicks(referenceConditions[1]);
             let columnNames = referenceConditions[2];
             columnNames = columnNames.replace(/\(|\)/g, "").split(", ");
-            referenceTableKeys = columnNames.map((column) => Utils23.removeTicks(column));
+            referenceTableKeys = columnNames.map((column) => Utils24.removeTicks(column));
           }
           const constraintCondition = constraintSql.match(/\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/)[0];
           constraintSql = constraintSql.replace(/\(.+\)/, "");
@@ -169794,7 +169794,7 @@ var require_query7 = __commonJS({
             constraint[1] += " KEY";
           }
           return {
-            constraintName: Utils23.removeTicks(constraint[0]),
+            constraintName: Utils24.removeTicks(constraint[0]),
             constraintType: constraint[1],
             updateAction,
             deleteAction,
@@ -169915,7 +169915,7 @@ var require_query_generator7 = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Transaction2 = require_transaction();
     var _4 = require_lodash();
     var MySqlQueryGenerator = require_query_generator2();
@@ -170029,10 +170029,10 @@ var require_query_generator7 = __commonJS({
         return value;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils23.Json) {
+        if (smth instanceof Utils24.Json) {
           return super.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
-        if (smth instanceof Utils23.Cast) {
+        if (smth instanceof Utils24.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           }
@@ -170053,7 +170053,7 @@ var require_query_generator7 = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils23.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -170068,7 +170068,7 @@ var require_query_generator7 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils23.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -170086,7 +170086,7 @@ var require_query_generator7 = __commonJS({
       truncateTableQuery(tableName, options2 = {}) {
         return [
           `DELETE FROM ${this.quoteTable(tableName)}`,
-          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils23.addTicks(Utils23.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
+          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils24.addTicks(Utils24.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
         ].join("");
       }
       deleteQuery(tableName, where3, options2 = {}, model) {
@@ -170110,7 +170110,7 @@ var require_query_generator7 = __commonJS({
             if (Object.prototype.hasOwnProperty.call(dataType, "allowNull") && !dataType.allowNull) {
               sql += " NOT NULL";
             }
-            if (Utils23.defaultValueSchemable(dataType.defaultValue)) {
+            if (Utils24.defaultValueSchemable(dataType.defaultValue)) {
               sql += ` DEFAULT ${this.escape(dataType.defaultValue, dataType)}`;
             }
             if (dataType.unique === true) {
@@ -170158,7 +170158,7 @@ var require_query_generator7 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX IF EXISTS ${this.quoteIdentifier(indexName)}`;
       }
@@ -170252,7 +170252,7 @@ var require_query_generator7 = __commonJS({
         return `SELECT name FROM sqlite_master WHERE type='table' AND name=${this.escape(this.addSchema(tableName))};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils23.addTicks(Utils23.removeTicks(identifier2, "`"), "`");
+        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = SQLiteQueryGenerator;
@@ -171051,7 +171051,7 @@ var require_query_generator8 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var randomBytes = require("crypto").randomBytes;
@@ -171339,7 +171339,7 @@ var require_query_generator8 = __commonJS({
           sql.query = `SELECT * FROM FINAL TABLE (${sql.query});`;
           return sql;
         }
-        attrValueHash = Utils23.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -171354,7 +171354,7 @@ var require_query_generator8 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils23.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -171497,7 +171497,7 @@ var require_query_generator8 = __commonJS({
         const sql = "DROP INDEX <%= indexName %>";
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         const values2 = {
           tableName: this.quoteIdentifiers(tableName),
@@ -171536,7 +171536,7 @@ var require_query_generator8 = __commonJS({
           }
           template2 += ` GENERATED BY DEFAULT AS IDENTITY(START WITH ${initialValue}, INCREMENT BY 1)`;
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -171716,7 +171716,7 @@ var require_query_generator8 = __commonJS({
         for (const key in rawAttributes) {
           if (rawAttributes[key].unique && dataValues[key] === void 0) {
             if (rawAttributes[key].type instanceof DataTypes2.DATE) {
-              dataValues[key] = Utils23.now("db2");
+              dataValues[key] = Utils24.now("db2");
             } else if (rawAttributes[key].type instanceof DataTypes2.STRING) {
               dataValues[key] = `unique${uniqno++}`;
             } else if (rawAttributes[key].type instanceof DataTypes2.INTEGER) {
@@ -171729,7 +171729,7 @@ var require_query_generator8 = __commonJS({
         return uniqno;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils23.addTicks(Utils23.removeTicks(identifier2, '"'), '"');
+        return Utils24.addTicks(Utils24.removeTicks(identifier2, '"'), '"');
       }
     };
     function wrapSingleQuote(identifier2) {
@@ -171766,7 +171766,7 @@ var require_query_interface7 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
     var QueryTypes2 = require_query_types();
@@ -171786,7 +171786,7 @@ var require_query_interface7 = __commonJS({
         let indexes = [];
         let indexFields;
         options2 = _4.clone(options2);
-        if (!Utils23.isWhereEmpty(where3)) {
+        if (!Utils24.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         indexes = _4.map(model.uniqueKeys, (value) => {
@@ -172342,7 +172342,7 @@ var require_query_generator9 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -172378,7 +172378,7 @@ var require_query_generator9 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -172449,7 +172449,7 @@ var require_query_generator9 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -172469,7 +172469,7 @@ var require_query_generator9 = __commonJS({
         return `SHOW FULL COLUMNS FROM ${table};`;
       }
       showTablesQuery(database) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           database ? `AND TABLE_SCHEMA = ${this.escape(database)}` : "AND TABLE_SCHEMA NOT IN ( 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA', 'SYS')",
           ";"
@@ -172478,7 +172478,7 @@ var require_query_generator9 = __commonJS({
       tableExistsQuery(table) {
         const tableName = table.tableName || table;
         const schema = table.schema;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           `AND TABLE_SCHEMA = ${schema !== void 0 ? this.escape(schema) : "CURRENT_SCHEMA()"}`,
           `AND TABLE_NAME = ${this.escape(tableName)}`,
@@ -172486,7 +172486,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       addColumnQuery(table, key, dataType) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -172500,7 +172500,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -172509,7 +172509,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       changeColumnQuery(tableName, attributes) {
-        const query = (...subQuerys) => Utils23.joinSQLFragments([
+        const query = (...subQuerys) => Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "ALTER COLUMN",
@@ -172552,7 +172552,7 @@ var require_query_generator9 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`'${attrBefore}' '${attrName}' ${definition}`);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "RENAME COLUMN",
@@ -172561,7 +172561,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       handleSequelizeMethod(attr, tableName, factory, options2, prepend2) {
-        if (attr instanceof Utils23.Json) {
+        if (attr instanceof Utils24.Json) {
           if (attr.conditions) {
             const conditions = this.parseConditionObject(attr.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -172580,7 +172580,7 @@ var require_query_generator9 = __commonJS({
             }
             return str;
           }
-        } else if (attr instanceof Utils23.Cast) {
+        } else if (attr instanceof Utils24.Cast) {
           if (/timestamp/i.test(attr.type)) {
             attr.type = "datetime";
           } else if (attr.json && /boolean/i.test(attr.type)) {
@@ -172594,7 +172594,7 @@ var require_query_generator9 = __commonJS({
         return super.handleSequelizeMethod(attr, tableName, factory, options2, prepend2);
       }
       truncateTableQuery(tableName) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "TRUNCATE",
           this.quoteTable(tableName)
         ]);
@@ -172615,7 +172615,7 @@ var require_query_generator9 = __commonJS({
           const pks = Object.values(model.primaryKeys).map((pk) => this.quoteIdentifier(pk.field)).join(",");
           primaryKeys = model.primaryKeyAttributes.length > 1 ? `(${pks})` : pks;
           primaryKeysSelection = pks;
-          return Utils23.joinSQLFragments([
+          return Utils24.joinSQLFragments([
             "DELETE FROM",
             table,
             "WHERE",
@@ -172630,7 +172630,7 @@ var require_query_generator9 = __commonJS({
             ";"
           ]);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "DELETE FROM",
           table,
           whereClause,
@@ -172643,7 +172643,7 @@ var require_query_generator9 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -172660,9 +172660,9 @@ var require_query_generator9 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils23.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -172684,7 +172684,7 @@ var require_query_generator9 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " AUTOINCREMENT";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils23.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -172795,7 +172795,7 @@ var require_query_generator9 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -172808,7 +172808,7 @@ var require_query_generator9 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -172829,7 +172829,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils23.joinSQLFragments([
+        return Utils24.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -172849,15 +172849,15 @@ var require_query_generator9 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils23.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || SNOWFLAKE_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils23.addTicks(rawIdentifier, '"');
+          return Utils24.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils23.addTicks(identifier2, "'");
+      return Utils24.addTicks(identifier2, "'");
     }
     module2.exports = SnowflakeQueryGenerator;
   }
@@ -173346,7 +173346,7 @@ var require_sequelize = __commonJS({
     var pgConnectionString = require_pg_connection_string();
     var retry = require_dist3().default;
     var _4 = require_lodash();
-    var Utils23 = require_utils6();
+    var Utils24 = require_utils6();
     var Model13 = require_model2();
     var DataTypes2 = require_data_types9();
     var Deferrable2 = require_deferrable();
@@ -173790,16 +173790,16 @@ var require_sequelize = __commonJS({
         return this.fn("RAND");
       }
       static fn(fn2, ...args) {
-        return new Utils23.Fn(fn2, args);
+        return new Utils24.Fn(fn2, args);
       }
       static col(col2) {
-        return new Utils23.Col(col2);
+        return new Utils24.Col(col2);
       }
       static cast(val, type2) {
-        return new Utils23.Cast(val, type2);
+        return new Utils24.Cast(val, type2);
       }
       static literal(val) {
-        return new Utils23.Literal(val);
+        return new Utils24.Literal(val);
       }
       static and(...args) {
         return { [Op2.and]: args };
@@ -173808,10 +173808,10 @@ var require_sequelize = __commonJS({
         return { [Op2.or]: args };
       }
       static json(conditionsOrPath, value) {
-        return new Utils23.Json(conditionsOrPath, value);
+        return new Utils24.Json(conditionsOrPath, value);
       }
       static where(attr, comparator, logic) {
-        return new Utils23.Where(attr, comparator, logic);
+        return new Utils24.Where(attr, comparator, logic);
       }
       async transaction(options2, autoCallback) {
         if (typeof options2 === "function") {
@@ -173935,7 +173935,7 @@ var require_sequelize = __commonJS({
       }
     });
     Sequelize2.options = { hooks: {} };
-    Sequelize2.Utils = Utils23;
+    Sequelize2.Utils = Utils24;
     Sequelize2.Op = Op2;
     Sequelize2.TableHints = TableHints2;
     Sequelize2.IndexHints = IndexHints2;
@@ -173955,7 +173955,7 @@ var require_sequelize = __commonJS({
     }
     Sequelize2.Deferrable = Deferrable2;
     Sequelize2.prototype.Association = Sequelize2.Association = Association2;
-    Sequelize2.useInflection = Utils23.useInflection;
+    Sequelize2.useInflection = Utils24.useInflection;
     Hooks.applyTo(Sequelize2);
     Hooks.applyTo(Sequelize2.prototype);
     Sequelize2.Error = sequelizeErrors.BaseError;
@@ -173977,7 +173977,7 @@ var require_lib11 = __commonJS({
 });
 
 // ../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/index.mjs
-var import_index2, lib_default, Sequelize, fn, col, cast, literal, and, or, json, where2, QueryInterface, ABSTRACT, STRING, CHAR, TEXT, NUMBER, TINYINT, SMALLINT, MEDIUMINT, INTEGER, BIGINT, FLOAT, TIME, DATE, DATEONLY, BOOLEAN, NOW, BLOB, DECIMAL, NUMERIC, UUID, UUIDV1, UUIDV4, HSTORE, JSON2, JSONB, VIRTUAL, ARRAY, ENUM, RANGE, REAL, DOUBLE, GEOMETRY, GEOGRAPHY, CIDR, INET, MACADDR, CITEXT, TSVECTOR, Model2, Transaction, Association, BelongsTo, HasOne, HasMany, BelongsToMany, BaseError, AggregateError2, AsyncQueueError, AssociationError, BulkRecordError, ConnectionError, DatabaseError, EagerLoadingError, EmptyResultError, InstanceError, OptimisticLockError, QueryError, SequelizeScopeError, ValidationError, ValidationErrorItem, AccessDeniedError, ConnectionAcquireTimeoutError, ConnectionRefusedError, ConnectionTimedOutError, HostNotFoundError, HostNotReachableError, InvalidConnectionError, ExclusionConstraintError, ForeignKeyConstraintError, TimeoutError, UnknownConstraintError, UniqueConstraintError, Error2, useInflection, Utils2, QueryTypes, Op, TableHints, IndexHints, DataTypes, Deferrable, Validator, ValidationErrorItemOrigin, ValidationErrorItemType;
+var import_index2, lib_default, Sequelize, fn, col, cast, literal, and, or, json, where2, QueryInterface, ABSTRACT, STRING, CHAR, TEXT, NUMBER, TINYINT, SMALLINT, MEDIUMINT, INTEGER, BIGINT, FLOAT, TIME, DATE, DATEONLY, BOOLEAN, NOW, BLOB, DECIMAL, NUMERIC, UUID, UUIDV1, UUIDV4, HSTORE, JSON2, JSONB, VIRTUAL, ARRAY, ENUM, RANGE, REAL, DOUBLE, GEOMETRY, GEOGRAPHY, CIDR, INET, MACADDR, CITEXT, TSVECTOR, Model2, Transaction, Association, BelongsTo, HasOne, HasMany, BelongsToMany, BaseError, AggregateError2, AsyncQueueError, AssociationError, BulkRecordError, ConnectionError, DatabaseError, EagerLoadingError, EmptyResultError, InstanceError, OptimisticLockError, QueryError, SequelizeScopeError, ValidationError, ValidationErrorItem, AccessDeniedError, ConnectionAcquireTimeoutError, ConnectionRefusedError, ConnectionTimedOutError, HostNotFoundError, HostNotReachableError, InvalidConnectionError, ExclusionConstraintError, ForeignKeyConstraintError, TimeoutError, UnknownConstraintError, UniqueConstraintError, Error2, useInflection, Utils3, QueryTypes, Op, TableHints, IndexHints, DataTypes, Deferrable, Validator, ValidationErrorItemOrigin, ValidationErrorItemType;
 var init_lib = __esm({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/index.mjs"() {
     import_index2 = __toESM(require_lib11(), 1);
@@ -174066,7 +174066,7 @@ var init_lib = __esm({
     UniqueConstraintError = import_index2.default.UniqueConstraintError;
     Error2 = import_index2.default.Error;
     useInflection = import_index2.default.useInflection;
-    Utils2 = import_index2.default.Utils;
+    Utils3 = import_index2.default.Utils;
     QueryTypes = import_index2.default.QueryTypes;
     Op = import_index2.default.Op;
     TableHints = import_index2.default.TableHints;
@@ -193722,7 +193722,7 @@ var identity_store_exports = {};
 __export(identity_store_exports, {
   default: () => identity_store_default
 });
-var import_node_module11, import_meta12, nodeRequire12, NylasStore3, electronNS, ipcRenderer2, remoteNS, remote4, Rx, request, url3, Utils7, Actions2, KEYCHAIN_NAME, IdentityStore2, identity_store_default;
+var import_node_module11, import_meta12, nodeRequire12, NylasStore3, electronNS, ipcRenderer2, remoteNS, remote4, Rx, request, url3, Utils8, Actions2, KEYCHAIN_NAME, IdentityStore2, identity_store_default;
 var init_identity_store = __esm({
   "src/flux/stores/identity-store.js"() {
     import_node_module11 = require("module");
@@ -193744,11 +193744,18 @@ var init_identity_store = __esm({
       }
     })();
     url3 = nodeRequire12("node:url");
-    Utils7 = (() => {
+    Utils8 = (() => {
       try {
-        return nodeRequire12("../models/utils.js").default;
+        return nodeRequire12("../models/utils.js").default || nodeRequire12("../models/utils.js");
       } catch (_e2) {
-        return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
+        try {
+          return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
+        } catch (_e22) {
+          return {
+            deepClone: (o) => JSON.parse(JSON.stringify(o)),
+            isTempId: (i) => typeof i === "string" && i.startsWith("local-")
+          };
+        }
       }
     })();
     Actions2 = (() => {
@@ -193787,7 +193794,7 @@ var init_identity_store = __esm({
       }
       identity() {
         if (!this._identity?.id) return null;
-        return Utils7.deepClone(this._identity);
+        return Utils8.deepClone(this._identity);
       }
       hasProAccess() {
         return this._identity?.has_pro_access;
@@ -193963,7 +193970,7 @@ var init_identity_store = __esm({
             password: "",
             sendImmediately: true
           };
-          const requestId = Utils7.generateTempId();
+          const requestId = Utils8.generateTempId();
           Actions2.willMakeAPIRequest({
             request: options2,
             requestId
@@ -199304,11 +199311,11 @@ var require_dom_utils = __commonJS({
   "src/dom-utils.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var _s2 = require_underscore();
-    var DOMUtils4 = {
+    var DOMUtils5 = {
       Mutating: {
         replaceFirstListItem(li2, replaceWith) {
           let text;
-          const list = DOMUtils4.closest(li2, "ul, ol");
+          const list = DOMUtils5.closest(li2, "ul, ol");
           if (replaceWith.length === 0) {
             replaceWith = replaceWith.replace(/\s/g, "&nbsp;");
             text = document.createElement("div");
@@ -199334,7 +199341,7 @@ var require_dom_utils = __commonJS({
             if (child.textContent === "") {
               return node.removeChild(child);
             } else {
-              return DOMUtils4.Mutating.removeEmptyNodes(child);
+              return DOMUtils5.Mutating.removeEmptyNodes(child);
             }
           });
         },
@@ -199357,7 +199364,7 @@ var require_dom_utils = __commonJS({
             if (Array.from(seenEls).includes(el)) {
               continue;
             }
-            var adjacent = DOMUtils4.collectAdjacent(el);
+            var adjacent = DOMUtils5.collectAdjacent(el);
             seenEls = seenEls.concat(adjacent);
             if (adjacent.length <= 1) {
               continue;
@@ -199373,7 +199380,7 @@ var require_dom_utils = __commonJS({
                 anchor.appendChild(el.childNodes[0]);
               }
             }
-            DOMUtils4.Mutating.removeElements(remaining);
+            DOMUtils5.Mutating.removeElements(remaining);
             anchors.push(anchor);
           }
           return anchors;
@@ -199403,7 +199410,7 @@ var require_dom_utils = __commonJS({
         getRangeAtAndSelectWord(selection, index) {
           let range2 = selection.getRangeAt(index);
           if (range2.collapsed) {
-            DOMUtils4.Mutating.selectWordContainingRange(range2);
+            DOMUtils5.Mutating.selectWordContainingRange(range2);
             range2 = selection.getRangeAt(index);
           }
           return range2;
@@ -199443,7 +199450,7 @@ var require_dom_utils = __commonJS({
           if (!selection.isCollapsed) {
             return;
           }
-          const node = DOMUtils4.findLastTextNode(selection.anchorNode);
+          const node = DOMUtils5.findLastTextNode(selection.anchorNode);
           const index = node.length;
           return selection.setBaseAndExtent(node, index, node, index);
         }
@@ -199476,7 +199483,7 @@ var require_dom_utils = __commonJS({
         if (selection == null) {
           selection = document.getSelection();
         }
-        if (DOMUtils4.isSelectionInTextNode(selection)) {
+        if (DOMUtils5.isSelectionInTextNode(selection)) {
           return selection.anchorNode.textContent[selection.anchorOffset - 1] === "	";
         } else {
           return false;
@@ -199513,11 +199520,11 @@ var require_dom_utils = __commonJS({
         if (selection.anchorOffset > 0) {
           return false;
         }
-        const li2 = DOMUtils4.closest(anchor, "li");
+        const li2 = DOMUtils5.closest(anchor, "li");
         if (!li2) {
           return;
         }
-        return DOMUtils4.isFirstChild(li2, anchor);
+        return DOMUtils5.isFirstChild(li2, anchor);
       },
       // Selectors for input types
       inputTypes() {
@@ -199529,7 +199536,7 @@ var require_dom_utils = __commonJS({
         if (node instanceof HTMLElement) {
           return node.closest(selector);
         } else if (node != null ? node.parentNode : void 0) {
-          return DOMUtils4.closest(node.parentNode, selector);
+          return DOMUtils5.closest(node.parentNode, selector);
         } else {
           return null;
         }
@@ -199539,20 +199546,20 @@ var require_dom_utils = __commonJS({
         if (!(selection != null ? selection.isCollapsed : void 0)) {
           return;
         }
-        return DOMUtils4.closest(selection.anchorNode, selector);
+        return DOMUtils5.closest(selection.anchorNode, selector);
       },
       closestElement(node) {
         if (node instanceof HTMLElement) {
           return node;
         } else if (node != null ? node.parentNode : void 0) {
-          return DOMUtils4.closestElement(node.parentNode);
+          return DOMUtils5.closestElement(node.parentNode);
         } else {
           return null;
         }
       },
       isInList() {
-        const li2 = DOMUtils4.closestAtCursor("li");
-        const list = DOMUtils4.closestAtCursor("ul, ol");
+        const li2 = DOMUtils5.closestAtCursor("li");
+        const list = DOMUtils5.closestAtCursor("ul, ol");
         return li2 && list;
       },
       // Returns an array of all immediately adjacent nodes of a particular
@@ -199581,12 +199588,12 @@ var require_dom_utils = __commonJS({
         return adjacent;
       },
       getNodeIndex: (context, nodeToFind) => {
-        return DOMUtils4.indexOfNodeInSimilarNodes(context, nodeToFind);
+        return DOMUtils5.indexOfNodeInSimilarNodes(context, nodeToFind);
       },
       getRangeInScope: (scope) => {
         let range2;
         const selection = document.getSelection();
-        if (!DOMUtils4.selectionInScope(selection, scope)) {
+        if (!DOMUtils5.selectionInScope(selection, scope)) {
           return null;
         }
         try {
@@ -199614,7 +199621,7 @@ var require_dom_utils = __commonJS({
           containerScope = rootScope;
         }
         if (selection.isCollapsed) {
-          const lastChild = DOMUtils4.lastNonBlankChildNode(containerScope);
+          const lastChild = DOMUtils5.lastNonBlankChildNode(containerScope);
           if (containerScope === rootScope) {
             if (containerScope.childNodes.length === 0) {
               return true;
@@ -199634,7 +199641,7 @@ var require_dom_utils = __commonJS({
             }
             return atEndIndex;
           } else if (inLastChild) {
-            return DOMUtils4.atEndOfContent(selection, rootScope, lastChild);
+            return DOMUtils5.atEndOfContent(selection, rootScope, lastChild);
           } else {
             return false;
           }
@@ -199647,7 +199654,7 @@ var require_dom_utils = __commonJS({
         for (let i = node.childNodes.length - 1; i >= 0; i--) {
           var childNode = node.childNodes[i];
           if (childNode.nodeType === Node.TEXT_NODE) {
-            if (DOMUtils4.isBlankTextNode(childNode)) {
+            if (DOMUtils5.isBlankTextNode(childNode)) {
             } else {
               return childNode;
             }
@@ -199663,7 +199670,7 @@ var require_dom_utils = __commonJS({
           return null;
         }
         if (node.childNodes.length > 0) {
-          return DOMUtils4.lastNode(node.childNodes[node.childNodes.length - 1]);
+          return DOMUtils5.lastNode(node.childNodes[node.childNodes.length - 1]);
         } else {
           return null;
         }
@@ -199680,7 +199687,7 @@ var require_dom_utils = __commonJS({
           if (childNode.nodeType === Node.TEXT_NODE) {
             return childNode;
           } else if (childNode.nodeType === Node.ELEMENT_NODE) {
-            return DOMUtils4.findLastTextNode(childNode);
+            return DOMUtils5.findLastTextNode(childNode);
           } else {
           }
         }
@@ -199698,7 +199705,7 @@ var require_dom_utils = __commonJS({
         if (node.childNodes.length > 1) {
           return null;
         }
-        return DOMUtils4.findOnlyChildTextNode(node.childNodes[0]);
+        return DOMUtils5.findOnlyChildTextNode(node.childNodes[0]);
       },
       findFirstTextNode(node) {
         if (!node) {
@@ -199711,7 +199718,7 @@ var require_dom_utils = __commonJS({
           if (childNode.nodeType === Node.TEXT_NODE) {
             return childNode;
           } else if (childNode.nodeType === Node.ELEMENT_NODE) {
-            return DOMUtils4.findFirstTextNode(childNode);
+            return DOMUtils5.findFirstTextNode(childNode);
           } else {
           }
         }
@@ -199872,7 +199879,7 @@ var require_dom_utils = __commonJS({
         if (root2.childNodes[0] === node) {
           return true;
         }
-        return DOMUtils4.isFirstChild(root2.childNodes[0], node);
+        return DOMUtils5.isFirstChild(root2.childNodes[0], node);
       },
       commonAncestor(nodes, parentFilter) {
         if (nodes == null) {
@@ -200112,7 +200119,7 @@ var require_dom_utils = __commonJS({
       // When detecting if we're at the start of a "visible" line, we need to look
       // for text nodes that have visible content in them.
       looksLikeNonEmptyNode(node) {
-        const textNode = DOMUtils4.findFirstTextNode(node);
+        const textNode = DOMUtils5.findFirstTextNode(node);
         if (textNode) {
           if (/^[\n ]*$/.test(textNode.data)) {
             return false;
@@ -200134,7 +200141,7 @@ var require_dom_utils = __commonJS({
         return null;
       }
     };
-    module2.exports = DOMUtils4;
+    module2.exports = DOMUtils5;
   }
 });
 
@@ -202856,7 +202863,7 @@ var require_prop_types = __commonJS({
 var require_react_dom_production = __commonJS({
   "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
     "use strict";
-    var React46 = require_react();
+    var React50 = require_react();
     function formatProdErrorMessage(code) {
       var url6 = "https://react.dev/errors/" + code;
       if (1 < arguments.length) {
@@ -202896,7 +202903,7 @@ var require_react_dom_production = __commonJS({
         implementation
       };
     }
-    var ReactSharedInternals = React46.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    var ReactSharedInternals = React50.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
     function getCrossOriginStringAs(as2, input) {
       if ("font" === as2) return "";
       if ("string" === typeof input)
@@ -203050,7 +203057,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React46 = require_react(), Internals = {
+      var React50 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -203068,7 +203075,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React46.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React50.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -203334,14 +203341,13 @@ var require_classnames = __commonJS({
 // src/components/menu.jsx
 var require_menu = __commonJS({
   "src/components/menu.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
     var import_classnames18 = __toESM(require_classnames());
     init_index_all();
     init_nylas_exports();
-    var import_event_kit3 = __toESM(require_event_kit());
-    var MenuItem2 = class _MenuItem extends import_react60.default.Component {
+    var MenuItem2 = class _MenuItem extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203349,15 +203355,15 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuItem.displayName = "MenuItem";
         _MenuItem.propTypes = {
-          divider: import_prop_types64.default.oneOfType([import_prop_types64.default.string, import_prop_types64.default.bool]),
-          selected: import_prop_types64.default.bool,
-          checked: import_prop_types64.default.bool
+          divider: import_prop_types65.default.oneOfType([import_prop_types65.default.string, import_prop_types65.default.bool]),
+          selected: import_prop_types65.default.bool,
+          checked: import_prop_types65.default.bool
         };
       }
       render() {
         if (this.props.divider) {
           const dividerLabel = index_default_default.isString(this.props.divider) ? this.props.divider : "";
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             { className: "item divider" },
             dividerLabel
@@ -203368,7 +203374,7 @@ var require_menu = __commonJS({
             selected: this.props.selected,
             checked: this.props.checked
           });
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             { className, onMouseDown: this.props.onMouseDown },
             this.props.content
@@ -203377,7 +203383,7 @@ var require_menu = __commonJS({
       }
     };
     MenuItem2.initClass();
-    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react60.default.Component {
+    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203385,24 +203391,24 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuNameEmailItem.displayName = "MenuNameEmailItem";
         _MenuNameEmailItem.propTypes = {
-          name: import_prop_types64.default.string,
-          email: import_prop_types64.default.string
+          name: import_prop_types65.default.string,
+          email: import_prop_types65.default.string
         };
       }
       render() {
         if ((this.props.name != null ? this.props.name.length : void 0) > 0 && this.props.name !== this.props.email) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "span",
             null,
-            import_react60.default.createElement("span", { className: "primary" }, this.props.name),
-            import_react60.default.createElement(
+            import_react61.default.createElement("span", { className: "primary" }, this.props.name),
+            import_react61.default.createElement(
               "span",
               { className: "secondary" },
               `(${this.props.email})`
             )
           );
         } else {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "span",
             { className: "primary" },
             this.props.email
@@ -203411,21 +203417,21 @@ var require_menu = __commonJS({
       }
     };
     MenuNameEmailItem.initClass();
-    var Menu7 = class _Menu extends import_react60.default.Component {
+    var Menu7 = class _Menu extends import_react61.default.Component {
       static initClass() {
         _Menu.displayName = "Menu";
         _Menu.propTypes = {
-          className: import_prop_types64.default.string,
-          footerComponents: import_prop_types64.default.node,
-          headerComponents: import_prop_types64.default.node,
-          itemContext: import_prop_types64.default.object,
-          itemContent: import_prop_types64.default.func.isRequired,
-          itemKey: import_prop_types64.default.func.isRequired,
-          itemChecked: import_prop_types64.default.func,
-          items: import_prop_types64.default.array.isRequired,
-          onSelect: import_prop_types64.default.func.isRequired,
-          onEscape: import_prop_types64.default.func,
-          defaultSelectedIndex: import_prop_types64.default.number
+          className: import_prop_types65.default.string,
+          footerComponents: import_prop_types65.default.node,
+          headerComponents: import_prop_types65.default.node,
+          itemContext: import_prop_types65.default.object,
+          itemContent: import_prop_types65.default.func.isRequired,
+          itemKey: import_prop_types65.default.func.isRequired,
+          itemChecked: import_prop_types65.default.func,
+          items: import_prop_types65.default.array.isRequired,
+          onSelect: import_prop_types65.default.func.isRequired,
+          onEscape: import_prop_types65.default.func,
+          defaultSelectedIndex: import_prop_types65.default.number
         };
         _Menu.defaultProps = { onEscape() {
         } };
@@ -203493,9 +203499,9 @@ var require_menu = __commonJS({
         });
       }
       componentDidUpdate() {
-        const item = import_react_dom29.default.findDOMNode(this).querySelector(".selected");
-        const container = import_react_dom29.default.findDOMNode(this).querySelector(".content-container");
-        const adjustment = DOMUtils3.scrollAdjustmentToMakeNodeVisibleInContainer(
+        const item = import_react_dom28.default.findDOMNode(this).querySelector(".selected");
+        const container = import_react_dom28.default.findDOMNode(this).querySelector(".content-container");
+        const adjustment = DOMUtils4.scrollAdjustmentToMakeNodeVisibleInContainer(
           item,
           container
         );
@@ -203504,19 +203510,19 @@ var require_menu = __commonJS({
         }
       }
       render() {
-        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react60.default.createElement("span", null);
-        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react60.default.createElement("span", null);
+        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react61.default.createElement("span", null);
+        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react61.default.createElement("span", null);
         const className = this.props.className ? this.props.className : "";
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           {
             onKeyDown: this._onKeyDown,
             className: `menu ${className}`,
             tabIndex: "-1"
           },
-          import_react60.default.createElement("div", { className: "header-container" }, hc),
+          import_react61.default.createElement("div", { className: "header-container" }, hc),
           this._contentContainer(),
-          import_react60.default.createElement("div", { className: "footer-container" }, fc)
+          import_react61.default.createElement("div", { className: "footer-container" }, fc)
         );
       }
       _onKeyDown(event2) {
@@ -203541,7 +203547,7 @@ var require_menu = __commonJS({
         const seenItemKeys = {};
         const items = (this.props.items || []).map((item, i) => {
           const content = this.props.itemContent(item);
-          if (import_react60.default.isValidElement(content) && content.type === MenuItem2) {
+          if (import_react61.default.isValidElement(content) && content.type === MenuItem2) {
             return content;
           }
           const onMouseDown = (event2) => {
@@ -203563,7 +203569,7 @@ var require_menu = __commonJS({
             );
           }
           seenItemKeys[key] = item;
-          return import_react60.default.createElement(MenuItem2, {
+          return import_react61.default.createElement(MenuItem2, {
             key,
             onMouseDown,
             checked: typeof this.props.itemChecked === "function" ? this.props.itemChecked(item) : void 0,
@@ -203575,7 +203581,7 @@ var require_menu = __commonJS({
           "content-container": true,
           empty: items.length === 0
         });
-        return import_react60.default.createElement("div", { className: contentClass }, items);
+        return import_react61.default.createElement("div", { className: contentClass }, items);
       }
       _onShiftSelectedIndex(delta) {
         if (this.props.items.length === 0) {
@@ -203711,17 +203717,16 @@ var init_drop_zone = __esm({
 // src/components/spinner.jsx
 var require_spinner = __commonJS({
   "src/components/spinner.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
     init_index_all();
     var import_classnames18 = __toESM(require_classnames());
-    var Spinner3 = class _Spinner extends import_react60.default.Component {
+    var Spinner3 = class _Spinner extends import_react61.default.Component {
       static initClass() {
         _Spinner.propTypes = {
-          visible: import_prop_types64.default.bool,
-          withCover: import_prop_types64.default.bool,
-          style: import_prop_types64.default.object
+          visible: import_prop_types65.default.bool,
+          withCover: import_prop_types65.default.bool,
+          style: import_prop_types65.default.object
         };
       }
       constructor(props) {
@@ -203815,7 +203820,7 @@ var require_spinner = __commonJS({
             zIndex: 1e3
           }
         );
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: coverClasses, style },
           this._renderSpinnerDots()
@@ -203842,13 +203847,13 @@ var require_spinner = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           Object.assign({ className: spinnerClass }, otherProps, { style }),
-          import_react60.default.createElement("div", { className: "bounce1" }),
-          import_react60.default.createElement("div", { className: "bounce2" }),
-          import_react60.default.createElement("div", { className: "bounce3" }),
-          import_react60.default.createElement("div", { className: "bounce4" })
+          import_react61.default.createElement("div", { className: "bounce1" }),
+          import_react61.default.createElement("div", { className: "bounce2" }),
+          import_react61.default.createElement("div", { className: "bounce3" }),
+          import_react61.default.createElement("div", { className: "bounce4" })
         );
       }
     };
@@ -204019,6 +204024,9 @@ var init_fixed_popover = __esm({
       };
       constructor(props) {
         super(props);
+        this.blurTrapRef = import_react2.default.createRef();
+        this.popoverRef = import_react2.default.createRef();
+        this.popoverContainerRef = import_react2.default.createRef();
         this.mounted = false;
         this.updateCount = 0;
         this.fallback = this.props.fallbackDirection;
@@ -204030,7 +204038,7 @@ var init_fixed_popover = __esm({
       }
       componentDidMount() {
         this.mounted = true;
-        (0, import_react_dom2.findDOMNode)(this.refs.popoverContainer).addEventListener(
+        (0, import_react_dom2.findDOMNode)(this.popoverContainerRef?.current).addEventListener(
           "animationend",
           this.onAnimationEnd
         );
@@ -204049,7 +204057,7 @@ var init_fixed_popover = __esm({
       }
       componentWillUnmount() {
         this.mounted = false;
-        (0, import_react_dom2.findDOMNode)(this.refs.popoverContainer).removeEventListener(
+        (0, import_react_dom2.findDOMNode)(this.popoverContainerRef?.current).removeEventListener(
           "animationend",
           this.onAnimationEnd
         );
@@ -204104,7 +204112,7 @@ var init_fixed_popover = __esm({
         }
       };
       getCurrentRect = () => {
-        return (0, import_react_dom2.findDOMNode)(this.refs.popover).getBoundingClientRect();
+        return (0, import_react_dom2.findDOMNode)(this.popoverRef?.current).getBoundingClientRect();
       };
       getWindowDimensions = () => {
         return {
@@ -204273,25 +204281,33 @@ var init_fixed_popover = __esm({
         };
         const { containerStyle, popoverStyle, pointerStyle } = this.computePopoverStyles({ originRect, direction, offset });
         const animateClass = visible ? " popout" : "";
-        return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(
           "div",
           {
-            ref: "blurTrap",
+            ref: this.blurTrapRef,
             className: "fixed-popover-blur-trap",
             style: blurTrapStyle
           }
-        ), /* @__PURE__ */ React.createElement(
+        ), /* @__PURE__ */ import_react2.default.createElement(
           "div",
           {
-            ref: "popoverContainer",
+            ref: this.popoverContainerRef,
             style: containerStyle,
             className: `fixed-popover-container${animateClass}`,
             onKeyDown: this.onKeyDown,
             onBlur: this.onBlur
           },
-          /* @__PURE__ */ React.createElement("div", { ref: "popover", className: `fixed-popover`, style: popoverStyle }, children),
-          /* @__PURE__ */ React.createElement("div", { className: `fixed-popover-pointer`, style: pointerStyle }),
-          /* @__PURE__ */ React.createElement(
+          /* @__PURE__ */ import_react2.default.createElement(
+            "div",
+            {
+              ref: this.popoverRef,
+              className: `fixed-popover`,
+              style: popoverStyle
+            },
+            children
+          ),
+          /* @__PURE__ */ import_react2.default.createElement("div", { className: `fixed-popover-pointer`, style: pointerStyle }),
+          /* @__PURE__ */ import_react2.default.createElement(
             "div",
             {
               className: `fixed-popover-pointer shadow`,
@@ -204415,6 +204431,11 @@ var init_date_picker_popover = __esm({
     import_menu = __toESM(require_menu());
     ({ DATE_FORMAT_SHORT, DATE_FORMAT_LONG } = DateUtils);
     DatePickerPopover = class extends import_react4.Component {
+      constructor(props) {
+        super(props);
+        this.dateInputRef = import_react4.default.createRef();
+        this.menuRef = import_react4.default.createRef();
+      }
       static displayName = "DatePickerPopover";
       static propTypes = {
         className: import_prop_types5.default.string,
@@ -204433,19 +204454,19 @@ var init_date_picker_popover = __esm({
       onSelectMenuOption = (optionKey) => {
         const { dateOptions } = this.props;
         const date = dateOptions[optionKey]();
-        this.refs.dateInput.clearInput();
+        this.dateInputRef?.current.clearInput();
         this.selectDate(date, optionKey);
       };
       onCustomDateInterpreted = (date) => {
         const { shouldSelectDateWhenInterpreted } = this.props;
         if (date && shouldSelectDateWhenInterpreted) {
-          this.refs.menu.clearSelection();
+          this.menuRef?.current.clearSelection();
           this.selectDate(date, "Custom");
         }
       };
       onCustomDateSelected = (date, inputValue) => {
         if (date) {
-          this.refs.menu.clearSelection();
+          this.menuRef?.current.clearSelection();
           this.selectDate(date, "Custom");
         } else {
           NylasEnv.showErrorDialog(
@@ -204461,16 +204482,16 @@ var init_date_picker_popover = __esm({
         const { dateOptions } = this.props;
         const date = dateOptions[optionKey]();
         const formatted = DateUtils.format(date, DATE_FORMAT_SHORT);
-        return /* @__PURE__ */ React.createElement("div", { className: "date-picker-popover-option" }, optionKey, /* @__PURE__ */ React.createElement("span", { className: "time" }, formatted));
+        return /* @__PURE__ */ import_react4.default.createElement("div", { className: "date-picker-popover-option" }, optionKey, /* @__PURE__ */ import_react4.default.createElement("span", { className: "time" }, formatted));
       };
       render() {
         const { className, header, footer, dateOptions } = this.props;
         let footerComponents = [
-          /* @__PURE__ */ React.createElement("div", { key: "divider", className: "divider" }),
-          /* @__PURE__ */ React.createElement(
+          /* @__PURE__ */ import_react4.default.createElement("div", { key: "divider", className: "divider" }),
+          /* @__PURE__ */ import_react4.default.createElement(
             date_input_default,
             {
-              ref: "dateInput",
+              ref: this.dateInputRef,
               key: "custom-section",
               className: "section date-input-section",
               dateFormat: DATE_FORMAT_LONG,
@@ -204486,10 +204507,10 @@ var init_date_picker_popover = __esm({
             footerComponents = footerComponents.concat([footer]);
           }
         }
-        return /* @__PURE__ */ React.createElement("div", { className: `date-picker-popover ${className}` }, /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ import_react4.default.createElement("div", { className: `date-picker-popover ${className}` }, /* @__PURE__ */ import_react4.default.createElement(
           import_menu.default,
           {
-            ref: "menu",
+            ref: this.menuRef,
             items: Object.keys(dateOptions),
             itemKey: (item) => item,
             itemContent: this.renderMenuOption,
@@ -204578,7 +204599,7 @@ var init_retina_img = __esm({
         if (this.props.selected === true) {
           pathName = `${basename2}-selected.${ext}`;
         }
-        return Utils12.imageNamed(pathName, this.props.resourcePath);
+        return Utils13.imageNamed(pathName, this.props.resourcePath);
       };
       render() {
         const path14 = this.props.url || this._pathFor(this.props.name) || this._pathFor(this.props.fallback) || "";
@@ -204605,7 +204626,7 @@ var init_retina_img = __esm({
             style[key] = val.replace("px", "") / style.zoom;
           }
         }
-        const otherProps = Utils12.fastOmit(
+        const otherProps = Utils13.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -209257,6 +209278,7 @@ var init_webview = __esm({
       };
       constructor(props) {
         super(props);
+        this.webviewRef = import_react7.default.createRef();
         this.state = {};
       }
       componentDidMount() {
@@ -209322,7 +209344,7 @@ var init_webview = __esm({
       }
       _setupWebview(props) {
         if (!props.src) return;
-        const webview = import_react_dom4.default.findDOMNode(this.refs.webview);
+        const webview = import_react_dom4.default.findDOMNode(this.webviewRef?.current);
         const listeners = {
           "did-fail-load": this._webviewDidFailLoad,
           "did-finish-load": this._webviewDidFinishLoad,
@@ -209339,7 +209361,7 @@ var init_webview = __esm({
         }
       }
       _onTryAgain = () => {
-        const webview = import_react_dom4.default.findDOMNode(this.refs.webview);
+        const webview = import_react_dom4.default.findDOMNode(this.webviewRef?.current);
         webview.reload();
       };
       _onConsoleMessage = (e) => {
@@ -209376,11 +209398,11 @@ var init_webview = __esm({
         if (this.state.error) return;
         this.setState({ ready: true, webviewLoading: false });
         if (!this.props.onDidFinishLoad) return;
-        const webview = import_react_dom4.default.findDOMNode(this.refs.webview);
+        const webview = import_react_dom4.default.findDOMNode(this.webviewRef?.current);
         this.props.onDidFinishLoad(webview);
       };
       render() {
-        return /* @__PURE__ */ import_react7.default.createElement("div", { className: "webview-wrap" }, /* @__PURE__ */ import_react7.default.createElement("webview", { ref: "webview", is: true, partition: "in-memory-only" }), /* @__PURE__ */ import_react7.default.createElement(
+        return /* @__PURE__ */ import_react7.default.createElement("div", { className: "webview-wrap" }, /* @__PURE__ */ import_react7.default.createElement("webview", { ref: this.webviewRef, is: true, partition: "in-memory-only" }), /* @__PURE__ */ import_react7.default.createElement(
           "div",
           {
             className: `webview-loading-spinner loading-${this.state.webviewLoading}`
@@ -209560,15 +209582,15 @@ var init_feature_used_up_modal = __esm({
 // src/components/flexbox.jsx
 var flexbox_exports = {};
 __export(flexbox_exports, {
-  default: () => Flexbox
+  default: () => Flexbox2
 });
-var import_react10, import_prop_types11, Flexbox;
+var import_react10, import_prop_types11, Flexbox2;
 var init_flexbox = __esm({
   "src/components/flexbox.jsx"() {
     import_react10 = __toESM(require_react());
     import_prop_types11 = __toESM(require_prop_types());
     init_nylas_exports();
-    Flexbox = class extends import_react10.default.Component {
+    Flexbox2 = class extends import_react10.default.Component {
       static displayName = "Flexbox";
       /*
         Public: React `props` supported by Flexbox:
@@ -209600,7 +209622,7 @@ var init_flexbox = __esm({
         if (this.props.inline === true) {
           style.display = "inline-flex";
         }
-        const otherProps = Utils12.fastOmit(
+        const otherProps = Utils13.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -209874,7 +209896,7 @@ var init_swipe_container = __esm({
       }
       render() {
         const { currentX, targetX } = this.state;
-        const otherProps = Utils12.fastOmit(
+        const otherProps = Utils13.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -209962,7 +209984,7 @@ var init_flux_container = __esm({
         });
       }
       render() {
-        const otherProps = Utils12.fastOmit(
+        const otherProps = Utils13.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -210054,796 +210076,24 @@ var init_syncing_list_state = __esm({
   }
 });
 
-// src/searchable-components/search-constants.js
-var require_search_constants = __commonJS({
-  "src/searchable-components/search-constants.js"(exports2, module2) {
-    var MAX_MATCHES = 999;
-    var CHAR_THRESHOLD = 2;
-    module2.exports = {
-      MAX_MATCHES,
-      CHAR_THRESHOLD
-    };
-    module2.exports.MAX_MATCHES = MAX_MATCHES;
-    module2.exports.CHAR_THRESHOLD = CHAR_THRESHOLD;
-    module2.exports.default = module2.exports;
-  }
-});
-
-// src/searchable-components/unified-dom-parser.js
-var require_unified_dom_parser = __commonJS({
-  "src/searchable-components/unified-dom-parser.js"(exports2, module2) {
-    var { Utils: Utils23 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var { MAX_MATCHES, CHAR_THRESHOLD } = require_search_constants();
-    var UnifiedDOMParser = class {
-      constructor(regionId) {
-        this.regionId = regionId;
-        this.matchRenderIndex = 0;
-      }
-      matchesSearch(dom, searchTerm) {
-        if ((searchTerm || "").trim().length < CHAR_THRESHOLD) {
-          return false;
-        }
-        const fullStrings = this.buildNormalizedText(dom);
-        for (const fullString of fullStrings) {
-          const matches = this.matchesFromFullString(fullString, searchTerm);
-          if (matches.length > 0) {
-            return true;
-          }
-        }
-        return false;
-      }
-      buildNormalizedText(dom) {
-        const walker = this.getWalker(dom);
-        const fullStrings = [];
-        let textElementAccumulator = [];
-        let stringIndex = 0;
-        for (const node of walker) {
-          if (this.isTextNode(node)) {
-            node.fullStringIndex = stringIndex;
-            textElementAccumulator.push(node);
-            stringIndex += this.textNodeLength(node);
-          } else if (this.looksLikeBlockElement(node)) {
-            if (textElementAccumulator.length > 0) {
-              fullStrings.push(textElementAccumulator);
-              textElementAccumulator = [];
-              stringIndex = 0;
-            }
-          }
-        }
-        if (textElementAccumulator.length > 0) {
-          fullStrings.push(textElementAccumulator);
-        }
-        return fullStrings;
-      }
-      // OVERRIDE ME
-      getWalker() {
-      }
-      isTextNode() {
-      }
-      textNodeLength() {
-      }
-      looksLikeBlockElement() {
-      }
-      textNodeContents() {
-      }
-      matchesFromFullString(fullString, searchTerm) {
-        const re2 = this.searchRE(searchTerm);
-        if (!re2) {
-          return [];
-        }
-        const rawString = this.getRawFullString(fullString);
-        const matches = [];
-        let matchCount = 0;
-        let match = re2.exec(rawString);
-        while (match && matchCount <= MAX_MATCHES) {
-          const matchStart = match.index;
-          const matchEnd = match.index + match[0].length;
-          matches.push([matchStart, matchEnd]);
-          match = re2.exec(rawString);
-          matchCount += 1;
-        }
-        return matches;
-      }
-      getRawFullString() {
-      }
-      searchRE(searchTerm) {
-        let re2;
-        const regexRe = /^\/(.+)\/(.*)$/;
-        try {
-          if (regexRe.test(searchTerm)) {
-            const matches = searchTerm.match(regexRe);
-            const reText = matches[1];
-            re2 = new RegExp(reText, "ig");
-          } else {
-            re2 = new RegExp(Utils23.escapeRegExp(searchTerm), "ig");
-          }
-        } catch (_e2) {
-          return null;
-        }
-        return re2;
-      }
-      // OVERRIDE ME
-      removeMatchesAndNormalize() {
-      }
-      getElementsWithNewMatchNodes(rootNode, searchTerm, currentMatchRenderIndex) {
-        const fullStrings = this.buildNormalizedText(rootNode);
-        const modifiedElements = /* @__PURE__ */ new Map();
-        for (const fullString of fullStrings) {
-          const matches = this.matchesFromFullString(fullString, searchTerm);
-          if (matches.length === 0) {
-            continue;
-          }
-          for (const textNode of fullString) {
-            const slicePoints = this.slicePointsForMatches(textNode, matches);
-            if (slicePoints.length > 0) {
-              const { key, originalTextNode, newTextNodes } = this.slicedTextElement(
-                textNode,
-                slicePoints,
-                currentMatchRenderIndex
-              );
-              modifiedElements.set(key, { originalTextNode, newTextNodes });
-            }
-          }
-        }
-        return modifiedElements;
-      }
-      slicePointsForMatches(textElement, matches) {
-        const textElStart = textElement.fullStringIndex;
-        const textLength = this.textNodeLength(textElement);
-        const textElEnd = textElement.fullStringIndex + textLength;
-        const slicePoints = [];
-        for (const [matchStart, matchEnd] of matches) {
-          if (matchStart < textElStart && matchEnd >= textElEnd) {
-            slicePoints.push([0, textLength]);
-          } else if (matchStart >= textElStart && matchEnd < textElEnd) {
-            slicePoints.push([matchStart - textElStart, matchEnd - textElStart]);
-          } else if (matchEnd >= textElStart && matchEnd < textElEnd) {
-            slicePoints.push([0, matchEnd - textElStart]);
-          } else if (matchStart >= textElStart && matchStart < textElEnd) {
-            slicePoints.push([matchStart - textElStart, textLength]);
-          } else {
-          }
-        }
-        return slicePoints;
-      }
-      /**
-       * Given some text element and a slice point, it will split that text
-       * element at the slice points and return the new nodes as a value,
-       * keyed by a way to find that insertion point in the DOM.
-       */
-      slicedTextElement(textNode, slicePoints, currentMatchRenderIndex) {
-        const key = this.textNodeKey(textNode);
-        const text = this.textNodeContents(textNode);
-        const newTextNodes = [];
-        let sliceOffset = 0;
-        let remainingText = text;
-        for (let [sliceStart, sliceEnd] of slicePoints) {
-          sliceStart -= sliceOffset;
-          sliceEnd -= sliceOffset;
-          const before2 = remainingText.slice(0, sliceStart);
-          if (before2.length > 0) {
-            newTextNodes.push(this.createTextNode({ rawText: before2 }));
-          }
-          const matchText = remainingText.slice(sliceStart, sliceEnd);
-          if (matchText.length > 0) {
-            let isCurrentMatch = false;
-            if (this.matchRenderIndex === currentMatchRenderIndex) {
-              isCurrentMatch = true;
-            }
-            newTextNodes.push(
-              this.createMatchNode({
-                regionId: this.regionId,
-                renderIndex: this.matchRenderIndex,
-                matchText,
-                isCurrentMatch
-              })
-            );
-            this.matchRenderIndex += 1;
-          }
-          remainingText = remainingText.slice(sliceEnd, remainingText.length);
-          sliceOffset += sliceEnd;
-        }
-        newTextNodes.push(this.createTextNode({ rawText: remainingText }));
-        return {
-          key,
-          originalTextNode: textNode,
-          newTextNodes
-        };
-      }
-      // OVERRIDE ME
-      createTextNode() {
-      }
-      createMatchNode() {
-      }
-      textNodeKey() {
-      }
-      // OVERRIDE ME
-      highlightSearch() {
-      }
-    };
-    module2.exports = UnifiedDOMParser;
-    module2.exports.default = UnifiedDOMParser;
-  }
-});
-
-// src/searchable-components/real-dom-parser.js
-var require_real_dom_parser = __commonJS({
-  "src/searchable-components/real-dom-parser.js"(exports2, module2) {
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports)).default || (init_index_all(), __toCommonJS(index_all_exports));
-    var { DOMUtils: DOMUtils4 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var UnifiedDOMParser = require_unified_dom_parser().default || require_unified_dom_parser();
-    var RealDOMParser = class extends UnifiedDOMParser {
-      *_pruningDOMWalker({ node, pruneFn, filterFn }) {
-        if (filterFn(node)) {
-          yield node;
-        }
-        if (node && !pruneFn(node) && node.childNodes.length > 0) {
-          for (let i = 0; i < node.childNodes.length; i++) {
-            yield* this._pruningDOMWalker({
-              node: node.childNodes[i],
-              pruneFn,
-              filterFn
-            });
-          }
-        }
-        return;
-      }
-      getWalker(dom) {
-        const filterFn = (node) => {
-          return node.nodeType === Node.TEXT_NODE;
-        };
-        const pruneFn = (node) => {
-          return node.nodeName === "STYLE";
-        };
-        return this._pruningDOMWalker({ node: dom, pruneFn, filterFn });
-      }
-      isTextNode(node) {
-        return node.nodeType === Node.TEXT_NODE;
-      }
-      textNodeLength(textNode) {
-        return (textNode.data || "").length;
-      }
-      textNodeContents(textNode) {
-        return textNode.data;
-      }
-      looksLikeBlockElement(node) {
-        return DOMUtils4.looksLikeBlockElement(node);
-      }
-      getRawFullString(fullString) {
-        return _4.pluck(fullString, "data").join("");
-      }
-      removeMatchesAndNormalize(element) {
-        const matches = element.querySelectorAll("search-match");
-        if (matches.length === 0) {
-          return null;
-        }
-        for (let i = 0; i < matches.length; i++) {
-          const match = matches[i];
-          DOMUtils4.unwrapNode(match);
-        }
-        element.normalize();
-        return element;
-      }
-      createTextNode({ rawText }) {
-        return document.createTextNode(rawText);
-      }
-      createMatchNode({ matchText, regionId, isCurrentMatch, renderIndex }) {
-        const text = document.createTextNode(matchText);
-        const newNode = document.createElement("search-match");
-        const className = isCurrentMatch ? "current-match" : "";
-        newNode.setAttribute("data-region-id", regionId);
-        newNode.setAttribute("data-render-index", renderIndex);
-        newNode.setAttribute("class", className);
-        newNode.appendChild(text);
-        return newNode;
-      }
-      textNodeKey(textElement) {
-        return textElement;
-      }
-      highlightSearch(element, matchNodeMap) {
-        const walker = this.getWalker(element);
-        const textNodes = [...walker];
-        for (const textNode of textNodes) {
-          if (matchNodeMap.has(textNode)) {
-            const { originalTextNode, newTextNodes } = matchNodeMap.get(textNode);
-            const frag = document.createDocumentFragment();
-            for (const newNode of newTextNodes) {
-              frag.appendChild(newNode);
-            }
-            textNode.parentNode.replaceChild(frag, originalTextNode);
-          }
-        }
-      }
-    };
-    module2.exports = RealDOMParser;
-    module2.exports.default = RealDOMParser;
-  }
-});
-
-// src/searchable-components/iframe-searcher.js
-var require_iframe_searcher = __commonJS({
-  "src/searchable-components/iframe-searcher.js"(exports2, module2) {
-    var RealDOMParser = require_real_dom_parser().default || require_real_dom_parser();
-    var IFrameSearcher = class {
-      /**
-       * An imperative renderer for iframes
-       */
-      static highlightSearchInDocument(regionId, searchTerm, doc, searchIndex) {
-        const parser = new RealDOMParser(regionId);
-        if (parser.matchesSearch(doc, searchTerm)) {
-          parser.removeMatchesAndNormalize(doc);
-          const matchNodeMap = parser.getElementsWithNewMatchNodes(
-            doc,
-            searchTerm,
-            searchIndex
-          );
-          parser.highlightSearch(doc, matchNodeMap);
-        } else {
-          parser.removeMatchesAndNormalize(doc);
-        }
-      }
-    };
-    module2.exports = IFrameSearcher;
-    module2.exports.default = IFrameSearcher;
-  }
-});
-
-// src/components/evented-iframe.jsx
-var require_evented_iframe = __commonJS({
-  "src/components/evented-iframe.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_iframe_searcher = __toESM(require_iframe_searcher());
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
-    var {
-      Utils: Utils23,
-      RegExpUtils: RegExpUtils5,
-      IdentityStore: IdentityStore4,
-      SearchableComponentMaker,
-      SearchableComponentStore: SearchableComponentStore2
-    } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var url6 = require("url");
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var EventedIFrame = class _EventedIFrame extends React46.Component {
-      constructor(...args) {
-        super(...args);
-        this.render = this.render.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-        this.didReplaceDocument = this.didReplaceDocument.bind(this);
-        this.setHeightQuietly = this.setHeightQuietly.bind(this);
-        this._onSearchableStoreChange = this._onSearchableStoreChange.bind(this);
-        this._unsubscribeFromIFrameEvents = this._unsubscribeFromIFrameEvents.bind(this);
-        this._subscribeToIFrameEvents = this._subscribeToIFrameEvents.bind(this);
-        this._getContainingTarget = this._getContainingTarget.bind(this);
-        this._onIFrameBlur = this._onIFrameBlur.bind(this);
-        this._onIFrameFocus = this._onIFrameFocus.bind(this);
-        this._onIFrameResize = this._onIFrameResize.bind(this);
-        this._onIFrameClick = this._onIFrameClick.bind(this);
-        this._onIFrameMouseEvent = this._onIFrameMouseEvent.bind(this);
-        this._onIFrameKeyEvent = this._onIFrameKeyEvent.bind(this);
-        this._onIFrameContextualMenu = this._onIFrameContextualMenu.bind(this);
-        super(...args);
-      }
-      static initClass() {
-        _EventedIFrame.displayName = "EventedIFrame";
-        _EventedIFrame.propTypes = {
-          searchable: import_prop_types64.default.bool,
-          onResize: import_prop_types64.default.func
-        };
-      }
-      render() {
-        const otherProps = Utils23.fastOmit(
-          this.props,
-          Object.keys(this.constructor.propTypes)
-        );
-        return React46.createElement(
-          "iframe",
-          Object.assign({ seamless: "seamless" }, otherProps)
-        );
-      }
-      componentDidMount() {
-        if (this.props.searchable) {
-          this._regionId = Utils23.generateTempId();
-          this._searchUsub = SearchableComponentStore2.listen(
-            this._onSearchableStoreChange
-          );
-          SearchableComponentStore2.registerSearchRegion(
-            this._regionId,
-            ReactDOM27.findDOMNode(this)
-          );
-        }
-        return this._subscribeToIFrameEvents();
-      }
-      componentWillUnmount() {
-        this._unsubscribeFromIFrameEvents();
-        if (this.props.searchable) {
-          this._searchUsub();
-          return SearchableComponentStore2.unregisterSearchRegion(this._regionId);
-        }
-      }
-      componentDidUpdate() {
-        if (this.props.searchable) {
-          return SearchableComponentStore2.registerSearchRegion(
-            this._regionId,
-            ReactDOM27.findDOMNode(this)
-          );
-        }
-      }
-      shouldComponentUpdate(nextProps, nextState) {
-        return !Utils23.isEqualReact(nextProps, this.props) || !Utils23.isEqualReact(nextState, this.state);
-      }
-      /*
-       Public: Call this method if you replace the contents of the iframe's document.
-       This allows {EventedIframe} to re-attach it's event listeners.
-       */
-      didReplaceDocument() {
-        this._unsubscribeFromIFrameEvents();
-        return this._subscribeToIFrameEvents();
-      }
-      setHeightQuietly(height) {
-        this._ignoreNextResize = true;
-        return ReactDOM27.findDOMNode(this).height = `${height}px`;
-      }
-      _onSearchableStoreChange() {
-        if (!this.props.searchable) {
-          return;
-        }
-        const node = ReactDOM27.findDOMNode(this);
-        const doc = (node.contentDocument != null ? node.contentDocument.body : void 0) != null ? node.contentDocument != null ? node.contentDocument.body : void 0 : node.contentDocument;
-        const searchIndex = SearchableComponentStore2.getCurrentRegionIndex(
-          this._regionId
-        );
-        const { searchTerm } = SearchableComponentStore2.getCurrentSearchData();
-        if (this.lastSearchIndex !== searchIndex || this.lastSearchTerm !== searchTerm) {
-          import_iframe_searcher.default.highlightSearchInDocument(
-            this._regionId,
-            searchTerm,
-            doc,
-            searchIndex
-          );
-        }
-        this.lastSearchIndex = searchIndex;
-        return this.lastSearchTerm = searchTerm;
-      }
-      _unsubscribeFromIFrameEvents() {
-        const node = ReactDOM27.findDOMNode(this);
-        const doc = node.contentDocument;
-        if (!doc) {
-          return;
-        }
-        doc.removeEventListener("click", this._onIFrameClick);
-        doc.removeEventListener("keydown", this._onIFrameKeyEvent);
-        doc.removeEventListener("keypress", this._onIFrameKeyEvent);
-        doc.removeEventListener("keyup", this._onIFrameKeyEvent);
-        doc.removeEventListener("mousedown", this._onIFrameMouseEvent);
-        doc.removeEventListener("mousemove", this._onIFrameMouseEvent);
-        doc.removeEventListener("mouseup", this._onIFrameMouseEvent);
-        doc.removeEventListener("contextmenu", this._onIFrameContextualMenu);
-        if (node.contentWindow) {
-          node.contentWindow.removeEventListener("focus", this._onIFrameFocus);
-          node.contentWindow.removeEventListener("blur", this._onIFrameBlur);
-          return node.contentWindow.removeEventListener(
-            "resize",
-            this._onIFrameResize
-          );
-        }
-      }
-      _subscribeToIFrameEvents() {
-        const node = ReactDOM27.findDOMNode(this);
-        const doc = node.contentDocument;
-        return _4.defer(() => {
-          doc.addEventListener("click", this._onIFrameClick);
-          doc.addEventListener("keydown", this._onIFrameKeyEvent);
-          doc.addEventListener("keypress", this._onIFrameKeyEvent);
-          doc.addEventListener("keyup", this._onIFrameKeyEvent);
-          doc.addEventListener("mousedown", this._onIFrameMouseEvent);
-          doc.addEventListener("mousemove", this._onIFrameMouseEvent);
-          doc.addEventListener("mouseup", this._onIFrameMouseEvent);
-          doc.addEventListener("contextmenu", this._onIFrameContextualMenu);
-          if (node.contentWindow) {
-            node.contentWindow.addEventListener("focus", this._onIFrameFocus);
-            node.contentWindow.addEventListener("blur", this._onIFrameBlur);
-            if (this.props.onResize) {
-              return node.contentWindow.addEventListener(
-                "resize",
-                this._onIFrameResize
-              );
-            }
-          }
-        });
-      }
-      _getContainingTarget(event2, options2) {
-        let { target } = event2;
-        while (target != null && target !== document && target !== window) {
-          if (target.getAttribute(options2.with) != null) {
-            return target;
-          }
-          target = target.parentElement;
-        }
-        return null;
-      }
-      _onIFrameBlur(_event) {
-        const node = ReactDOM27.findDOMNode(this);
-        return node.contentWindow.getSelection().empty();
-      }
-      _onIFrameFocus(_event) {
-        return window.getSelection().empty();
-      }
-      _onIFrameResize(event2) {
-        if (this._ignoreNextResize) {
-          this._ignoreNextResize = false;
-          return;
-        }
-        return typeof this.props.onResize === "function" ? this.props.onResize(event2) : void 0;
-      }
-      // The iFrame captures events that take place over it, which causes some
-      // interesting behaviors. For example, when you drag and release over the
-      // iFrame, the mouseup never fires in the parent window.
-      _onIFrameClick(e) {
-        e.stopPropagation();
-        const target = this._getContainingTarget(e, { with: "href" });
-        if (target) {
-          let rawHref = target.getAttribute("href");
-          if (this._isBlacklistedHref(rawHref)) {
-            e.preventDefault();
-            return;
-          }
-          if (!url6.parse(rawHref).protocol) {
-            if (new RegExp(/^\/\//).test(rawHref)) {
-              target.setAttribute("href", `https:${rawHref}`);
-            } else {
-              target.setAttribute("href", `http://${rawHref}`);
-            }
-            rawHref = target.getAttribute("href");
-          }
-          e.preventDefault();
-          if (rawHref.startsWith(IdentityStore4.URLRoot)) {
-            const path14 = rawHref.split(IdentityStore4.URLRoot).pop();
-            IdentityStore4.fetchSingleSignOnURL(path14, {
-              source: "SingleSignOnEmail"
-            }).then((href) => {
-              return NylasEnv.windowEventHandler.openLink({
-                href,
-                metaKey: e.metaKey
-              });
-            });
-            return;
-          }
-          return NylasEnv.windowEventHandler.openLink({
-            href: rawHref,
-            metaKey: e.metaKey
-          });
-        }
-      }
-      _isBlacklistedHref(href) {
-        return new RegExp(/^file:/i).test(href);
-      }
-      _onIFrameMouseEvent(event2) {
-        const node = ReactDOM27.findDOMNode(this);
-        const nodeRect = node.getBoundingClientRect();
-        const eventAttrs = {};
-        for (var key of Array.from(Object.keys(event2))) {
-          if (["webkitMovementX", "webkitMovementY"].includes(key)) {
-            continue;
-          }
-          eventAttrs[key] = event2[key];
-        }
-        return node.dispatchEvent(
-          new MouseEvent(
-            event2.type,
-            _4.extend({}, eventAttrs, {
-              bubbles: true,
-              clientX: event2.clientX + nodeRect.left,
-              clientY: event2.clientY + nodeRect.top,
-              pageX: event2.pageX + nodeRect.left,
-              pageY: event2.pageY + nodeRect.top
-            })
-          )
-        );
-      }
-      _onIFrameKeyEvent(event2) {
-        if (event2.metaKey || event2.altKey || event2.ctrlKey) {
-          return;
-        }
-        const attrs = [
-          "key",
-          "code",
-          "location",
-          "ctrlKey",
-          "shiftKey",
-          "altKey",
-          "metaKey",
-          "repeat",
-          "isComposing",
-          "charCode",
-          "keyCode",
-          "which"
-        ];
-        const eventInit = Object.assign({ bubbles: true }, _4.pick(event2, attrs));
-        const eventInParentDoc = new KeyboardEvent(event2.type, eventInit);
-        Object.defineProperty(eventInParentDoc, "which", { value: event2.which });
-        return ReactDOM27.findDOMNode(this).dispatchEvent(eventInParentDoc);
-      }
-      _onIFrameContextualMenu(event2) {
-        event2.preventDefault();
-        const { remote: remote9, clipboard: clipboard3, shell: shell6, nativeImage } = require("electron");
-        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
-        const path14 = require("path");
-        const fs11 = require("fs");
-        const menu = new Menu7();
-        const linkTarget = this._getContainingTarget(event2, { with: "href" });
-        if (linkTarget) {
-          const href = linkTarget.getAttribute("href");
-          if (href.startsWith("mailto")) {
-            menu.append(
-              new MenuItem2({
-                label: "Compose Message...",
-                click() {
-                  return NylasEnv.windowEventHandler.openLink({ href });
-                }
-              })
-            );
-            menu.append(
-              new MenuItem2({
-                label: "Copy Email Address",
-                click() {
-                  return clipboard3.writeText(href.split("mailto:").pop());
-                }
-              })
-            );
-          } else {
-            menu.append(
-              new MenuItem2({
-                label: "Open Link",
-                click() {
-                  return NylasEnv.windowEventHandler.openLink({ href });
-                }
-              })
-            );
-            menu.append(
-              new MenuItem2({
-                label: "Copy Link Address",
-                click() {
-                  return clipboard3.writeText(href);
-                }
-              })
-            );
-          }
-          menu.append(new MenuItem2({ type: "separator" }));
-        }
-        const imageTarget = this._getContainingTarget(event2, { with: "src" });
-        if (imageTarget) {
-          const src = imageTarget.getAttribute("src");
-          const srcFilename = path14.basename(src);
-          menu.append(
-            new MenuItem2({
-              label: "Save Image...",
-              click() {
-                return NylasEnv.showSaveDialog(
-                  { defaultPath: srcFilename },
-                  (path15) => {
-                    if (!path15) {
-                      return;
-                    }
-                    const oReq = new XMLHttpRequest();
-                    oReq.open("GET", src, true);
-                    oReq.responseType = "arraybuffer";
-                    oReq.onload = () => {
-                      const buffer = new Buffer(new Uint8Array(oReq.response));
-                      return fs11.writeFile(
-                        path15,
-                        buffer,
-                        (_err) => shell6.showItemInFolder(path15)
-                      );
-                    };
-                    return oReq.send();
-                  }
-                );
-              }
-            })
-          );
-          menu.append(
-            new MenuItem2({
-              label: "Copy Image",
-              click() {
-                let img = new Image();
-                img.addEventListener(
-                  "load",
-                  () => {
-                    const canvas = document.createElement("canvas");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    canvas.getContext("2d").drawImage(imageTarget, 0, 0);
-                    const imageDataURL = canvas.toDataURL("image/png");
-                    img = nativeImage.createFromDataURL(imageDataURL);
-                    return clipboard3.writeImage(img);
-                  },
-                  false
-                );
-                return img.src = src;
-              }
-            })
-          );
-          menu.append(new MenuItem2({ type: "separator" }));
-        }
-        let text = "";
-        const selection = ReactDOM27.findDOMNode(this).contentDocument.getSelection();
-        if (selection.rangeCount > 0) {
-          const range2 = selection.getRangeAt(0);
-          text = range2.toString();
-        }
-        if (!text || text.length === 0) {
-          text = (linkTarget != null ? linkTarget : event2.target).innerText;
-        }
-        text = text.trim();
-        if (text.length > 0) {
-          let textPreview;
-          if (text.length > 45) {
-            textPreview = `${text.substr(0, 42)}...`;
-          } else {
-            textPreview = text;
-          }
-          menu.append(
-            new MenuItem2({
-              label: "Copy",
-              click() {
-                return clipboard3.writeText(text);
-              }
-            })
-          );
-          menu.append(
-            new MenuItem2({
-              label: `Search Google for '${textPreview}'`,
-              click() {
-                return shell6.openExternal(
-                  `https://www.google.com/search?q=${encodeURIComponent(text)}`
-                );
-              }
-            })
-          );
-          if (process.platform === "darwin") {
-            menu.append(
-              new MenuItem2({
-                label: `Look Up '${textPreview}'`,
-                click() {
-                  return NylasEnv.getCurrentWindow().showDefinitionForSelection();
-                }
-              })
-            );
-          }
-        }
-        if (process.platform === "darwin") {
-          menu.append(new MenuItem2({ type: "separator" }));
-        }
-        return menu.popup(remote9.getCurrentWindow());
-      }
-    };
-    EventedIFrame.initClass();
-    module2.exports = EventedIFrame;
-  }
-});
-
 // src/components/empty-list-state.jsx
 var require_empty_list_state = __commonJS({
   "src/components/empty-list-state.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_index_all();
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
     var import_classnames18 = __toESM(require_classnames());
     init_retina_img();
-    var import_evented_iframe = __toESM(require_evented_iframe());
     init_nylas_exports();
     init_nylas_component_kit();
     var INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
-    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react60.default.Component {
+    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react61.default.Component {
       static initClass() {
         _EmptyPerspectiveState.displayName = "EmptyPerspectiveState";
         _EmptyPerspectiveState.propTypes = {
-          perspective: import_prop_types64.default.object,
-          messageContent: import_prop_types64.default.node
+          perspective: import_prop_types65.default.object,
+          messageContent: import_prop_types65.default.node
         };
       }
       render() {
@@ -210858,19 +210108,19 @@ var require_empty_list_state = __commonJS({
         if (name2) {
           name2 = name2.toLowerCase();
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: "perspective-empty-state" },
-          name2 ? import_react60.default.createElement(retina_img_default, {
+          name2 ? import_react61.default.createElement(retina_img_default, {
             name: `ic-emptystate-${name2}.png`,
             mode: retina_img_default.Mode.ContentIsMask
           }) : void 0,
-          import_react60.default.createElement("div", { className: "message" }, messageContent)
+          import_react61.default.createElement("div", { className: "message" }, messageContent)
         );
       }
     };
     EmptyPerspectiveState.initClass();
-    var EmptyInboxState = class _EmptyInboxState extends import_react60.default.Component {
+    var EmptyInboxState = class _EmptyInboxState extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this._getScalingFactor = this._getScalingFactor.bind(this);
@@ -210878,7 +210128,7 @@ var require_empty_list_state = __commonJS({
       }
       static initClass() {
         _EmptyInboxState.displayName = "EmptyInboxState";
-        _EmptyInboxState.propTypes = { containerRect: import_prop_types64.default.object };
+        _EmptyInboxState.propTypes = { containerRect: import_prop_types65.default.object };
       }
       _getScalingFactor() {
         const { width } = this.props.containerRect;
@@ -210904,16 +210154,16 @@ var require_empty_list_state = __commonJS({
         const animationName = this._getAnimationName();
         const factor = this._getScalingFactor();
         const style = factor ? { transform: `scale(${factor})` } : {};
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: "inbox-zero-animation" },
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             { className: "animation-wrapper", style },
-            import_react60.default.createElement("iframe", {
+            import_react61.default.createElement("iframe", {
               src: `animations/inbox-zero/${animationName}/${animationName}.html`
             }),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "message" },
               "Hooray! You\u2019re done."
@@ -210923,10 +210173,10 @@ var require_empty_list_state = __commonJS({
       }
     };
     EmptyInboxState.initClass();
-    var EmptyListState = class _EmptyListState extends import_react60.default.Component {
+    var EmptyListState = class _EmptyListState extends import_react61.default.Component {
       static initClass() {
         _EmptyListState.displayName = "EmptyListState";
-        _EmptyListState.propTypes = { visible: import_prop_types64.default.bool.isRequired };
+        _EmptyListState.propTypes = { visible: import_prop_types65.default.bool.isRequired };
       }
       constructor(props) {
         this._getDimensions = this._getDimensions.bind(this);
@@ -210988,13 +210238,13 @@ var require_empty_list_state = __commonJS({
       }
       render() {
         if (!this.props.visible) {
-          return import_react60.default.createElement("span", null);
+          return import_react61.default.createElement("span", null);
         }
         let ContentComponent = EmptyPerspectiveState;
         const current = FocusedPerspectiveStore3.current();
         let messageContent = current.emptyMessage();
         if (this.state.syncing) {
-          messageContent = import_react60.default.createElement(void 0, { empty: true });
+          messageContent = import_react61.default.createElement(void 0, { empty: true });
         } else if (current.isInbox()) {
           ContentComponent = EmptyInboxState;
         }
@@ -211002,10 +210252,10 @@ var require_empty_list_state = __commonJS({
           "empty-state": true,
           active: this.state.active
         });
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: classes },
-          import_react60.default.createElement(ContentComponent, {
+          import_react61.default.createElement(ContentComponent, {
             perspective: current,
             containerRect: this.state.rect,
             messageContent
@@ -211016,7 +210266,7 @@ var require_empty_list_state = __commonJS({
         if (!this._mounted) {
           return null;
         }
-        const node = import_react_dom29.default.findDOMNode(this);
+        const node = import_react_dom28.default.findDOMNode(this);
         const rect = node.getBoundingClientRect();
         return { width: rect.width, height: rect.height };
       }
@@ -211079,18 +210329,18 @@ var init_scrollbar_ticks = __esm({
 // src/components/scroll-region.jsx
 var require_scroll_region = __commonJS({
   "src/components/scroll-region.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_index_all();
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
     init_nylas_exports();
     var import_classnames18 = __toESM(require_classnames());
     init_scrollbar_ticks();
-    var Scrollbar = class _Scrollbar extends import_react60.default.Component {
+    var Scrollbar = class _Scrollbar extends import_react61.default.Component {
       static initClass() {
         _Scrollbar.displayName = "Scrollbar";
         _Scrollbar.propTypes = {
-          scrollTooltipComponent: import_prop_types64.default.func,
+          scrollTooltipComponent: import_prop_types65.default.func,
           // A scrollbarTickProvider is any object that has the `listen` and
           // `scrollbarTicks` method. Since ScrollRegions tend to encompass large
           // render trees it's more efficent for the scrollbar to listen for its
@@ -211099,8 +210349,8 @@ var require_scroll_region = __commonJS({
           // method must return an array of numbers between 0 and 1 which
           // represent the height percentages at which tick marks will be
           // rendered.
-          scrollbarTickProvider: import_prop_types64.default.object,
-          getScrollRegion: import_prop_types64.default.func
+          scrollbarTickProvider: import_prop_types65.default.object,
+          getScrollRegion: import_prop_types65.default.func
         };
       }
       constructor(props) {
@@ -211137,7 +210387,7 @@ var require_scroll_region = __commonJS({
         }
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       componentWillUnmount() {
         this._onHandleUp({ preventDefault() {
@@ -211156,19 +210406,19 @@ var require_scroll_region = __commonJS({
         });
         let tooltip = [];
         if (this.props.scrollTooltipComponent && this.state.dragging) {
-          tooltip = import_react60.default.createElement(this.props.scrollTooltipComponent, {
+          tooltip = import_react61.default.createElement(this.props.scrollTooltipComponent, {
             viewportCenter: this.state.viewportScrollTop + this.state.viewportHeight / 2,
             totalHeight: this.state.totalHeight
           });
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           {
             className: containerClasses,
             style: this._scrollbarWrapStyles(),
             onMouseEnter: this.recomputeDimensions
           },
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             {
               className: "scrollbar-track-inner",
@@ -211176,7 +210426,7 @@ var require_scroll_region = __commonJS({
               onClick: this._onScrollJump
             },
             this._renderScrollbarTicks(),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               {
                 className: "scrollbar-handle",
@@ -211185,7 +210435,7 @@ var require_scroll_region = __commonJS({
                 ref: "handle",
                 onClick: this._onHandleClick
               },
-              import_react60.default.createElement("div", { className: "tooltip" }, tooltip)
+              import_react61.default.createElement("div", { className: "tooltip" }, tooltip)
             )
           )
         );
@@ -211213,13 +210463,13 @@ var require_scroll_region = __commonJS({
         if (!(this.state.scrollbarTicks.length > 0)) {
           return false;
         }
-        return import_react60.default.createElement(ScrollbarTicks, {
+        return import_react61.default.createElement(ScrollbarTicks, {
           ticks: this.state.scrollbarTicks
         });
       }
       _recomputeDimensions({ useCachedValues }) {
         if (!useCachedValues) {
-          const trackNode = import_react_dom29.default.findDOMNode(this.refs.track);
+          const trackNode = import_react_dom28.default.findDOMNode(this.refs.track);
           if (!trackNode) {
             return;
           }
@@ -211249,8 +210499,8 @@ var require_scroll_region = __commonJS({
         };
       }
       _onHandleDown(event2) {
-        const handleNode = import_react_dom29.default.findDOMNode(this.refs.handle);
-        this._trackOffset = import_react_dom29.default.findDOMNode(
+        const handleNode = import_react_dom28.default.findDOMNode(this.refs.handle);
+        this._trackOffset = import_react_dom28.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = event2.pageY - handleNode.getBoundingClientRect().top;
@@ -211275,7 +210525,7 @@ var require_scroll_region = __commonJS({
         return event2.stopPropagation();
       }
       _onScrollJump(event2) {
-        this._trackOffset = import_react_dom29.default.findDOMNode(
+        this._trackOffset = import_react_dom28.default.findDOMNode(
           this.refs.track
         ).getBoundingClientRect().top;
         this._mouseOffsetWithinHandle = this._getHandleHeight() / 2;
@@ -211292,17 +210542,17 @@ var require_scroll_region = __commonJS({
       }
     };
     Scrollbar.initClass();
-    var ScrollRegion5 = class _ScrollRegion extends import_react60.default.Component {
+    var ScrollRegion5 = class _ScrollRegion extends import_react61.default.Component {
       static initClass() {
         _ScrollRegion.displayName = "ScrollRegion";
         _ScrollRegion.propTypes = {
-          onScroll: import_prop_types64.default.func,
-          onScrollEnd: import_prop_types64.default.func,
-          className: import_prop_types64.default.string,
-          scrollTooltipComponent: import_prop_types64.default.func,
-          scrollbarTickProvider: import_prop_types64.default.object,
-          children: import_prop_types64.default.oneOfType([import_prop_types64.default.element, import_prop_types64.default.array]),
-          getScrollbar: import_prop_types64.default.func
+          onScroll: import_prop_types65.default.func,
+          onScrollEnd: import_prop_types65.default.func,
+          className: import_prop_types65.default.string,
+          scrollTooltipComponent: import_prop_types65.default.func,
+          scrollbarTickProvider: import_prop_types65.default.object,
+          children: import_prop_types65.default.oneOfType([import_prop_types65.default.element, import_prop_types65.default.array]),
+          getScrollbar: import_prop_types65.default.func
         };
         _ScrollRegion.ScrollPosition = {
           // Scroll so that the desired region is at the top of the viewport
@@ -211344,10 +210594,10 @@ var require_scroll_region = __commonJS({
         };
         Object.defineProperty(this, "scrollTop", {
           get() {
-            return import_react_dom29.default.findDOMNode(this.refs.content).scrollTop;
+            return import_react_dom28.default.findDOMNode(this.refs.content).scrollTop;
           },
           set(val) {
-            return import_react_dom29.default.findDOMNode(this.refs.content).scrollTop = val;
+            return import_react_dom28.default.findDOMNode(this.refs.content).scrollTop = val;
           }
         });
       }
@@ -211364,7 +210614,7 @@ var require_scroll_region = __commonJS({
           }
         });
         return this._heightObserver.observe(
-          import_react_dom29.default.findDOMNode(this.refs.content),
+          import_react_dom28.default.findDOMNode(this.refs.content),
           {
             subtree: true,
             attributes: true,
@@ -211407,7 +210657,7 @@ var require_scroll_region = __commonJS({
         });
         if (!this.props.getScrollbar) {
           if (this._scrollbarComponent == null) {
-            this._scrollbarComponent = import_react60.default.createElement(Scrollbar, {
+            this._scrollbarComponent = import_react61.default.createElement(Scrollbar, {
               ref: "scrollbar",
               scrollbarTickProvider: this.props.scrollbarTickProvider,
               scrollTooltipComponent: this.props.scrollTooltipComponent,
@@ -211415,22 +210665,22 @@ var require_scroll_region = __commonJS({
             });
           }
         }
-        const otherProps = Utils12.fastOmit(
+        const otherProps = Utils13.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           Object.assign({ className: containerClasses }, otherProps),
           this._scrollbarComponent,
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             {
               className: "scroll-region-content",
               onScroll: this._onScroll,
               ref: "content"
             },
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "scroll-region-content-inner" },
               this.props.children
@@ -211445,8 +210695,8 @@ var require_scroll_region = __commonJS({
           param = {};
         }
         const { position, settle, done } = param;
-        if (node instanceof import_react60.default.Component) {
-          node = import_react_dom29.default.findDOMNode(node);
+        if (node instanceof import_react61.default.Component) {
+          node = import_react_dom28.default.findDOMNode(node);
         }
         if (!(node instanceof Node)) {
           throw new Error(
@@ -211480,7 +210730,7 @@ var require_scroll_region = __commonJS({
       }
       _scroll({ position, settle, done }, clientRectProviderCallback) {
         let settleFn;
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom28.default.findDOMNode(this.refs.content);
         if (position == null) {
           position = _ScrollRegion.ScrollPosition.Visible;
         }
@@ -211509,7 +210759,7 @@ var require_scroll_region = __commonJS({
           } else if (position === _ScrollRegion.ScrollPosition.Center) {
             this.scrollTop = rect.top - (contentClientRect.height - rect.height) / 2;
           } else if (position === _ScrollRegion.ScrollPosition.CenterIfInvisible) {
-            if (!Utils12.rectVisibleInRect(rect, contentVisibleRect)) {
+            if (!Utils13.rectVisibleInRect(rect, contentVisibleRect)) {
               this.scrollTop = rect.top - (contentClientRect.height - rect.height) / 2;
             }
           } else if (position === _ScrollRegion.ScrollPosition.Visible) {
@@ -211525,7 +210775,7 @@ var require_scroll_region = __commonJS({
         });
       }
       _settleHeight(callback) {
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom28.default.findDOMNode(this.refs.content);
         let lastContentHeight = -1;
         var scrollIfSettled = () => {
           if (!this._mounted) {
@@ -211557,7 +210807,7 @@ var require_scroll_region = __commonJS({
         if (!this.refs.content) {
           return;
         }
-        const contentNode = import_react_dom29.default.findDOMNode(this.refs.content);
+        const contentNode = import_react_dom28.default.findDOMNode(this.refs.content);
         if (!contentNode) {
           return;
         }
@@ -211587,7 +210837,7 @@ var require_scroll_region = __commonJS({
         return this.setState(state);
       }
       _onScroll(event2) {
-        if (event2.target !== import_react_dom29.default.findDOMNode(this.refs.content)) {
+        if (event2.target !== import_react_dom28.default.findDOMNode(this.refs.content)) {
           return;
         }
         if (this.state.scrolling) {
@@ -211913,12 +211163,11 @@ var init_list_data_source = __esm({
 // src/components/list-tabular-item.jsx
 var require_list_tabular_item = __commonJS({
   "src/components/list-tabular-item.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    init_index_all();
-    var import_react60 = __toESM(require_react());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
     init_swipe_container();
     init_nylas_exports();
-    var ListTabularItem2 = class _ListTabularItem extends import_react60.default.Component {
+    var ListTabularItem2 = class _ListTabularItem extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -211929,26 +211178,26 @@ var require_list_tabular_item = __commonJS({
       static initClass() {
         _ListTabularItem.displayName = "ListTabularItem";
         _ListTabularItem.propTypes = {
-          metrics: import_prop_types64.default.object,
-          columns: import_prop_types64.default.arrayOf(import_prop_types64.default.object).isRequired,
-          item: import_prop_types64.default.object.isRequired,
-          itemProps: import_prop_types64.default.object,
-          onSelect: import_prop_types64.default.func,
-          onClick: import_prop_types64.default.func,
-          onDoubleClick: import_prop_types64.default.func
+          metrics: import_prop_types65.default.object,
+          columns: import_prop_types65.default.arrayOf(import_prop_types65.default.object).isRequired,
+          item: import_prop_types65.default.object.isRequired,
+          itemProps: import_prop_types65.default.object,
+          onSelect: import_prop_types65.default.func,
+          onClick: import_prop_types65.default.func,
+          onDoubleClick: import_prop_types65.default.func
         };
       }
       // DO NOT DELETE unless you know what you're doing! This method cuts
       // React.Perf.wasted-time from ~300msec to 20msec by doing a deep
       // comparison of props before triggering a re-render.
       shouldComponentUpdate(nextProps, _nextState) {
-        if (!Utils12.isEqualReact(this.props.item, nextProps.item) || this.props.columns !== nextProps.columns) {
+        if (!Utils13.isEqualReact(this.props.item, nextProps.item) || this.props.columns !== nextProps.columns) {
           this._columnCache = null;
           return true;
         }
-        if (!Utils12.isEqualReact(
-          Utils12.fastOmit(this.props, ["item"]),
-          Utils12.fastOmit(nextProps, ["item"])
+        if (!Utils13.isEqualReact(
+          Utils13.fastOmit(this.props, ["item"]),
+          Utils13.fastOmit(nextProps, ["item"])
         )) {
           return true;
         }
@@ -211956,14 +211205,14 @@ var require_list_tabular_item = __commonJS({
       }
       render() {
         const className = `list-item list-tabular-item ${this.props.itemProps != null ? this.props.itemProps.className : void 0}`;
-        const props = Utils12.fastOmit(
+        const props = Utils13.fastOmit(
           this.props.itemProps != null ? this.props.itemProps : {},
           ["className"]
         );
         if (this._columnCache == null) {
           this._columnCache = this._columns();
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           SwipeContainer,
           Object.assign({}, props, {
             onClick: this._onClick,
@@ -211974,7 +211223,7 @@ var require_list_tabular_item = __commonJS({
               height: this.props.metrics.height
             }
           }),
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             { className, style: { height: this.props.metrics.height } },
             this._columnCache
@@ -211991,7 +211240,7 @@ var require_list_tabular_item = __commonJS({
               );
             }
             names[column.name] = true;
-            return import_react60.default.createElement(
+            return import_react61.default.createElement(
               "div",
               {
                 key: column.name,
@@ -212028,14 +211277,13 @@ var list_tabular_exports = {};
 __export(list_tabular_exports, {
   default: () => list_tabular_default
 });
-var import_react15, import_prop_types17, import_react_dom7, import_scroll_region, import_spinner, import_list_tabular_item, ListColumn, ListTabularRows, ListTabular, list_tabular_default;
+var import_react15, import_prop_types17, import_scroll_region, import_spinner, import_list_tabular_item, ListColumn, ListTabularRows, ListTabular, list_tabular_default;
 var init_list_tabular = __esm({
   "src/components/list-tabular.jsx"() {
     init_index_all();
     import_react15 = __toESM(require_react());
     import_prop_types17 = __toESM(require_prop_types());
     init_nylas_exports();
-    import_react_dom7 = __toESM(require_react_dom());
     import_scroll_region = __toESM(require_scroll_region());
     import_spinner = __toESM(require_spinner());
     init_list_data_source();
@@ -212064,14 +211312,14 @@ var init_list_tabular = __esm({
         onDragEnd: import_prop_types17.default.func
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       renderRow({ item, idx, itemProps = {} } = {}) {
         if (!item) {
           return false;
         }
         const { columns, itemHeight, onClick, onSelect, onDoubleClick } = this.props;
-        return /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ import_react15.default.createElement(
           import_list_tabular_item.default,
           {
             key: item.id || idx,
@@ -212087,7 +211335,7 @@ var init_list_tabular = __esm({
       }
       render() {
         const { rows, innerStyles, draggable, onDragStart, onDragEnd } = this.props;
-        return /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ import_react15.default.createElement(
           "div",
           {
             className: "list-rows",
@@ -212129,6 +211377,7 @@ var init_list_tabular = __esm({
       static DataSource = ListDataSource;
       constructor(props) {
         super(props);
+        this.containerRef = import_react15.default.createRef();
         if (!props.itemHeight) {
           throw new Error(
             "ListTabular: You must provide an itemHeight - raising to avoid divide by zero errors."
@@ -212153,7 +211402,9 @@ var init_list_tabular = __esm({
           this.props.onComponentDidUpdate();
         }
         if (prevProps.dataSource !== this.props.dataSource) {
-          this.refs.container.scrollTop = 0;
+          if (this.containerRef?.current) {
+            this.containerRef.current.scrollTop = 0;
+          }
         }
         if (!this.updateRangeStateFiring) {
           this.updateRangeState();
@@ -212215,7 +211466,7 @@ var init_list_tabular = __esm({
           const itemProps = itemPropsProvider(record.item, idx / 1);
           rows.push({ item: record.item, idx: idx / 1, itemProps });
         });
-        Utils12.range(renderedRangeStart, renderedRangeEnd).forEach((idx) => {
+        Utils13.range(renderedRangeStart, renderedRangeEnd).forEach((idx) => {
           const item = items[idx];
           if (item) {
             const itemProps = itemPropsProvider(item, idx);
@@ -212225,14 +211476,17 @@ var init_list_tabular = __esm({
         return rows;
       }
       scrollTo(node) {
-        this.refs.container.scrollTo(node);
+        this.containerRef?.current.scrollTo(node);
       }
       scrollByPage(direction) {
-        const height = import_react_dom7.default.findDOMNode(this.refs.container).clientHeight;
-        this.refs.container.scrollTop += height * direction;
+        const height = this.containerRef?.current?.clientHeight ?? 0;
+        const el = this.containerRef?.current;
+        if (el) {
+          el.scrollTop += height * direction;
+        }
       }
       updateRangeState() {
-        const { scrollTop } = this.refs.container;
+        const { scrollTop } = this.containerRef?.current ?? {};
         const { itemHeight } = this.props;
         const rangeSize = Math.ceil(window.innerHeight / itemHeight);
         let rangeStart = Math.floor(scrollTop / itemHeight);
@@ -212262,7 +211516,7 @@ var init_list_tabular = __esm({
         } = args;
         const items = {};
         let animatingOut = {};
-        Utils12.range(start, end).forEach((idx) => {
+        Utils13.range(start, end).forEach((idx) => {
           items[idx] = dataSource.get(idx);
         });
         if (this.state && start === this.state.renderedRangeStart) {
@@ -212315,15 +211569,15 @@ var init_list_tabular = __esm({
         const { count, loaded, empty } = this.state;
         const rows = this.getRowsToRender();
         const innerStyles = { height: count * itemHeight };
-        return /* @__PURE__ */ React.createElement("div", { className: "list-container list-tabular #{@props.className}" }, /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ import_react15.default.createElement("div", { className: "list-container list-tabular #{@props.className}" }, /* @__PURE__ */ import_react15.default.createElement(
           import_scroll_region.default,
           {
-            ref: "container",
+            ref: this.containerRef,
             onScroll: this.onScroll,
             tabIndex: "-1",
             scrollTooltipComponent
           },
-          /* @__PURE__ */ React.createElement(
+          /* @__PURE__ */ import_react15.default.createElement(
             ListTabularRows,
             {
               rows,
@@ -212338,8 +211592,8 @@ var init_list_tabular = __esm({
               onDoubleClick
             }
           ),
-          /* @__PURE__ */ React.createElement("div", { className: "footer" }, footer)
-        ), /* @__PURE__ */ React.createElement(import_spinner.default, { visible: !loaded && empty }), /* @__PURE__ */ React.createElement(EmptyComponent, { visible: loaded && empty }));
+          /* @__PURE__ */ import_react15.default.createElement("div", { className: "footer" }, footer)
+        ), /* @__PURE__ */ import_react15.default.createElement(import_spinner.default, { visible: !loaded && empty }), /* @__PURE__ */ import_react15.default.createElement(EmptyComponent, { visible: loaded && empty }));
       }
     };
     list_tabular_default = ListTabular;
@@ -212541,7 +211795,7 @@ var init_header_controls = __esm({
         headerComonents: false
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       _renderNextAction() {
         if (!this.props.nextAction) {
@@ -212606,7 +211860,7 @@ var init_footer_controls = __esm({
         footerComponents: false
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       render() {
         if (!this.props.footerComponents) {
@@ -212655,12 +211909,12 @@ var init_calendar_data_source = __esm({
 });
 
 // src/components/nylas-calendar/event-grid-background.jsx
-var import_react20, import_prop_types22, import_react_dom8, EventGridBackground;
+var import_react20, import_prop_types22, import_react_dom7, EventGridBackground;
 var init_event_grid_background = __esm({
   "src/components/nylas-calendar/event-grid-background.jsx"() {
     import_react20 = __toESM(require_react());
     import_prop_types22 = __toESM(require_prop_types());
-    import_react_dom8 = __toESM(require_react_dom());
+    import_react_dom7 = __toESM(require_react_dom());
     init_nylas_exports();
     EventGridBackground = class extends import_react20.default.Component {
       static displayName = "EventGridBackground";
@@ -212678,13 +211932,13 @@ var init_event_grid_background = __esm({
         this._renderEventGridBackground();
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       componentDidUpdate() {
         this._renderEventGridBackground();
       }
       _renderEventGridBackground() {
-        const canvas = import_react_dom8.default.findDOMNode(this.refs.canvas);
+        const canvas = import_react_dom7.default.findDOMNode(this.refs.canvas);
         const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const height = this.props.height;
@@ -212718,7 +211972,7 @@ var init_event_grid_background = __esm({
           return;
         }
         this._lastHoverRect = r;
-        const cursor = import_react_dom8.default.findDOMNode(this.refs.cursor);
+        const cursor = import_react_dom7.default.findDOMNode(this.refs.cursor);
         cursor.style.left = `${r.x}px`;
         cursor.style.top = `${r.y}px`;
         cursor.style.width = `${r.width}px`;
@@ -212739,7 +211993,7 @@ var init_event_grid_background = __esm({
 function calcColor(calendarId) {
   let bgColor = NylasEnv.config.get(`calendar.colors.${calendarId}`);
   if (!bgColor) {
-    const hue = Utils12.hueForString(calendarId);
+    const hue = Utils13.hueForString(calendarId);
     bgColor = `hsla(${hue}, 50%, 45%, 0.35)`;
   }
   return bgColor;
@@ -212751,12 +212005,12 @@ var init_calendar_helpers = __esm({
 });
 
 // src/components/nylas-calendar/calendar-event.jsx
-var import_react21, import_prop_types23, import_react_dom9, CalendarEvent;
+var import_react21, import_prop_types23, import_react_dom8, CalendarEvent;
 var init_calendar_event = __esm({
   "src/components/nylas-calendar/calendar-event.jsx"() {
     import_react21 = __toESM(require_react());
     import_prop_types23 = __toESM(require_prop_types());
-    import_react_dom9 = __toESM(require_react_dom());
+    import_react_dom8 = __toESM(require_react_dom());
     init_nylas_exports();
     init_nylas_component_kit();
     init_calendar_helpers();
@@ -212799,7 +212053,7 @@ var init_calendar_event = __esm({
         if (!focused) {
           return;
         }
-        const eventNode = import_react_dom9.default.findDOMNode(this);
+        const eventNode = import_react_dom8.default.findDOMNode(this);
         if (!eventNode) {
           return;
         }
@@ -212901,7 +212155,7 @@ var init_week_view_event_column = __esm({
         selectedEvents: import_prop_types24.default.arrayOf(import_prop_types24.default.object)
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       renderEvents() {
         const {
@@ -212973,7 +212227,7 @@ var init_week_view_all_day_events = __esm({
         allDayOverlap: import_prop_types25.default.object
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       render() {
         const eventComponents = this.props.allDayEvents.map((e) => {
@@ -212998,13 +212252,13 @@ var init_week_view_all_day_events = __esm({
 });
 
 // src/components/nylas-calendar/calendar-event-container.jsx
-var import_moment4, import_react24, import_prop_types26, import_react_dom10, CalendarEventContainer;
+var import_moment4, import_react24, import_prop_types26, import_react_dom9, CalendarEventContainer;
 var init_calendar_event_container = __esm({
   "src/components/nylas-calendar/calendar-event-container.jsx"() {
     import_moment4 = __toESM(require_moment());
     import_react24 = __toESM(require_react());
     import_prop_types26 = __toESM(require_prop_types());
-    import_react_dom10 = __toESM(require_react_dom());
+    import_react_dom9 = __toESM(require_react_dom());
     CalendarEventContainer = class extends import_react24.default.Component {
       static displayName = "CalendarEventContainer";
       static propTypes = {
@@ -213086,7 +212340,7 @@ var init_calendar_event_container = __esm({
         return { x: x3, y, width, height, time };
       }
       _onWindowMouseUp = (event2) => {
-        if (import_react_dom10.default.findDOMNode(this).contains(event2.target)) {
+        if (import_react_dom9.default.findDOMNode(this).contains(event2.target)) {
           return;
         }
         this._onCalendarMouseUp(event2);
@@ -213108,12 +212362,12 @@ var init_calendar_event_container = __esm({
 });
 
 // src/components/nylas-calendar/current-time-indicator.jsx
-var import_react25, import_prop_types27, import_react_dom11, import_moment5, import_classnames4, CurrentTimeIndicator;
+var import_react25, import_prop_types27, import_react_dom10, import_moment5, import_classnames4, CurrentTimeIndicator;
 var init_current_time_indicator = __esm({
   "src/components/nylas-calendar/current-time-indicator.jsx"() {
     import_react25 = __toESM(require_react());
     import_prop_types27 = __toESM(require_prop_types());
-    import_react_dom11 = __toESM(require_react_dom());
+    import_react_dom10 = __toESM(require_react_dom());
     import_moment5 = __toESM(require_moment());
     import_classnames4 = __toESM(require_classnames());
     CurrentTimeIndicator = class extends import_react25.default.Component {
@@ -213132,7 +212386,7 @@ var init_current_time_indicator = __esm({
         this._movementTimer = setInterval(() => {
           this.setState(this.getStateFromTime());
         }, 60 * 1e3);
-        import_react_dom11.default.findDOMNode(this).scrollIntoViewIfNeeded(true);
+        import_react_dom10.default.findDOMNode(this).scrollIntoViewIfNeeded(true);
       }
       componentWillUnmount() {
         clearTimeout(this._movementTimer);
@@ -213173,13 +212427,13 @@ var init_current_time_indicator = __esm({
 });
 
 // src/components/nylas-calendar/week-view.jsx
-var import_react26, import_prop_types28, import_react_dom12, import_moment_timezone, import_classnames5, BUFFER_DAYS, DAYS_IN_VIEW, MIN_INTERVAL_HEIGHT, DAY_DUR, INTERVAL_TIME, overlapsBounds, WeekView;
+var import_react26, import_prop_types28, import_react_dom11, import_moment_timezone, import_classnames5, BUFFER_DAYS, DAYS_IN_VIEW, MIN_INTERVAL_HEIGHT, DAY_DUR, INTERVAL_TIME, overlapsBounds, WeekView;
 var init_week_view = __esm({
   "src/components/nylas-calendar/week-view.jsx"() {
     init_index_all();
     import_react26 = __toESM(require_react());
     import_prop_types28 = __toESM(require_prop_types());
-    import_react_dom12 = __toESM(require_react_dom());
+    import_react_dom11 = __toESM(require_react_dom());
     import_moment_timezone = __toESM(require_moment_timezone2());
     import_classnames5 = __toESM(require_classnames());
     init_nylas_exports();
@@ -213198,7 +212452,7 @@ var init_week_view = __esm({
     MIN_INTERVAL_HEIGHT = 21;
     DAY_DUR = import_moment_timezone.default.duration(1, "day").as("seconds");
     INTERVAL_TIME = import_moment_timezone.default.duration(30, "minutes").as("seconds");
-    overlapsBounds = Utils12.overlapsBounds;
+    overlapsBounds = Utils13.overlapsBounds;
     WeekView = class extends import_react26.default.Component {
       static displayName = "WeekView";
       static propTypes = {
@@ -213448,7 +212702,7 @@ var init_week_view = __esm({
         return DAY_DUR / INTERVAL_TIME * this.state.intervalHeight;
       }
       _centerScrollRegion() {
-        const wrap3 = import_react_dom12.default.findDOMNode(this.refs.eventGridWrap);
+        const wrap3 = import_react_dom11.default.findDOMNode(this.refs.eventGridWrap);
         wrap3.scrollTop = this._gridHeight() / 2 - wrap3.getBoundingClientRect().height / 2;
       }
       // This generates the ticks used mark the event grid and the
@@ -213479,20 +212733,20 @@ var init_week_view = __esm({
         if (!this._mounted) {
           return;
         }
-        const wrap3 = import_react_dom12.default.findDOMNode(this.refs.eventGridWrap);
+        const wrap3 = import_react_dom11.default.findDOMNode(this.refs.eventGridWrap);
         const wrapHeight = wrap3.getBoundingClientRect().height;
         if (this._lastWrapHeight === wrapHeight) {
           return;
         }
         this._lastWrapHeight = wrapHeight;
         const numIntervals = Math.floor(DAY_DUR / INTERVAL_TIME);
-        import_react_dom12.default.findDOMNode(this.refs.eventGridLegendWrap).style.height = `${wrapHeight}px`;
+        import_react_dom11.default.findDOMNode(this.refs.eventGridLegendWrap).style.height = `${wrapHeight}px`;
         this.setState({
           intervalHeight: Math.max(wrapHeight / numIntervals, MIN_INTERVAL_HEIGHT)
         });
       };
       _onScrollGrid = (event2) => {
-        import_react_dom12.default.findDOMNode(this.refs.eventGridLegendWrap).scrollTop = event2.target.scrollTop;
+        import_react_dom11.default.findDOMNode(this.refs.eventGridLegendWrap).scrollTop = event2.target.scrollTop;
       };
       _onScrollCalendarArea = (event2) => {
         if (!event2.target.scrollLeft) {
@@ -213515,7 +212769,7 @@ var init_week_view = __esm({
         const weekEnd = this.state.endMoment.unix();
         let percent = (this._scrollTime - weekStart) / (weekEnd - weekStart);
         percent = Math.min(Math.max(percent, 0), 1);
-        const wrap3 = import_react_dom12.default.findDOMNode(this.refs.calendarAreaWrap);
+        const wrap3 = import_react_dom11.default.findDOMNode(this.refs.calendarAreaWrap);
         wrap3.scrollLeft = wrap3.scrollWidth * percent;
       }
       _renderEventGridLabels() {
@@ -213697,13 +212951,13 @@ var key_commands_region_exports = {};
 __export(key_commands_region_exports, {
   default: () => KeyCommandsRegion
 });
-var import_react28, import_prop_types30, import_react_dom13, import_classnames6, KeyCommandsRegion;
+var import_react28, import_prop_types30, import_react_dom12, import_classnames6, KeyCommandsRegion;
 var init_key_commands_region = __esm({
   "src/components/key-commands-region.jsx"() {
     init_index_all();
     import_react28 = __toESM(require_react());
     import_prop_types30 = __toESM(require_prop_types());
-    import_react_dom13 = __toESM(require_react_dom());
+    import_react_dom12 = __toESM(require_react_dom());
     import_classnames6 = __toESM(require_classnames());
     KeyCommandsRegion = class extends import_react28.default.Component {
       static displayName = "KeyCommandsRegion";
@@ -213765,7 +213019,7 @@ var init_key_commands_region = __esm({
       // particular scope, we simply need to listen at the root window level
       // here for all commands coming in.
       _setupListeners(props) {
-        const $el = import_react_dom13.default.findDOMNode(this);
+        const $el = import_react_dom12.default.findDOMNode(this);
         $el.addEventListener("focusin", this._onFocusIn);
         $el.addEventListener("focusout", this._onFocusOut);
         if (props.globalHandlers) {
@@ -213788,7 +213042,7 @@ var init_key_commands_region = __esm({
           this._localDisposable.dispose();
           this._localDisposable = null;
         }
-        const $el = import_react_dom13.default.findDOMNode(this);
+        const $el = import_react_dom12.default.findDOMNode(this);
         $el.removeEventListener("focusin", this._onFocusIn);
         $el.removeEventListener("focusout", this._onDidFocusOut);
         window.removeEventListener("browser-window-blur", this._onWindowBlur);
@@ -213834,7 +213088,7 @@ var init_key_commands_region = __esm({
         }
         const sel = document.getSelection();
         const activeEl = document.activeElement;
-        if (import_react_dom13.default.findDOMNode(this).contains(activeEl)) {
+        if (import_react_dom12.default.findDOMNode(this).contains(activeEl)) {
           return;
         }
         if (sel?.focusNode && !activeEl.parentElement.contains(sel.focusNode)) {
@@ -213864,12 +213118,11 @@ var search_bar_exports = {};
 __export(search_bar_exports, {
   default: () => search_bar_default
 });
-var import_react29, import_prop_types31, import_react_dom14, import_classnames7, import_menu2, SearchBar, search_bar_default;
+var import_react29, import_prop_types31, import_classnames7, import_menu2, SearchBar, search_bar_default;
 var init_search_bar = __esm({
   "src/components/search-bar.jsx"() {
     import_react29 = __toESM(require_react());
     import_prop_types31 = __toESM(require_prop_types());
-    import_react_dom14 = __toESM(require_react_dom());
     import_classnames7 = __toESM(require_classnames());
     import_menu2 = __toESM(require_menu());
     init_retina_img();
@@ -213877,6 +213130,7 @@ var init_search_bar = __esm({
     SearchBar = class extends import_react29.Component {
       constructor(props) {
         super(props);
+        this.menuRef = import_react29.default.createRef();
         this.searchInputRef = import_react29.default.createRef();
       }
       static displayName = "SearchBar";
@@ -214026,7 +213280,7 @@ var init_search_bar = __esm({
           /* @__PURE__ */ import_react29.default.createElement("div", null, /* @__PURE__ */ import_react29.default.createElement(
             import_menu2.default,
             {
-              ref: "menu",
+              ref: this.menuRef,
               className: (0, import_classnames7.default)({
                 "showing-query": query && query.length > 0,
                 "search-container": true,
@@ -214528,30 +213782,802 @@ var init_mini_month_view = __esm({
   }
 });
 
+// src/searchable-components/search-constants.js
+var require_search_constants = __commonJS({
+  "src/searchable-components/search-constants.js"(exports2, module2) {
+    var MAX_MATCHES = 999;
+    var CHAR_THRESHOLD = 2;
+    module2.exports = {
+      MAX_MATCHES,
+      CHAR_THRESHOLD
+    };
+    module2.exports.MAX_MATCHES = MAX_MATCHES;
+    module2.exports.CHAR_THRESHOLD = CHAR_THRESHOLD;
+    module2.exports.default = module2.exports;
+  }
+});
+
+// src/searchable-components/unified-dom-parser.js
+var require_unified_dom_parser = __commonJS({
+  "src/searchable-components/unified-dom-parser.js"(exports2, module2) {
+    var { Utils: Utils24 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { MAX_MATCHES, CHAR_THRESHOLD } = require_search_constants();
+    var UnifiedDOMParser = class {
+      constructor(regionId) {
+        this.regionId = regionId;
+        this.matchRenderIndex = 0;
+      }
+      matchesSearch(dom, searchTerm) {
+        if ((searchTerm || "").trim().length < CHAR_THRESHOLD) {
+          return false;
+        }
+        const fullStrings = this.buildNormalizedText(dom);
+        for (const fullString of fullStrings) {
+          const matches = this.matchesFromFullString(fullString, searchTerm);
+          if (matches.length > 0) {
+            return true;
+          }
+        }
+        return false;
+      }
+      buildNormalizedText(dom) {
+        const walker = this.getWalker(dom);
+        const fullStrings = [];
+        let textElementAccumulator = [];
+        let stringIndex = 0;
+        for (const node of walker) {
+          if (this.isTextNode(node)) {
+            node.fullStringIndex = stringIndex;
+            textElementAccumulator.push(node);
+            stringIndex += this.textNodeLength(node);
+          } else if (this.looksLikeBlockElement(node)) {
+            if (textElementAccumulator.length > 0) {
+              fullStrings.push(textElementAccumulator);
+              textElementAccumulator = [];
+              stringIndex = 0;
+            }
+          }
+        }
+        if (textElementAccumulator.length > 0) {
+          fullStrings.push(textElementAccumulator);
+        }
+        return fullStrings;
+      }
+      // OVERRIDE ME
+      getWalker() {
+      }
+      isTextNode() {
+      }
+      textNodeLength() {
+      }
+      looksLikeBlockElement() {
+      }
+      textNodeContents() {
+      }
+      matchesFromFullString(fullString, searchTerm) {
+        const re2 = this.searchRE(searchTerm);
+        if (!re2) {
+          return [];
+        }
+        const rawString = this.getRawFullString(fullString);
+        const matches = [];
+        let matchCount = 0;
+        let match = re2.exec(rawString);
+        while (match && matchCount <= MAX_MATCHES) {
+          const matchStart = match.index;
+          const matchEnd = match.index + match[0].length;
+          matches.push([matchStart, matchEnd]);
+          match = re2.exec(rawString);
+          matchCount += 1;
+        }
+        return matches;
+      }
+      getRawFullString() {
+      }
+      searchRE(searchTerm) {
+        let re2;
+        const regexRe = /^\/(.+)\/(.*)$/;
+        try {
+          if (regexRe.test(searchTerm)) {
+            const matches = searchTerm.match(regexRe);
+            const reText = matches[1];
+            re2 = new RegExp(reText, "ig");
+          } else {
+            re2 = new RegExp(Utils24.escapeRegExp(searchTerm), "ig");
+          }
+        } catch (_e2) {
+          return null;
+        }
+        return re2;
+      }
+      // OVERRIDE ME
+      removeMatchesAndNormalize() {
+      }
+      getElementsWithNewMatchNodes(rootNode, searchTerm, currentMatchRenderIndex) {
+        const fullStrings = this.buildNormalizedText(rootNode);
+        const modifiedElements = /* @__PURE__ */ new Map();
+        for (const fullString of fullStrings) {
+          const matches = this.matchesFromFullString(fullString, searchTerm);
+          if (matches.length === 0) {
+            continue;
+          }
+          for (const textNode of fullString) {
+            const slicePoints = this.slicePointsForMatches(textNode, matches);
+            if (slicePoints.length > 0) {
+              const { key, originalTextNode, newTextNodes } = this.slicedTextElement(
+                textNode,
+                slicePoints,
+                currentMatchRenderIndex
+              );
+              modifiedElements.set(key, { originalTextNode, newTextNodes });
+            }
+          }
+        }
+        return modifiedElements;
+      }
+      slicePointsForMatches(textElement, matches) {
+        const textElStart = textElement.fullStringIndex;
+        const textLength = this.textNodeLength(textElement);
+        const textElEnd = textElement.fullStringIndex + textLength;
+        const slicePoints = [];
+        for (const [matchStart, matchEnd] of matches) {
+          if (matchStart < textElStart && matchEnd >= textElEnd) {
+            slicePoints.push([0, textLength]);
+          } else if (matchStart >= textElStart && matchEnd < textElEnd) {
+            slicePoints.push([matchStart - textElStart, matchEnd - textElStart]);
+          } else if (matchEnd >= textElStart && matchEnd < textElEnd) {
+            slicePoints.push([0, matchEnd - textElStart]);
+          } else if (matchStart >= textElStart && matchStart < textElEnd) {
+            slicePoints.push([matchStart - textElStart, textLength]);
+          } else {
+          }
+        }
+        return slicePoints;
+      }
+      /**
+       * Given some text element and a slice point, it will split that text
+       * element at the slice points and return the new nodes as a value,
+       * keyed by a way to find that insertion point in the DOM.
+       */
+      slicedTextElement(textNode, slicePoints, currentMatchRenderIndex) {
+        const key = this.textNodeKey(textNode);
+        const text = this.textNodeContents(textNode);
+        const newTextNodes = [];
+        let sliceOffset = 0;
+        let remainingText = text;
+        for (let [sliceStart, sliceEnd] of slicePoints) {
+          sliceStart -= sliceOffset;
+          sliceEnd -= sliceOffset;
+          const before2 = remainingText.slice(0, sliceStart);
+          if (before2.length > 0) {
+            newTextNodes.push(this.createTextNode({ rawText: before2 }));
+          }
+          const matchText = remainingText.slice(sliceStart, sliceEnd);
+          if (matchText.length > 0) {
+            let isCurrentMatch = false;
+            if (this.matchRenderIndex === currentMatchRenderIndex) {
+              isCurrentMatch = true;
+            }
+            newTextNodes.push(
+              this.createMatchNode({
+                regionId: this.regionId,
+                renderIndex: this.matchRenderIndex,
+                matchText,
+                isCurrentMatch
+              })
+            );
+            this.matchRenderIndex += 1;
+          }
+          remainingText = remainingText.slice(sliceEnd, remainingText.length);
+          sliceOffset += sliceEnd;
+        }
+        newTextNodes.push(this.createTextNode({ rawText: remainingText }));
+        return {
+          key,
+          originalTextNode: textNode,
+          newTextNodes
+        };
+      }
+      // OVERRIDE ME
+      createTextNode() {
+      }
+      createMatchNode() {
+      }
+      textNodeKey() {
+      }
+      // OVERRIDE ME
+      highlightSearch() {
+      }
+    };
+    module2.exports = UnifiedDOMParser;
+    module2.exports.default = UnifiedDOMParser;
+  }
+});
+
+// src/searchable-components/real-dom-parser.js
+var require_real_dom_parser = __commonJS({
+  "src/searchable-components/real-dom-parser.js"(exports2, module2) {
+    var _4 = (init_index_all(), __toCommonJS(index_all_exports)).default || (init_index_all(), __toCommonJS(index_all_exports));
+    var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var UnifiedDOMParser = require_unified_dom_parser().default || require_unified_dom_parser();
+    var RealDOMParser = class extends UnifiedDOMParser {
+      *_pruningDOMWalker({ node, pruneFn, filterFn }) {
+        if (filterFn(node)) {
+          yield node;
+        }
+        if (node && !pruneFn(node) && node.childNodes.length > 0) {
+          for (let i = 0; i < node.childNodes.length; i++) {
+            yield* this._pruningDOMWalker({
+              node: node.childNodes[i],
+              pruneFn,
+              filterFn
+            });
+          }
+        }
+        return;
+      }
+      getWalker(dom) {
+        const filterFn = (node) => {
+          return node.nodeType === Node.TEXT_NODE;
+        };
+        const pruneFn = (node) => {
+          return node.nodeName === "STYLE";
+        };
+        return this._pruningDOMWalker({ node: dom, pruneFn, filterFn });
+      }
+      isTextNode(node) {
+        return node.nodeType === Node.TEXT_NODE;
+      }
+      textNodeLength(textNode) {
+        return (textNode.data || "").length;
+      }
+      textNodeContents(textNode) {
+        return textNode.data;
+      }
+      looksLikeBlockElement(node) {
+        return DOMUtils5.looksLikeBlockElement(node);
+      }
+      getRawFullString(fullString) {
+        return _4.pluck(fullString, "data").join("");
+      }
+      removeMatchesAndNormalize(element) {
+        const matches = element.querySelectorAll("search-match");
+        if (matches.length === 0) {
+          return null;
+        }
+        for (let i = 0; i < matches.length; i++) {
+          const match = matches[i];
+          DOMUtils5.unwrapNode(match);
+        }
+        element.normalize();
+        return element;
+      }
+      createTextNode({ rawText }) {
+        return document.createTextNode(rawText);
+      }
+      createMatchNode({ matchText, regionId, isCurrentMatch, renderIndex }) {
+        const text = document.createTextNode(matchText);
+        const newNode = document.createElement("search-match");
+        const className = isCurrentMatch ? "current-match" : "";
+        newNode.setAttribute("data-region-id", regionId);
+        newNode.setAttribute("data-render-index", renderIndex);
+        newNode.setAttribute("class", className);
+        newNode.appendChild(text);
+        return newNode;
+      }
+      textNodeKey(textElement) {
+        return textElement;
+      }
+      highlightSearch(element, matchNodeMap) {
+        const walker = this.getWalker(element);
+        const textNodes = [...walker];
+        for (const textNode of textNodes) {
+          if (matchNodeMap.has(textNode)) {
+            const { originalTextNode, newTextNodes } = matchNodeMap.get(textNode);
+            const frag = document.createDocumentFragment();
+            for (const newNode of newTextNodes) {
+              frag.appendChild(newNode);
+            }
+            textNode.parentNode.replaceChild(frag, originalTextNode);
+          }
+        }
+      }
+    };
+    module2.exports = RealDOMParser;
+    module2.exports.default = RealDOMParser;
+  }
+});
+
+// src/searchable-components/iframe-searcher.js
+var require_iframe_searcher = __commonJS({
+  "src/searchable-components/iframe-searcher.js"(exports2, module2) {
+    var RealDOMParser = require_real_dom_parser().default || require_real_dom_parser();
+    var IFrameSearcher = class {
+      /**
+       * An imperative renderer for iframes
+       */
+      static highlightSearchInDocument(regionId, searchTerm, doc, searchIndex) {
+        const parser = new RealDOMParser(regionId);
+        if (parser.matchesSearch(doc, searchTerm)) {
+          parser.removeMatchesAndNormalize(doc);
+          const matchNodeMap = parser.getElementsWithNewMatchNodes(
+            doc,
+            searchTerm,
+            searchIndex
+          );
+          parser.highlightSearch(doc, matchNodeMap);
+        } else {
+          parser.removeMatchesAndNormalize(doc);
+        }
+      }
+    };
+    module2.exports = IFrameSearcher;
+    module2.exports.default = IFrameSearcher;
+  }
+});
+
+// src/components/evented-iframe.jsx
+var require_evented_iframe = __commonJS({
+  "src/components/evented-iframe.jsx"(exports2, module2) {
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_iframe_searcher = __toESM(require_iframe_searcher());
+    var React50 = require_react();
+    var ReactDOM26 = require_react_dom();
+    var {
+      Utils: Utils24,
+      RegExpUtils: RegExpUtils5,
+      IdentityStore: IdentityStore4,
+      SearchableComponentMaker,
+      SearchableComponentStore: SearchableComponentStore2
+    } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var url6 = require("url");
+    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
+    var EventedIFrame = class _EventedIFrame extends React50.Component {
+      constructor(...args) {
+        super(...args);
+        this.render = this.render.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+        this.didReplaceDocument = this.didReplaceDocument.bind(this);
+        this.setHeightQuietly = this.setHeightQuietly.bind(this);
+        this._onSearchableStoreChange = this._onSearchableStoreChange.bind(this);
+        this._unsubscribeFromIFrameEvents = this._unsubscribeFromIFrameEvents.bind(this);
+        this._subscribeToIFrameEvents = this._subscribeToIFrameEvents.bind(this);
+        this._getContainingTarget = this._getContainingTarget.bind(this);
+        this._onIFrameBlur = this._onIFrameBlur.bind(this);
+        this._onIFrameFocus = this._onIFrameFocus.bind(this);
+        this._onIFrameResize = this._onIFrameResize.bind(this);
+        this._onIFrameClick = this._onIFrameClick.bind(this);
+        this._onIFrameMouseEvent = this._onIFrameMouseEvent.bind(this);
+        this._onIFrameKeyEvent = this._onIFrameKeyEvent.bind(this);
+        this._onIFrameContextualMenu = this._onIFrameContextualMenu.bind(this);
+        super(...args);
+      }
+      static initClass() {
+        _EventedIFrame.displayName = "EventedIFrame";
+        _EventedIFrame.propTypes = {
+          searchable: import_prop_types65.default.bool,
+          onResize: import_prop_types65.default.func
+        };
+      }
+      render() {
+        const otherProps = Utils24.fastOmit(
+          this.props,
+          Object.keys(this.constructor.propTypes)
+        );
+        return React50.createElement(
+          "iframe",
+          Object.assign({ seamless: "seamless" }, otherProps)
+        );
+      }
+      componentDidMount() {
+        if (this.props.searchable) {
+          this._regionId = Utils24.generateTempId();
+          this._searchUsub = SearchableComponentStore2.listen(
+            this._onSearchableStoreChange
+          );
+          SearchableComponentStore2.registerSearchRegion(
+            this._regionId,
+            ReactDOM26.findDOMNode(this)
+          );
+        }
+        return this._subscribeToIFrameEvents();
+      }
+      componentWillUnmount() {
+        this._unsubscribeFromIFrameEvents();
+        if (this.props.searchable) {
+          this._searchUsub();
+          return SearchableComponentStore2.unregisterSearchRegion(this._regionId);
+        }
+      }
+      componentDidUpdate() {
+        if (this.props.searchable) {
+          return SearchableComponentStore2.registerSearchRegion(
+            this._regionId,
+            ReactDOM26.findDOMNode(this)
+          );
+        }
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        return !Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state);
+      }
+      /*
+       Public: Call this method if you replace the contents of the iframe's document.
+       This allows {EventedIframe} to re-attach it's event listeners.
+       */
+      didReplaceDocument() {
+        this._unsubscribeFromIFrameEvents();
+        return this._subscribeToIFrameEvents();
+      }
+      setHeightQuietly(height) {
+        this._ignoreNextResize = true;
+        return ReactDOM26.findDOMNode(this).height = `${height}px`;
+      }
+      _onSearchableStoreChange() {
+        if (!this.props.searchable) {
+          return;
+        }
+        const node = ReactDOM26.findDOMNode(this);
+        const doc = (node.contentDocument != null ? node.contentDocument.body : void 0) != null ? node.contentDocument != null ? node.contentDocument.body : void 0 : node.contentDocument;
+        const searchIndex = SearchableComponentStore2.getCurrentRegionIndex(
+          this._regionId
+        );
+        const { searchTerm } = SearchableComponentStore2.getCurrentSearchData();
+        if (this.lastSearchIndex !== searchIndex || this.lastSearchTerm !== searchTerm) {
+          import_iframe_searcher.default.highlightSearchInDocument(
+            this._regionId,
+            searchTerm,
+            doc,
+            searchIndex
+          );
+        }
+        this.lastSearchIndex = searchIndex;
+        return this.lastSearchTerm = searchTerm;
+      }
+      _unsubscribeFromIFrameEvents() {
+        const node = ReactDOM26.findDOMNode(this);
+        const doc = node.contentDocument;
+        if (!doc) {
+          return;
+        }
+        doc.removeEventListener("click", this._onIFrameClick);
+        doc.removeEventListener("keydown", this._onIFrameKeyEvent);
+        doc.removeEventListener("keypress", this._onIFrameKeyEvent);
+        doc.removeEventListener("keyup", this._onIFrameKeyEvent);
+        doc.removeEventListener("mousedown", this._onIFrameMouseEvent);
+        doc.removeEventListener("mousemove", this._onIFrameMouseEvent);
+        doc.removeEventListener("mouseup", this._onIFrameMouseEvent);
+        doc.removeEventListener("contextmenu", this._onIFrameContextualMenu);
+        if (node.contentWindow) {
+          node.contentWindow.removeEventListener("focus", this._onIFrameFocus);
+          node.contentWindow.removeEventListener("blur", this._onIFrameBlur);
+          return node.contentWindow.removeEventListener(
+            "resize",
+            this._onIFrameResize
+          );
+        }
+      }
+      _subscribeToIFrameEvents() {
+        const node = ReactDOM26.findDOMNode(this);
+        const doc = node.contentDocument;
+        return _4.defer(() => {
+          doc.addEventListener("click", this._onIFrameClick);
+          doc.addEventListener("keydown", this._onIFrameKeyEvent);
+          doc.addEventListener("keypress", this._onIFrameKeyEvent);
+          doc.addEventListener("keyup", this._onIFrameKeyEvent);
+          doc.addEventListener("mousedown", this._onIFrameMouseEvent);
+          doc.addEventListener("mousemove", this._onIFrameMouseEvent);
+          doc.addEventListener("mouseup", this._onIFrameMouseEvent);
+          doc.addEventListener("contextmenu", this._onIFrameContextualMenu);
+          if (node.contentWindow) {
+            node.contentWindow.addEventListener("focus", this._onIFrameFocus);
+            node.contentWindow.addEventListener("blur", this._onIFrameBlur);
+            if (this.props.onResize) {
+              return node.contentWindow.addEventListener(
+                "resize",
+                this._onIFrameResize
+              );
+            }
+          }
+        });
+      }
+      _getContainingTarget(event2, options2) {
+        let { target } = event2;
+        while (target != null && target !== document && target !== window) {
+          if (target.getAttribute(options2.with) != null) {
+            return target;
+          }
+          target = target.parentElement;
+        }
+        return null;
+      }
+      _onIFrameBlur(_event) {
+        const node = ReactDOM26.findDOMNode(this);
+        return node.contentWindow.getSelection().empty();
+      }
+      _onIFrameFocus(_event) {
+        return window.getSelection().empty();
+      }
+      _onIFrameResize(event2) {
+        if (this._ignoreNextResize) {
+          this._ignoreNextResize = false;
+          return;
+        }
+        return typeof this.props.onResize === "function" ? this.props.onResize(event2) : void 0;
+      }
+      // The iFrame captures events that take place over it, which causes some
+      // interesting behaviors. For example, when you drag and release over the
+      // iFrame, the mouseup never fires in the parent window.
+      _onIFrameClick(e) {
+        e.stopPropagation();
+        const target = this._getContainingTarget(e, { with: "href" });
+        if (target) {
+          let rawHref = target.getAttribute("href");
+          if (this._isBlacklistedHref(rawHref)) {
+            e.preventDefault();
+            return;
+          }
+          if (!url6.parse(rawHref).protocol) {
+            if (new RegExp(/^\/\//).test(rawHref)) {
+              target.setAttribute("href", `https:${rawHref}`);
+            } else {
+              target.setAttribute("href", `http://${rawHref}`);
+            }
+            rawHref = target.getAttribute("href");
+          }
+          e.preventDefault();
+          if (rawHref.startsWith(IdentityStore4.URLRoot)) {
+            const path14 = rawHref.split(IdentityStore4.URLRoot).pop();
+            IdentityStore4.fetchSingleSignOnURL(path14, {
+              source: "SingleSignOnEmail"
+            }).then((href) => {
+              return NylasEnv.windowEventHandler.openLink({
+                href,
+                metaKey: e.metaKey
+              });
+            });
+            return;
+          }
+          return NylasEnv.windowEventHandler.openLink({
+            href: rawHref,
+            metaKey: e.metaKey
+          });
+        }
+      }
+      _isBlacklistedHref(href) {
+        return new RegExp(/^file:/i).test(href);
+      }
+      _onIFrameMouseEvent(event2) {
+        const node = ReactDOM26.findDOMNode(this);
+        const nodeRect = node.getBoundingClientRect();
+        const eventAttrs = {};
+        for (var key of Array.from(Object.keys(event2))) {
+          if (["webkitMovementX", "webkitMovementY"].includes(key)) {
+            continue;
+          }
+          eventAttrs[key] = event2[key];
+        }
+        return node.dispatchEvent(
+          new MouseEvent(
+            event2.type,
+            _4.extend({}, eventAttrs, {
+              bubbles: true,
+              clientX: event2.clientX + nodeRect.left,
+              clientY: event2.clientY + nodeRect.top,
+              pageX: event2.pageX + nodeRect.left,
+              pageY: event2.pageY + nodeRect.top
+            })
+          )
+        );
+      }
+      _onIFrameKeyEvent(event2) {
+        if (event2.metaKey || event2.altKey || event2.ctrlKey) {
+          return;
+        }
+        const attrs = [
+          "key",
+          "code",
+          "location",
+          "ctrlKey",
+          "shiftKey",
+          "altKey",
+          "metaKey",
+          "repeat",
+          "isComposing",
+          "charCode",
+          "keyCode",
+          "which"
+        ];
+        const eventInit = Object.assign({ bubbles: true }, _4.pick(event2, attrs));
+        const eventInParentDoc = new KeyboardEvent(event2.type, eventInit);
+        Object.defineProperty(eventInParentDoc, "which", { value: event2.which });
+        return ReactDOM26.findDOMNode(this).dispatchEvent(eventInParentDoc);
+      }
+      _onIFrameContextualMenu(event2) {
+        event2.preventDefault();
+        const { remote: remote9, clipboard: clipboard3, shell: shell6, nativeImage } = require("electron");
+        const { Menu: Menu7, MenuItem: MenuItem2 } = remote9;
+        const path14 = require("path");
+        const fs11 = require("fs");
+        const menu = new Menu7();
+        const linkTarget = this._getContainingTarget(event2, { with: "href" });
+        if (linkTarget) {
+          const href = linkTarget.getAttribute("href");
+          if (href.startsWith("mailto")) {
+            menu.append(
+              new MenuItem2({
+                label: "Compose Message...",
+                click() {
+                  return NylasEnv.windowEventHandler.openLink({ href });
+                }
+              })
+            );
+            menu.append(
+              new MenuItem2({
+                label: "Copy Email Address",
+                click() {
+                  return clipboard3.writeText(href.split("mailto:").pop());
+                }
+              })
+            );
+          } else {
+            menu.append(
+              new MenuItem2({
+                label: "Open Link",
+                click() {
+                  return NylasEnv.windowEventHandler.openLink({ href });
+                }
+              })
+            );
+            menu.append(
+              new MenuItem2({
+                label: "Copy Link Address",
+                click() {
+                  return clipboard3.writeText(href);
+                }
+              })
+            );
+          }
+          menu.append(new MenuItem2({ type: "separator" }));
+        }
+        const imageTarget = this._getContainingTarget(event2, { with: "src" });
+        if (imageTarget) {
+          const src = imageTarget.getAttribute("src");
+          const srcFilename = path14.basename(src);
+          menu.append(
+            new MenuItem2({
+              label: "Save Image...",
+              click() {
+                return NylasEnv.showSaveDialog(
+                  { defaultPath: srcFilename },
+                  (path15) => {
+                    if (!path15) {
+                      return;
+                    }
+                    const oReq = new XMLHttpRequest();
+                    oReq.open("GET", src, true);
+                    oReq.responseType = "arraybuffer";
+                    oReq.onload = () => {
+                      const buffer = new Buffer(new Uint8Array(oReq.response));
+                      return fs11.writeFile(
+                        path15,
+                        buffer,
+                        (_err) => shell6.showItemInFolder(path15)
+                      );
+                    };
+                    return oReq.send();
+                  }
+                );
+              }
+            })
+          );
+          menu.append(
+            new MenuItem2({
+              label: "Copy Image",
+              click() {
+                let img = new Image();
+                img.addEventListener(
+                  "load",
+                  () => {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    canvas.getContext("2d").drawImage(imageTarget, 0, 0);
+                    const imageDataURL = canvas.toDataURL("image/png");
+                    img = nativeImage.createFromDataURL(imageDataURL);
+                    return clipboard3.writeImage(img);
+                  },
+                  false
+                );
+                return img.src = src;
+              }
+            })
+          );
+          menu.append(new MenuItem2({ type: "separator" }));
+        }
+        let text = "";
+        const selection = ReactDOM26.findDOMNode(this).contentDocument.getSelection();
+        if (selection.rangeCount > 0) {
+          const range2 = selection.getRangeAt(0);
+          text = range2.toString();
+        }
+        if (!text || text.length === 0) {
+          text = (linkTarget != null ? linkTarget : event2.target).innerText;
+        }
+        text = text.trim();
+        if (text.length > 0) {
+          let textPreview;
+          if (text.length > 45) {
+            textPreview = `${text.substr(0, 42)}...`;
+          } else {
+            textPreview = text;
+          }
+          menu.append(
+            new MenuItem2({
+              label: "Copy",
+              click() {
+                return clipboard3.writeText(text);
+              }
+            })
+          );
+          menu.append(
+            new MenuItem2({
+              label: `Search Google for '${textPreview}'`,
+              click() {
+                return shell6.openExternal(
+                  `https://www.google.com/search?q=${encodeURIComponent(text)}`
+                );
+              }
+            })
+          );
+          if (process.platform === "darwin") {
+            menu.append(
+              new MenuItem2({
+                label: `Look Up '${textPreview}'`,
+                click() {
+                  return NylasEnv.getCurrentWindow().showDefinitionForSelection();
+                }
+              })
+            );
+          }
+        }
+        if (process.platform === "darwin") {
+          menu.append(new MenuItem2({ type: "separator" }));
+        }
+        return menu.popup(remote9.getCurrentWindow());
+      }
+    };
+    EventedIFrame.initClass();
+    module2.exports = EventedIFrame;
+  }
+});
+
 // src/components/button-dropdown.jsx
 var require_button_dropdown = __commonJS({
   "src/components/button-dropdown.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_retina_img();
-    init_nylas_exports();
     var import_classnames18 = __toESM(require_classnames());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
-    var ButtonDropdown2 = class _ButtonDropdown extends import_react60.default.Component {
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
+    var ButtonDropdown2 = class _ButtonDropdown extends import_react61.default.Component {
       static initClass() {
         _ButtonDropdown.displayName = "ButtonDropdown";
         _ButtonDropdown.propTypes = {
-          primaryItem: import_prop_types64.default.element,
-          primaryClick: import_prop_types64.default.func,
-          bordered: import_prop_types64.default.bool,
-          menu: import_prop_types64.default.element,
-          style: import_prop_types64.default.object,
-          closeOnMenuClick: import_prop_types64.default.bool
+          primaryItem: import_prop_types65.default.element,
+          primaryClick: import_prop_types65.default.func,
+          bordered: import_prop_types65.default.bool,
+          menu: import_prop_types65.default.element,
+          style: import_prop_types65.default.object,
+          closeOnMenuClick: import_prop_types65.default.bool
         };
         _ButtonDropdown.defaultProps = { style: {} };
       }
       constructor(props) {
         super();
+        this.buttonRef = import_react61.default.createRef();
+        this.secondaryItemsRef = import_react61.default.createRef();
         this.render = this.render.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this._onMenuClick = this._onMenuClick.bind(this);
@@ -214567,16 +214593,16 @@ var require_button_dropdown = __commonJS({
           bordered: this.props.bordered !== false
         });
         if (this.props.primaryClick) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             {
-              ref: "button",
+              ref: this.buttonRef,
               onBlur: this._onBlur,
               tabIndex: -1,
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               {
                 className: "primary-item",
@@ -214585,18 +214611,18 @@ var require_button_dropdown = __commonJS({
               },
               this.props.primaryItem
             ),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "secondary-picker", onClick: this.toggleDropdown },
-              import_react60.default.createElement(retina_img_default, {
+              import_react61.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               {
-                ref: "secondaryItems",
+                ref: this.secondaryItemsRef,
                 className: "secondary-items",
                 onMouseDown: this._onMenuClick
               },
@@ -214604,16 +214630,16 @@ var require_button_dropdown = __commonJS({
             )
           );
         } else {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             {
-              ref: "button",
+              ref: this.buttonRef,
               onBlur: this._onBlur,
               tabIndex: -1,
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               {
                 className: "only-item",
@@ -214621,16 +214647,16 @@ var require_button_dropdown = __commonJS({
                 onClick: this.toggleDropdown
               },
               this.props.primaryItem,
-              import_react60.default.createElement(retina_img_default, {
+              import_react61.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 style: { marginLeft: 12 },
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               {
-                ref: "secondaryItems",
+                ref: this.secondaryItemsRef,
                 className: "secondary-items left",
                 onMouseDown: this._onMenuClick
               },
@@ -214643,9 +214669,9 @@ var require_button_dropdown = __commonJS({
         if (this.state.open !== false) {
           return this.setState({ open: false });
         } else {
-          const buttonBottom = import_react_dom29.default.findDOMNode(this).getBoundingClientRect().bottom;
-          const openHeight = import_react_dom29.default.findDOMNode(
-            this.refs.secondaryItems
+          const buttonBottom = import_react_dom28.default.findDOMNode(this).getBoundingClientRect().bottom;
+          const openHeight = import_react_dom28.default.findDOMNode(
+            this.secondaryItemsRef?.current
           ).getBoundingClientRect().height;
           if (buttonBottom + openHeight > window.innerHeight) {
             return this.setState({ open: "up" });
@@ -214661,7 +214687,7 @@ var require_button_dropdown = __commonJS({
       }
       _onBlur(event2) {
         const target = event2.nativeEvent.relatedTarget;
-        if (target != null && import_react_dom29.default.findDOMNode(this.refs.button).contains(target)) {
+        if (target != null && this.buttonRef?.current?.contains(target)) {
           return;
         }
         return this.setState({ open: false });
@@ -214895,16 +214921,16 @@ var require_multiselect_split_interaction_handler = __commonJS({
 // src/components/multiselect-list.jsx
 var require_multiselect_list = __commonJS({
   "src/components/multiselect-list.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
+    var React50 = require_react();
+    var ReactDOM26 = require_react_dom();
     var classNames5 = require_classnames();
     var ListTabular3 = (init_list_tabular(), __toCommonJS(list_tabular_exports)).default;
     var Spinner3 = require_spinner();
     var {
       Actions: Actions37,
-      Utils: Utils23,
+      Utils: Utils24,
       WorkspaceStore: WorkspaceStore5,
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
@@ -214912,16 +214938,16 @@ var require_multiselect_list = __commonJS({
     var { EventEmitter: EventEmitter5 } = require("events");
     var MultiselectListInteractionHandler = require_multiselect_list_interaction_handler();
     var MultiselectSplitInteractionHandler = require_multiselect_split_interaction_handler();
-    var MultiselectList = class _MultiselectList extends React46.Component {
+    var MultiselectList = class _MultiselectList extends React50.Component {
       static initClass() {
         _MultiselectList.displayName = "MultiselectList";
         _MultiselectList.propTypes = {
-          dataSource: import_prop_types64.default.object,
-          className: import_prop_types64.default.string.isRequired,
-          columns: import_prop_types64.default.array.isRequired,
-          itemPropsProvider: import_prop_types64.default.func.isRequired,
-          keymapHandlers: import_prop_types64.default.object,
-          onComponentDidUpdate: import_prop_types64.default.func
+          dataSource: import_prop_types65.default.object,
+          className: import_prop_types65.default.string.isRequired,
+          columns: import_prop_types65.default.array.isRequired,
+          itemPropsProvider: import_prop_types65.default.func.isRequired,
+          keymapHandlers: import_prop_types65.default.object,
+          onComponentDidUpdate: import_prop_types65.default.func
         };
       }
       constructor(props) {
@@ -214963,9 +214989,9 @@ var require_multiselect_list = __commonJS({
           this.props.onComponentDidUpdate();
         }
         if (prevProps.focusedId !== this.props.focusedId || prevProps.keyboardCursorId !== this.props.keyboardCursorId) {
-          let item = ReactDOM27.findDOMNode(this).querySelector(".focused");
+          let item = ReactDOM26.findDOMNode(this).querySelector(".focused");
           if (item == null) {
-            item = ReactDOM27.findDOMNode(this).querySelector(".keyboard-cursor");
+            item = ReactDOM26.findDOMNode(this).querySelector(".keyboard-cursor");
           }
           if (!(item instanceof Node)) {
             return;
@@ -215002,7 +215028,7 @@ var require_multiselect_list = __commonJS({
         });
       }
       render() {
-        const otherProps = Utils23.fastOmit(
+        const otherProps = Utils24.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -215035,10 +215061,10 @@ var require_multiselect_list = __commonJS({
               return props;
             };
           }
-          return React46.createElement(
+          return React50.createElement(
             KeyCommandsRegion2,
             { globalHandlers: this._globalKeymapHandlers(), className },
-            React46.createElement(
+            React50.createElement(
               ListTabular3,
               Object.assign(
                 {
@@ -215054,10 +215080,10 @@ var require_multiselect_list = __commonJS({
             )
           );
         } else {
-          return React46.createElement(
+          return React50.createElement(
             "div",
             Object.assign({ className }, otherProps),
-            React46.createElement(Spinner3, { visible: true })
+            React50.createElement(Spinner3, { visible: true })
           );
         }
       }
@@ -215134,10 +215160,10 @@ var require_multiselect_list = __commonJS({
               }
               return event2.stopPropagation();
             };
-            return React46.createElement(
+            return React50.createElement(
               "div",
               { className: "checkmark", onClick: toggle },
-              React46.createElement("div", { className: "inner" })
+              React50.createElement("div", { className: "inner" })
             );
           }
         });
@@ -215226,13 +215252,13 @@ var multiselect_dropdown_exports = {};
 __export(multiselect_dropdown_exports, {
   default: () => multiselect_dropdown_default
 });
-var import_react33, import_prop_types37, import_react_dom15, MultiselectDropdown, multiselect_dropdown_default;
+var import_react33, import_prop_types37, import_react_dom13, MultiselectDropdown, multiselect_dropdown_default;
 var init_multiselect_dropdown = __esm({
   "src/components/multiselect-dropdown.jsx"() {
     import_react33 = __toESM(require_react());
     import_prop_types37 = __toESM(require_prop_types());
     init_nylas_component_kit();
-    import_react_dom15 = __toESM(require_react_dom());
+    import_react_dom13 = __toESM(require_react_dom());
     MultiselectDropdown = class extends import_react33.Component {
       static displayName = "MultiselectDropdown";
       static propTypes = {
@@ -215257,8 +215283,8 @@ var init_multiselect_dropdown = __esm({
         }
       };
       componentDidUpdate() {
-        if (import_react_dom15.default.findDOMNode(this.refs.select)) {
-          import_react_dom15.default.findDOMNode(this.refs.select).focus();
+        if (import_react_dom13.default.findDOMNode(this.refs.select)) {
+          import_react_dom13.default.findDOMNode(this.refs.select).focus();
         }
       }
       _onItemClick = (item) => {
@@ -215308,10 +215334,10 @@ var init_multiselect_dropdown = __esm({
 // src/components/tab-group-region.jsx
 var require_tab_group_region = __commonJS({
   "src/components/tab-group-region.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
-    var TabGroupRegion = class _TabGroupRegion extends import_react60.default.Component {
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
+    var TabGroupRegion = class _TabGroupRegion extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -215319,7 +215345,7 @@ var require_tab_group_region = __commonJS({
         this.getChildContext = this.getChildContext.bind(this);
       }
       static initClass() {
-        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types64.default.object };
+        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types65.default.object };
       }
       _onKeyDown(event2) {
         if (event2.key === "Tab" && !event2.defaultPrevented) {
@@ -215330,7 +215356,7 @@ var require_tab_group_region = __commonJS({
         }
       }
       shiftFocus(dir) {
-        const nodes = import_react_dom29.default.findDOMNode(this).querySelectorAll(
+        const nodes = import_react_dom28.default.findDOMNode(this).querySelectorAll(
           "input, textarea, [contenteditable], [tabIndex]"
         );
         const current = document.activeElement;
@@ -215362,7 +215388,7 @@ var require_tab_group_region = __commonJS({
         return { parentTabGroup: this };
       }
       render() {
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
           this.props.children
@@ -215374,16 +215400,149 @@ var require_tab_group_region = __commonJS({
   }
 });
 
+// src/components/unsafe-component.jsx
+var unsafe_component_exports = {};
+__export(unsafe_component_exports, {
+  default: () => unsafe_component_default
+});
+var import_prop_types38, import_react34, import_react_dom14, UnsafeComponent, unsafe_component_default;
+var init_unsafe_component = __esm({
+  "src/components/unsafe-component.jsx"() {
+    import_prop_types38 = __toESM(require_prop_types());
+    import_react34 = __toESM(require_react());
+    import_react_dom14 = __toESM(require_react_dom());
+    init_nylas_exports();
+    UnsafeComponent = class _UnsafeComponent extends import_react34.default.Component {
+      constructor(...args) {
+        super(...args);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.render = this.render.bind(this);
+        this.renderInjected = this.renderInjected.bind(this);
+        this.unmountInjected = this.unmountInjected.bind(this);
+        this.focus = this.focus.bind(this);
+        this.blur = this.blur.bind(this);
+        this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
+      }
+      static initClass() {
+        _UnsafeComponent.displayName = "UnsafeComponent";
+        _UnsafeComponent.propTypes = {
+          component: import_prop_types38.default.func.isRequired,
+          onComponentDidRender: import_prop_types38.default.func
+        };
+        _UnsafeComponent.defaultProps = { onComponentDidRender() {
+        } };
+      }
+      componentDidMount() {
+        return this.renderInjected();
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
+      }
+      componentDidUpdate() {
+        return this.renderInjected();
+      }
+      componentWillUnmount() {
+        return this.unmountInjected();
+      }
+      render() {
+        return import_react34.default.createElement("div", {
+          name: "unsafe-component-wrapper",
+          style: this.props.component != null ? this.props.component.containerStyles : void 0
+        });
+      }
+      renderInjected() {
+        let props;
+        const node = import_react_dom14.default.findDOMNode(this);
+        let element = null;
+        try {
+          props = Utils13.fastOmit(
+            this.props,
+            Object.keys(this.constructor.propTypes)
+          );
+          const Component20 = this.props.component;
+          element = import_react34.default.createElement(
+            Component20,
+            Object.assign({ key: name }, props)
+          );
+          return this.injected = import_react_dom14.default.render(
+            element,
+            node,
+            this.props.onComponentDidRender
+          );
+        } catch (err) {
+          if (NylasEnv.inDevMode()) {
+            let { stack } = err;
+            let stackEnd = stack.indexOf("react/lib/");
+            if (stackEnd > 0) {
+              stackEnd = stack.lastIndexOf("\n", stackEnd);
+              stack = stack.substr(0, stackEnd);
+            }
+            element = import_react34.default.createElement(
+              "div",
+              { className: "unsafe-component-exception" },
+              import_react34.default.createElement(
+                "div",
+                { className: "message" },
+                this.props.component.displayName,
+                " could not be displayed."
+              ),
+              import_react34.default.createElement("div", { className: "trace" }, stack)
+            );
+          } else {
+            element = import_react34.default.createElement("div", null);
+            this.injected = import_react_dom14.default.render(element, node);
+          }
+          return NylasEnv.reportError(err);
+        }
+      }
+      unmountInjected() {
+        try {
+          const node = import_react_dom14.default.findDOMNode(this);
+          return import_react_dom14.default.unmountComponentAtNode(node);
+        } catch (_err) {
+        }
+      }
+      focus() {
+        return this._runInjectedDOMMethod("focus");
+      }
+      blur() {
+        return this._runInjectedDOMMethod("blur");
+      }
+      // Private: Attempts to run the DOM method, ie 'focus', on
+      // 1. Any implementation provided by the inner component
+      // 2. Any native implementation provided by the DOM
+      // 3. Ourselves, so that the method always has /some/ effect.
+      //
+      _runInjectedDOMMethod(method) {
+        let target = null;
+        if (this.injected?.[method]) {
+          target = this.injected;
+        } else if (this.injected) {
+          target = import_react_dom14.default.findDOMNode(this.injected);
+        } else {
+          target = import_react_dom14.default.findDOMNode(this);
+        }
+        return typeof target[method] === "function" ? target[method]() : void 0;
+      }
+    };
+    UnsafeComponent.initClass();
+    unsafe_component_default = UnsafeComponent;
+  }
+});
+
 // src/components/injected-component-label.jsx
-var import_react34, import_prop_types38, InjectedComponentLabel;
+var import_react35, import_prop_types39, InjectedComponentLabel;
 var init_injected_component_label = __esm({
   "src/components/injected-component-label.jsx"() {
-    import_react34 = __toESM(require_react());
-    import_prop_types38 = __toESM(require_prop_types());
-    InjectedComponentLabel = class extends import_react34.default.Component {
+    import_react35 = __toESM(require_react());
+    import_prop_types39 = __toESM(require_prop_types());
+    InjectedComponentLabel = class extends import_react35.default.Component {
       static displayName = "InjectedComponentLabel";
       static propTypes = {
-        matching: import_prop_types38.default.object
+        matching: import_prop_types39.default.object
       };
       render() {
         const matchingDescriptions = [];
@@ -215404,170 +215563,41 @@ var init_injected_component_label = __esm({
             continue;
           }
           propDescriptions.push(
-            `${key}:<${val.constructor ? val.constructor.name : typeof val}>`
+            `${key}:<${val?.constructor ? val.constructor.name : typeof val}>`
           );
         }
         let description = ` ${matchingDescriptions.join(", ")}`;
         if (propDescriptions.length > 0) {
           description += ` (${propDescriptions.join(", ")})`;
         }
-        return /* @__PURE__ */ import_react34.default.createElement("span", { className: "name" }, description);
+        return /* @__PURE__ */ import_react35.default.createElement("span", { className: "name" }, description);
       }
     };
-  }
-});
-
-// src/components/unsafe-component.jsx
-var require_unsafe_component = __commonJS({
-  "src/components/unsafe-component.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
-    init_nylas_exports();
-    init_index_all();
-    var UnsafeComponent = class _UnsafeComponent extends import_react60.default.Component {
-      constructor(...args) {
-        super(...args);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-        this.componentDidUpdate = this.componentDidUpdate.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.render = this.render.bind(this);
-        this.renderInjected = this.renderInjected.bind(this);
-        this.unmountInjected = this.unmountInjected.bind(this);
-        this.focus = this.focus.bind(this);
-        this.blur = this.blur.bind(this);
-        this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
-      }
-      static initClass() {
-        _UnsafeComponent.displayName = "UnsafeComponent";
-        _UnsafeComponent.propTypes = {
-          component: import_prop_types64.default.func.isRequired,
-          onComponentDidRender: import_prop_types64.default.func
-        };
-        _UnsafeComponent.defaultProps = { onComponentDidRender() {
-        } };
-      }
-      componentDidMount() {
-        return this.renderInjected();
-      }
-      shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
-      }
-      componentDidUpdate() {
-        return this.renderInjected();
-      }
-      componentWillUnmount() {
-        return this.unmountInjected();
-      }
-      render() {
-        return import_react60.default.createElement("div", {
-          name: "unsafe-component-wrapper",
-          style: this.props.component != null ? this.props.component.containerStyles : void 0
-        });
-      }
-      renderInjected() {
-        let props;
-        const node = import_react_dom29.default.findDOMNode(this);
-        let element = null;
-        try {
-          props = Utils12.fastOmit(
-            this.props,
-            Object.keys(this.constructor.propTypes)
-          );
-          const Component20 = this.props.component;
-          element = import_react60.default.createElement(
-            Component20,
-            Object.assign({ key: name }, props)
-          );
-          return this.injected = import_react_dom29.default.render(
-            element,
-            node,
-            this.props.onComponentDidRender
-          );
-        } catch (err) {
-          if (NylasEnv.inDevMode()) {
-            let { stack } = err;
-            let stackEnd = stack.indexOf("react/lib/");
-            if (stackEnd > 0) {
-              stackEnd = stack.lastIndexOf("\n", stackEnd);
-              stack = stack.substr(0, stackEnd);
-            }
-            element = import_react60.default.createElement(
-              "div",
-              { className: "unsafe-component-exception" },
-              import_react60.default.createElement(
-                "div",
-                { className: "message" },
-                this.props.component.displayName,
-                " could not be displayed."
-              ),
-              import_react60.default.createElement("div", { className: "trace" }, stack)
-            );
-          } else {
-            element = import_react60.default.createElement("div", null);
-            this.injected = import_react_dom29.default.render(element, node);
-          }
-          return NylasEnv.reportError(err);
-        }
-      }
-      unmountInjected() {
-        try {
-          const node = import_react_dom29.default.findDOMNode(this);
-          return import_react_dom29.default.unmountComponentAtNode(node);
-        } catch (_err) {
-        }
-      }
-      focus() {
-        return this._runInjectedDOMMethod("focus");
-      }
-      blur() {
-        return this._runInjectedDOMMethod("blur");
-      }
-      // Private: Attempts to run the DOM method, ie 'focus', on
-      // 1. Any implementation provided by the inner component
-      // 2. Any native implementation provided by the DOM
-      // 3. Ourselves, so that the method always has /some/ effect.
-      //
-      _runInjectedDOMMethod(method) {
-        let target = null;
-        if (this.injected?.[method]) {
-          target = this.injected;
-        } else if (this.injected) {
-          target = import_react_dom29.default.findDOMNode(this.injected);
-        } else {
-          target = import_react_dom29.default.findDOMNode(this);
-        }
-        return typeof target[method] === "function" ? target[method]() : void 0;
-      }
-    };
-    UnsafeComponent.initClass();
-    module2.exports = UnsafeComponent;
   }
 });
 
 // src/components/injected-component.jsx
 var require_injected_component = __commonJS({
   "src/components/injected-component.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
+    init_index_all();
+    init_nylas_exports();
+    init_unsafe_component();
     init_injected_component_label();
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var UnsafeComponent = require_unsafe_component();
-    var { Actions: Actions37, WorkspaceStore: WorkspaceStore5, ComponentRegistry: ComponentRegistry2 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var InjectedComponent2 = class _InjectedComponent extends React46.Component {
+    var InjectedComponent2 = class _InjectedComponent extends import_react61.default.Component {
       static initClass() {
         _InjectedComponent.displayName = "InjectedComponent";
         _InjectedComponent.propTypes = {
-          matching: import_prop_types64.default.object.isRequired,
-          className: import_prop_types64.default.string,
-          exposedProps: import_prop_types64.default.object,
-          fallback: import_prop_types64.default.func,
-          onComponentDidRender: import_prop_types64.default.func,
-          style: import_prop_types64.default.object,
-          requiredMethods: import_prop_types64.default.arrayOf(import_prop_types64.default.string),
-          onComponentDidChange: import_prop_types64.default.func
+          matching: import_prop_types65.default.object.isRequired,
+          className: import_prop_types65.default.string,
+          exposedProps: import_prop_types65.default.object,
+          fallback: import_prop_types65.default.func,
+          onComponentDidRender: import_prop_types65.default.func,
+          style: import_prop_types65.default.object,
+          requiredMethods: import_prop_types65.default.arrayOf(import_prop_types65.default.string),
+          onComponentDidChange: import_prop_types65.default.func
         };
         _InjectedComponent.defaultProps = {
           style: {},
@@ -215581,6 +215611,7 @@ var require_injected_component = __commonJS({
       }
       constructor(props) {
         super();
+        this.innerRef = import_react61.default.createRef();
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -215598,7 +215629,7 @@ var require_injected_component = __commonJS({
         this._setRequiredMethods(this.props.requiredMethods);
       }
       componentDidMount() {
-        this._componentUnlistener = ComponentRegistry2.listen(() => {
+        this._componentUnlistener = ComponentRegistry.listen(() => {
           return this.setState(this._getStateFromStores());
         });
         if ((this.state.component != null ? this.state.component.containerRequired : void 0) === false) {
@@ -215612,7 +215643,7 @@ var require_injected_component = __commonJS({
         }
       }
       UNSAFE_componentWillReceiveProps(newProps) {
-        if (!_4.isEqual(
+        if (!index_default_default.isEqual(
           newProps.matching,
           this.props != null ? this.props.matching : void 0
         )) {
@@ -215631,7 +215662,7 @@ var require_injected_component = __commonJS({
       render() {
         let element;
         if (!this.state.component) {
-          return React46.createElement("div", null);
+          return import_react61.default.createElement("div", null);
         }
         const exposedProps = Object.assign({}, this.props.exposedProps, {
           fallback: this.props.fallback
@@ -215645,19 +215676,19 @@ var require_injected_component = __commonJS({
           const privateProps = {
             key: Component20.displayName
           };
-          if (React46.Component.isPrototypeOf(Component20)) {
+          if (import_react61.default.Component.isPrototypeOf(Component20)) {
             privateProps.ref = "inner";
           }
-          element = React46.createElement(
+          element = import_react61.default.createElement(
             Component20,
             Object.assign({}, privateProps, exposedProps)
           );
         } else {
-          element = React46.createElement(
-            UnsafeComponent,
+          element = import_react61.default.createElement(
+            unsafe_component_default,
             Object.assign(
               {
-                ref: "inner",
+                ref: this.innerRef,
                 style: this.props.style,
                 className,
                 key: Component20.displayName,
@@ -215669,18 +215700,18 @@ var require_injected_component = __commonJS({
           );
         }
         if (this.state.visible) {
-          return React46.createElement(
+          return import_react61.default.createElement(
             "div",
             { className, style: this.props.style },
             element,
-            React46.createElement(
+            import_react61.default.createElement(
               InjectedComponentLabel,
               Object.assign({ matching: this.props.matching }, exposedProps)
             ),
-            React46.createElement("span", { style: { clear: "both" } })
+            import_react61.default.createElement("span", { style: { clear: "both" } })
           );
         } else {
-          return React46.createElement(
+          return import_react61.default.createElement(
             "div",
             { className, style: this.props.style },
             element
@@ -215700,14 +215731,14 @@ var require_injected_component = __commonJS({
       //
       _runInnerDOMMethod(method, ...args) {
         let target = null;
-        if (this.refs.inner instanceof UnsafeComponent && this.refs.inner.injected[method] != null) {
-          target = this.refs.inner.injected;
-        } else if (this.refs.inner && this.refs.inner[method] != null) {
-          target = this.refs.inner;
-        } else if (this.refs.inner) {
-          target = ReactDOM27.findDOMNode(this.refs.inner);
+        if (this.innerRef?.current instanceof unsafe_component_default && this.innerRef?.current.injected[method] != null) {
+          target = this.innerRef?.current.injected;
+        } else if (this.innerRef?.current && this.innerRef?.current[method] != null) {
+          target = this.innerRef?.current;
+        } else if (this.innerRef?.current) {
+          target = import_react_dom28.default.findDOMNode(this.innerRef?.current);
         } else {
-          target = ReactDOM27.findDOMNode(this);
+          target = import_react_dom28.default.findDOMNode(this);
         }
         if (target[method]) {
           return target[method].bind(target)(...Array.from(args || []));
@@ -215741,14 +215772,14 @@ var require_injected_component = __commonJS({
         if (props == null) {
           ({ props } = this);
         }
-        const components = ComponentRegistry2.findComponentsMatching(props.matching);
+        const components = ComponentRegistry.findComponentsMatching(props.matching);
         if (components.length > 1) {
           console.warn(`There are multiple components available for ${JSON.stringify(props.matching)}. <InjectedComponent> is only rendering the first one.`);
         }
         const component = components.length === 0 ? this.props.fallback : components[0];
         return {
           component,
-          visible: ComponentRegistry2.showComponentRegions()
+          visible: ComponentRegistry.showComponentRegions()
         };
       }
     };
@@ -215762,12 +215793,12 @@ var tokenizing_text_field_exports = {};
 __export(tokenizing_text_field_exports, {
   default: () => TokenizingTextField
 });
-var import_react35, import_prop_types39, import_react_dom16, import_classnames10, import_remote4, SizeToFitInput, Token, TokenizingTextField;
+var import_react36, import_prop_types40, import_react_dom15, import_classnames10, import_remote4, SizeToFitInput, Token, TokenizingTextField;
 var init_tokenizing_text_field = __esm({
   "src/components/tokenizing-text-field.jsx"() {
-    import_react35 = __toESM(require_react());
-    import_prop_types39 = __toESM(require_prop_types());
-    import_react_dom16 = __toESM(require_react_dom());
+    import_react36 = __toESM(require_react());
+    import_prop_types40 = __toESM(require_prop_types());
+    import_react_dom15 = __toESM(require_react_dom());
     import_classnames10 = __toESM(require_classnames());
     init_index_all();
     import_remote4 = __toESM(require_at_electron_remote());
@@ -215775,12 +215806,15 @@ var init_tokenizing_text_field = __esm({
     init_nylas_component_kit();
     init_retina_img();
     init_key_commands_region();
-    SizeToFitInput = class extends import_react35.default.Component {
+    SizeToFitInput = class extends import_react36.default.Component {
       static propTypes = {
-        value: import_prop_types39.default.string
+        value: import_prop_types40.default.string
       };
       constructor(props) {
         super(props);
+        this.completionsRef = import_react36.default.createRef();
+        this.inputRef = import_react36.default.createRef();
+        this.measureRef = import_react36.default.createRef();
         this.state = {};
       }
       componentDidMount() {
@@ -215793,49 +215827,57 @@ var init_tokenizing_text_field = __esm({
         if (this.props.value.length === 0) {
           return;
         }
-        const inputEl = import_react_dom16.default.findDOMNode(this.refs.input);
-        const measureEl = import_react_dom16.default.findDOMNode(this.refs.measure);
+        const inputEl = import_react_dom15.default.findDOMNode(this.inputRef?.current);
+        const measureEl = import_react_dom15.default.findDOMNode(this.measureRef?.current);
         measureEl.innerText = inputEl.value;
         measureEl.style.top = `${inputEl.offsetTop}px`;
         measureEl.style.left = `${inputEl.offsetLeft}px`;
         inputEl.style.width = `${measureEl.offsetWidth + 10}px`;
       }
       select() {
-        import_react_dom16.default.findDOMNode(this.refs.input).select();
+        import_react_dom15.default.findDOMNode(this.inputRef?.current).select();
       }
       selectionRange() {
-        const inputEl = import_react_dom16.default.findDOMNode(this.refs.input);
+        const inputEl = import_react_dom15.default.findDOMNode(this.inputRef?.current);
         return {
           start: inputEl.selectionStart,
           end: inputEl.selectionEnd
         };
       }
       focus() {
-        import_react_dom16.default.findDOMNode(this.refs.input).focus();
+        import_react_dom15.default.findDOMNode(this.inputRef?.current).focus();
       }
       render() {
-        return /* @__PURE__ */ import_react35.default.createElement("span", null, /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react36.default.createElement("span", null, /* @__PURE__ */ import_react36.default.createElement(
           "span",
           {
-            ref: "measure",
+            ref: this.measureRef,
             style: { visibility: "hidden", position: "absolute" }
           }
-        ), /* @__PURE__ */ import_react35.default.createElement("input", { ref: "input", type: "text", style: { width: 1 }, ...this.props }));
+        ), /* @__PURE__ */ import_react36.default.createElement(
+          "input",
+          {
+            ref: this.inputRef,
+            type: "text",
+            style: { width: 1 },
+            ...this.props
+          }
+        ));
       }
     };
-    Token = class extends import_react35.default.Component {
+    Token = class extends import_react36.default.Component {
       static displayName = "Token";
       static propTypes = {
-        className: import_prop_types39.default.string,
-        selected: import_prop_types39.default.bool,
-        valid: import_prop_types39.default.bool,
-        item: import_prop_types39.default.object,
-        onClick: import_prop_types39.default.func.isRequired,
-        onDragStart: import_prop_types39.default.func.isRequired,
-        onEdited: import_prop_types39.default.func,
-        onAction: import_prop_types39.default.func,
-        disabled: import_prop_types39.default.bool,
-        onEditMotion: import_prop_types39.default.func
+        className: import_prop_types40.default.string,
+        selected: import_prop_types40.default.bool,
+        valid: import_prop_types40.default.bool,
+        item: import_prop_types40.default.object,
+        onClick: import_prop_types40.default.func.isRequired,
+        onDragStart: import_prop_types40.default.func.isRequired,
+        onEdited: import_prop_types40.default.func,
+        onAction: import_prop_types40.default.func,
+        disabled: import_prop_types40.default.bool,
+        onEditMotion: import_prop_types40.default.func
       };
       static defaultProps = {
         className: ""
@@ -215855,14 +215897,14 @@ var init_tokenizing_text_field = __esm({
       }
       componentDidUpdate(_prevProps, prevState) {
         if (this.state.editing && !prevState.editing) {
-          this.refs.input.select();
+          this.inputRef?.current.select();
         }
       }
       _renderEditing() {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react36.default.createElement(
           SizeToFitInput,
           {
-            ref: "input",
+            ref: this.inputRef,
             className: "token-editing-input",
             spellCheck: "false",
             value: this.state.editingValue,
@@ -215882,7 +215924,7 @@ var init_tokenizing_text_field = __esm({
         });
         let actionButton = null;
         if (this.props.onAction && !this.props.disabled) {
-          actionButton = /* @__PURE__ */ import_react35.default.createElement(
+          actionButton = /* @__PURE__ */ import_react36.default.createElement(
             "button",
             {
               type: "button",
@@ -215890,7 +215932,7 @@ var init_tokenizing_text_field = __esm({
               onClick: this._onAction,
               tabIndex: -1
             },
-            /* @__PURE__ */ import_react35.default.createElement(
+            /* @__PURE__ */ import_react36.default.createElement(
               retina_img_default,
               {
                 mode: retina_img_default.Mode.ContentIsMask,
@@ -215899,7 +215941,7 @@ var init_tokenizing_text_field = __esm({
             )
           );
         }
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react36.default.createElement(
           "div",
           {
             className: `${classes} ${this.props.className}`,
@@ -215960,44 +216002,44 @@ var init_tokenizing_text_field = __esm({
         return this.state.editing ? this._renderEditing() : this._renderViewing();
       }
     };
-    TokenizingTextField = class extends import_react35.default.Component {
+    TokenizingTextField = class extends import_react36.default.Component {
       static displayName = "TokenizingTextField";
       static containerRequired = false;
       static Token = Token;
       static propTypes = {
-        className: import_prop_types39.default.string,
-        disabled: import_prop_types39.default.bool,
-        placeholder: import_prop_types39.default.node,
+        className: import_prop_types40.default.string,
+        disabled: import_prop_types40.default.bool,
+        placeholder: import_prop_types40.default.node,
         // An array of current tokens.
         //
         // A token is usually an object type like a `Contact`. The set of
         // tokens is stored as a prop instead of `state`. This means that when
         // the set of tokens needs to be changed, it is the parent's
         // responsibility to make that change.
-        tokens: import_prop_types39.default.arrayOf(import_prop_types39.default.object),
+        tokens: import_prop_types40.default.arrayOf(import_prop_types40.default.object),
         // The maximum number of tokens allowed. When null (the default) and
         // unlimited number of tokens may be given
-        maxTokens: import_prop_types39.default.number,
+        maxTokens: import_prop_types40.default.number,
         // A string to pre-fill the input with when the tokens are empty.
-        defaultValue: import_prop_types39.default.string,
+        defaultValue: import_prop_types40.default.string,
         // A function that, given an object used for tokens, returns a unique
         // id (key) for that object.
         //
         // This is necessary for React to assign each of the subitems and
         // unique key.
-        tokenKey: import_prop_types39.default.func.isRequired,
+        tokenKey: import_prop_types40.default.func.isRequired,
         // A function that, given a token, returns true if the token is valid
         // and false if the token is invalid. Useful if your implementation of
         // onAdd allows invalid tokens to be added to the field (ie malformed
         // email addresses.) Optional.
         //
-        tokenIsValid: import_prop_types39.default.func,
+        tokenIsValid: import_prop_types40.default.func,
         // What each token looks like
         //
         // A function that is passed an object and should return React elements
         // to display that individual token.
-        tokenRenderer: import_prop_types39.default.func.isRequired,
-        tokenClassNames: import_prop_types39.default.func,
+        tokenRenderer: import_prop_types40.default.func.isRequired,
+        tokenClassNames: import_prop_types40.default.func,
         // The function responsible for providing a list of possible options
         // given the current input.
         //
@@ -216007,12 +216049,12 @@ var init_tokenizing_text_field = __esm({
         //
         // The function may either directly return tokens, or may return a
         // Promise, that resolves with the requested tokens
-        onRequestCompletions: import_prop_types39.default.func.isRequired,
+        onRequestCompletions: import_prop_types40.default.func.isRequired,
         // What each suggestion looks like.
         //
         // This is passed through to the Menu component's `itemContent` prop.
         // See components/menu.cjsx for more info.
-        completionNode: import_prop_types39.default.func.isRequired,
+        completionNode: import_prop_types40.default.func.isRequired,
         // Gets called when we we're ready to add whatever it is we're
         // completing
         //
@@ -216027,16 +216069,16 @@ var init_tokenizing_text_field = __esm({
         // The function doesn't need to return anything, but it is generally
         // responible for mutating the parent's state in a way that eventually
         // updates this component's `tokens` prop.
-        onAdd: import_prop_types39.default.func.isRequired,
+        onAdd: import_prop_types40.default.func.isRequired,
         // This gets fired when people try and submit a query with a break
         // character (tab, comma, semicolon, etc). It lets us the caller
         // determine how to best deal with available options.
         // If this method is not implemented we'll pick the first available
         // option in the completions
-        onInputTrySubmit: import_prop_types39.default.func,
+        onInputTrySubmit: import_prop_types40.default.func,
         // If implemented lets the caller determine when to cut a token based
         // on the current input value and the current keydown.
-        shouldBreakOnKeydown: import_prop_types39.default.func,
+        shouldBreakOnKeydown: import_prop_types40.default.func,
         // Gets called when we remove a token
         //
         // It's passed an array of objects (the same ones used to render
@@ -216045,7 +216087,7 @@ var init_tokenizing_text_field = __esm({
         // The function doesn't need to return anything, but it is generally
         // responible for mutating the parent's state in a way that eventually
         // updates this component's `tokens` prop.
-        onRemove: import_prop_types39.default.func.isRequired,
+        onRemove: import_prop_types40.default.func.isRequired,
         // Gets called when an existing token is double-clicked and edited.
         // Do not provide this method if you want to disable editing.
         //
@@ -216054,24 +216096,24 @@ var init_tokenizing_text_field = __esm({
         // The function doesn't need to return anything, but it is generally
         // responible for mutating the parent's state in a way that eventually
         // updates this component's `tokens` prop.
-        onEdit: import_prop_types39.default.func,
+        onEdit: import_prop_types40.default.func,
         // This is slightly different than onEdit. onEditMotion gets fired if
         // the user does an editing-like action on a Token. Double clicking,
         // etc. This is usefulf for when you don't want the text of the tokens
         // themselves to be editable, but want to perform some action when the
         // tokens are double clicked.
-        onEditMotion: import_prop_types39.default.func,
+        onEditMotion: import_prop_types40.default.func,
         // Called when we remove and there's nothing left to remove
-        onEmptied: import_prop_types39.default.func,
+        onEmptied: import_prop_types40.default.func,
         // Called when the secondary action of the token gets invoked.
-        onTokenAction: import_prop_types39.default.oneOfType([import_prop_types39.default.func, import_prop_types39.default.bool]),
+        onTokenAction: import_prop_types40.default.oneOfType([import_prop_types40.default.func, import_prop_types40.default.bool]),
         // Called when the input is focused
-        onFocus: import_prop_types39.default.func,
+        onFocus: import_prop_types40.default.func,
         // A Prompt used in the head of the menu
-        menuPrompt: import_prop_types39.default.string,
+        menuPrompt: import_prop_types40.default.string,
         // A classSet hash applied to the Menu item
-        menuClassSet: import_prop_types39.default.object,
-        tabIndex: import_prop_types39.default.number
+        menuClassSet: import_prop_types40.default.object,
+        tabIndex: import_prop_types40.default.number
       };
       static defaultProps = {
         tokens: [],
@@ -216109,7 +216151,7 @@ var init_tokenizing_text_field = __esm({
       }
       // Maintaining Input State
       _onClick = (event2) => {
-        if (event2.target.tagName === "INPUT" && import_react_dom16.default.findDOMNode(this).contains(event2.target)) {
+        if (event2.target.tagName === "INPUT" && import_react_dom15.default.findDOMNode(this).contains(event2.target)) {
           return;
         }
         this.focus();
@@ -216124,7 +216166,7 @@ var init_tokenizing_text_field = __esm({
       _onAddItemsFromJSON = (json2) => {
         let items = null;
         try {
-          items = JSON.parse(json2, Utils12.registeredObjectReviver);
+          items = JSON.parse(json2, Utils13.registeredObjectReviver);
         } catch (err) {
           console.error(err);
           items = null;
@@ -216151,7 +216193,9 @@ var init_tokenizing_text_field = __esm({
           this._onInputTrySubmit(event2);
         } else if (["ArrowLeft", "ArrowRight"].includes(event2.key)) {
           const delta = event2.key === "ArrowLeft" ? -1 : 1;
-          const { start } = this.refs.input.selectionRange();
+          const { start } = this.inputRef?.current?.selectionRange() ?? {
+            start: 0
+          };
           if (this.state.selectedKeys.length > 0) {
             this._onShiftSelection(delta, event2);
             event2.preventDefault();
@@ -216221,7 +216265,7 @@ var init_tokenizing_text_field = __esm({
         const { inputValue, completions } = this.state;
         let token = null;
         if (completions.length > 0) {
-          token = this.refs.completions.getSelectedItem() || completions[0];
+          token = this.completionsRef?.current.getSelectedItem() || completions[0];
         }
         if (this.props.onInputTrySubmit) {
           token = this.props.onInputTrySubmit(inputValue, completions, token);
@@ -216248,7 +216292,7 @@ var init_tokenizing_text_field = __esm({
         if (!event2.relatedTarget) {
           return;
         }
-        if (event2.relatedTarget === import_react_dom16.default.findDOMNode(this)) {
+        if (event2.relatedTarget === import_react_dom15.default.findDOMNode(this)) {
           return;
         }
         this._addInputValue();
@@ -216263,7 +216307,7 @@ var init_tokenizing_text_field = __esm({
         this._refreshCompletions("", { clear: true });
       }
       focus() {
-        this.refs.input.focus();
+        this.inputRef?.current.focus();
       }
       // Managing Tokens
       _addInputValue = (input = this.state.inputValue, options2 = {}) => {
@@ -216309,7 +216353,7 @@ var init_tokenizing_text_field = __esm({
         if (tokens.length === 0) {
           tokens = [token];
         }
-        const json2 = JSON.stringify(tokens, Utils12.registeredObjectReplacer);
+        const json2 = JSON.stringify(tokens, Utils13.registeredObjectReplacer);
         event2.dataTransfer.setData("nylas-token-items", json2);
         event2.dataTransfer.setData(
           "text/plain",
@@ -216397,11 +216441,11 @@ var init_tokenizing_text_field = __esm({
         if (event2.clipboardData) {
           const json2 = JSON.stringify(
             this._selectedTokens(),
-            Utils12.registeredObjectReplacer
+            Utils13.registeredObjectReplacer
           );
           event2.clipboardData.setData("text/plain", text);
           event2.clipboardData.setData("nylas-token-items", json2);
-          const range2 = this.refs.input.selectionRange();
+          const range2 = this.inputRef?.current.selectionRange();
           if (range2.end > 0) {
             const inputSelection = this.state.inputValue.substr(
               range2.start,
@@ -216484,13 +216528,13 @@ var init_tokenizing_text_field = __esm({
           props.onChange = () => "noop";
           props.value = "";
         }
-        return /* @__PURE__ */ import_react35.default.createElement(SizeToFitInput, { ref: "input", spellCheck: "false", ...props });
+        return /* @__PURE__ */ import_react36.default.createElement(SizeToFitInput, { ref: this.inputRef, spellCheck: "false", ...props });
       }
       _placeholderComponent() {
         if (this.state.inputValue.length > 0 || this.props.placeholder === void 0 || this.props.tokens.length > 0) {
           return false;
         }
-        return /* @__PURE__ */ import_react35.default.createElement("div", { className: "placeholder" }, this.props.placeholder);
+        return /* @__PURE__ */ import_react36.default.createElement("div", { className: "placeholder" }, this.props.placeholder);
       }
       _atMaxTokens() {
         const { tokens, maxTokens } = this.props;
@@ -216500,7 +216544,7 @@ var init_tokenizing_text_field = __esm({
         if (!this.props.menuPrompt) {
           return false;
         }
-        return /* @__PURE__ */ import_react35.default.createElement("div", { className: "tokenizing-field-label" }, `${this.props.menuPrompt}:`);
+        return /* @__PURE__ */ import_react36.default.createElement("div", { className: "tokenizing-field-label" }, `${this.props.menuPrompt}:`);
       }
       _fieldComponents() {
         const {
@@ -216517,7 +216561,7 @@ var init_tokenizing_text_field = __esm({
           const valid = tokenIsValid ? tokenIsValid(item) : true;
           const TokenRenderer2 = tokenRenderer;
           const onAction = onTokenAction === false ? null : onTokenAction || this._showDefaultTokenMenu;
-          return /* @__PURE__ */ import_react35.default.createElement(
+          return /* @__PURE__ */ import_react36.default.createElement(
             Token,
             {
               className: tokenClassNames(item),
@@ -216532,7 +216576,7 @@ var init_tokenizing_text_field = __esm({
               onEdited: onEdit,
               onAction
             },
-            /* @__PURE__ */ import_react35.default.createElement(TokenRenderer2, { token: item })
+            /* @__PURE__ */ import_react36.default.createElement(TokenRenderer2, { token: item })
           );
         });
       }
@@ -216541,7 +216585,7 @@ var init_tokenizing_text_field = __esm({
           "tokenizing-field-input": true,
           "at-max-tokens": this._atMaxTokens()
         });
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react36.default.createElement(
           KeyCommandsRegion,
           {
             key: "field-component",
@@ -216554,7 +216598,7 @@ var init_tokenizing_text_field = __esm({
             onDrop: this._onDrop
           },
           this._renderPromptComponent(),
-          /* @__PURE__ */ import_react35.default.createElement("div", { className: fieldClasses }, this._placeholderComponent(), this._fieldComponents(), this._inputComponent())
+          /* @__PURE__ */ import_react36.default.createElement("div", { className: fieldClasses }, this._placeholderComponent(), this._fieldComponents(), this._inputComponent())
         );
       }
       render() {
@@ -216568,11 +216612,11 @@ var init_tokenizing_text_field = __esm({
             empty: (this.state.inputValue || "").trim().length === 0
           })
         );
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react36.default.createElement(
           void 0,
           {
             className: classes,
-            ref: "completions",
+            ref: this.completionsRef,
             items: this.state.completions,
             itemKey: (item) => item.id,
             itemContext: { inputValue: this.state.inputValue },
@@ -216593,11 +216637,11 @@ var participants_text_field_exports = {};
 __export(participants_text_field_exports, {
   default: () => ParticipantsTextField
 });
-var import_react36, import_prop_types40, import_electron4, import_remote5, TokenRenderer, ParticipantsTextField;
+var import_react37, import_prop_types41, import_electron4, import_remote5, TokenRenderer, ParticipantsTextField;
 var init_participants_text_field = __esm({
   "src/components/participants-text-field.jsx"() {
-    import_react36 = __toESM(require_react());
-    import_prop_types40 = __toESM(require_prop_types());
+    import_react37 = __toESM(require_react());
+    import_prop_types41 = __toESM(require_prop_types());
     init_index_all();
     import_electron4 = require("electron");
     import_remote5 = __toESM(require_at_electron_remote());
@@ -216609,7 +216653,7 @@ var init_participants_text_field = __esm({
       if (name2 && name2.length > 0 && name2 !== email) {
         chipText = name2;
       }
-      return /* @__PURE__ */ import_react36.default.createElement("div", { className: "participant" }, /* @__PURE__ */ import_react36.default.createElement(
+      return /* @__PURE__ */ import_react37.default.createElement("div", { className: "participant" }, /* @__PURE__ */ import_react37.default.createElement(
         void 0,
         {
           matching: { role: "Composer:RecipientChip" },
@@ -216617,46 +216661,50 @@ var init_participants_text_field = __esm({
           direction: "row",
           inline: true
         }
-      ), /* @__PURE__ */ import_react36.default.createElement("span", { className: "participant-primary" }, chipText));
+      ), /* @__PURE__ */ import_react37.default.createElement("span", { className: "participant-primary" }, chipText));
     };
     TokenRenderer.propTypes = {
-      token: import_prop_types40.default.object
+      token: import_prop_types41.default.object
     };
-    ParticipantsTextField = class extends import_react36.default.Component {
+    ParticipantsTextField = class extends import_react37.default.Component {
+      constructor(props) {
+        super(props);
+        this.textFieldRef = import_react37.default.createRef();
+      }
       static displayName = "ParticipantsTextField";
       static propTypes = {
         // The name of the field, used for both display purposes and also
         // to modify the `participants` provided.
-        field: import_prop_types40.default.string,
+        field: import_prop_types41.default.string,
         // An object containing arrays of participants. Typically, this is
         // {to: [], cc: [], bcc: []}. Each ParticipantsTextField needs all of
         // the values, because adding an element to one field may remove it
         // from another.
-        participants: import_prop_types40.default.object.isRequired,
+        participants: import_prop_types41.default.object.isRequired,
         // The function to call with an updated `participants` object when
         // changes are made.
-        change: import_prop_types40.default.func.isRequired,
-        className: import_prop_types40.default.string,
-        onEmptied: import_prop_types40.default.func,
-        onFocus: import_prop_types40.default.func,
-        draft: import_prop_types40.default.object,
-        session: import_prop_types40.default.object
+        change: import_prop_types41.default.func.isRequired,
+        className: import_prop_types41.default.string,
+        onEmptied: import_prop_types41.default.func,
+        onFocus: import_prop_types41.default.func,
+        draft: import_prop_types41.default.object,
+        session: import_prop_types41.default.object
       };
       static defaultProps = {
         visible: true
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       // Public. Can be called by any component that has a ref to this one to
       // focus the input field.
       focus = () => {
-        this.refs.textField.focus();
+        this.textFieldRef?.current.focus();
       };
       _completionNode = (p) => {
         const CustomComponent = p.customComponent;
-        if (CustomComponent) return /* @__PURE__ */ import_react36.default.createElement(CustomComponent, { token: p });
-        return /* @__PURE__ */ import_react36.default.createElement((void 0).NameEmailItem, { name: p.name, email: p.email, key: p.id });
+        if (CustomComponent) return /* @__PURE__ */ import_react37.default.createElement(CustomComponent, { token: p });
+        return /* @__PURE__ */ import_react37.default.createElement((void 0).NameEmailItem, { name: p.name, email: p.email, key: p.id });
       };
       _tokensForString = (string, options2 = {}) => {
         if (string.length === 0) {
@@ -216757,10 +216805,10 @@ var init_participants_text_field = __esm({
           [this.props.field]: true
         };
         const draftId = this.props.draft ? this.props.draft.clientId : null;
-        return /* @__PURE__ */ import_react36.default.createElement("div", { className: this.props.className }, /* @__PURE__ */ import_react36.default.createElement(
+        return /* @__PURE__ */ import_react37.default.createElement("div", { className: this.props.className }, /* @__PURE__ */ import_react37.default.createElement(
           void 0,
           {
-            ref: "textField",
+            ref: this.textFieldRef,
             matching: { role: "Composer:ParticipantsTextField" },
             fallback: void 0,
             requiredMethods: ["focus"],
@@ -218317,24 +218365,24 @@ var css_transition_group_compat_exports = {};
 __export(css_transition_group_compat_exports, {
   default: () => ReactCSSTransitionGroup
 });
-var import_react37, import_prop_types41, import_react_transition_group, ReactCSSTransitionGroup;
+var import_react38, import_prop_types42, import_react_transition_group, ReactCSSTransitionGroup;
 var init_css_transition_group_compat = __esm({
   "src/components/css-transition-group-compat.jsx"() {
-    import_react37 = __toESM(require_react());
-    import_prop_types41 = __toESM(require_prop_types());
+    import_react38 = __toESM(require_react());
+    import_prop_types42 = __toESM(require_prop_types());
     import_react_transition_group = __toESM(require_cjs2());
-    ReactCSSTransitionGroup = class extends import_react37.Component {
+    ReactCSSTransitionGroup = class extends import_react38.Component {
       static propTypes = {
-        transitionName: import_prop_types41.default.string.isRequired,
-        transitionEnterTimeout: import_prop_types41.default.number,
-        transitionLeaveTimeout: import_prop_types41.default.number,
-        transitionAppearTimeout: import_prop_types41.default.number,
-        transitionEnter: import_prop_types41.default.bool,
-        transitionLeave: import_prop_types41.default.bool,
-        transitionAppear: import_prop_types41.default.bool,
-        className: import_prop_types41.default.string,
-        component: import_prop_types41.default.any,
-        children: import_prop_types41.default.node
+        transitionName: import_prop_types42.default.string.isRequired,
+        transitionEnterTimeout: import_prop_types42.default.number,
+        transitionLeaveTimeout: import_prop_types42.default.number,
+        transitionAppearTimeout: import_prop_types42.default.number,
+        transitionEnter: import_prop_types42.default.bool,
+        transitionLeave: import_prop_types42.default.bool,
+        transitionAppear: import_prop_types42.default.bool,
+        className: import_prop_types42.default.string,
+        component: import_prop_types42.default.any,
+        children: import_prop_types42.default.node
       };
       render() {
         const {
@@ -218350,7 +218398,7 @@ var init_css_transition_group_compat = __esm({
           children,
           ...rest2
         } = this.props;
-        const child = import_react37.default.Children.count(children) === 1 ? import_react37.default.Children.toArray(children)[0] : null;
+        const child = import_react38.default.Children.count(children) === 1 ? import_react38.default.Children.toArray(children)[0] : null;
         const transitionProps = {
           in: true,
           appear: transitionAppear,
@@ -218364,7 +218412,7 @@ var init_css_transition_group_compat = __esm({
           classNames: transitionName,
           ...child ? { key: child.key } : {}
         };
-        return /* @__PURE__ */ import_react37.default.createElement(import_react_transition_group.TransitionGroup, { className, component, ...rest2 }, child ? /* @__PURE__ */ import_react37.default.createElement(import_react_transition_group.CSSTransition, { ...transitionProps }, child) : null);
+        return /* @__PURE__ */ import_react38.default.createElement(import_react_transition_group.TransitionGroup, { className, component, ...rest2 }, child ? /* @__PURE__ */ import_react38.default.createElement(import_react_transition_group.CSSTransition, { ...transitionProps }, child) : null);
       }
     };
   }
@@ -218375,23 +218423,23 @@ var multiselect_toolbar_exports = {};
 __export(multiselect_toolbar_exports, {
   default: () => multiselect_toolbar_default
 });
-var import_react38, import_prop_types42, MultiselectToolbar, multiselect_toolbar_default;
+var import_react39, import_prop_types43, MultiselectToolbar, multiselect_toolbar_default;
 var init_multiselect_toolbar = __esm({
   "src/components/multiselect-toolbar.jsx"() {
     init_nylas_exports();
-    import_react38 = __toESM(require_react());
-    import_prop_types42 = __toESM(require_prop_types());
+    import_react39 = __toESM(require_react());
+    import_prop_types43 = __toESM(require_prop_types());
     init_css_transition_group_compat();
-    MultiselectToolbar = class extends import_react38.Component {
+    MultiselectToolbar = class extends import_react39.Component {
       static displayName = "MultiselectToolbar";
       static propTypes = {
-        toolbarElement: import_prop_types42.default.element.isRequired,
-        collection: import_prop_types42.default.string.isRequired,
-        onClearSelection: import_prop_types42.default.func.isRequired,
-        selectionCount: import_prop_types42.default.node
+        toolbarElement: import_prop_types43.default.element.isRequired,
+        collection: import_prop_types43.default.string.isRequired,
+        onClearSelection: import_prop_types43.default.func.isRequired,
+        selectionCount: import_prop_types43.default.node
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       selectionLabel = () => {
         const { selectionCount, collection } = this.props;
@@ -218436,29 +218484,29 @@ var init_multiselect_toolbar = __esm({
 // src/components/injected-component-set.jsx
 var require_injected_component_set = __commonJS({
   "src/components/injected-component-set.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_injected_component_label();
-    var React46 = require_react();
+    var React50 = require_react();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var UnsafeComponent = require_unsafe_component();
-    var Flexbox2 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
+    var UnsafeComponent2 = (init_unsafe_component(), __toCommonJS(unsafe_component_exports));
+    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var {
-      Utils: Utils23,
+      Utils: Utils24,
       Actions: Actions37,
       WorkspaceStore: WorkspaceStore5,
       ComponentRegistry: ComponentRegistry2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var InjectedComponentSet4 = class _InjectedComponentSet extends React46.Component {
+    var InjectedComponentSet4 = class _InjectedComponentSet extends React50.Component {
       static initClass() {
         _InjectedComponentSet.displayName = "InjectedComponentSet";
         _InjectedComponentSet.propTypes = {
-          matching: import_prop_types64.default.object.isRequired,
-          children: import_prop_types64.default.array,
-          className: import_prop_types64.default.string,
-          matchLimit: import_prop_types64.default.number,
-          exposedProps: import_prop_types64.default.object,
-          containersRequired: import_prop_types64.default.bool,
-          onComponentsDidRender: import_prop_types64.default.func
+          matching: import_prop_types65.default.object.isRequired,
+          children: import_prop_types65.default.array,
+          className: import_prop_types65.default.string,
+          matchLimit: import_prop_types65.default.number,
+          exposedProps: import_prop_types65.default.object,
+          containersRequired: import_prop_types65.default.bool,
+          onComponentsDidRender: import_prop_types65.default.func
         };
         _InjectedComponentSet.defaultProps = {
           direction: "row",
@@ -218505,7 +218553,7 @@ var require_injected_component_set = __commonJS({
       }
       render() {
         this._renderedComponents = /* @__PURE__ */ new Set();
-        const flexboxProps = Utils23.fastOmit(
+        const flexboxProps = Utils24.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -218513,13 +218561,13 @@ var require_injected_component_set = __commonJS({
         const exposedProps = this.props.exposedProps != null ? this.props.exposedProps : {};
         const elements = this.state.components.map((Component20) => {
           if (this.props.containersRequired === false || Component20.containerRequired === false) {
-            return React46.createElement(
+            return React50.createElement(
               Component20,
               Object.assign({ key: Component20.displayName }, exposedProps)
             );
           } else {
-            return React46.createElement(
-              UnsafeComponent,
+            return React50.createElement(
+              UnsafeComponent2,
               Object.assign(
                 {
                   key: Component20.displayName,
@@ -218539,7 +218587,7 @@ var require_injected_component_set = __commonJS({
           elements.splice(
             0,
             0,
-            React46.createElement(
+            React50.createElement(
               InjectedComponentLabel,
               Object.assign(
                 { key: "_label", matching: this.props.matching },
@@ -218548,14 +218596,14 @@ var require_injected_component_set = __commonJS({
             )
           );
           elements.push(
-            React46.createElement("span", {
+            React50.createElement("span", {
               key: "_clear",
               style: { clear: "both" }
             })
           );
         }
-        return React46.createElement(
-          Flexbox2,
+        return React50.createElement(
+          Flexbox3,
           Object.assign({ className: flexboxClassName }, flexboxProps),
           elements,
           this.props.children != null ? this.props.children : []
@@ -218590,11 +218638,11 @@ var config_prop_container_exports = {};
 __export(config_prop_container_exports, {
   default: () => ConfigPropContainer
 });
-var import_react39, ConfigPropContainer;
+var import_react40, ConfigPropContainer;
 var init_config_prop_container = __esm({
   "src/components/config-prop-container.jsx"() {
-    import_react39 = __toESM(require_react());
-    ConfigPropContainer = class extends import_react39.default.Component {
+    import_react40 = __toESM(require_react());
+    ConfigPropContainer = class extends import_react40.default.Component {
       static displayName = "ConfigPropContainer";
       constructor(props) {
         super(props);
@@ -218647,7 +218695,7 @@ var init_config_prop_container = __esm({
         });
       }
       render() {
-        return import_react39.default.cloneElement(this.props.children, {
+        return import_react40.default.cloneElement(this.props.children, {
           config: this.state.config,
           configSchema: NylasEnv.config.getSchema("core")
         });
@@ -218659,15 +218707,15 @@ var init_config_prop_container = __esm({
 // src/components/disclosure-triangle.jsx
 var require_disclosure_triangle = __commonJS({
   "src/components/disclosure-triangle.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react60.default.Component {
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
+    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react61.default.Component {
       static initClass() {
         _DisclosureTriangle.displayName = "DisclosureTriangle";
         _DisclosureTriangle.propTypes = {
-          collapsed: import_prop_types64.default.bool,
-          visible: import_prop_types64.default.bool,
-          onCollapseToggled: import_prop_types64.default.func
+          collapsed: import_prop_types65.default.bool,
+          visible: import_prop_types65.default.bool,
+          onCollapseToggled: import_prop_types65.default.func
         };
         _DisclosureTriangle.defaultProps = { onCollapseToggled() {
         } };
@@ -218680,10 +218728,10 @@ var require_disclosure_triangle = __commonJS({
         if (this.props.collapsed) {
           classnames14 += " collapsed";
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: classnames14, onClick: this.props.onCollapseToggled },
-          import_react60.default.createElement("div", null)
+          import_react61.default.createElement("div", null)
         );
       }
     };
@@ -218765,19 +218813,19 @@ var editable_list_exports = {};
 __export(editable_list_exports, {
   default: () => editable_list_default
 });
-var import_classnames11, import_react40, import_prop_types43, import_react_dom17, import_scroll_region2, EditableList, editable_list_default;
+var import_classnames11, import_react41, import_prop_types44, import_react_dom16, import_scroll_region2, EditableList, editable_list_default;
 var init_editable_list = __esm({
   "src/components/editable-list.jsx"() {
     init_index_all();
     init_dist_node();
     import_classnames11 = __toESM(require_classnames());
-    import_react40 = __toESM(require_react());
-    import_prop_types43 = __toESM(require_prop_types());
-    import_react_dom17 = __toESM(require_react_dom());
+    import_react41 = __toESM(require_react());
+    import_prop_types44 = __toESM(require_prop_types());
+    import_react_dom16 = __toESM(require_react_dom());
     import_scroll_region2 = __toESM(require_scroll_region());
     init_key_commands_region();
     init_retina_img();
-    EditableList = class extends import_react40.Component {
+    EditableList = class extends import_react41.Component {
       static displayName = "EditableList";
       /**
        * If provided, this function will be called when the add button is clicked,
@@ -218824,19 +218872,19 @@ var init_editable_list = __esm({
            already removed from startIdx.
          */
       static propTypes = {
-        items: import_prop_types43.default.array.isRequired,
-        itemContent: import_prop_types43.default.func,
-        className: import_prop_types43.default.string,
-        showEditIcon: import_prop_types43.default.bool,
-        createInputProps: import_prop_types43.default.object,
-        onCreateItem: import_prop_types43.default.func,
-        onDeleteItem: import_prop_types43.default.func,
-        onReorderItem: import_prop_types43.default.func,
-        onItemEdited: import_prop_types43.default.func,
-        onItemCreated: import_prop_types43.default.func,
+        items: import_prop_types44.default.array.isRequired,
+        itemContent: import_prop_types44.default.func,
+        className: import_prop_types44.default.string,
+        showEditIcon: import_prop_types44.default.bool,
+        createInputProps: import_prop_types44.default.object,
+        onCreateItem: import_prop_types44.default.func,
+        onDeleteItem: import_prop_types44.default.func,
+        onReorderItem: import_prop_types44.default.func,
+        onItemEdited: import_prop_types44.default.func,
+        onItemCreated: import_prop_types44.default.func,
         /* Optional, if you choose to control selection externally */
-        selected: import_prop_types43.default.oneOfType([import_prop_types43.default.string, import_prop_types43.default.object]),
-        onSelectItem: import_prop_types43.default.func
+        selected: import_prop_types44.default.oneOfType([import_prop_types44.default.string, import_prop_types44.default.object]),
+        onSelectItem: import_prop_types44.default.func
       };
       static defaultProps = {
         items: [],
@@ -218853,6 +218901,7 @@ var init_editable_list = __esm({
       };
       constructor(props) {
         super(props);
+        this.itemsWrapperRef = import_react41.default.createRef();
         this.listId = v4_default2();
         this.state = {
           dropInsertionIndex: -1,
@@ -218900,7 +218949,7 @@ var init_editable_list = __esm({
         });
       };
       _focusSelf = () => {
-        import_react_dom17.default.findDOMNode(this).focus();
+        import_react_dom16.default.findDOMNode(this).focus();
       };
       /**
        * @private Scrolls to the dom node of the item at the provided index
@@ -218908,8 +218957,8 @@ var init_editable_list = __esm({
        */
       _scrollTo = (idx) => {
         if (!idx) return;
-        const list = this.refs.itemsWrapper;
-        const nodes = import_react_dom17.default.findDOMNode(list).querySelectorAll(".list-item");
+        const list = this.itemsWrapperRef?.current;
+        const nodes = import_react_dom16.default.findDOMNode(list).querySelectorAll(".list-item");
         list.scrollTo(nodes[idx]);
       };
       // Handlers
@@ -219003,7 +219052,7 @@ var init_editable_list = __esm({
         event2.dataTransfer.effectAllowed = "move";
       };
       _onDragOver = (event2) => {
-        const wrapperNode = import_react_dom17.default.findDOMNode(this.refs.itemsWrapper);
+        const wrapperNode = import_react_dom16.default.findDOMNode(this.itemsWrapperRef?.current);
         const originListType = event2.dataTransfer.types.find(
           (t) => t.startsWith("editablelist-listid:")
         );
@@ -219050,7 +219099,7 @@ var init_editable_list = __esm({
         const onInputBlur = handlers.onInputBlur || this._onEditInputBlur;
         const onInputFocus = handlers.onInputFocus || this._onEditInputFocus;
         const onInputKeyDown = handlers.onInputKeyDown || this._onEditInputKeyDown;
-        return /* @__PURE__ */ import_react40.default.createElement(
+        return /* @__PURE__ */ import_react41.default.createElement(
           "input",
           {
             type: "text",
@@ -219074,14 +219123,14 @@ var init_editable_list = __esm({
           onBlur: this._onCreateInputBlur,
           onKeyDown: this._onCreateInputKeyDown
         });
-        return /* @__PURE__ */ import_react40.default.createElement("div", { className: "create-item-input", key: "create-item-input" }, /* @__PURE__ */ import_react40.default.createElement("input", { ...props }));
+        return /* @__PURE__ */ import_react41.default.createElement("div", { className: "create-item-input", key: "create-item-input" }, /* @__PURE__ */ import_react41.default.createElement("input", { ...props }));
       };
       // handlers object for testing
       _renderItem = (item, idx, { editingIndex } = this.state, handlers = {}) => {
         const onClick = handlers.onClick || this._onItemClick;
         const onEdit = handlers.onEdit || this._onItemEdit;
         let itemContent = this.props.itemContent(item);
-        const itemIsEditable = !import_react40.default.isValidElement(itemContent);
+        const itemIsEditable = !import_react41.default.isValidElement(itemContent);
         const classes = (0, import_classnames11.default)({
           "list-item": true,
           selected: item === this._getSelectedItem(),
@@ -219092,7 +219141,7 @@ var init_editable_list = __esm({
         if (editingIndex === idx && itemIsEditable) {
           itemContent = this._renderEditInput(item, itemContent, idx, handlers);
         }
-        return /* @__PURE__ */ import_react40.default.createElement(
+        return /* @__PURE__ */ import_react41.default.createElement(
           "div",
           {
             className: classes,
@@ -219104,7 +219153,7 @@ var init_editable_list = __esm({
             onDoubleClick: index_default_default.partial(onEdit, index_default_default, item, idx)
           },
           itemContent,
-          /* @__PURE__ */ import_react40.default.createElement(
+          /* @__PURE__ */ import_react41.default.createElement(
             retina_img_default,
             {
               className: "edit-icon",
@@ -219121,10 +219170,10 @@ var init_editable_list = __esm({
           "btn-editable-list": true,
           "btn-disabled": !this._getSelectedItem()
         });
-        return /* @__PURE__ */ import_react40.default.createElement("div", { className: "buttons-wrapper" }, /* @__PURE__ */ import_react40.default.createElement("div", { className: "btn-editable-list", onClick: this._onCreateItem }, /* @__PURE__ */ import_react40.default.createElement("span", null, "+")), /* @__PURE__ */ import_react40.default.createElement("div", { className: deleteClasses, onClick: this._onDeleteItem }, /* @__PURE__ */ import_react40.default.createElement("span", null, "\u2014")));
+        return /* @__PURE__ */ import_react41.default.createElement("div", { className: "buttons-wrapper" }, /* @__PURE__ */ import_react41.default.createElement("div", { className: "btn-editable-list", onClick: this._onCreateItem }, /* @__PURE__ */ import_react41.default.createElement("span", null, "+")), /* @__PURE__ */ import_react41.default.createElement("div", { className: deleteClasses, onClick: this._onDeleteItem }, /* @__PURE__ */ import_react41.default.createElement("span", null, "\u2014")));
       };
       _renderDropInsertion = () => {
-        return /* @__PURE__ */ import_react40.default.createElement("div", { className: "insertion-point" }, /* @__PURE__ */ import_react40.default.createElement("div", null));
+        return /* @__PURE__ */ import_react41.default.createElement("div", { className: "insertion-point" }, /* @__PURE__ */ import_react41.default.createElement("div", null));
       };
       render() {
         let items = this.props.items.map(
@@ -219140,18 +219189,18 @@ var init_editable_list = __esm({
             this._renderDropInsertion()
           );
         }
-        return /* @__PURE__ */ import_react40.default.createElement(
+        return /* @__PURE__ */ import_react41.default.createElement(
           KeyCommandsRegion,
           {
             tabIndex: "0",
             localHandlers: this._listKeymapHandlers(),
             className: `nylas-editable-list ${this.props.className}`
           },
-          /* @__PURE__ */ import_react40.default.createElement(
+          /* @__PURE__ */ import_react41.default.createElement(
             import_scroll_region2.default,
             {
               className: "items-wrapper",
-              ref: "itemsWrapper",
+              ref: this.itemsWrapperRef,
               onDragOver: this._onDragOver,
               onDragLeave: this._onDragLeave,
               onDrop: this._onDrop
@@ -219171,16 +219220,16 @@ var outline_view_item_exports = {};
 __export(outline_view_item_exports, {
   default: () => outline_view_item_default
 });
-var import_node_module16, import_classnames12, import_react41, import_prop_types44, import_react_dom18, import_disclosure_triangle, import_meta17, nodeRequire17, CounterStyles, OutlineViewItem, outline_view_item_default;
+var import_node_module16, import_classnames12, import_react42, import_prop_types45, import_react_dom17, import_disclosure_triangle, import_meta17, nodeRequire17, CounterStyles, OutlineViewItem, outline_view_item_default;
 var init_outline_view_item = __esm({
   "src/components/outline-view-item.jsx"() {
     import_node_module16 = require("module");
     init_index_all();
     init_nylas_exports();
     import_classnames12 = __toESM(require_classnames());
-    import_react41 = __toESM(require_react());
-    import_prop_types44 = __toESM(require_prop_types());
-    import_react_dom18 = __toESM(require_react_dom());
+    import_react42 = __toESM(require_react());
+    import_prop_types45 = __toESM(require_prop_types());
+    import_react_dom17 = __toESM(require_react_dom());
     import_disclosure_triangle = __toESM(require_disclosure_triangle());
     init_drop_zone();
     init_retina_img();
@@ -219190,7 +219239,7 @@ var init_outline_view_item = __esm({
       Default: "def",
       Alt: "alt"
     };
-    OutlineViewItem = class _OutlineViewItem extends import_react41.Component {
+    OutlineViewItem = class _OutlineViewItem extends import_react42.Component {
       static displayName = "OutlineView";
       /*
        * If provided, this function will be called when receiving a drop. It must
@@ -219238,25 +219287,25 @@ var init_outline_view_item = __esm({
        * @param {string} value - The new value
        */
       static propTypes = {
-        item: import_prop_types44.default.shape({
-          className: import_prop_types44.default.string,
-          id: import_prop_types44.default.string.isRequired,
-          children: import_prop_types44.default.array.isRequired,
-          name: import_prop_types44.default.string.isRequired,
-          iconName: import_prop_types44.default.string.isRequired,
-          count: import_prop_types44.default.number,
-          counterStyle: import_prop_types44.default.string,
-          inputPlaceholder: import_prop_types44.default.string,
-          collapsed: import_prop_types44.default.bool,
-          editing: import_prop_types44.default.bool,
-          selected: import_prop_types44.default.bool,
-          shouldAcceptDrop: import_prop_types44.default.func,
-          onCollapseToggled: import_prop_types44.default.func,
-          onInputCleared: import_prop_types44.default.func,
-          onDrop: import_prop_types44.default.func,
-          onSelect: import_prop_types44.default.func,
-          onDelete: import_prop_types44.default.func,
-          onEdited: import_prop_types44.default.func
+        item: import_prop_types45.default.shape({
+          className: import_prop_types45.default.string,
+          id: import_prop_types45.default.string.isRequired,
+          children: import_prop_types45.default.array.isRequired,
+          name: import_prop_types45.default.string.isRequired,
+          iconName: import_prop_types45.default.string.isRequired,
+          count: import_prop_types45.default.number,
+          counterStyle: import_prop_types45.default.string,
+          inputPlaceholder: import_prop_types45.default.string,
+          collapsed: import_prop_types45.default.bool,
+          editing: import_prop_types45.default.bool,
+          selected: import_prop_types45.default.bool,
+          shouldAcceptDrop: import_prop_types45.default.func,
+          onCollapseToggled: import_prop_types45.default.func,
+          onInputCleared: import_prop_types45.default.func,
+          onDrop: import_prop_types45.default.func,
+          onSelect: import_prop_types45.default.func,
+          onDelete: import_prop_types45.default.func,
+          onEdited: import_prop_types45.default.func
         }).isRequired
       };
       static CounterStyles = CounterStyles;
@@ -219270,7 +219319,7 @@ var init_outline_view_item = __esm({
       }
       componentDidMount() {
         if (this._shouldShowContextMenu()) {
-          import_react_dom18.default.findDOMNode(this).addEventListener(
+          import_react_dom17.default.findDOMNode(this).addEventListener(
             "contextmenu",
             this._onShowContextMenu
           );
@@ -219282,12 +219331,12 @@ var init_outline_view_item = __esm({
         }
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       componentWillUnmount() {
         clearTimeout(this._expandTimeout);
         if (this._shouldShowContextMenu()) {
-          import_react_dom18.default.findDOMNode(this).removeEventListener(
+          import_react_dom17.default.findDOMNode(this).removeEventListener(
             "contextmenu",
             this._onShowContextMenu
           );
@@ -219478,16 +219527,16 @@ var outline_view_exports = {};
 __export(outline_view_exports, {
   default: () => outline_view_default
 });
-var import_react42, import_prop_types45, OutlineView, outline_view_default;
+var import_react43, import_prop_types46, OutlineView, outline_view_default;
 var init_outline_view = __esm({
   "src/components/outline-view.jsx"() {
     init_nylas_exports();
-    import_react42 = __toESM(require_react());
-    import_prop_types45 = __toESM(require_prop_types());
+    import_react43 = __toESM(require_react());
+    import_prop_types46 = __toESM(require_prop_types());
     init_drop_zone();
     init_retina_img();
     init_outline_view_item();
-    OutlineView = class extends import_react42.Component {
+    OutlineView = class extends import_react43.Component {
       static displayName = "OutlineView";
       /*
        * If provided, this function will be called when an item has been created.
@@ -219501,12 +219550,12 @@ var init_outline_view = __esm({
        * @param {object} props - The entire props object for this OutlineView
        */
       static propTypes = {
-        title: import_prop_types45.default.string,
-        iconName: import_prop_types45.default.string,
-        items: import_prop_types45.default.array,
-        collapsed: import_prop_types45.default.bool,
-        onItemCreated: import_prop_types45.default.func,
-        onCollapseToggled: import_prop_types45.default.func
+        title: import_prop_types46.default.string,
+        iconName: import_prop_types46.default.string,
+        items: import_prop_types46.default.array,
+        collapsed: import_prop_types46.default.bool,
+        onItemCreated: import_prop_types46.default.func,
+        onCollapseToggled: import_prop_types46.default.func
       };
       static defaultProps = {
         title: "",
@@ -219516,7 +219565,7 @@ var init_outline_view = __esm({
         showCreateInput: false
       };
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils13.isEqualReact(nextProps, this.props) || !Utils13.isEqualReact(nextState, this.state);
       }
       componentWillUnmount() {
         clearTimeout(this._expandTimeout);
@@ -219624,24 +219673,24 @@ var date_picker_exports = {};
 __export(date_picker_exports, {
   default: () => DatePicker
 });
-var import_react43, import_prop_types46, import_moment8, import_classnames13, DatePicker;
+var import_react44, import_prop_types47, import_moment8, import_classnames13, DatePicker;
 var init_date_picker = __esm({
   "src/components/date-picker.jsx"() {
-    import_react43 = __toESM(require_react());
-    import_prop_types46 = __toESM(require_prop_types());
+    import_react44 = __toESM(require_react());
+    import_prop_types47 = __toESM(require_prop_types());
     import_moment8 = __toESM(require_moment());
     import_classnames13 = __toESM(require_classnames());
     init_nylas_exports();
     init_nylas_component_kit();
-    DatePicker = class extends import_react43.default.Component {
+    DatePicker = class extends import_react44.default.Component {
       static displayName = "DatePicker";
       static propTypes = {
-        value: import_prop_types46.default.number,
-        onChange: import_prop_types46.default.func,
-        dateFormat: import_prop_types46.default.string
+        value: import_prop_types47.default.number,
+        onChange: import_prop_types47.default.func,
+        dateFormat: import_prop_types47.default.string
       };
       static contextTypes = {
-        parentTabGroup: import_prop_types46.default.object
+        parentTabGroup: import_prop_types47.default.object
       };
       static defaultProps = {
         dateFormat: null,
@@ -219692,7 +219741,7 @@ var init_date_picker = __esm({
       };
       _renderMiniMonthView() {
         if (this.state.focused) {
-          return /* @__PURE__ */ import_react43.default.createElement("div", { className: "mini-month-view-wrap" }, /* @__PURE__ */ import_react43.default.createElement(void 0, { onChange: this._onSelectDay, value: this.value() }));
+          return /* @__PURE__ */ import_react44.default.createElement("div", { className: "mini-month-view-wrap" }, /* @__PURE__ */ import_react44.default.createElement(void 0, { onChange: this._onSelectDay, value: this.value() }));
         }
         return false;
       }
@@ -219706,7 +219755,7 @@ var init_date_picker = __esm({
         if (val) {
           dayTxt = this.value().format(DateUtils.DATE_FORMAT_llll_NO_TIME);
         }
-        return /* @__PURE__ */ import_react43.default.createElement(
+        return /* @__PURE__ */ import_react44.default.createElement(
           "div",
           {
             className: "date-picker",
@@ -219714,7 +219763,7 @@ var init_date_picker = __esm({
             onFocus: this._onFocus,
             onBlur: this._onBlur
           },
-          /* @__PURE__ */ import_react43.default.createElement("div", { className }, dayTxt),
+          /* @__PURE__ */ import_react44.default.createElement("div", { className }, dayTxt),
           this._renderMiniMonthView()
         );
       }
@@ -219777,29 +219826,29 @@ var time_picker_exports = {};
 __export(time_picker_exports, {
   default: () => TimePicker
 });
-var import_node_module17, import_react44, import_prop_types47, import_react_dom19, import_moment9, import_classnames14, import_meta18, nodeRequire18, INTERVAL, TimePicker;
+var import_node_module17, import_react45, import_prop_types48, import_react_dom18, import_moment9, import_classnames14, import_meta18, nodeRequire18, INTERVAL, TimePicker;
 var init_time_picker = __esm({
   "src/components/time-picker.jsx"() {
     import_node_module17 = require("module");
-    import_react44 = __toESM(require_react());
-    import_prop_types47 = __toESM(require_prop_types());
-    import_react_dom19 = __toESM(require_react_dom());
+    import_react45 = __toESM(require_react());
+    import_prop_types48 = __toESM(require_prop_types());
+    import_react_dom18 = __toESM(require_react_dom());
     import_moment9 = __toESM(require_moment());
     import_classnames14 = __toESM(require_classnames());
     import_meta18 = {};
     nodeRequire18 = typeof import_meta18.url === "string" && import_meta18.url.startsWith("file:") ? (0, import_node_module17.createRequire)(import_meta18.url) : require;
     require_moment_round();
     INTERVAL = [30, "minutes"];
-    TimePicker = class extends import_react44.default.Component {
+    TimePicker = class extends import_react45.default.Component {
       static displayName = "TimePicker";
       static propTypes = {
-        value: import_prop_types47.default.number,
-        onChange: import_prop_types47.default.func,
-        relativeTo: import_prop_types47.default.number
+        value: import_prop_types48.default.number,
+        onChange: import_prop_types48.default.func,
+        relativeTo: import_prop_types48.default.number
         // TODO For `renderTimeOptions`
       };
       static contextTypes = {
-        parentTabGroup: import_prop_types47.default.object
+        parentTabGroup: import_prop_types48.default.object
       };
       static defaultProps = {
         value: (0, import_moment9.default)().valueOf(),
@@ -219808,6 +219857,7 @@ var init_time_picker = __esm({
       };
       constructor(props) {
         super(props);
+        this.inputRef = import_react45.default.createRef();
         this.state = {
           focused: false,
           rawText: this._valToTimeString(props.value)
@@ -219855,7 +219905,7 @@ var init_time_picker = __esm({
       _onFocus = () => {
         this.setState({ focused: true });
         this._gotoScrollStartOnUpdate = true;
-        const el = import_react_dom19.default.findDOMNode(this.refs.input);
+        const el = this.inputRef.current;
         el.setSelectionRange(0, el.value.length);
       };
       _onBlur = (event2) => {
@@ -219894,7 +219944,7 @@ var init_time_picker = __esm({
       }
       _fixTimeOptionScroll() {
         this._gotoScrollStartOnUpdate = false;
-        const el = import_react_dom19.default.findDOMNode(this);
+        const el = import_react_dom18.default.findDOMNode(this);
         const scrollTo = el.querySelector(".scroll-start");
         const scrollWrap = el.querySelector(".time-options");
         if (scrollTo && scrollWrap) {
@@ -219932,10 +219982,10 @@ var init_time_picker = __esm({
           });
           let relTxt = false;
           if (this.props.relativeTo) {
-            relTxt = /* @__PURE__ */ import_react44.default.createElement("span", { className: "rel-text" }, `(${timeIter.diff(relStart, "hours", true)}hr)`);
+            relTxt = /* @__PURE__ */ import_react45.default.createElement("span", { className: "rel-text" }, `(${timeIter.diff(relStart, "hours", true)}hr)`);
           }
           opts.push(
-            /* @__PURE__ */ import_react44.default.createElement(
+            /* @__PURE__ */ import_react45.default.createElement(
               "div",
               {
                 className: className2,
@@ -219952,7 +220002,7 @@ var init_time_picker = __esm({
           "time-options": true,
           "relative-to": this.props.relativeTo
         });
-        return /* @__PURE__ */ import_react44.default.createElement("div", { className, tabIndex: -1 }, opts);
+        return /* @__PURE__ */ import_react45.default.createElement("div", { className, tabIndex: -1 }, opts);
       }
       render() {
         const className = (0, import_classnames14.default)({
@@ -219960,12 +220010,12 @@ var init_time_picker = __esm({
           "no-select-end": true,
           invalid: !(0, import_moment9.default)(this.state.rawText, "h:ma").isValid()
         });
-        return /* @__PURE__ */ import_react44.default.createElement("div", { className: "time-picker-wrap" }, /* @__PURE__ */ import_react44.default.createElement(
+        return /* @__PURE__ */ import_react45.default.createElement("div", { className: "time-picker-wrap" }, /* @__PURE__ */ import_react45.default.createElement(
           "input",
           {
             className,
             type: "text",
-            ref: "input",
+            ref: this.inputRef,
             value: this.state.rawText,
             onChange: this._onRawTextChange,
             onKeyDown: this._onKeyDown,
@@ -220673,21 +220723,21 @@ function getRange({ total, itemHeight, containerHeight, scrollTop = 0 } = {}) {
   );
   return { start, end };
 }
-var import_react45, import_prop_types48, import_react_dom20, MIN_RANGE_SIZE, LazyRenderedList, lazy_rendered_list_default;
+var import_react46, import_prop_types49, import_react_dom19, MIN_RANGE_SIZE, LazyRenderedList, lazy_rendered_list_default;
 var init_lazy_rendered_list = __esm({
   "src/components/lazy-rendered-list.jsx"() {
-    import_react45 = __toESM(require_react());
-    import_prop_types48 = __toESM(require_prop_types());
-    import_react_dom20 = __toESM(require_react_dom());
+    import_react46 = __toESM(require_react());
+    import_prop_types49 = __toESM(require_prop_types());
+    import_react_dom19 = __toESM(require_react_dom());
     MIN_RANGE_SIZE = 2;
-    LazyRenderedList = class extends import_react45.Component {
+    LazyRenderedList = class extends import_react46.Component {
       static propTypes = {
-        items: import_prop_types48.default.array,
-        itemHeight: import_prop_types48.default.number,
-        containerHeight: import_prop_types48.default.number,
-        BufferTag: import_prop_types48.default.string,
-        ItemRenderer: import_prop_types48.default.oneOfType([import_prop_types48.default.func, import_prop_types48.default.string]),
-        RootRenderer: import_prop_types48.default.oneOfType([import_prop_types48.default.func, import_prop_types48.default.string])
+        items: import_prop_types49.default.array,
+        itemHeight: import_prop_types49.default.number,
+        containerHeight: import_prop_types49.default.number,
+        BufferTag: import_prop_types49.default.string,
+        ItemRenderer: import_prop_types49.default.oneOfType([import_prop_types49.default.func, import_prop_types49.default.string]),
+        RootRenderer: import_prop_types49.default.oneOfType([import_prop_types49.default.func, import_prop_types49.default.string])
       };
       static defaultProps = {
         items: [],
@@ -220714,7 +220764,7 @@ var init_lazy_rendered_list = __esm({
         });
       }
       updateRangeState(props) {
-        const { scrollTop } = (0, import_react_dom20.findDOMNode)(this);
+        const { scrollTop } = (0, import_react_dom19.findDOMNode)(this);
         this.setState(this.getRangeState({ ...props, scrollTop }));
       }
       renderItems() {
@@ -221030,34 +221080,34 @@ function TableCell(props) {
     children
   );
 }
-var import_classnames15, import_react46, import_prop_types49, import_pick_react_known_prop, RendererType, IndexType, TablePropTypes, TableRow, Table;
+var import_classnames15, import_react47, import_prop_types50, import_pick_react_known_prop, RendererType, IndexType, TablePropTypes, TableRow, Table;
 var init_table = __esm({
   "src/components/table/table.jsx"() {
     import_classnames15 = __toESM(require_classnames());
-    import_react46 = __toESM(require_react());
-    import_prop_types49 = __toESM(require_prop_types());
+    import_react47 = __toESM(require_react());
+    import_prop_types50 = __toESM(require_prop_types());
     import_pick_react_known_prop = __toESM(require_dist4());
     init_lazy_rendered_list();
     init_table_data_source();
-    RendererType = import_prop_types49.default.oneOfType([import_prop_types49.default.func, import_prop_types49.default.string]);
-    IndexType = import_prop_types49.default.oneOfType([import_prop_types49.default.number, import_prop_types49.default.string]);
+    RendererType = import_prop_types50.default.oneOfType([import_prop_types50.default.func, import_prop_types50.default.string]);
+    IndexType = import_prop_types50.default.oneOfType([import_prop_types50.default.number, import_prop_types50.default.string]);
     TablePropTypes = {
       idx: IndexType,
       renderer: RendererType,
-      tableDataSource: import_prop_types49.default.instanceOf(TableDataSource)
+      tableDataSource: import_prop_types50.default.instanceOf(TableDataSource)
     };
     TableCell.propTypes = {
-      isHeader: import_prop_types49.default.bool,
-      className: import_prop_types49.default.string
+      isHeader: import_prop_types50.default.bool,
+      className: import_prop_types50.default.string
     };
-    TableRow = class extends import_react46.Component {
+    TableRow = class extends import_react47.Component {
       static propTypes = {
-        className: import_prop_types49.default.string,
-        isHeader: import_prop_types49.default.bool,
-        displayNumbers: import_prop_types49.default.bool,
+        className: import_prop_types50.default.string,
+        isHeader: import_prop_types50.default.bool,
+        displayNumbers: import_prop_types50.default.bool,
         tableDataSource: TablePropTypes.tableDataSource.isRequired,
         rowIdx: TablePropTypes.idx,
-        extraProps: import_prop_types49.default.object,
+        extraProps: import_prop_types50.default.object,
         CellRenderer: TablePropTypes.renderer
       };
       static defaultProps = {
@@ -221087,16 +221137,16 @@ var init_table = __esm({
         }));
       }
     };
-    Table = class extends import_react46.Component {
+    Table = class extends import_react47.Component {
       static displayName = "Table";
       static propTypes = {
-        className: import_prop_types49.default.string,
-        displayHeader: import_prop_types49.default.bool,
-        displayNumbers: import_prop_types49.default.bool,
-        rowHeight: import_prop_types49.default.number,
-        bodyHeight: import_prop_types49.default.number,
+        className: import_prop_types50.default.string,
+        displayHeader: import_prop_types50.default.bool,
+        displayNumbers: import_prop_types50.default.bool,
+        rowHeight: import_prop_types50.default.number,
+        bodyHeight: import_prop_types50.default.number,
         tableDataSource: TablePropTypes.tableDataSource.isRequired,
-        extraProps: import_prop_types49.default.object,
+        extraProps: import_prop_types50.default.object,
         RowRenderer: TablePropTypes.renderer,
         CellRenderer: TablePropTypes.renderer
       };
@@ -221275,26 +221325,26 @@ __export(selectable_table_exports, {
   SelectableTableRow: () => SelectableTableRow,
   default: () => selectable_table_default
 });
-var import_react47, import_prop_types50, import_react_dom21, import_classnames16, SelectableTableCell, SelectableTableRow, SelectableTable, selectable_table_default;
+var import_react48, import_prop_types51, import_react_dom20, import_classnames16, SelectableTableCell, SelectableTableRow, SelectableTable, selectable_table_default;
 var init_selectable_table = __esm({
   "src/components/selectable-table.jsx"() {
     init_index_all();
-    import_react47 = __toESM(require_react());
-    import_prop_types50 = __toESM(require_prop_types());
-    import_react_dom21 = __toESM(require_react_dom());
+    import_react48 = __toESM(require_react());
+    import_prop_types51 = __toESM(require_prop_types());
+    import_react_dom20 = __toESM(require_react_dom());
     import_classnames16 = __toESM(require_classnames());
     init_compose2();
     init_auto_focuses();
     init_listens_to_movement_keys();
     init_table();
-    SelectableTableCell = class extends import_react47.Component {
+    SelectableTableCell = class extends import_react48.Component {
       static propTypes = {
-        className: import_prop_types50.default.string,
+        className: import_prop_types51.default.string,
         tableDataSource: Table.propTypes.tableDataSource,
-        rowIdx: import_prop_types50.default.oneOfType([import_prop_types50.default.number, import_prop_types50.default.string]),
-        colIdx: import_prop_types50.default.oneOfType([import_prop_types50.default.number, import_prop_types50.default.string]),
-        selection: import_prop_types50.default.object,
-        onSetSelection: import_prop_types50.default.func.isRequired
+        rowIdx: import_prop_types51.default.oneOfType([import_prop_types51.default.number, import_prop_types51.default.string]),
+        colIdx: import_prop_types51.default.oneOfType([import_prop_types51.default.number, import_prop_types51.default.string]),
+        selection: import_prop_types51.default.object,
+        onSetSelection: import_prop_types51.default.func.isRequired
       };
       static defaultProps = {
         className: ""
@@ -221345,11 +221395,11 @@ var init_selectable_table = __esm({
         );
       }
     };
-    SelectableTableRow = class extends import_react47.Component {
+    SelectableTableRow = class extends import_react48.Component {
       static propTypes = {
-        className: import_prop_types50.default.string,
+        className: import_prop_types51.default.string,
         tableDataSource: Table.propTypes.tableDataSource,
-        selection: import_prop_types50.default.object,
+        selection: import_prop_types51.default.object,
         rowIdx: TableRow.propTypes.rowIdx
       };
       static defaultProps = {
@@ -221363,7 +221413,7 @@ var init_selectable_table = __esm({
       }
       componentDidUpdate() {
         if (this.isSelected(this.props)) {
-          import_react_dom21.default.findDOMNode(this).scrollIntoViewIfNeeded(false);
+          import_react_dom20.default.findDOMNode(this).scrollIntoViewIfNeeded(false);
         }
       }
       isSelected({ selection, rowIdx }) {
@@ -221378,19 +221428,19 @@ var init_selectable_table = __esm({
         return /* @__PURE__ */ React.createElement(TableRow, { ...this.props, className: classes });
       }
     };
-    SelectableTable = class extends import_react47.Component {
+    SelectableTable = class extends import_react48.Component {
       static displayName = "SelectableTable";
       static propTypes = {
         tableDataSource: Table.propTypes.tableDataSource,
-        extraProps: import_prop_types50.default.object,
+        extraProps: import_prop_types51.default.object,
         RowRenderer: Table.propTypes.RowRenderer,
         CellRenderer: Table.propTypes.CellRenderer,
-        selection: import_prop_types50.default.shape({
-          rowIdx: import_prop_types50.default.number,
-          colIdx: import_prop_types50.default.number
+        selection: import_prop_types51.default.shape({
+          rowIdx: import_prop_types51.default.number,
+          colIdx: import_prop_types51.default.number
         }).isRequired,
-        onSetSelection: import_prop_types50.default.func.isRequired,
-        onShiftSelection: import_prop_types50.default.func.isRequired
+        onSetSelection: import_prop_types51.default.func.isRequired,
+        onShiftSelection: import_prop_types51.default.func.isRequired
       };
       static defaultProps = {
         extraProps: {},
@@ -221517,25 +221567,30 @@ function EditableTable(props) {
     }
   ))));
 }
-var import_react48, import_prop_types51, import_pick_react_known_prop2, import_react_dom22, EditableTableCell, editable_table_default;
+var import_react49, import_prop_types52, import_pick_react_known_prop2, import_react_dom21, EditableTableCell, editable_table_default;
 var init_editable_table = __esm({
   "src/components/editable-table.jsx"() {
-    import_react48 = __toESM(require_react());
-    import_prop_types51 = __toESM(require_prop_types());
+    import_react49 = __toESM(require_react());
+    import_prop_types52 = __toESM(require_prop_types());
     import_pick_react_known_prop2 = __toESM(require_dist4());
-    import_react_dom22 = __toESM(require_react_dom());
+    import_react_dom21 = __toESM(require_react_dom());
     init_retina_img();
     init_selectable_table();
-    EditableTableCell = class extends import_react48.Component {
+    EditableTableCell = class extends import_react49.Component {
+      constructor(props) {
+        super(props);
+        this.cellRef = React.createRef();
+        this.inputContainerRef = React.createRef();
+      }
       static propTypes = {
         tableDataSource: SelectableTableCell.propTypes.tableDataSource,
         rowIdx: SelectableTableCell.propTypes.colIdx,
         colIdx: SelectableTableCell.propTypes.colIdx,
-        isHeader: import_prop_types51.default.bool,
-        inputProps: import_prop_types51.default.object,
+        isHeader: import_prop_types52.default.bool,
+        inputProps: import_prop_types52.default.object,
         InputRenderer: selectable_table_default.propTypes.RowRenderer,
-        onAddRow: import_prop_types51.default.func,
-        onCellEdited: import_prop_types51.default.func.isRequired
+        onAddRow: import_prop_types52.default.func,
+        onCellEdited: import_prop_types52.default.func.isRequired
       };
       static defaultProps = {
         inputProps: {},
@@ -221543,12 +221598,12 @@ var init_editable_table = __esm({
       };
       componentDidMount() {
         if (this.shouldFocusInput()) {
-          import_react_dom22.default.findDOMNode(this.refs.inputContainer).querySelector("input").focus();
+          import_react_dom21.default.findDOMNode(this.inputContainerRef?.current).querySelector("input").focus();
         }
       }
       componentDidUpdate() {
         if (this.shouldFocusInput()) {
-          import_react_dom22.default.findDOMNode(this.refs.inputContainer).querySelector("input").focus();
+          import_react_dom21.default.findDOMNode(this.inputContainerRef?.current).querySelector("input").focus();
         }
       }
       onInputBlur = (event2) => {
@@ -221565,17 +221620,17 @@ var init_editable_table = __esm({
         const { key } = event2;
         const { onAddRow } = this.props;
         if (["Enter", "Return"].includes(key)) {
-          if (this.refs.cell.isInLastRow()) {
+          if (this.cellRef?.current.isInLastRow()) {
             event2.stopPropagation();
             onAddRow();
           }
         } else if (key === "Escape") {
           event2.stopPropagation();
-          import_react_dom22.default.findDOMNode(this.refs.inputContainer).focus();
+          import_react_dom21.default.findDOMNode(this.inputContainerRef?.current).focus();
         }
       };
       shouldFocusInput() {
-        return this.refs.cell.isSelectedUsingKey("Tab") || this.refs.cell.isSelectedUsingKey("Enter") || this.refs.cell.isSelectedUsingKey("Return");
+        return this.cellRef?.current.isSelectedUsingKey("Tab") || this.cellRef?.current.isSelectedUsingKey("Enter") || this.cellRef?.current.isSelectedUsingKey("Return");
       }
       render() {
         const {
@@ -221587,7 +221642,7 @@ var init_editable_table = __esm({
           InputRenderer
         } = this.props;
         const cellValue = tableDataSource.cellAt({ rowIdx, colIdx });
-        return /* @__PURE__ */ React.createElement(SelectableTableCell, { ref: "cell", ...this.props }, /* @__PURE__ */ React.createElement("div", { ref: "inputContainer" }, /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ React.createElement(SelectableTableCell, { ref: this.cellRef, ...this.props }, /* @__PURE__ */ React.createElement("div", { ref: this.inputContainerRef }, /* @__PURE__ */ React.createElement(
           InputRenderer,
           {
             type: "text",
@@ -221606,13 +221661,13 @@ var init_editable_table = __esm({
     EditableTable.displayName = "EditableTable";
     EditableTable.propTypes = {
       tableDataSource: selectable_table_default.propTypes.tableDataSource,
-      inputProps: import_prop_types51.default.object,
-      InputRenderer: import_prop_types51.default.any,
-      onCellEdited: import_prop_types51.default.func.isRequired,
-      onAddColumn: import_prop_types51.default.func,
-      onRemoveColumn: import_prop_types51.default.func,
-      onAddRow: import_prop_types51.default.func,
-      onRemoveRow: import_prop_types51.default.func
+      inputProps: import_prop_types52.default.object,
+      InputRenderer: import_prop_types52.default.any,
+      onCellEdited: import_prop_types52.default.func.isRequired,
+      onAddColumn: import_prop_types52.default.func,
+      onRemoveColumn: import_prop_types52.default.func,
+      onAddRow: import_prop_types52.default.func,
+      onRemoveRow: import_prop_types52.default.func
     };
     editable_table_default = EditableTable;
   }
@@ -221623,19 +221678,19 @@ var toast_exports = {};
 __export(toast_exports, {
   default: () => toast_default
 });
-var import_react49, import_prop_types52, Toast, toast_default;
+var import_react50, import_prop_types53, Toast, toast_default;
 var init_toast = __esm({
   "src/components/toast.jsx"() {
-    import_react49 = __toESM(require_react());
-    import_prop_types52 = __toESM(require_prop_types());
+    import_react50 = __toESM(require_react());
+    import_prop_types53 = __toESM(require_prop_types());
     init_css_transition_group_compat();
-    Toast = class extends import_react49.Component {
+    Toast = class extends import_react50.Component {
       static displayName = "Toast";
       static propTypes = {
-        className: import_prop_types52.default.string,
-        visible: import_prop_types52.default.bool,
-        visibleDuration: import_prop_types52.default.number,
-        onDidHide: import_prop_types52.default.func
+        className: import_prop_types53.default.string,
+        visible: import_prop_types53.default.bool,
+        visibleDuration: import_prop_types53.default.number,
+        onDidHide: import_prop_types53.default.func
       };
       static defaultProps = {
         visible: false,
@@ -221732,16 +221787,16 @@ function UndoToast(props) {
     }
   ), /* @__PURE__ */ React.createElement("span", { className: "undo-action-text" }, "Undo")));
 }
-var import_prop_types53, undo_toast_default;
+var import_prop_types54, undo_toast_default;
 var init_undo_toast = __esm({
   "src/components/undo-toast.jsx"() {
-    import_prop_types53 = __toESM(require_prop_types());
+    import_prop_types54 = __toESM(require_prop_types());
     init_toast();
     init_retina_img();
     UndoToast.propTypes = {
-      className: import_prop_types53.default.string,
-      undoMessage: import_prop_types53.default.string,
-      onUndo: import_prop_types53.default.func
+      className: import_prop_types54.default.string,
+      undoMessage: import_prop_types54.default.string,
+      onUndo: import_prop_types54.default.func
     };
     undo_toast_default = UndoToast;
   }
@@ -221752,19 +221807,19 @@ var oauth_signin_page_exports = {};
 __export(oauth_signin_page_exports, {
   default: () => OAuthSignInPage
 });
-var import_node_module18, import_react50, import_prop_types54, import_electron5, import_meta19, nodeRequire19, clipboard2, OAuthSignInPage;
+var import_node_module18, import_react51, import_prop_types55, import_electron5, import_meta19, nodeRequire19, clipboard2, OAuthSignInPage;
 var init_oauth_signin_page = __esm({
   "src/components/oauth-signin-page.jsx"() {
     import_node_module18 = require("module");
-    import_react50 = __toESM(require_react());
-    import_prop_types54 = __toESM(require_prop_types());
+    import_react51 = __toESM(require_react());
+    import_prop_types55 = __toESM(require_prop_types());
     import_electron5 = require("electron");
     init_nylas_exports();
     init_nylas_component_kit();
     import_meta19 = {};
     nodeRequire19 = typeof import_meta19.url === "string" && import_meta19.url.startsWith("file:") ? (0, import_node_module18.createRequire)(import_meta19.url) : require;
     clipboard2 = nodeRequire19("electron").clipboard;
-    OAuthSignInPage = class extends import_react50.default.Component {
+    OAuthSignInPage = class extends import_react51.default.Component {
       static displayName = "OAuthSignInPage";
       static propTypes = {
         /**
@@ -221772,7 +221827,7 @@ var init_oauth_signin_page = __esm({
          * the native provider's website. We pass along a key and a redirect
          * url to a Nylas-owned server
          */
-        providerAuthPageUrl: import_prop_types54.default.string,
+        providerAuthPageUrl: import_prop_types55.default.string,
         /**
          * Step 2: Poll a Nylas server with this function looking for the key.
          * Once users complete the auth successfully, Nylas servers will get
@@ -221780,7 +221835,7 @@ var init_oauth_signin_page = __esm({
          * since we don't know how long it'll take users to log in on their
          * provider's website.
          */
-        tokenRequestPollFn: import_prop_types54.default.func,
+        tokenRequestPollFn: import_prop_types55.default.func,
         /**
          * Once we have the token, we can use that to retrieve the full
          * account credentials or establish a direct connection ourselves.
@@ -221790,17 +221845,17 @@ var init_oauth_signin_page = __esm({
          * IMAP connection directly that may have its own set of failure
          * cases.
          */
-        accountFromTokenFn: import_prop_types54.default.func,
+        accountFromTokenFn: import_prop_types55.default.func,
         /**
          * Called once we have successfully received the account data from
          * `accountFromTokenFn`
          */
-        onSuccess: import_prop_types54.default.func,
-        onTryAgain: import_prop_types54.default.func,
-        iconName: import_prop_types54.default.string,
-        sessionKey: import_prop_types54.default.string,
-        serviceName: import_prop_types54.default.string,
-        accountInfo: import_prop_types54.default.object
+        onSuccess: import_prop_types55.default.func,
+        onTryAgain: import_prop_types55.default.func,
+        iconName: import_prop_types55.default.string,
+        sessionKey: import_prop_types55.default.string,
+        serviceName: import_prop_types55.default.string,
+        accountInfo: import_prop_types55.default.object
       };
       constructor() {
         super();
@@ -221890,14 +221945,14 @@ var init_oauth_signin_page = __esm({
       _renderCertificateErrorHeader() {
         const { onTryAgain } = this.props;
         const { errorMessage } = this.state;
-        return /* @__PURE__ */ import_react50.default.createElement("div", null, /* @__PURE__ */ import_react50.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react50.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react50.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react50.default.createElement("p", { className: "message error error-message" }, "The certificate for this server is invalid. Would you like to connect to the server anyway?"), /* @__PURE__ */ import_react50.default.createElement("br", null), /* @__PURE__ */ import_react50.default.createElement("div", null, /* @__PURE__ */ import_react50.default.createElement(
+        return /* @__PURE__ */ import_react51.default.createElement("div", null, /* @__PURE__ */ import_react51.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react51.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react51.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react51.default.createElement("p", { className: "message error error-message" }, "The certificate for this server is invalid. Would you like to connect to the server anyway?"), /* @__PURE__ */ import_react51.default.createElement("br", null), /* @__PURE__ */ import_react51.default.createElement("div", null, /* @__PURE__ */ import_react51.default.createElement(
           "button",
           {
             className: "btn btn-large btn-gradient btn-add-account",
             onClick: onTryAgain
           },
           "Try again"
-        ), /* @__PURE__ */ import_react50.default.createElement(
+        ), /* @__PURE__ */ import_react51.default.createElement(
           "button",
           {
             className: "btn btn-large btn-gradient btn-add-account",
@@ -221912,23 +221967,23 @@ var init_oauth_signin_page = __esm({
         const { serviceName, onTryAgain } = this.props;
         const { authStage, isCertificateError, errorMessage } = this.state;
         if (authStage === "initial" || authStage === "polling") {
-          return /* @__PURE__ */ import_react50.default.createElement("h2", null, "Sign in with ", serviceName, " in", /* @__PURE__ */ import_react50.default.createElement("br", null), "your browser.");
+          return /* @__PURE__ */ import_react51.default.createElement("h2", null, "Sign in with ", serviceName, " in", /* @__PURE__ */ import_react51.default.createElement("br", null), "your browser.");
         } else if (authStage === "fetchingAccount") {
-          return /* @__PURE__ */ import_react50.default.createElement("h2", null, "Connecting to ", serviceName, "\u2026");
+          return /* @__PURE__ */ import_react51.default.createElement("h2", null, "Connecting to ", serviceName, "\u2026");
         } else if (authStage === "accountSuccess") {
-          return /* @__PURE__ */ import_react50.default.createElement("div", null, /* @__PURE__ */ import_react50.default.createElement("h2", null, "Successfully connected to ", serviceName, "!"), /* @__PURE__ */ import_react50.default.createElement("h3", null, "Adding your account to Nylas Mail\u2026"));
+          return /* @__PURE__ */ import_react51.default.createElement("div", null, /* @__PURE__ */ import_react51.default.createElement("h2", null, "Successfully connected to ", serviceName, "!"), /* @__PURE__ */ import_react51.default.createElement("h3", null, "Adding your account to Nylas Mail\u2026"));
         }
         if (isCertificateError) {
           return this._renderCertificateErrorHeader();
         }
-        return /* @__PURE__ */ import_react50.default.createElement("div", null, /* @__PURE__ */ import_react50.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react50.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react50.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react50.default.createElement("p", { className: "extra" }, "Please ", /* @__PURE__ */ import_react50.default.createElement("a", { onClick: onTryAgain }, "try again"), " later.")));
+        return /* @__PURE__ */ import_react51.default.createElement("div", null, /* @__PURE__ */ import_react51.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react51.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react51.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react51.default.createElement("p", { className: "extra" }, "Please ", /* @__PURE__ */ import_react51.default.createElement("a", { onClick: onTryAgain }, "try again"), " later.")));
       }
       _renderAlternative() {
         let classnames14 = "input hidden";
         if (this.state.authStage === "polling" && this.state.showAlternative) {
           classnames14 += " fadein";
         }
-        return /* @__PURE__ */ import_react50.default.createElement("div", { className: "alternative-auth" }, /* @__PURE__ */ import_react50.default.createElement("div", { className: classnames14 }, /* @__PURE__ */ import_react50.default.createElement("div", { style: { marginTop: 40 } }, "Page didn't open? Paste this URL into your browser:"), /* @__PURE__ */ import_react50.default.createElement(
+        return /* @__PURE__ */ import_react51.default.createElement("div", { className: "alternative-auth" }, /* @__PURE__ */ import_react51.default.createElement("div", { className: classnames14 }, /* @__PURE__ */ import_react51.default.createElement("div", { style: { marginTop: 40 } }, "Page didn't open? Paste this URL into your browser:"), /* @__PURE__ */ import_react51.default.createElement(
           "input",
           {
             type: "url",
@@ -221936,7 +221991,7 @@ var init_oauth_signin_page = __esm({
             value: this.props.providerAuthPageUrl,
             readOnly: true
           }
-        ), /* @__PURE__ */ import_react50.default.createElement(
+        ), /* @__PURE__ */ import_react51.default.createElement(
           "div",
           {
             className: "copy-to-clipboard",
@@ -221944,7 +221999,7 @@ var init_oauth_signin_page = __esm({
             onMouseDown: () => this.setState({ pressed: true }),
             onMouseUp: () => this.setState({ pressed: false })
           },
-          /* @__PURE__ */ import_react50.default.createElement(
+          /* @__PURE__ */ import_react51.default.createElement(
             void 0,
             {
               name: "icon-copytoclipboard.png",
@@ -221954,12 +222009,12 @@ var init_oauth_signin_page = __esm({
         )));
       }
       render() {
-        return /* @__PURE__ */ import_react50.default.createElement(
+        return /* @__PURE__ */ import_react51.default.createElement(
           "div",
           {
             className: `page account-setup ${this.props.serviceName.toLowerCase()}`
           },
-          /* @__PURE__ */ import_react50.default.createElement("div", { className: "logo-container" }, /* @__PURE__ */ import_react50.default.createElement(
+          /* @__PURE__ */ import_react51.default.createElement("div", { className: "logo-container" }, /* @__PURE__ */ import_react51.default.createElement(
             void 0,
             {
               name: this.props.iconName,
@@ -222018,38 +222073,38 @@ function AttachmentActionIcon(props) {
   };
   return /* @__PURE__ */ React.createElement("div", { className: "file-action-icon", onClick: onClickActionIcon }, /* @__PURE__ */ React.createElement(retina_img_default, { name: actionIconName, mode: retinaImgMode }));
 }
-var import_node_fs3, import_node_path9, import_classnames17, import_react51, import_prop_types55, import_react_dom23, import_pick_react_known_prop3, import_spinner2, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
+var import_node_fs3, import_node_path9, import_classnames17, import_react52, import_prop_types56, import_react_dom22, import_pick_react_known_prop3, import_spinner2, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
 var init_attachment_items = __esm({
   "src/components/attachment-items.jsx"() {
     import_node_fs3 = __toESM(require("fs"));
     import_node_path9 = __toESM(require("path"));
     import_classnames17 = __toESM(require_classnames());
-    import_react51 = __toESM(require_react());
-    import_prop_types55 = __toESM(require_prop_types());
-    import_react_dom23 = __toESM(require_react_dom());
+    import_react52 = __toESM(require_react());
+    import_prop_types56 = __toESM(require_prop_types());
+    import_react_dom22 = __toESM(require_react_dom());
     import_pick_react_known_prop3 = __toESM(require_dist4());
     init_retina_img();
     init_flexbox();
     import_spinner2 = __toESM(require_spinner());
     propTypes = {
-      className: import_prop_types55.default.string,
-      draggable: import_prop_types55.default.bool,
-      focusable: import_prop_types55.default.bool,
-      previewable: import_prop_types55.default.bool,
-      filePath: import_prop_types55.default.string,
-      contentType: import_prop_types55.default.string,
-      download: import_prop_types55.default.shape({
-        state: import_prop_types55.default.string,
-        percent: import_prop_types55.default.number
+      className: import_prop_types56.default.string,
+      draggable: import_prop_types56.default.bool,
+      focusable: import_prop_types56.default.bool,
+      previewable: import_prop_types56.default.bool,
+      filePath: import_prop_types56.default.string,
+      contentType: import_prop_types56.default.string,
+      download: import_prop_types56.default.shape({
+        state: import_prop_types56.default.string,
+        percent: import_prop_types56.default.number
       }),
-      displayName: import_prop_types55.default.string,
-      displaySize: import_prop_types55.default.string,
-      fileIconName: import_prop_types55.default.string,
-      filePreviewPath: import_prop_types55.default.string,
-      onOpenAttachment: import_prop_types55.default.func,
-      onRemoveAttachment: import_prop_types55.default.func,
-      onDownloadAttachment: import_prop_types55.default.func,
-      onAbortDownload: import_prop_types55.default.func
+      displayName: import_prop_types56.default.string,
+      displaySize: import_prop_types56.default.string,
+      fileIconName: import_prop_types56.default.string,
+      filePreviewPath: import_prop_types56.default.string,
+      onOpenAttachment: import_prop_types56.default.func,
+      onRemoveAttachment: import_prop_types56.default.func,
+      onDownloadAttachment: import_prop_types56.default.func,
+      onAbortDownload: import_prop_types56.default.func
     };
     defaultProps = {
       draggable: true
@@ -222057,12 +222112,16 @@ var init_attachment_items = __esm({
     SPACE = " ";
     ProgressBar.propTypes = propTypes;
     AttachmentActionIcon.propTypes = {
-      removeIcon: import_prop_types55.default.string,
-      downloadIcon: import_prop_types55.default.string,
-      retinaImgMode: import_prop_types55.default.string,
+      removeIcon: import_prop_types56.default.string,
+      downloadIcon: import_prop_types56.default.string,
+      retinaImgMode: import_prop_types56.default.string,
       ...propTypes
     };
-    AttachmentItem = class extends import_react51.Component {
+    AttachmentItem = class extends import_react52.Component {
+      constructor(props) {
+        super(props);
+        this.fileIconImgRef = React.createRef();
+      }
       static displayName = "AttachmentItem";
       static containerRequired = false;
       static propTypes = propTypes;
@@ -222082,7 +222141,7 @@ var init_attachment_items = __esm({
           const downloadURL = `${contentType}:${import_node_path9.default.basename(filePath)}:file://${filePath}`;
           event2.dataTransfer.setData("DownloadURL", downloadURL);
           event2.dataTransfer.setData("text/nylas-file-url", downloadURL);
-          const fileIconImg = import_react_dom23.default.findDOMNode(this.refs.fileIconImg);
+          const fileIconImg = import_react_dom22.default.findDOMNode(this.fileIconImgRef?.current);
           const rect = fileIconImg.getBoundingClientRect();
           const x3 = window.devicePixelRatio === 2 ? rect.height / 2 : rect.height;
           const y = window.devicePixelRatio === 2 ? rect.width / 2 : rect.width;
@@ -222106,7 +222165,7 @@ var init_attachment_items = __esm({
           this._previewAttachment();
         }
         if (event2.key === "Escape") {
-          const attachmentNode = import_react_dom23.default.findDOMNode(this);
+          const attachmentNode = import_react_dom22.default.findDOMNode(this);
           if (attachmentNode) {
             attachmentNode.blur();
           }
@@ -222164,10 +222223,10 @@ var init_attachment_items = __esm({
               onDragStart: this._onDragStart
             },
             /* @__PURE__ */ React.createElement(ProgressBar, { download }),
-            /* @__PURE__ */ React.createElement(Flexbox, { direction: "row", style: { alignItems: "center" } }, /* @__PURE__ */ React.createElement("div", { className: "file-info-wrap" }, /* @__PURE__ */ React.createElement(
+            /* @__PURE__ */ React.createElement(Flexbox2, { direction: "row", style: { alignItems: "center" } }, /* @__PURE__ */ React.createElement("div", { className: "file-info-wrap" }, /* @__PURE__ */ React.createElement(
               retina_img_default,
               {
-                ref: "fileIconImg",
+                ref: this.fileIconImgRef,
                 className: "file-icon",
                 fallback: "file-fallback.png",
                 mode: retina_img_default.Mode.ContentPreserve,
@@ -222194,10 +222253,10 @@ var init_attachment_items = __esm({
         );
       }
     };
-    ImageAttachmentItem = class extends import_react51.Component {
+    ImageAttachmentItem = class extends import_react52.Component {
       static displayName = "ImageAttachmentItem";
       static propTypes = {
-        imgProps: import_prop_types55.default.object,
+        imgProps: import_prop_types56.default.object,
         ...propTypes
       };
       static defaultProps = defaultProps;
@@ -222209,7 +222268,7 @@ var init_attachment_items = __esm({
         }
       };
       _onImgLoaded = () => {
-        const el = import_react_dom23.default.findDOMNode(this);
+        const el = import_react_dom22.default.findDOMNode(this);
         if (el) {
           el.classList.add("loaded");
         }
@@ -222256,14 +222315,14 @@ __export(code_snippet_exports, {
 function CodeSnippet(props) {
   return /* @__PURE__ */ React.createElement("div", { className: props.className }, props.intro, /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("textarea", { disabled: true, value: props.code }));
 }
-var import_prop_types56;
+var import_prop_types57;
 var init_code_snippet = __esm({
   "src/components/code-snippet.jsx"() {
-    import_prop_types56 = __toESM(require_prop_types());
+    import_prop_types57 = __toESM(require_prop_types());
     CodeSnippet.propTypes = {
-      intro: import_prop_types56.default.string,
-      code: import_prop_types56.default.string,
-      className: import_prop_types56.default.string
+      intro: import_prop_types57.default.string,
+      code: import_prop_types57.default.string,
+      className: import_prop_types57.default.string
     };
   }
 });
@@ -222273,18 +222332,18 @@ var dropdown_menu_exports = {};
 __export(dropdown_menu_exports, {
   default: () => DropdownMenu
 });
-var import_prop_types57, DropdownMenu;
+var import_prop_types58, DropdownMenu;
 var init_dropdown_menu = __esm({
   "src/components/dropdown-menu.jsx"() {
     init_nylas_exports();
-    import_prop_types57 = __toESM(require_prop_types());
+    import_prop_types58 = __toESM(require_prop_types());
     init_nylas_component_kit();
-    DropdownMenu = class extends React37.Component {
+    DropdownMenu = class extends React41.Component {
       static propTypes = {
-        intitialSelectionItem: import_prop_types57.default.object,
-        onSelect: import_prop_types57.default.func,
-        itemContent: import_prop_types57.default.fun,
-        headerComponents: import_prop_types57.default.element
+        intitialSelectionItem: import_prop_types58.default.object,
+        onSelect: import_prop_types58.default.func,
+        itemContent: import_prop_types58.default.fun,
+        headerComponents: import_prop_types58.default.element
       };
       constructor(props) {
         super(props);
@@ -222312,7 +222371,7 @@ var init_dropdown_menu = __esm({
         this._close();
       };
       _onBlur = (e) => {
-        const node = ReactDOM21.findDOMNode(this);
+        const node = ReactDOM20.findDOMNode(this);
         let otherNode = e.relatedTarget;
         if (otherNode) {
           while (otherNode.parentElement) {
@@ -222325,9 +222384,9 @@ var init_dropdown_menu = __esm({
         this._close();
       };
       render() {
-        let dropdown = /* @__PURE__ */ React37.createElement("span", null);
+        let dropdown = /* @__PURE__ */ React41.createElement("span", null);
         if (this.state.expanded) {
-          dropdown = /* @__PURE__ */ React37.createElement(
+          dropdown = /* @__PURE__ */ React41.createElement(
             void 0,
             {
               ...this.props,
@@ -222336,14 +222395,14 @@ var init_dropdown_menu = __esm({
             }
           );
         }
-        return /* @__PURE__ */ React37.createElement(
+        return /* @__PURE__ */ React41.createElement(
           "div",
           {
             tabIndex: "-1",
             onBlur: this._onBlur,
             style: { display: "inline-block" }
           },
-          /* @__PURE__ */ React37.createElement(
+          /* @__PURE__ */ React41.createElement(
             "div",
             {
               onClick: this._toggleExpanded,
@@ -222351,7 +222410,7 @@ var init_dropdown_menu = __esm({
             },
             this.props.itemContent(this.state.currentSelection)
           ),
-          /* @__PURE__ */ React37.createElement("div", { style: { position: "absolute", zIndex: "10" } }, dropdown)
+          /* @__PURE__ */ React41.createElement("div", { style: { position: "absolute", zIndex: "10" } }, dropdown)
         );
       }
     };
@@ -222361,12 +222420,12 @@ var init_dropdown_menu = __esm({
 // src/components/resizable-region.jsx
 var require_resizable_region = __commonJS({
   "src/components/resizable-region.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
+    var import_prop_types65 = __toESM(require_prop_types());
+    var React50 = require_react();
+    var ReactDOM26 = require_react_dom();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var {
-      Utils: Utils23,
+      Utils: Utils24,
       Actions: Actions37,
       ComponentRegistry: ComponentRegistry2,
       PriorityUICoordinator: PriorityUICoordinator2
@@ -222433,19 +222492,19 @@ var require_resizable_region = __commonJS({
         }
       }
     };
-    var ResizableRegion2 = class _ResizableRegion extends React46.Component {
+    var ResizableRegion2 = class _ResizableRegion extends React50.Component {
       static initClass() {
         _ResizableRegion.displayName = "ResizableRegion";
         _ResizableRegion.propTypes = {
-          handle: import_prop_types64.default.object.isRequired,
-          onResize: import_prop_types64.default.func,
-          initialWidth: import_prop_types64.default.number,
-          minWidth: import_prop_types64.default.number,
-          maxWidth: import_prop_types64.default.number,
-          initialHeight: import_prop_types64.default.number,
-          minHeight: import_prop_types64.default.number,
-          maxHeight: import_prop_types64.default.number,
-          style: import_prop_types64.default.object
+          handle: import_prop_types65.default.object.isRequired,
+          onResize: import_prop_types65.default.func,
+          initialWidth: import_prop_types65.default.number,
+          minWidth: import_prop_types65.default.number,
+          maxWidth: import_prop_types65.default.number,
+          initialHeight: import_prop_types65.default.number,
+          minHeight: import_prop_types65.default.number,
+          maxHeight: import_prop_types65.default.number,
+          style: import_prop_types65.default.object
         };
       }
       constructor(props) {
@@ -222496,21 +222555,21 @@ var require_resizable_region = __commonJS({
             containerStyle.flex = 1;
           }
         }
-        const otherProps = Utils23.fastOmit(
+        const otherProps = Utils24.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return React46.createElement(
+        return React50.createElement(
           "div",
           Object.assign({ style: containerStyle }, otherProps),
           this.props.children,
-          React46.createElement(
+          React50.createElement(
             "div",
             {
               className: this.props.handle.className,
               onMouseDown: this._mouseDown
             },
-            React46.createElement("div", null)
+            React50.createElement("div", null)
           )
         );
       }
@@ -222541,7 +222600,7 @@ var require_resizable_region = __commonJS({
         if (event2.button !== 0) {
           return;
         }
-        const bcr = ReactDOM27.findDOMNode(this).getBoundingClientRect();
+        const bcr = ReactDOM26.findDOMNode(this).getBoundingClientRect();
         this.setState({
           dragging: true,
           bcr
@@ -222596,11 +222655,11 @@ __export(mail_label_exports, {
   LabelColorizer: () => LabelColorizer,
   MailLabel: () => MailLabel
 });
-var import_react52, import_prop_types58, LabelColorizer, MailLabel;
+var import_react53, import_prop_types59, LabelColorizer, MailLabel;
 var init_mail_label = __esm({
   "src/components/mail-label.jsx"() {
-    import_react52 = __toESM(require_react());
-    import_prop_types58 = __toESM(require_prop_types());
+    import_react53 = __toESM(require_react());
+    import_prop_types59 = __toESM(require_prop_types());
     init_retina_img();
     LabelColorizer = {
       color(label) {
@@ -222624,10 +222683,10 @@ var init_mail_label = __esm({
         return styles;
       }
     };
-    MailLabel = class extends import_react52.default.Component {
+    MailLabel = class extends import_react53.default.Component {
       static propTypes = {
-        label: import_prop_types58.default.object.isRequired,
-        onRemove: import_prop_types58.default.func
+        label: import_prop_types59.default.object.isRequired,
+        onRemove: import_prop_types59.default.func
       };
       shouldComponentUpdate(nextProps) {
         if (nextProps.label.id === this.props.label.id) {
@@ -222644,8 +222703,8 @@ var init_mail_label = __esm({
         let x3 = null;
         if (this._removable()) {
           classname += " removable";
-          content = /* @__PURE__ */ import_react52.default.createElement("span", { className: "inner" }, content);
-          x3 = /* @__PURE__ */ import_react52.default.createElement(
+          content = /* @__PURE__ */ import_react53.default.createElement("span", { className: "inner" }, content);
+          x3 = /* @__PURE__ */ import_react53.default.createElement(
             retina_img_default,
             {
               className: "x",
@@ -222656,7 +222715,7 @@ var init_mail_label = __esm({
             }
           );
         }
-        return /* @__PURE__ */ import_react52.default.createElement(
+        return /* @__PURE__ */ import_react53.default.createElement(
           "div",
           {
             className: classname,
@@ -237163,7 +237222,7 @@ var require_task_queue = __commonJS({
     var CoffeeHelpers = require_coffee_helpers().default || require_coffee_helpers();
     var Task3 = (init_task(), __toCommonJS(task_exports)).default;
     var TaskRegistry2 = require_task_registry().default;
-    var _Utils2 = require_utils();
+    var _Utils = require_utils();
     var _Reflux = require_src();
     var Actions37 = require_actions().default;
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
@@ -237172,11 +237231,11 @@ var require_task_queue = __commonJS({
     if (!NylasEnv.isWorkWindow() && !NylasEnv.inSpecMode()) {
       module2.exports = { JSONBlobStorageKey };
     } else {
-      class TaskQueue3 {
+      class TaskQueue4 {
         static initClass() {
-          TaskQueue3.include = CoffeeHelpers.includeModule;
-          TaskQueue3.include(Publisher2);
-          TaskQueue3.include(Listener2);
+          TaskQueue4.include = CoffeeHelpers.includeModule;
+          TaskQueue4.include(Publisher2);
+          TaskQueue4.include(Listener2);
         }
         constructor() {
           this.queue = this.queue.bind(this);
@@ -237595,23 +237654,27 @@ var require_task_queue = __commonJS({
           }
         }
       }
-      TaskQueue3.initClass();
-      module2.exports = new TaskQueue3();
+      TaskQueue4.initClass();
+      module2.exports = new TaskQueue4();
       module2.exports.JSONBlobStorageKey = JSONBlobStorageKey;
     }
   }
 });
 
 // src/flux/stores/task-queue-status-store.js
-var require_task_queue_status_store = __commonJS({
-  "src/flux/stores/task-queue-status-store.js"(exports2, module2) {
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Rx9 = require_rx_lite();
-    var NylasStore26 = require_nylas_store().default || require_nylas_store();
-    var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
-    var _AccountStore = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var TaskQueue3 = require_task_queue();
-    var TaskQueueStatusStore6 = class extends NylasStore26 {
+var task_queue_status_store_exports = {};
+__export(task_queue_status_store_exports, {
+  default: () => task_queue_status_store_default
+});
+var import_rx_lite3, import_nylas_store3, import_task_queue, TaskQueueStatusStore, task_queue_status_store_default;
+var init_task_queue_status_store = __esm({
+  "src/flux/stores/task-queue-status-store.js"() {
+    init_index_all();
+    import_rx_lite3 = __toESM(require_rx_lite());
+    import_nylas_store3 = __toESM(require_nylas_store());
+    init_database_store();
+    import_task_queue = __toESM(require_task_queue());
+    TaskQueueStatusStore = class extends import_nylas_store3.default {
       constructor() {
         super();
         this.waitForPerformLocal = this.waitForPerformLocal.bind(this);
@@ -237619,11 +237682,11 @@ var require_task_queue_status_store = __commonJS({
         this._queue = [];
         this._waitingLocals = [];
         this._waitingRemotes = [];
-        const query = DatabaseStore5.findJSONBlob(TaskQueue3.JSONBlobStorageKey);
-        Rx9.Observable.fromQuery(query).subscribe((json2) => {
+        const query = database_store_default.findJSONBlob(import_task_queue.default.JSONBlobStorageKey);
+        import_rx_lite3.default.Observable.fromQuery(query).subscribe((json2) => {
           this._queue = json2 || [];
           this._waitingLocals = this._waitingLocals.filter(({ task, resolve: resolve7 }) => {
-            const queuedTask = _4.findWhere(this._queue, { id: task.id });
+            const queuedTask = index_default_default.findWhere(this._queue, { id: task.id });
             if (!queuedTask || queuedTask.queueState.localComplete) {
               resolve7(task);
               return false;
@@ -237632,7 +237695,7 @@ var require_task_queue_status_store = __commonJS({
           });
           this._waitingRemotes = this._waitingRemotes.filter(
             ({ task, resolve: resolve7 }) => {
-              const queuedTask = _4.findWhere(this._queue, { id: task.id });
+              const queuedTask = index_default_default.findWhere(this._queue, { id: task.id });
               if (!queuedTask) {
                 resolve7(task);
                 return false;
@@ -237660,15 +237723,15 @@ var require_task_queue_status_store = __commonJS({
         if (matching == null) {
           matching = {};
         }
-        if (!_4.isString(type2)) {
+        if (!index_default_default.isString(type2)) {
           type2 = type2.name;
         }
         return this._queue.filter(
-          (task) => task.constructor.name === type2 && _4.isMatch(task, matching)
+          (task) => task.constructor.name === type2 && index_default_default.isMatch(task, matching)
         );
       }
     };
-    module2.exports = new TaskQueueStatusStore6();
+    task_queue_status_store_default = new TaskQueueStatusStore();
   }
 });
 
@@ -237677,21 +237740,21 @@ var outbox_store_exports = {};
 __export(outbox_store_exports, {
   default: () => outbox_store_default
 });
-var import_nylas_store3, import_task_queue_status_store, OutboxStore, store, outbox_store_default;
+var import_nylas_store4, OutboxStore, store, outbox_store_default;
 var init_outbox_store = __esm({
   "src/flux/stores/outbox-store.js"() {
-    import_nylas_store3 = __toESM(require_nylas_store());
+    import_nylas_store4 = __toESM(require_nylas_store());
     init_send_draft_task();
-    import_task_queue_status_store = __toESM(require_task_queue_status_store());
-    OutboxStore = class extends import_nylas_store3.default {
+    init_task_queue_status_store();
+    OutboxStore = class extends import_nylas_store4.default {
       constructor() {
         super();
         this._tasks = [];
-        this.listenTo(import_task_queue_status_store.default, this._populate);
+        this.listenTo(task_queue_status_store_default, this._populate);
         this._populate();
       }
       _populate() {
-        const nextTasks = import_task_queue_status_store.default.queue().filter(
+        const nextTasks = task_queue_status_store_default.queue().filter(
           (task) => task instanceof SendDraftTask
         );
         if (this._tasks.length === 0 && nextTasks.length === 0) {
@@ -237713,7 +237776,7 @@ var init_outbox_store = __esm({
 var require_thread_counts_store = __commonJS({
   "src/flux/stores/thread-counts-store.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var NylasStore26 = require_nylas_store().default || require_nylas_store();
+    var NylasStore27 = require_nylas_store().default || require_nylas_store();
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var Thread4 = (init_thread(), __toCommonJS(thread_exports)).default;
     var ReadCountsQuery = () => "SELECT * FROM `ThreadCounts`";
@@ -237759,7 +237822,7 @@ GROUP BY \`ThreadCategory\`.\`value\``;
         }
       }
     };
-    var ThreadCountsStore2 = class _ThreadCountsStore extends NylasStore26 {
+    var ThreadCountsStore2 = class _ThreadCountsStore extends NylasStore27 {
       static initClass() {
         _ThreadCountsStore.prototype.CategoryDatabaseMutationObserver = CategoryDatabaseMutationObserver;
       }
@@ -237842,15 +237905,15 @@ var recently_read_store_exports = {};
 __export(recently_read_store_exports, {
   default: () => recently_read_store_default
 });
-var import_nylas_store4, import_actions12, RecentlyReadStore, store2, recently_read_store_default;
+var import_nylas_store5, import_actions12, RecentlyReadStore, store2, recently_read_store_default;
 var init_recently_read_store = __esm({
   "src/flux/stores/recently-read-store.js"() {
-    import_nylas_store4 = __toESM(require_nylas_store());
+    import_nylas_store5 = __toESM(require_nylas_store());
     init_change_unread_task();
     init_change_labels_task();
     init_change_folder_task();
     import_actions12 = __toESM(require_actions());
-    RecentlyReadStore = class extends import_nylas_store4.default {
+    RecentlyReadStore = class extends import_nylas_store5.default {
       constructor() {
         super();
         this.ids = [];
@@ -237982,7 +238045,7 @@ var init_unread_query_subscription = __esm({
 var require_mailbox_perspective = __commonJS({
   "src/mailbox-perspective.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils23 = require_utils();
+    var Utils24 = require_utils();
     var TaskFactory3 = (init_task_factory(), __toCommonJS(task_factory_exports)).default;
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
     var CategoryStore4 = (init_category_store(), __toCommonJS(category_store_exports));
@@ -238008,13 +238071,13 @@ var require_mailbox_perspective = __commonJS({
             if (json2.type === CategoryMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils23.registeredObjectReviver
+                Utils24.registeredObjectReviver
               );
               return _MailboxPerspective.forCategories(categories);
             } else if (json2.type === UnreadMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils23.registeredObjectReviver
+                Utils24.registeredObjectReviver
               );
               return _MailboxPerspective.forUnread(categories);
             } else if (json2.type === StarredMailboxPerspective.name) {
@@ -238331,7 +238394,7 @@ var require_mailbox_perspective = __commonJS({
         const json2 = super.toJSON(...arguments);
         json2.serializedCategories = JSON.stringify(
           this._categories,
-          Utils23.registeredObjectReplacer
+          Utils24.registeredObjectReplacer
         );
         return json2;
       }
@@ -238525,17 +238588,17 @@ var focused_perspective_store_exports = {};
 __export(focused_perspective_store_exports, {
   default: () => focused_perspective_store_default
 });
-var import_nylas_store5, import_workspace_store, import_mailbox_perspective, import_actions13, FocusedPerspectiveStore2, focused_perspective_store_default;
+var import_nylas_store6, import_workspace_store, import_mailbox_perspective, import_actions13, FocusedPerspectiveStore2, focused_perspective_store_default;
 var init_focused_perspective_store = __esm({
   "src/flux/stores/focused-perspective-store.js"() {
     init_index_all();
-    import_nylas_store5 = __toESM(require_nylas_store());
+    import_nylas_store6 = __toESM(require_nylas_store());
     init_account_store();
     import_workspace_store = __toESM(require_workspace_store());
     import_mailbox_perspective = __toESM(require_mailbox_perspective());
     init_category_store();
     import_actions13 = __toESM(require_actions());
-    FocusedPerspectiveStore2 = class extends import_nylas_store5.default {
+    FocusedPerspectiveStore2 = class extends import_nylas_store6.default {
       constructor() {
         super();
         this._current = import_mailbox_perspective.default.forNothing();
@@ -238716,14 +238779,11 @@ var init_focused_perspective_store = __esm({
 // src/flux/stores/focused-content-store.js
 var require_focused_content_store = __commonJS({
   "src/flux/stores/focused-content-store.js"(exports2, module2) {
-    init_index_all();
-    var import_reflux = __toESM(require_src());
     init_account_store();
     var import_workspace_store4 = __toESM(require_workspace_store());
     init_database_store();
     var _MailboxPerspectiveNS = __toESM(require_mailbox_perspective());
     var import_actions35 = __toESM(require_actions());
-    init_thread();
     var import_model11 = __toESM(require_model());
     var import_reflux_coffee2 = __toESM(require_reflux_coffee());
     var import_coffee_helpers2 = __toESM(require_coffee_helpers());
@@ -239131,26 +239191,24 @@ var message_store_exports = {};
 __export(message_store_exports, {
   default: () => message_store_default
 });
-var import_nylas_store6, import_actions14, _Utils, import_focused_content_store, import_deprecate_utils, import_async, ExtensionRegistry, deprecate, CategoryNamesHiddenByDefault, MessageStore, store4, message_store_default;
+var import_nylas_store7, import_actions14, import_focused_content_store, import_deprecate_utils, ExtensionRegistry, deprecate, CategoryNamesHiddenByDefault, MessageStore, store4, message_store_default;
 var init_message_store = __esm({
   "src/flux/stores/message-store.js"() {
-    import_nylas_store6 = __toESM(require_nylas_store());
+    import_nylas_store7 = __toESM(require_nylas_store());
     import_actions14 = __toESM(require_actions());
     init_message();
     init_thread();
-    _Utils = __toESM(require_utils());
     init_database_store();
     init_focused_perspective_store();
     import_focused_content_store = __toESM(require_focused_content_store());
     init_nylas_api_helpers();
     init_extension_registry();
     import_deprecate_utils = __toESM(require_deprecate_utils());
-    import_async = __toESM(require_async2());
     init_index_all();
     ExtensionRegistry = void 0 || extension_registry_exports;
     ({ deprecate } = import_deprecate_utils.default.default || import_deprecate_utils.default);
     CategoryNamesHiddenByDefault = ["spam", "trash"];
-    MessageStore = class extends import_nylas_store6.default {
+    MessageStore = class extends import_nylas_store7.default {
       constructor() {
         super();
         this.itemsExpandedState = this.itemsExpandedState.bind(this);
@@ -239551,11 +239609,11 @@ var mail_label_set_exports = {};
 __export(mail_label_set_exports, {
   default: () => MailLabelSet
 });
-var import_react53, import_prop_types59, import_actions15, import_injected_component_set, LabelComponentCache, MailLabelSet;
+var import_react54, import_prop_types60, import_actions15, import_injected_component_set, LabelComponentCache, MailLabelSet;
 var init_mail_label_set = __esm({
   "src/components/mail-label-set.jsx"() {
-    import_react53 = __toESM(require_react());
-    import_prop_types59 = __toESM(require_prop_types());
+    import_react54 = __toESM(require_react());
+    import_prop_types60 = __toESM(require_prop_types());
     init_focused_perspective_store();
     init_category_store();
     init_message_store();
@@ -239564,13 +239622,13 @@ var init_mail_label_set = __esm({
     import_actions15 = __toESM(require_actions());
     import_injected_component_set = __toESM(require_injected_component_set());
     LabelComponentCache = {};
-    MailLabelSet = class extends import_react53.default.Component {
+    MailLabelSet = class extends import_react54.default.Component {
       static displayName = "MailLabelSet";
       static propTypes = {
-        thread: import_prop_types59.default.object.isRequired,
-        messages: import_prop_types59.default.array,
-        includeCurrentCategories: import_prop_types59.default.bool,
-        removable: import_prop_types59.default.bool
+        thread: import_prop_types60.default.object.isRequired,
+        messages: import_prop_types60.default.array,
+        includeCurrentCategories: import_prop_types60.default.bool,
+        removable: import_prop_types60.default.bool
       };
       _onRemoveLabel(label) {
         import_actions15.default.removeCategoryFromThreads({
@@ -239597,7 +239655,7 @@ var init_mail_label_set = __esm({
             }
             if (this.props.removable) {
               labels.push(
-                /* @__PURE__ */ import_react53.default.createElement(
+                /* @__PURE__ */ import_react54.default.createElement(
                   MailLabel,
                   {
                     label,
@@ -239608,13 +239666,13 @@ var init_mail_label_set = __esm({
               );
             } else {
               if (LabelComponentCache[label.id] === void 0) {
-                LabelComponentCache[label.id] = /* @__PURE__ */ import_react53.default.createElement(MailLabel, { label, key: label.id });
+                LabelComponentCache[label.id] = /* @__PURE__ */ import_react54.default.createElement(MailLabel, { label, key: label.id });
               }
               labels.push(LabelComponentCache[label.id]);
             }
           }
         }
-        return /* @__PURE__ */ import_react53.default.createElement(
+        return /* @__PURE__ */ import_react54.default.createElement(
           import_injected_component_set.default,
           {
             inline: true,
@@ -239633,13 +239691,13 @@ var init_mail_label_set = __esm({
 // src/components/mail-important-icon.jsx
 var require_mail_important_icon = __commonJS({
   "src/components/mail-important-icon.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React46 = require_react();
+    var React50 = require_react();
     var classNames5 = require_classnames();
     var {
       Actions: Actions37,
-      Utils: Utils23,
+      Utils: Utils24,
       Thread: Thread4,
       TaskFactory: TaskFactory3,
       CategoryStore: CategoryStore4,
@@ -239647,12 +239705,12 @@ var require_mail_important_icon = __commonJS({
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ShowImportantKey = "core.workspace.showImportant";
-    var MailImportantIcon = class _MailImportantIcon extends React46.Component {
+    var MailImportantIcon = class _MailImportantIcon extends React50.Component {
       static initClass() {
         _MailImportantIcon.displayName = "MailImportantIcon";
         _MailImportantIcon.propTypes = {
-          thread: import_prop_types64.default.object,
-          showIfAvailableForAnyAccount: import_prop_types64.default.bool
+          thread: import_prop_types65.default.object,
+          showIfAvailableForAnyAccount: import_prop_types65.default.bool
         };
       }
       constructor(props) {
@@ -239742,7 +239800,7 @@ var require_mail_important_icon = __commonJS({
         } else {
           title = "Mark as important";
         }
-        return React46.createElement("div", {
+        return React50.createElement("div", {
           className: classes,
           title,
           onClick: this._onToggleImportant
@@ -239779,18 +239837,21 @@ var require_mail_important_icon = __commonJS({
 // src/components/generated-form.jsx
 var require_generated_form = __commonJS({
   "src/components/generated-form.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames18 = __toESM(require_classnames());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_react61 = __toESM(require_react());
     init_nylas_exports();
     init_date_picker();
     var import_tab_group_region = __toESM(require_tab_group_region());
-    var idPropType = import_prop_types64.default.oneOfType([import_prop_types64.default.string, import_prop_types64.default.number]);
-    var FormItem = class _FormItem extends import_react60.default.Component {
+    var idPropType = import_prop_types65.default.oneOfType([import_prop_types65.default.string, import_prop_types65.default.number]);
+    var FormItem = class _FormItem extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
+        this.inputRef = import_react61.default.createRef();
+        this.formRef = import_react61.default.createRef();
+        this.inputWrapRef = import_react61.default.createRef();
+        this.formHeaderErrorRef = import_react61.default.createRef();
         this.render = this.render.bind(this);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
         this._renderError = this._renderError.bind(this);
@@ -239826,63 +239887,63 @@ var require_generated_form = __commonJS({
           id: idPropType.isRequired,
           // Either a type of input or any type that can be passed into
           // `React.createElement(type, ...)`
-          type: import_prop_types64.default.string.isRequired,
+          type: import_prop_types65.default.string.isRequired,
           // The name as POSTed to the eventual endpoint.
-          name: import_prop_types64.default.string,
+          name: import_prop_types65.default.string,
           // The human-readable display label for the formItem
-          label: import_prop_types64.default.node,
+          label: import_prop_types65.default.node,
           // Most input types take strings, numbers, and bools. Some types (like
           // "reference" can get passed arrays)
-          value: import_prop_types64.default.oneOfType([
-            import_prop_types64.default.string,
-            import_prop_types64.default.number,
-            import_prop_types64.default.bool
+          value: import_prop_types65.default.oneOfType([
+            import_prop_types65.default.string,
+            import_prop_types65.default.number,
+            import_prop_types65.default.bool
           ]),
-          defaultValue: import_prop_types64.default.string,
+          defaultValue: import_prop_types65.default.string,
           // A function that takes two arguments:
           //   - The id of this FormItem
           //   - The new value of the FormItem
-          onChange: import_prop_types64.default.func,
+          onChange: import_prop_types65.default.func,
           // FormItems can either explicitly set the disabled state, or determine
           // the disabled state by whether or not this is a 'new' or 'update'
           // form.
-          formType: import_prop_types64.default.oneOf(["new", "update"]),
-          disabled: import_prop_types64.default.bool,
-          editableForNew: import_prop_types64.default.bool,
-          editableForUpdate: import_prop_types64.default.bool,
-          formItemError: import_prop_types64.default.shape({
+          formType: import_prop_types65.default.oneOf(["new", "update"]),
+          disabled: import_prop_types65.default.bool,
+          editableForNew: import_prop_types65.default.bool,
+          editableForUpdate: import_prop_types65.default.bool,
+          formItemError: import_prop_types65.default.shape({
             id: idPropType,
             // The formItemId
-            message: import_prop_types64.default.string
+            message: import_prop_types65.default.string
           }),
           // selectOptions
           // An array of options.
-          selectOptions: import_prop_types64.default.arrayOf(
-            import_prop_types64.default.shape({
-              label: import_prop_types64.default.node,
-              value: import_prop_types64.default.string
+          selectOptions: import_prop_types65.default.arrayOf(
+            import_prop_types65.default.shape({
+              label: import_prop_types65.default.node,
+              value: import_prop_types65.default.string
             })
           ),
           // Common <input> props.
           // Anything that can be passed into a standard React <input> item will
           // be passed along. Here are some common ones. There can be many more
-          multiple: import_prop_types64.default.bool,
-          required: import_prop_types64.default.bool,
-          prefilled: import_prop_types64.default.bool,
-          maxlength: import_prop_types64.default.number,
-          placeholder: import_prop_types64.default.node,
-          tabIndex: import_prop_types64.default.oneOfType([import_prop_types64.default.number, import_prop_types64.default.string]),
+          multiple: import_prop_types65.default.bool,
+          required: import_prop_types65.default.bool,
+          prefilled: import_prop_types65.default.bool,
+          maxlength: import_prop_types65.default.number,
+          placeholder: import_prop_types65.default.node,
+          tabIndex: import_prop_types65.default.oneOfType([import_prop_types65.default.number, import_prop_types65.default.string]),
           //### Used by "reference" type objects
-          customComponent: import_prop_types64.default.func,
-          contextData: import_prop_types64.default.object,
-          referenceTo: import_prop_types64.default.oneOfType([import_prop_types64.default.array, import_prop_types64.default.string]),
-          referenceType: import_prop_types64.default.oneOf([
+          customComponent: import_prop_types65.default.func,
+          contextData: import_prop_types65.default.object,
+          referenceTo: import_prop_types65.default.oneOfType([import_prop_types65.default.array, import_prop_types65.default.string]),
+          referenceType: import_prop_types65.default.oneOf([
             "belongsTo",
             "hasMany",
             "hasManyThrough"
           ]),
-          referenceThrough: import_prop_types64.default.string,
-          currentFormValues: import_prop_types64.default.object
+          referenceThrough: import_prop_types65.default.string,
+          currentFormValues: import_prop_types65.default.object
         };
       }
       render() {
@@ -239894,25 +239955,25 @@ var require_generated_form = __commonJS({
         });
         let { label } = this.props;
         if (this.props.required) {
-          label = import_react60.default.createElement(
+          label = import_react61.default.createElement(
             "strong",
             null,
-            import_react60.default.createElement("span", { className: "required" }, "*"),
+            import_react61.default.createElement("span", { className: "required" }, "*"),
             this.props.label
           );
         }
         if (this.props.type === "hidden") {
           return this._renderInput();
         } else {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
-            { className: classes, ref: "inputWrap" },
-            import_react60.default.createElement(
+            { className: classes, ref: this.inputWrapRef },
+            import_react61.default.createElement(
               "div",
               { className: "label-area" },
-              import_react60.default.createElement("label", { htmlFor: this.props.id }, label)
+              import_react61.default.createElement("label", { htmlFor: this.props.id }, label)
             ),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "input-area" },
               this._renderInput(),
@@ -239922,11 +239983,11 @@ var require_generated_form = __commonJS({
         }
       }
       shouldComponentUpdate(nextProps) {
-        return !Utils12.isEqualReact(nextProps, this.props);
+        return !Utils13.isEqualReact(nextProps, this.props);
       }
       componentDidUpdate(prevProps) {
         if (!prevProps.formItemError && !this._isValid()) {
-          return import_react_dom29.default.findDOMNode(this.refs.inputWrap).scrollIntoView(true);
+          this.inputWrapRef?.current?.scrollIntoView(true);
         }
       }
       _isValid() {
@@ -239937,14 +239998,14 @@ var require_generated_form = __commonJS({
           return false;
         }
         const msg = this.props.formItemError.message;
-        return import_react60.default.createElement("div", { className: "form-error" }, msg);
+        return import_react61.default.createElement("div", { className: "form-error" }, msg);
       }
       _isDisabled() {
         return this.props.disabled || this.props.formType === "new" && this.props.editableForNew === false || this.props.formType === "update" && this.props.editableForUpdate === false;
       }
       _renderInput() {
         const inputProps = index_default_default.extend({}, this.props, {
-          ref: "input",
+          ref: this.inputRef,
           onChange: (eventOrValue) => {
             return this.props.onChange(
               this.props.id,
@@ -239962,36 +240023,36 @@ var require_generated_form = __commonJS({
           inputProps.disabled = true;
         }
         if (_FormItem.inputElementTypes[this.props.type]) {
-          return import_react60.default.createElement("input", inputProps);
+          return import_react61.default.createElement("input", inputProps);
         } else if (this.props.type === "select") {
           const options2 = (this.props.selectOptions != null ? this.props.selectOptions : []).map(
-            (optionData) => import_react60.default.createElement(
+            (optionData) => import_react61.default.createElement(
               "option",
               Object.assign({}, optionData, {
-                key: `${Utils12.generateTempId()}-optionData.value`
+                key: `${Utils13.generateTempId()}-optionData.value`
               }),
               optionData.label
             )
           );
           options2.unshift(
-            import_react60.default.createElement("option", {
-              key: `${Utils12.generateTempId()}-blank-option`
+            import_react61.default.createElement("option", {
+              key: `${Utils13.generateTempId()}-blank-option`
             })
           );
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "select",
             Object.assign({}, inputProps),
             options2
           );
         } else if (this.props.type === "textarea") {
-          return import_react60.default.createElement("textarea", inputProps);
+          return import_react61.default.createElement("textarea", inputProps);
         } else if (this.props.type === "date") {
           inputProps.dateFormat = "YYYY-MM-DD";
-          return import_react60.default.createElement(DatePicker, inputProps);
+          return import_react61.default.createElement(DatePicker, inputProps);
         } else if (this.props.type === "EmptySpace") {
-          return import_react60.default.createElement("div", { className: "empty-space" });
+          return import_react61.default.createElement("div", { className: "empty-space" });
         } else if (index_default_default.isFunction(this.props.customComponent)) {
-          return import_react60.default.createElement(this.props.customComponent, inputProps);
+          return import_react61.default.createElement(this.props.customComponent, inputProps);
         } else {
           return console.warn(
             `We do not support type ${this.props.type} with attributes:`,
@@ -240001,7 +240062,7 @@ var require_generated_form = __commonJS({
       }
     };
     FormItem.initClass();
-    var GeneratedFieldset = class _GeneratedFieldset extends import_react60.default.Component {
+    var GeneratedFieldset = class _GeneratedFieldset extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -240017,28 +240078,28 @@ var require_generated_form = __commonJS({
         _GeneratedFieldset.propTypes = {
           // Some sort of unique identifier
           id: idPropType.isRequired,
-          formItems: import_prop_types64.default.arrayOf(
-            import_prop_types64.default.shape(
+          formItems: import_prop_types65.default.arrayOf(
+            import_prop_types65.default.shape(
               index_default_default.extend(FormItem.propTypes, {
-                row: import_prop_types64.default.number,
-                column: import_prop_types64.default.number
+                row: import_prop_types65.default.number,
+                column: import_prop_types65.default.number
               })
             )
           ),
           // The key is the formItem id, the value is the error object
-          formItemErrors: import_prop_types64.default.arrayOf(FormItem.propTypes.formItemError),
+          formItemErrors: import_prop_types65.default.arrayOf(FormItem.propTypes.formItemError),
           // A function that takes two arguments:
           //   - The id of this GeneratedFieldset
           //   - A new array of updated formItems with the correct value.
-          onChange: import_prop_types64.default.func,
-          heading: import_prop_types64.default.node,
-          useHeading: import_prop_types64.default.bool,
-          formType: import_prop_types64.default.oneOf(["new", "update"]),
-          zIndex: import_prop_types64.default.number,
-          lastFieldset: import_prop_types64.default.bool,
-          firstFieldset: import_prop_types64.default.bool,
-          contextData: import_prop_types64.default.object,
-          currentFormValues: import_prop_types64.default.object
+          onChange: import_prop_types65.default.func,
+          heading: import_prop_types65.default.node,
+          useHeading: import_prop_types65.default.bool,
+          formType: import_prop_types65.default.oneOf(["new", "update"]),
+          zIndex: import_prop_types65.default.number,
+          lastFieldset: import_prop_types65.default.bool,
+          firstFieldset: import_prop_types65.default.bool,
+          contextData: import_prop_types65.default.object,
+          currentFormValues: import_prop_types65.default.object
         };
       }
       render() {
@@ -240046,14 +240107,14 @@ var require_generated_form = __commonJS({
           "first-fieldset": this.props.firstFieldset,
           "last-fieldset": this.props.lastFieldset
         });
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "fieldset",
           {
             style: { zIndex: this.props.zIndex != null ? this.props.zIndex : 0 },
             className: classStr
           },
           this._renderHeader(),
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             { className: "fieldset-form-items" },
             this._renderFormItems()
@@ -240062,17 +240123,17 @@ var require_generated_form = __commonJS({
         );
       }
       shouldComponentUpdate(nextProps) {
-        return !Utils12.isEqualReact(nextProps, this.props);
+        return !Utils13.isEqualReact(nextProps, this.props);
       }
       _renderHeader() {
         if (this.props.useHeading) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "header",
             null,
-            import_react60.default.createElement("legend", null, this.props.heading)
+            import_react61.default.createElement("legend", null, this.props.heading)
           );
         } else {
-          return import_react60.default.createElement("div", null);
+          return import_react61.default.createElement("div", null);
         }
       }
       _renderFormItems() {
@@ -240088,7 +240149,7 @@ var require_generated_form = __commonJS({
           if (allHidden) {
             style.display = "none";
           }
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             { className: "row", "data-row-num": rowNum, style, key: rowNum },
             index_default_default.map(byCol, (itemsInCol, colNum) => {
@@ -240096,15 +240157,15 @@ var require_generated_form = __commonJS({
                 itemsInCol = [];
               }
               const colEls = [
-                import_react60.default.createElement(
+                import_react61.default.createElement(
                   "div",
                   { className: "column", "data-col-num": colNum, key: colNum },
                   itemsInCol.map((formItemData) => {
                     const props = this._propsFromFormItemData(formItemData);
-                    return import_react60.default.createElement(
+                    return import_react61.default.createElement(
                       FormItem,
                       Object.assign({}, props, {
-                        ref: `form-item-${formItemData.id}`
+                        key: `form-item-${formItemData.id}`
                       })
                     );
                   })
@@ -240112,7 +240173,7 @@ var require_generated_form = __commonJS({
               ];
               if (colNum !== numCols - 1) {
                 colEls.push(
-                  import_react60.default.createElement("div", {
+                  import_react61.default.createElement("div", {
                     className: "column-spacer",
                     "data-col-num": `${colNum}-spacer`,
                     key: `${colNum}-spacer`
@@ -240152,11 +240213,11 @@ var require_generated_form = __commonJS({
         return this.props.onChange(this.props.id, newFormItems);
       }
       _renderFooter() {
-        return import_react60.default.createElement("footer", null);
+        return import_react61.default.createElement("footer", null);
       }
     };
     GeneratedFieldset.initClass();
-    var GeneratedForm = class _GeneratedForm extends import_react60.default.Component {
+    var GeneratedForm = class _GeneratedForm extends import_react61.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -240174,24 +240235,24 @@ var require_generated_form = __commonJS({
         _GeneratedForm.propTypes = {
           // Some sort of unique identifier
           id: idPropType,
-          errors: import_prop_types64.default.shape({
-            formError: import_prop_types64.default.shape({
-              message: import_prop_types64.default.string,
-              location: import_prop_types64.default.string
+          errors: import_prop_types65.default.shape({
+            formError: import_prop_types65.default.shape({
+              message: import_prop_types65.default.string,
+              location: import_prop_types65.default.string
               // Can be "header" (default) or "footer"
             }),
             formItemErrors: GeneratedFieldset.propTypes.formItemErrors
           }),
-          fieldsets: import_prop_types64.default.arrayOf(
-            import_prop_types64.default.shape(GeneratedFieldset.propTypes)
+          fieldsets: import_prop_types65.default.arrayOf(
+            import_prop_types65.default.shape(GeneratedFieldset.propTypes)
           ),
           // A function whose argument is a new set of Props
-          onChange: import_prop_types64.default.func.isRequired,
-          onSubmit: import_prop_types64.default.func.isRequired,
-          style: import_prop_types64.default.object,
-          formType: import_prop_types64.default.oneOf(["new", "update"]),
-          prefilled: import_prop_types64.default.bool,
-          contextData: import_prop_types64.default.object
+          onChange: import_prop_types65.default.func.isRequired,
+          onSubmit: import_prop_types65.default.func.isRequired,
+          style: import_prop_types65.default.object,
+          formType: import_prop_types65.default.oneOf(["new", "update"]),
+          prefilled: import_prop_types65.default.bool,
+          contextData: import_prop_types65.default.object
         };
         _GeneratedForm.defaultProps = {
           style: {},
@@ -240201,30 +240262,30 @@ var require_generated_form = __commonJS({
       }
       render() {
         const submitText = this.props.formType === "new" ? "Create" : "Update";
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "form",
           {
             className: "generated-form",
-            ref: "form",
+            ref: this.formRef,
             style: this.props.style,
             onSubmit: this.props.onSubmit,
             onKeyDown: this._onKeyDown,
             noValidate: true
           },
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             import_tab_group_region.default,
             null,
             this._renderHeaderFormError(),
             this._renderPrefilledMessage(),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "fieldsets" },
               this._renderFieldsets()
             ),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "div",
               { className: "form-footer" },
-              import_react60.default.createElement(
+              import_react61.default.createElement(
                 "button",
                 {
                   type: "button",
@@ -240238,13 +240299,11 @@ var require_generated_form = __commonJS({
         );
       }
       shouldComponentUpdate(nextProps) {
-        return !Utils12.isEqualReact(nextProps, this.props);
+        return !Utils13.isEqualReact(nextProps, this.props);
       }
       componentDidUpdate(prevProps) {
         if (!(prevProps.errors != null ? prevProps.errors.formError : void 0) && (this.props.errors != null ? this.props.errors.formError : void 0)) {
-          return import_react_dom29.default.findDOMNode(this.refs.formHeaderError).scrollIntoView(
-            true
-          );
+          return this.formHeaderErrorRef?.current?.scrollIntoView(true);
         }
       }
       _onKeyDown(event2) {
@@ -240254,11 +240313,11 @@ var require_generated_form = __commonJS({
       }
       _renderPrefilledMessage() {
         if (this.props.prefilled) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
             { className: "prefilled-message" },
             `The `,
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               "span",
               { className: "highlighted" },
               "highlighted"
@@ -240269,9 +240328,12 @@ var require_generated_form = __commonJS({
       }
       _renderHeaderFormError() {
         if (this.props.errors != null ? this.props.errors.formError : void 0) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "div",
-            { ref: "formHeaderError", className: "form-error form-header-error" },
+            {
+              ref: this.formHeaderErrorRef,
+              className: "form-error form-header-error"
+            },
             this.props.errors.formError.message
           );
         } else {
@@ -240287,7 +240349,7 @@ var require_generated_form = __commonJS({
             props.currentFormValues = this._currentFormValues();
             props.firstFieldset = i === 0;
             props.lastFieldset = i !== 0 && i === this.props.fieldsets.length - 1;
-            return import_react60.default.createElement(
+            return import_react61.default.createElement(
               GeneratedFieldset,
               Object.assign({}, props, { ref: `fieldset-${fieldset.id}` })
             );
@@ -240342,7 +240404,7 @@ var require_generated_form = __commonJS({
 });
 
 // src/components/scenario-editor-models.js
-var Comparator, Types, Comparators, Template;
+var Comparator, Types, Comparators, Template2;
 var init_scenario_editor_models = __esm({
   "src/components/scenario-editor-models.js"() {
     init_index_all();
@@ -240411,7 +240473,7 @@ var init_scenario_editor_models = __esm({
         )
       }
     };
-    Template = class {
+    Template2 = class {
       static Type = Types;
       static Comparator = Comparator;
       static Comparators = Comparators;
@@ -240468,21 +240530,18 @@ var init_scenario_editor_models = __esm({
 // src/components/scenario-editor-row.jsx
 var require_scenario_editor_row = __commonJS({
   "src/components/scenario-editor-row.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
     init_index_all();
     var import_rx_lite7 = __toESM(require_rx_lite());
-    init_nylas_component_kit();
-    init_nylas_exports();
-    init_scenario_editor_models();
     var SOURCE_SELECT_NULL = "NULL";
-    var SourceSelect = class _SourceSelect extends import_react60.default.Component {
+    var SourceSelect = class _SourceSelect extends import_react61.default.Component {
       static initClass() {
         _SourceSelect.displayName = "SourceSelect";
         _SourceSelect.propTypes = {
-          value: import_prop_types64.default.string,
-          onChange: import_prop_types64.default.func.isRequired,
-          options: import_prop_types64.default.oneOfType([import_prop_types64.default.object, import_prop_types64.default.array]).isRequired
+          value: import_prop_types65.default.string,
+          onChange: import_prop_types65.default.func.isRequired,
+          options: import_prop_types65.default.oneOfType([import_prop_types65.default.object, import_prop_types65.default.array]).isRequired
         };
       }
       constructor(props) {
@@ -240526,18 +240585,18 @@ var require_scenario_editor_row = __commonJS({
       }
       render() {
         const { options: options2 } = this.state;
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "select",
           {
             value: this.props.value || SOURCE_SELECT_NULL,
             onChange: this._onChange
           },
-          import_react60.default.createElement("option", {
+          import_react61.default.createElement("option", {
             key: SOURCE_SELECT_NULL,
             value: SOURCE_SELECT_NULL
           }),
           this.state.options.map(({ value, name: name2 }) => {
-            return import_react60.default.createElement(
+            return import_react61.default.createElement(
               "option",
               { key: value, value },
               name2
@@ -240554,16 +240613,16 @@ var require_scenario_editor_row = __commonJS({
       }
     };
     SourceSelect.initClass();
-    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react60.default.Component {
+    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react61.default.Component {
       static initClass() {
         _ScenarioEditorRow.displayName = "ScenarioEditorRow";
         _ScenarioEditorRow.propTypes = {
-          instance: import_prop_types64.default.object.isRequired,
-          removable: import_prop_types64.default.bool,
-          templates: import_prop_types64.default.array.isRequired,
-          onChange: import_prop_types64.default.func,
-          onInsert: import_prop_types64.default.func,
-          onRemove: import_prop_types64.default.func
+          instance: import_prop_types65.default.object.isRequired,
+          removable: import_prop_types65.default.bool,
+          templates: import_prop_types65.default.array.isRequired,
+          onChange: import_prop_types65.default.func,
+          onInsert: import_prop_types65.default.func,
+          onRemove: import_prop_types65.default.func
         };
       }
       constructor(props) {
@@ -240582,33 +240641,33 @@ var require_scenario_editor_row = __commonJS({
           key: this.props.instance.templateKey
         });
         if (!template2) {
-          return import_react60.default.createElement(
+          return import_react61.default.createElement(
             "span",
             null,
             " Could not find template for instance key: ",
             this.props.instance.templateKey
           );
         }
-        return import_react60.default.createElement(
-          void 0,
+        return import_react61.default.createElement(
+          Flexbox,
           { direction: "row", className: "well-row" },
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "span",
             null,
             this._renderTemplateSelect(template2),
             this._renderComparator(template2),
-            import_react60.default.createElement("span", null, template2.valueLabel),
+            import_react61.default.createElement("span", null, template2.valueLabel),
             this._renderValue(template2)
           ),
-          import_react60.default.createElement("div", { style: { flex: 1 } }),
+          import_react61.default.createElement("div", { style: { flex: 1 } }),
           this._renderActions()
         );
       }
       _renderTemplateSelect(_template) {
         const options2 = this.props.templates.map(({ key, name: name2 }) => {
-          return import_react60.default.createElement("option", { value: key, key }, name2);
+          return import_react61.default.createElement("option", { value: key, key }, name2);
         });
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "select",
           {
             value: this.props.instance.templateKey,
@@ -240619,12 +240678,12 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderComparator(template2) {
         const options2 = index_default_default.map(template2.comparators, ({ name: name2 }, key) => {
-          return import_react60.default.createElement("option", { key, value: key }, name2);
+          return import_react61.default.createElement("option", { key, value: key }, name2);
         });
         if (!(options2.length > 0)) {
           return false;
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "select",
           {
             value: this.props.instance.comparatorKey,
@@ -240635,13 +240694,13 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderValue(template2) {
         if (template2.type === Template.Type.Enum) {
-          return import_react60.default.createElement(SourceSelect, {
+          return import_react61.default.createElement(SourceSelect, {
             value: this.props.instance.value,
             onChange: this._onChangeValue,
             options: template2.values
           });
         } else if (template2.type === Template.Type.String) {
-          return import_react60.default.createElement("input", {
+          return import_react61.default.createElement("input", {
             type: "text",
             value: this.props.instance.value,
             onChange: this._onChangeValue
@@ -240651,15 +240710,15 @@ var require_scenario_editor_row = __commonJS({
         }
       }
       _renderActions() {
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: "actions" },
-          this.props.removable ? import_react60.default.createElement(
+          this.props.removable ? import_react61.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onRemove },
             "\u2212"
           ) : void 0,
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onInsert },
             "+"
@@ -240696,23 +240755,20 @@ var require_scenario_editor_row = __commonJS({
 // src/components/scenario-editor.jsx
 var require_scenario_editor = __commonJS({
   "src/components/scenario-editor.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    init_index_all();
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
     init_scenario_editor_models();
     var import_scenario_editor_row = __toESM(require_scenario_editor_row());
-    init_nylas_component_kit();
-    init_nylas_exports();
-    var ScenarioEditor = class _ScenarioEditor extends import_react60.default.Component {
+    var ScenarioEditor = class _ScenarioEditor extends import_react61.default.Component {
       static initClass() {
         _ScenarioEditor.displayName = "ScenarioEditor";
         _ScenarioEditor.propTypes = {
-          instances: import_prop_types64.default.array,
-          className: import_prop_types64.default.string,
-          onChange: import_prop_types64.default.func,
-          templates: import_prop_types64.default.array
+          instances: import_prop_types65.default.array,
+          className: import_prop_types65.default.string,
+          onChange: import_prop_types65.default.func,
+          templates: import_prop_types65.default.array
         };
-        _ScenarioEditor.Template = Template;
+        _ScenarioEditor.Template = Template2;
         _ScenarioEditor.Comparator = Comparator;
       }
       constructor(props) {
@@ -240726,11 +240782,11 @@ var require_scenario_editor = __commonJS({
         this.state = { collapsed: true };
       }
       render() {
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: this.props.className },
           (this.props.instances || []).map((instance, idx) => {
-            return import_react60.default.createElement(import_scenario_editor_row.default, {
+            return import_react61.default.createElement(import_scenario_editor_row.default, {
               key: idx,
               instance,
               removable: this.props.instances.length > 1,
@@ -240786,7 +240842,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
   if (TipsStore.hasSeenTip(TipKey)) {
     return ComposedComponent;
   }
-  return class extends import_react54.default.Component {
+  return class extends import_react55.default.Component {
     static displayName = ComposedComponent.displayName;
     static containerRequired = ComposedComponent.containerRequired;
     static containerStyles = ComposedComponent.containerStyles;
@@ -240809,7 +240865,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
         })
       ];
       window.addEventListener("resize", this._onRecomputeTooltipPosition);
-      const el = import_react_dom24.default.findDOMNode(this);
+      const el = import_react_dom23.default.findDOMNode(this);
       this.tipNode = document.createElement("div");
       this.tipNode.classList.add("tutorial-tip");
       this.tipAnchor = el.closest("[data-tooltips-anchor]") || document.body;
@@ -240839,8 +240895,8 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       return sheetEl.dataset.id === WorkspaceStore2.topSheet().id;
     };
     _isVisible = () => {
-      const el = import_react_dom24.default.findDOMNode(this);
-      return TipsStore.isTipVisible(TipKey) && this._containingSheetIsVisible(el) && DOMUtils3.nodeIsVisible(el);
+      const el = import_react_dom23.default.findDOMNode(this);
+      return TipsStore.isTipVisible(TipKey) && this._containingSheetIsVisible(el) && DOMUtils4.nodeIsVisible(el);
     };
     _onTooltipStateChanged = () => {
       const visible = this._isVisible();
@@ -240858,11 +240914,11 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       if (!this.state.visible) {
         return;
       }
-      const el = import_react_dom24.default.findDOMNode(this);
+      const el = import_react_dom23.default.findDOMNode(this);
       el.removeEventListener("mouseover", this._onMouseOver);
       const tipRect = this.tipNode.getBoundingClientRect();
       const tipFocusCircleRadius = 64;
-      const rect = import_react_dom24.default.findDOMNode(this).getBoundingClientRect();
+      const rect = import_react_dom23.default.findDOMNode(this).getBoundingClientRect();
       const rectCX = Math.round(
         rect.left + rect.width / 2 - tipFocusCircleRadius
       );
@@ -240871,7 +240927,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       );
       TipsBackgroundEl.style.webkitMaskPosition = `0 0, ${rectCX}px ${rectCY}px`;
       Actions5.openPopover(
-        /* @__PURE__ */ import_react54.default.createElement(
+        /* @__PURE__ */ import_react55.default.createElement(
           TipPopoverContents,
           {
             tipKey: TipKey,
@@ -240890,7 +240946,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       );
     };
     _onRecomputeTooltipPosition = () => {
-      const el = import_react_dom24.default.findDOMNode(this);
+      const el = import_react_dom23.default.findDOMNode(this);
       let settled = 0;
       let last2 = {};
       const attempt = () => {
@@ -240910,24 +240966,24 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       attempt();
     };
     render() {
-      return /* @__PURE__ */ import_react54.default.createElement(ComposedComponent, { ...this.props });
+      return /* @__PURE__ */ import_react55.default.createElement(ComposedComponent, { ...this.props });
     }
   };
 }
-var import_react54, import_prop_types60, import_react_dom24, import_nylas_store7, TipsBackgroundEl, TipsContainerEl, TipsStoreCls, TipsStore, TipPopoverContents;
+var import_react55, import_prop_types61, import_react_dom23, import_nylas_store8, TipsBackgroundEl, TipsContainerEl, TipsStoreCls, TipsStore, TipPopoverContents;
 var init_has_tutorial_tip = __esm({
   "src/components/decorators/has-tutorial-tip.jsx"() {
-    import_react54 = __toESM(require_react());
-    import_prop_types60 = __toESM(require_prop_types());
-    import_react_dom24 = __toESM(require_react_dom());
+    import_react55 = __toESM(require_react());
+    import_prop_types61 = __toESM(require_prop_types());
+    import_react_dom23 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
-    import_nylas_store7 = __toESM(require_nylas_store());
+    import_nylas_store8 = __toESM(require_nylas_store());
     TipsBackgroundEl = document.createElement("tutorial-tip-background");
     TipsContainerEl = document.createElement("div");
     TipsContainerEl.classList.add("tooltips-container");
     document.body.appendChild(TipsContainerEl);
-    TipsStoreCls = class extends import_nylas_store7.default {
+    TipsStoreCls = class extends import_nylas_store8.default {
       constructor() {
         super();
         this._tipKeys = [];
@@ -240958,12 +241014,12 @@ var init_has_tutorial_tip = __esm({
       };
     };
     TipsStore = new TipsStoreCls();
-    TipPopoverContents = class extends import_react54.default.Component {
+    TipPopoverContents = class extends import_react55.default.Component {
       static propTypes = {
-        title: import_prop_types60.default.string,
-        tipKey: import_prop_types60.default.string,
-        instructions: import_prop_types60.default.oneOfType([import_prop_types60.default.string, import_prop_types60.default.element]),
-        onDismissed: import_prop_types60.default.func
+        title: import_prop_types61.default.string,
+        tipKey: import_prop_types61.default.string,
+        instructions: import_prop_types61.default.oneOfType([import_prop_types61.default.string, import_prop_types61.default.element]),
+        onDismissed: import_prop_types61.default.func
       };
       componentDidMount() {
         if (TipsBackgroundEl.parentNode === null) {
@@ -240986,11 +241042,11 @@ var init_has_tutorial_tip = __esm({
       render() {
         let content = null;
         if (typeof this.props.instructions === "string") {
-          content = /* @__PURE__ */ import_react54.default.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.instructions } });
+          content = /* @__PURE__ */ import_react55.default.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.instructions } });
         } else {
-          content = /* @__PURE__ */ import_react54.default.createElement("p", null, this.props.instructions);
+          content = /* @__PURE__ */ import_react55.default.createElement("p", null, this.props.instructions);
         }
-        return /* @__PURE__ */ import_react54.default.createElement("div", { style: { width: 250, padding: 20, paddingTop: 0 } }, /* @__PURE__ */ import_react54.default.createElement("h2", null, this.props.title), content, /* @__PURE__ */ import_react54.default.createElement("button", { className: "btn", onClick: this.onDone }, "Got it!"));
+        return /* @__PURE__ */ import_react55.default.createElement("div", { style: { width: 250, padding: 20, paddingTop: 0 } }, /* @__PURE__ */ import_react55.default.createElement("h2", null, this.props.title), content, /* @__PURE__ */ import_react55.default.createElement("button", { className: "btn", onClick: this.onDone }, "Got it!"));
       }
     };
   }
@@ -242421,7 +242477,7 @@ function verifySendAction(sendAction = {}, extension = {}) {
   return true;
 }
 function configKeyFromTitle(title) {
-  return import_underscore67.default.dasherize(title.toLowerCase());
+  return import_underscore68.default.dasherize(title.toLowerCase());
 }
 function getSendActions() {
   return [DefaultSendAction].concat(
@@ -242440,12 +242496,12 @@ function getSendActions() {
     }, [])
   );
 }
-var import_underscore67, import_nylas_store8, import_actions16, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
+var import_underscore68, import_nylas_store9, import_actions16, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
 var init_send_actions_store = __esm({
   "src/flux/stores/send-actions-store.js"() {
     init_index_all();
-    import_underscore67 = __toESM(require_underscore());
-    import_nylas_store8 = __toESM(require_nylas_store());
+    import_underscore68 = __toESM(require_underscore());
+    import_nylas_store9 = __toESM(require_nylas_store());
     import_actions16 = __toESM(require_actions());
     init_send_draft_task();
     init_extension_registry();
@@ -242458,7 +242514,7 @@ var init_send_actions_store = __esm({
       isAvailableForDraft: () => true,
       performSendAction: ({ draft }) => import_actions16.default.queueTask(new SendDraftTask(draft.clientId))
     };
-    SendActionsStore = class extends import_nylas_store8.default {
+    SendActionsStore = class extends import_nylas_store9.default {
       constructor() {
         super();
         this._sendActions = [];
@@ -242513,13 +242569,13 @@ var perform_send_action_task_exports = {};
 __export(perform_send_action_task_exports, {
   default: () => perform_send_action_task_default
 });
-var import_actions17, import_task_queue, PerformSendActionTask, perform_send_action_task_default;
+var import_actions17, import_task_queue2, PerformSendActionTask, perform_send_action_task_default;
 var init_perform_send_action_task = __esm({
   "src/flux/tasks/perform-send-action-task.js"() {
     init_task();
     import_actions17 = __toESM(require_actions());
     init_base_draft_task();
-    import_task_queue = __toESM(require_task_queue());
+    import_task_queue2 = __toESM(require_task_queue());
     init_send_actions_store();
     PerformSendActionTask = class _PerformSendActionTask extends BaseDraftTask {
       constructor(draftClientId, sendActionKey) {
@@ -242543,7 +242599,7 @@ var init_perform_send_action_task = __esm({
         return Promise.resolve();
       }
       performRemote() {
-        const sameTasks = import_task_queue.default.findTasks(_PerformSendActionTask, {
+        const sameTasks = import_task_queue2.default.findTasks(_PerformSendActionTask, {
           draftClientId: this.draftClientId
         });
         if (sameTasks.length > 1) {
@@ -242599,7 +242655,7 @@ var init_mail_rules_templates = __esm({
     import_nylas_observables = __toESM(require_nylas_observables());
     init_scenario_editor_models();
     ConditionTemplates = [
-      new Template("from", Template.Type.String, {
+      new Template2("from", Template2.Type.String, {
         name: "From",
         valueForMessage(message) {
           return [].concat(
@@ -242608,7 +242664,7 @@ var init_mail_rules_templates = __esm({
           );
         }
       }),
-      new Template("to", Template.Type.String, {
+      new Template2("to", Template2.Type.String, {
         name: "To",
         valueForMessage(message) {
           return [].concat(
@@ -242617,7 +242673,7 @@ var init_mail_rules_templates = __esm({
           );
         }
       }),
-      new Template("cc", Template.Type.String, {
+      new Template2("cc", Template2.Type.String, {
         name: "Cc",
         valueForMessage(message) {
           return [].concat(
@@ -242626,7 +242682,7 @@ var init_mail_rules_templates = __esm({
           );
         }
       }),
-      new Template("bcc", Template.Type.String, {
+      new Template2("bcc", Template2.Type.String, {
         name: "Bcc",
         valueForMessage(message) {
           return [].concat(
@@ -242635,7 +242691,7 @@ var init_mail_rules_templates = __esm({
           );
         }
       }),
-      new Template("anyRecipient", Template.Type.String, {
+      new Template2("anyRecipient", Template2.Type.String, {
         name: "Any Recipient",
         valueForMessage(message) {
           const recipients = [].concat(
@@ -242650,13 +242706,13 @@ var init_mail_rules_templates = __esm({
           );
         }
       }),
-      new Template("anyAttachmentName", Template.Type.String, {
+      new Template2("anyAttachmentName", Template2.Type.String, {
         name: "Any attachment name",
         valueForMessage(message) {
           return message.files.map((f) => f.filename);
         }
       }),
-      new Template("starred", Template.Type.Enum, {
+      new Template2("starred", Template2.Type.Enum, {
         name: "Starred",
         values: [
           { name: "True", value: "true" },
@@ -242671,13 +242727,13 @@ var init_mail_rules_templates = __esm({
           }
         }
       }),
-      new Template("subject", Template.Type.String, {
+      new Template2("subject", Template2.Type.String, {
         name: "Subject",
         valueForMessage(message) {
           return message.subject;
         }
       }),
-      new Template("body", Template.Type.String, {
+      new Template2("body", Template2.Type.String, {
         name: "Body",
         valueForMessage(message) {
           return message.body;
@@ -242685,9 +242741,9 @@ var init_mail_rules_templates = __esm({
       })
     ];
     ActionTemplates = [
-      new Template("markAsRead", Template.Type.None, { name: "Mark as Read" }),
-      new Template("moveToTrash", Template.Type.None, { name: "Move to Trash" }),
-      new Template("star", Template.Type.None, { name: "Star" })
+      new Template2("markAsRead", Template2.Type.None, { name: "Mark as Read" }),
+      new Template2("moveToTrash", Template2.Type.None, { name: "Move to Trash" }),
+      new Template2("star", Template2.Type.None, { name: "Star" })
     ];
     __tplExports = {
       ConditionMode: {
@@ -242717,30 +242773,30 @@ var init_mail_rules_templates = __esm({
         );
         if (account.usesLabels()) {
           templates.unshift(
-            new Template("markAsImportant", Template.Type.None, {
+            new Template2("markAsImportant", Template2.Type.None, {
               name: "Mark as Important"
             })
           );
           templates.unshift(
-            new Template("applyLabelArchive", Template.Type.None, {
+            new Template2("applyLabelArchive", Template2.Type.None, {
               name: "Archive"
             })
           );
           templates.unshift(
-            new Template("applyLabel", Template.Type.Enum, {
+            new Template2("applyLabel", Template2.Type.Enum, {
               name: "Apply Label",
               values: CategoryNamesObservable
             })
           );
           templates.unshift(
-            new Template("moveToLabel", Template.Type.Enum, {
+            new Template2("moveToLabel", Template2.Type.Enum, {
               name: "Move to Label",
               values: CategoryNamesObservable
             })
           );
         } else {
           templates.push(
-            new Template("changeFolder", Template.Type.Enum, {
+            new Template2("changeFolder", Template2.Type.Enum, {
               name: "Move Message",
               valueLabel: "to folder:",
               values: CategoryNamesObservable
@@ -242761,7 +242817,7 @@ var mail_rules_processor_exports = {};
 __export(mail_rules_processor_exports, {
   default: () => mail_rules_processor_default
 });
-var import_node_module22, import_actions18, import_task_queue_status_store2, import_meta23, nodeRequire23, MailRulesStore, MailRulesActions, MailRulesProcessor, mail_rules_processor_default;
+var import_node_module22, import_actions18, import_meta23, nodeRequire23, MailRulesStore, MailRulesActions, MailRulesProcessor, mail_rules_processor_default;
 var init_mail_rules_processor = __esm({
   "src/mail-rules-processor.js"() {
     import_node_module22 = require("module");
@@ -242770,7 +242826,7 @@ var init_mail_rules_processor = __esm({
     import_actions18 = __toESM(require_actions());
     init_account_store();
     init_database_store();
-    import_task_queue_status_store2 = __toESM(require_task_queue_status_store());
+    init_task_queue_status_store();
     init_mail_rules_templates();
     init_change_unread_task();
     init_change_folder_task();
@@ -242961,7 +243017,7 @@ var init_mail_rules_processor = __esm({
           const actionTasks = actionResults.filter((r) => r instanceof Task);
           actionTasks.forEach((task) => {
             performLocalPromises.push(
-              import_task_queue_status_store2.default.waitForPerformLocal(task)
+              task_queue_status_store_default.waitForPerformLocal(task)
             );
             return import_actions18.default.queueTask(task);
           });
@@ -242981,11 +243037,11 @@ var reprocess_mail_rules_task_exports = {};
 __export(reprocess_mail_rules_task_exports, {
   default: () => ReprocessMailRulesTask
 });
-var import_async2, ReprocessMailRulesTask;
+var import_async, ReprocessMailRulesTask;
 var init_reprocess_mail_rules_task = __esm({
   "src/flux/tasks/reprocess-mail-rules-task.js"() {
     init_index_all();
-    import_async2 = __toESM(require_async2());
+    import_async = __toESM(require_async2());
     init_task();
     init_thread();
     init_message();
@@ -243016,7 +243072,7 @@ var init_reprocess_mail_rules_task = __esm({
         );
       }
       _processAllMessages = (callback) => {
-        import_async2.default.until(() => this._finished, this._processSomeMessages, callback);
+        import_async.default.until(() => this._finished, this._processSomeMessages, callback);
       };
       _processSomeMessages = (callback) => {
         const inboxCategory = category_store_default.getStandardCategory(
@@ -243066,17 +243122,17 @@ var badge_store_exports = {};
 __export(badge_store_exports, {
   default: () => badge_store_default
 });
-var import_node_module23, import_nylas_store9, import_thread_counts_store, import_meta24, nodeRequire24, BadgeStore, badgeStore, badge_store_default;
+var import_node_module23, import_nylas_store10, import_thread_counts_store, import_meta24, nodeRequire24, BadgeStore, badgeStore, badge_store_default;
 var init_badge_store = __esm({
   "src/flux/stores/badge-store.js"() {
     import_node_module23 = require("module");
-    import_nylas_store9 = __toESM(require_nylas_store());
+    import_nylas_store10 = __toESM(require_nylas_store());
     init_focused_perspective_store();
     import_thread_counts_store = __toESM(require_thread_counts_store());
     init_category_store();
     import_meta24 = {};
     nodeRequire24 = typeof import_meta24.url === "string" && import_meta24.url.startsWith("file:") ? (0, import_node_module23.createRequire)(import_meta24.url) : require;
-    BadgeStore = class extends import_nylas_store9.default {
+    BadgeStore = class extends import_nylas_store10.default {
       constructor() {
         super();
         this.listenTo(focused_perspective_store_default, this._updateCounts);
@@ -243149,10 +243205,10 @@ var init_badge_store = __esm({
 var require_contact_ranking_store = __commonJS({
   "src/flux/stores/contact-ranking-store.js"(exports2, module2) {
     var Rx9 = require_rx_lite();
-    var NylasStore26 = require_nylas_store().default || require_nylas_store();
+    var NylasStore27 = require_nylas_store().default || require_nylas_store();
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var ContactRankingStore = class extends NylasStore26 {
+    var ContactRankingStore = class extends NylasStore27 {
       constructor() {
         super();
         this._registerObservables = this._registerObservables.bind(this);
@@ -243228,7 +243284,7 @@ var require_window_bridge = __commonJS({
   "src/window-bridge.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { ipcRenderer: ipcRenderer8 } = require("electron");
-    var Utils23 = require_utils();
+    var Utils24 = require_utils();
     var WindowBridge = class {
       constructor() {
         this._onResults = this._onResults.bind(this);
@@ -243238,10 +243294,10 @@ var require_window_bridge = __commonJS({
         ipcRenderer8.on("run-in-window", this._onRunInWindow);
       }
       runInWindow(window2, objectName, methodName, args) {
-        const taskId = Utils23.generateTempId();
+        const taskId = Utils24.generateTempId();
         return new Promise((resolve7, reject2) => {
           this._tasks[taskId] = { resolve: resolve7, reject: reject2 };
-          args = JSON.stringify(args, Utils23.registeredObjectReplacer);
+          args = JSON.stringify(args, Utils24.registeredObjectReplacer);
           const params = { window: window2, objectName, methodName, args, taskId };
           return ipcRenderer8.send("run-in-window", params);
         });
@@ -243257,7 +243313,7 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { returnValue, taskId } = param;
-        returnValue = JSON.parse(returnValue, Utils23.registeredObjectReviver);
+        returnValue = JSON.parse(returnValue, Utils24.registeredObjectReviver);
         this._tasks[taskId].resolve(returnValue);
         return delete this._tasks[taskId];
       }
@@ -243266,20 +243322,20 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { objectName, methodName, args, taskId } = param;
-        args = JSON.parse(args, Utils23.registeredObjectReviver);
+        args = JSON.parse(args, Utils24.registeredObjectReviver);
         const exports3 = globalThis.$n || (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
         const result2 = exports3[objectName][methodName].apply(null, args);
         if (_4.isFunction(result2.then)) {
           return result2.then((returnValue) => {
             returnValue = JSON.stringify(
               returnValue,
-              Utils23.registeredObjectReplacer
+              Utils24.registeredObjectReplacer
             );
             return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
           });
         } else {
           let returnValue = result2;
-          returnValue = JSON.stringify(returnValue, Utils23.registeredObjectReplacer);
+          returnValue = JSON.stringify(returnValue, Utils24.registeredObjectReplacer);
           return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
         }
       }
@@ -243297,8 +243353,8 @@ var require_contact_store = __commonJS({
     var _Rx = require_rx_lite();
     var _Actions = require_actions().default;
     var Contact4 = (init_contact(), __toCommonJS(contact_exports)).default;
-    var _Utils2 = require_utils();
-    var NylasStore26 = require_nylas_store().default || require_nylas_store();
+    var _Utils = require_utils();
+    var NylasStore27 = require_nylas_store().default || require_nylas_store();
     var RegExpUtils5 = require_regexp_utils();
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
@@ -243306,7 +243362,7 @@ var require_contact_store = __commonJS({
     var ContactRankingStore = require_contact_ranking_store();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var _WindowBridge = require_window_bridge();
-    var ContactStore2 = class extends NylasStore26 {
+    var ContactStore2 = class extends NylasStore27 {
       constructor() {
         super();
         this.searchContacts = this.searchContacts.bind(this);
@@ -243957,8 +244013,6 @@ var require_draft_factory = __commonJS({
     init_message_store();
     init_focused_perspective_store();
     init_draft_helpers();
-    init_thread();
-    init_contact();
     init_message();
     var import_utils25 = __toESM(require_utils());
     var import_utils26 = __toESM(require_utils());
@@ -244264,18 +244318,18 @@ var draft_store_exports = {};
 __export(draft_store_exports, {
   default: () => draft_store_default
 });
-var import_electron7, import_nylas_store10, import_draft_editing_session, import_draft_factory, import_task_queue_status_store3, import_focused_content_store2, import_utils16, import_actions19, import_sound_registry2, DefaultSendActionKey2, DraftStore, draft_store_default;
+var import_electron7, import_nylas_store11, import_draft_editing_session, import_draft_factory, import_focused_content_store2, import_utils16, import_actions19, import_sound_registry2, DefaultSendActionKey2, DraftStore, draft_store_default;
 var init_draft_store = __esm({
   "src/flux/stores/draft-store.js"() {
     init_index_all();
     import_electron7 = require("electron");
-    import_nylas_store10 = __toESM(require_nylas_store());
+    import_nylas_store11 = __toESM(require_nylas_store());
     import_draft_editing_session = __toESM(require_draft_editing_session());
     init_draft_helpers();
     import_draft_factory = __toESM(require_draft_factory());
     init_database_store();
     init_send_actions_store();
-    import_task_queue_status_store3 = __toESM(require_task_queue_status_store());
+    init_task_queue_status_store();
     import_focused_content_store2 = __toESM(require_focused_content_store());
     init_base_draft_task();
     init_perform_send_action_task();
@@ -244288,7 +244342,7 @@ var init_draft_store = __esm({
     import_sound_registry2 = __toESM(require_sound_registry());
     init_extension_registry();
     ({ DefaultSendActionKey: DefaultSendActionKey2 } = send_actions_store_default);
-    DraftStore = class extends import_nylas_store10.default {
+    DraftStore = class extends import_nylas_store11.default {
       constructor() {
         super();
         this.listenTo(database_store_default, this._onDataChanged);
@@ -244586,7 +244640,7 @@ ${draft.body}`;
         if (session) {
           this._doneWithSession(session);
         }
-        import_task_queue_status_store3.default.queue().forEach((task) => {
+        task_queue_status_store_default.queue().forEach((task) => {
           if (task instanceof BaseDraftTask && task.draftClientId === draftClientId) {
             import_actions19.default.dequeueTask(task.id);
           }
@@ -244692,20 +244746,20 @@ function createContainer(id) {
   document.body.appendChild(element);
   return element;
 }
-var import_react_dom25, import_nylas_store11, import_actions20, CONTAINER_ID, ModalStore, modal_store_default;
+var import_react_dom24, import_nylas_store12, import_actions20, CONTAINER_ID, ModalStore, modal_store_default;
 var init_modal_store = __esm({
   "src/flux/stores/modal-store.jsx"() {
-    import_react_dom25 = __toESM(require_react_dom());
+    import_react_dom24 = __toESM(require_react_dom());
     init_nylas_component_kit();
-    import_nylas_store11 = __toESM(require_nylas_store());
+    import_nylas_store12 = __toESM(require_nylas_store());
     import_actions20 = __toESM(require_actions());
     CONTAINER_ID = "nylas-modal-container";
-    ModalStore = class extends import_nylas_store11.default {
+    ModalStore = class extends import_nylas_store12.default {
       constructor(containerId = CONTAINER_ID) {
         super();
         this.isOpen = false;
         this.container = createContainer(containerId);
-        import_react_dom25.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
+        import_react_dom24.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
         this.listenTo(import_actions20.default.openModal, this.openModal);
         this.listenTo(import_actions20.default.closeModal, this.closeModal);
       }
@@ -244714,7 +244768,7 @@ var init_modal_store = __esm({
       };
       renderModal = (child, props, callback) => {
         const modal = /* @__PURE__ */ React.createElement(void 0, { ...props }, child);
-        import_react_dom25.default.render(modal, this.container, () => {
+        import_react_dom24.default.render(modal, this.container, () => {
           this.isOpen = true;
           this.trigger();
           callback();
@@ -244736,7 +244790,7 @@ var init_modal_store = __esm({
       };
       closeModal = (callback = () => {
       }) => {
-        import_react_dom25.default.render(/* @__PURE__ */ React.createElement("span", null), this.container, () => {
+        import_react_dom24.default.render(/* @__PURE__ */ React.createElement("span", null), this.container, () => {
           this.isOpen = false;
           this.trigger();
           callback();
@@ -244757,26 +244811,26 @@ function createContainer2(id) {
   document.body.appendChild(element);
   return element;
 }
-var import_react_dom26, import_nylas_store12, import_actions21, CONTAINER_ID2, PopoverStore, popover_store_default;
+var import_react_dom25, import_nylas_store13, import_actions21, CONTAINER_ID2, PopoverStore, popover_store_default;
 var init_popover_store = __esm({
   "src/flux/stores/popover-store.jsx"() {
-    import_react_dom26 = __toESM(require_react_dom());
-    import_nylas_store12 = __toESM(require_nylas_store());
+    import_react_dom25 = __toESM(require_react_dom());
+    import_nylas_store13 = __toESM(require_nylas_store());
     import_actions21 = __toESM(require_actions());
     init_fixed_popover();
     CONTAINER_ID2 = "nylas-popover-container";
-    PopoverStore = class extends import_nylas_store12.default {
+    PopoverStore = class extends import_nylas_store13.default {
       constructor(containerId = CONTAINER_ID2) {
         super();
         this.isOpen = false;
         this.container = createContainer2(containerId);
-        import_react_dom26.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
+        import_react_dom25.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
         this.listenTo(import_actions21.default.openPopover, this.openPopover);
         this.listenTo(import_actions21.default.closePopover, this.closePopover);
       }
       renderPopover = (child, props, callback) => {
         const popover = /* @__PURE__ */ React.createElement(fixed_popover_default, { ...props }, child);
-        import_react_dom26.default.render(popover, this.container, () => {
+        import_react_dom25.default.render(popover, this.container, () => {
           this.isOpen = true;
           this.trigger();
           callback();
@@ -244806,7 +244860,7 @@ var init_popover_store = __esm({
       };
       closePopover = (callback = () => {
       }) => {
-        import_react_dom26.default.render(/* @__PURE__ */ React.createElement("span", null), this.container, () => {
+        import_react_dom25.default.render(/* @__PURE__ */ React.createElement("span", null), this.container, () => {
           this.isOpen = false;
           this.trigger();
           callback();
@@ -244822,14 +244876,14 @@ var signature_store_exports = {};
 __export(signature_store_exports, {
   default: () => signature_store_default
 });
-var import_nylas_store13, DefaultSignatureText, SignatureStore, signature_store_default;
+var import_nylas_store14, DefaultSignatureText, SignatureStore, signature_store_default;
 var init_signature_store = __esm({
   "src/flux/stores/signature-store.js"() {
     init_nylas_exports();
-    import_nylas_store13 = __toESM(require_nylas_store());
+    import_nylas_store14 = __toESM(require_nylas_store());
     init_index_all();
     DefaultSignatureText = 'Sent from <a href="https://nylas.com?ref=n1">Nylas Mail</a>, the best free email app for work';
-    SignatureStore = class extends import_nylas_store13.default {
+    SignatureStore = class extends import_nylas_store14.default {
       activate() {
         this.unsubscribers = [
           Actions5.addSignature.listen(this._onAddSignature),
@@ -244854,7 +244908,7 @@ var init_signature_store = __esm({
             `nylas.account-${account.id}.signature`
           );
           if (signature) {
-            const newId = Utils12.generateTempId();
+            const newId = Utils13.generateTempId();
             this.signatures[newId] = {
               id: newId,
               title: account.label,
@@ -244924,7 +244978,7 @@ var init_signature_store = __esm({
         this._saveSignatures();
       };
       _onAddSignature = (sigTitle = "Untitled") => {
-        const newId = Utils12.generateTempId();
+        const newId = Utils13.generateTempId();
         this.signatures[newId] = {
           id: newId,
           title: sigTitle,
@@ -244959,15 +245013,15 @@ var metadata_store_exports = {};
 __export(metadata_store_exports, {
   default: () => metadata_store_default
 });
-var import_nylas_store14, import_actions22, MetadataStore, store5, metadata_store_default;
+var import_nylas_store15, import_actions22, MetadataStore, store5, metadata_store_default;
 var init_metadata_store = __esm({
   "src/flux/stores/metadata-store.js"() {
     init_index_all();
-    import_nylas_store14 = __toESM(require_nylas_store());
+    import_nylas_store15 = __toESM(require_nylas_store());
     import_actions22 = __toESM(require_actions());
     init_database_store();
     init_syncback_metadata_task();
-    MetadataStore = class extends import_nylas_store14.default {
+    MetadataStore = class extends import_nylas_store15.default {
       constructor() {
         super();
         this.listenTo(import_actions22.default.setMetadata, this._onSetMetadata);
@@ -245011,13 +245065,13 @@ var undo_redo_store_exports = {};
 __export(undo_redo_store_exports, {
   default: () => undo_redo_store_default
 });
-var import_nylas_store15, import_actions23, UndoRedoStore, undo_redo_store_default;
+var import_nylas_store16, import_actions23, UndoRedoStore, undo_redo_store_default;
 var init_undo_redo_store = __esm({
   "src/flux/stores/undo-redo-store.js"() {
     init_index_all();
-    import_nylas_store15 = __toESM(require_nylas_store());
+    import_nylas_store16 = __toESM(require_nylas_store());
     import_actions23 = __toESM(require_actions());
-    UndoRedoStore = class extends import_nylas_store15.default {
+    UndoRedoStore = class extends import_nylas_store16.default {
       constructor() {
         super();
         this._undo = [];
@@ -245091,12 +245145,11 @@ var init_undo_redo_store = __esm({
 // src/flux/stores/mail-rules-store.js
 var require_mail_rules_store = __commonJS({
   "src/flux/stores/mail-rules-store.js"(exports2, module2) {
-    var import_nylas_store25 = __toESM(require_nylas_store());
+    var import_nylas_store26 = __toESM(require_nylas_store());
     init_index_all();
     var import_rx_lite7 = __toESM(require_rx_lite());
-    init_account_store();
     init_database_store();
-    var import_task_queue_status_store5 = __toESM(require_task_queue_status_store());
+    init_task_queue_status_store();
     var import_utils25 = __toESM(require_utils());
     var import_actions35 = __toESM(require_actions());
     var ReprocessMailRulesTask3 = (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)).default;
@@ -245106,7 +245159,7 @@ var require_mail_rules_store = __commonJS({
       ActionTemplates: ActionTemplates2
     } = (init_mail_rules_templates(), __toCommonJS(mail_rules_templates_exports));
     var RulesJSONBlobKey = "MailRules-V2";
-    var MailRulesStore3 = class extends import_nylas_store25.default {
+    var MailRulesStore3 = class extends import_nylas_store26.default {
       constructor() {
         super();
         this.rules = this.rules.bind(this);
@@ -245189,7 +245242,7 @@ var require_mail_rules_store = __commonJS({
         existing.disabledReason = reason;
         this._saveMailRules();
         for (var task of Array.from(
-          import_task_queue_status_store5.default.tasksMatching(ReprocessMailRulesTask3, {})
+          task_queue_status_store_default.tasksMatching(ReprocessMailRulesTask3, {})
         )) {
           import_actions35.default.dequeueTask(task.id);
         }
@@ -248963,7 +249016,7 @@ var file_upload_store_exports = {};
 __export(file_upload_store_exports, {
   default: () => file_upload_store_default
 });
-var import_node_fs4, import_node_path11, import_nylas_store16, import_actions24, import_utils17, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
+var import_node_fs4, import_node_path11, import_nylas_store17, import_actions24, import_utils17, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
 var init_file_upload_store = __esm({
   "src/flux/stores/file-upload-store.js"() {
     init_index_all();
@@ -248971,7 +249024,7 @@ var init_file_upload_store = __esm({
     import_node_path11 = __toESM(require("path"));
     init_esm2();
     init_mjs();
-    import_nylas_store16 = __toESM(require_nylas_store());
+    import_nylas_store17 = __toESM(require_nylas_store());
     import_actions24 = __toESM(require_actions());
     import_utils17 = __toESM(require_utils());
     init_message();
@@ -249006,7 +249059,7 @@ var init_file_upload_store = __esm({
         return ext.slice(1);
       }
     };
-    FileUploadStore = class extends import_nylas_store16.default {
+    FileUploadStore = class extends import_nylas_store17.default {
       Upload = Upload;
       constructor() {
         super();
@@ -249244,26 +249297,26 @@ var feature_usage_store_exports = {};
 __export(feature_usage_store_exports, {
   default: () => feature_usage_store_default
 });
-var import_rx_lite3, import_nylas_store17, import_actions25, import_task_queue_status_store4, NoProAccess, FeatureUsageStore, feature_usage_store_default;
+var import_rx_lite4, import_nylas_store18, import_actions25, NoProAccess, FeatureUsageStore, feature_usage_store_default;
 var init_feature_usage_store = __esm({
   "src/flux/stores/feature-usage-store.jsx"() {
-    import_rx_lite3 = __toESM(require_rx_lite());
-    import_nylas_store17 = __toESM(require_nylas_store());
+    import_rx_lite4 = __toESM(require_rx_lite());
+    import_nylas_store18 = __toESM(require_nylas_store());
     init_nylas_component_kit();
     import_actions25 = __toESM(require_actions());
     init_identity_store();
-    import_task_queue_status_store4 = __toESM(require_task_queue_status_store());
+    init_task_queue_status_store();
     init_send_feature_usage_event_task();
     NoProAccess = class extends Error {
     };
-    FeatureUsageStore = class extends import_nylas_store17.default {
+    FeatureUsageStore = class extends import_nylas_store18.default {
       constructor() {
         super();
         this._waitForModalClose = [];
         this.NoProAccess = NoProAccess;
       }
       activate() {
-        this._disp = import_rx_lite3.default.Observable.fromStore(identity_store_default).subscribe(() => {
+        this._disp = import_rx_lite4.default.Observable.fromStore(identity_store_default).subscribe(() => {
           this.trigger();
         });
         this._usub = import_actions25.default.closeModal.listen(this._onModalClose);
@@ -249352,7 +249405,7 @@ var init_feature_usage_store = __esm({
       async _markFeatureUsed(featureName) {
         const task = new SendFeatureUsageEventTask(featureName);
         import_actions25.default.queueTask(task);
-        await import_task_queue_status_store4.default.waitForPerformLocal(task);
+        await task_queue_status_store_default.waitForPerformLocal(task);
         const feat = identity_store_default.identity().feature_usage[featureName];
         return feat.quota - feat.used_in_period;
       }
@@ -254768,7 +254821,7 @@ __export(file_download_store_exports, {
   Download: () => Download,
   default: () => file_download_store_default
 });
-var import_bluebird, import_node_os, import_node_fs5, import_node_path12, import_electron8, import_remote6, import_request_progress, import_nylas_store18, import_actions26, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
+var import_bluebird, import_node_os, import_node_fs5, import_node_path12, import_electron8, import_remote6, import_request_progress, import_nylas_store19, import_actions26, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
 var init_file_download_store = __esm({
   "src/flux/stores/file-download-store.js"() {
     import_bluebird = __toESM(require_bluebird());
@@ -254781,7 +254834,7 @@ var init_file_download_store = __esm({
     import_remote6 = __toESM(require_at_electron_remote());
     init_mjs();
     import_request_progress = __toESM(require_request_progress());
-    import_nylas_store18 = __toESM(require_nylas_store());
+    import_nylas_store19 = __toESM(require_nylas_store());
     import_actions26 = __toESM(require_actions());
     init_nylas_api();
     init_nylas_api_request();
@@ -254956,7 +255009,7 @@ var init_file_download_store = __esm({
         }
       }
     };
-    FileDownloadStore = class extends import_nylas_store18.default {
+    FileDownloadStore = class extends import_nylas_store19.default {
       constructor() {
         super();
         this.listenTo(import_actions26.default.fetchFile, this._fetch);
@@ -267075,15 +267128,15 @@ var online_status_store_exports = {};
 __export(online_status_store_exports, {
   default: () => online_status_store_default
 });
-var import_nylas_store19, import_actions27, CHECK_ONLINE_INTERVAL, OnlineStatusStore, online_status_store_default;
+var import_nylas_store20, import_actions27, CHECK_ONLINE_INTERVAL, OnlineStatusStore, online_status_store_default;
 var init_online_status_store = __esm({
   "src/flux/stores/online-status-store.js"() {
     init_is_online();
-    import_nylas_store19 = __toESM(require_nylas_store());
+    import_nylas_store20 = __toESM(require_nylas_store());
     init_isomorphic_core();
     import_actions27 = __toESM(require_actions());
     CHECK_ONLINE_INTERVAL = 30 * 1e3;
-    OnlineStatusStore = class extends import_nylas_store19.default {
+    OnlineStatusStore = class extends import_nylas_store20.default {
       constructor() {
         super();
         this._isOnline = true;
@@ -272089,12 +272142,12 @@ var preferences_ui_store_exports = {};
 __export(preferences_ui_store_exports, {
   default: () => preferences_ui_store_default
 });
-var import_electron9, import_nylas_store20, import_immutable, import_workspace_store2, import_actions28, MAIN_TAB_ITEM_ID, TabItem, PreferencesUIStore, preferences_ui_store_default;
+var import_electron9, import_nylas_store21, import_immutable, import_workspace_store2, import_actions28, MAIN_TAB_ITEM_ID, TabItem, PreferencesUIStore, preferences_ui_store_default;
 var init_preferences_ui_store = __esm({
   "src/flux/stores/preferences-ui-store.js"() {
     import_electron9 = require("electron");
     init_index_all();
-    import_nylas_store20 = __toESM(require_nylas_store());
+    import_nylas_store21 = __toESM(require_nylas_store());
     import_immutable = __toESM(require_immutable());
     import_workspace_store2 = __toESM(require_workspace_store());
     init_focused_perspective_store();
@@ -272106,7 +272159,7 @@ var init_preferences_ui_store = __esm({
         index_default_default.extend(this, opts);
       }
     };
-    PreferencesUIStore = class extends import_nylas_store20.default {
+    PreferencesUIStore = class extends import_nylas_store21.default {
       constructor() {
         super();
         const perspective = focused_perspective_store_default.current();
@@ -272188,12 +272241,12 @@ var focused_contacts_store_exports = {};
 __export(focused_contacts_store_exports, {
   default: () => focused_contacts_store_default
 });
-var import_rx_lite4, import_nylas_store21, import_utils18, import_actions29, FocusedContactsStore, focused_contacts_store_default;
+var import_rx_lite5, import_nylas_store22, import_utils18, import_actions29, FocusedContactsStore, focused_contacts_store_default;
 var init_focused_contacts_store = __esm({
   "src/flux/stores/focused-contacts-store.js"() {
     init_index_all();
-    import_rx_lite4 = __toESM(require_rx_lite());
-    import_nylas_store21 = __toESM(require_nylas_store());
+    import_rx_lite5 = __toESM(require_rx_lite());
+    import_nylas_store22 = __toESM(require_nylas_store());
     import_utils18 = __toESM(require_utils());
     init_thread();
     import_actions29 = __toESM(require_actions());
@@ -272201,7 +272254,7 @@ var init_focused_contacts_store = __esm({
     init_message_store();
     init_account_store();
     init_database_store();
-    FocusedContactsStore = class extends import_nylas_store21.default {
+    FocusedContactsStore = class extends import_nylas_store22.default {
       constructor() {
         super();
         this.listenTo(message_store_default, this._onMessageStoreChanged);
@@ -272262,7 +272315,7 @@ var init_focused_contacts_store = __esm({
             email: contact.email,
             name: contact.name
           });
-          this._unsubFocusedContact = import_rx_lite4.default.Observable.fromQuery(query).subscribe(
+          this._unsubFocusedContact = import_rx_lite5.default.Observable.fromQuery(query).subscribe(
             (match) => {
               this._currentFocusedContact = match || contact;
               return this._triggerLater();
@@ -272844,16 +272897,16 @@ var delta_connection_store_exports = {};
 __export(delta_connection_store_exports, {
   default: () => delta_connection_store_default
 });
-var import_rx_lite5, import_nylas_store22, DeltaConnectionStore, delta_connection_store_default;
+var import_rx_lite6, import_nylas_store23, DeltaConnectionStore, delta_connection_store_default;
 var init_delta_connection_store = __esm({
   "src/flux/stores/delta-connection-store.js"() {
     init_index_all();
-    import_rx_lite5 = __toESM(require_rx_lite());
-    import_nylas_store22 = __toESM(require_nylas_store());
+    import_rx_lite6 = __toESM(require_rx_lite());
+    import_nylas_store23 = __toESM(require_nylas_store());
     init_account_store();
     init_database_store();
     init_delta_streaming_connection();
-    DeltaConnectionStore = class extends import_nylas_store22.default {
+    DeltaConnectionStore = class extends import_nylas_store23.default {
       constructor() {
         super();
         this._unsubscribers = [];
@@ -272931,7 +272984,7 @@ var init_delta_connection_store = __esm({
           const query = database_store_default.findJSONBlob(
             `DeltaStreamingConnectionStatus:${accountId}`
           );
-          const subscription = import_rx_lite5.default.Observable.fromQuery(query).subscribe((json2) => {
+          const subscription = import_rx_lite6.default.Observable.fromQuery(query).subscribe((json2) => {
             this._updateState(accountId, { ...json2 });
           });
           this._connectionStatusSubscriptionsByAccountId.set(
@@ -272979,16 +273032,16 @@ var thread_list_actions_store_exports = {};
 __export(thread_list_actions_store_exports, {
   default: () => thread_list_actions_store_default
 });
-var import_nylas_store23, import_actions32, import_utils19, ThreadListActionsStore, thread_list_actions_store_default;
+var import_nylas_store24, import_actions32, import_utils19, ThreadListActionsStore, thread_list_actions_store_default;
 var init_thread_list_actions_store = __esm({
   "src/flux/stores/thread-list-actions-store.js"() {
-    import_nylas_store23 = __toESM(require_nylas_store());
+    import_nylas_store24 = __toESM(require_nylas_store());
     import_actions32 = __toESM(require_actions());
     import_utils19 = __toESM(require_utils());
     init_task_factory();
     init_account_store();
     init_focused_perspective_store();
-    ThreadListActionsStore = class extends import_nylas_store23.default {
+    ThreadListActionsStore = class extends import_nylas_store24.default {
       constructor() {
         super();
         this._timers = /* @__PURE__ */ new Map();
@@ -273271,11 +273324,11 @@ __export(inflates_draft_client_id_exports, {
   default: () => inflates_draft_client_id_default
 });
 function InflatesDraftClientId(ComposedComponent) {
-  return class extends import_react55.default.Component {
+  return class extends import_react56.default.Component {
     static displayName = ComposedComponent.displayName;
     static propTypes = {
-      draftClientId: import_prop_types61.default.string,
-      onDraftReady: import_prop_types61.default.func
+      draftClientId: import_prop_types62.default.string,
+      onDraftReady: import_prop_types62.default.func
     };
     static defaultProps = {
       onDraftReady: () => {
@@ -273350,17 +273403,17 @@ function InflatesDraftClientId(ComposedComponent) {
     }
     render() {
       if (!this.state.draft) {
-        return /* @__PURE__ */ import_react55.default.createElement("span", null);
+        return /* @__PURE__ */ import_react56.default.createElement("span", null);
       }
-      return /* @__PURE__ */ import_react55.default.createElement(ComposedComponent, { ref: "composed", ...this.props, ...this.state });
+      return /* @__PURE__ */ import_react56.default.createElement(ComposedComponent, { ref: "composed", ...this.props, ...this.state });
     }
   };
 }
-var import_react55, import_prop_types61, import_actions33, import_utils20, inflates_draft_client_id_default;
+var import_react56, import_prop_types62, import_actions33, import_utils20, inflates_draft_client_id_default;
 var init_inflates_draft_client_id = __esm({
   "src/decorators/inflates-draft-client-id.jsx"() {
-    import_react55 = __toESM(require_react());
-    import_prop_types61 = __toESM(require_prop_types());
+    import_react56 = __toESM(require_react());
+    import_prop_types62 = __toESM(require_prop_types());
     init_draft_store();
     import_actions33 = __toESM(require_actions());
     import_utils20 = __toESM(require_utils());
@@ -274360,16 +274413,16 @@ var virtual_dom_utils_exports = {};
 __export(virtual_dom_utils_exports, {
   default: () => virtual_dom_utils_default
 });
-var import_react56, VirtualDOMUtils, virtual_dom_utils_default;
+var import_react57, VirtualDOMUtils, virtual_dom_utils_default;
 var init_virtual_dom_utils = __esm({
   "src/virtual-dom-utils.js"() {
     init_index_all();
-    import_react56 = __toESM(require_react());
+    import_react57 = __toESM(require_react());
     VirtualDOMUtils = {
       *walk({ element, parentNode, childOffset, pruneFn = () => {
       } }) {
         yield { element, parentNode, childOffset };
-        if (import_react56.default.isValidElement(element) && !pruneFn(element)) {
+        if (import_react57.default.isValidElement(element) && !pruneFn(element)) {
           const children = element.props.children;
           if (!children) {
             return;
@@ -274425,13 +274478,13 @@ var init_exported_selection = __esm({
         if (this.type !== "None") {
           this.anchorNode = this.rawSelection.anchorNode.cloneNode(true);
           this.anchorOffset = this.rawSelection.anchorOffset;
-          this.anchorNodeIndex = DOMUtils3.getNodeIndex(
+          this.anchorNodeIndex = DOMUtils4.getNodeIndex(
             this.scopeNode,
             this.rawSelection.anchorNode
           );
           this.focusNode = this.rawSelection.focusNode.cloneNode(true);
           this.focusOffset = this.rawSelection.focusOffset;
-          this.focusNodeIndex = DOMUtils3.getNodeIndex(
+          this.focusNodeIndex = DOMUtils4.getNodeIndex(
             this.scopeNode,
             this.rawSelection.focusNode
           );
@@ -274465,11 +274518,11 @@ var init_exported_selection = __esm({
         if (otherSelection.anchorNode == null || otherSelection.focusNode == null) {
           return false;
         }
-        const anchorIndex = DOMUtils3.getNodeIndex(
+        const anchorIndex = DOMUtils4.getNodeIndex(
           this.scopeNode,
           otherSelection.anchorNode
         );
-        const focusIndex = DOMUtils3.getNodeIndex(
+        const focusIndex = DOMUtils4.getNodeIndex(
           this.scopeNode,
           otherSelection.focusNode
         );
@@ -274500,7 +274553,7 @@ var init_exported_selection = __esm({
 var require_extended_selection = __commonJS({
   "src/components/contenteditable/extended-selection.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { DOMUtils: DOMUtils4 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ExportedSelection2 = (init_exported_selection(), __toCommonJS(exported_selection_exports)).default;
     var ExtendedSelection = class _ExtendedSelection {
       static initClass() {
@@ -274662,12 +274715,12 @@ var require_extended_selection = __commonJS({
         if (!(exportedSelection instanceof ExportedSelection2)) {
           return;
         }
-        const newAnchorNode = DOMUtils4.findSimilarNodeAtIndex(
+        const newAnchorNode = DOMUtils5.findSimilarNodeAtIndex(
           this.scopeNode,
           exportedSelection.anchorNode,
           exportedSelection.anchorNodeIndex
         );
-        const newFocusNode = DOMUtils4.findSimilarNodeAtIndex(
+        const newFocusNode = DOMUtils5.findSimilarNodeAtIndex(
           this.scopeNode,
           exportedSelection.focusNode,
           exportedSelection.focusNodeIndex
@@ -274686,7 +274739,7 @@ var require_extended_selection = __commonJS({
         } else if (_4.isString(arg)) {
           node = this.scopeNode.querySelector(arg);
         } else if (_4.isRegExp(arg)) {
-          node = DOMUtils4.findNodeByRegex(this.scopeNode, arg);
+          node = DOMUtils5.findNodeByRegex(this.scopeNode, arg);
         }
         return node;
       }
@@ -274699,7 +274752,7 @@ var require_extended_selection = __commonJS({
       // offsets of the range.
       getSelectionTextIndex(refRangeOrNode) {
         let parentNode;
-        if (!DOMUtils4.selectionStartsOrEndsIn(refRangeOrNode)) {
+        if (!DOMUtils5.selectionStartsOrEndsIn(refRangeOrNode)) {
           return null;
         }
         const sel = this.rawSelection;
@@ -274732,7 +274785,7 @@ var require_extended_selection = __commonJS({
           return { startIndex, endIndex };
         }
         for (var { node, start, end } of Array.from(
-          DOMUtils4.getIndexedTextContent(parentNode)
+          DOMUtils5.getIndexedTextContent(parentNode)
         )) {
           if ((range2 != null ? range2.startContainer : void 0) === node) {
             rangeOffset = start + range2.startOffset;
@@ -274770,7 +274823,7 @@ var require_extended_selection = __commonJS({
           sel.setBaseAndExtent(parentNode, startIndex, parentNode, endIndex);
         }
         let inRange = range2 === null;
-        const items = DOMUtils4.getIndexedTextContent(parentNode);
+        const items = DOMUtils5.getIndexedTextContent(parentNode);
         for (let i = 0; i < items.length; i++) {
           var { node, start, end } = items[i];
           inRange = inRange || range2.startContainer === node;
@@ -274986,24 +275039,23 @@ var init_paragraph_formatting_extension = __esm({
 // src/components/contenteditable/floating-toolbar.jsx
 var require_floating_toolbar = __commonJS({
   "src/components/contenteditable/floating-toolbar.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames18 = __toESM(require_classnames());
-    var import_react60 = __toESM(require_react());
-    init_nylas_exports();
-    var FloatingToolbar = class _FloatingToolbar extends import_react60.default.Component {
+    var import_react61 = __toESM(require_react());
+    var FloatingToolbar = class _FloatingToolbar extends import_react61.default.Component {
       static initClass() {
         _FloatingToolbar.displayName = "FloatingToolbar";
         _FloatingToolbar.propTypes = {
-          atomicEdit: import_prop_types64.default.func,
-          extensions: import_prop_types64.default.array
+          atomicEdit: import_prop_types65.default.func,
+          extensions: import_prop_types65.default.array
         };
         _FloatingToolbar.innerPropTypes = {
-          dragging: import_prop_types64.default.bool,
-          selection: import_prop_types64.default.object,
-          doubleDown: import_prop_types64.default.bool,
-          hoveringOver: import_prop_types64.default.object,
-          editableNode: import_prop_types64.default.object
+          dragging: import_prop_types65.default.bool,
+          selection: import_prop_types65.default.object,
+          doubleDown: import_prop_types65.default.bool,
+          hoveringOver: import_prop_types65.default.object,
+          editableNode: import_prop_types65.default.object
         };
         _FloatingToolbar.defaultProps = { extensions: [] };
         _FloatingToolbar.defaultInnerProps = {
@@ -275043,7 +275095,7 @@ var require_floating_toolbar = __commonJS({
         this.innerProps = _FloatingToolbar.defaultInnerProps;
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils12.isEqualReact(nextProps, this.props) || !Utils12.isEqualReact(nextState, this.state);
+        return !Utils.isEqualReact(nextProps, this.props) || !Utils.isEqualReact(nextState, this.state);
       }
       // Some properties (like whether we're dragging or clicking the mouse)
       // should in a strict-sense be props, but update in a way that's not
@@ -275077,10 +275129,10 @@ var require_floating_toolbar = __commonJS({
         if (!ToolbarComponent) {
           return false;
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: "floating-toolbar-container" },
-          import_react60.default.createElement(
+          import_react61.default.createElement(
             "div",
             {
               ref: "floatingToolbar",
@@ -275088,7 +275140,7 @@ var require_floating_toolbar = __commonJS({
               style: this._toolbarStyles()
             },
             this._renderPointer(),
-            import_react60.default.createElement(
+            import_react61.default.createElement(
               ToolbarComponent,
               Object.assign({}, this.state.toolbarComponentProps)
             )
@@ -275157,7 +275209,7 @@ var require_floating_toolbar = __commonJS({
           );
         }
         const referenceRect = toolbarLocationRef.getBoundingClientRect();
-        if (!editableNode || !referenceRect || DOMUtils3.isEmptyBoundingRect(referenceRect)) {
+        if (!editableNode || !referenceRect || DOMUtils.isEmptyBoundingRect(referenceRect)) {
           return {
             toolbarTop: 0,
             toolbarLeft: 0,
@@ -275248,14 +275300,14 @@ var require_floating_toolbar = __commonJS({
         if (this.state.hidePointer) {
           return false;
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           {
             className: "toolbar-pointer-container",
             style: this._toolbarPointerStyles()
           },
-          import_react60.default.createElement("div", { className: "shadow" }),
-          import_react60.default.createElement("div", { className: "foreground" })
+          import_react61.default.createElement("div", { className: "shadow" }),
+          import_react61.default.createElement("div", { className: "foreground" })
         );
       }
     };
@@ -275288,7 +275340,7 @@ var init_tab_manager = __esm({
         const selection = editor.currentSelection();
         if (selection?.isCollapsed) {
           if (event2.shiftKey) {
-            if (DOMUtils3.isAtTabChar(selection)) {
+            if (DOMUtils4.isAtTabChar(selection)) {
               _TabManager._removeLastCharacter(editor);
             } else {
               return;
@@ -275307,7 +275359,7 @@ var init_tab_manager = __esm({
         event2.stopPropagation();
       }
       static _removeLastCharacter(editor) {
-        if (DOMUtils3.isSelectionInTextNode(editor.currentSelection())) {
+        if (DOMUtils4.isSelectionInTextNode(editor.currentSelection())) {
           const node = editor.currentSelection().anchorNode;
           const offset = editor.currentSelection().anchorOffset;
           editor.currentSelection().setBaseAndExtent(node, offset - 1, node, offset);
@@ -275321,21 +275373,21 @@ var init_tab_manager = __esm({
 // src/components/contenteditable/link-editor.jsx
 var require_link_editor = __commonJS({
   "src/components/contenteditable/link-editor.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var import_react60 = __toESM(require_react());
-    var import_react_dom29 = __toESM(require_react_dom());
+    var import_prop_types65 = __toESM(require_prop_types());
+    var import_react61 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
     init_nylas_exports();
-    var LinkEditor2 = class _LinkEditor extends import_react60.default.Component {
+    var LinkEditor2 = class _LinkEditor extends import_react61.default.Component {
       static initClass() {
         _LinkEditor.displayName = "LinkEditor";
         _LinkEditor.propTypes = {
           // A callback function we use to save the URL to the Contenteditable
-          onSaveUrl: import_prop_types64.default.func,
+          onSaveUrl: import_prop_types65.default.func,
           // The current DOM link we are modifying
-          linkToModify: import_prop_types64.default.object,
+          linkToModify: import_prop_types65.default.object,
           // A callback used when a link has been cancled, completed, or escaped
           // from. Used to notify our parent to switch modes.
-          onDoneWithLink: import_prop_types64.default.func
+          onDoneWithLink: import_prop_types65.default.func
         };
       }
       constructor(props) {
@@ -275358,7 +275410,7 @@ var require_link_editor = __commonJS({
       }
       componentDidMount() {
         if (this.props.focusOnMount) {
-          return import_react_dom29.default.findDOMNode(this.refs.urlInput).focus();
+          return import_react_dom28.default.findDOMNode(this.refs.urlInput).focus();
         }
       }
       render() {
@@ -275367,7 +275419,7 @@ var require_link_editor = __commonJS({
         let removeBtn = "";
         if (this._initialUrl()) {
           widthCorrection += 32;
-          removeBtn = import_react60.default.createElement(
+          removeBtn = import_react61.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275375,12 +275427,12 @@ var require_link_editor = __commonJS({
               style: { float: "right" },
               onMouseDown: this._removeUrl
             },
-            import_react60.default.createElement("i", { className: "fa fa-times" })
+            import_react61.default.createElement("i", { className: "fa fa-times" })
           );
         }
         if (this.state.urlInputValue.length === 0 || this.state.urlInputValue !== this._initialUrl()) {
           widthCorrection += 32;
-          checkBtn = import_react60.default.createElement(
+          checkBtn = import_react61.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -275389,14 +275441,14 @@ var require_link_editor = __commonJS({
               onKeyPress: this._saveUrlOnEnter,
               onMouseDown: this._saveUrl
             },
-            import_react60.default.createElement("i", { className: "fa fa-check" })
+            import_react61.default.createElement("i", { className: "fa fa-check" })
           );
         }
-        return import_react60.default.createElement(
+        return import_react61.default.createElement(
           "div",
           { className: "toolbar-new-link" },
-          import_react60.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
-          import_react60.default.createElement("input", {
+          import_react61.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
+          import_react61.default.createElement("input", {
             type: "text",
             ref: "urlInput",
             style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
@@ -275417,10 +275469,10 @@ var require_link_editor = __commonJS({
       _onBlur(event2) {
         const targets = [];
         if (this.refs.saveBtn) {
-          targets.push(import_react_dom29.default.findDOMNode(this.refs.saveBtn));
+          targets.push(import_react_dom28.default.findDOMNode(this.refs.saveBtn));
         }
         if (this.refs.removeBtn) {
-          targets.push(import_react_dom29.default.findDOMNode(this.refs.removeBtn));
+          targets.push(import_react_dom28.default.findDOMNode(this.refs.removeBtn));
         }
         if (Array.from(targets).includes(event2.relatedTarget)) {
           event2.preventDefault();
@@ -275539,7 +275591,7 @@ var init_link_manager = __esm({
           }
           sibling.appendChild(node);
           sibling.normalize();
-          const text = DOMUtils3.findLastTextNode(sibling);
+          const text = DOMUtils4.findLastTextNode(sibling);
           editor.select(text, text.length, text, text.length);
         }
       }
@@ -275588,8 +275640,8 @@ var init_link_manager = __esm({
       static _linkAtCursor(toolbarState) {
         if (toolbarState.selectionSnapshot.isCollapsed) {
           const anchor2 = toolbarState.selectionSnapshot.anchorNode;
-          const node = DOMUtils3.closest(anchor2, "a, n1-prompt-link");
-          const lastTextNode = DOMUtils3.findLastTextNode(anchor2);
+          const node = DOMUtils4.closest(anchor2, "a, n1-prompt-link");
+          const lastTextNode = DOMUtils4.findLastTextNode(anchor2);
           if (lastTextNode && toolbarState.selectionSnapshot.anchorOffset === lastTextNode.data.length) {
             return null;
           }
@@ -275597,10 +275649,10 @@ var init_link_manager = __esm({
         }
         const anchor = toolbarState.selectionSnapshot.anchorNode;
         const focus = toolbarState.selectionSnapshot.anchorNode;
-        const aPrompt = DOMUtils3.closest(anchor, "n1-prompt-link");
-        const fPrompt = DOMUtils3.closest(focus, "n1-prompt-link");
+        const aPrompt = DOMUtils4.closest(anchor, "n1-prompt-link");
+        const fPrompt = DOMUtils4.closest(focus, "n1-prompt-link");
         if (aPrompt && fPrompt && aPrompt === fPrompt) {
-          const aTag = DOMUtils3.closest(aPrompt, "a");
+          const aTag = DOMUtils4.closest(aPrompt, "a");
           return aTag || aPrompt;
         }
         return null;
@@ -275644,7 +275696,7 @@ var init_link_manager = __esm({
       static _onSaveUrl({ editor, url: url6, linkToModify }) {
         let toSelect = null;
         if (linkToModify != null) {
-          const equivalentNode = DOMUtils3.findSimilarNodeAtIndex(
+          const equivalentNode = DOMUtils4.findSimilarNodeAtIndex(
             editor.rootNode,
             linkToModify,
             0
@@ -275706,8 +275758,8 @@ var init_list_manager = __esm({
       }
       static onKeyDown({ editor, event: event2 }) {
         _ListManager._spaceEntered = event2.key === " ";
-        if (DOMUtils3.isInList()) {
-          if (event2.key === "Backspace" && DOMUtils3.atStartOfList()) {
+        if (DOMUtils4.isInList()) {
+          if (event2.key === "Backspace" && DOMUtils4.atStartOfList()) {
             event2.preventDefault();
             _ListManager.outdentListItem(editor);
           } else if (event2.key === "Tab" && editor.currentSelection().isCollapsed) {
@@ -275739,7 +275791,7 @@ var init_list_manager = __esm({
           return false;
         }
         const sibling = selection.anchorNode.previousElementSibling;
-        if (!sibling || DOMUtils3.looksLikeBlockElement(sibling)) {
+        if (!sibling || DOMUtils4.looksLikeBlockElement(sibling)) {
           const text = selection.anchorNode.textContent;
           return _ListManager.numberRegex().test(text) || _ListManager.bulletRegex().test(text);
         }
@@ -275768,16 +275820,16 @@ var init_list_manager = __esm({
         } else {
           return;
         }
-        const el = DOMUtils3.closest(editor.currentSelection().anchorNode, "li");
-        DOMUtils3.Mutating.removeEmptyNodes(el);
+        const el = DOMUtils4.closest(editor.currentSelection().anchorNode, "li");
+        DOMUtils4.Mutating.removeEmptyNodes(el);
       }
       static removeListStarter(starterRegex, selection) {
-        const el = DOMUtils3.closest(selection.anchorNode, "li");
+        const el = DOMUtils4.closest(selection.anchorNode, "li");
         const textContent2 = el.textContent.replace(starterRegex, "");
         if (textContent2.trim().length === 0) {
           el.innerHTML = "<br>";
         } else {
-          const textNode = DOMUtils3.findFirstTextNode(el);
+          const textNode = DOMUtils4.findFirstTextNode(el);
           textNode.textContent = textNode.textContent.replace(starterRegex, "");
         }
       }
@@ -275796,7 +275848,7 @@ var init_list_manager = __esm({
         if (node.nodeType === Node.TEXT_NODE) {
           node.textContent = _ListManager.originalInput + node.textContent;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
-          const textNode = DOMUtils3.findFirstTextNode(node);
+          const textNode = DOMUtils4.findFirstTextNode(node);
           if (!textNode) {
             node.innerHTML = _ListManager.originalInput.replace(" ", "&nbsp;") + node.innerHTML;
           } else {
@@ -275804,13 +275856,13 @@ var init_list_manager = __esm({
           }
         }
         if (_ListManager.numberRegex().test(_ListManager.originalInput)) {
-          DOMUtils3.Mutating.moveSelectionToIndexInAnchorNode(
+          DOMUtils4.Mutating.moveSelectionToIndexInAnchorNode(
             editor.currentSelection(),
             3
           );
         }
         if (_ListManager.bulletRegex().test(_ListManager.originalInput)) {
-          DOMUtils3.Mutating.moveSelectionToIndexInAnchorNode(
+          DOMUtils4.Mutating.moveSelectionToIndexInAnchorNode(
             editor.currentSelection(),
             2
           );
@@ -275843,14 +275895,14 @@ var init_list_manager = __esm({
         editor.outdent();
       }
       static isInsideListItem(node) {
-        return DOMUtils3.isDescendantOf(node, (parent) => parent.tagName === "LI");
+        return DOMUtils4.isDescendantOf(node, (parent) => parent.tagName === "LI");
       }
       // If users ended up with two <ul> lists adjacent to each other, we
       // collapse them into one. We leave adjacent <ol> lists intact in case
       // the user wanted to restart the numbering sequence
       static _collapseAdjacentLists(editor) {
         const els = editor.rootNode.querySelectorAll("ul, ol");
-        return DOMUtils3.Mutating.collapseAdjacentElements(els);
+        return DOMUtils4.Mutating.collapseAdjacentElements(els);
       }
     };
   }
@@ -275971,7 +276023,7 @@ var init_mouse_service = __esm({
         }
         const { editableNode } = this.innerState;
         const selection = document.getSelection();
-        if (!DOMUtils3.selectionInScope(selection, editableNode)) {
+        if (!DOMUtils4.selectionInScope(selection, editableNode)) {
           return;
         }
         this.dispatchEventToExtensions("onClick", event2);
@@ -276003,7 +276055,7 @@ var init_mouse_service = __esm({
 // src/components/contenteditable/dom-normalizer.js
 var require_dom_normalizer = __commonJS({
   "src/components/contenteditable/dom-normalizer.js"(exports2, module2) {
-    var { ContenteditableExtension: ContenteditableExtension2, DOMUtils: DOMUtils4 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { ContenteditableExtension: ContenteditableExtension2, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var DOMNormalizer = class _DOMNormalizer extends ContenteditableExtension2 {
       // This component works by re-rendering on every change and restoring the
       // selection. This is also how standard React controlled inputs work too.
@@ -276080,14 +276132,14 @@ var require_dom_normalizer = __commonJS({
         if (!node) {
           return true;
         }
-        if (node.nodeType === Node.TEXT_NODE && DOMUtils4.isBlankTextNode(node)) {
+        if (node.nodeType === Node.TEXT_NODE && DOMUtils5.isBlankTextNode(node)) {
           return true;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
           const child = node.firstChild;
           if (!child) {
             return true;
           }
-          const hasText = child.nodeType === Node.TEXT_NODE && !DOMUtils4.isBlankTextNode(node);
+          const hasText = child.nodeType === Node.TEXT_NODE && !DOMUtils5.isBlankTextNode(node);
           const hasBr = child.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR";
           return !hasText && !hasBr;
         } else {
@@ -276161,7 +276213,7 @@ var init_clipboard_service = __esm({
             event2.clipboardData
           );
           if (mimetype === "text/plain") {
-            const encoded = Utils12.encodeHTMLEntities(input);
+            const encoded = Utils13.encodeHTMLEntities(input);
             const htmlified = encoded.replace(/[\r\n]|&#1[03];/g, "<br/>").replace(/\s\s/g, " &nbsp;");
             document.execCommand("insertHTML", false, htmlified);
           } else if (mimetype === "text/html") {
@@ -276233,7 +276285,7 @@ var init_blockquote_manager = __esm({
         if (!sel.isCollapsed) {
           return false;
         }
-        return DOMUtils3.closest(sel.anchorNode, "blockquote") != null;
+        return DOMUtils4.closest(sel.anchorNode, "blockquote") != null;
       }
       static _isAtStartOfLine(editor) {
         const sel = editor.currentSelection();
@@ -276249,15 +276301,15 @@ var init_blockquote_manager = __esm({
         return _BlockquoteManager._ancestorRelativeLooksLikeBlock(sel.anchorNode);
       }
       static _ancestorRelativeLooksLikeBlock(node) {
-        if (DOMUtils3.looksLikeBlockElement(node)) {
+        if (DOMUtils4.looksLikeBlockElement(node)) {
           return true;
         }
         let sibling = node;
         while (sibling = sibling.previousSibling) {
-          if (DOMUtils3.looksLikeBlockElement(sibling)) {
+          if (DOMUtils4.looksLikeBlockElement(sibling)) {
             return true;
           }
-          if (DOMUtils3.looksLikeNonEmptyNode(sibling)) {
+          if (DOMUtils4.looksLikeNonEmptyNode(sibling)) {
             return false;
           }
         }
@@ -276268,32 +276320,32 @@ var init_blockquote_manager = __esm({
 });
 
 // src/components/contenteditable/toolbar-buttons.jsx
-var import_react57, import_prop_types62, ToolbarButtons;
+var import_react58, import_prop_types63, ToolbarButtons;
 var init_toolbar_buttons = __esm({
   "src/components/contenteditable/toolbar-buttons.jsx"() {
-    import_react57 = __toESM(require_react());
-    import_prop_types62 = __toESM(require_prop_types());
+    import_react58 = __toESM(require_react());
+    import_prop_types63 = __toESM(require_prop_types());
     init_nylas_component_kit();
-    ToolbarButtons = class extends import_react57.default.Component {
+    ToolbarButtons = class extends import_react58.default.Component {
       static displayName = "ToolbarButtons";
       static propTypes = {
         // Declares what buttons should appear in the toolbar. An array of
         // config objects.
-        buttonConfigs: import_prop_types62.default.array
+        buttonConfigs: import_prop_types63.default.array
       };
       static defaultProps = {
         buttonConfigs: []
       };
       render() {
         const buttons = this.props.buttonConfigs.map((config, i) => {
-          const icon = (config.iconUrl || "").length > 0 ? /* @__PURE__ */ import_react57.default.createElement(
+          const icon = (config.iconUrl || "").length > 0 ? /* @__PURE__ */ import_react58.default.createElement(
             void 0,
             {
               mode: (void 0).Mode.ContentIsMask,
               url: "#{config.iconUrl}"
             }
           ) : null;
-          return /* @__PURE__ */ import_react57.default.createElement(
+          return /* @__PURE__ */ import_react58.default.createElement(
             "button",
             {
               className: `btn toolbar-btn ${config.className || ""}`,
@@ -276304,7 +276356,7 @@ var init_toolbar_buttons = __esm({
             icon
           );
         });
-        return /* @__PURE__ */ import_react57.default.createElement("div", { className: "toolbar-buttons" }, buttons);
+        return /* @__PURE__ */ import_react58.default.createElement("div", { className: "toolbar-buttons" }, buttons);
       }
     };
   }
@@ -276336,12 +276388,12 @@ var init_toolbar_button_manager = __esm({
         if (toolbarState.selectionSnapshot.isCollapsed) {
           return null;
         }
-        const locationRef = DOMUtils3.getRangeInScope(toolbarState.editableNode);
+        const locationRef = DOMUtils4.getRangeInScope(toolbarState.editableNode);
         if (!locationRef) {
           return null;
         }
         const buttonConfigs = _ToolbarButtonManager._toolbarButtonConfigs(toolbarState);
-        const range2 = DOMUtils3.getRangeInScope(toolbarState.editableNode);
+        const range2 = DOMUtils4.getRangeInScope(toolbarState.editableNode);
         if (!range2?.startContainer) {
           return null;
         }
@@ -276388,13 +276440,13 @@ var init_toolbar_button_manager = __esm({
 // src/components/contenteditable/contenteditable.jsx
 var require_contenteditable = __commonJS({
   "src/components/contenteditable/contenteditable.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
+    var import_prop_types65 = __toESM(require_prop_types());
     init_emphasis_formatting_extension();
     init_paragraph_formatting_extension();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
-    var { Utils: Utils23, DOMUtils: DOMUtils4 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var React50 = require_react();
+    var ReactDOM26 = require_react_dom();
+    var { Utils: Utils24, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { KeyCommandsRegion: KeyCommandsRegion2 } = (init_nylas_component_kit(), __toCommonJS(nylas_component_kit_exports));
     var FloatingToolbar = require_floating_toolbar();
     var EditorAPI2 = require_editor_api();
@@ -276407,20 +276459,20 @@ var require_contenteditable = __commonJS({
     var ClipboardService2 = (init_clipboard_service(), __toCommonJS(clipboard_service_exports)).default;
     var BlockquoteManager2 = (init_blockquote_manager(), __toCommonJS(blockquote_manager_exports)).default;
     var ToolbarButtonManager2 = (init_toolbar_button_manager(), __toCommonJS(toolbar_button_manager_exports)).default;
-    var Contenteditable = class _Contenteditable extends React46.Component {
+    var Contenteditable = class _Contenteditable extends React50.Component {
       static initClass() {
         _Contenteditable.displayName = "Contenteditable";
         _Contenteditable.IgnoreMutationClassName = "ignore-mutations";
         _Contenteditable.propTypes = {
           // The current html state, as a string, of the contenteditable.
-          value: import_prop_types64.default.string,
+          value: import_prop_types65.default.string,
           // Handlers
-          onChange: import_prop_types64.default.func.isRequired,
-          onFilePaste: import_prop_types64.default.func,
+          onChange: import_prop_types65.default.func.isRequired,
+          onFilePaste: import_prop_types65.default.func,
           // A list of objects that extend {ContenteditableExtension}
-          extensions: import_prop_types64.default.array,
-          spellcheck: import_prop_types64.default.bool,
-          floatingToolbar: import_prop_types64.default.bool
+          extensions: import_prop_types65.default.array,
+          spellcheck: import_prop_types65.default.bool,
+          floatingToolbar: import_prop_types65.default.bool
         };
         _Contenteditable.defaultProps = {
           extensions: [],
@@ -276549,7 +276601,7 @@ var require_contenteditable = __commonJS({
       // When we have a composition event in progress, we should not update
       // because otherwise our composition event will be blown away.
       shouldComponentUpdate(nextProps, nextState) {
-        return !this._inCompositionEvent && (!Utils23.isEqualReact(nextProps, this.props) || !Utils23.isEqualReact(nextState, this.state));
+        return !this._inCompositionEvent && (!Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state));
       }
       componentDidUpdate() {
         if (this._shouldRestoreSelectionOnUpdate()) {
@@ -276619,14 +276671,14 @@ var require_contenteditable = __commonJS({
       //############################# Render ################################
       //#####################################################################
       render() {
-        return React46.createElement(
+        return React50.createElement(
           KeyCommandsRegion2,
           {
             className: "contenteditable-container",
             localHandlers: this._keymapHandlers()
           },
           this._renderFloatingToolbar(),
-          React46.createElement(
+          React50.createElement(
             "div",
             Object.assign(
               {
@@ -276646,14 +276698,14 @@ var require_contenteditable = __commonJS({
         if (!this.props.floatingToolbar) {
           return;
         }
-        return React46.createElement(FloatingToolbar, {
+        return React50.createElement(FloatingToolbar, {
           ref: "toolbarController",
           atomicEdit: this.atomicEdit,
           extensions: this._extensions()
         });
       }
       _editableNode() {
-        return ReactDOM27.findDOMNode(this.refs.contenteditable);
+        return ReactDOM26.findDOMNode(this.refs.contenteditable);
       }
       //#####################################################################
       //########################## Listener Setup ###########################
@@ -277107,13 +277159,13 @@ var overlaid_components_exports = {};
 __export(overlaid_components_exports, {
   default: () => OverlaidComponents
 });
-var import_react58, import_prop_types63, import_react_dom27, import_utils23, import_contenteditable, MUTATION_CONFIG, OverlaidComponents;
+var import_react59, import_prop_types64, import_react_dom26, import_utils23, import_contenteditable, MUTATION_CONFIG, OverlaidComponents;
 var init_overlaid_components = __esm({
   "src/components/overlaid-components/overlaid-components.jsx"() {
     init_index_all();
-    import_react58 = __toESM(require_react());
-    import_prop_types63 = __toESM(require_prop_types());
-    import_react_dom27 = __toESM(require_react_dom());
+    import_react59 = __toESM(require_react());
+    import_prop_types64 = __toESM(require_prop_types());
+    import_react_dom26 = __toESM(require_react_dom());
     import_utils23 = __toESM(require_utils());
     init_custom_contenteditable_components();
     import_contenteditable = __toESM(require_contenteditable());
@@ -277126,12 +277178,12 @@ var init_overlaid_components = __esm({
       attributeOldValue: true,
       characterDataOldValue: true
     };
-    OverlaidComponents = class _OverlaidComponents extends import_react58.default.Component {
+    OverlaidComponents = class _OverlaidComponents extends import_react59.default.Component {
       static displayName = "OverlaidComponents";
       static propTypes = {
-        children: import_prop_types63.default.node,
-        className: import_prop_types63.default.string,
-        exposedProps: import_prop_types63.default.object
+        children: import_prop_types64.default.node,
+        className: import_prop_types64.default.string,
+        exposedProps: import_prop_types64.default.object
       };
       static defaultProps = {
         children: false,
@@ -277183,12 +277235,12 @@ var init_overlaid_components = __esm({
       _setupMutationObservers() {
         this.observeOverlays.disconnect();
         this.observeOverlays.observe(
-          import_react_dom27.default.findDOMNode(this.refs.overlaidComponents),
+          import_react_dom26.default.findDOMNode(this.refs.overlaidComponents),
           MUTATION_CONFIG
         );
         this.observeAnchors.disconnect();
         this.observeAnchors.observe(
-          import_react_dom27.default.findDOMNode(this.refs.anchorContainer),
+          import_react_dom26.default.findDOMNode(this.refs.anchorContainer),
           MUTATION_CONFIG
         );
       }
@@ -277231,7 +277283,7 @@ var init_overlaid_components = __esm({
         }
       };
       _adjustNodes(ref, rects, dims) {
-        const root2 = import_react_dom27.default.findDOMNode(this.refs[ref]);
+        const root2 = import_react_dom26.default.findDOMNode(this.refs[ref]);
         for (const id of Object.keys(rects)) {
           const node = root2.querySelector(`[data-overlay-id=${id}]`);
           if (!node) {
@@ -277274,7 +277326,7 @@ var init_overlaid_components = __esm({
         if (this.state.previewMode) {
           msg = "Return to editor";
         }
-        return /* @__PURE__ */ import_react58.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
+        return /* @__PURE__ */ import_react59.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
       }
       _renderOverlaidComponents() {
         const els = [];
@@ -277298,7 +277350,7 @@ var init_overlaid_components = __esm({
           );
           previewToggleVisible = previewToggleVisible || supportsPreviewWithinEditor;
           els.push(
-            /* @__PURE__ */ import_react58.default.createElement(
+            /* @__PURE__ */ import_react59.default.createElement(
               "span",
               {
                 key: id,
@@ -277306,22 +277358,22 @@ var init_overlaid_components = __esm({
                 style,
                 "data-overlay-id": id
               },
-              import_react58.default.createElement(component, props)
+              import_react59.default.createElement(component, props)
             )
           );
         }
         const toggle = previewToggleVisible ? this._renderPreviewToggle() : false;
-        return /* @__PURE__ */ import_react58.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
+        return /* @__PURE__ */ import_react59.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
       }
       render() {
         const { className } = this.props;
-        return /* @__PURE__ */ import_react58.default.createElement(
+        return /* @__PURE__ */ import_react59.default.createElement(
           "div",
           {
             className: `overlaid-components-wrap ${className || ""}`,
             style: { position: "relative" }
           },
-          /* @__PURE__ */ import_react58.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
+          /* @__PURE__ */ import_react59.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
           this._renderOverlaidComponents()
         );
       }
@@ -277333,7 +277385,7 @@ var init_overlaid_components = __esm({
 var require_editor_api = __commonJS({
   "src/components/contenteditable/editor-api.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { DOMUtils: DOMUtils4 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var _React = require_react();
     var ExtendedSelection = require_extended_selection();
     var OverlaidComponents2 = null;
@@ -277343,7 +277395,7 @@ var require_editor_api = __commonJS({
         this._extendedSelection = new ExtendedSelection(this.rootNode);
       }
       wrapSelection(nodeName) {
-        const wrapped = DOMUtils4.wrap(
+        const wrapped = DOMUtils5.wrap(
           this._extendedSelection.getRangeAt(0),
           nodeName
         );
@@ -277351,17 +277403,17 @@ var require_editor_api = __commonJS({
         return this;
       }
       unwrapNodeAndSelectAll(node) {
-        const replacedNodes = DOMUtils4.unwrapNode(node);
+        const replacedNodes = DOMUtils5.unwrapNode(node);
         if (replacedNodes.length === 0) {
           return this;
         }
-        const first2 = DOMUtils4.findFirstTextNode(replacedNodes[0]);
-        const last2 = DOMUtils4.findLastTextNode(_4.last(replacedNodes));
+        const first2 = DOMUtils5.findFirstTextNode(replacedNodes[0]);
+        const last2 = DOMUtils5.findLastTextNode(_4.last(replacedNodes));
         this._extendedSelection.selectFromTo(first2, last2);
         return this;
       }
       regExpSelectorAll(regex) {
-        return DOMUtils4.regExpSelectorAll(this.rootNode, regex);
+        return DOMUtils5.regExpSelectorAll(this.rootNode, regex);
       }
       currentSelection() {
         return this._extendedSelection;
@@ -278720,7 +278772,7 @@ __export(nylas_exports_exports, {
   ContactStore: () => ContactStore,
   ContenteditableExtension: () => ContenteditableExtension,
   CustomContenteditableComponents: () => CustomContenteditableComponents2,
-  DOMUtils: () => DOMUtils3,
+  DOMUtils: () => DOMUtils4,
   DatabaseStore: () => DatabaseStore4,
   DateUtils: () => DateUtils,
   DefaultClientHelper: () => DefaultClientHelper,
@@ -278764,12 +278816,12 @@ __export(nylas_exports_exports, {
   QueryResultSet: () => QueryResultSet2,
   QuerySubscription: () => QuerySubscription2,
   QuotedHTMLTransformer: () => QuotedHTMLTransformer2,
-  React: () => React37,
-  ReactDOM: () => ReactDOM21,
+  React: () => React41,
+  ReactDOM: () => ReactDOM20,
   Reflux: () => Reflux,
   RegExpUtils: () => RegExpUtils3,
   ReprocessMailRulesTask: () => ReprocessMailRulesTask2,
-  Rx: () => Rx7,
+  Rx: () => Rx8,
   SanitizeTransformer: () => SanitizeTransformer2,
   SearchIndexScheduler: () => SearchIndexScheduler2,
   SearchQueryParser: () => SearchQueryParser2,
@@ -278785,16 +278837,16 @@ __export(nylas_exports_exports, {
   SystemStartService: () => SystemStartService2,
   Task: () => Task2,
   TaskFactory: () => TaskFactory2,
-  TaskQueue: () => TaskQueue2,
-  TaskQueueStatusStore: () => TaskQueueStatusStore5,
+  TaskQueue: () => TaskQueue3,
+  TaskQueueStatusStore: () => TaskQueueStatusStore2,
   Thread: () => Thread3,
   UndoRedoStore: () => UndoRedoStore2,
-  Utils: () => Utils12,
+  Utils: () => Utils13,
   VirtualDOMUtils: () => VirtualDOMUtils2,
   WorkspaceStore: () => WorkspaceStore2,
   default: () => nylas_exports_default
 });
-var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils3, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore2, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model11, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React37, ReactDOM21, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx7, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue2, TaskQueueStatusStore5, Thread3, UndoRedoStore2, Utils12, VirtualDOMUtils2, WorkspaceStore2;
+var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore2, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model11, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React41, ReactDOM20, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx8, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore2;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module26 = require("module");
@@ -279212,7 +279264,7 @@ var init_nylas_exports = __esm({
     );
     lazyLoadAndRegisterStore(
       `TaskQueueStatusStore`,
-      () => typeof require !== "undefined" && require.resolve ? require_task_queue_status_store().default || require_task_queue_status_store() : requireFromSrc2("../flux/stores/task-queue-status-store.js").default || requireFromSrc2("../flux/stores/task-queue-status-store.js")
+      () => typeof require !== "undefined" && require.resolve ? (init_task_queue_status_store(), __toCommonJS(task_queue_status_store_exports)).default || (init_task_queue_status_store(), __toCommonJS(task_queue_status_store_exports)) : requireFromSrc2("../flux/stores/task-queue-status-store.js").default || requireFromSrc2("../flux/stores/task-queue-status-store.js")
     );
     lazyLoadAndRegisterStore(
       `FolderSyncProgressStore`,
@@ -279458,7 +279510,7 @@ var init_nylas_exports = __esm({
     CustomContenteditableComponents2 = __lazy(
       "CustomContenteditableComponents"
     );
-    DOMUtils3 = __lazy("DOMUtils");
+    DOMUtils4 = __lazy("DOMUtils");
     DatabaseStore4 = __lazy("DatabaseStore");
     DateUtils = __lazy("DateUtils");
     DefaultClientHelper = __lazy("DefaultClientHelper");
@@ -279502,12 +279554,12 @@ var init_nylas_exports = __esm({
     QueryResultSet2 = __lazy("QueryResultSet");
     QuerySubscription2 = __lazy("QuerySubscription");
     QuotedHTMLTransformer2 = __lazy("QuotedHTMLTransformer");
-    React37 = __lazy("React");
-    ReactDOM21 = __lazy("ReactDOM");
+    React41 = __lazy("React");
+    ReactDOM20 = __lazy("ReactDOM");
     Reflux = __lazy("Reflux");
     RegExpUtils3 = __lazy("RegExpUtils");
     ReprocessMailRulesTask2 = __lazy("ReprocessMailRulesTask");
-    Rx7 = __lazy("Rx");
+    Rx8 = __lazy("Rx");
     SanitizeTransformer2 = __lazy("SanitizeTransformer");
     SearchIndexScheduler2 = __lazy("SearchIndexScheduler");
     SearchQueryParser2 = __lazy("SearchQueryParser");
@@ -279523,11 +279575,11 @@ var init_nylas_exports = __esm({
     SystemStartService2 = __lazy("SystemStartService");
     Task2 = __lazy("Task");
     TaskFactory2 = __lazy("TaskFactory");
-    TaskQueue2 = __lazy("TaskQueue");
-    TaskQueueStatusStore5 = __lazy("TaskQueueStatusStore");
+    TaskQueue3 = __lazy("TaskQueue");
+    TaskQueueStatusStore2 = __lazy("TaskQueueStatusStore");
     Thread3 = __lazy("Thread");
     UndoRedoStore2 = __lazy("UndoRedoStore");
-    Utils12 = __lazy("Utils");
+    Utils13 = __lazy("Utils");
     VirtualDOMUtils2 = __lazy("VirtualDOMUtils");
     WorkspaceStore2 = __lazy("WorkspaceStore");
   }
@@ -279836,12 +279888,11 @@ var category_store_exports = {};
 __export(category_store_exports, {
   default: () => category_store_default
 });
-var import_rx_lite6, import_nylas_store24, import_nylas_observables2, _standardCategoryNames, getStandardCategoryNames, asAccount, asAccountId, CategoryStore3, category_store_default;
+var import_nylas_store25, import_nylas_observables2, _standardCategoryNames, getStandardCategoryNames, asAccount, asAccountId, CategoryStore3, category_store_default;
 var init_category_store = __esm({
   "src/flux/stores/category-store.js"() {
     init_index_all();
-    import_rx_lite6 = __toESM(require_rx_lite());
-    import_nylas_store24 = __toESM(require_nylas_store());
+    import_nylas_store25 = __toESM(require_nylas_store());
     init_account_store();
     init_account();
     import_nylas_observables2 = __toESM(require_nylas_observables());
@@ -279867,7 +279918,7 @@ var init_category_store = __esm({
         return a;
       }
     };
-    CategoryStore3 = class extends import_nylas_store24.default {
+    CategoryStore3 = class extends import_nylas_store25.default {
       constructor() {
         super();
         this.getStandardCategory = this.getStandardCategory.bind(this);
@@ -280061,10 +280112,10 @@ var require_workspace_store = __commonJS({
     var _AccountStore = (init_account_store(), __toCommonJS(account_store_exports)).default;
     var _CategoryStore = (init_category_store(), __toCommonJS(category_store_exports));
     var _MailboxPerspective = require_mailbox_perspective();
-    var NylasStore26 = require_nylas_store().default || require_nylas_store();
+    var NylasStore27 = require_nylas_store().default || require_nylas_store();
     var Sheet = {};
     var Location = {};
-    var WorkspaceStore5 = class _WorkspaceStore extends NylasStore26 {
+    var WorkspaceStore5 = class _WorkspaceStore extends NylasStore27 {
       static initClass() {
         _WorkspaceStore.prototype.triggerDebounced = _4.debounce(function() {
           return this.trigger(this);
@@ -280383,26 +280434,26 @@ var require_workspace_store = __commonJS({
 // src/sheet.jsx
 var require_sheet = __commonJS({
   "src/sheet.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var React46 = require_react();
+    var import_prop_types65 = __toESM(require_prop_types());
+    var React50 = require_react();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var Flexbox2 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
+    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var InjectedComponentSet4 = require_injected_component_set();
     var ResizableRegion2 = require_resizable_region();
     var FLEX = 1e4;
-    var Sheet = class _Sheet extends React46.Component {
+    var Sheet = class _Sheet extends React50.Component {
       static initClass() {
         _Sheet.displayName = "Sheet";
         _Sheet.propTypes = {
-          data: import_prop_types64.default.object.isRequired,
-          depth: import_prop_types64.default.number.isRequired,
-          onColumnSizeChanged: import_prop_types64.default.func
+          data: import_prop_types65.default.object.isRequired,
+          depth: import_prop_types65.default.number.isRequired,
+          onColumnSizeChanged: import_prop_types65.default.func
         };
         _Sheet.defaultProps = { onColumnSizeChanged() {
         } };
-        _Sheet.childContextTypes = { sheetDepth: import_prop_types64.default.number };
+        _Sheet.childContextTypes = { sheetDepth: import_prop_types65.default.number };
       }
       getChildContext() {
         return { sheetDepth: this.props.depth };
@@ -280458,7 +280509,7 @@ var require_sheet = __commonJS({
           height: "100%",
           zIndex: 1
         };
-        return React46.createElement(
+        return React50.createElement(
           "div",
           {
             name: "Sheet",
@@ -280466,8 +280517,8 @@ var require_sheet = __commonJS({
             className: `sheet mode-${this.state.mode}`,
             "data-id": this.props.data.id
           },
-          React46.createElement(
-            Flexbox2,
+          React50.createElement(
+            Flexbox3,
             { direction: "row", style: { overflow: "hidden" } },
             this._columnFlexboxElements()
           )
@@ -280477,7 +280528,7 @@ var require_sheet = __commonJS({
         return this.state.columns.map((column, idx) => {
           const { maxWidth, minWidth, handle, location: location2, width } = column;
           if (minWidth !== maxWidth && maxWidth < FLEX) {
-            return React46.createElement(
+            return React50.createElement(
               ResizableRegion2,
               {
                 key: `${this.props.data.id}:${idx}`,
@@ -280491,7 +280542,7 @@ var require_sheet = __commonJS({
                 maxWidth,
                 handle
               },
-              React46.createElement(InjectedComponentSet4, {
+              React50.createElement(InjectedComponentSet4, {
                 direction: "column",
                 matching: { location: location2, mode: this.state.mode }
               })
@@ -280507,7 +280558,7 @@ var require_sheet = __commonJS({
             } else {
               style.flex = 1;
             }
-            return React46.createElement(InjectedComponentSet4, {
+            return React50.createElement(InjectedComponentSet4, {
               direction: "column",
               key: `${this.props.data.id}:${idx}`,
               name: `${this.props.data.id}:${idx}`,
@@ -280592,28 +280643,28 @@ var require_sheet = __commonJS({
 // src/sheet-toolbar.jsx
 var require_sheet_toolbar = __commonJS({
   "src/sheet-toolbar.jsx"(exports2, module2) {
-    var import_prop_types64 = __toESM(require_prop_types());
-    var React46 = require_react();
-    var ReactDOM27 = require_react_dom();
+    var import_prop_types65 = __toESM(require_prop_types());
+    var React50 = require_react();
+    var ReactDOM26 = require_react_dom();
     var _Sheet = require_sheet();
-    var Flexbox2 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
+    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var RetinaImg5 = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var Utils23 = require_utils();
+    var Utils24 = require_utils();
     var { remote: remote9 } = require("electron");
     var _str3 = require_underscore();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var ToolbarSpacer = class _ToolbarSpacer extends React46.Component {
+    var ToolbarSpacer = class _ToolbarSpacer extends React50.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         super(...args);
       }
       static initClass() {
         _ToolbarSpacer.displayName = "ToolbarSpacer";
-        _ToolbarSpacer.propTypes = { order: import_prop_types64.default.number };
+        _ToolbarSpacer.propTypes = { order: import_prop_types65.default.number };
       }
       render() {
-        return React46.createElement("div", {
+        return React50.createElement("div", {
           className: "item-spacer",
           style: {
             flex: 1,
@@ -280623,7 +280674,7 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarSpacer.initClass();
-    var WindowTitle = class _WindowTitle extends React46.Component {
+    var WindowTitle = class _WindowTitle extends React50.Component {
       static initClass() {
         _WindowTitle.displayName = "WindowTitle";
       }
@@ -280640,7 +280691,7 @@ var require_sheet_toolbar = __commonJS({
         return typeof this.unlisten === "function" ? this.unlisten() : void 0;
       }
       render() {
-        return React46.createElement(
+        return React50.createElement(
           "div",
           { className: "window-title" },
           this.state.title
@@ -280650,7 +280701,7 @@ var require_sheet_toolbar = __commonJS({
     WindowTitle.initClass();
     var Category4 = null;
     var FocusedPerspectiveStore4 = null;
-    var ToolbarBack = class _ToolbarBack extends React46.Component {
+    var ToolbarBack = class _ToolbarBack extends React50.Component {
       static initClass() {
         _ToolbarBack.displayName = "ToolbarBack";
       }
@@ -280691,18 +280742,18 @@ var require_sheet_toolbar = __commonJS({
         } else {
           title = "Back";
         }
-        return React46.createElement(
+        return React50.createElement(
           "div",
           {
             className: "item-back",
             onClick: this._onClick,
             title: `Return to ${title}`
           },
-          React46.createElement(RetinaImg5, {
+          React50.createElement(RetinaImg5, {
             name: "sheet-back.png",
             mode: RetinaImg5.Mode.ContentIsMask
           }),
-          React46.createElement("div", { className: "item-back-title" }, title)
+          React50.createElement("div", { className: "item-back-title" }, title)
         );
       }
       _onClick() {
@@ -280710,7 +280761,7 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarBack.initClass();
-    var ToolbarWindowControls = class _ToolbarWindowControls extends React46.Component {
+    var ToolbarWindowControls = class _ToolbarWindowControls extends React50.Component {
       static initClass() {
         _ToolbarWindowControls.displayName = "ToolbarWindowControls";
       }
@@ -280736,27 +280787,27 @@ var require_sheet_toolbar = __commonJS({
         }
       }
       render() {
-        return React46.createElement(
+        return React50.createElement(
           "div",
           {
             name: "ToolbarWindowControls",
             className: `toolbar-window-controls alt-${this.state.alt}`
           },
-          React46.createElement("button", {
+          React50.createElement("button", {
             tabIndex: -1,
             className: "close",
             onClick() {
               return NylasEnv.close();
             }
           }),
-          React46.createElement("button", {
+          React50.createElement("button", {
             tabIndex: -1,
             className: "minimize",
             onClick() {
               return NylasEnv.minimize();
             }
           }),
-          React46.createElement("button", {
+          React50.createElement("button", {
             tabIndex: -1,
             className: "maximize",
             onClick: this._onMaximize
@@ -280777,7 +280828,7 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarWindowControls.initClass();
-    var ToolbarMenuControl = class _ToolbarMenuControl extends React46.Component {
+    var ToolbarMenuControl = class _ToolbarMenuControl extends React50.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
         this._openMenu = this._openMenu.bind(this);
@@ -280787,13 +280838,13 @@ var require_sheet_toolbar = __commonJS({
         _ToolbarMenuControl.displayName = "ToolbarMenuControl";
       }
       render() {
-        return React46.createElement(
+        return React50.createElement(
           "div",
           { className: "toolbar-menu-control" },
-          React46.createElement(
+          React50.createElement(
             "button",
             { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
-            React46.createElement(RetinaImg5, {
+            React50.createElement(RetinaImg5, {
               name: "windows-menu-icon.png",
               mode: RetinaImg5.Mode.ContentIsMask
             })
@@ -280812,14 +280863,14 @@ var require_sheet_toolbar = __commonJS({
     ComponentRegistry2.register(ToolbarMenuControl, {
       location: WorkspaceStore5.Sheet.Global.Toolbar.Right
     });
-    var Toolbar = class _Toolbar extends React46.Component {
+    var Toolbar = class _Toolbar extends React50.Component {
       static initClass() {
         _Toolbar.displayName = "Toolbar";
         _Toolbar.propTypes = {
-          data: import_prop_types64.default.object,
-          depth: import_prop_types64.default.number
+          data: import_prop_types65.default.object,
+          depth: import_prop_types65.default.number
         };
-        _Toolbar.childContextTypes = { sheetDepth: import_prop_types64.default.number };
+        _Toolbar.childContextTypes = { sheetDepth: import_prop_types65.default.number };
       }
       getChildContext() {
         return { sheetDepth: this.props.depth };
@@ -280867,7 +280918,7 @@ var require_sheet_toolbar = __commonJS({
         return window.requestAnimationFrame(() => this.recomputeLayout());
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils23.isEqualReact(nextProps, this.props) || !Utils23.isEqualReact(nextState, this.state);
+        return !Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state);
       }
       render() {
         const style = {
@@ -280877,7 +280928,7 @@ var require_sheet_toolbar = __commonJS({
           zIndex: 1
         };
         const toolbars = this.state.columns.map((components, idx) => {
-          return React46.createElement(
+          return React50.createElement(
             "div",
             {
               style: { position: "absolute", top: 0, display: "none" },
@@ -280888,7 +280939,7 @@ var require_sheet_toolbar = __commonJS({
             this._flexboxForComponents(components)
           );
         });
-        return React46.createElement(
+        return React50.createElement(
           "div",
           {
             style,
@@ -280900,24 +280951,24 @@ var require_sheet_toolbar = __commonJS({
       }
       _flexboxForComponents(components) {
         const elements = components.map((Component20) => {
-          return React46.createElement(
+          return React50.createElement(
             Component20,
             Object.assign({ key: Component20.displayName }, this.props)
           );
         });
-        return React46.createElement(
-          Flexbox2,
+        return React50.createElement(
+          Flexbox3,
           { className: "item-container", direction: "row" },
           elements,
-          React46.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
-          React46.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
+          React50.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
+          React50.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
         );
       }
       recomputeLayout() {
         if (!this.mounted) {
           return;
         }
-        const el = ReactDOM27.findDOMNode(this);
+        const el = ReactDOM26.findDOMNode(this);
         const columnToolbarEls = el.querySelectorAll("[data-column]");
         const sheet = document.querySelectorAll("[name='Sheet']")[this.props.depth];
         if (!sheet) {
@@ -281006,18 +281057,18 @@ var require_sheet_toolbar = __commonJS({
 // src/sheet-container.jsx
 var require_sheet_container = __commonJS({
   "src/sheet-container.jsx"(exports2, module2) {
-    var React46 = require_react();
+    var React50 = require_react();
     var ReactCSSTransitionGroup2 = (init_css_transition_group_compat(), __toCommonJS(css_transition_group_compat_exports));
     var Sheet = require_sheet();
     var Toolbar = require_sheet_toolbar();
-    var Flexbox2 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
+    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
     var InjectedComponentSet4 = require_injected_component_set();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var SheetContainer2 = (() => {
       let _displayName;
-      SheetContainer2 = class SheetContainer extends React46.Component {
+      SheetContainer2 = class SheetContainer extends React50.Component {
         static initClass() {
           _displayName = "SheetContainer";
         }
@@ -281046,21 +281097,21 @@ var require_sheet_container = __commonJS({
           const totalSheets = this.state.stack.length;
           const topSheet = this.state.stack[totalSheets - 1];
           if (!topSheet) {
-            return React46.createElement("div", null);
+            return React50.createElement("div", null);
           }
           const sheetElements = this._sheetElements();
-          return React46.createElement(
-            Flexbox2,
+          return React50.createElement(
+            Flexbox3,
             {
               direction: "column",
               className: `layout-mode-${this.state.mode}`,
               style: { overflow: "hidden" }
             },
             this._toolbarContainerElement(),
-            React46.createElement(
+            React50.createElement(
               "div",
               { name: "Header", style: { order: 1, zIndex: 2 } },
-              React46.createElement(InjectedComponentSet4, {
+              React50.createElement(InjectedComponentSet4, {
                 matching: {
                   locations: [topSheet.Header, WorkspaceStore5.Sheet.Global.Header]
                 },
@@ -281068,14 +281119,14 @@ var require_sheet_container = __commonJS({
                 id: topSheet.id
               })
             ),
-            React46.createElement(
+            React50.createElement(
               "div",
               {
                 name: "Center",
                 style: { order: 2, flex: 1, position: "relative", zIndex: 1 }
               },
               sheetElements[0],
-              React46.createElement(
+              React50.createElement(
                 ReactCSSTransitionGroup2,
                 {
                   transitionLeaveTimeout: 125,
@@ -281085,10 +281136,10 @@ var require_sheet_container = __commonJS({
                 sheetElements.slice(1)
               )
             ),
-            React46.createElement(
+            React50.createElement(
               "div",
               { name: "Footer", style: { order: 3, zIndex: 4 } },
-              React46.createElement(InjectedComponentSet4, {
+              React50.createElement(InjectedComponentSet4, {
                 matching: {
                   locations: [topSheet.Footer, WorkspaceStore5.Sheet.Global.Footer]
                 },
@@ -281104,7 +281155,7 @@ var require_sheet_container = __commonJS({
             return [];
           }
           const toolbarElements = this._toolbarElements();
-          return React46.createElement(
+          return React50.createElement(
             "div",
             {
               name: "Toolbar",
@@ -281112,7 +281163,7 @@ var require_sheet_container = __commonJS({
               className: "sheet-toolbar"
             },
             toolbarElements[0],
-            React46.createElement(
+            React50.createElement(
               ReactCSSTransitionGroup2,
               {
                 transitionLeaveTimeout: 125,
@@ -281125,7 +281176,7 @@ var require_sheet_container = __commonJS({
         }
         _toolbarElements() {
           return this.state.stack.map(
-            (sheet, index) => React46.createElement(Toolbar, {
+            (sheet, index) => React50.createElement(Toolbar, {
               data: sheet,
               ref: `toolbar-${index}`,
               key: `${index}:${sheet.id}:toolbar`,
@@ -281135,7 +281186,7 @@ var require_sheet_container = __commonJS({
         }
         _sheetElements() {
           return this.state.stack.map((sheet, index) => {
-            return React46.createElement(Sheet, {
+            return React50.createElement(Sheet, {
               data: sheet,
               depth: index,
               key: `${index}:${sheet.id}`,
@@ -281188,8 +281239,8 @@ var import_theme_manager = __toESM(require_theme_manager());
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
 var import_workspace_store3 = __toESM(require_workspace_store());
-var import_react59 = __toESM(require_react());
-var import_react_dom28 = __toESM(require_react_dom());
+var import_react60 = __toESM(require_react());
+var import_react_dom27 = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
 init_nylas_exports();
 init_nylas_component_kit();
@@ -282145,7 +282196,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.item.setAttribute("id", "sheet-container");
     this.item.setAttribute("class", "sheet-container");
     this.item.setAttribute("tabIndex", "-1");
-    import_react_dom28.default.render(import_react59.default.createElement(import_sheet_container.default), this.item);
+    import_react_dom27.default.render(import_react60.default.createElement(import_sheet_container.default), this.item);
     return document.querySelector(this.workspaceViewParentSelector).appendChild(this.item);
   }
   deserializePackageStates() {

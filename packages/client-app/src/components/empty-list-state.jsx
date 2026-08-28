@@ -13,7 +13,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import RetinaImg from "./retina-img.jsx";
-import _EventedIFrame from "./evented-iframe.jsx";
 import {
 	FolderSyncProgressStore,
 	FocusedPerspectiveStore,

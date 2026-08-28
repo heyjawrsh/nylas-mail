@@ -7,12 +7,9 @@
  */
 import PropTypes from "prop-types";
 let KeyManager;
-import { Utils, React, Actions } from "nylas-exports";
 import PGPKeyStore from "./pgp-key-store";
 import KeybaseUser from "./keybase-user";
 import PassphrasePopover from "./passphrase-popover";
-import _kb from "./keybase";
-import _ from "underscore";
 import pgp from "kbpgp";
 import fs from "node:fs";
 

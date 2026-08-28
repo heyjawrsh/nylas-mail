@@ -13,9 +13,7 @@ import React from "react";
 import ReactCSSTransitionGroup from "./css-transition-group-compat.jsx";
 import _ from "underscore";
 
-import { Utils, Actions } from "nylas-exports";
 import InjectedComponentSet from "./injected-component-set.jsx";
-import _Flexbox from "./flexbox.jsx";
 
 /*
 Public: MultiselectActionBar is a simple component that can be placed in a {Sheet} Toolbar.

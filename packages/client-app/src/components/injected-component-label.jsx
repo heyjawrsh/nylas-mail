@@ -29,7 +29,7 @@ export default class InjectedComponentLabel extends React.Component {
 				continue;
 			}
 			propDescriptions.push(
-				`${key}:<${val.constructor ? val.constructor.name : typeof val}>`,
+				`${key}:<${val?.constructor ? val.constructor.name : typeof val}>`,
 			);
 		}
 
