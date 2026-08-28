@@ -423,3 +423,21 @@ Cumulative: **0.32% → 24.87%** lines, 11 → 1,437 tests, eight swarm rounds.
 Remaining to 60% gate: ~35 points ≈ 25+ rounds at current mix — or a shift
 in strategy (the remaining mass is React components needing rendering
 harnesses at scale, which the workers now do competently).
+
+
+## Loop 24 — Coverage round 9: internal packages (commit b213196b1)
+
+client-app: 24.87% → **25.83% lines** (1,596 tests, 89/89 files green).
+First round targeting `internal_packages/` — the thread-list, account-
+sidebar, message-list, draft-list, thread-snooze, composer families, plus
+calendar/contenteditable deep specs.
+
+The internal packages carry the same two debts the core components did:
+bind-before-super constructors (a 12+ file sweep, including the multiline
+wrapped form that escaped earlier regexes) and CJS sources that vi.mock
+can't intercept. Both are now swept systematically.
+
+Cumulative: **0.32% → 25.83%** lines, 11 → 1,596 tests, nine swarm rounds.
+Remaining to 60%: ~34 points. The uncovered mass is now mostly React
+components and their stores — exactly what the workers are producing specs
+for at ~1 pt/round. Mechanical, stable, continuing.
