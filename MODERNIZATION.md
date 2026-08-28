@@ -691,3 +691,15 @@ account edges (15), delta-streaming-connection (11).
 
 Cumulative: **0.32% → 47.34%**, 11 → 3,166 tests, twenty-three swarm
 rounds. ~12.7 points (~2,930 lines) remain.
+
+
+## Loop 39 — editor-api ESM + suite stability (commit 9c7a59c2e)
+
+**47.45% lines** (3,232 tests). editor-api's 66-test spec was silently
+skipping — the CJS dynamic import crashed the worker fork (all tests
+collected, none run, zero coverage). ESM conversion executed them all.
+Second default-vs-named mock race found and fixed in
+nylas-env-delegation; both flake classes now have named remediation
+patterns.
+
+~12.5 points (~2,910 lines) remain to 60%.
