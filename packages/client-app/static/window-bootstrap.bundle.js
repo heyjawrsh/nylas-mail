@@ -199312,7 +199312,9 @@ var require_dom_utils = __commonJS({
           return null;
         }
         if (node.childNodes.length > 0) {
-          return DOMUtils5.lastNode(node.childNodes[node.childNodes.length - 1]);
+          return DOMUtils5.lastDescendent(
+            node.childNodes[node.childNodes.length - 1]
+          );
         } else {
           return null;
         }

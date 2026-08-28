@@ -464,7 +464,9 @@ var DOMUtils = {
 			return null;
 		}
 		if (node.childNodes.length > 0) {
-			return DOMUtils.lastNode(node.childNodes[node.childNodes.length - 1]);
+			return DOMUtils.lastDescendent(
+				node.childNodes[node.childNodes.length - 1],
+			);
 		} else {
 			return null;
 		}
