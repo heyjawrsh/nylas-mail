@@ -40,6 +40,7 @@ Section: Component Kit
 */
 class EventedIFrame extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);

@@ -27,12 +27,12 @@ const idPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 // the `value` prop to update the value again.
 class FormItem extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this._renderError = this._renderError.bind(this);
 		this._isDisabled = this._isDisabled.bind(this);
 		this._renderInput = this._renderInput.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -273,6 +273,7 @@ FormItem.initClass();
 
 class GeneratedFieldset extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this._renderHeader = this._renderHeader.bind(this);
@@ -280,7 +281,6 @@ class GeneratedFieldset extends React.Component {
 		this._propsFromFormItemData = this._propsFromFormItemData.bind(this);
 		this._onChangeItem = this._onChangeItem.bind(this);
 		this._renderFooter = this._renderFooter.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -450,6 +450,7 @@ GeneratedFieldset.initClass();
 
 class GeneratedForm extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this._onKeyDown = this._onKeyDown.bind(this);
@@ -459,7 +460,6 @@ class GeneratedForm extends React.Component {
 		this._currentFormValues = this._currentFormValues.bind(this);
 		this._propsFromFieldsetData = this._propsFromFieldsetData.bind(this);
 		this._onChangeFieldset = this._onChangeFieldset.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

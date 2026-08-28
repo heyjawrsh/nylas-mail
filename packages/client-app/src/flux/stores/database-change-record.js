@@ -1,5 +1,4 @@
-const Utils =
-	require("../models/utils.js").default || require("../models/utils.js");
+import Utils from "../models/utils.js";
 
 /*
 DatabaseChangeRecord is the object emitted from the DatabaseStore when it triggers.
@@ -59,5 +58,4 @@ class DatabaseChangeRecord {
 	}
 }
 
-module.exports = DatabaseChangeRecord;
-module.exports.default = DatabaseChangeRecord;
+export default DatabaseChangeRecord;

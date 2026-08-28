@@ -14,11 +14,11 @@ import { Utils } from "nylas-exports";
 
 class ListTabularItem extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._columns = this._columns.bind(this);
 		this._onClick = this._onClick.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

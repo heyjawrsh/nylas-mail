@@ -3,8 +3,8 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const NylasObservables = require("nylas-observables");
-const { Template } = require("./components/scenario-editor-models.js");
+import NylasObservables from "nylas-observables";
+import { Template } from "./components/scenario-editor-models.js";
 
 const ConditionTemplates = [
 	new Template("from", Template.Type.String, {
@@ -107,7 +107,7 @@ const ActionTemplates = [
 	new Template("star", Template.Type.None, { name: "Star" }),
 ];
 
-module.exports = {
+const __tplExports = {
 	ConditionMode: {
 		Any: "any",
 		All: "all",
@@ -178,4 +178,13 @@ module.exports = {
 
 		return templates;
 	},
+};
+
+// ESM named surface for ESM importers (CJS module.exports stays authoritative).
+const __templatesNS = __tplExports;
+const __ConditionMode = __templatesNS.ConditionMode;
+const __ConditionTemplates = __templatesNS.ConditionTemplates;
+export {
+	__ConditionMode as ConditionMode,
+	__ConditionTemplates as ConditionTemplates,
 };

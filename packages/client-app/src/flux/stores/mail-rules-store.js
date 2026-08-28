@@ -6,16 +6,16 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const NylasStore = require("nylas-store").default || require("nylas-store");
-const _ = require("underscore");
-const Rx = require("rx-lite");
-const _AccountStore = require("./account-store.js").default;
-const DatabaseStore = require("./database-store.js").default;
-const TaskQueueStatusStore = require("./task-queue-status-store.js");
+import NylasStore from "nylas-store";
+import _ from "underscore";
+import Rx from "rx-lite";
+import _AccountStore from "./account-store.js";
+import DatabaseStore from "./database-store.js";
+import TaskQueueStatusStore from "./task-queue-status-store.js";
 const ReprocessMailRulesTask =
 	require("../tasks/reprocess-mail-rules-task.js").default;
-const Utils = require("../models/utils.js");
-const Actions = require("../actions.js").default;
+import Utils from "../models/utils.js";
+import Actions from "../actions.js";
 
 const {
 	ConditionMode,

@@ -13,10 +13,10 @@ import ReactDOM from "react-dom";
 
 class TabGroupRegion extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this._onKeyDown = this._onKeyDown.bind(this);
 		this.shiftFocus = this.shiftFocus.bind(this);
 		this.getChildContext = this.getChildContext.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

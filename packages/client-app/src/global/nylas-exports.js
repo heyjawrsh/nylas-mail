@@ -173,6 +173,12 @@ lazyLoad(
 		requireFromSrc("../package-manager.js").default ||
 		requireFromSrc("../package-manager.js"),
 );
+lazyLoad(
+	`DatabaseChangeRecord`,
+	() =>
+		requireFromSrc("../flux/stores/database-change-record.js").default ||
+		requireFromSrc("../flux/stores/database-change-record.js"),
+);
 // The Database
 lazyLoad(`Matcher`, () =>
 	typeof require !== "undefined" && require.resolve

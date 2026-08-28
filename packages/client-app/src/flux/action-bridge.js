@@ -6,9 +6,10 @@ const getDatabaseStore = () => {
 	const DB = globalThis.$n?.DatabaseStore;
 	return DB?.default || DB;
 };
-const DatabaseChangeRecord =
-	require("./stores/database-change-record.js").default ||
-	require("./stores/database-change-record.js");
+const getDatabaseChangeRecord = () => {
+	const DCR = globalThis.$n?.DatabaseChangeRecord;
+	return DCR?.default || DCR;
+};
 
 const Utils =
 	require("./models/utils.js").default || require("./models/utils.js");
@@ -142,7 +143,7 @@ class ActionBridge {
 			if (name === Message.DATABASE_STORE_TRIGGER) {
 				const DB = getDatabaseStore();
 				DB.triggeringFromActionBridge = true;
-				DB.trigger(new DatabaseChangeRecord(args[0]));
+				DB.trigger(new (getDatabaseChangeRecord())(args[0]));
 				DatabaseStore.triggeringFromActionBridge = false;
 			} else if (Actions[name]) {
 				Actions[name].firing = true;

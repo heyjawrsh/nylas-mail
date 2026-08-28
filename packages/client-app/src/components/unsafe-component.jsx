@@ -36,6 +36,7 @@ Section: Component Kit
 */
 class UnsafeComponent extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
@@ -46,7 +47,6 @@ class UnsafeComponent extends React.Component {
 		this.focus = this.focus.bind(this);
 		this.blur = this.blur.bind(this);
 		this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

@@ -8,17 +8,17 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const ReactDOM = require("react-dom");
-const classNames = require("classnames");
-const RetinaImg = require("./retina-img.jsx").default;
-const _EventedIFrame = require("./evented-iframe.jsx");
-const {
+import _ from "underscore";
+import React from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
+import RetinaImg from "./retina-img.jsx";
+import _EventedIFrame from "./evented-iframe.jsx";
+import {
 	FolderSyncProgressStore,
 	FocusedPerspectiveStore,
-} = require("nylas-exports");
-const { SyncingListState } = require("nylas-component-kit");
+} from "nylas-exports";
+import { SyncingListState } from "nylas-component-kit";
 
 const INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
 
@@ -62,9 +62,9 @@ EmptyPerspectiveState.initClass();
 
 class EmptyInboxState extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this._getScalingFactor = this._getScalingFactor.bind(this);
 		this._getAnimationName = this._getAnimationName.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
