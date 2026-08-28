@@ -703,3 +703,17 @@ nylas-env-delegation; both flake classes now have named remediation
 patterns.
 
 ~12.5 points (~2,910 lines) remain to 60%.
+
+
+## Loop 40 — Coverage round 24: fifth-round sweep (commit 0dfbf29c2)
+
+client-app: 47.45% → **47.72% lines** (3,328 tests, 168/168 files green).
+
+The bridge itself (nylas-exports lazyLoad machinery, 27 tests) is now
+under test, plus dom-utils third (33), kit registration (20), and fifth
+specs on env/account/pm. Returns are flattening — the remaining ~2,860
+lines are concentrated in native-CJS boot files (browser/*, module-cache,
+apm-wrapper, buffered-process) that resist unit interception by design.
+
+Cumulative: **0.32% → 47.72%**, 11 → 3,328 tests, twenty-four swarm
+rounds. 12.3 points remain.
