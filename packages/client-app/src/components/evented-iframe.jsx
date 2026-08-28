@@ -8,8 +8,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const ReactDOM = require("react-dom");
+import React from "react";
+import ReactDOM from "react-dom";
 const {
 	Utils,
 	RegExpUtils,
@@ -18,8 +18,8 @@ const {
 	SearchableComponentStore,
 } = require("nylas-exports");
 import IFrameSearcher from "../searchable-components/iframe-searcher.js";
-const url = require("node:url");
-const _ = require("underscore");
+import * as url from "node:url";
+import _ from "underscore";
 
 /*
 Public: EventedIFrame is a thin wrapper around the DOM's standard `<iframe>` element.
@@ -41,6 +41,7 @@ Section: Component Kit
 class EventedIFrame extends React.Component {
 	constructor(...args) {
 		super(...args);
+		this._nodeRef = React.createRef();
 		this.render = this.render.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -78,7 +79,7 @@ class EventedIFrame extends React.Component {
 		);
 		return React.createElement(
 			"iframe",
-			Object.assign({ seamless: "seamless" }, otherProps),
+			Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps),
 		);
 	}
 
@@ -90,7 +91,7 @@ class EventedIFrame extends React.Component {
 			);
 			SearchableComponentStore.registerSearchRegion(
 				this._regionId,
-				ReactDOM.findDOMNode(this),
+				this._nodeRef.current,
 			);
 		}
 		return this._subscribeToIFrameEvents();
@@ -108,7 +109,7 @@ class EventedIFrame extends React.Component {
 		if (this.props.searchable) {
 			return SearchableComponentStore.registerSearchRegion(
 				this._regionId,
-				ReactDOM.findDOMNode(this),
+				this._nodeRef.current,
 			);
 		}
 	}
@@ -131,14 +132,14 @@ class EventedIFrame extends React.Component {
 
 	setHeightQuietly(height) {
 		this._ignoreNextResize = true;
-		return (ReactDOM.findDOMNode(this).height = `${height}px`);
+		return (this._nodeRef.current.height = `${height}px`);
 	}
 
 	_onSearchableStoreChange() {
 		if (!this.props.searchable) {
 			return;
 		}
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._nodeRef.current;
 		const doc =
 			(node.contentDocument != null ? node.contentDocument.body : undefined) !=
 			null
@@ -166,7 +167,7 @@ class EventedIFrame extends React.Component {
 	}
 
 	_unsubscribeFromIFrameEvents() {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._nodeRef.current;
 		const doc = node.contentDocument;
 		if (!doc) {
 			return;
@@ -190,7 +191,7 @@ class EventedIFrame extends React.Component {
 	}
 
 	_subscribeToIFrameEvents() {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._nodeRef.current;
 		const doc = node.contentDocument;
 		return _.defer(() => {
 			doc.addEventListener("click", this._onIFrameClick);
@@ -226,7 +227,7 @@ class EventedIFrame extends React.Component {
 	}
 
 	_onIFrameBlur(_event) {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._nodeRef.current;
 		return node.contentWindow.getSelection().empty();
 	}
 
@@ -309,7 +310,7 @@ class EventedIFrame extends React.Component {
 	}
 
 	_onIFrameMouseEvent(event) {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._nodeRef.current;
 		const nodeRect = node.getBoundingClientRect();
 
 		const eventAttrs = {};
@@ -358,7 +359,7 @@ class EventedIFrame extends React.Component {
 
 		Object.defineProperty(eventInParentDoc, "which", { value: event.which });
 
-		return ReactDOM.findDOMNode(this).dispatchEvent(eventInParentDoc);
+		return this._nodeRef.current.dispatchEvent(eventInParentDoc);
 	}
 
 	_onIFrameContextualMenu(event) {
@@ -471,7 +472,7 @@ class EventedIFrame extends React.Component {
 
 		// Menu actions for text
 		let text = "";
-		const selection = ReactDOM.findDOMNode(this).contentDocument.getSelection();
+		const selection = this._nodeRef.current.contentDocument.getSelection();
 		if (selection.rangeCount > 0) {
 			const range = selection.getRangeAt(0);
 			text = range.toString();

@@ -103,6 +103,7 @@ class Token extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.fieldDropTargetRef = React.createRef();
 		this.state = {
 			editing: false,
 			editingValue: this.props.item.toString(),
@@ -981,7 +982,7 @@ export default class TokenizingTextField extends React.Component {
 		return (
 			<KeyCommandsRegion
 				key="field-component"
-				ref="field-drop-target"
+				ref={this.fieldDropTargetRef}
 				localHandlers={{
 					"core:select-all": this._onSelectAll,
 				}}

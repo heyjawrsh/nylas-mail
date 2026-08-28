@@ -214131,9 +214131,11 @@ var require_iframe_searcher = __commonJS({
 var require_evented_iframe = __commonJS({
   "src/components/evented-iframe.jsx"(exports2, module2) {
     var import_prop_types65 = __toESM(require_prop_types());
+    var import_react62 = __toESM(require_react());
+    var import_react_dom28 = __toESM(require_react_dom());
     var import_iframe_searcher = __toESM(require_iframe_searcher());
-    var React51 = require_react();
-    var ReactDOM26 = require_react_dom();
+    var url6 = __toESM(require("url"));
+    init_index_all();
     var {
       Utils: Utils25,
       RegExpUtils: RegExpUtils6,
@@ -214141,11 +214143,10 @@ var require_evented_iframe = __commonJS({
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var url6 = require("url");
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var EventedIFrame = class _EventedIFrame extends React51.Component {
+    var EventedIFrame = class _EventedIFrame extends import_react62.default.Component {
       constructor(...args) {
         super(...args);
+        this._nodeRef = import_react62.default.createRef();
         this.render = this.render.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -214177,9 +214178,9 @@ var require_evented_iframe = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return React51.createElement(
+        return import_react62.default.createElement(
           "iframe",
-          Object.assign({ seamless: "seamless" }, otherProps)
+          Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps)
         );
       }
       componentDidMount() {
@@ -214190,7 +214191,7 @@ var require_evented_iframe = __commonJS({
           );
           SearchableComponentStore2.registerSearchRegion(
             this._regionId,
-            ReactDOM26.findDOMNode(this)
+            this._nodeRef.current
           );
         }
         return this._subscribeToIFrameEvents();
@@ -214206,7 +214207,7 @@ var require_evented_iframe = __commonJS({
         if (this.props.searchable) {
           return SearchableComponentStore2.registerSearchRegion(
             this._regionId,
-            ReactDOM26.findDOMNode(this)
+            this._nodeRef.current
           );
         }
       }
@@ -214223,13 +214224,13 @@ var require_evented_iframe = __commonJS({
       }
       setHeightQuietly(height) {
         this._ignoreNextResize = true;
-        return ReactDOM26.findDOMNode(this).height = `${height}px`;
+        return this._nodeRef.current.height = `${height}px`;
       }
       _onSearchableStoreChange() {
         if (!this.props.searchable) {
           return;
         }
-        const node = ReactDOM26.findDOMNode(this);
+        const node = this._nodeRef.current;
         const doc = (node.contentDocument != null ? node.contentDocument.body : void 0) != null ? node.contentDocument != null ? node.contentDocument.body : void 0 : node.contentDocument;
         const searchIndex = SearchableComponentStore2.getCurrentRegionIndex(
           this._regionId
@@ -214247,7 +214248,7 @@ var require_evented_iframe = __commonJS({
         return this.lastSearchTerm = searchTerm;
       }
       _unsubscribeFromIFrameEvents() {
-        const node = ReactDOM26.findDOMNode(this);
+        const node = this._nodeRef.current;
         const doc = node.contentDocument;
         if (!doc) {
           return;
@@ -214270,9 +214271,9 @@ var require_evented_iframe = __commonJS({
         }
       }
       _subscribeToIFrameEvents() {
-        const node = ReactDOM26.findDOMNode(this);
+        const node = this._nodeRef.current;
         const doc = node.contentDocument;
-        return _4.defer(() => {
+        return index_default_default.defer(() => {
           doc.addEventListener("click", this._onIFrameClick);
           doc.addEventListener("keydown", this._onIFrameKeyEvent);
           doc.addEventListener("keypress", this._onIFrameKeyEvent);
@@ -214304,7 +214305,7 @@ var require_evented_iframe = __commonJS({
         return null;
       }
       _onIFrameBlur(_event) {
-        const node = ReactDOM26.findDOMNode(this);
+        const node = this._nodeRef.current;
         return node.contentWindow.getSelection().empty();
       }
       _onIFrameFocus(_event) {
@@ -214360,7 +214361,7 @@ var require_evented_iframe = __commonJS({
         return new RegExp(/^file:/i).test(href);
       }
       _onIFrameMouseEvent(event2) {
-        const node = ReactDOM26.findDOMNode(this);
+        const node = this._nodeRef.current;
         const nodeRect = node.getBoundingClientRect();
         const eventAttrs = {};
         for (var key of Array.from(Object.keys(event2))) {
@@ -214372,7 +214373,7 @@ var require_evented_iframe = __commonJS({
         return node.dispatchEvent(
           new MouseEvent(
             event2.type,
-            _4.extend({}, eventAttrs, {
+            index_default_default.extend({}, eventAttrs, {
               bubbles: true,
               clientX: event2.clientX + nodeRect.left,
               clientY: event2.clientY + nodeRect.top,
@@ -214400,10 +214401,10 @@ var require_evented_iframe = __commonJS({
           "keyCode",
           "which"
         ];
-        const eventInit = Object.assign({ bubbles: true }, _4.pick(event2, attrs));
+        const eventInit = Object.assign({ bubbles: true }, index_default_default.pick(event2, attrs));
         const eventInParentDoc = new KeyboardEvent(event2.type, eventInit);
         Object.defineProperty(eventInParentDoc, "which", { value: event2.which });
-        return ReactDOM26.findDOMNode(this).dispatchEvent(eventInParentDoc);
+        return this._nodeRef.current.dispatchEvent(eventInParentDoc);
       }
       _onIFrameContextualMenu(event2) {
         event2.preventDefault();
@@ -214508,7 +214509,7 @@ var require_evented_iframe = __commonJS({
           menu.append(new MenuItem2({ type: "separator" }));
         }
         let text = "";
-        const selection = ReactDOM26.findDOMNode(this).contentDocument.getSelection();
+        const selection = this._nodeRef.current.contentDocument.getSelection();
         if (selection.rangeCount > 0) {
           const range2 = selection.getRangeAt(0);
           text = range2.toString();
@@ -215895,6 +215896,7 @@ var init_tokenizing_text_field = __esm({
       };
       constructor(props) {
         super(props);
+        this.fieldDropTargetRef = import_react36.default.createRef();
         this.state = {
           editing: false,
           editingValue: this.props.item.toString()
@@ -216600,7 +216602,7 @@ var init_tokenizing_text_field = __esm({
           KeyCommandsRegion,
           {
             key: "field-component",
-            ref: "field-drop-target",
+            ref: this.fieldDropTargetRef,
             localHandlers: {
               "core:select-all": this._onSelectAll
             },
