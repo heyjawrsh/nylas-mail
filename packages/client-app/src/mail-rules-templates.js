@@ -184,7 +184,9 @@ const __tplExports = {
 const __templatesNS = __tplExports;
 const __ConditionMode = __templatesNS.ConditionMode;
 const __ConditionTemplates = __templatesNS.ConditionTemplates;
+const __ActionTemplates = __templatesNS.ActionTemplates;
 export {
 	__ConditionMode as ConditionMode,
 	__ConditionTemplates as ConditionTemplates,
+	__ActionTemplates as ActionTemplates,
 };

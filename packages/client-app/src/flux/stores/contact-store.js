@@ -9,22 +9,24 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _fs = require("node:fs");
-const _path = require("node:path");
-const _Reflux = require("reflux");
-const _Rx = require("rx-lite");
-const _Actions = require("../actions.js").default;
-const Contact = require("../models/contact.js").default;
-const _Utils = require("../models/utils.js");
-const NylasStore = require("nylas-store").default || require("nylas-store");
-const RegExpUtils = require("../../regexp-utils.js");
-const DatabaseStore = require("./database-store.js").default;
-const AccountStore = require("./account-store.js").default;
-const ComponentRegistry = require("../../registries/component-registry.js");
-const ContactRankingStore = require("./contact-ranking-store.js");
-const _ = require("underscore");
-
-const _WindowBridge = require("../../window-bridge.js");
+import _fs from "node:fs";
+import _path from "node:path";
+import _Reflux from "reflux";
+import _Rx from "rx-lite";
+import _Actions from "../actions.js";
+import Contact from "../models/contact.js";
+import * as _UtilsNS from "../models/utils.js";
+const _Utils = _UtilsNS.default || _UtilsNS;
+import NylasStore from "nylas-store";
+import * as RegExpUtilsNS from "../../regexp-utils.js";
+const RegExpUtils = RegExpUtilsNS.default || RegExpUtilsNS;
+import DatabaseStore from "./database-store.js";
+import AccountStore from "./account-store.js";
+import ComponentRegistry from "../../registries/component-registry.js";
+import ContactRankingStore from "./contact-ranking-store.js";
+import _ from "underscore";
+import * as _WindowBridgeNS from "../../window-bridge.js";
+const _WindowBridge = _WindowBridgeNS.default || _WindowBridgeNS;
 
 /*
 Public: ContactStore provides convenience methods for searching contacts and
@@ -279,4 +281,4 @@ class ContactStore extends NylasStore {
 	}
 }
 
-module.exports = new ContactStore();
+export default new ContactStore();

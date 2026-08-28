@@ -9,8 +9,7 @@
 import AccountStore from "./account-store.js";
 import WorkspaceStore from "./workspace-store.js";
 import DatabaseStore from "./database-store.js";
-const _FocusedPerspectiveStore =
-	require("./focused-perspective-store.js").default;
+import _FocusedPerspectiveStore from "./focused-perspective-store.js";
 import * as _MailboxPerspectiveNS from "../../mailbox-perspective.js";
 const _MailboxPerspective =
 	_MailboxPerspectiveNS.default || _MailboxPerspectiveNS;
@@ -333,4 +332,4 @@ class FocusedContentStore {
 }
 FocusedContentStore.initClass();
 
-module.exports = new FocusedContentStore();
+export default new FocusedContentStore();

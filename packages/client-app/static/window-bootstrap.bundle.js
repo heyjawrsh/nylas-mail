@@ -20559,7 +20559,7 @@ var require_reflux_coffee = __commonJS({
         }
       }
     };
-    var Publisher2 = {
+    var Publisher3 = {
       setupEmitter() {
         if (this._emitter) {
           return;
@@ -20593,7 +20593,7 @@ var require_reflux_coffee = __commonJS({
         this._emitter.emit("trigger", args);
       }
     };
-    RefluxCoffeeExports.Publisher = Publisher2;
+    RefluxCoffeeExports.Publisher = Publisher3;
     module2.exports = RefluxCoffeeExports;
     module2.exports.default = RefluxCoffeeExports;
   }
@@ -20603,7 +20603,7 @@ var require_reflux_coffee = __commonJS({
 var require_coffee_helpers = __commonJS({
   "src/flux/coffee-helpers.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var CoffeeHelpers = {
+    var CoffeeHelpers2 = {
       // This copied out CoffeeScript
       includeModule(mixin2) {
         let tmpSuper;
@@ -20700,9 +20700,9 @@ var require_coffee_helpers = __commonJS({
         return this;
       }
     };
-    module2.exports = CoffeeHelpers;
-    module2.exports.includeModule = CoffeeHelpers.includeModule;
-    module2.exports.default = CoffeeHelpers;
+    module2.exports = CoffeeHelpers2;
+    module2.exports.includeModule = CoffeeHelpers2.includeModule;
+    module2.exports.default = CoffeeHelpers2;
   }
 });
 
@@ -20710,19 +20710,19 @@ var require_coffee_helpers = __commonJS({
 var require_component_registry = __commonJS({
   "src/registries/component-registry.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Listener: Listener2, Publisher: Publisher2 } = require_reflux_coffee();
-    var CoffeeHelpers = require_coffee_helpers();
+    var { Listener: Listener3, Publisher: Publisher3 } = require_reflux_coffee();
+    var CoffeeHelpers2 = require_coffee_helpers();
     var DeprecatedRoles = {
       "thread:BulkAction": "ThreadActionsToolbarButton",
       "draft:BulkAction": "DraftActionsToolbarButton",
       "message:Toolbar": "ThreadActionsToolbarButton",
       "thread:Toolbar": "ThreadActionsToolbarButton"
     };
-    var ComponentRegistry2 = class _ComponentRegistry {
+    var ComponentRegistry3 = class _ComponentRegistry {
       static initClass() {
-        _ComponentRegistry.include = CoffeeHelpers.includeModule;
-        _ComponentRegistry.include(Publisher2);
-        _ComponentRegistry.include(Listener2);
+        _ComponentRegistry.include = CoffeeHelpers2.includeModule;
+        _ComponentRegistry.include(Publisher3);
+        _ComponentRegistry.include(Listener3);
         _ComponentRegistry.prototype.triggerDebounced = _4.debounce(function() {
           return this.trigger(this);
         }, 16);
@@ -20935,8 +20935,8 @@ var require_component_registry = __commonJS({
         return this._showComponentRegions;
       }
     };
-    ComponentRegistry2.initClass();
-    module2.exports = new ComponentRegistry2();
+    ComponentRegistry3.initClass();
+    module2.exports = new ComponentRegistry3();
   }
 });
 
@@ -21158,8 +21158,8 @@ var require_window_event_handler = __commonJS({
           document.body,
           "window:toggle-component-regions",
           () => {
-            const ComponentRegistry2 = require_component_registry();
-            return ComponentRegistry2.toggleComponentRegions();
+            const ComponentRegistry3 = require_component_registry();
+            return ComponentRegistry3.toggleComponentRegions();
           }
         );
         const { webContents } = NylasEnv.getCurrentWindow();
@@ -26996,7 +26996,7 @@ var require_database_object_registry = __commonJS({
 // src/flux/models/utils.js
 var require_utils = __commonJS({
   "src/flux/models/utils.js"(exports2, module2) {
-    var Utils24;
+    var Utils25;
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var fs11 = require_fs_plus();
     var path14 = require("path");
@@ -27005,7 +27005,7 @@ var require_utils = __commonJS({
     var TaskRegistry2 = require_task_registry().default;
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     var imageData = null;
-    module2.exports = Utils24 = {
+    module2.exports = Utils25 = {
       waitFor(latch, options2) {
         if (options2 == null) {
           options2 = {};
@@ -27101,7 +27101,7 @@ var require_utils = __commonJS({
         if (str == null) {
           str = "";
         }
-        return new RegExp(`((?:^|\\W|$)${Utils24.escapeRegExp(str.trim())})`, "ig");
+        return new RegExp(`((?:^|\\W|$)${Utils25.escapeRegExp(str.trim())})`, "ig");
       },
       // Takes an optional customizer. The customizer is passed the key and the
       // new cloned value for that key. The customizer is expected to either
@@ -27134,7 +27134,7 @@ var require_utils = __commonJS({
         stackSeen.push(object2);
         stackRefs.push(newObject);
         for (var key of Array.from(Object.getOwnPropertyNames(object2))) {
-          var newVal = Utils24.deepClone(
+          var newVal = Utils25.deepClone(
             object2[key],
             customizer,
             stackSeen,
@@ -27192,7 +27192,7 @@ var require_utils = __commonJS({
         return Object.getOwnPropertyNames(o).forEach((key) => {
           const val = o[key];
           if (typeof val === "object" && val !== null && !Object.isFrozen(val)) {
-            return Utils24.modelFreeze(val);
+            return Utils25.modelFreeze(val);
           }
         });
       },
@@ -27225,30 +27225,30 @@ var require_utils = __commonJS({
         if (!imageData) {
           let left, left1;
           imageData = (left = NylasEnv.fileListCache().imageData) != null ? left : "{}";
-          Utils24.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
+          Utils25.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
         }
         if (!__guard__(
-          Utils24 != null ? Utils24.images : void 0,
+          Utils25 != null ? Utils25.images : void 0,
           (x3) => x3[resourcePath2]
         )) {
-          if (Utils24.images == null) {
-            Utils24.images = {};
+          if (Utils25.images == null) {
+            Utils25.images = {};
           }
-          if (Utils24.images[resourcePath2] == null) {
-            Utils24.images[resourcePath2] = {};
+          if (Utils25.images[resourcePath2] == null) {
+            Utils25.images[resourcePath2] = {};
           }
           const imagesPath = path14.join(resourcePath2, "static", "images");
           const files = fs11.listTreeSync(imagesPath);
           for (var file of Array.from(files)) {
             file = file.replace(/\\/g, "/");
             var _basename = path14.basename(file);
-            Utils24.images[resourcePath2][path14.basename(file)] = file;
+            Utils25.images[resourcePath2][path14.basename(file)] = file;
           }
-          NylasEnv.fileListCache().imageData = JSON.stringify(Utils24.images);
+          NylasEnv.fileListCache().imageData = JSON.stringify(Utils25.images);
         }
         const plat = process.platform != null ? process.platform : "";
         const ratio = window.devicePixelRatio != null ? window.devicePixelRatio : 1;
-        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils24.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils24.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils24.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils24.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils24.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils24.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils24.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils24.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils24.images[resourcePath2][`${name2}@1x.${ext}`];
+        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils25.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils25.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils25.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils25.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils25.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils25.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils25.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils25.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils25.images[resourcePath2][`${name2}@1x.${ext}`];
       },
       subjectWithPrefix(subject, prefix) {
         if (subject.search(/fwd:/i) === 0) {
@@ -27281,7 +27281,7 @@ var require_utils = __commonJS({
           email = "";
         }
         const domain = _4.last(email.toLowerCase().trim().split("@"));
-        return Utils24.commonDomains[domain] != null ? Utils24.commonDomains[domain] : false;
+        return Utils25.commonDomains[domain] != null ? Utils25.commonDomains[domain] : false;
       },
       // This looks for and removes plus-ing, it taks a VERY liberal approach
       // to match an email address. We'd rather let false positives through.
@@ -27303,8 +27303,8 @@ var require_utils = __commonJS({
         if (email1 === email2) {
           return true;
         }
-        email1 = Utils24.toEquivalentEmailForm(email1);
-        email2 = Utils24.toEquivalentEmailForm(email2);
+        email1 = Utils25.toEquivalentEmailForm(email1);
+        email2 = Utils25.toEquivalentEmailForm(email2);
         return email1 === email2;
       },
       rectVisibleInRect(r1, r2) {
@@ -27316,7 +27316,7 @@ var require_utils = __commonJS({
         }
         options2.functionsAreEqual = true;
         options2.ignoreKeys = (options2.ignoreKeys != null ? options2.ignoreKeys : []).push("clientId");
-        return Utils24.isEqual(a, b, options2);
+        return Utils25.isEqual(a, b, options2);
       },
       // Customized version of Underscore 1.8.2's isEqual function
       // You can pass the following options:
@@ -27327,7 +27327,7 @@ var require_utils = __commonJS({
         if (options2 == null) {
           options2 = {};
         }
-        const value = Utils24._isEqual(a, b, [], [], options2);
+        const value = Utils25._isEqual(a, b, [], [], options2);
         if (options2.logWhenFalse) {
           if (value === false) {
             console.log("isEqual is false", a, b, options2);
@@ -27412,7 +27412,7 @@ var require_utils = __commonJS({
             return false;
           }
           while (length--) {
-            if (!Utils24._isEqual(a[length], b[length], aStack, bStack, options2)) {
+            if (!Utils25._isEqual(a[length], b[length], aStack, bStack, options2)) {
               return false;
             }
           }
@@ -27434,7 +27434,7 @@ var require_utils = __commonJS({
             if (key in keysToIgnore) {
               continue;
             }
-            if (!(_4.has(b, key) && Utils24._isEqual(a[key], b[key], aStack, bStack, options2))) {
+            if (!(_4.has(b, key) && Utils25._isEqual(a[key], b[key], aStack, bStack, options2))) {
               return false;
             }
           }
@@ -27660,9 +27660,9 @@ var require_utils = __commonJS({
         if (values2.length === 0) {
           throw new Error("Can't stdev zero values");
         }
-        const avg = Utils24.mean(values2);
+        const avg = Utils25.mean(values2);
         const squareDiffs = values2.map((val) => (val - avg) ** 2);
-        return Math.sqrt(Utils24.mean(squareDiffs));
+        return Math.sqrt(Utils25.mean(squareDiffs));
       },
       // Resolves nested paths in objects of the form "key.subKey.subKey".
       // Null checks along the way.
@@ -57036,7 +57036,7 @@ var require_actions = __commonJS({
     var ActionScopeWindow = "window";
     var ActionScopeGlobal = "global";
     var ActionScopeWorkWindow = "work";
-    var Actions37 = class {
+    var Actions39 = class {
       /*
         Public: Fired when the Nylas API Connector receives new data from the API.
       
@@ -57512,22 +57512,22 @@ var require_actions = __commonJS({
       global: [],
       work: []
     };
-    for (const name2 of Object.getOwnPropertyNames(Actions37)) {
+    for (const name2 of Object.getOwnPropertyNames(Actions39)) {
       if (name2 === "length" || name2 === "name" || name2 === "arguments" || name2 === "caller" || name2 === "prototype") {
         continue;
       }
-      if (Actions37[name2] !== "window" && Actions37[name2] !== "global" && Actions37[name2] !== "work") {
+      if (Actions39[name2] !== "window" && Actions39[name2] !== "global" && Actions39[name2] !== "work") {
         continue;
       }
-      const scope = Actions37[name2];
+      const scope = Actions39[name2];
       scopes[scope].push(name2);
-      create3(Actions37, name2, scope);
+      create3(Actions39, name2, scope);
     }
-    Actions37.windowActions = scopes.window;
-    Actions37.workWindowActions = scopes.work;
-    Actions37.globalActions = scopes.global;
-    module2.exports = Actions37;
-    module2.exports.default = Actions37;
+    Actions39.windowActions = scopes.window;
+    Actions39.workWindowActions = scopes.work;
+    Actions39.globalActions = scopes.global;
+    module2.exports = Actions39;
+    module2.exports.default = Actions39;
   }
 });
 
@@ -57535,21 +57535,21 @@ var require_actions = __commonJS({
 var require_nylas_store = __commonJS({
   "src/global/nylas-store.js"(exports2, module2) {
     var RefluxCoffeeNS = require_reflux_coffee();
-    var RefluxCoffee2 = RefluxCoffeeNS.default || RefluxCoffeeNS.Listener || RefluxCoffeeNS;
-    var Listener2 = RefluxCoffee2?.Listener ?? RefluxCoffeeNS?.Listener;
-    var Publisher2 = RefluxCoffee2?.Publisher ?? RefluxCoffeeNS?.Publisher;
+    var RefluxCoffee3 = RefluxCoffeeNS.default || RefluxCoffeeNS.Listener || RefluxCoffeeNS;
+    var Listener3 = RefluxCoffee3?.Listener ?? RefluxCoffeeNS?.Listener;
+    var Publisher3 = RefluxCoffee3?.Publisher ?? RefluxCoffeeNS?.Publisher;
     var CoffeeHelpersNS = require_coffee_helpers();
-    var CoffeeHelpers = CoffeeHelpersNS.default || CoffeeHelpersNS;
-    var NylasStore27 = class _NylasStore {
+    var CoffeeHelpers2 = CoffeeHelpersNS.default || CoffeeHelpersNS;
+    var NylasStore30 = class _NylasStore {
       static initClass() {
-        _NylasStore.include = CoffeeHelpers.includeModule;
-        _NylasStore.include(Publisher2);
-        _NylasStore.include(Listener2);
+        _NylasStore.include = CoffeeHelpers2.includeModule;
+        _NylasStore.include(Publisher3);
+        _NylasStore.include(Listener3);
       }
     };
-    NylasStore27.initClass();
-    module2.exports = NylasStore27;
-    module2.exports.default = NylasStore27;
+    NylasStore30.initClass();
+    module2.exports = NylasStore30;
+    module2.exports.default = NylasStore30;
   }
 });
 
@@ -58885,9 +58885,9 @@ var init_attributes = __esm({
 var require_model = __commonJS({
   "src/flux/models/model.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils24 = require_utils();
+    var Utils25 = require_utils();
     var Attributes2 = (init_attributes(), __toCommonJS(attributes_exports)).default;
-    var Model13 = class _Model {
+    var Model14 = class _Model {
       static initClass() {
         Object.defineProperty(_Model.prototype, "id", {
           enumerable: false,
@@ -58932,7 +58932,7 @@ var require_model = __commonJS({
         if (values2 == null) {
           values2 = {};
         }
-        if (values2.id && Utils24.isTempId(values2.id)) {
+        if (values2.id && Utils25.isTempId(values2.id)) {
           if (values2.clientId == null) {
             values2.clientId = values2.id;
           }
@@ -58951,7 +58951,7 @@ var require_model = __commonJS({
           this[key] = values2[key];
         }
         if (this.clientId == null) {
-          this.clientId = Utils24.generateTempId();
+          this.clientId = Utils25.generateTempId();
         }
         this;
       }
@@ -58977,7 +58977,7 @@ var require_model = __commonJS({
       // This method is chainable.
       //
       fromJSON(json2) {
-        if (json2.id && !Utils24.isTempId(json2.id)) {
+        if (json2.id && !Utils25.isTempId(json2.id)) {
           this.serverId = json2.id;
         }
         for (var key of Array.from(Object.keys(this.constructor.attributes))) {
@@ -59053,8 +59053,8 @@ var require_model = __commonJS({
         return true;
       }
     };
-    Model13.initClass();
-    module2.exports = Model13;
+    Model14.initClass();
+    module2.exports = Model14;
   }
 });
 
@@ -106020,7 +106020,7 @@ var require_clone2 = __commonJS({
     "use strict";
     var Reach = require_reach();
     var Types2 = require_types4();
-    var Utils24 = require_utils5();
+    var Utils25 = require_utils5();
     var internals = {
       needsProtoHack: /* @__PURE__ */ new Set([Types2.set, Types2.map, Types2.weakSet, Types2.weakMap]),
       structuredCloneExists: typeof structuredClone === "function"
@@ -106070,7 +106070,7 @@ var require_clone2 = __commonJS({
           newObj.set(key, clone2(value, options2, seen));
         }
       }
-      const keys2 = Utils24.keys(obj2, options2);
+      const keys2 = Utils25.keys(obj2, options2);
       for (const key of keys2) {
         if (key === "__proto__") {
           continue;
@@ -106157,7 +106157,7 @@ var require_merge = __commonJS({
     "use strict";
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Utils24 = require_utils5();
+    var Utils25 = require_utils5();
     var internals = {};
     module2.exports = internals.merge = function(target, source, options2) {
       Assert(target && typeof target === "object", "Invalid target value: must be an object");
@@ -106176,7 +106176,7 @@ var require_merge = __commonJS({
         }
         return target;
       }
-      const keys2 = Utils24.keys(source, options2);
+      const keys2 = Utils25.keys(source, options2);
       for (let i = 0; i < keys2.length; ++i) {
         const key = keys2[i];
         if (key === "__proto__" || !Object.prototype.propertyIsEnumerable.call(source, key)) {
@@ -106560,7 +106560,7 @@ var require_contain = __commonJS({
     var Assert = require_assert();
     var DeepEqual = require_deepEqual();
     var EscapeRegex = require_escapeRegex();
-    var Utils24 = require_utils5();
+    var Utils25 = require_utils5();
     var internals = {};
     module2.exports = function(ref, values2, options2 = {}) {
       if (typeof values2 !== "object") {
@@ -106648,7 +106648,7 @@ var require_contain = __commonJS({
     };
     internals.object = function(ref, values2, options2) {
       Assert(options2.once === void 0, "Cannot use option once with object");
-      const keys2 = Utils24.keys(ref, options2);
+      const keys2 = Utils25.keys(ref, options2);
       if (!keys2.length) {
         return false;
       }
@@ -149156,13 +149156,13 @@ var require_data_types = __commonJS({
       BaseTypes.ARRAY.prototype._stringify = function _stringify(values2, options2) {
         let str = `ARRAY[${this._value(values2, options2).join(",")}]`;
         if (this.type) {
-          const Utils24 = require_utils6();
+          const Utils25 = require_utils6();
           let castKey = this.toSql();
           if (this.type instanceof BaseTypes.ENUM) {
             const table = options2.field.Model.getTableName();
             const useSchema = table.schema !== void 0;
-            const schemaWithDelimiter = useSchema ? `${Utils24.addTicks(table.schema, '"')}${table.delimiter}` : "";
-            castKey = `${Utils24.addTicks(Utils24.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
+            const schemaWithDelimiter = useSchema ? `${Utils25.addTicks(table.schema, '"')}${table.delimiter}` : "";
+            castKey = `${Utils25.addTicks(Utils25.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
             str += `::${schemaWithDelimiter}${castKey}`;
           } else {
             str += `::${castKey}`;
@@ -153106,37 +153106,37 @@ var require_utils6 = __commonJS({
       });
     }
     exports2.cloneDeep = cloneDeep;
-    function mapFinderOptions(options2, Model13) {
+    function mapFinderOptions(options2, Model14) {
       if (options2.attributes && Array.isArray(options2.attributes)) {
-        options2.attributes = Model13._injectDependentVirtualAttributes(options2.attributes);
-        options2.attributes = options2.attributes.filter((v2) => !Model13._virtualAttributes.has(v2));
+        options2.attributes = Model14._injectDependentVirtualAttributes(options2.attributes);
+        options2.attributes = options2.attributes.filter((v2) => !Model14._virtualAttributes.has(v2));
       }
-      mapOptionFieldNames(options2, Model13);
+      mapOptionFieldNames(options2, Model14);
       return options2;
     }
     exports2.mapFinderOptions = mapFinderOptions;
-    function mapOptionFieldNames(options2, Model13) {
+    function mapOptionFieldNames(options2, Model14) {
       if (Array.isArray(options2.attributes)) {
         options2.attributes = options2.attributes.map((attr) => {
           if (typeof attr !== "string")
             return attr;
-          if (Model13.rawAttributes[attr] && attr !== Model13.rawAttributes[attr].field) {
-            return [Model13.rawAttributes[attr].field, attr];
+          if (Model14.rawAttributes[attr] && attr !== Model14.rawAttributes[attr].field) {
+            return [Model14.rawAttributes[attr].field, attr];
           }
           return attr;
         });
       }
       if (options2.where && _4.isPlainObject(options2.where)) {
-        options2.where = mapWhereFieldNames(options2.where, Model13);
+        options2.where = mapWhereFieldNames(options2.where, Model14);
       }
       return options2;
     }
     exports2.mapOptionFieldNames = mapOptionFieldNames;
-    function mapWhereFieldNames(attributes, Model13) {
+    function mapWhereFieldNames(attributes, Model14) {
       if (attributes) {
         attributes = cloneDeep(attributes);
         getComplexKeys(attributes).forEach((attribute) => {
-          const rawAttribute = Model13.rawAttributes[attribute];
+          const rawAttribute = Model14.rawAttributes[attribute];
           if (rawAttribute && rawAttribute.field !== rawAttribute.fieldName) {
             attributes[rawAttribute.field] = attributes[attribute];
             delete attributes[attribute];
@@ -153144,12 +153144,12 @@ var require_utils6 = __commonJS({
           if (_4.isPlainObject(attributes[attribute]) && !(rawAttribute && (rawAttribute.type instanceof DataTypes2.HSTORE || rawAttribute.type instanceof DataTypes2.JSON))) {
             attributes[attribute] = mapOptionFieldNames({
               where: attributes[attribute]
-            }, Model13).where;
+            }, Model14).where;
           }
           if (Array.isArray(attributes[attribute])) {
             attributes[attribute].forEach((where3, index) => {
               if (_4.isPlainObject(where3)) {
-                attributes[attribute][index] = mapWhereFieldNames(where3, Model13);
+                attributes[attribute][index] = mapWhereFieldNames(where3, Model14);
               }
             });
           }
@@ -153158,12 +153158,12 @@ var require_utils6 = __commonJS({
       return attributes;
     }
     exports2.mapWhereFieldNames = mapWhereFieldNames;
-    function mapValueFieldNames(dataValues, fields, Model13) {
+    function mapValueFieldNames(dataValues, fields, Model14) {
       const values2 = {};
       for (const attr of fields) {
-        if (dataValues[attr] !== void 0 && !Model13._virtualAttributes.has(attr)) {
-          if (Model13.rawAttributes[attr] && Model13.rawAttributes[attr].field && Model13.rawAttributes[attr].field !== attr) {
-            values2[Model13.rawAttributes[attr].field] = dataValues[attr];
+        if (dataValues[attr] !== void 0 && !Model14._virtualAttributes.has(attr)) {
+          if (Model14.rawAttributes[attr] && Model14.rawAttributes[attr].field && Model14.rawAttributes[attr].field !== attr) {
+            values2[Model14.rawAttributes[attr].field] = dataValues[attr];
           } else {
             values2[attr] = dataValues[attr];
           }
@@ -153685,7 +153685,7 @@ var require_belongs_to = __commonJS({
         }
       return a;
     };
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153712,7 +153712,7 @@ var require_belongs_to = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils24.camelize([
+          this.foreignKey = Utils25.camelize([
             this.as,
             this.target.primaryKeyAttribute
           ].join("_"));
@@ -153750,7 +153750,7 @@ var require_belongs_to = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.target, this.source, this.options, this.targetKeyField);
-        Utils24.mergeDefaults(this.source.rawAttributes, newAttributes);
+        Utils25.mergeDefaults(this.source.rawAttributes, newAttributes);
         this.source.refreshAttributes();
         this.identifierField = this.source.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -153764,7 +153764,7 @@ var require_belongs_to = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -153865,7 +153865,7 @@ var require_has_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153892,7 +153892,7 @@ var require_has_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils24.singularize(this.as)
+              singular: Utils25.singularize(this.as)
             };
           }
         } else {
@@ -153906,7 +153906,7 @@ var require_has_many = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils24.camelize([
+          this.foreignKey = Utils25.camelize([
             this.source.options.name.singular,
             this.source.primaryKeyAttribute
           ].join("_"));
@@ -153953,7 +153953,7 @@ var require_has_many = __commonJS({
           constraintOptions.onUpdate = constraintOptions.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, constraintOptions, this.sourceKeyField);
-        Utils24.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils25.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.source.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
@@ -153974,7 +153974,7 @@ var require_has_many = __commonJS({
       }
       async get(instances, options2 = {}) {
         const where3 = {};
-        let Model13 = this.target;
+        let Model14 = this.target;
         let instance;
         let values2;
         if (!Array.isArray(instances)) {
@@ -154006,15 +154006,15 @@ var require_has_many = __commonJS({
         options2.where = options2.where ? { [Op2.and]: [where3, options2.where] } : where3;
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
-            Model13 = Model13.unscoped();
+            Model14 = Model14.unscoped();
           } else {
-            Model13 = Model13.scope(options2.scope);
+            Model14 = Model14.scope(options2.scope);
           }
         }
         if (Object.prototype.hasOwnProperty.call(options2, "schema")) {
-          Model13 = Model13.schema(options2.schema, options2.schemaDelimiter);
+          Model14 = Model14.schema(options2.schema, options2.schemaDelimiter);
         }
-        const results = await Model13.findAll(options2);
+        const results = await Model14.findAll(options2);
         if (instance)
           return results;
         const result2 = {};
@@ -154027,7 +154027,7 @@ var require_has_many = __commonJS({
         return result2;
       }
       async count(instance, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2.attributes = [
           [
             this.sequelize.fn("COUNT", this.sequelize.col(`${this.target.name}.${this.target.primaryKeyField}`)),
@@ -154186,7 +154186,7 @@ var require_has_one = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154213,8 +154213,8 @@ var require_has_one = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils24.camelize([
-            Utils24.singularize(this.options.as || this.source.name),
+          this.foreignKey = Utils25.camelize([
+            Utils25.singularize(this.options.as || this.source.name),
             this.source.primaryKeyAttribute
           ].join("_"));
         }
@@ -154249,7 +154249,7 @@ var require_has_one = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, this.options, this.sourceKeyField);
-        Utils24.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils25.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -154263,7 +154263,7 @@ var require_has_one = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -154382,7 +154382,7 @@ var require_belongs_to_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154420,14 +154420,14 @@ var require_belongs_to_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils24.singularize(this.as)
+              singular: Utils25.singularize(this.as)
             };
           }
         } else {
           this.as = this.target.options.name.plural;
           this.options.name = this.target.options.name;
         }
-        this.combinedTableName = Utils24.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
+        this.combinedTableName = Utils25.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
         if (this.isSelfAssociation) {
           this.targetAssociation = this;
         }
@@ -154527,7 +154527,7 @@ var require_belongs_to_many = __commonJS({
           this.foreignKey = this.foreignKeyAttribute.name || this.foreignKeyAttribute.fieldName;
         } else {
           this.foreignKeyAttribute = {};
-          this.foreignKey = this.options.foreignKey || Utils24.camelize([
+          this.foreignKey = this.options.foreignKey || Utils25.camelize([
             this.source.options.name.singular,
             this.sourceKey
           ].join("_"));
@@ -154540,8 +154540,8 @@ var require_belongs_to_many = __commonJS({
             this.otherKeyDefault = true;
           }
           this.otherKeyAttribute = {};
-          this.otherKey = this.options.otherKey || Utils24.camelize([
-            this.isSelfAssociation ? Utils24.singularize(this.as) : this.target.options.name.singular,
+          this.otherKey = this.options.otherKey || Utils25.camelize([
+            this.isSelfAssociation ? Utils25.singularize(this.as) : this.target.options.name.singular,
             this.targetKey
           ].join("_"));
         }
@@ -154667,7 +154667,7 @@ var require_belongs_to_many = __commonJS({
         Helpers.mixinMethods(this, obj2, methods, aliases2);
       }
       async get(instance, options2) {
-        options2 = Utils24.cloneDeep(options2) || {};
+        options2 = Utils25.cloneDeep(options2) || {};
         const through = this.through;
         let scopeWhere;
         let throughWhere;
@@ -154715,7 +154715,7 @@ var require_belongs_to_many = __commonJS({
       }
       async count(instance, options2) {
         const sequelize = this.target.sequelize;
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2.attributes = [
           [sequelize.fn("COUNT", sequelize.col([this.target.name, this.targetKeyField].join("."))), "count"]
         ];
@@ -154951,7 +154951,7 @@ var require_instance_validator = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var sequelizeError = require_errors4();
     var DataTypes2 = require_data_types9();
     var BelongsTo2 = require_belongs_to();
@@ -155007,7 +155007,7 @@ var require_instance_validator = __commonJS({
             return;
           }
           const value = this.modelInstance.dataValues[field];
-          if (value instanceof Utils24.SequelizeMethod) {
+          if (value instanceof Utils25.SequelizeMethod) {
             return;
           }
           if (!rawAttribute._autoGenerated && !rawAttribute.autoIncrement) {
@@ -155129,7 +155129,7 @@ var require_instance_validator = __commonJS({
           }
         }
         if (rawAttribute.type instanceof DataTypes2.STRING || rawAttribute.type instanceof DataTypes2.TEXT || rawAttribute.type instanceof DataTypes2.CITEXT) {
-          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils24.SequelizeMethod) && !Buffer.isBuffer(value)) {
+          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils25.SequelizeMethod) && !Buffer.isBuffer(value)) {
             this.errors.push(new sequelizeError.ValidationErrorItem(`${field} cannot be an array or an object`, "string violation", field, value, this.modelInstance, "not_a_string"));
           }
         }
@@ -155486,7 +155486,7 @@ var require_model2 = __commonJS({
     var assert2 = require("assert");
     var _4 = require_lodash();
     var Dottie = require_dottie();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var { logger } = require_logger3();
     var BelongsTo2 = require_belongs_to();
     var BelongsToMany2 = require_belongs_to_many();
@@ -155530,7 +155530,7 @@ var require_model2 = __commonJS({
       "name"
     ]);
     var nonCascadingOptions = ["include", "attributes", "originalAttributes", "order", "where", "limit", "offset", "plain", "group", "having"];
-    var Model13 = class _Model {
+    var Model14 = class _Model {
       static get queryInterface() {
         return this.sequelize.getQueryInterface();
       }
@@ -155589,7 +155589,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.constructor._hasDefaultValues) {
             defaults3 = _4.mapValues(this.constructor._defaultValues, (valueFn) => {
               const value = valueFn();
-              return value && value instanceof Utils24.SequelizeMethod ? value : _4.cloneDeep(value);
+              return value && value instanceof Utils25.SequelizeMethod ? value : _4.cloneDeep(value);
             });
           }
           if (this.constructor.primaryKeyAttributes.length) {
@@ -155600,20 +155600,20 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
           if (this.constructor._timestampAttributes.createdAt && defaults3[this.constructor._timestampAttributes.createdAt]) {
-            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.createdAt];
           }
           if (this.constructor._timestampAttributes.updatedAt && defaults3[this.constructor._timestampAttributes.updatedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.updatedAt];
           }
           if (this.constructor._timestampAttributes.deletedAt && defaults3[this.constructor._timestampAttributes.deletedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils24.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils25.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.deletedAt];
           }
           for (key in defaults3) {
             if (values2[key] === void 0) {
-              this.set(key, Utils24.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
+              this.set(key, Utils25.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
               delete values2[key];
             }
           }
@@ -155643,7 +155643,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           [Op2.eq]: null
         };
         deletedAtObject[deletedAtAttribute.field || deletedAtCol] = deletedAtDefaultValue;
-        if (Utils24.isWhereEmpty(options2.where)) {
+        if (Utils25.isWhereEmpty(options2.where)) {
           options2.where = deletedAtObject;
         } else {
           options2.where = { [Op2.and]: [deletedAtObject, options2.where] };
@@ -155852,7 +155852,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             }
             used.push(parent);
-            const thisInclude = Utils24.cloneDeep(include);
+            const thisInclude = Utils25.cloneDeep(include);
             thisInclude.model = model;
             if (as2) {
               thisInclude.as = as2;
@@ -155942,7 +155942,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (include.attributes && !options2.raw) {
           include.model._expandAttributes(include);
           include.originalAttributes = include.model._injectDependentVirtualAttributes(include.attributes);
-          include = Utils24.mapFinderOptions(include, include.model);
+          include = Utils25.mapFinderOptions(include, include.model);
           if (include.attributes.length) {
             _4.each(include.model.primaryKeys, (attr, key) => {
               if (!include.attributes.some((includeAttr) => {
@@ -155956,13 +155956,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
         } else {
-          include = Utils24.mapFinderOptions(include, include.model);
+          include = Utils25.mapFinderOptions(include, include.model);
         }
         if (include._pseudo) {
           if (!include.attributes) {
             include.attributes = Object.keys(include.model.tableAttributes);
           }
-          return Utils24.mapFinderOptions(include, include.model);
+          return Utils25.mapFinderOptions(include, include.model);
         }
         const association = include.association || this._getIncludedAssociation(include.model, include.as);
         include.association = association;
@@ -155996,7 +155996,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!include.attributes) {
           include.attributes = Object.keys(include.model.tableAttributes);
         }
-        include = Utils24.mapFinderOptions(include, include.model);
+        include = Utils25.mapFinderOptions(include, include.model);
         if (include.required === void 0) {
           include.required = !!include.where;
         }
@@ -156096,7 +156096,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.options && this.options.whereMergeStrategy === "and") {
             return combineWheresWithAnd(objValue, srcValue);
           }
-          if (srcValue instanceof Utils24.SequelizeMethod) {
+          if (srcValue instanceof Utils25.SequelizeMethod) {
             srcValue = { [Op2.and]: srcValue };
           }
           if (_4.isPlainObject(objValue) && _4.isPlainObject(srcValue)) {
@@ -156110,7 +156110,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           });
         }
         if (srcValue) {
-          return Utils24.cloneDeep(srcValue, true);
+          return Utils25.cloneDeep(srcValue, true);
         }
         return srcValue === void 0 ? objValue : srcValue;
       }
@@ -156128,14 +156128,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this.sequelize = options2.sequelize;
         const globalOptions = this.sequelize.options;
-        options2 = Utils24.merge(_4.cloneDeep(globalOptions.define), options2);
+        options2 = Utils25.merge(_4.cloneDeep(globalOptions.define), options2);
         if (!options2.modelName) {
           options2.modelName = this.name;
         }
-        options2 = Utils24.merge({
+        options2 = Utils25.merge({
           name: {
-            plural: Utils24.pluralize(options2.modelName),
-            singular: Utils24.singularize(options2.modelName)
+            plural: Utils25.pluralize(options2.modelName),
+            singular: Utils25.singularize(options2.modelName)
           },
           indexes: [],
           omitNull: globalOptions.omitNull,
@@ -156168,7 +156168,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this._setupHooks(options2.hooks);
         this.underscored = this.options.underscored;
         if (!this.options.tableName) {
-          this.tableName = this.options.freezeTableName ? this.name : Utils24.underscoredIf(Utils24.pluralize(this.name), this.underscored);
+          this.tableName = this.options.freezeTableName ? this.name : Utils25.underscoredIf(Utils25.pluralize(this.name), this.underscored);
         } else {
           this.tableName = this.options.tableName;
         }
@@ -156199,7 +156199,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return attribute;
         });
         const tableName = this.getTableName();
-        this._indexes = this.options.indexes.map((index) => Utils24.nameIndex(this._conformIndex(index), tableName));
+        this._indexes = this.options.indexes.map((index) => Utils25.nameIndex(this._conformIndex(index), tableName));
         this.primaryKeys = {};
         this._readOnlyAttributes = /* @__PURE__ */ new Set();
         this._timestampAttributes = {};
@@ -156301,7 +156301,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           definition.fieldName = name2;
           definition._modelAttribute = true;
           if (definition.field === void 0) {
-            definition.field = Utils24.underscoredIf(name2, this.underscored);
+            definition.field = Utils25.underscoredIf(name2, this.underscored);
           }
           if (definition.primaryKey === true) {
             this.primaryKeys[name2] = definition;
@@ -156323,7 +156323,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this._virtualAttributes.add(name2);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "defaultValue")) {
-            this._defaultValues[name2] = () => Utils24.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
+            this._defaultValues[name2] = () => Utils25.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "unique") && definition.unique) {
             let idxName;
@@ -156346,7 +156346,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this.prototype.validators[name2] = definition.validate;
           }
           if (definition.index === true && definition.type instanceof DataTypes2.JSONB) {
-            this._indexes.push(Utils24.nameIndex(this._conformIndex({
+            this._indexes.push(Utils25.nameIndex(this._conformIndex({
               fields: [definition.field || name2],
               using: "gin"
             }), this.getTableName()));
@@ -156544,7 +156544,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
           if (scope) {
             this._conformIncludes(scope, this);
-            this._assignOptions(self2._scope, Utils24.cloneDeep(scope));
+            this._assignOptions(self2._scope, Utils25.cloneDeep(scope));
             self2._scopeNames.push(scopeName ? scopeName : "defaultScope");
           } else {
             throw new sequelizeErrors.SequelizeScopeError(`Invalid scope ${scopeName} called.`);
@@ -156564,7 +156564,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this.warnOnInvalidOptions(options2, Object.keys(this.rawAttributes));
         const tableNames = {};
         tableNames[this.getTableName(options2)] = true;
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156596,7 +156596,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           options2.originalAttributes = this._injectDependentVirtualAttributes(options2.attributes);
         }
         this.options.whereCollection = options2.where || null;
-        Utils24.mapFinderOptions(options2, this);
+        Utils25.mapFinderOptions(options2, this);
         options2 = this._paranoidClause(this, options2);
         if (options2.hooks) {
           await this.runHooks("beforeFindAfterOptions", options2);
@@ -156675,7 +156675,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if ([null, void 0].includes(param)) {
           return null;
         }
-        options2 = Utils24.cloneDeep(options2) || {};
+        options2 = Utils25.cloneDeep(options2) || {};
         if (typeof param === "number" || typeof param === "bigint" || typeof param === "string" || Buffer.isBuffer(param)) {
           options2.where = {
             [this.primaryKeyAttribute]: param
@@ -156689,7 +156689,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findOne must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156698,7 +156698,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         if (options2.limit === void 0) {
           const uniqueSingleColumns = _4.chain(this.uniqueKeys).values().filter((c) => c.fields.length === 1).map("column").value();
-          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils24.isPrimitive(value) || Buffer.isBuffer(value)))) {
+          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils25.isPrimitive(value) || Buffer.isBuffer(value)))) {
             options2.limit = 1;
           }
         }
@@ -156707,7 +156707,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }));
       }
       static async aggregate(attribute, aggregateFunction, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         const prevAttributes = options2.attributes;
         this._injectScope(options2);
         options2.attributes = prevAttributes;
@@ -156737,13 +156737,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else {
           options2.dataType = this.sequelize.normalizeDataType(options2.dataType);
         }
-        Utils24.mapOptionFieldNames(options2, this);
+        Utils25.mapOptionFieldNames(options2, this);
         options2 = this._paranoidClause(this, options2);
         const value = await this.queryInterface.rawSelect(this.getTableName(options2), options2, aggregateFunction, this);
         return value;
       }
       static async count(options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2 = _4.defaults(options2, { hooks: true });
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
@@ -156780,7 +156780,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findAndCountAll must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        const countOptions = Utils24.cloneDeep(options2);
+        const countOptions = Utils25.cloneDeep(options2);
         if (countOptions.attributes) {
           countOptions.attributes = void 0;
         }
@@ -156823,7 +156823,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return valueSets.map((values2) => this.build(values2, options2));
       }
       static async create(values2, options2) {
-        options2 = Utils24.cloneDeep(options2 || {});
+        options2 = Utils25.cloneDeep(options2 || {});
         return await this.build(values2, {
           isNewRecord: true,
           attributes: options2.fields,
@@ -156841,7 +156841,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (instance === null) {
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils24.defaults(values2, options2.where);
+            values2 = Utils25.defaults(values2, options2.where);
           }
           instance = this.build(values2, options2);
           return [instance, true];
@@ -156873,13 +156873,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const t = await this.sequelize.transaction(options2);
           transaction = t;
           options2.transaction = t;
-          const found = await this.findOne(Utils24.defaults({ transaction }, options2));
+          const found = await this.findOne(Utils25.defaults({ transaction }, options2));
           if (found !== null) {
             return [found, false];
           }
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils24.defaults(values2, options2.where);
+            values2 = Utils25.defaults(values2, options2.where);
           }
           options2.exception = true;
           options2.returning = true;
@@ -156892,13 +156892,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           } catch (err) {
             if (!(err instanceof sequelizeErrors.UniqueConstraintError))
               throw err;
-            const flattenedWhere = Utils24.flattenObjectDeep(options2.where);
+            const flattenedWhere = Utils25.flattenObjectDeep(options2.where);
             const flattenedWhereKeys = Object.keys(flattenedWhere).map((name2) => _4.last(name2.split(".")));
             const whereFields = flattenedWhereKeys.map((name2) => _4.get(this.rawAttributes, `${name2}.field`, name2));
             const defaultFields = options2.defaults && Object.keys(options2.defaults).filter((name2) => this.rawAttributes[name2]).map((name2) => this.rawAttributes[name2].field || name2);
             const errFieldKeys = Object.keys(err.fields);
-            const errFieldsWhereIntersects = Utils24.intersects(errFieldKeys, whereFields);
-            if (defaultFields && !errFieldsWhereIntersects && Utils24.intersects(errFieldKeys, defaultFields)) {
+            const errFieldsWhereIntersects = Utils25.intersects(errFieldKeys, whereFields);
+            if (defaultFields && !errFieldsWhereIntersects && Utils25.intersects(errFieldKeys, defaultFields)) {
               throw err;
             }
             if (errFieldsWhereIntersects) {
@@ -156909,7 +156909,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 }
               });
             }
-            const otherCreated = await this.findOne(Utils24.defaults({
+            const otherCreated = await this.findOne(Utils25.defaults({
               transaction: internalTransaction ? null : transaction
             }, options2));
             if (otherCreated === null)
@@ -156928,7 +156928,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         let values2 = __spreadValues({}, options2.defaults);
         if (_4.isPlainObject(options2.where)) {
-          values2 = Utils24.defaults(values2, options2.where);
+          values2 = Utils25.defaults(values2, options2.where);
         }
         const found = await this.findOne(options2);
         if (found)
@@ -156953,7 +156953,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           hooks: true,
           returning: true,
           validate: true
-        }, Utils24.cloneDeep(options2));
+        }, Utils25.cloneDeep(options2));
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156974,9 +156974,9 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           await instance.validate(options2);
         }
         const updatedDataValues = _4.pick(instance.dataValues, changed);
-        const insertValues = Utils24.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
-        const updateValues = Utils24.mapValueFieldNames(updatedDataValues, options2.fields, this);
-        const now2 = Utils24.now(this.sequelize.options.dialect);
+        const insertValues = Utils25.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
+        const updateValues = Utils25.mapValueFieldNames(updatedDataValues, options2.fields, this);
+        const now2 = Utils25.now(this.sequelize.options.dialect);
         if (createdAtAttr && !insertValues[createdAtAttr]) {
           const field = this.rawAttributes[createdAtAttr].field || createdAtAttr;
           insertValues[field] = this._getDefaultTimestamp(createdAtAttr) || now2;
@@ -157009,8 +157009,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return [];
         }
         const dialect = this.sequelize.options.dialect;
-        const now2 = Utils24.now(this.sequelize.options.dialect);
-        options2 = Utils24.cloneDeep(options2);
+        const now2 = Utils25.now(this.sequelize.options.dialect);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157102,7 +157102,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 if (!associationInstances.length) {
                   return;
                 }
-                const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
+                const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157128,7 +157128,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   options22.fields.push(updatedAtAttr);
                 }
               }
-              const out = Utils24.mapValueFieldNames(values2, options22.fields, model);
+              const out = Utils25.mapValueFieldNames(values2, options22.fields, model);
               for (const key of model._virtualAttributes) {
                 delete out[key];
               }
@@ -157198,7 +157198,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               if (!associationInstances.length) {
                 return;
               }
-              const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
+              const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
                 transaction: options22.transaction,
                 logging: options22.logging
               }).value();
@@ -157222,7 +157222,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   }
                   valueSets.push(values2);
                 }
-                const throughOptions = _4(Utils24.cloneDeep(include)).omit(["association", "attributes"]).defaults({
+                const throughOptions = _4(Utils25.cloneDeep(include)).omit(["association", "attributes"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -157251,12 +157251,12 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return await recursiveBulkCreate(instances, options2);
       }
       static async truncate(options2) {
-        options2 = Utils24.cloneDeep(options2) || {};
+        options2 = Utils25.cloneDeep(options2) || {};
         options2.truncate = true;
         return await this.destroy(options2);
       }
       static async destroy(options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157267,7 +157267,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!options2 || !(options2.where || options2.truncate)) {
           throw new Error("Missing where or truncate attribute in the options parameter of model.destroy.");
         }
-        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils24.SequelizeMethod)) {
+        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils25.SequelizeMethod)) {
           throw new Error("Expected plain object, array or sequelize method in the options.where parameter of model.destroy.");
         }
         options2 = _4.defaults(options2, {
@@ -157278,7 +157278,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           restartIdentity: false
         });
         options2.type = QueryTypes2.BULKDELETE;
-        Utils24.mapOptionFieldNames(options2, this);
+        Utils25.mapOptionFieldNames(options2, this);
         options2.model = this;
         if (options2.hooks) {
           await this.runHooks("beforeBulkDestroy", options2);
@@ -157297,7 +157297,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const where3 = {
             [field]: Object.prototype.hasOwnProperty.call(deletedAtAttribute, "defaultValue") ? deletedAtAttribute.defaultValue : null
           };
-          attrValueHash[field] = Utils24.now(this.sequelize.options.dialect);
+          attrValueHash[field] = Utils25.now(this.sequelize.options.dialect);
           result2 = await this.queryInterface.bulkUpdate(this.getTableName(options2), attrValueHash, Object.assign(where3, options2.where), options2, this.rawAttributes);
         } else {
           result2 = await this.queryInterface.bulkDelete(this.getTableName(options2), options2.where, options2, this);
@@ -157325,7 +157325,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         options2.type = QueryTypes2.RAW;
         options2.model = this;
-        Utils24.mapOptionFieldNames(options2, this);
+        Utils25.mapOptionFieldNames(options2, this);
         if (options2.hooks) {
           await this.runHooks("beforeBulkRestore", options2);
         }
@@ -157350,7 +157350,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       static async update(values2, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157383,7 +157383,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
         }
         if (this._timestampAttributes.updatedAt && !options2.silent) {
-          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils24.now(this.sequelize.options.dialect);
+          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils25.now(this.sequelize.options.dialect);
         }
         options2.model = this;
         let valuesUse;
@@ -157469,8 +157469,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else if (_4.isEmpty(valuesUse) || Object.keys(valuesUse).length === 1 && valuesUse[this._timestampAttributes.updatedAt]) {
           result2 = [0];
         } else {
-          valuesUse = Utils24.mapValueFieldNames(valuesUse, options2.fields, this);
-          options2 = Utils24.mapOptionFieldNames(options2, this);
+          valuesUse = Utils25.mapValueFieldNames(valuesUse, options2.fields, this);
+          options2 = Utils25.mapOptionFieldNames(options2, this);
           options2.hasTrigger = this.options ? this.options.hasTrigger : false;
           const affectedRows = await this.queryInterface.bulkUpdate(this.getTableName(options2), valuesUse, options2.where, options2, this.tableAttributes);
           if (options2.returning) {
@@ -157496,7 +157496,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _getDefaultTimestamp(attr) {
         if (!!this.rawAttributes[attr] && !!this.rawAttributes[attr].defaultValue) {
-          return Utils24.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
+          return Utils25.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
         }
         return void 0;
       }
@@ -157514,7 +157514,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2.attributes = attributes;
       }
       static _injectScope(options2) {
-        const scope = Utils24.cloneDeep(this._scope);
+        const scope = Utils25.cloneDeep(this._scope);
         this._defaultsOptions(options2, scope);
       }
       static [/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")]() {
@@ -157546,13 +157546,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this._injectScope(options2);
         this._optionsMustContainWhere(options2);
-        options2 = Utils24.defaults({}, options2, {
+        options2 = Utils25.defaults({}, options2, {
           by: 1,
           where: {},
           increment: true
         });
         const isSubtraction = !options2.increment;
-        Utils24.mapOptionFieldNames(options2, this);
+        Utils25.mapOptionFieldNames(options2, this);
         const where3 = __spreadValues({}, options2.where);
         let incrementAmountsByField = {};
         if (Array.isArray(fields)) {
@@ -157570,7 +157570,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const updatedAtAttr = this._timestampAttributes.updatedAt;
         if (!options2.silent && updatedAtAttr && !incrementAmountsByField[updatedAtAttr]) {
           const attrName = this.rawAttributes[updatedAtAttr].field || updatedAtAttr;
-          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils24.now(this.sequelize.options.dialect);
+          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils25.now(this.sequelize.options.dialect);
         }
         const tableName = this.getTableName(options2);
         let affectedRows;
@@ -157593,7 +157593,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _optionsMustContainWhere(options2) {
         assert2(options2 && options2.where, "Missing where attribute in the options parameter");
-        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils24.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
+        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils25.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
       }
       where(checkVersion) {
         const where3 = this.constructor.primaryKeyAttributes.reduce((result2, attribute) => {
@@ -157607,7 +157607,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (checkVersion && versionAttr) {
           where3[versionAttr] = this.get(versionAttr, { raw: true });
         }
-        return Utils24.mapWhereFieldNames(where3, this.constructor);
+        return Utils25.mapWhereFieldNames(where3, this.constructor);
       }
       toString() {
         return `[object SequelizeInstance:${this.constructor.name}]`;
@@ -157747,10 +157747,10 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return this;
             }
           }
-          if (!(value instanceof Utils24.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
+          if (!(value instanceof Utils25.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
             value = this.constructor._dataTypeSanitizers[key].call(this, value, options2);
           }
-          if (!options2.raw && (value instanceof Utils24.SequelizeMethod || !(value instanceof Utils24.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
+          if (!options2.raw && (value instanceof Utils25.SequelizeMethod || !(value instanceof Utils25.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
             this._previousDataValues[key] = originalValue;
             this.changed(key, true);
           }
@@ -157821,7 +157821,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (arguments.length > 1) {
           throw new Error("The second argument was removed in favor of the options object.");
         }
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157853,7 +157853,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const versionAttr = this.constructor._versionAttribute;
         const hook = this.isNewRecord ? "Create" : "Update";
         const wasNewRecord = this.isNewRecord;
-        const now2 = Utils24.now(this.sequelize.options.dialect);
+        const now2 = Utils25.now(this.sequelize.options.dialect);
         let updatedAtAttr = this.constructor._timestampAttributes.updatedAt;
         if (updatedAtAttr && options2.fields.length > 0 && !options2.fields.includes(updatedAtAttr)) {
           options2.fields.push(updatedAtAttr);
@@ -157922,7 +157922,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             const instance = this.get(include.as);
             if (!instance)
               return;
-            const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -157937,7 +157937,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!this.changed() && !this.isNewRecord)
           return this;
         const versionFieldName = _4.get(this.constructor.rawAttributes[versionAttr], "field") || versionAttr;
-        const values2 = Utils24.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
+        const values2 = Utils25.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
         let query = null;
         let args = [];
         let where3;
@@ -157979,7 +157979,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             if (!Array.isArray(instances))
               instances = [instances];
-            const includeOptions = _4(Utils24.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils25.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -158019,7 +158019,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       async reload(options2) {
-        options2 = Utils24.defaults({
+        options2 = Utils25.defaults({
           where: this.where()
         }, options2, {
           include: this._options.include || void 0
@@ -158044,14 +158044,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2 = options2 || {};
         if (Array.isArray(options2))
           options2 = { fields: options2 };
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
             options2.transaction = t;
           }
         }
-        const setOptions = Utils24.cloneDeep(options2);
+        const setOptions = Utils25.cloneDeep(options2);
         setOptions.attributes = options2.fields;
         this.set(values2, setOptions);
         const sideEffects = _4.without(this.changed(), ...changedBefore);
@@ -158135,7 +158135,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       async increment(fields, options2) {
         const identifier2 = this.where();
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2.where = __spreadValues(__spreadValues({}, options2.where), identifier2);
         options2.instance = this;
         await this.constructor.increment(fields, options2);
@@ -158181,7 +158181,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       if (!_4.isObject(where3)) {
         return where3;
       }
-      const keys2 = Utils24.getComplexKeys(where3);
+      const keys2 = Utils25.getComplexKeys(where3);
       if (keys2.length === 0) {
         return;
       }
@@ -158204,9 +158204,9 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         [Op2.and]: _4.flatten([unpackedA, unpackedB])
       };
     }
-    Object.assign(Model13, associationsMixin);
-    Hooks.applyTo(Model13, true);
-    module2.exports = Model13;
+    Object.assign(Model14, associationsMixin);
+    Hooks.applyTo(Model14, true);
+    module2.exports = Model14;
   }
 });
 
@@ -158795,7 +158795,7 @@ var require_query_interface = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var DataTypes2 = require_data_types9();
     var Transaction2 = require_transaction();
     var QueryTypes2 = require_query_types();
@@ -159020,7 +159020,7 @@ var require_query_interface = __commonJS({
         if (!rawTablename) {
           rawTablename = tableName;
         }
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2.fields = attributes;
         const sql = this.queryGenerator.addIndexQuery(tableName, options2, rawTablename);
         return await this.sequelize.query(sql, __spreadProps(__spreadValues({}, options2), { supportsSearchPath: false }));
@@ -159064,7 +159064,7 @@ var require_query_interface = __commonJS({
         if (!options2.type) {
           throw new Error("Constraint type must be specified through options.type");
         }
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         const sql = this.queryGenerator.addConstraintQuery(tableName, options2);
         return await this.sequelize.query(sql, options2);
       }
@@ -159076,7 +159076,7 @@ var require_query_interface = __commonJS({
         return this.sequelize.query(this.queryGenerator.removeConstraintQuery(tableName, constraintName), options2);
       }
       async insert(instance, tableName, values2, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2.hasTrigger = instance && instance.constructor.options.hasTrigger;
         const sql = this.queryGenerator.insertQuery(tableName, values2, instance && instance.constructor.rawAttributes, options2);
         options2.type = QueryTypes2.INSERT;
@@ -159131,9 +159131,9 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkUpdate(tableName, values2, identifier2, options2, attributes) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         if (typeof identifier2 === "object")
-          identifier2 = Utils24.cloneDeep(identifier2);
+          identifier2 = Utils25.cloneDeep(identifier2);
         const sql = this.queryGenerator.updateQuery(tableName, values2, identifier2, options2, attributes);
         const table = _4.isObject(tableName) ? tableName : { tableName };
         const model = options2.model ? options2.model : _4.find(this.sequelize.modelManager.models, { tableName: table.tableName });
@@ -159169,13 +159169,13 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkDelete(tableName, where3, options2, model) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         options2 = _4.defaults(options2, { limit: null });
         if (options2.truncate === true) {
           return this.sequelize.query(this.queryGenerator.truncateTableQuery(tableName, options2), options2);
         }
         if (typeof identifier === "object")
-          where3 = Utils24.cloneDeep(where3);
+          where3 = Utils25.cloneDeep(where3);
         return await this.sequelize.query(this.queryGenerator.deleteQuery(tableName, where3, options2, model), options2);
       }
       async select(model, tableName, optionsArg) {
@@ -159183,27 +159183,27 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(this.queryGenerator.selectQuery(tableName, options2, model), options2);
       }
       async increment(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("+", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async decrement(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils24.cloneDeep(options2);
+        options2 = Utils25.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("-", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
-      async rawSelect(tableName, options2, attributeSelector, Model13) {
-        options2 = Utils24.cloneDeep(options2);
+      async rawSelect(tableName, options2, attributeSelector, Model14) {
+        options2 = Utils25.cloneDeep(options2);
         options2 = _4.defaults(options2, {
           raw: true,
           plain: true,
           type: QueryTypes2.SELECT
         });
-        const sql = this.queryGenerator.selectQuery(tableName, options2, Model13);
+        const sql = this.queryGenerator.selectQuery(tableName, options2, Model14);
         if (attributeSelector === void 0) {
           throw new Error("Please pass an attribute selector!");
         }
@@ -161289,7 +161289,7 @@ var require_operators2 = __commonJS({
     };
     var _4 = require_lodash();
     var Op2 = require_operators();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var OperatorHelpers = {
       OperatorMap: {
         [Op2.eq]: "=",
@@ -161344,7 +161344,7 @@ var require_operators2 = __commonJS({
         if (!this.OperatorsAliasMap) {
           return orig;
         }
-        Utils24.getOperators(orig).forEach((op) => {
+        Utils25.getOperators(orig).forEach((op) => {
           const item = orig[op];
           if (_4.isPlainObject(item)) {
             obj2[op] = this._replaceAliases(item);
@@ -161438,11 +161438,11 @@ var require_query_generator = __commonJS({
     var util = require("util");
     var _4 = require_lodash();
     var uuidv4 = (init_esm_node(), __toCommonJS(esm_node_exports)).v4;
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var deprecations = require_deprecations();
     var SqlString = require_sql_string();
     var DataTypes2 = require_data_types9();
-    var Model13 = require_model2();
+    var Model14 = require_model2();
     var Association2 = require_base2();
     var BelongsTo2 = require_belongs_to();
     var BelongsToMany2 = require_belongs_to_many();
@@ -161577,7 +161577,7 @@ var require_query_generator = __commonJS({
         if (this._dialect.supports.EXCEPTION && options2.exception) {
           options2.bindParam = false;
         }
-        valueHash = Utils24.removeNullValuesFromHash(valueHash, this.options.omitNull);
+        valueHash = Utils25.removeNullValuesFromHash(valueHash, this.options.omitNull);
         for (const key in valueHash) {
           if (Object.prototype.hasOwnProperty.call(valueHash, key)) {
             const value = valueHash[key];
@@ -161594,7 +161594,7 @@ var require_query_generator = __commonJS({
               if (modelAttributeMap && modelAttributeMap[key] && modelAttributeMap[key].autoIncrement === true) {
                 identityWrapperRequired = true;
               }
-              if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
+              if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
                 values2.push(this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }));
               } else {
                 values2.push(this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }, bindParam));
@@ -161624,7 +161624,7 @@ var require_query_generator = __commonJS({
             } else {
               fragments.push("DO UPDATE SET", updateKeys.join(","));
             }
-            onDuplicateKeyUpdate = ` ${Utils24.joinSQLFragments(fragments)}`;
+            onDuplicateKeyUpdate = ` ${Utils25.joinSQLFragments(fragments)}`;
           } else {
             const valueKeys = options2.updateOnDuplicate.map((attr) => `${this.quoteIdentifier(attr)}=VALUES(${this.quoteIdentifier(attr)})`);
             if (_4.isEmpty(valueKeys) && options2.upsertKeys) {
@@ -161737,7 +161737,7 @@ var require_query_generator = __commonJS({
           const returnValues = this.generateReturnValues(fieldMappedAttributes, options2);
           returning += returnValues.returningFragment;
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "INSERT",
           ignoreDuplicates,
           "INTO",
@@ -161754,7 +161754,7 @@ var require_query_generator = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const values2 = [];
         const bind = [];
         const modelAttributeMap = {};
@@ -161799,7 +161799,7 @@ var require_query_generator = __commonJS({
             continue;
           }
           const value = attrValueHash[key];
-          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -161819,7 +161819,7 @@ var require_query_generator = __commonJS({
       arithmeticQuery(operator, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
         options2 = options2 || {};
         _4.defaults(options2, { returning: true });
-        extraAttributesToBeUpdated = Utils24.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
+        extraAttributesToBeUpdated = Utils25.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
         let outputFragment = "";
         let returningFragment = "";
         if (this._dialect.supports.returnValues && options2.returning) {
@@ -161840,7 +161840,7 @@ var require_query_generator = __commonJS({
           const escapedValue = this.escape(newValue);
           updateSetSqlFragments.push(`${quotedField}=${escapedValue}`);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "UPDATE",
           this.quoteTable(tableName),
           "SET",
@@ -161864,7 +161864,7 @@ var require_query_generator = __commonJS({
           options2.prefix = options2.prefix.replace(/("|')/g, "");
         }
         const fieldsSql = options2.fields.map((field) => {
-          if (field instanceof Utils24.SequelizeMethod) {
+          if (field instanceof Utils25.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (typeof field === "string") {
@@ -161898,9 +161898,9 @@ var require_query_generator = __commonJS({
           return result2;
         });
         if (!options2.name) {
-          options2 = Utils24.nameIndex(options2, options2.prefix);
+          options2 = Utils25.nameIndex(options2, options2.prefix);
         }
-        options2 = Model13._conformIndex(options2);
+        options2 = Model14._conformIndex(options2);
         if (!this._dialect.supports.index.type) {
           delete options2.type;
         }
@@ -161933,7 +161933,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "ADD",
@@ -161947,7 +161947,7 @@ var require_query_generator = __commonJS({
           if (typeof field === "string") {
             return this.quoteIdentifier(field);
           }
-          if (field instanceof Utils24.SequelizeMethod) {
+          if (field instanceof Utils25.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (field.attribute) {
@@ -162015,7 +162015,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "DROP CONSTRAINT",
@@ -162048,12 +162048,12 @@ var require_query_generator = __commonJS({
               previousAssociation = previous;
               previousModel = previous.target;
             }
-            if (previousModel && previousModel.prototype instanceof Model13) {
+            if (previousModel && previousModel.prototype instanceof Model14) {
               let model;
               let as2;
-              if (typeof item2 === "function" && item2.prototype instanceof Model13) {
+              if (typeof item2 === "function" && item2.prototype instanceof Model14) {
                 model = item2;
-              } else if (_4.isPlainObject(item2) && item2.model && item2.model.prototype instanceof Model13) {
+              } else if (_4.isPlainObject(item2) && item2.model && item2.model.prototype instanceof Model14) {
                 model = item2.model;
                 as2 = item2.as;
               }
@@ -162077,7 +162077,7 @@ var require_query_generator = __commonJS({
               const orderIndex = validOrderOptions.indexOf(item2.toUpperCase());
               if (index > 0 && orderIndex !== -1) {
                 item2 = this.sequelize.literal(` ${validOrderOptions[orderIndex]}`);
-              } else if (previousModel && previousModel.prototype instanceof Model13) {
+              } else if (previousModel && previousModel.prototype instanceof Model14) {
                 if (previousModel.associations !== void 0 && previousModel.associations[item2]) {
                   item2 = previousModel.associations[item2];
                 } else if (previousModel.rawAttributes !== void 0 && previousModel.rawAttributes[item2] && item2 !== previousModel.rawAttributes[item2].field) {
@@ -162101,7 +162101,7 @@ var require_query_generator = __commonJS({
           let i = 0;
           for (i = 0; i < collectionLength - 1; i++) {
             item = collection[i];
-            if (typeof item === "string" || item._modelAttribute || item instanceof Utils24.SequelizeMethod) {
+            if (typeof item === "string" || item._modelAttribute || item instanceof Utils25.SequelizeMethod) {
               break;
             } else if (item instanceof Association2) {
               tableNames[i] = item.as;
@@ -162121,7 +162121,7 @@ var require_query_generator = __commonJS({
         if (collection._modelAttribute) {
           return `${this.quoteTable(collection.Model.name)}.${this.quoteIdentifier(collection.fieldName)}`;
         }
-        if (collection instanceof Utils24.SequelizeMethod) {
+        if (collection instanceof Utils25.SequelizeMethod) {
           return this.handleSequelizeMethod(collection);
         }
         if (_4.isPlainObject(collection) && collection.raw) {
@@ -162187,7 +162187,7 @@ var require_query_generator = __commonJS({
       escape(value, field, options2) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils24.SequelizeMethod) {
+          if (value instanceof Utils25.SequelizeMethod) {
             return this.handleSequelizeMethod(value);
           }
           if (field && field.type) {
@@ -162215,7 +162215,7 @@ var require_query_generator = __commonJS({
       format(value, field, options2, bindParam) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils24.SequelizeMethod) {
+          if (value instanceof Utils25.SequelizeMethod) {
             throw new Error("Cannot pass SequelizeMethod as a bind parameter - use escape instead");
           }
           if (field && field.type) {
@@ -162258,7 +162258,7 @@ var require_query_generator = __commonJS({
           case "sqlite":
             if (this.dialect === "mysql") {
               paths = paths.map((subPath) => {
-                return /\D/.test(subPath) ? Utils24.addTicks(subPath, '"') : subPath;
+                return /\D/.test(subPath) ? Utils25.addTicks(subPath, '"') : subPath;
               });
             }
             pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
@@ -162357,7 +162357,7 @@ var require_query_generator = __commonJS({
             }
             if (options2.groupedLimit.on instanceof BelongsToMany2) {
               groupedTableName = options2.groupedLimit.on.manyFromSource.as;
-              const groupedLimitOptions = Model13._validateIncludedElements({
+              const groupedLimitOptions = Model14._validateIncludedElements({
                 include: [{
                   association: options2.groupedLimit.on.manyFromSource,
                   duplicating: false,
@@ -162421,7 +162421,7 @@ var require_query_generator = __commonJS({
                   [options2.groupedLimit.on.foreignIdentifierField]: value
                 };
               }
-              return Utils24.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
+              return Utils25.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
             }).join(this._dialect.supports["UNION ALL"] ? " UNION ALL " : " UNION ")})`, mainTable.as));
           } else {
             mainQueryItems.push(this.selectFromTableFragment(options2, mainTable.model, attributes.main, mainTable.quotedName, mainTable.as));
@@ -162496,7 +162496,7 @@ var require_query_generator = __commonJS({
           } else {
             query += " FOR UPDATE";
           }
-          if (this._dialect.supports.lockOf && options2.lock.of && options2.lock.of.prototype instanceof Model13) {
+          if (this._dialect.supports.lockOf && options2.lock.of && options2.lock.of.prototype instanceof Model14) {
             query += ` OF ${this.quoteTable(options2.lock.of.name)}`;
           }
           if (this._dialect.supports.skipLocked && options2.skipLocked) {
@@ -162512,7 +162512,7 @@ var require_query_generator = __commonJS({
       escapeAttributes(attributes, options2, mainTableAs) {
         return attributes && attributes.map((attr) => {
           let addTable = true;
-          if (attr instanceof Utils24.SequelizeMethod) {
+          if (attr instanceof Utils25.SequelizeMethod) {
             return this.handleSequelizeMethod(attr);
           }
           if (Array.isArray(attr)) {
@@ -162520,7 +162520,7 @@ var require_query_generator = __commonJS({
               throw new Error(`${JSON.stringify(attr)} is not a valid attribute definition. Please use the following format: ['attribute definition', 'alias']`);
             }
             attr = attr.slice();
-            if (attr[0] instanceof Utils24.SequelizeMethod) {
+            if (attr[0] instanceof Utils25.SequelizeMethod) {
               attr[0] = this.handleSequelizeMethod(attr[0]);
               addTable = false;
             } else if (this.options.attributeBehavior === "escape" || !attr[0].includes("(") && !attr[0].includes(")")) {
@@ -162546,7 +162546,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             }
             attr = [attr[0], this.quoteIdentifier(alias)].join(" AS ");
           } else {
-            attr = !attr.includes(Utils24.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
+            attr = !attr.includes(Utils25.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
           }
           if (!_4.isEmpty(options2.include) && (!attr.includes(".") || options2.dotNotation) && addTable) {
             attr = `${mainTableAs}.${attr}`;
@@ -162578,22 +162578,22 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         if (topLevelInfo.options.includeIgnoreAttributes !== false) {
           include.model._expandAttributes(include);
-          Utils24.mapFinderOptions(include, include.model);
+          Utils25.mapFinderOptions(include, include.model);
           const includeAttributes = include.attributes.map((attr) => {
             let attrAs = attr;
             let verbatim = false;
             if (Array.isArray(attr) && attr.length === 2) {
-              if (attr[0] instanceof Utils24.SequelizeMethod && (attr[0] instanceof Utils24.Literal || attr[0] instanceof Utils24.Cast || attr[0] instanceof Utils24.Fn)) {
+              if (attr[0] instanceof Utils25.SequelizeMethod && (attr[0] instanceof Utils25.Literal || attr[0] instanceof Utils25.Cast || attr[0] instanceof Utils25.Fn)) {
                 verbatim = true;
               }
-              attr = attr.map((attr2) => attr2 instanceof Utils24.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
+              attr = attr.map((attr2) => attr2 instanceof Utils25.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
               attrAs = attr[1];
               attr = attr[0];
             }
-            if (attr instanceof Utils24.Literal) {
+            if (attr instanceof Utils25.Literal) {
               return attr.val;
             }
-            if (attr instanceof Utils24.Cast || attr instanceof Utils24.Fn) {
+            if (attr instanceof Utils25.Cast || attr instanceof Utils25.Fn) {
               throw new Error("Tried to select attributes using Sequelize.cast or Sequelize.fn without specifying an alias for the result, during eager loading. This means the attribute will not be added to the returned instance");
             }
             let prefix;
@@ -162612,7 +162612,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             if (this.options.minifyAliases) {
               alias = this._getMinifiedAlias(alias, includeAs.internalAs, topLevelInfo.options);
             }
-            return Utils24.joinSQLFragments([
+            return Utils25.joinSQLFragments([
               prefix,
               "AS",
               this.quoteIdentifier(alias, true)
@@ -162825,7 +162825,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           if (this.options.minifyAliases) {
             alias = this._getMinifiedAlias(alias, throughAs, topLevelInfo.options);
           }
-          return Utils24.joinSQLFragments([
+          return Utils25.joinSQLFragments([
             `${this.quoteIdentifier(throughAs)}.${this.quoteIdentifier(Array.isArray(attr) ? attr[0] : attr)}`,
             "AS",
             this.quoteIdentifier(alias)
@@ -162931,7 +162931,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (topInclude.through && Object(topInclude.through.model) === topInclude.through.model) {
           query = this.selectQuery(topInclude.through.model.getTableName(), {
             attributes: [topInclude.through.model.primaryKeyField],
-            include: Model13._validateIncludedElements({
+            include: Model14._validateIncludedElements({
               model: topInclude.through.model,
               include: [{
                 association: topAssociation.toTarget,
@@ -162963,7 +162963,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           ].join(" = ");
           query = this.selectQuery(topInclude.model.getTableName(), {
             attributes: [targetField],
-            include: Model13._validateIncludedElements(topInclude).include,
+            include: Model14._validateIncludedElements(topInclude).include,
             model: topInclude.model,
             where: {
               [Op2.and]: [
@@ -163001,7 +163001,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             if (!Array.isArray(order)) {
               order = [order];
             }
-            if (subQuery && Array.isArray(order) && order[0] && !(order[0] instanceof Association2) && !(typeof order[0] === "function" && order[0].prototype instanceof Model13) && !(typeof order[0].model === "function" && order[0].model.prototype instanceof Model13) && !(typeof order[0] === "string" && model && model.associations !== void 0 && model.associations[order[0]])) {
+            if (subQuery && Array.isArray(order) && order[0] && !(order[0] instanceof Association2) && !(typeof order[0] === "function" && order[0].prototype instanceof Model14) && !(typeof order[0].model === "function" && order[0].model.prototype instanceof Model14) && !(typeof order[0] === "string" && model && model.associations !== void 0 && model.associations[order[0]])) {
               const field = model.rawAttributes[order[0]] ? model.rawAttributes[order[0]].field : order[0];
               const subQueryAlias = this._getAliasForField(this.quoteIdentifier(model.name), field, options2);
               let parent = null;
@@ -163020,12 +163020,12 @@ https://github.com/sequelize/sequelize/discussions/15694`);
               if (aliasedAttribute) {
                 const modelName = this.quoteIdentifier(model.name);
                 const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-                order[0] = new Utils24.Col(alias || aliasedAttribute[1]);
+                order[0] = new Utils25.Col(alias || aliasedAttribute[1]);
               }
             }
             mainQueryOrder.push(this.quote(order, model, "->"));
           }
-        } else if (options2.order instanceof Utils24.SequelizeMethod) {
+        } else if (options2.order instanceof Utils25.SequelizeMethod) {
           const sql = this.quote(options2.order, model, "->");
           if (subQuery) {
             subQueryOrder.push(sql);
@@ -163077,15 +163077,15 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Object.prototype.hasOwnProperty.call(this.OperatorMap, smth.comparator)) {
           smth.comparator = this.OperatorMap[smth.comparator];
         }
-        if (smth instanceof Utils24.Where) {
+        if (smth instanceof Utils25.Where) {
           let value = smth.logic;
           let key;
-          if (smth.attribute instanceof Utils24.SequelizeMethod) {
+          if (smth.attribute instanceof Utils25.SequelizeMethod) {
             key = this.getWhereConditions(smth.attribute, tableName, factory, options2, prepend2);
           } else {
             key = `${this.quoteTable(smth.attribute.Model.name)}.${this.quoteIdentifier(smth.attribute.field || smth.attribute.fieldName)}`;
           }
-          if (value && value instanceof Utils24.SequelizeMethod) {
+          if (value && value instanceof Utils25.SequelizeMethod) {
             value = this.getWhereConditions(value, tableName, factory, options2, prepend2);
             if (value === "NULL") {
               if (smth.comparator === "=") {
@@ -163119,11 +163119,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return [key, value].join(` ${smth.comparator} `);
         }
-        if (smth instanceof Utils24.Literal) {
+        if (smth instanceof Utils25.Literal) {
           return smth.val;
         }
-        if (smth instanceof Utils24.Cast) {
-          if (smth.val instanceof Utils24.SequelizeMethod) {
+        if (smth instanceof Utils25.Cast) {
+          if (smth.val instanceof Utils25.SequelizeMethod) {
             result2 = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
           } else if (_4.isPlainObject(smth.val)) {
             result2 = this.whereItemsQuery(smth.val);
@@ -163132,9 +163132,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return `CAST(${result2} AS ${smth.type.toUpperCase()})`;
         }
-        if (smth instanceof Utils24.Fn) {
+        if (smth instanceof Utils25.Fn) {
           return `${smth.fn}(${smth.args.map((arg) => {
-            if (arg instanceof Utils24.SequelizeMethod) {
+            if (arg instanceof Utils25.SequelizeMethod) {
               return this.handleSequelizeMethod(arg, tableName, factory, options2, prepend2);
             }
             if (_4.isPlainObject(arg)) {
@@ -163143,7 +163143,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             return this.escape(typeof arg === "string" ? arg.replace(/\$/g, "$$$") : arg);
           }).join(", ")})`;
         }
-        if (smth instanceof Utils24.Col) {
+        if (smth instanceof Utils25.Col) {
           if (Array.isArray(smth.col) && !factory) {
             throw new Error("Cannot call Sequelize.col() with array outside of order / group clause");
           }
@@ -163162,7 +163162,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return "";
       }
       whereItemsQuery(where3, options2, binding) {
-        if (where3 === null || where3 === void 0 || Utils24.getComplexSize(where3) === 0) {
+        if (where3 === null || where3 === void 0 || Utils25.getComplexSize(where3) === 0) {
           return "";
         }
         if (typeof where3 === "string") {
@@ -163173,7 +163173,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (binding[0] !== " ")
           binding = ` ${binding} `;
         if (_4.isPlainObject(where3)) {
-          Utils24.getComplexKeys(where3).forEach((prop) => {
+          Utils25.getComplexKeys(where3).forEach((prop) => {
             const item = where3[prop];
             items.push(this.whereItemQuery(prop, item, options2));
           });
@@ -163203,7 +163203,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (isPlainObject2) {
           value = this._replaceAliases(value);
         }
-        const valueKeys = isPlainObject2 && Utils24.getComplexKeys(value);
+        const valueKeys = isPlainObject2 && Utils25.getComplexKeys(value);
         if (key === void 0) {
           if (typeof value === "string") {
             return value;
@@ -163220,11 +163220,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           const opValue2 = options2.bindParam ? this.format(value, field, options2, options2.bindParam) : this.escape(value, field);
           return this._joinKeyValue(key, opValue2, this.OperatorMap[Op2.eq], options2.prefix);
         }
-        if (value instanceof Utils24.SequelizeMethod && !(key !== void 0 && value instanceof Utils24.Fn)) {
+        if (value instanceof Utils25.SequelizeMethod && !(key !== void 0 && value instanceof Utils25.Fn)) {
           return this.handleSequelizeMethod(value);
         }
         if (key === void 0 && isArray) {
-          if (Utils24.canTreatArrayAsAnd(value)) {
+          if (Utils25.canTreatArrayAsAnd(value)) {
             key = Op2.and;
           } else {
             throw new Error("Support for literal replacements in the `where` object has been removed.");
@@ -163282,7 +163282,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(value)) {
           value = value.map((item) => {
             let itemQuery = this.whereItemsQuery(item, options2, this.OperatorMap[Op2.and]);
-            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils24.getComplexSize(item) > 1) {
+            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils25.getComplexSize(item) > 1) {
               itemQuery = `(${itemQuery})`;
             }
             return itemQuery;
@@ -163298,7 +163298,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _whereBind(binding, key, value, options2) {
         if (_4.isPlainObject(value)) {
-          value = Utils24.getComplexKeys(value).map((prop) => {
+          value = Utils25.getComplexKeys(value).map((prop) => {
             const item = value[prop];
             return this.whereItemQuery(key, { [prop]: item }, options2);
           });
@@ -163312,13 +163312,13 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         const items = [];
         let baseKey = this.quoteIdentifier(key);
         if (options2.prefix) {
-          if (options2.prefix instanceof Utils24.Literal) {
+          if (options2.prefix instanceof Utils25.Literal) {
             baseKey = `${this.handleSequelizeMethod(options2.prefix)}.${baseKey}`;
           } else {
             baseKey = `${this.quoteTable(options2.prefix)}.${baseKey}`;
           }
         }
-        Utils24.getOperators(value).forEach((op) => {
+        Utils25.getOperators(value).forEach((op) => {
           const where3 = {
             [op]: value[op]
           };
@@ -163340,7 +163340,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         let pathKey = this.jsonPathExtractionQuery(baseKey, path14);
         if (_4.isPlainObject(item)) {
-          Utils24.getOperators(item).forEach((op) => {
+          Utils25.getOperators(item).forEach((op) => {
             const value = this._toJSONValue(item[op]);
             let isJson = false;
             if (typeof value === "string" && op === Op2.contains) {
@@ -163367,9 +163367,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       _castKey(key, value, cast2, json2) {
         cast2 = cast2 || this._getJsonCast(Array.isArray(value) ? value[0] : value);
         if (cast2) {
-          return new Utils24.Literal(this.handleSequelizeMethod(new Utils24.Cast(new Utils24.Literal(key), cast2, json2)));
+          return new Utils25.Literal(this.handleSequelizeMethod(new Utils25.Cast(new Utils25.Literal(key), cast2, json2)));
         }
-        return new Utils24.Literal(key);
+        return new Utils25.Literal(key);
       }
       _getJsonCast(value) {
         if (typeof value === "number") {
@@ -163399,11 +163399,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return [key, value].join(` ${comparator} `);
       }
       _getSafeKey(key, prefix) {
-        if (key instanceof Utils24.SequelizeMethod) {
+        if (key instanceof Utils25.SequelizeMethod) {
           key = this.handleSequelizeMethod(key);
           return this._prefixKey(this.handleSequelizeMethod(key), prefix);
         }
-        if (Utils24.isColString(key)) {
+        if (Utils25.isColString(key)) {
           key = key.substr(1, key.length - 2).split(".");
           if (key.length > 2) {
             key = [
@@ -163417,7 +163417,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _prefixKey(key, prefix) {
         if (prefix) {
-          if (prefix instanceof Utils24.Literal) {
+          if (prefix instanceof Utils25.Literal) {
             return [this.handleSequelizeMethod(prefix), key].join(".");
           }
           return [this.quoteTable(prefix), key].join(".");
@@ -163436,7 +163436,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         switch (prop) {
           case Op2.in:
           case Op2.notIn:
-            if (value instanceof Utils24.Literal) {
+            if (value instanceof Utils25.Literal) {
               return this._joinKeyValue(key, value.val, comparator, options2.prefix);
             }
             if (value.length) {
@@ -163472,7 +163472,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           case Op2.endsWith:
           case Op2.substring:
             comparator = this.OperatorMap[Op2.like];
-            if (value instanceof Utils24.Literal) {
+            if (value instanceof Utils25.Literal) {
               value = value.val;
             }
             let pattern = `${value}%`;
@@ -163518,7 +163518,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (prepend2 === void 0) {
           prepend2 = true;
         }
-        if (smth && smth instanceof Utils24.SequelizeMethod) {
+        if (smth && smth instanceof Utils25.SequelizeMethod) {
           return this.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
         if (_4.isPlainObject(smth)) {
@@ -163553,7 +163553,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(smth)) {
           if (smth.length === 0 || smth.length > 0 && smth[0].length === 0)
             return "1=1";
-          if (Utils24.canTreatArrayAsAnd(smth)) {
+          if (Utils25.canTreatArrayAsAnd(smth)) {
             const _smth = { [Op2.and]: smth };
             return this.getWhereConditions(_smth, tableName, factory, options2, prepend2);
           }
@@ -163614,7 +163614,7 @@ var require_query_generator2 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -163649,7 +163649,7 @@ var require_query_generator2 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -163721,7 +163721,7 @@ var require_query_generator2 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -163756,7 +163756,7 @@ var require_query_generator2 = __commonJS({
         return `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = ${tableName} AND TABLE_SCHEMA = ${this.escape(this.sequelize.config.database)}`;
       }
       addColumnQuery(table, key, dataType) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -163770,7 +163770,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -163791,7 +163791,7 @@ var require_query_generator2 = __commonJS({
             attrString.push(`\`${attributeName}\` \`${attributeName}\` ${definition}`);
           }
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `CHANGE ${attrString.join(", ")}`,
@@ -163805,7 +163805,7 @@ var require_query_generator2 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`\`${attrBefore}\` \`${attrName}\` ${definition}`);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "CHANGE",
@@ -163814,7 +163814,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils24.Json) {
+        if (smth instanceof Utils25.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -163833,7 +163833,7 @@ var require_query_generator2 = __commonJS({
             }
             return str;
           }
-        } else if (smth instanceof Utils24.Cast) {
+        } else if (smth instanceof Utils25.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           } else if (smth.json && /boolean/i.test(smth.type)) {
@@ -163871,7 +163871,7 @@ var require_query_generator2 = __commonJS({
         return query + limit;
       }
       showIndexesQuery(tableName, options2) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           `SHOW INDEX FROM ${this.quoteTable(tableName)}`,
           options2 && options2.database && `FROM \`${options2.database}\``
         ]);
@@ -163879,7 +163879,7 @@ var require_query_generator2 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -163896,9 +163896,9 @@ var require_query_generator2 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -163919,7 +163919,7 @@ var require_query_generator2 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " auto_increment";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -164012,7 +164012,7 @@ var require_query_generator2 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -164025,7 +164025,7 @@ var require_query_generator2 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -164046,7 +164046,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -164055,11 +164055,11 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       quoteIdentifier(identifier2, force) {
-        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
+        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils24.addTicks(identifier2, "'");
+      return Utils25.addTicks(identifier2, "'");
     }
     module2.exports = MySQLQueryGenerator;
   }
@@ -164086,14 +164086,14 @@ var require_query_generator3 = __commonJS({
       return a;
     };
     var MySQLQueryGenerator = require_query_generator2();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var MariaDBQueryGenerator = class extends MySQLQueryGenerator {
       createSchema(schema, options2) {
         options2 = __spreadValues({
           charset: null,
           collate: null
         }, options2);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "CREATE SCHEMA IF NOT EXISTS",
           this.quoteIdentifier(schema),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -164115,7 +164115,7 @@ var require_query_generator3 = __commonJS({
             schemasToSkip.push(this.escape(schemaName));
           }
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT SCHEMA_NAME as schema_name",
           "FROM INFORMATION_SCHEMA.SCHEMATA",
           `WHERE SCHEMA_NAME NOT IN (${schemasToSkip.join(", ")})`,
@@ -164132,7 +164132,7 @@ var require_query_generator3 = __commonJS({
         return `${query};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
+        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = MariaDBQueryGenerator;
@@ -164784,7 +164784,7 @@ var require_query_generator4 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var DataTypes2 = require_data_types9();
     var TableHints2 = require_table_hints();
     var AbstractQueryGenerator = require_query_generator();
@@ -164942,7 +164942,7 @@ var require_query_generator4 = __commonJS({
           }
         }
         const quotedTableName = this.quoteTable(tableName);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           `IF OBJECT_ID('${quotedTableName}', 'U') IS NULL`,
           `CREATE TABLE ${quotedTableName} (${attributesClauseParts.join(", ")})`,
           ";",
@@ -165000,7 +165000,7 @@ var require_query_generator4 = __commonJS({
       }
       dropTableQuery(tableName) {
         const quoteTbl = this.quoteTable(tableName);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           `IF OBJECT_ID('${quoteTbl}', 'U') IS NOT NULL`,
           "DROP TABLE",
           quoteTbl,
@@ -165014,7 +165014,7 @@ var require_query_generator4 = __commonJS({
           commentStr = this.commentTemplate(dataType.comment, table, key);
           delete dataType["comment"];
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -165028,7 +165028,7 @@ var require_query_generator4 = __commonJS({
         return ` EXEC sp_addextendedproperty @name = N'MS_Description', @value = ${this.escape(comment)}, @level0type = N'Schema', @level0name = 'dbo', @level1type = N'Table', @level1name = ${this.quoteIdentifier(table)}, @level2type = N'Column', @level2name = ${this.quoteIdentifier(column)};`;
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -165054,7 +165054,7 @@ var require_query_generator4 = __commonJS({
             attrString.push(`${quotedAttrName} ${definition}`);
           }
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `ALTER COLUMN ${attrString.join(", ")}`,
@@ -165065,7 +165065,7 @@ var require_query_generator4 = __commonJS({
       }
       renameColumnQuery(tableName, attrBefore, attributes) {
         const newName = Object.keys(attributes)[0];
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "EXEC sp_rename",
           `'${this.quoteTable(tableName)}.${attrBefore}',`,
           `'${newName}',`,
@@ -165223,7 +165223,7 @@ var require_query_generator4 = __commonJS({
       deleteQuery(tableName, where3, options2 = {}, model) {
         const table = this.quoteTable(tableName);
         const whereClause = this.getWhereConditions(where3, null, model, options2);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "DELETE",
           options2.limit && `TOP(${this.escape(options2.limit)})`,
           "FROM",
@@ -165243,7 +165243,7 @@ var require_query_generator4 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifiers(indexName)} ON ${this.quoteIdentifiers(tableName)}`;
       }
@@ -165273,13 +165273,13 @@ var require_query_generator4 = __commonJS({
         template2 = attribute.type.toString();
         if (attribute.allowNull === false) {
           template2 += " NOT NULL";
-        } else if (!attribute.primaryKey && !Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        } else if (!attribute.primaryKey && !Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += " NULL";
         }
         if (attribute.autoIncrement) {
           template2 += " IDENTITY(1,1)";
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -165358,7 +165358,7 @@ var require_query_generator4 = __commonJS({
       }
       getForeignKeyQuery(table, attributeName) {
         const tableName = table.tableName || table;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           this._getForeignKeysQueryPrefix(),
           "WHERE",
           `TB.NAME =${wrapSingleQuote(tableName)}`,
@@ -165369,7 +165369,7 @@ var require_query_generator4 = __commonJS({
       }
       getPrimaryKeyConstraintQuery(table, attributeName) {
         const tableName = wrapSingleQuote(table.tableName || table);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT K.TABLE_NAME AS tableName,",
           "K.COLUMN_NAME AS columnName,",
           "K.CONSTRAINT_NAME AS constraintName",
@@ -165386,7 +165386,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -165395,7 +165395,7 @@ var require_query_generator4 = __commonJS({
       }
       getDefaultConstraintQuery(tableName, attributeName) {
         const quotedTable = this.quoteTable(tableName);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT name FROM sys.default_constraints",
           `WHERE PARENT_OBJECT_ID = OBJECT_ID('${quotedTable}', 'U')`,
           `AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = ('${attributeName}')`,
@@ -165404,7 +165404,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropConstraintQuery(tableName, constraintName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP CONSTRAINT",
@@ -165471,7 +165471,7 @@ var require_query_generator4 = __commonJS({
               const joinQueries = this.generateInclude(include, { externalAs: mainTableAs, internalAs: mainTableAs }, topLevelInfo);
               mainJoinQueries = mainJoinQueries.concat(joinQueries.mainQuery);
             }
-            return Utils24.joinSQLFragments([
+            return Utils25.joinSQLFragments([
               "SELECT TOP 100 PERCENT",
               attributes.join(", "),
               "FROM (",
@@ -165499,7 +165499,7 @@ var require_query_generator4 = __commonJS({
               `) AS ${tmpTable}`
             ]);
           }
-          return Utils24.joinSQLFragments([
+          return Utils25.joinSQLFragments([
             "SELECT TOP 100 PERCENT",
             attributes.join(", "),
             "FROM (",
@@ -165521,7 +165521,7 @@ var require_query_generator4 = __commonJS({
             `) AS ${tmpTable}`
           ]);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT",
           isSQLServer2008 && options2.limit && `TOP ${options2.limit}`,
           attributes.join(", "),
@@ -165549,17 +165549,17 @@ var require_query_generator4 = __commonJS({
             if (aliasedAttribute) {
               const modelName = this.quoteIdentifier(options2.tableAs || model.name);
               const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-              primaryKey = new Utils24.Col(alias || aliasedAttribute[1]);
+              primaryKey = new Utils25.Col(alias || aliasedAttribute[1]);
             }
             if (!options2.order || !options2.order.length) {
               fragment += ` ORDER BY ${tablePkFragment}`;
             } else {
               const orderFieldNames = (options2.order || []).map((order) => {
                 const value = Array.isArray(order) ? order[0] : order;
-                if (value instanceof Utils24.Col) {
+                if (value instanceof Utils25.Col) {
                   return value.col;
                 }
-                if (value instanceof Utils24.Literal) {
+                if (value instanceof Utils25.Literal) {
                   return value.val;
                 }
                 return value;
@@ -165588,7 +165588,7 @@ var require_query_generator4 = __commonJS({
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils24.addTicks(Utils24.removeTicks(identifier2, "'"), "'");
+      return Utils25.addTicks(Utils25.removeTicks(identifier2, "'"), "'");
     }
     module2.exports = MSSQLQueryGenerator;
   }
@@ -165615,7 +165615,7 @@ var require_query_interface3 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var QueryTypes2 = require_query_types();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
@@ -165647,7 +165647,7 @@ var require_query_interface3 = __commonJS({
         const model = options2.model;
         const wheres = [];
         options2 = __spreadValues({}, options2);
-        if (!Utils24.isWhereEmpty(where3)) {
+        if (!Utils25.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         let indexes = Object.values(model.uniqueKeys).map((item) => item.fields);
@@ -166362,7 +166362,7 @@ var require_query5 = __commonJS({
     var SequelizeErrors = require_errors4();
     var parserStore = require_parserStore()("oracle");
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var { logger } = require_logger3();
     var debug2 = logger.debugContext("sql:oracle");
     var OracleQuery = class extends AbstractQuery {
@@ -166822,7 +166822,7 @@ var require_query5 = __commonJS({
           const columns = {};
           columns.fields = acc[accKey].fields;
           if (acc[accKey].name.match(/sys_c[0-9]*/)) {
-            acc[accKey].name = Utils24.nameIndex(columns, acc[accKey].tableName).name;
+            acc[accKey].name = Utils25.nameIndex(columns, acc[accKey].tableName).name;
           }
           returnIndexes.push(acc[accKey]);
         }
@@ -166878,7 +166878,7 @@ var require_query_generator5 = __commonJS({
     __export2(exports2, {
       OracleQueryGenerator: () => OracleQueryGenerator
     });
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var _4 = require_lodash();
@@ -167101,12 +167101,12 @@ var require_query_generator5 = __commonJS({
             }
           });
         }
-        const query = Utils24.joinSQLFragments([
+        const query = Utils25.joinSQLFragments([
           "CREATE TABLE",
           values2.table,
           `(${values2.attributes})`
         ]);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "BEGIN",
           "EXECUTE IMMEDIATE",
           `${this.escape(query)};`,
@@ -167136,7 +167136,7 @@ var require_query_generator5 = __commonJS({
         ].join("");
       }
       renameTableQuery(before2, after2) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(before2),
           "RENAME TO",
@@ -167151,7 +167151,7 @@ var require_query_generator5 = __commonJS({
         return `SELECT owner as table_schema, table_name, 0 as lvl FROM all_tables where OWNER IN(SELECT USERNAME AS "schema_name" FROM ALL_USERS WHERE ORACLE_MAINTAINED = 'N')`;
       }
       dropTableQuery(tableName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "BEGIN ",
           "EXECUTE IMMEDIATE 'DROP TABLE",
           this.quoteTable(tableName),
@@ -167183,14 +167183,14 @@ var require_query_generator5 = __commonJS({
       }
       addColumnQuery(table, key, dataType) {
         dataType.field = key;
-        const attribute = Utils24.joinSQLFragments([
+        const attribute = Utils25.joinSQLFragments([
           this.quoteIdentifier(key),
           this.attributeToSQL(dataType, {
             attributeName: key,
             context: "addColumn"
           })
         ]);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -167198,7 +167198,7 @@ var require_query_generator5 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -167230,7 +167230,7 @@ var require_query_generator5 = __commonJS({
           attributeNameConstant,
           ";"
         ].join(" ");
-        const secondQuery = Utils24.joinSQLFragments([
+        const secondQuery = Utils25.joinSQLFragments([
           `ALTER TABLE ${this.quoteIdentifier(tableName)}`,
           "ADD FOREIGN KEY",
           `(${this.quoteIdentifier(attributeName)})`,
@@ -167251,7 +167251,7 @@ var require_query_generator5 = __commonJS({
       }
       _modifyQuery(definition, table, attributeName) {
         definition = definition.startsWith("BLOB") ? definition.replace("BLOB ", "") : definition;
-        const query = Utils24.joinSQLFragments([
+        const query = Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "MODIFY",
@@ -167394,7 +167394,7 @@ var require_query_generator5 = __commonJS({
           }
           insertColumns.push(this.quoteIdentifier(key));
         }
-        let query = Utils24.joinSQLFragments([
+        let query = Utils25.joinSQLFragments([
           "INSERT",
           "INTO",
           this.quoteTable(tableName),
@@ -167404,7 +167404,7 @@ var require_query_generator5 = __commonJS({
         ]);
         if (returnColumn.length > 0) {
           options2.outBindAttributes = outBindBindDefMap;
-          query = Utils24.joinSQLFragments([
+          query = Utils25.joinSQLFragments([
             query,
             "RETURNING",
             `${returnColumn.join(",")}`,
@@ -167453,7 +167453,7 @@ var require_query_generator5 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifier(indexName)}`;
       }
@@ -167476,7 +167476,7 @@ var require_query_generator5 = __commonJS({
           template2 += ` CHECK (${this.quoteIdentifier(options2.attributeName)} IS JSON)`;
           return template2;
         }
-        if (Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.allowNull === false) {
@@ -167505,13 +167505,13 @@ var require_query_generator5 = __commonJS({
             unsignedTemplate += ` check(${this.quoteIdentifier(options2.attributeName)} >= 0)`;
           }
           template2 = attribute.type.toString();
-          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
+          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
             template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
           }
           if (!attribute.autoIncrement) {
             if (attribute.allowNull === false) {
               template2 += " NOT NULL";
-            } else if (!attribute.primaryKey && !Utils24.defaultValueSchemable(attribute.defaultValue)) {
+            } else if (!attribute.primaryKey && !Utils25.defaultValueSchemable(attribute.defaultValue)) {
               template2 += " NULL";
             }
           }
@@ -167656,7 +167656,7 @@ var require_query_generator5 = __commonJS({
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
         let str;
-        if (smth instanceof Utils24.Json) {
+        if (smth instanceof Utils25.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -167675,8 +167675,8 @@ var require_query_generator5 = __commonJS({
             return str;
           }
         }
-        if (smth instanceof Utils24.Cast) {
-          if (smth.val instanceof Utils24.SequelizeMethod) {
+        if (smth instanceof Utils25.Cast) {
+          if (smth.val instanceof Utils25.SequelizeMethod) {
             str = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
             if (smth.type === "boolean") {
               str = `(CASE WHEN ${str}='true' THEN 1 ELSE 0 END)`;
@@ -167738,7 +167738,7 @@ var require_query_generator5 = __commonJS({
         let paths = _4.toPath(path14);
         const quotedColumn = this.isIdentifierQuoted(column) ? column : this.quoteIdentifier(column);
         paths = paths.map((subPath) => {
-          return /\D/.test(subPath) ? Utils24.addTicks(subPath, '"') : subPath;
+          return /\D/.test(subPath) ? Utils25.addTicks(subPath, '"') : subPath;
         });
         const pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
         return `json_value(${quotedColumn},${pathStr})`;
@@ -167770,12 +167770,12 @@ var require_query_generator5 = __commonJS({
       quoteIdentifier(identifier2, force = false) {
         const optForceQuote = force;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
         const regExp = /^(([\w][\w\d_]*))$/g;
         if (optForceQuote !== true && optQuoteIdentifiers === false && regExp.test(rawIdentifier) && !ORACLE_RESERVED_WORDS.includes(rawIdentifier.toUpperCase())) {
           return rawIdentifier;
         }
-        return Utils24.addTicks(rawIdentifier, '"');
+        return Utils25.addTicks(rawIdentifier, '"');
       }
       bindParam(bind, posOffset = 0) {
         return (value) => {
@@ -168537,7 +168537,7 @@ var require_query_generator6 = __commonJS({
         }
       return a;
     };
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var util = require("util");
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
@@ -168687,7 +168687,7 @@ var require_query_generator6 = __commonJS({
         return hasJsonFunction;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils24.Json) {
+        if (smth instanceof Utils25.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -168834,7 +168834,7 @@ var require_query_generator6 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes, options2) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return [
           "DROP INDEX",
@@ -168888,7 +168888,7 @@ var require_query_generator6 = __commonJS({
             sql += " SERIAL";
           }
         }
-        if (Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils25.defaultValueSchemable(attribute.defaultValue)) {
           sql += ` DEFAULT ${this.escape(attribute.defaultValue, attribute)}`;
         }
         if (attribute.unique === true) {
@@ -168998,7 +168998,7 @@ var require_query_generator6 = __commonJS({
         return `ALTER FUNCTION ${oldFunctionName}(${paramList}) RENAME TO ${newFunctionName};`;
       }
       pgEscapeAndQuote(val) {
-        return this.quoteIdentifier(Utils24.removeTicks(this.escape(val), "'"));
+        return this.quoteIdentifier(Utils25.removeTicks(this.escape(val), "'"));
       }
       _expandFunctionParamList(params) {
         if (params === void 0 || !Array.isArray(params)) {
@@ -169086,7 +169086,7 @@ var require_query_generator6 = __commonJS({
       pgEnumName(tableName, attr, options2) {
         options2 = options2 || {};
         const tableDetails = this.extractTableDetails(tableName, options2);
-        let enumName = Utils24.addTicks(Utils24.generateEnumName(tableDetails.tableName, attr), '"');
+        let enumName = Utils25.addTicks(Utils25.generateEnumName(tableDetails.tableName, attr), '"');
         if (options2.schema !== false && tableDetails.schema) {
           enumName = this.quoteIdentifier(tableDetails.schema) + tableDetails.delimiter + enumName;
         }
@@ -169182,9 +169182,9 @@ var require_query_generator6 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || POSTGRES_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils24.addTicks(rawIdentifier, '"');
+          return Utils25.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
@@ -169231,7 +169231,7 @@ var require_query_interface5 = __commonJS({
     var DataTypes2 = require_data_types9();
     var QueryTypes2 = require_query_types();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Deferrable2 = require_deferrable();
     var PostgresQueryInterface = class extends QueryInterface2 {
       async ensureEnums(tableName, attributes, options2, model) {
@@ -169325,7 +169325,7 @@ var require_query_interface5 = __commonJS({
         const query = this.queryGenerator.getForeignKeyReferencesQuery(table.tableName || table, this.sequelize.config.database, table.schema);
         const result2 = await this.sequelize.query(query, queryOptions);
         return result2.map((fkMeta) => {
-          const _a = Utils24.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
+          const _a = Utils25.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
           return __spreadProps(__spreadValues({}, remaining), {
             deferrable: isDeferrable === "NO" ? Deferrable2.NOT : initiallyDeferred === "NO" ? Deferrable2.INITIALLY_IMMEDIATE : Deferrable2.INITIALLY_DEFERRED
           });
@@ -169539,7 +169539,7 @@ var require_query7 = __commonJS({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/dialects/sqlite/query.js"(exports2, module2) {
     "use strict";
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var AbstractQuery = require_query();
     var QueryTypes2 = require_query_types();
     var sequelizeErrors = require_errors4();
@@ -169793,10 +169793,10 @@ var require_query7 = __commonJS({
             }
             const referencesRegex = /REFERENCES.+\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
             const referenceConditions = constraintSql.match(referencesRegex)[0].split(" ");
-            referenceTableName = Utils24.removeTicks(referenceConditions[1]);
+            referenceTableName = Utils25.removeTicks(referenceConditions[1]);
             let columnNames = referenceConditions[2];
             columnNames = columnNames.replace(/\(|\)/g, "").split(", ");
-            referenceTableKeys = columnNames.map((column) => Utils24.removeTicks(column));
+            referenceTableKeys = columnNames.map((column) => Utils25.removeTicks(column));
           }
           const constraintCondition = constraintSql.match(/\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/)[0];
           constraintSql = constraintSql.replace(/\(.+\)/, "");
@@ -169805,7 +169805,7 @@ var require_query7 = __commonJS({
             constraint[1] += " KEY";
           }
           return {
-            constraintName: Utils24.removeTicks(constraint[0]),
+            constraintName: Utils25.removeTicks(constraint[0]),
             constraintType: constraint[1],
             updateAction,
             deleteAction,
@@ -169926,7 +169926,7 @@ var require_query_generator7 = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Transaction2 = require_transaction();
     var _4 = require_lodash();
     var MySqlQueryGenerator = require_query_generator2();
@@ -170040,10 +170040,10 @@ var require_query_generator7 = __commonJS({
         return value;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils24.Json) {
+        if (smth instanceof Utils25.Json) {
           return super.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
-        if (smth instanceof Utils24.Cast) {
+        if (smth instanceof Utils25.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           }
@@ -170064,7 +170064,7 @@ var require_query_generator7 = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -170079,7 +170079,7 @@ var require_query_generator7 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -170097,7 +170097,7 @@ var require_query_generator7 = __commonJS({
       truncateTableQuery(tableName, options2 = {}) {
         return [
           `DELETE FROM ${this.quoteTable(tableName)}`,
-          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils24.addTicks(Utils24.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
+          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils25.addTicks(Utils25.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
         ].join("");
       }
       deleteQuery(tableName, where3, options2 = {}, model) {
@@ -170121,7 +170121,7 @@ var require_query_generator7 = __commonJS({
             if (Object.prototype.hasOwnProperty.call(dataType, "allowNull") && !dataType.allowNull) {
               sql += " NOT NULL";
             }
-            if (Utils24.defaultValueSchemable(dataType.defaultValue)) {
+            if (Utils25.defaultValueSchemable(dataType.defaultValue)) {
               sql += ` DEFAULT ${this.escape(dataType.defaultValue, dataType)}`;
             }
             if (dataType.unique === true) {
@@ -170169,7 +170169,7 @@ var require_query_generator7 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX IF EXISTS ${this.quoteIdentifier(indexName)}`;
       }
@@ -170263,7 +170263,7 @@ var require_query_generator7 = __commonJS({
         return `SELECT name FROM sqlite_master WHERE type='table' AND name=${this.escape(this.addSchema(tableName))};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils24.addTicks(Utils24.removeTicks(identifier2, "`"), "`");
+        return Utils25.addTicks(Utils25.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = SQLiteQueryGenerator;
@@ -171062,7 +171062,7 @@ var require_query_generator8 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var randomBytes = require("crypto").randomBytes;
@@ -171350,7 +171350,7 @@ var require_query_generator8 = __commonJS({
           sql.query = `SELECT * FROM FINAL TABLE (${sql.query});`;
           return sql;
         }
-        attrValueHash = Utils24.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils25.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -171365,7 +171365,7 @@ var require_query_generator8 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils24.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils25.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -171508,7 +171508,7 @@ var require_query_generator8 = __commonJS({
         const sql = "DROP INDEX <%= indexName %>";
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         const values2 = {
           tableName: this.quoteIdentifiers(tableName),
@@ -171547,7 +171547,7 @@ var require_query_generator8 = __commonJS({
           }
           template2 += ` GENERATED BY DEFAULT AS IDENTITY(START WITH ${initialValue}, INCREMENT BY 1)`;
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -171727,7 +171727,7 @@ var require_query_generator8 = __commonJS({
         for (const key in rawAttributes) {
           if (rawAttributes[key].unique && dataValues[key] === void 0) {
             if (rawAttributes[key].type instanceof DataTypes2.DATE) {
-              dataValues[key] = Utils24.now("db2");
+              dataValues[key] = Utils25.now("db2");
             } else if (rawAttributes[key].type instanceof DataTypes2.STRING) {
               dataValues[key] = `unique${uniqno++}`;
             } else if (rawAttributes[key].type instanceof DataTypes2.INTEGER) {
@@ -171740,7 +171740,7 @@ var require_query_generator8 = __commonJS({
         return uniqno;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils24.addTicks(Utils24.removeTicks(identifier2, '"'), '"');
+        return Utils25.addTicks(Utils25.removeTicks(identifier2, '"'), '"');
       }
     };
     function wrapSingleQuote(identifier2) {
@@ -171777,7 +171777,7 @@ var require_query_interface7 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
     var QueryTypes2 = require_query_types();
@@ -171797,7 +171797,7 @@ var require_query_interface7 = __commonJS({
         let indexes = [];
         let indexFields;
         options2 = _4.clone(options2);
-        if (!Utils24.isWhereEmpty(where3)) {
+        if (!Utils25.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         indexes = _4.map(model.uniqueKeys, (value) => {
@@ -172353,7 +172353,7 @@ var require_query_generator9 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
+    var Utils25 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -172389,7 +172389,7 @@ var require_query_generator9 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -172460,7 +172460,7 @@ var require_query_generator9 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -172480,7 +172480,7 @@ var require_query_generator9 = __commonJS({
         return `SHOW FULL COLUMNS FROM ${table};`;
       }
       showTablesQuery(database) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           database ? `AND TABLE_SCHEMA = ${this.escape(database)}` : "AND TABLE_SCHEMA NOT IN ( 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA', 'SYS')",
           ";"
@@ -172489,7 +172489,7 @@ var require_query_generator9 = __commonJS({
       tableExistsQuery(table) {
         const tableName = table.tableName || table;
         const schema = table.schema;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           `AND TABLE_SCHEMA = ${schema !== void 0 ? this.escape(schema) : "CURRENT_SCHEMA()"}`,
           `AND TABLE_NAME = ${this.escape(tableName)}`,
@@ -172497,7 +172497,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       addColumnQuery(table, key, dataType) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -172511,7 +172511,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -172520,7 +172520,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       changeColumnQuery(tableName, attributes) {
-        const query = (...subQuerys) => Utils24.joinSQLFragments([
+        const query = (...subQuerys) => Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "ALTER COLUMN",
@@ -172563,7 +172563,7 @@ var require_query_generator9 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`'${attrBefore}' '${attrName}' ${definition}`);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "RENAME COLUMN",
@@ -172572,7 +172572,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       handleSequelizeMethod(attr, tableName, factory, options2, prepend2) {
-        if (attr instanceof Utils24.Json) {
+        if (attr instanceof Utils25.Json) {
           if (attr.conditions) {
             const conditions = this.parseConditionObject(attr.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -172591,7 +172591,7 @@ var require_query_generator9 = __commonJS({
             }
             return str;
           }
-        } else if (attr instanceof Utils24.Cast) {
+        } else if (attr instanceof Utils25.Cast) {
           if (/timestamp/i.test(attr.type)) {
             attr.type = "datetime";
           } else if (attr.json && /boolean/i.test(attr.type)) {
@@ -172605,7 +172605,7 @@ var require_query_generator9 = __commonJS({
         return super.handleSequelizeMethod(attr, tableName, factory, options2, prepend2);
       }
       truncateTableQuery(tableName) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "TRUNCATE",
           this.quoteTable(tableName)
         ]);
@@ -172626,7 +172626,7 @@ var require_query_generator9 = __commonJS({
           const pks = Object.values(model.primaryKeys).map((pk) => this.quoteIdentifier(pk.field)).join(",");
           primaryKeys = model.primaryKeyAttributes.length > 1 ? `(${pks})` : pks;
           primaryKeysSelection = pks;
-          return Utils24.joinSQLFragments([
+          return Utils25.joinSQLFragments([
             "DELETE FROM",
             table,
             "WHERE",
@@ -172641,7 +172641,7 @@ var require_query_generator9 = __commonJS({
             ";"
           ]);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "DELETE FROM",
           table,
           whereClause,
@@ -172654,7 +172654,7 @@ var require_query_generator9 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -172671,9 +172671,9 @@ var require_query_generator9 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils24.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils25.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -172695,7 +172695,7 @@ var require_query_generator9 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " AUTOINCREMENT";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils24.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils25.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -172806,7 +172806,7 @@ var require_query_generator9 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -172819,7 +172819,7 @@ var require_query_generator9 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -172840,7 +172840,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils24.joinSQLFragments([
+        return Utils25.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -172860,15 +172860,15 @@ var require_query_generator9 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils24.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils25.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || SNOWFLAKE_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils24.addTicks(rawIdentifier, '"');
+          return Utils25.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils24.addTicks(identifier2, "'");
+      return Utils25.addTicks(identifier2, "'");
     }
     module2.exports = SnowflakeQueryGenerator;
   }
@@ -173357,8 +173357,8 @@ var require_sequelize = __commonJS({
     var pgConnectionString = require_pg_connection_string();
     var retry = require_dist3().default;
     var _4 = require_lodash();
-    var Utils24 = require_utils6();
-    var Model13 = require_model2();
+    var Utils25 = require_utils6();
+    var Model14 = require_model2();
     var DataTypes2 = require_data_types9();
     var Deferrable2 = require_deferrable();
     var ModelManager = require_model_manager();
@@ -173554,7 +173554,7 @@ var require_sequelize = __commonJS({
       define(modelName, attributes, options2 = {}) {
         options2.modelName = modelName;
         options2.sequelize = this;
-        const model = class extends Model13 {
+        const model = class extends Model14 {
         };
         model.init(attributes, options2);
         return model;
@@ -173801,16 +173801,16 @@ var require_sequelize = __commonJS({
         return this.fn("RAND");
       }
       static fn(fn2, ...args) {
-        return new Utils24.Fn(fn2, args);
+        return new Utils25.Fn(fn2, args);
       }
       static col(col2) {
-        return new Utils24.Col(col2);
+        return new Utils25.Col(col2);
       }
       static cast(val, type2) {
-        return new Utils24.Cast(val, type2);
+        return new Utils25.Cast(val, type2);
       }
       static literal(val) {
-        return new Utils24.Literal(val);
+        return new Utils25.Literal(val);
       }
       static and(...args) {
         return { [Op2.and]: args };
@@ -173819,10 +173819,10 @@ var require_sequelize = __commonJS({
         return { [Op2.or]: args };
       }
       static json(conditionsOrPath, value) {
-        return new Utils24.Json(conditionsOrPath, value);
+        return new Utils25.Json(conditionsOrPath, value);
       }
       static where(attr, comparator, logic) {
-        return new Utils24.Where(attr, comparator, logic);
+        return new Utils25.Where(attr, comparator, logic);
       }
       async transaction(options2, autoCallback) {
         if (typeof options2 === "function") {
@@ -173946,7 +173946,7 @@ var require_sequelize = __commonJS({
       }
     });
     Sequelize2.options = { hooks: {} };
-    Sequelize2.Utils = Utils24;
+    Sequelize2.Utils = Utils25;
     Sequelize2.Op = Op2;
     Sequelize2.TableHints = TableHints2;
     Sequelize2.IndexHints = IndexHints2;
@@ -173954,7 +173954,7 @@ var require_sequelize = __commonJS({
     Sequelize2.prototype.Sequelize = Sequelize2;
     Sequelize2.prototype.QueryTypes = Sequelize2.QueryTypes = QueryTypes2;
     Sequelize2.prototype.Validator = Sequelize2.Validator = Validator2;
-    Sequelize2.Model = Model13;
+    Sequelize2.Model = Model14;
     Sequelize2.QueryInterface = QueryInterface2;
     Sequelize2.BelongsTo = BelongsTo2;
     Sequelize2.HasOne = HasOne2;
@@ -173966,7 +173966,7 @@ var require_sequelize = __commonJS({
     }
     Sequelize2.Deferrable = Deferrable2;
     Sequelize2.prototype.Association = Sequelize2.Association = Association2;
-    Sequelize2.useInflection = Utils24.useInflection;
+    Sequelize2.useInflection = Utils25.useInflection;
     Hooks.applyTo(Sequelize2);
     Hooks.applyTo(Sequelize2.prototype);
     Sequelize2.Error = sequelizeErrors.BaseError;
@@ -187707,27 +187707,27 @@ var require_rx_lite = __commonJS({
       var moduleExports = freeModule && freeModule.exports === freeExports ? freeExports : null;
       var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
       var root2 = freeGlobal || freeWindow !== (thisGlobal && thisGlobal.window) && freeWindow || freeSelf || thisGlobal || Function("return this")();
-      var Rx9 = {
+      var Rx11 = {
         internals: {},
         config: {
           Promise: root2.Promise
         },
         helpers: {}
       };
-      var noop4 = Rx9.helpers.noop = function() {
-      }, identity2 = Rx9.helpers.identity = function(x3) {
+      var noop4 = Rx11.helpers.noop = function() {
+      }, identity2 = Rx11.helpers.identity = function(x3) {
         return x3;
-      }, defaultNow = Rx9.helpers.defaultNow = Date.now, defaultComparer = Rx9.helpers.defaultComparer = function(x3, y) {
+      }, defaultNow = Rx11.helpers.defaultNow = Date.now, defaultComparer = Rx11.helpers.defaultComparer = function(x3, y) {
         return isEqual2(x3, y);
-      }, defaultSubComparer = Rx9.helpers.defaultSubComparer = function(x3, y) {
+      }, defaultSubComparer = Rx11.helpers.defaultSubComparer = function(x3, y) {
         return x3 > y ? 1 : x3 < y ? -1 : 0;
-      }, defaultKeySerializer = Rx9.helpers.defaultKeySerializer = function(x3) {
+      }, defaultKeySerializer = Rx11.helpers.defaultKeySerializer = function(x3) {
         return x3.toString();
-      }, defaultError = Rx9.helpers.defaultError = function(err) {
+      }, defaultError = Rx11.helpers.defaultError = function(err) {
         throw err;
-      }, isPromise = Rx9.helpers.isPromise = function(p) {
+      }, isPromise = Rx11.helpers.isPromise = function(p) {
         return !!p && typeof p.subscribe !== "function" && typeof p.then === "function";
-      }, isFunction3 = Rx9.helpers.isFunction = (function() {
+      }, isFunction3 = Rx11.helpers.isFunction = (function() {
         var isFn = function(value) {
           return typeof value == "function" || false;
         };
@@ -187756,7 +187756,7 @@ var require_rx_lite = __commonJS({
           }
         };
       }
-      var tryCatch2 = Rx9.internals.tryCatch = function tryCatch3(fn2) {
+      var tryCatch2 = Rx11.internals.tryCatch = function tryCatch3(fn2) {
         if (!isFunction3(fn2)) {
           throw new TypeError("fn must be a function");
         }
@@ -187765,7 +187765,7 @@ var require_rx_lite = __commonJS({
       function thrower2(e) {
         throw e;
       }
-      Rx9.config.longStackSupport = false;
+      Rx11.config.longStackSupport = false;
       var hasStacks = false, stacks = tryCatch2(function() {
         throw new Error();
       })();
@@ -187837,55 +187837,55 @@ var require_rx_lite = __commonJS({
           return [attempt3[1], Number(attempt3[2])];
         }
       }
-      var EmptyError = Rx9.EmptyError = function() {
+      var EmptyError = Rx11.EmptyError = function() {
         this.message = "Sequence contains no elements.";
         Error.call(this);
       };
       EmptyError.prototype = Object.create(Error.prototype);
       EmptyError.prototype.name = "EmptyError";
-      var ObjectDisposedError = Rx9.ObjectDisposedError = function() {
+      var ObjectDisposedError = Rx11.ObjectDisposedError = function() {
         this.message = "Object has been disposed";
         Error.call(this);
       };
       ObjectDisposedError.prototype = Object.create(Error.prototype);
       ObjectDisposedError.prototype.name = "ObjectDisposedError";
-      var ArgumentOutOfRangeError = Rx9.ArgumentOutOfRangeError = function() {
+      var ArgumentOutOfRangeError = Rx11.ArgumentOutOfRangeError = function() {
         this.message = "Argument out of range";
         Error.call(this);
       };
       ArgumentOutOfRangeError.prototype = Object.create(Error.prototype);
       ArgumentOutOfRangeError.prototype.name = "ArgumentOutOfRangeError";
-      var NotSupportedError = Rx9.NotSupportedError = function(message) {
+      var NotSupportedError = Rx11.NotSupportedError = function(message) {
         this.message = message || "This operation is not supported";
         Error.call(this);
       };
       NotSupportedError.prototype = Object.create(Error.prototype);
       NotSupportedError.prototype.name = "NotSupportedError";
-      var NotImplementedError = Rx9.NotImplementedError = function(message) {
+      var NotImplementedError = Rx11.NotImplementedError = function(message) {
         this.message = message || "This operation is not implemented";
         Error.call(this);
       };
       NotImplementedError.prototype = Object.create(Error.prototype);
       NotImplementedError.prototype.name = "NotImplementedError";
-      var notImplemented = Rx9.helpers.notImplemented = function() {
+      var notImplemented = Rx11.helpers.notImplemented = function() {
         throw new NotImplementedError();
       };
-      var notSupported = Rx9.helpers.notSupported = function() {
+      var notSupported = Rx11.helpers.notSupported = function() {
         throw new NotSupportedError();
       };
       var $iterator$ = typeof Symbol === "function" && Symbol.iterator || "_es6shim_iterator_";
       if (root2.Set && typeof new root2.Set()["@@iterator"] === "function") {
         $iterator$ = "@@iterator";
       }
-      var doneEnumerator = Rx9.doneEnumerator = { done: true, value: undefined2 };
-      var isIterable2 = Rx9.helpers.isIterable = function(o) {
+      var doneEnumerator = Rx11.doneEnumerator = { done: true, value: undefined2 };
+      var isIterable2 = Rx11.helpers.isIterable = function(o) {
         return o && o[$iterator$] !== undefined2;
       };
-      var isArrayLike = Rx9.helpers.isArrayLike = function(o) {
+      var isArrayLike = Rx11.helpers.isArrayLike = function(o) {
         return o && o.length !== undefined2;
       };
-      Rx9.helpers.iterator = $iterator$;
-      var bindCallback = Rx9.internals.bindCallback = function(func, thisArg, argCount) {
+      Rx11.helpers.iterator = $iterator$;
+      var bindCallback = Rx11.internals.bindCallback = function(func, thisArg, argCount) {
         if (typeof thisArg === "undefined") {
           return func;
         }
@@ -188000,7 +188000,7 @@ var require_rx_lite = __commonJS({
         }
         return false;
       }
-      var isObject3 = Rx9.internals.isObject = function(value) {
+      var isObject3 = Rx11.internals.isObject = function(value) {
         var type2 = typeof value;
         return !!value && (type2 === "object" || type2 === "function");
       };
@@ -188115,18 +188115,18 @@ var require_rx_lite = __commonJS({
         }
         return baseIsEqualDeep(value, other, baseIsEqual, isLoose, stackA, stackB);
       }
-      var isEqual2 = Rx9.internals.isEqual = function(value, other) {
+      var isEqual2 = Rx11.internals.isEqual = function(value, other) {
         return baseIsEqual(value, other);
       };
       var hasProp = {}.hasOwnProperty, slice2 = Array.prototype.slice;
-      var inherits2 = Rx9.internals.inherits = function(child, parent) {
+      var inherits2 = Rx11.internals.inherits = function(child, parent) {
         function __() {
           this.constructor = child;
         }
         __.prototype = parent.prototype;
         child.prototype = new __();
       };
-      var addProperties = Rx9.internals.addProperties = function(obj2) {
+      var addProperties = Rx11.internals.addProperties = function(obj2) {
         for (var sources = [], i = 1, len = arguments.length; i < len; i++) {
           sources.push(arguments[i]);
         }
@@ -188137,7 +188137,7 @@ var require_rx_lite = __commonJS({
           }
         }
       };
-      var addRef = Rx9.internals.addRef = function(xs2, r) {
+      var addRef = Rx11.internals.addRef = function(xs2, r) {
         return new AnonymousObservable(function(observer) {
           return new BinaryDisposable(r.getDisposable(), xs2.subscribe(observer));
         });
@@ -188149,7 +188149,7 @@ var require_rx_lite = __commonJS({
         }
         return a;
       }
-      var CompositeDisposable = Rx9.CompositeDisposable = function() {
+      var CompositeDisposable = Rx11.CompositeDisposable = function() {
         var args = [], i, len;
         if (Array.isArray(arguments[0])) {
           args = arguments[0];
@@ -188200,7 +188200,7 @@ var require_rx_lite = __commonJS({
           }
         }
       };
-      var Disposable = Rx9.Disposable = function(action) {
+      var Disposable = Rx11.Disposable = function(action) {
         this.isDisposed = false;
         this.action = action || noop4;
       };
@@ -188225,7 +188225,7 @@ var require_rx_lite = __commonJS({
       var disposableFixup = Disposable._fixup = function(result2) {
         return isDisposable(result2) ? result2 : disposableEmpty;
       };
-      var SingleAssignmentDisposable = Rx9.SingleAssignmentDisposable = function() {
+      var SingleAssignmentDisposable = Rx11.SingleAssignmentDisposable = function() {
         this.isDisposed = false;
         this.current = null;
       };
@@ -188248,7 +188248,7 @@ var require_rx_lite = __commonJS({
           old && old.dispose();
         }
       };
-      var SerialDisposable = Rx9.SerialDisposable = function() {
+      var SerialDisposable = Rx11.SerialDisposable = function() {
         this.isDisposed = false;
         this.current = null;
       };
@@ -188272,7 +188272,7 @@ var require_rx_lite = __commonJS({
         }
         old && old.dispose();
       };
-      var BinaryDisposable = Rx9.BinaryDisposable = function(first2, second) {
+      var BinaryDisposable = Rx11.BinaryDisposable = function(first2, second) {
         this._first = first2;
         this._second = second;
         this.isDisposed = false;
@@ -188288,7 +188288,7 @@ var require_rx_lite = __commonJS({
           old2 && old2.dispose();
         }
       };
-      var NAryDisposable = Rx9.NAryDisposable = function(disposables) {
+      var NAryDisposable = Rx11.NAryDisposable = function(disposables) {
         this._disposables = disposables;
         this.isDisposed = false;
       };
@@ -188301,7 +188301,7 @@ var require_rx_lite = __commonJS({
           this._disposables.length = 0;
         }
       };
-      var RefCountDisposable = Rx9.RefCountDisposable = (function() {
+      var RefCountDisposable = Rx11.RefCountDisposable = (function() {
         function InnerDisposable(disposable) {
           this.disposable = disposable;
           this.disposable.count++;
@@ -188337,7 +188337,7 @@ var require_rx_lite = __commonJS({
         };
         return RefCountDisposable2;
       })();
-      var ScheduledItem = Rx9.internals.ScheduledItem = function(scheduler, state, action, dueTime, comparer) {
+      var ScheduledItem = Rx11.internals.ScheduledItem = function(scheduler, state, action, dueTime, comparer) {
         this.scheduler = scheduler;
         this.state = state;
         this.action = action;
@@ -188357,7 +188357,7 @@ var require_rx_lite = __commonJS({
       ScheduledItem.prototype.invokeCore = function() {
         return disposableFixup(this.action(this.scheduler, this.state));
       };
-      var Scheduler = Rx9.Scheduler = (function() {
+      var Scheduler = Rx11.Scheduler = (function() {
         function Scheduler2() {
         }
         Scheduler2.isScheduler = function(s) {
@@ -188498,7 +188498,7 @@ var require_rx_lite = __commonJS({
         return CurrentThreadScheduler2;
       })(Scheduler);
       var currentThreadScheduler = Scheduler.currentThread = new CurrentThreadScheduler();
-      var SchedulePeriodicRecursive = Rx9.internals.SchedulePeriodicRecursive = (function() {
+      var SchedulePeriodicRecursive = Rx11.internals.SchedulePeriodicRecursive = (function() {
         function createTick(self2) {
           return function tick(command, recurse) {
             recurse(0, self2._period);
@@ -188704,7 +188704,7 @@ var require_rx_lite = __commonJS({
         c === 0 && (c = this.id - other.id);
         return c;
       };
-      var PriorityQueue = Rx9.internals.PriorityQueue = function(capacity) {
+      var PriorityQueue = Rx11.internals.PriorityQueue = function(capacity) {
         this.items = new Array(capacity);
         this.length = 0;
       };
@@ -188774,7 +188774,7 @@ var require_rx_lite = __commonJS({
         return false;
       };
       PriorityQueue.count = 0;
-      var Notification3 = Rx9.Notification = (function() {
+      var Notification3 = Rx11.Notification = (function() {
         function Notification4() {
         }
         Notification4.prototype._accept = function(onNext, onError, onCompleted) {
@@ -188857,7 +188857,7 @@ var require_rx_lite = __commonJS({
       var notificationCreateOnCompleted = Notification3.createOnCompleted = function() {
         return new OnCompletedNotification();
       };
-      var Observer = Rx9.Observer = function() {
+      var Observer = Rx11.Observer = function() {
       };
       var observerCreate = Observer.create = function(onNext, onError, onCompleted) {
         onNext || (onNext = noop4);
@@ -188865,7 +188865,7 @@ var require_rx_lite = __commonJS({
         onCompleted || (onCompleted = noop4);
         return new AnonymousObserver(onNext, onError, onCompleted);
       };
-      var AbstractObserver = Rx9.internals.AbstractObserver = (function(__super__) {
+      var AbstractObserver = Rx11.internals.AbstractObserver = (function(__super__) {
         inherits2(AbstractObserver2, __super__);
         function AbstractObserver2() {
           this.isStopped = false;
@@ -188901,7 +188901,7 @@ var require_rx_lite = __commonJS({
         };
         return AbstractObserver2;
       })(Observer);
-      var AnonymousObserver = Rx9.AnonymousObserver = (function(__super__) {
+      var AnonymousObserver = Rx11.AnonymousObserver = (function(__super__) {
         inherits2(AnonymousObserver2, __super__);
         function AnonymousObserver2(onNext, onError, onCompleted) {
           __super__.call(this);
@@ -188921,7 +188921,7 @@ var require_rx_lite = __commonJS({
         return AnonymousObserver2;
       })(AbstractObserver);
       var observableProto;
-      var Observable2 = Rx9.Observable = (function() {
+      var Observable2 = Rx11.Observable = (function() {
         function makeSubscribe(self2, subscribe) {
           return function(o) {
             var oldOnError = o.onError;
@@ -188933,7 +188933,7 @@ var require_rx_lite = __commonJS({
           };
         }
         function Observable3() {
-          if (Rx9.config.longStackSupport && hasStacks) {
+          if (Rx11.config.longStackSupport && hasStacks) {
             var oldSubscribe = this._subscribe;
             var e = tryCatch2(thrower2)(new Error()).e;
             this.stack = e.stack.substring(e.stack.indexOf("\n") + 1);
@@ -188964,7 +188964,7 @@ var require_rx_lite = __commonJS({
         };
         return Observable3;
       })();
-      var ScheduledObserver = Rx9.internals.ScheduledObserver = (function(__super__) {
+      var ScheduledObserver = Rx11.internals.ScheduledObserver = (function(__super__) {
         inherits2(ScheduledObserver2, __super__);
         function ScheduledObserver2(scheduler, observer) {
           __super__.call(this);
@@ -189029,7 +189029,7 @@ var require_rx_lite = __commonJS({
         };
         return ScheduledObserver2;
       })(AbstractObserver);
-      var ObservableBase = Rx9.ObservableBase = (function(__super__) {
+      var ObservableBase = Rx11.ObservableBase = (function(__super__) {
         inherits2(ObservableBase2, __super__);
         function fixSubscriber(subscriber) {
           return subscriber && isFunction3(subscriber.dispose) ? subscriber : isFunction3(subscriber) ? disposableCreate(subscriber) : disposableEmpty;
@@ -189057,7 +189057,7 @@ var require_rx_lite = __commonJS({
         ObservableBase2.prototype.subscribeCore = notImplemented;
         return ObservableBase2;
       })(Observable2);
-      var FlatMapObservable = Rx9.FlatMapObservable = (function(__super__) {
+      var FlatMapObservable = Rx11.FlatMapObservable = (function(__super__) {
         inherits2(FlatMapObservable2, __super__);
         function FlatMapObservable2(source, selector, resultSelector, thisArg) {
           this.resultSelector = isFunction3(resultSelector) ? resultSelector : null;
@@ -189102,7 +189102,7 @@ var require_rx_lite = __commonJS({
         };
         return FlatMapObservable2;
       })(ObservableBase);
-      var Enumerable = Rx9.internals.Enumerable = function() {
+      var Enumerable = Rx11.internals.Enumerable = function() {
       };
       function IsDisposedDisposable(state) {
         this._s = state;
@@ -190002,7 +190002,7 @@ var require_rx_lite = __commonJS({
         }
         return observableOf(scheduler, sources).mergeAll();
       };
-      var CompositeError = Rx9.CompositeError = function(errors) {
+      var CompositeError = Rx11.CompositeError = function(errors) {
         this.innerErrors = errors;
         this.message = "This contains multiple errors. Check the innerErrors";
         Error.call(this);
@@ -191213,7 +191213,7 @@ var require_rx_lite = __commonJS({
       observableProto.flatMap = observableProto.selectMany = function(selector, resultSelector, thisArg) {
         return new FlatMapObservable(this, selector, resultSelector, thisArg).mergeAll();
       };
-      Rx9.Observable.prototype.flatMapLatest = function(selector, resultSelector, thisArg) {
+      Rx11.Observable.prototype.flatMapLatest = function(selector, resultSelector, thisArg) {
         return new FlatMapObservable(this, selector, resultSelector, thisArg).switchLatest();
       };
       var SkipObservable = (function(__super__) {
@@ -191538,7 +191538,7 @@ var require_rx_lite = __commonJS({
         }
         return disposables;
       }
-      Rx9.config.useNativeEvents = false;
+      Rx11.config.useNativeEvents = false;
       var EventObservable = (function(__super__) {
         inherits2(EventObservable2, __super__);
         function EventObservable2(el, name2, fn2) {
@@ -191580,7 +191580,7 @@ var require_rx_lite = __commonJS({
             selector
           );
         }
-        if (!Rx9.config.useNativeEvents) {
+        if (!Rx11.config.useNativeEvents) {
           if (typeof element.on === "function" && typeof element.off === "function") {
             return fromEventPattern(
               function(h) {
@@ -191669,7 +191669,7 @@ var require_rx_lite = __commonJS({
         return new FromPromiseObservable(promise, scheduler);
       };
       observableProto.toPromise = function(promiseCtor) {
-        promiseCtor || (promiseCtor = Rx9.config.Promise);
+        promiseCtor || (promiseCtor = Rx11.config.Promise);
         if (!promiseCtor) {
           throw new NotSupportedError("Promise type not provided nor in Rx.config.Promise");
         }
@@ -191763,7 +191763,7 @@ var require_rx_lite = __commonJS({
         };
         return RefCountObservable2;
       })(ObservableBase);
-      var ConnectableObservable = Rx9.ConnectableObservable = (function(__super__) {
+      var ConnectableObservable = Rx11.ConnectableObservable = (function(__super__) {
         inherits2(ConnectableObservable2, __super__);
         function ConnectableObservable2(source, subject) {
           this.source = source;
@@ -192213,7 +192213,7 @@ var require_rx_lite = __commonJS({
         isScheduler(scheduler) || (scheduler = defaultScheduler);
         return typeof intervalOrSampler === "number" ? new SampleObservable(this, observableinterval(intervalOrSampler, scheduler)) : new SampleObservable(this, intervalOrSampler);
       };
-      var TimeoutError5 = Rx9.TimeoutError = function(message) {
+      var TimeoutError5 = Rx11.TimeoutError = function(message) {
         this.message = message || "Timeout has occurred";
         this.name = "TimeoutError";
         Error.call(this);
@@ -192675,7 +192675,7 @@ var require_rx_lite = __commonJS({
           return source.subscribe(new TransduceObserver(o, xform));
         }, source);
       };
-      var AnonymousObservable = Rx9.AnonymousObservable = (function(__super__) {
+      var AnonymousObservable = Rx11.AnonymousObservable = (function(__super__) {
         inherits2(AnonymousObservable2, __super__);
         function fixSubscriber(subscriber) {
           return subscriber && isFunction3(subscriber.dispose) ? subscriber : isFunction3(subscriber) ? disposableCreate(subscriber) : disposableEmpty;
@@ -192752,7 +192752,7 @@ var require_rx_lite = __commonJS({
           this._o = null;
         }
       };
-      var Subject = Rx9.Subject = (function(__super__) {
+      var Subject = Rx11.Subject = (function(__super__) {
         inherits2(Subject2, __super__);
         function Subject2() {
           __super__.call(this);
@@ -192837,7 +192837,7 @@ var require_rx_lite = __commonJS({
         };
         return Subject2;
       })(Observable2);
-      var AsyncSubject = Rx9.AsyncSubject = (function(__super__) {
+      var AsyncSubject = Rx11.AsyncSubject = (function(__super__) {
         inherits2(AsyncSubject2, __super__);
         function AsyncSubject2() {
           __super__.call(this);
@@ -192935,7 +192935,7 @@ var require_rx_lite = __commonJS({
         });
         return AsyncSubject2;
       })(Observable2);
-      var AnonymousSubject = Rx9.AnonymousSubject = (function(__super__) {
+      var AnonymousSubject = Rx11.AnonymousSubject = (function(__super__) {
         inherits2(AnonymousSubject2, __super__);
         function AnonymousSubject2(observer, observable) {
           this.observer = observer;
@@ -192958,7 +192958,7 @@ var require_rx_lite = __commonJS({
         });
         return AnonymousSubject2;
       })(Observable2);
-      var BehaviorSubject = Rx9.BehaviorSubject = (function(__super__) {
+      var BehaviorSubject = Rx11.BehaviorSubject = (function(__super__) {
         inherits2(BehaviorSubject2, __super__);
         function BehaviorSubject2(value) {
           __super__.call(this);
@@ -193062,7 +193062,7 @@ var require_rx_lite = __commonJS({
         });
         return BehaviorSubject2;
       })(Observable2);
-      var ReplaySubject = Rx9.ReplaySubject = (function(__super__) {
+      var ReplaySubject = Rx11.ReplaySubject = (function(__super__) {
         var maxSafeInteger2 = Math.pow(2, 53) - 1;
         function createRemovableDisposable(subject, observer) {
           return disposableCreate(function() {
@@ -193183,7 +193183,7 @@ var require_rx_lite = __commonJS({
         });
         return ReplaySubject2;
       })(Observable2);
-      Rx9.Pauser = (function(__super__) {
+      Rx11.Pauser = (function(__super__) {
         inherits2(Pauser, __super__);
         function Pauser() {
           __super__.call(this);
@@ -193197,18 +193197,18 @@ var require_rx_lite = __commonJS({
         return Pauser;
       })(Subject);
       if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
-        root2.Rx = Rx9;
+        root2.Rx = Rx11;
         define(function() {
-          return Rx9;
+          return Rx11;
         });
       } else if (freeExports && freeModule) {
         if (moduleExports) {
-          (freeModule.exports = Rx9).Rx = Rx9;
+          (freeModule.exports = Rx11).Rx = Rx11;
         } else {
-          freeExports.Rx = Rx9;
+          freeExports.Rx = Rx11;
         }
       } else {
-        root2.Rx = Rx9;
+        root2.Rx = Rx11;
       }
       var rEndingLine = captureLine();
     }).call(exports2);
@@ -198364,7 +198364,7 @@ var require_regexp_utils = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var EmojiData = require_emoji_data();
     var UnicodeEmailChars = "\x80-\xFF\u0100-\u017F\u0180-\u024F\u0250-\u02AF\u0300-\u036F\u0370-\u03FF\u0400-\u04FF\u0500-\u052F\u0530-\u058F\u0590-\u05FF\u0600-\u06FF\u0700-\u074F\u0750-\u077F\u0780-\u07BF\u07C0-\u07FF\u0900-\u097F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0D80-\u0DFF\u0E00-\u0E7F\u0E80-\u0EFF\u0F00-\u0FFF\u1000-\u109F\u10A0-\u10FF\u1100-\u11FF\u1200-\u137F\u1380-\u139F\u13A0-\u13FF\u1400-\u167F\u1680-\u169F\u16A0-\u16FF\u1700-\u171F\u1720-\u173F\u1740-\u175F\u1760-\u177F\u1780-\u17FF\u1800-\u18AF\u1900-\u194F\u1950-\u197F\u1980-\u19DF\u19E0-\u19FF\u1A00-\u1A1F\u1B00-\u1B7F\u1D00-\u1D7F\u1D80-\u1DBF\u1DC0-\u1DFF\u1E00-\u1EFF\u1F00-\u1FFF\u20D0-\u20FF\u2100-\u214F\u2C00-\u2C5F\u2C60-\u2C7F\u2C80-\u2CFF\u2D00-\u2D2F\u2D30-\u2D7F\u2D80-\u2DDF\u2F00-\u2FDF\u2FF0-\u2FFF\u3040-\u309F\u30A0-\u30FF\u3100-\u312F\u3130-\u318F\u3190-\u319F\u31C0-\u31EF\u31F0-\u31FF\u3200-\u32FF\u3300-\u33FF\u3400-\u4DBF\u4DC0-\u4DFF\u4E00-\u9FFF\uA000-\uA48F\uA490-\uA4CF\uA700-\uA71F\uA800-\uA82F\uA840-\uA87F\uAC00-\uD7AF\uF900-\uFAFF";
-    var RegExpUtils5 = {
+    var RegExpUtils6 = {
       // It's important that the regex be wrapped in parens, otherwise
       // javascript's RegExp::exec method won't find anything even when the
       // regex matches!
@@ -198626,7 +198626,7 @@ var require_regexp_utils = __commonJS({
         return /[./\\]/g;
       }
     };
-    module2.exports = RegExpUtils5;
+    module2.exports = RegExpUtils6;
   }
 });
 
@@ -213811,7 +213811,7 @@ var require_search_constants = __commonJS({
 // src/searchable-components/unified-dom-parser.js
 var require_unified_dom_parser = __commonJS({
   "src/searchable-components/unified-dom-parser.js"(exports2, module2) {
-    var { Utils: Utils24 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Utils: Utils25 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { MAX_MATCHES, CHAR_THRESHOLD } = require_search_constants();
     var UnifiedDOMParser = class {
       constructor(regionId) {
@@ -213894,7 +213894,7 @@ var require_unified_dom_parser = __commonJS({
             const reText = matches[1];
             re2 = new RegExp(reText, "ig");
           } else {
-            re2 = new RegExp(Utils24.escapeRegExp(searchTerm), "ig");
+            re2 = new RegExp(Utils25.escapeRegExp(searchTerm), "ig");
           }
         } catch (_e2) {
           return null;
@@ -214135,8 +214135,8 @@ var require_evented_iframe = __commonJS({
     var React51 = require_react();
     var ReactDOM26 = require_react_dom();
     var {
-      Utils: Utils24,
-      RegExpUtils: RegExpUtils5,
+      Utils: Utils25,
+      RegExpUtils: RegExpUtils6,
       IdentityStore: IdentityStore4,
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
@@ -214173,7 +214173,7 @@ var require_evented_iframe = __commonJS({
         };
       }
       render() {
-        const otherProps = Utils24.fastOmit(
+        const otherProps = Utils25.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -214184,7 +214184,7 @@ var require_evented_iframe = __commonJS({
       }
       componentDidMount() {
         if (this.props.searchable) {
-          this._regionId = Utils24.generateTempId();
+          this._regionId = Utils25.generateTempId();
           this._searchUsub = SearchableComponentStore2.listen(
             this._onSearchableStoreChange
           );
@@ -214211,7 +214211,7 @@ var require_evented_iframe = __commonJS({
         }
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state);
+        return !Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state);
       }
       /*
        Public: Call this method if you replace the contents of the iframe's document.
@@ -214799,7 +214799,7 @@ var require_multiselect_list_interaction_handler = __commonJS({
         }
       }
       _keyboardContext() {
-        if (WorkspaceStore2.topSheet().root) {
+        if (WorkspaceStore3.topSheet().root) {
           return {
             id: this.props.keyboardCursorId,
             action: this.onSetCursorPosition
@@ -214940,9 +214940,9 @@ var require_multiselect_list = __commonJS({
     var ListTabular3 = (init_list_tabular(), __toCommonJS(list_tabular_exports)).default;
     var Spinner3 = require_spinner();
     var {
-      Actions: Actions37,
-      Utils: Utils24,
-      WorkspaceStore: WorkspaceStore5,
+      Actions: Actions39,
+      Utils: Utils25,
+      WorkspaceStore: WorkspaceStore6,
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { KeyCommandsRegion: KeyCommandsRegion2 } = (init_nylas_component_kit(), __toCommonJS(nylas_component_kit_exports));
@@ -215021,7 +215021,7 @@ var require_multiselect_list = __commonJS({
       }
       setupForProps(_props) {
         this.unsubscribers = [];
-        return this.unsubscribers.push(WorkspaceStore5.listen(this._onChange));
+        return this.unsubscribers.push(WorkspaceStore6.listen(this._onChange));
       }
       _globalKeymapHandlers() {
         return _4.extend({}, this.props.keymapHandlers, {
@@ -215039,7 +215039,7 @@ var require_multiselect_list = __commonJS({
         });
       }
       render() {
-        const otherProps = Utils24.fastOmit(
+        const otherProps = Utils25.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -215154,7 +215154,7 @@ var require_multiselect_list = __commonJS({
       }
       _visible() {
         if (this.state.layoutMode) {
-          return WorkspaceStore5.topSheet().root;
+          return WorkspaceStore6.topSheet().root;
         } else {
           return true;
         }
@@ -215185,7 +215185,7 @@ var require_multiselect_list = __commonJS({
           ({ props } = this);
         }
         const state = this.state != null ? this.state : {};
-        const layoutMode = WorkspaceStore5.layoutMode();
+        const layoutMode = WorkspaceStore6.layoutMode();
         if (props.columns !== state.columns || layoutMode !== state.layoutMode) {
           computedColumns = [].concat(props.columns);
           if (layoutMode === "list") {
@@ -215640,7 +215640,7 @@ var require_injected_component = __commonJS({
         this._setRequiredMethods(this.props.requiredMethods);
       }
       componentDidMount() {
-        this._componentUnlistener = ComponentRegistry.listen(() => {
+        this._componentUnlistener = ComponentRegistry2.listen(() => {
           return this.setState(this._getStateFromStores());
         });
         if ((this.state.component != null ? this.state.component.containerRequired : void 0) === false) {
@@ -215783,14 +215783,14 @@ var require_injected_component = __commonJS({
         if (props == null) {
           ({ props } = this);
         }
-        const components = ComponentRegistry.findComponentsMatching(props.matching);
+        const components = ComponentRegistry2.findComponentsMatching(props.matching);
         if (components.length > 1) {
           console.warn(`There are multiple components available for ${JSON.stringify(props.matching)}. <InjectedComponent> is only rendering the first one.`);
         }
         const component = components.length === 0 ? this.props.fallback : components[0];
         return {
           component,
-          visible: ComponentRegistry.showComponentRegions()
+          visible: ComponentRegistry2.showComponentRegions()
         };
       }
     };
@@ -218502,10 +218502,10 @@ var require_injected_component_set = __commonJS({
     var UnsafeComponent2 = (init_unsafe_component(), __toCommonJS(unsafe_component_exports));
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var {
-      Utils: Utils24,
-      Actions: Actions37,
-      WorkspaceStore: WorkspaceStore5,
-      ComponentRegistry: ComponentRegistry2
+      Utils: Utils25,
+      Actions: Actions39,
+      WorkspaceStore: WorkspaceStore6,
+      ComponentRegistry: ComponentRegistry3
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var InjectedComponentSet4 = class _InjectedComponentSet extends React51.Component {
       static initClass() {
@@ -218540,7 +218540,7 @@ var require_injected_component_set = __commonJS({
         this._renderedComponents = /* @__PURE__ */ new Set();
       }
       componentDidMount() {
-        this._componentUnlistener = ComponentRegistry2.listen(() => {
+        this._componentUnlistener = ComponentRegistry3.listen(() => {
           return this.setState(this._getStateFromStores());
         });
         if (this.props.containersRequired === false) {
@@ -218564,7 +218564,7 @@ var require_injected_component_set = __commonJS({
       }
       render() {
         this._renderedComponents = /* @__PURE__ */ new Set();
-        const flexboxProps = Utils24.fastOmit(
+        const flexboxProps = Utils25.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -218632,10 +218632,10 @@ var require_injected_component_set = __commonJS({
         }
         const limit = props.matchLimit;
         return {
-          components: ComponentRegistry2.findComponentsMatching(
+          components: ComponentRegistry3.findComponentsMatching(
             this.props.matching
           ).slice(0, limit),
-          visible: ComponentRegistry2.showComponentRegions()
+          visible: ComponentRegistry3.showComponentRegions()
         };
       }
     };
@@ -222437,9 +222437,9 @@ var require_resizable_region = __commonJS({
     var ReactDOM26 = require_react_dom();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var {
-      Utils: Utils24,
-      Actions: Actions37,
-      ComponentRegistry: ComponentRegistry2,
+      Utils: Utils25,
+      Actions: Actions39,
+      ComponentRegistry: ComponentRegistry3,
       PriorityUICoordinator: PriorityUICoordinator2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ResizableHandle = {
@@ -222567,7 +222567,7 @@ var require_resizable_region = __commonJS({
             containerStyle.flex = 1;
           }
         }
-        const otherProps = Utils24.fastOmit(
+        const otherProps = Utils25.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -237230,13 +237230,13 @@ var require_task_queue = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var _fs = require_fs_plus();
     var _path = require("path");
-    var { Listener: Listener2, Publisher: Publisher2 } = require_reflux_coffee();
-    var CoffeeHelpers = require_coffee_helpers().default || require_coffee_helpers();
+    var { Listener: Listener3, Publisher: Publisher3 } = require_reflux_coffee();
+    var CoffeeHelpers2 = require_coffee_helpers().default || require_coffee_helpers();
     var Task3 = (init_task(), __toCommonJS(task_exports)).default;
     var TaskRegistry2 = require_task_registry().default;
     var _Utils = require_utils();
-    var _Reflux = require_src();
-    var Actions37 = require_actions().default;
+    var _Reflux2 = require_src();
+    var Actions39 = require_actions().default;
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var { APIError: APIError5 } = (init_errors2(), __toCommonJS(errors_exports2));
     var JSONBlobStorageKey = "task-queue";
@@ -237245,9 +237245,9 @@ var require_task_queue = __commonJS({
     } else {
       class TaskQueue4 {
         static initClass() {
-          TaskQueue4.include = CoffeeHelpers.includeModule;
-          TaskQueue4.include(Publisher2);
-          TaskQueue4.include(Listener2);
+          TaskQueue4.include = CoffeeHelpers2.includeModule;
+          TaskQueue4.include(Publisher3);
+          TaskQueue4.include(Listener3);
         }
         constructor() {
           this.queue = this.queue.bind(this);
@@ -237285,18 +237285,18 @@ var require_task_queue = __commonJS({
             });
             return false;
           });
-          this.listenTo(Actions37.queueTask, this.enqueue);
-          this.listenTo(Actions37.queueTasks, (tasks) => {
+          this.listenTo(Actions39.queueTask, this.enqueue);
+          this.listenTo(Actions39.queueTasks, (tasks) => {
             if (!tasks || !(tasks.length > 0)) {
               return;
             }
             return Array.from(tasks).map((t) => this.enqueue(t));
           });
-          this.listenTo(Actions37.undoTaskId, this.enqueueUndoOfTaskId);
-          this.listenTo(Actions37.dequeueTask, this.dequeue);
-          this.listenTo(Actions37.dequeueAllTasks, this.dequeueAll);
-          this.listenTo(Actions37.dequeueMatchingTask, this.dequeueMatching);
-          this.listenTo(Actions37.clearDeveloperConsole, this.clearCompleted);
+          this.listenTo(Actions39.undoTaskId, this.enqueueUndoOfTaskId);
+          this.listenTo(Actions39.dequeueTask, this.dequeue);
+          this.listenTo(Actions39.dequeueAllTasks, this.dequeueAll);
+          this.listenTo(Actions39.dequeueMatchingTask, this.dequeueMatching);
+          this.listenTo(Actions39.clearDeveloperConsole, this.clearCompleted);
         }
         queue() {
           return this._queue;
@@ -237504,7 +237504,7 @@ var require_task_queue = __commonJS({
             maxValue: 1e3,
             sample: 0.1
           });
-          return Actions37.recordPerfMetric(eventData);
+          return Actions39.recordPerfMetric(eventData);
         }
         _processTask(task) {
           if (task.queueState.isProcessing) {
@@ -237788,7 +237788,7 @@ var init_outbox_store = __esm({
 var require_thread_counts_store = __commonJS({
   "src/flux/stores/thread-counts-store.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var NylasStore27 = require_nylas_store().default || require_nylas_store();
+    var NylasStore30 = require_nylas_store().default || require_nylas_store();
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var Thread4 = (init_thread(), __toCommonJS(thread_exports)).default;
     var ReadCountsQuery = () => "SELECT * FROM `ThreadCounts`";
@@ -237834,7 +237834,7 @@ GROUP BY \`ThreadCategory\`.\`value\``;
         }
       }
     };
-    var ThreadCountsStore2 = class _ThreadCountsStore extends NylasStore27 {
+    var ThreadCountsStore2 = class _ThreadCountsStore extends NylasStore30 {
       static initClass() {
         _ThreadCountsStore.prototype.CategoryDatabaseMutationObserver = CategoryDatabaseMutationObserver;
       }
@@ -238057,7 +238057,7 @@ var init_unread_query_subscription = __esm({
 var require_mailbox_perspective = __commonJS({
   "src/mailbox-perspective.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils24 = require_utils();
+    var Utils25 = require_utils();
     var TaskFactory3 = (init_task_factory(), __toCommonJS(task_factory_exports)).default;
     var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
     var CategoryStore4 = (init_category_store(), __toCommonJS(category_store_exports));
@@ -238070,7 +238070,7 @@ var require_mailbox_perspective = __commonJS({
     var _Matcher = (init_matcher2(), __toCommonJS(matcher_exports)).default;
     var Thread4 = (init_thread(), __toCommonJS(thread_exports)).default;
     var Category4 = (init_category(), __toCommonJS(category_exports)).default;
-    var Actions37 = require_actions().default;
+    var Actions39 = require_actions().default;
     var ChangeUnreadTask2 = null;
     var MailboxPerspective3 = class _MailboxPerspective {
       static initClass() {
@@ -238083,13 +238083,13 @@ var require_mailbox_perspective = __commonJS({
             if (json2.type === CategoryMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils24.registeredObjectReviver
+                Utils25.registeredObjectReviver
               );
               return _MailboxPerspective.forCategories(categories);
             } else if (json2.type === UnreadMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils24.registeredObjectReviver
+                Utils25.registeredObjectReviver
               );
               return _MailboxPerspective.forUnread(categories);
             } else if (json2.type === StarredMailboxPerspective.name) {
@@ -238346,7 +238346,7 @@ var require_mailbox_perspective = __commonJS({
           starred: true,
           source: "Dragged Into List"
         });
-        return Actions37.queueTask(task);
+        return Actions39.queueTask(task);
       }
       tasksForRemovingItems(threads, _ruleset, source) {
         const task = TaskFactory3.taskForInvertingStarred({
@@ -238406,7 +238406,7 @@ var require_mailbox_perspective = __commonJS({
         const json2 = super.toJSON(...arguments);
         json2.serializedCategories = JSON.stringify(
           this._categories,
-          Utils24.registeredObjectReplacer
+          Utils25.registeredObjectReplacer
         );
         return json2;
       }
@@ -238476,7 +238476,7 @@ var require_mailbox_perspective = __commonJS({
               _4.findWhere(this._categories, { accountId })
             ]
           });
-          return Actions37.queueTasks(tasks);
+          return Actions39.queueTasks(tasks);
         });
       }
       // Public:
@@ -238574,7 +238574,7 @@ var require_mailbox_perspective = __commonJS({
           unread: true,
           source: "Dragged Into List"
         });
-        return Actions37.queueTask(task);
+        return Actions39.queueTask(task);
       }
       tasksForRemovingItems(threads, ruleset, source) {
         if (ChangeUnreadTask2 == null) {
@@ -238789,20 +238789,25 @@ var init_focused_perspective_store = __esm({
 });
 
 // src/flux/stores/focused-content-store.js
-var require_focused_content_store = __commonJS({
-  "src/flux/stores/focused-content-store.js"(exports2, module2) {
+var focused_content_store_exports = {};
+__export(focused_content_store_exports, {
+  default: () => focused_content_store_default
+});
+var import_workspace_store2, _MailboxPerspectiveNS, import_actions14, import_model9, import_reflux_coffee2, import_coffee_helpers2, RC2, Listener2, Publisher2, FocusedContentStore2, focused_content_store_default;
+var init_focused_content_store = __esm({
+  "src/flux/stores/focused-content-store.js"() {
     init_account_store();
-    var import_workspace_store4 = __toESM(require_workspace_store());
+    import_workspace_store2 = __toESM(require_workspace_store());
     init_database_store();
-    var _MailboxPerspectiveNS = __toESM(require_mailbox_perspective());
-    var import_actions35 = __toESM(require_actions());
-    var import_model11 = __toESM(require_model());
-    var import_reflux_coffee2 = __toESM(require_reflux_coffee());
-    var import_coffee_helpers2 = __toESM(require_coffee_helpers());
-    var _FocusedPerspectiveStore = (init_focused_perspective_store(), __toCommonJS(focused_perspective_store_exports)).default;
-    var RC2 = import_reflux_coffee2.default.Listener ? import_reflux_coffee2.default : import_reflux_coffee2.default.default;
-    var { Listener: Listener2, Publisher: Publisher2 } = RC2;
-    var FocusedContentStore4 = class _FocusedContentStore {
+    init_focused_perspective_store();
+    _MailboxPerspectiveNS = __toESM(require_mailbox_perspective());
+    import_actions14 = __toESM(require_actions());
+    import_model9 = __toESM(require_model());
+    import_reflux_coffee2 = __toESM(require_reflux_coffee());
+    import_coffee_helpers2 = __toESM(require_coffee_helpers());
+    RC2 = import_reflux_coffee2.default.Listener ? import_reflux_coffee2.default : import_reflux_coffee2.default.default;
+    ({ Listener: Listener2, Publisher: Publisher2 } = RC2);
+    FocusedContentStore2 = class _FocusedContentStore {
       static initClass() {
         _FocusedContentStore.include = import_coffee_helpers2.default.includeModule;
         _FocusedContentStore.include(Publisher2);
@@ -238824,10 +238829,10 @@ var require_focused_content_store = __commonJS({
         this.keyboardCursorEnabled = this.keyboardCursorEnabled.bind(this);
         this._resetInstanceVars();
         this.listenTo(account_store_default, this._onAccountsChange);
-        this.listenTo(import_workspace_store4.default, this._onWorkspaceChange);
+        this.listenTo(import_workspace_store2.default, this._onWorkspaceChange);
         this.listenTo(database_store_default, this._onDataChange);
-        this.listenTo(import_actions35.default.setFocus, this._onFocus);
-        this.listenTo(import_actions35.default.setCursorPosition, this._onFocusKeyboard);
+        this.listenTo(import_actions14.default.setFocus, this._onFocus);
+        this.listenTo(import_actions14.default.setCursorPosition, this._onFocusKeyboard);
       }
       triggerAfterAnimationFrame(payload) {
         return window.requestAnimationFrame(() => {
@@ -238838,7 +238843,7 @@ var require_focused_content_store = __commonJS({
         this._focused = {};
         this._focusedUsingClick = {};
         this._keyboardCursor = {};
-        return this._keyboardCursorEnabled = import_workspace_store4.default.layoutMode() === "list";
+        return this._keyboardCursorEnabled = import_workspace_store2.default.layoutMode() === "list";
       }
       // Inbound Events
       _onAccountsChange() {
@@ -238861,7 +238866,7 @@ var require_focused_content_store = __commonJS({
         }
       }
       _onFocusKeyboard({ collection, item }) {
-        if (item && !(item instanceof import_model11.default)) {
+        if (item && !(item instanceof import_model9.default)) {
           throw new Error("focusKeyboard() requires a Model or null");
         }
         if (!collection) {
@@ -238878,7 +238883,7 @@ var require_focused_content_store = __commonJS({
         });
       }
       _onFocus({ collection, item, usingClick }) {
-        if (item && !(item instanceof import_model11.default)) {
+        if (item && !(item instanceof import_model9.default)) {
           throw new Error("focus() requires a Model or null");
         }
         if (!collection) {
@@ -238902,7 +238907,7 @@ var require_focused_content_store = __commonJS({
         });
       }
       _onWorkspaceChange() {
-        const keyboardCursorEnabled = import_workspace_store4.default.layoutMode() === "list";
+        const keyboardCursorEnabled = import_workspace_store2.default.layoutMode() === "list";
         if (keyboardCursorEnabled !== this._keyboardCursorEnabled) {
           let collection, item;
           this._keyboardCursorEnabled = keyboardCursorEnabled;
@@ -239020,8 +239025,8 @@ var require_focused_content_store = __commonJS({
         return this._keyboardCursorEnabled;
       }
     };
-    FocusedContentStore4.initClass();
-    module2.exports = new FocusedContentStore4();
+    FocusedContentStore2.initClass();
+    focused_content_store_default = new FocusedContentStore2();
   }
 });
 
@@ -239203,16 +239208,16 @@ var message_store_exports = {};
 __export(message_store_exports, {
   default: () => message_store_default
 });
-var import_nylas_store7, import_actions14, import_focused_content_store, import_deprecate_utils, ExtensionRegistry, deprecate, CategoryNamesHiddenByDefault, MessageStore, store4, message_store_default;
+var import_nylas_store7, import_actions15, import_deprecate_utils, ExtensionRegistry, deprecate, CategoryNamesHiddenByDefault, MessageStore, store4, message_store_default;
 var init_message_store = __esm({
   "src/flux/stores/message-store.js"() {
     import_nylas_store7 = __toESM(require_nylas_store());
-    import_actions14 = __toESM(require_actions());
+    import_actions15 = __toESM(require_actions());
     init_message();
     init_thread();
     init_database_store();
     init_focused_perspective_store();
-    import_focused_content_store = __toESM(require_focused_content_store());
+    init_focused_content_store();
     init_nylas_api_helpers();
     init_extension_registry();
     import_deprecate_utils = __toESM(require_deprecate_utils());
@@ -239328,20 +239333,20 @@ var init_message_store = __esm({
       _registerListeners() {
         this.listenTo(ExtensionRegistry.MessageView, this._onExtensionsChanged);
         this.listenTo(database_store_default, this._onDataChanged);
-        this.listenTo(import_focused_content_store.default, this._onFocusChanged);
+        this.listenTo(focused_content_store_default, this._onFocusChanged);
         this.listenTo(
-          import_actions14.default.toggleMessageIdExpanded,
+          import_actions15.default.toggleMessageIdExpanded,
           this._onToggleMessageIdExpanded
         );
         this.listenTo(
-          import_actions14.default.toggleAllMessagesExpanded,
+          import_actions15.default.toggleAllMessagesExpanded,
           this._onToggleAllMessagesExpanded
         );
-        this.listenTo(import_actions14.default.toggleHiddenMessages, this._onToggleHiddenMessages);
+        this.listenTo(import_actions15.default.toggleHiddenMessages, this._onToggleHiddenMessages);
         this.listenTo(focused_perspective_store_default, this._onPerspectiveChanged);
-        this.listenTo(import_actions14.default.popoutThread, this._onPopoutThread);
+        this.listenTo(import_actions15.default.popoutThread, this._onPopoutThread);
         return this.listenTo(
-          import_actions14.default.focusThreadMainWindow,
+          import_actions15.default.focusThreadMainWindow,
           this._onFocusThreadMainWindow
         );
       }
@@ -239409,7 +239414,7 @@ var init_message_store = __esm({
         }, 100);
       }
       _onApplyFocusChange() {
-        const focused = import_focused_content_store.default.focused("thread");
+        const focused = focused_content_store_default.focused("thread");
         if ((this._thread != null ? this._thread.id : void 0) === (focused != null ? focused.id : void 0)) {
           return;
         }
@@ -239441,7 +239446,7 @@ var init_message_store = __esm({
             if (markAsReadId !== (this._thread != null ? this._thread.id : void 0) || !this._thread.unread) {
               return;
             }
-            return import_actions14.default.setUnreadThreads({
+            return import_actions15.default.setUnreadThreads({
               threads: [this._thread],
               source: "Thread Selected",
               canBeUndone: false,
@@ -239526,7 +239531,7 @@ var init_message_store = __esm({
               continue;
             }
             result2.push(
-              Array.from(item.files).map((file) => import_actions14.default.fetchFile(file))
+              Array.from(item.files).map((file) => import_actions15.default.fetchFile(file))
             );
           }
           return result2;
@@ -239593,7 +239598,7 @@ var init_message_store = __esm({
       }
       _onFocusThreadMainWindow(thread) {
         if (NylasEnv.isMainWindow()) {
-          import_actions14.default.setFocus({ collection: "thread", item: thread });
+          import_actions15.default.setFocus({ collection: "thread", item: thread });
           return NylasEnv.focus();
         }
       }
@@ -239621,7 +239626,7 @@ var mail_label_set_exports = {};
 __export(mail_label_set_exports, {
   default: () => MailLabelSet
 });
-var import_react55, import_prop_types60, import_actions15, import_injected_component_set, LabelComponentCache, MailLabelSet;
+var import_react55, import_prop_types60, import_actions16, import_injected_component_set, LabelComponentCache, MailLabelSet;
 var init_mail_label_set = __esm({
   "src/components/mail-label-set.jsx"() {
     import_react55 = __toESM(require_react());
@@ -239631,7 +239636,7 @@ var init_mail_label_set = __esm({
     init_message_store();
     init_account_store();
     init_mail_label();
-    import_actions15 = __toESM(require_actions());
+    import_actions16 = __toESM(require_actions());
     import_injected_component_set = __toESM(require_injected_component_set());
     LabelComponentCache = {};
     MailLabelSet = class extends import_react55.default.Component {
@@ -239643,7 +239648,7 @@ var init_mail_label_set = __esm({
         removable: import_prop_types60.default.bool
       };
       _onRemoveLabel(label) {
-        import_actions15.default.removeCategoryFromThreads({
+        import_actions16.default.removeCategoryFromThreads({
           source: "Label Remove Icon",
           threads: [this.props.thread],
           categoryToRemove: label
@@ -239708,8 +239713,8 @@ var require_mail_important_icon = __commonJS({
     var React51 = require_react();
     var classNames5 = require_classnames();
     var {
-      Actions: Actions37,
-      Utils: Utils24,
+      Actions: Actions39,
+      Utils: Utils25,
       Thread: Thread4,
       TaskFactory: TaskFactory3,
       CategoryStore: CategoryStore4,
@@ -239825,13 +239830,13 @@ var require_mail_important_icon = __commonJS({
           const threads = [this.props.thread];
           const source = "Important Icon";
           if (!isImportant) {
-            Actions37.applyCategoryToThreads({
+            Actions39.applyCategoryToThreads({
               threads,
               categoryToApply: category,
               source
             });
           } else {
-            Actions37.removeCategoryFromThreads({
+            Actions39.removeCategoryFromThreads({
               threads,
               categoryToRemove: category,
               source
@@ -240545,7 +240550,7 @@ var require_scenario_editor_row = __commonJS({
     var import_prop_types65 = __toESM(require_prop_types());
     var import_react62 = __toESM(require_react());
     init_index_all();
-    var import_rx_lite7 = __toESM(require_rx_lite());
+    var import_rx_lite10 = __toESM(require_rx_lite());
     var SOURCE_SELECT_NULL = "NULL";
     var SourceSelect = class _SourceSelect extends import_react62.default.Component {
       static initClass() {
@@ -240587,7 +240592,7 @@ var require_scenario_editor_row = __commonJS({
           this._subscription.dispose();
         }
         this._subscription = null;
-        if (props.options instanceof import_rx_lite7.default.Observable) {
+        if (props.options instanceof import_rx_lite10.default.Observable) {
           return this._subscription = props.options.subscribe((options2) => {
             return this.setState({ options: options2 });
           });
@@ -240867,7 +240872,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       TipsStore.mountedTip(TipKey);
       this._unlisteners = [
         TipsStore.listen(this._onTooltipStateChanged),
-        WorkspaceStore2.listen(() => {
+        WorkspaceStore3.listen(() => {
           this._workspaceTimer = setTimeout(this._onTooltipStateChanged, 0);
         })
       ];
@@ -240904,7 +240909,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       if (!sheetEl) {
         return true;
       }
-      return sheetEl.dataset.id === WorkspaceStore2.topSheet().id;
+      return sheetEl.dataset.id === WorkspaceStore3.topSheet().id;
     };
     _isVisible = () => {
       const el = import_react_dom23.default.findDOMNode(this);
@@ -241640,13 +241645,13 @@ var calendar_exports = {};
 __export(calendar_exports, {
   default: () => Calendar2
 });
-var import_model9, Calendar2;
+var import_model10, Calendar2;
 var init_calendar = __esm({
   "src/flux/models/calendar.js"() {
-    import_model9 = __toESM(require_model());
+    import_model10 = __toESM(require_model());
     init_attributes();
-    Calendar2 = class extends import_model9.default {
-      static attributes = Object.assign({}, import_model9.default.attributes, {
+    Calendar2 = class extends import_model10.default {
+      static attributes = Object.assign({}, import_model10.default.attributes, {
         name: attributes_default.String({
           modelKey: "name",
           jsonKey: "name"
@@ -242510,13 +242515,13 @@ function getSendActions() {
     }, [])
   );
 }
-var import_underscore68, import_nylas_store9, import_actions16, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
+var import_underscore68, import_nylas_store9, import_actions17, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
 var init_send_actions_store = __esm({
   "src/flux/stores/send-actions-store.js"() {
     init_index_all();
     import_underscore68 = __toESM(require_underscore());
     import_nylas_store9 = __toESM(require_nylas_store());
-    import_actions16 = __toESM(require_actions());
+    import_actions17 = __toESM(require_actions());
     init_send_draft_task();
     init_extension_registry();
     ACTION_CONFIG_KEY = "core.sending.defaultSendType";
@@ -242526,7 +242531,7 @@ var init_send_actions_store = __esm({
       iconUrl: null,
       configKey: DefaultSendActionKey,
       isAvailableForDraft: () => true,
-      performSendAction: ({ draft }) => import_actions16.default.queueTask(new SendDraftTask(draft.clientId))
+      performSendAction: ({ draft }) => import_actions17.default.queueTask(new SendDraftTask(draft.clientId))
     };
     SendActionsStore = class extends import_nylas_store9.default {
       constructor() {
@@ -242583,11 +242588,11 @@ var perform_send_action_task_exports = {};
 __export(perform_send_action_task_exports, {
   default: () => perform_send_action_task_default
 });
-var import_actions17, import_task_queue2, PerformSendActionTask, perform_send_action_task_default;
+var import_actions18, import_task_queue2, PerformSendActionTask, perform_send_action_task_default;
 var init_perform_send_action_task = __esm({
   "src/flux/tasks/perform-send-action-task.js"() {
     init_task();
-    import_actions17 = __toESM(require_actions());
+    import_actions18 = __toESM(require_actions());
     init_base_draft_task();
     import_task_queue2 = __toESM(require_task_queue());
     init_send_actions_store();
@@ -242626,10 +242631,10 @@ var init_perform_send_action_task = __esm({
         return new Promise((resolve7, reject2) => {
           const { id: taskId, draftClientId } = this;
           this._taskResolve = resolve7;
-          import_actions17.default.willPerformSendAction({ taskId, draftClientId });
+          import_actions18.default.willPerformSendAction({ taskId, draftClientId });
           this._sendTimer = setTimeout(() => {
             this._performSendAction().then(() => resolve7(Task.Status.Success)).catch((err) => reject2([Task.Status.Failed, err])).finally(
-              () => import_actions17.default.didPerformSendAction({ taskId, draftClientId })
+              () => import_actions18.default.didPerformSendAction({ taskId, draftClientId })
             );
           }, undoSendTimeout);
         });
@@ -242637,7 +242642,7 @@ var init_perform_send_action_task = __esm({
       cancel() {
         const { id: taskId, draftClientId } = this;
         clearTimeout(this._sendTimer);
-        import_actions17.default.didCancelSendAction({ taskId, draftClientId });
+        import_actions18.default.didCancelSendAction({ taskId, draftClientId });
         this._taskResolve(Task.Status.Continue);
       }
       _performSendAction() {
@@ -242660,10 +242665,11 @@ var init_perform_send_action_task = __esm({
 // src/mail-rules-templates.js
 var mail_rules_templates_exports = {};
 __export(mail_rules_templates_exports, {
+  ActionTemplates: () => __ActionTemplates,
   ConditionMode: () => __ConditionMode,
   ConditionTemplates: () => __ConditionTemplates
 });
-var import_nylas_observables, ConditionTemplates, ActionTemplates, __tplExports, __templatesNS, __ConditionMode, __ConditionTemplates;
+var import_nylas_observables, ConditionTemplates, ActionTemplates, __tplExports, __templatesNS, __ConditionMode, __ConditionTemplates, __ActionTemplates;
 var init_mail_rules_templates = __esm({
   "src/mail-rules-templates.js"() {
     import_nylas_observables = __toESM(require_nylas_observables());
@@ -242823,6 +242829,7 @@ var init_mail_rules_templates = __esm({
     __templatesNS = __tplExports;
     __ConditionMode = __templatesNS.ConditionMode;
     __ConditionTemplates = __templatesNS.ConditionTemplates;
+    __ActionTemplates = __templatesNS.ActionTemplates;
   }
 });
 
@@ -242831,13 +242838,13 @@ var mail_rules_processor_exports = {};
 __export(mail_rules_processor_exports, {
   default: () => mail_rules_processor_default
 });
-var import_node_module22, import_actions18, import_meta23, nodeRequire23, MailRulesStore, MailRulesActions, MailRulesProcessor, mail_rules_processor_default;
+var import_node_module22, import_actions19, import_meta23, nodeRequire23, MailRulesStore, MailRulesActions, MailRulesProcessor, mail_rules_processor_default;
 var init_mail_rules_processor = __esm({
   "src/mail-rules-processor.js"() {
     import_node_module22 = require("module");
     init_index_all();
     init_task();
-    import_actions18 = __toESM(require_actions());
+    import_actions19 = __toESM(require_actions());
     init_account_store();
     init_database_store();
     init_task_queue_status_store();
@@ -243033,11 +243040,11 @@ var init_mail_rules_processor = __esm({
             performLocalPromises.push(
               task_queue_status_store_default.waitForPerformLocal(task)
             );
-            return import_actions18.default.queueTask(task);
+            return import_actions19.default.queueTask(task);
           });
           return Promise.all(performLocalPromises);
         }).catch((err) => {
-          import_actions18.default.disableMailRule(rule.id, err.toString());
+          import_actions19.default.disableMailRule(rule.id, err.toString());
           return Promise.resolve();
         });
       }
@@ -243216,13 +243223,14 @@ var init_badge_store = __esm({
 });
 
 // src/flux/stores/contact-ranking-store.js
-var require_contact_ranking_store = __commonJS({
-  "src/flux/stores/contact-ranking-store.js"(exports2, module2) {
-    var Rx9 = require_rx_lite();
-    var NylasStore27 = require_nylas_store().default || require_nylas_store();
-    var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
-    var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var ContactRankingStore = class extends NylasStore27 {
+var import_rx_lite4, import_nylas_store11, ContactRankingStore, contact_ranking_store_default;
+var init_contact_ranking_store = __esm({
+  "src/flux/stores/contact-ranking-store.js"() {
+    import_rx_lite4 = __toESM(require_rx_lite());
+    import_nylas_store11 = __toESM(require_nylas_store());
+    init_database_store();
+    init_account_store();
+    ContactRankingStore = class extends import_nylas_store11.default {
       constructor() {
         super();
         this._registerObservables = this._registerObservables.bind(this);
@@ -243234,8 +243242,8 @@ var require_contact_ranking_store = __commonJS({
         this._values = {};
         this._valuesAllAccounts = null;
         this._disposables = {};
-        this.listenTo(AccountStore5, this._onAccountsChanged);
-        this._registerObservables(AccountStore5.accounts());
+        this.listenTo(account_store_default, this._onAccountsChanged);
+        this._registerObservables(account_store_default.accounts());
       }
       _registerObservables(accounts) {
         const nextDisposables = {};
@@ -243244,9 +243252,9 @@ var require_contact_ranking_store = __commonJS({
             nextDisposables[acct.id] = this._disposables[acct.id];
             delete this._disposables[acct.id];
           } else {
-            var query = DatabaseStore5.findJSONBlob(`ContactRankingsFor${acct.id}`);
+            var query = database_store_default.findJSONBlob(`ContactRankingsFor${acct.id}`);
             var callback = this._onRankingsChanged.bind(this, acct.id);
-            nextDisposables[acct.id] = Rx9.Observable.fromQuery(query).subscribe(callback);
+            nextDisposables[acct.id] = import_rx_lite4.default.Observable.fromQuery(query).subscribe(callback);
           }
         }
         for (var key in this._disposables) {
@@ -243261,7 +243269,7 @@ var require_contact_ranking_store = __commonJS({
         return this.trigger();
       }
       _onAccountsChanged() {
-        return this._registerObservables(AccountStore5.accounts());
+        return this._registerObservables(account_store_default.accounts());
       }
       valueFor(accountId) {
         return this._values[accountId];
@@ -243289,7 +243297,7 @@ var require_contact_ranking_store = __commonJS({
         return this._values = {};
       }
     };
-    module2.exports = new ContactRankingStore();
+    contact_ranking_store_default = new ContactRankingStore();
   }
 });
 
@@ -243298,7 +243306,7 @@ var require_window_bridge = __commonJS({
   "src/window-bridge.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { ipcRenderer: ipcRenderer8 } = require("electron");
-    var Utils24 = require_utils();
+    var Utils25 = require_utils();
     var WindowBridge = class {
       constructor() {
         this._onResults = this._onResults.bind(this);
@@ -243308,10 +243316,10 @@ var require_window_bridge = __commonJS({
         ipcRenderer8.on("run-in-window", this._onRunInWindow);
       }
       runInWindow(window2, objectName, methodName, args) {
-        const taskId = Utils24.generateTempId();
+        const taskId = Utils25.generateTempId();
         return new Promise((resolve7, reject2) => {
           this._tasks[taskId] = { resolve: resolve7, reject: reject2 };
-          args = JSON.stringify(args, Utils24.registeredObjectReplacer);
+          args = JSON.stringify(args, Utils25.registeredObjectReplacer);
           const params = { window: window2, objectName, methodName, args, taskId };
           return ipcRenderer8.send("run-in-window", params);
         });
@@ -243327,7 +243335,7 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { returnValue, taskId } = param;
-        returnValue = JSON.parse(returnValue, Utils24.registeredObjectReviver);
+        returnValue = JSON.parse(returnValue, Utils25.registeredObjectReviver);
         this._tasks[taskId].resolve(returnValue);
         return delete this._tasks[taskId];
       }
@@ -243336,20 +243344,20 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { objectName, methodName, args, taskId } = param;
-        args = JSON.parse(args, Utils24.registeredObjectReviver);
+        args = JSON.parse(args, Utils25.registeredObjectReviver);
         const exports3 = globalThis.$n || (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
         const result2 = exports3[objectName][methodName].apply(null, args);
         if (_4.isFunction(result2.then)) {
           return result2.then((returnValue) => {
             returnValue = JSON.stringify(
               returnValue,
-              Utils24.registeredObjectReplacer
+              Utils25.registeredObjectReplacer
             );
             return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
           });
         } else {
           let returnValue = result2;
-          returnValue = JSON.stringify(returnValue, Utils24.registeredObjectReplacer);
+          returnValue = JSON.stringify(returnValue, Utils25.registeredObjectReplacer);
           return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
         }
       }
@@ -243359,24 +243367,28 @@ var require_window_bridge = __commonJS({
 });
 
 // src/flux/stores/contact-store.js
-var require_contact_store = __commonJS({
-  "src/flux/stores/contact-store.js"(exports2, module2) {
-    var _fs = require("fs");
-    var _path = require("path");
-    var _Reflux = require_src();
-    var _Rx = require_rx_lite();
-    var _Actions = require_actions().default;
-    var Contact4 = (init_contact(), __toCommonJS(contact_exports)).default;
-    var _Utils = require_utils();
-    var NylasStore27 = require_nylas_store().default || require_nylas_store();
-    var RegExpUtils5 = require_regexp_utils();
-    var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
-    var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var ComponentRegistry2 = require_component_registry();
-    var ContactRankingStore = require_contact_ranking_store();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var _WindowBridge = require_window_bridge();
-    var ContactStore2 = class extends NylasStore27 {
+var contact_store_exports = {};
+__export(contact_store_exports, {
+  default: () => contact_store_default
+});
+var import_reflux, import_rx_lite5, import_actions20, _UtilsNS, import_nylas_store12, RegExpUtilsNS, import_component_registry, _WindowBridgeNS, RegExpUtils5, ContactStore2, contact_store_default;
+var init_contact_store = __esm({
+  "src/flux/stores/contact-store.js"() {
+    import_reflux = __toESM(require_src());
+    import_rx_lite5 = __toESM(require_rx_lite());
+    import_actions20 = __toESM(require_actions());
+    init_contact();
+    _UtilsNS = __toESM(require_utils());
+    import_nylas_store12 = __toESM(require_nylas_store());
+    RegExpUtilsNS = __toESM(require_regexp_utils());
+    init_database_store();
+    init_account_store();
+    import_component_registry = __toESM(require_component_registry());
+    init_contact_ranking_store();
+    init_index_all();
+    _WindowBridgeNS = __toESM(require_window_bridge());
+    RegExpUtils5 = RegExpUtilsNS.default || RegExpUtilsNS;
+    ContactStore2 = class extends import_nylas_store12.default {
       constructor() {
         super();
         this.searchContacts = this.searchContacts.bind(this);
@@ -243386,7 +243398,7 @@ var require_contact_store = __commonJS({
         this._distinctByEmail = this._distinctByEmail.bind(this);
         this._resetCache = this._resetCache.bind(this);
         this._rankedContacts = [];
-        this.listenTo(ContactRankingStore, () => this._updateRankedContactCache());
+        this.listenTo(contact_ranking_store_default, () => this._updateRankedContactCache());
         this._updateRankedContactCache();
       }
       // Public: Search the user's contact list for the given search term.
@@ -243410,7 +243422,7 @@ var require_contact_store = __commonJS({
         }
         limit = Math.max(limit, 0);
         search = search.toLowerCase();
-        const accountCount = AccountStore5.accounts().length;
+        const accountCount = account_store_default.accounts().length;
         if (!search || search.length === 0) {
           return Promise.resolve([]);
         }
@@ -243423,16 +243435,16 @@ var require_contact_store = __commonJS({
             break;
           }
         }
-        const query = DatabaseStore5.findAll(Contact4).search(search).limit(limit * accountCount);
+        const query = database_store_default.findAll(Contact2).search(search).limit(limit * accountCount);
         return query.then((queryResults) => {
-          const existingEmails = _4.pluck(results, "email");
-          queryResults = _4.reject(
+          const existingEmails = index_default_default.pluck(results, "email");
+          queryResults = index_default_default.reject(
             queryResults,
             (c) => Array.from(existingEmails).includes(c.email)
           );
           queryResults = this._distinctByEmail(queryResults);
           results = results.concat(queryResults);
-          const extensions = ComponentRegistry2.findComponentsMatching({
+          const extensions = import_component_registry.default.findComponentsMatching({
             role: "ContactSearchResults"
           });
           return Promise.each(extensions, (ext) => {
@@ -243448,7 +243460,7 @@ var require_contact_store = __commonJS({
         });
       }
       isValidContact(contact) {
-        if (!(contact instanceof Contact4)) {
+        if (!(contact instanceof Contact2)) {
           return false;
         }
         return contact.isValid();
@@ -243495,7 +243507,7 @@ var require_contact_store = __commonJS({
           if (['"', "'"].includes(firstChar) && ['"', "'"].includes(lastChar)) {
             name2 = name2.slice(1, -1);
           }
-          detected.push(new Contact4({ email, name: name2 }));
+          detected.push(new Contact2({ email, name: name2 }));
         }
         if (skipNameLookup) {
           return Promise.resolve(detected);
@@ -243519,26 +243531,26 @@ var require_contact_store = __commonJS({
         );
       }
       _updateRankedContactCache() {
-        const rankings = ContactRankingStore.valuesForAllAccounts();
+        const rankings = contact_ranking_store_default.valuesForAllAccounts();
         let emails = Object.keys(rankings);
         if (emails.length === 0) {
           this._rankedContacts = [];
           return;
         }
-        emails = _4.sortBy(emails, (email) => {
+        emails = index_default_default.sortBy(emails, (email) => {
           let left;
           return -((left = rankings[email.toLowerCase()]) != null ? left : 0) / 1;
         });
         if (emails.length > 400) {
           emails.length = 400;
         }
-        return DatabaseStore5.findAll(Contact4, { email: emails }).background().then((contacts) => {
+        return database_store_default.findAll(Contact2, { email: emails }).background().then((contacts) => {
           contacts = this._distinctByEmail(contacts);
           for (var contact of Array.from(contacts)) {
             var left;
             contact._rank = -((left = rankings[contact.email.toLowerCase()]) != null ? left : 0) / 1;
           }
-          return this._rankedContacts = _4.sortBy(
+          return this._rankedContacts = index_default_default.sortBy(
             contacts,
             (contact2) => contact2._rank
           );
@@ -243556,23 +243568,19 @@ var require_contact_store = __commonJS({
             uniq2[key] = contact;
           }
         }
-        return _4.values(uniq2);
+        return index_default_default.values(uniq2);
       }
       _resetCache() {
         this._rankedContacts = [];
-        ContactRankingStore.reset();
+        contact_ranking_store_default.reset();
         return this.trigger(this);
       }
     };
-    module2.exports = new ContactStore2();
+    contact_store_default = new ContactStore2();
   }
 });
 
 // src/undo-stack.js
-var undo_stack_exports = {};
-__export(undo_stack_exports, {
-  default: () => UndoStack
-});
 var UndoStack;
 var init_undo_stack = __esm({
   "src/undo-stack.js"() {
@@ -243642,24 +243650,25 @@ var init_undo_stack = __esm({
 // src/flux/stores/draft-editing-session.js
 var require_draft_editing_session = __commonJS({
   "src/flux/stores/draft-editing-session.js"(exports2, module2) {
-    var Message3 = (init_message(), __toCommonJS(message_exports)).default;
-    var _Actions = require_actions().default;
-    var NylasAPIHelpers2 = (init_nylas_api_helpers(), __toCommonJS(nylas_api_helpers_exports));
-    var AccountStore5 = (init_account_store(), __toCommonJS(account_store_exports)).default;
-    var ContactStore2 = require_contact_store();
-    var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
-    var UndoStack2 = (init_undo_stack(), __toCommonJS(undo_stack_exports)).default;
-    var DraftHelpers3 = (init_draft_helpers(), __toCommonJS(draft_helpers_exports)).default;
-    var ExtensionRegistry3 = (init_extension_registry(), __toCommonJS(extension_registry_exports));
-    var { Listener: Listener2, Publisher: Publisher2 } = require_reflux_coffee();
-    var CoffeeHelpers = require_coffee_helpers();
-    var DraftStore3 = null;
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
+    init_message();
+    var import_actions38 = __toESM(require_actions());
+    init_nylas_api_helpers();
+    init_account_store();
+    init_contact_store();
+    init_database_store();
+    init_undo_stack();
+    init_draft_helpers();
+    init_extension_registry();
+    init_draft_store();
+    init_index_all();
+    var DraftHelpers3 = draft_helpers_default || draft_helpers_exports;
+    var { Listener: Listener3, Publisher: Publisher3 } = require_reflux_coffee();
+    var CoffeeHelpers2 = require_coffee_helpers();
     var MetadataChangePrefix = "metadata.";
     var DraftChangeSet = class _DraftChangeSet {
       static initClass() {
-        _DraftChangeSet.include = CoffeeHelpers.includeModule;
-        _DraftChangeSet.include(Publisher2);
+        _DraftChangeSet.include = CoffeeHelpers2.includeModule;
+        _DraftChangeSet.include(Publisher3);
       }
       constructor(callbacks) {
         this.add = this.add.bind(this);
@@ -243686,7 +243695,7 @@ var require_draft_editing_session = __commonJS({
         }
         const { doesNotAffectPristine } = param;
         this.callbacks.onWillAddChanges(changes);
-        this._pending = _4.extend(this._pending, changes);
+        this._pending = index_default_default.extend(this._pending, changes);
         if (!doesNotAffectPristine) {
           this._pending.pristine = false;
         }
@@ -243719,8 +243728,8 @@ var require_draft_editing_session = __commonJS({
       }
       applyToModel(model) {
         if (model) {
-          const changesToApply = _4.pairs(this._saving).concat(
-            _4.pairs(this._pending)
+          const changesToApply = index_default_default.pairs(this._saving).concat(
+            index_default_default.pairs(this._pending)
           );
           for (var [key, val] of Array.from(changesToApply)) {
             if (key.startsWith(MetadataChangePrefix)) {
@@ -243736,9 +243745,9 @@ var require_draft_editing_session = __commonJS({
     DraftChangeSet.initClass();
     var DraftEditingSession2 = class _DraftEditingSession {
       static initClass() {
-        _DraftEditingSession.include = CoffeeHelpers.includeModule;
-        _DraftEditingSession.include(Publisher2);
-        _DraftEditingSession.include(Listener2);
+        _DraftEditingSession.include = CoffeeHelpers2.includeModule;
+        _DraftEditingSession.include(Publisher3);
+        _DraftEditingSession.include(Listener3);
       }
       constructor(draftClientId, draft = null) {
         this.validateDraftForSending = this.validateDraftForSending.bind(this);
@@ -243751,14 +243760,11 @@ var require_draft_editing_session = __commonJS({
         this.redo = this.redo.bind(this);
         this._snapshot = this._snapshot.bind(this);
         this.draftClientId = draftClientId;
-        if (DraftStore3 == null) {
-          DraftStore3 = (init_draft_store(), __toCommonJS(draft_store_exports)).default;
-        }
-        this.listenTo(DraftStore3, this._onDraftChanged);
+        this.listenTo(draft_store_default, this._onDraftChanged);
         this._draft = false;
         this._draftPristineBody = null;
         this._destroyed = false;
-        this._undoStack = new UndoStack2();
+        this._undoStack = new UndoStack();
         this.changes = new DraftChangeSet({
           onWillAddChanges: this.changeSetWillAddChanges,
           onDidAddChanges: this.changeSetDidAddChanges,
@@ -243786,9 +243792,9 @@ var require_draft_editing_session = __commonJS({
         return this._draftPristineBody;
       }
       prepare() {
-        return this._draftPromise != null ? this._draftPromise : this._draftPromise = DatabaseStore5.findBy(Message3, {
+        return this._draftPromise != null ? this._draftPromise : this._draftPromise = database_store_default.findBy(Message, {
           clientId: this.draftClientId
-        }).include(Message3.attributes.body).then((draft) => {
+        }).include(Message.attributes.body).then((draft) => {
           if (this._destroyed) {
             return Promise.reject(new Error("Draft has been destroyed."));
           }
@@ -243819,7 +243825,7 @@ var require_draft_editing_session = __commonJS({
         const forwarded = DraftHelpers3.isForwardedMessage(this._draft);
         const hasAttachment = (this._draft.files != null ? this._draft.files.length : void 0) > 0 || (this._draft.uploads != null ? this._draft.uploads.length : void 0) > 0;
         for (var contact of Array.from(allRecipients)) {
-          if (!ContactStore2.isValidContact(contact)) {
+          if (!(void 0)(contact)) {
             errors.push(
               `${contact.email} is not a valid email address - please remove or edit it before sending.`
             );
@@ -243842,7 +243848,7 @@ var require_draft_editing_session = __commonJS({
         if (bodyIsEmpty && !forwarded && !hasAttachment) {
           warnings.push("without a body");
         }
-        for (var extension of Array.from(ExtensionRegistry3.Composer.extensions())) {
+        for (var extension of Array.from(Composer.extensions())) {
           if (!extension.warningsForSending) {
             continue;
           }
@@ -243859,7 +243865,7 @@ var require_draft_editing_session = __commonJS({
       // If the account is updated it makes a request to delete the draft with the
       // old accountId
       ensureCorrectAccount() {
-        const account = AccountStore5.accountForEmail(this._draft.from[0].email);
+        const account = account_store_default.accountForEmail(this._draft.from[0].email);
         if (!account) {
           return Promise.reject(
             new Error(
@@ -243868,7 +243874,7 @@ var require_draft_editing_session = __commonJS({
           );
         }
         if (account.id !== this._draft.accountId) {
-          NylasAPIHelpers2.makeDraftDeletionRequest(this._draft);
+          makeDraftDeletionRequest(this._draft);
           this.changes.add({
             accountId: account.id,
             version: null,
@@ -243884,7 +243890,7 @@ var require_draft_editing_session = __commonJS({
         if (draft.body == null) {
           throw new Error("DraftEditingSession._setDraft - new draft has no body!");
         }
-        const extensions = ExtensionRegistry3.Composer.extensions();
+        const extensions = Composer.extensions();
         const fragment = document.createDocumentFragment();
         const draftBodyRootNode = document.createElement("root");
         fragment.appendChild(draftBodyRootNode);
@@ -243916,14 +243922,14 @@ var require_draft_editing_session = __commonJS({
         if (!this._draft) {
           return;
         }
-        const nextDraft = _4.filter(
+        const nextDraft = index_default_default.filter(
           change.objects,
           (obj2) => obj2.clientId === this._draft.clientId
         ).pop();
         if (nextDraft) {
           const nextValues = {};
-          for (var key in Message3.attributes) {
-            var _attr = Message3.attributes[key];
+          for (var key in Message.attributes) {
+            var _attr = Message.attributes[key];
             if (key === "id") {
               continue;
             }
@@ -243932,7 +243938,7 @@ var require_draft_editing_session = __commonJS({
             }
             nextValues[key] = nextDraft[key];
           }
-          this._setDraft(Object.assign(new Message3(), this._draft, nextValues));
+          this._setDraft(Object.assign(new Message(), this._draft, nextValues));
           return this.trigger();
         }
       }
@@ -243941,8 +243947,8 @@ var require_draft_editing_session = __commonJS({
           return Promise.resolve(true);
         }
         const inMemoryDraft = this._draft;
-        return DatabaseStore5.inTransaction((t) => {
-          return t.findBy(Message3, { clientId: inMemoryDraft.clientId }).include(Message3.attributes.body).then((draft) => {
+        return database_store_default.inTransaction((t) => {
+          return t.findBy(Message, { clientId: inMemoryDraft.clientId }).include(Message.attributes.body).then((draft) => {
             if (draft == null) {
               draft = inMemoryDraft;
             }
@@ -243957,7 +243963,7 @@ var require_draft_editing_session = __commonJS({
           return;
         }
         const hasBeen300ms = Date.now() - this._lastAddTimestamp > 300;
-        const hasChangedFields = !_4.isEqual(
+        const hasChangedFields = !index_default_default.isEqual(
           Object.keys(changes),
           this._lastChangedFields
         );
@@ -244011,6 +244017,7 @@ var require_draft_editing_session = __commonJS({
     DraftEditingSession2.initClass();
     DraftEditingSession2.DraftChangeSet = DraftChangeSet;
     module2.exports = DraftEditingSession2;
+    module2.exports.default = DraftEditingSession2;
   }
 });
 
@@ -244020,16 +244027,16 @@ var require_draft_factory = __commonJS({
     init_index_all();
     var import_node_path15 = __toESM(require("path"));
     init_nylas_exports();
-    var import_actions35 = __toESM(require_actions());
+    var import_actions38 = __toESM(require_actions());
     init_database_store();
     init_account_store();
-    var import_contact_store = __toESM(require_contact_store());
+    init_contact_store();
     init_message_store();
     init_focused_perspective_store();
     init_draft_helpers();
     init_message();
-    var import_utils25 = __toESM(require_utils());
     var import_utils26 = __toESM(require_utils());
+    var import_utils27 = __toESM(require_utils());
     var import_dom_utils3 = __toESM(require_dom_utils());
     var DraftStore3 = null;
     var DraftFactory2 = class {
@@ -244055,7 +244062,7 @@ var require_draft_factory = __commonJS({
               {
                 body: "",
                 subject: "",
-                clientId: import_utils25.default.generateTempId(),
+                clientId: import_utils26.default.generateTempId(),
                 from: [account.defaultMe()],
                 date: /* @__PURE__ */ new Date(),
                 draft: true,
@@ -244113,7 +244120,7 @@ var require_draft_factory = __commonJS({
         const contacts = {};
         for (var attr of ["to", "cc", "bcc"]) {
           if (query[attr]) {
-            contacts[attr] = import_contact_store.default.parseContactsInString(query[attr]);
+            contacts[attr] = contact_store_default.parseContactsInString(query[attr]);
           }
         }
         if (query.body) {
@@ -244151,7 +244158,7 @@ var require_draft_factory = __commonJS({
           ({ to, cc } = message.participantsForReplyAll());
         }
         return this.createDraft({
-          subject: (0, import_utils26.subjectWithPrefix)(message.subject, "Re:"),
+          subject: (0, import_utils27.subjectWithPrefix)(message.subject, "Re:"),
           to,
           cc,
           from: [this._fromContactForReply(message)],
@@ -244163,7 +244170,7 @@ var require_draft_factory = __commonJS({
         });
       }
       createDraftForForward({ thread, message }) {
-        message.files.forEach((f) => import_actions35.default.fetchFile(f));
+        message.files.forEach((f) => import_actions38.default.fetchFile(f));
         const contactsAsHtml = (cs3) => import_dom_utils3.default.escapeHTMLCharacters(index_default_default.invoke(cs3, "toString").join(", "));
         const fields = [];
         if (message.from.length > 0) {
@@ -244179,7 +244186,7 @@ var require_draft_factory = __commonJS({
         }
         return draft_helpers_default.prepareBodyForQuoting(message.body).then((body) => {
           return this.createDraft({
-            subject: (0, import_utils26.subjectWithPrefix)(message.subject, "Fwd:"),
+            subject: (0, import_utils27.subjectWithPrefix)(message.subject, "Fwd:"),
             from: [this._fromContactForReply(message)],
             threadId: thread.id,
             accountId: message.accountId,
@@ -244332,19 +244339,19 @@ var draft_store_exports = {};
 __export(draft_store_exports, {
   default: () => draft_store_default
 });
-var import_electron7, import_nylas_store11, import_draft_editing_session, import_draft_factory, import_focused_content_store2, import_utils16, import_actions19, import_sound_registry2, DefaultSendActionKey2, DraftStore, draft_store_default;
+var import_electron7, import_nylas_store13, import_draft_editing_session, import_draft_factory, import_utils16, import_actions21, import_sound_registry2, DefaultSendActionKey2, DraftStore, draft_store_default;
 var init_draft_store = __esm({
   "src/flux/stores/draft-store.js"() {
     init_index_all();
     import_electron7 = require("electron");
-    import_nylas_store11 = __toESM(require_nylas_store());
+    import_nylas_store13 = __toESM(require_nylas_store());
     import_draft_editing_session = __toESM(require_draft_editing_session());
     init_draft_helpers();
     import_draft_factory = __toESM(require_draft_factory());
     init_database_store();
     init_send_actions_store();
     init_task_queue_status_store();
-    import_focused_content_store2 = __toESM(require_focused_content_store());
+    init_focused_content_store();
     init_base_draft_task();
     init_perform_send_action_task();
     init_syncback_metadata_task();
@@ -244352,38 +244359,38 @@ var init_draft_store = __esm({
     init_thread();
     init_message();
     import_utils16 = __toESM(require_utils());
-    import_actions19 = __toESM(require_actions());
+    import_actions21 = __toESM(require_actions());
     import_sound_registry2 = __toESM(require_sound_registry());
     init_extension_registry();
     ({ DefaultSendActionKey: DefaultSendActionKey2 } = send_actions_store_default);
-    DraftStore = class extends import_nylas_store11.default {
+    DraftStore = class extends import_nylas_store13.default {
       constructor() {
         super();
         this.listenTo(database_store_default, this._onDataChanged);
-        this.listenTo(import_actions19.default.composeReply, this._onComposeReply);
-        this.listenTo(import_actions19.default.composeForward, this._onComposeForward);
-        this.listenTo(import_actions19.default.composePopoutDraft, this._onPopoutDraftClientId);
-        this.listenTo(import_actions19.default.composeNewBlankDraft, this._onPopoutBlankDraft);
+        this.listenTo(import_actions21.default.composeReply, this._onComposeReply);
+        this.listenTo(import_actions21.default.composeForward, this._onComposeForward);
+        this.listenTo(import_actions21.default.composePopoutDraft, this._onPopoutDraftClientId);
+        this.listenTo(import_actions21.default.composeNewBlankDraft, this._onPopoutBlankDraft);
         this.listenTo(
-          import_actions19.default.composeNewDraftToRecipient,
+          import_actions21.default.composeNewDraftToRecipient,
           this._onPopoutNewDraftToRecipient
         );
-        this.listenTo(import_actions19.default.draftDeliveryFailed, this._onSendDraftFailed);
-        this.listenTo(import_actions19.default.draftDeliverySucceeded, this._onSendDraftSuccess);
-        this.listenTo(import_actions19.default.didCancelSendAction, this._onDidCancelSendAction);
-        this.listenTo(import_actions19.default.sendQuickReply, this._onSendQuickReply);
+        this.listenTo(import_actions21.default.draftDeliveryFailed, this._onSendDraftFailed);
+        this.listenTo(import_actions21.default.draftDeliverySucceeded, this._onSendDraftSuccess);
+        this.listenTo(import_actions21.default.didCancelSendAction, this._onDidCancelSendAction);
+        this.listenTo(import_actions21.default.sendQuickReply, this._onSendQuickReply);
         if (NylasEnv.isMainWindow()) {
           import_electron7.ipcRenderer.on("new-message", () => {
-            import_actions19.default.composeNewBlankDraft();
+            import_actions21.default.composeNewBlankDraft();
           });
         }
         this.listenTo(
-          import_actions19.default.finalizeDraftAndSyncbackMetadata,
+          import_actions21.default.finalizeDraftAndSyncbackMetadata,
           this._onFinalizeDraftAndSyncbackMetadata
         );
-        this.listenTo(import_actions19.default.sendDraft, this._onSendDraft);
-        this.listenTo(import_actions19.default.destroyDraft, this._onDestroyDraft);
-        this.listenTo(import_actions19.default.removeFile, this._onRemoveFile);
+        this.listenTo(import_actions21.default.sendDraft, this._onSendDraft);
+        this.listenTo(import_actions21.default.destroyDraft, this._onDestroyDraft);
+        this.listenTo(import_actions21.default.removeFile, this._onRemoveFile);
         NylasEnv.onBeforeUnload(this._onBeforeUnload);
         this._draftSessions = {};
         this._draftsSending = {};
@@ -244425,7 +244432,7 @@ var init_draft_store = __esm({
         index_default_default.each(this._draftSessions, (session) => {
           const draft = session.draft();
           if (draft?.pristine) {
-            import_actions19.default.queueTask(new DestroyDraftTask(session.draftClientId));
+            import_actions21.default.queueTask(new DestroyDraftTask(session.draftClientId));
           } else {
             promises2.push(session.changes.commit());
           }
@@ -244466,7 +244473,7 @@ ${draft.body}`;
           return database_store_default.inTransaction((t) => {
             return t.persistModel(draft);
           }).then(() => {
-            import_actions19.default.sendDraft(draft.clientId);
+            import_actions21.default.sendDraft(draft.clientId);
           });
         });
       };
@@ -244549,7 +244556,7 @@ ${draft.body}`;
           if (popout) {
             this._onPopoutDraftClientId(draft.clientId);
           } else {
-            import_actions19.default.focusDraft({ draftClientId: draft.clientId });
+            import_actions21.default.focusDraft({ draftClientId: draft.clientId });
           }
         }).thenReturn({ draftClientId: draft.clientId, draft });
       }
@@ -244615,7 +244622,7 @@ ${draft.body}`;
             }
           };
           paths.forEach((path14) => {
-            import_actions19.default.addAttachment({
+            import_actions21.default.addAttachment({
               filePath: path14,
               messageClientId: draftClientId,
               onUploadCreated: callback
@@ -244656,10 +244663,10 @@ ${draft.body}`;
         }
         task_queue_status_store_default.queue().forEach((task) => {
           if (task instanceof BaseDraftTask && task.draftClientId === draftClientId) {
-            import_actions19.default.dequeueTask(task.id);
+            import_actions21.default.dequeueTask(task.id);
           }
         });
-        import_actions19.default.queueTask(new DestroyDraftTask(draftClientId));
+        import_actions21.default.queueTask(new DestroyDraftTask(draftClientId));
         if (NylasEnv.isComposerWindow()) {
           NylasEnv.close();
         }
@@ -244673,14 +244680,14 @@ ${draft.body}`;
             Message.name,
             pluginId
           );
-          import_actions19.default.queueTask(task);
+          import_actions21.default.queueTask(task);
         }
       };
       _onSendDraft = (draftClientId, sendActionKey = DefaultSendActionKey2) => {
         this._draftsSending[draftClientId] = true;
         return this.sessionForClientId(draftClientId).then((session) => {
           return draft_helpers_default.finalizeDraft(session).then(() => {
-            import_actions19.default.queueTask(
+            import_actions21.default.queueTask(
               new perform_send_action_task_default(draftClientId, sendActionKey)
             );
             this._doneWithSession(session);
@@ -244738,11 +244745,11 @@ ${draft.body}`;
         }
       };
       _notifyUserOfError({ draftClientId, threadId, errorMessage, errorDetail }) {
-        const focusedThread = import_focused_content_store2.default.focused("thread");
+        const focusedThread = focused_content_store_default.focused("thread");
         if (threadId && focusedThread && focusedThread.id === threadId) {
           NylasEnv.showErrorDialog(errorMessage, { detail: errorDetail });
         } else {
-          import_actions19.default.composePopoutDraft(draftClientId, { errorMessage, errorDetail });
+          import_actions21.default.composePopoutDraft(draftClientId, { errorMessage, errorDetail });
         }
       }
     };
@@ -244760,22 +244767,22 @@ function createContainer(id) {
   document.body.appendChild(element);
   return element;
 }
-var import_react_dom24, import_nylas_store12, import_actions20, CONTAINER_ID, ModalStore, modal_store_default;
+var import_react_dom24, import_nylas_store14, import_actions22, CONTAINER_ID, ModalStore, modal_store_default;
 var init_modal_store = __esm({
   "src/flux/stores/modal-store.jsx"() {
     import_react_dom24 = __toESM(require_react_dom());
     init_nylas_component_kit();
-    import_nylas_store12 = __toESM(require_nylas_store());
-    import_actions20 = __toESM(require_actions());
+    import_nylas_store14 = __toESM(require_nylas_store());
+    import_actions22 = __toESM(require_actions());
     CONTAINER_ID = "nylas-modal-container";
-    ModalStore = class extends import_nylas_store12.default {
+    ModalStore = class extends import_nylas_store14.default {
       constructor(containerId = CONTAINER_ID) {
         super();
         this.isOpen = false;
         this.container = createContainer(containerId);
         import_react_dom24.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
-        this.listenTo(import_actions20.default.openModal, this.openModal);
-        this.listenTo(import_actions20.default.closeModal, this.closeModal);
+        this.listenTo(import_actions22.default.openModal, this.openModal);
+        this.listenTo(import_actions22.default.closeModal, this.closeModal);
       }
       isModalOpen = () => {
         return this.isOpen;
@@ -244825,22 +244832,22 @@ function createContainer2(id) {
   document.body.appendChild(element);
   return element;
 }
-var import_react_dom25, import_nylas_store13, import_actions21, CONTAINER_ID2, PopoverStore, popover_store_default;
+var import_react_dom25, import_nylas_store15, import_actions23, CONTAINER_ID2, PopoverStore, popover_store_default;
 var init_popover_store = __esm({
   "src/flux/stores/popover-store.jsx"() {
     import_react_dom25 = __toESM(require_react_dom());
-    import_nylas_store13 = __toESM(require_nylas_store());
-    import_actions21 = __toESM(require_actions());
+    import_nylas_store15 = __toESM(require_nylas_store());
+    import_actions23 = __toESM(require_actions());
     init_fixed_popover();
     CONTAINER_ID2 = "nylas-popover-container";
-    PopoverStore = class extends import_nylas_store13.default {
+    PopoverStore = class extends import_nylas_store15.default {
       constructor(containerId = CONTAINER_ID2) {
         super();
         this.isOpen = false;
         this.container = createContainer2(containerId);
         import_react_dom25.default.render(/* @__PURE__ */ React.createElement("span", null), this.container);
-        this.listenTo(import_actions21.default.openPopover, this.openPopover);
-        this.listenTo(import_actions21.default.closePopover, this.closePopover);
+        this.listenTo(import_actions23.default.openPopover, this.openPopover);
+        this.listenTo(import_actions23.default.closePopover, this.closePopover);
       }
       renderPopover = (child, props, callback) => {
         const popover = /* @__PURE__ */ React.createElement(fixed_popover_default, { ...props }, child);
@@ -244890,14 +244897,14 @@ var signature_store_exports = {};
 __export(signature_store_exports, {
   default: () => signature_store_default
 });
-var import_nylas_store14, DefaultSignatureText, SignatureStore, signature_store_default;
+var import_nylas_store16, DefaultSignatureText, SignatureStore, signature_store_default;
 var init_signature_store = __esm({
   "src/flux/stores/signature-store.js"() {
     init_nylas_exports();
-    import_nylas_store14 = __toESM(require_nylas_store());
+    import_nylas_store16 = __toESM(require_nylas_store());
     init_index_all();
     DefaultSignatureText = 'Sent from <a href="https://nylas.com?ref=n1">Nylas Mail</a>, the best free email app for work';
-    SignatureStore = class extends import_nylas_store14.default {
+    SignatureStore = class extends import_nylas_store16.default {
       activate() {
         this.unsubscribers = [
           Actions5.addSignature.listen(this._onAddSignature),
@@ -245027,18 +245034,18 @@ var metadata_store_exports = {};
 __export(metadata_store_exports, {
   default: () => metadata_store_default
 });
-var import_nylas_store15, import_actions22, MetadataStore, store5, metadata_store_default;
+var import_nylas_store17, import_actions24, MetadataStore, store5, metadata_store_default;
 var init_metadata_store = __esm({
   "src/flux/stores/metadata-store.js"() {
     init_index_all();
-    import_nylas_store15 = __toESM(require_nylas_store());
-    import_actions22 = __toESM(require_actions());
+    import_nylas_store17 = __toESM(require_nylas_store());
+    import_actions24 = __toESM(require_actions());
     init_database_store();
     init_syncback_metadata_task();
-    MetadataStore = class extends import_nylas_store15.default {
+    MetadataStore = class extends import_nylas_store17.default {
       constructor() {
         super();
-        this.listenTo(import_actions22.default.setMetadata, this._onSetMetadata);
+        this.listenTo(import_actions24.default.setMetadata, this._onSetMetadata);
       }
       _onSetMetadata(modelOrModels, pluginId, metadataValue) {
         const models2 = Array.isArray(modelOrModels) ? modelOrModels : [modelOrModels];
@@ -245063,7 +245070,7 @@ var init_metadata_store = __esm({
                 updated.constructor.name,
                 pluginId
               );
-              import_actions22.default.queueTask(task);
+              import_actions24.default.queueTask(task);
             }
           });
         });
@@ -245079,20 +245086,20 @@ var undo_redo_store_exports = {};
 __export(undo_redo_store_exports, {
   default: () => undo_redo_store_default
 });
-var import_nylas_store16, import_actions23, UndoRedoStore, undo_redo_store_default;
+var import_nylas_store18, import_actions25, UndoRedoStore, undo_redo_store_default;
 var init_undo_redo_store = __esm({
   "src/flux/stores/undo-redo-store.js"() {
     init_index_all();
-    import_nylas_store16 = __toESM(require_nylas_store());
-    import_actions23 = __toESM(require_actions());
-    UndoRedoStore = class extends import_nylas_store16.default {
+    import_nylas_store18 = __toESM(require_nylas_store());
+    import_actions25 = __toESM(require_actions());
+    UndoRedoStore = class extends import_nylas_store18.default {
       constructor() {
         super();
         this._undo = [];
         this._redo = [];
         this._mostRecentTasks = [];
-        this.listenTo(import_actions23.default.queueTask, this._onQueue);
-        this.listenTo(import_actions23.default.queueTasks, this._onQueue);
+        this.listenTo(import_actions25.default.queueTask, this._onQueue);
+        this.listenTo(import_actions25.default.queueTasks, this._onQueue);
         NylasEnv.commands.add(document.body, { "core:undo": this.undo });
         NylasEnv.commands.add(document.body, { "core:redo": this.redo });
       }
@@ -245126,7 +245133,7 @@ var init_undo_redo_store = __esm({
         this._mostRecentTasks = [];
         this.trigger();
         for (const task of topTasks) {
-          import_actions23.default.undoTaskId(task.id);
+          import_actions25.default.undoTaskId(task.id);
         }
         const redoTasks = topTasks.map((t) => {
           const redoTask = t.createIdenticalTask();
@@ -245140,7 +245147,7 @@ var init_undo_redo_store = __esm({
         if (!redoTasks) {
           return;
         }
-        import_actions23.default.queueTasks(redoTasks);
+        import_actions25.default.queueTasks(redoTasks);
       };
       getMostRecent = () => {
         return this._mostRecentTasks;
@@ -245157,23 +245164,24 @@ var init_undo_redo_store = __esm({
 });
 
 // src/flux/stores/mail-rules-store.js
-var require_mail_rules_store = __commonJS({
-  "src/flux/stores/mail-rules-store.js"(exports2, module2) {
-    var import_nylas_store26 = __toESM(require_nylas_store());
+var mail_rules_store_exports = {};
+__export(mail_rules_store_exports, {
+  default: () => mail_rules_store_default
+});
+var import_nylas_store19, import_rx_lite6, import_utils17, import_actions26, RulesJSONBlobKey, MailRulesStore2, mail_rules_store_default;
+var init_mail_rules_store = __esm({
+  "src/flux/stores/mail-rules-store.js"() {
+    import_nylas_store19 = __toESM(require_nylas_store());
     init_index_all();
-    var import_rx_lite7 = __toESM(require_rx_lite());
+    import_rx_lite6 = __toESM(require_rx_lite());
     init_database_store();
     init_task_queue_status_store();
-    var import_utils25 = __toESM(require_utils());
-    var import_actions35 = __toESM(require_actions());
-    var ReprocessMailRulesTask3 = (init_reprocess_mail_rules_task(), __toCommonJS(reprocess_mail_rules_task_exports)).default;
-    var {
-      ConditionMode,
-      ConditionTemplates: ConditionTemplates2,
-      ActionTemplates: ActionTemplates2
-    } = (init_mail_rules_templates(), __toCommonJS(mail_rules_templates_exports));
-    var RulesJSONBlobKey = "MailRules-V2";
-    var MailRulesStore3 = class extends import_nylas_store26.default {
+    init_reprocess_mail_rules_task();
+    import_utils17 = __toESM(require_utils());
+    import_actions26 = __toESM(require_actions());
+    init_mail_rules_templates();
+    RulesJSONBlobKey = "MailRules-V2";
+    MailRulesStore2 = class extends import_nylas_store19.default {
       constructor() {
         super();
         this.rules = this.rules.bind(this);
@@ -245187,15 +245195,15 @@ var require_mail_rules_store = __commonJS({
         this._saveMailRules = this._saveMailRules.bind(this);
         this._rules = [];
         const query = database_store_default.findJSONBlob(RulesJSONBlobKey);
-        this._subscription = import_rx_lite7.default.Observable.fromQuery(query).subscribe((rules) => {
+        this._subscription = import_rx_lite6.default.Observable.fromQuery(query).subscribe((rules) => {
           this._rules = rules != null ? rules : [];
           return this.trigger();
         });
-        this.listenTo(import_actions35.default.addMailRule, this._onAddMailRule);
-        this.listenTo(import_actions35.default.deleteMailRule, this._onDeleteMailRule);
-        this.listenTo(import_actions35.default.reorderMailRule, this._onReorderMailRule);
-        this.listenTo(import_actions35.default.updateMailRule, this._onUpdateMailRule);
-        this.listenTo(import_actions35.default.disableMailRule, this._onDisableMailRule);
+        this.listenTo(import_actions26.default.addMailRule, this._onAddMailRule);
+        this.listenTo(import_actions26.default.deleteMailRule, this._onDeleteMailRule);
+        this.listenTo(import_actions26.default.reorderMailRule, this._onReorderMailRule);
+        this.listenTo(import_actions26.default.updateMailRule, this._onUpdateMailRule);
+        this.listenTo(import_actions26.default.disableMailRule, this._onDisableMailRule);
       }
       rules() {
         return this._rules;
@@ -245224,11 +245232,11 @@ var require_mail_rules_store = __commonJS({
       }
       _onAddMailRule(properties) {
         const defaults3 = {
-          id: import_utils25.default.generateTempId(),
+          id: import_utils17.default.generateTempId(),
           name: "Untitled Rule",
-          conditionMode: ConditionMode.All,
-          conditions: [ConditionTemplates2[0].createDefaultInstance()],
-          actions: [ActionTemplates2[0].createDefaultInstance()],
+          conditionMode: __ConditionMode.All,
+          conditions: [__ConditionTemplates[0].createDefaultInstance()],
+          actions: [__ActionTemplates[0].createDefaultInstance()],
           disabled: false
         };
         if (!properties.accountId) {
@@ -245256,9 +245264,9 @@ var require_mail_rules_store = __commonJS({
         existing.disabledReason = reason;
         this._saveMailRules();
         for (var task of Array.from(
-          task_queue_status_store_default.tasksMatching(ReprocessMailRulesTask3, {})
+          task_queue_status_store_default.tasksMatching(ReprocessMailRulesTask, {})
         )) {
-          import_actions35.default.dequeueTask(task.id);
+          import_actions26.default.dequeueTask(task.id);
         }
         return this.trigger();
       }
@@ -245273,7 +245281,7 @@ var require_mail_rules_store = __commonJS({
         return this._saveMailRulesDebounced();
       }
     };
-    module2.exports = new MailRulesStore3();
+    mail_rules_store_default = new MailRulesStore2();
   }
 });
 
@@ -249030,7 +249038,7 @@ var file_upload_store_exports = {};
 __export(file_upload_store_exports, {
   default: () => file_upload_store_default
 });
-var import_node_fs4, import_node_path11, import_nylas_store17, import_actions24, import_utils17, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
+var import_node_fs4, import_node_path11, import_nylas_store20, import_actions27, import_utils18, mkdirpAsync, UPLOAD_DIR, MAX_UPLOAD_SIZE, Upload, FileUploadStore, file_upload_store_default;
 var init_file_upload_store = __esm({
   "src/flux/stores/file-upload-store.js"() {
     init_index_all();
@@ -249038,9 +249046,9 @@ var init_file_upload_store = __esm({
     import_node_path11 = __toESM(require("path"));
     init_esm2();
     init_mjs();
-    import_nylas_store17 = __toESM(require_nylas_store());
-    import_actions24 = __toESM(require_actions());
-    import_utils17 = __toESM(require_utils());
+    import_nylas_store20 = __toESM(require_nylas_store());
+    import_actions27 = __toESM(require_actions());
+    import_utils18 = __toESM(require_utils());
     init_message();
     init_draft_store();
     init_database_store();
@@ -249062,7 +249070,7 @@ var init_file_upload_store = __esm({
         this.uploadDir = uploadDir || UPLOAD_DIR;
         this.messageClientId = messageClientId;
         this.originPath = filePath;
-        this.id = id || import_utils17.default.generateTempId();
+        this.id = id || import_utils18.default.generateTempId();
         this.filename = import_node_path11.default.basename(filePath);
         this.targetDir = import_node_path11.default.join(this.uploadDir, this.messageClientId, this.id);
         this.targetPath = import_node_path11.default.join(this.targetDir, this.filename);
@@ -249073,18 +249081,18 @@ var init_file_upload_store = __esm({
         return ext.slice(1);
       }
     };
-    FileUploadStore = class extends import_nylas_store17.default {
+    FileUploadStore = class extends import_nylas_store20.default {
       Upload = Upload;
       constructor() {
         super();
-        this.listenTo(import_actions24.default.addAttachment, this._onAddAttachment);
-        this.listenTo(import_actions24.default.selectAttachment, this._onSelectAttachment);
-        this.listenTo(import_actions24.default.removeAttachment, this._onRemoveAttachment);
+        this.listenTo(import_actions27.default.addAttachment, this._onAddAttachment);
+        this.listenTo(import_actions27.default.selectAttachment, this._onSelectAttachment);
+        this.listenTo(import_actions27.default.removeAttachment, this._onRemoveAttachment);
         this.listenTo(database_store_default, this._onDataChanged);
         mkdirp.sync(UPLOAD_DIR);
         if (NylasEnv.isMainWindow() || NylasEnv.inSpecMode()) {
           this.listenTo(
-            import_actions24.default.ensureMessageInSentSuccess,
+            import_actions27.default.ensureMessageInSentSuccess,
             ({ messageClientId }) => {
               this._deleteUploadsForClientId(messageClientId);
             }
@@ -249199,7 +249207,7 @@ ${err.message}`
               pathsToOpen = [pathsToOpen];
             }
             pathsToOpen.forEach(
-              (filePath) => import_actions24.default.addAttachment({ messageClientId, filePath })
+              (filePath) => import_actions27.default.addAttachment({ messageClientId, filePath })
             );
           }
         );
@@ -249311,29 +249319,29 @@ var feature_usage_store_exports = {};
 __export(feature_usage_store_exports, {
   default: () => feature_usage_store_default
 });
-var import_rx_lite4, import_nylas_store18, import_actions25, NoProAccess, FeatureUsageStore, feature_usage_store_default;
+var import_rx_lite7, import_nylas_store21, import_actions28, NoProAccess, FeatureUsageStore, feature_usage_store_default;
 var init_feature_usage_store = __esm({
   "src/flux/stores/feature-usage-store.jsx"() {
-    import_rx_lite4 = __toESM(require_rx_lite());
-    import_nylas_store18 = __toESM(require_nylas_store());
+    import_rx_lite7 = __toESM(require_rx_lite());
+    import_nylas_store21 = __toESM(require_nylas_store());
     init_nylas_component_kit();
-    import_actions25 = __toESM(require_actions());
+    import_actions28 = __toESM(require_actions());
     init_identity_store();
     init_task_queue_status_store();
     init_send_feature_usage_event_task();
     NoProAccess = class extends Error {
     };
-    FeatureUsageStore = class extends import_nylas_store18.default {
+    FeatureUsageStore = class extends import_nylas_store21.default {
       constructor() {
         super();
         this._waitForModalClose = [];
         this.NoProAccess = NoProAccess;
       }
       activate() {
-        this._disp = import_rx_lite4.default.Observable.fromStore(identity_store_default).subscribe(() => {
+        this._disp = import_rx_lite7.default.Observable.fromStore(identity_store_default).subscribe(() => {
           this.trigger();
         });
-        this._usub = import_actions25.default.closeModal.listen(this._onModalClose);
+        this._usub = import_actions28.default.closeModal.listen(this._onModalClose);
       }
       deactivate() {
         this._disp.dispose();
@@ -249344,7 +249352,7 @@ var init_feature_usage_store = __esm({
           return this._markFeatureUsed(feature);
         }
         const { headerText, rechargeText } = this._modalText(feature, lexicon);
-        import_actions25.default.openModal({
+        import_actions28.default.openModal({
           component: /* @__PURE__ */ React.createElement(
             void 0,
             {
@@ -249418,7 +249426,7 @@ var init_feature_usage_store = __esm({
       }
       async _markFeatureUsed(featureName) {
         const task = new SendFeatureUsageEventTask(featureName);
-        import_actions25.default.queueTask(task);
+        import_actions28.default.queueTask(task);
         await task_queue_status_store_default.waitForPerformLocal(task);
         const feat = identity_store_default.identity().feature_usage[featureName];
         return feat.quota - feat.used_in_period;
@@ -254835,7 +254843,7 @@ __export(file_download_store_exports, {
   Download: () => Download,
   default: () => file_download_store_default
 });
-var import_bluebird, import_node_os, import_node_fs5, import_node_path12, import_electron8, import_remote6, import_request_progress, import_nylas_store19, import_actions26, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
+var import_bluebird, import_node_os, import_node_fs5, import_node_path12, import_electron8, import_remote6, import_request_progress, import_nylas_store22, import_actions29, mkdirpAsync2, State2, NonPreviewableExtensions, THUMBNAIL_WIDTH, Download, FileDownloadStore, file_download_store_default;
 var init_file_download_store = __esm({
   "src/flux/stores/file-download-store.js"() {
     import_bluebird = __toESM(require_bluebird());
@@ -254848,8 +254856,8 @@ var init_file_download_store = __esm({
     import_remote6 = __toESM(require_at_electron_remote());
     init_mjs();
     import_request_progress = __toESM(require_request_progress());
-    import_nylas_store19 = __toESM(require_nylas_store());
-    import_actions26 = __toESM(require_actions());
+    import_nylas_store22 = __toESM(require_nylas_store());
+    import_actions29 = __toESM(require_actions());
     init_nylas_api();
     init_nylas_api_request();
     mkdirpAsync2 = (dir) => import_bluebird.default.resolve(mkdirp(dir));
@@ -254945,7 +254953,7 @@ var init_file_download_store = __esm({
           let startRequest = null;
           const before2 = Date.now();
           const onFailed = (err) => {
-            import_actions26.default.recordPerfMetric({
+            import_actions29.default.recordPerfMetric({
               action: "file-download",
               accountId: this.accountId,
               actionTimeMs: Date.now() - before2,
@@ -254966,7 +254974,7 @@ var init_file_download_store = __esm({
             startRequest();
           };
           const onSuccess = () => {
-            import_actions26.default.recordPerfMetric({
+            import_actions29.default.recordPerfMetric({
               action: "file-download",
               accountId: this.accountId,
               actionTimeMs: Date.now() - before2,
@@ -255023,14 +255031,14 @@ var init_file_download_store = __esm({
         }
       }
     };
-    FileDownloadStore = class extends import_nylas_store19.default {
+    FileDownloadStore = class extends import_nylas_store22.default {
       constructor() {
         super();
-        this.listenTo(import_actions26.default.fetchFile, this._fetch);
-        this.listenTo(import_actions26.default.fetchAndOpenFile, this._fetchAndOpen);
-        this.listenTo(import_actions26.default.fetchAndSaveFile, this._fetchAndSave);
-        this.listenTo(import_actions26.default.fetchAndSaveAllFiles, this._fetchAndSaveAll);
-        this.listenTo(import_actions26.default.abortFetchFile, this._abortFetchFile);
+        this.listenTo(import_actions29.default.fetchFile, this._fetch);
+        this.listenTo(import_actions29.default.fetchAndOpenFile, this._fetchAndOpen);
+        this.listenTo(import_actions29.default.fetchAndSaveFile, this._fetchAndSave);
+        this.listenTo(import_actions29.default.fetchAndSaveAllFiles, this._fetchAndSaveAll);
+        this.listenTo(import_actions29.default.abortFetchFile, this._abortFetchFile);
         this._downloads = {};
         this._filePreviewPaths = {};
         this._downloadDirectory = import_node_path12.default.join(
@@ -267142,15 +267150,15 @@ var online_status_store_exports = {};
 __export(online_status_store_exports, {
   default: () => online_status_store_default
 });
-var import_nylas_store20, import_actions27, CHECK_ONLINE_INTERVAL, OnlineStatusStore, online_status_store_default;
+var import_nylas_store23, import_actions30, CHECK_ONLINE_INTERVAL, OnlineStatusStore, online_status_store_default;
 var init_online_status_store = __esm({
   "src/flux/stores/online-status-store.js"() {
     init_is_online();
-    import_nylas_store20 = __toESM(require_nylas_store());
+    import_nylas_store23 = __toESM(require_nylas_store());
     init_isomorphic_core();
-    import_actions27 = __toESM(require_actions());
+    import_actions30 = __toESM(require_actions());
     CHECK_ONLINE_INTERVAL = 30 * 1e3;
-    OnlineStatusStore = class extends import_nylas_store20.default {
+    OnlineStatusStore = class extends import_nylas_store23.default {
       constructor() {
         super();
         this._isOnline = true;
@@ -267160,7 +267168,7 @@ var init_online_status_store = __esm({
         this._backoffScheduler = new ExponentialBackoffScheduler({ jitter: false });
         this.setupEmitter();
         if (NylasEnv.isMainWindow()) {
-          import_actions27.default.checkOnlineStatus.listen(() => this._checkOnlineStatus());
+          import_actions30.default.checkOnlineStatus.listen(() => this._checkOnlineStatus());
           this._checkOnlineStatus();
         }
       }
@@ -272156,16 +272164,16 @@ var preferences_ui_store_exports = {};
 __export(preferences_ui_store_exports, {
   default: () => preferences_ui_store_default
 });
-var import_electron9, import_nylas_store21, import_immutable, import_workspace_store2, import_actions28, MAIN_TAB_ITEM_ID, TabItem, PreferencesUIStore, preferences_ui_store_default;
+var import_electron9, import_nylas_store24, import_immutable, import_workspace_store3, import_actions31, MAIN_TAB_ITEM_ID, TabItem, PreferencesUIStore, preferences_ui_store_default;
 var init_preferences_ui_store = __esm({
   "src/flux/stores/preferences-ui-store.js"() {
     import_electron9 = require("electron");
     init_index_all();
-    import_nylas_store21 = __toESM(require_nylas_store());
+    import_nylas_store24 = __toESM(require_nylas_store());
     import_immutable = __toESM(require_immutable());
-    import_workspace_store2 = __toESM(require_workspace_store());
+    import_workspace_store3 = __toESM(require_workspace_store());
     init_focused_perspective_store();
-    import_actions28 = __toESM(require_actions());
+    import_actions31 = __toESM(require_actions());
     MAIN_TAB_ITEM_ID = "General";
     TabItem = class {
       constructor(opts = {}) {
@@ -272173,7 +272181,7 @@ var init_preferences_ui_store = __esm({
         index_default_default.extend(this, opts);
       }
     };
-    PreferencesUIStore = class extends import_nylas_store21.default {
+    PreferencesUIStore = class extends import_nylas_store24.default {
       constructor() {
         super();
         const perspective = focused_perspective_store_default.current();
@@ -272190,13 +272198,13 @@ var init_preferences_ui_store = __esm({
       }
       setupListeners() {
         if (NylasEnv.isMainWindow()) {
-          this.listenTo(import_actions28.default.openPreferences, this.openPreferences);
+          this.listenTo(import_actions31.default.openPreferences, this.openPreferences);
           import_electron9.ipcRenderer.on("open-preferences", this.openPreferences);
-          this.listenTo(import_actions28.default.switchPreferencesTab, this.switchPreferencesTab);
+          this.listenTo(import_actions31.default.switchPreferencesTab, this.switchPreferencesTab);
         }
         NylasEnv.commands.add(document.body, "core:show-keybindings", () => {
-          import_actions28.default.openPreferences();
-          import_actions28.default.switchPreferencesTab("Shortcuts");
+          import_actions31.default.openPreferences();
+          import_actions31.default.switchPreferencesTab("Shortcuts");
         });
       }
       tabs() {
@@ -272207,8 +272215,8 @@ var init_preferences_ui_store = __esm({
       }
       openPreferences = () => {
         import_electron9.ipcRenderer.send("command", "application:show-main-window");
-        if (import_workspace_store2.default.topSheet() !== import_workspace_store2.default.Sheet.Preferences) {
-          import_actions28.default.pushSheet(import_workspace_store2.default.Sheet.Preferences);
+        if (import_workspace_store3.default.topSheet() !== import_workspace_store3.default.Sheet.Preferences) {
+          import_actions31.default.pushSheet(import_workspace_store3.default.Sheet.Preferences);
         }
       };
       switchPreferencesTab = (tabId, options2 = {}) => {
@@ -272255,24 +272263,24 @@ var focused_contacts_store_exports = {};
 __export(focused_contacts_store_exports, {
   default: () => focused_contacts_store_default
 });
-var import_rx_lite5, import_nylas_store22, import_utils18, import_actions29, FocusedContactsStore, focused_contacts_store_default;
+var import_rx_lite8, import_nylas_store25, import_utils19, import_actions32, FocusedContactsStore, focused_contacts_store_default;
 var init_focused_contacts_store = __esm({
   "src/flux/stores/focused-contacts-store.js"() {
     init_index_all();
-    import_rx_lite5 = __toESM(require_rx_lite());
-    import_nylas_store22 = __toESM(require_nylas_store());
-    import_utils18 = __toESM(require_utils());
+    import_rx_lite8 = __toESM(require_rx_lite());
+    import_nylas_store25 = __toESM(require_nylas_store());
+    import_utils19 = __toESM(require_utils());
     init_thread();
-    import_actions29 = __toESM(require_actions());
+    import_actions32 = __toESM(require_actions());
     init_contact();
     init_message_store();
     init_account_store();
     init_database_store();
-    FocusedContactsStore = class extends import_nylas_store22.default {
+    FocusedContactsStore = class extends import_nylas_store25.default {
       constructor() {
         super();
         this.listenTo(message_store_default, this._onMessageStoreChanged);
-        this.listenTo(import_actions29.default.focusContact, this._onFocusContact);
+        this.listenTo(import_actions32.default.focusContact, this._onFocusContact);
         this._clearCurrentParticipants();
         this._triggerLater = index_default_default.debounce(this.trigger, 250);
         this._loadCurrentParticipantThreads = index_default_default.debounce(
@@ -272329,7 +272337,7 @@ var init_focused_contacts_store = __esm({
             email: contact.email,
             name: contact.name
           });
-          this._unsubFocusedContact = import_rx_lite5.default.Observable.fromQuery(query).subscribe(
+          this._unsubFocusedContact = import_rx_lite8.default.Observable.fromQuery(query).subscribe(
             (match) => {
               this._currentFocusedContact = match || contact;
               return this._triggerLater();
@@ -272386,7 +272394,7 @@ var init_focused_contacts_store = __esm({
         if (contact.email.trim().length === 0) {
           return;
         }
-        const key = import_utils18.default.toEquivalentEmailForm(contact.email);
+        const key = import_utils19.default.toEquivalentEmailForm(contact.email);
         if (!this._contactScores[key]) {
           this._contactScores[key] = {
             contact,
@@ -272403,8 +272411,8 @@ var init_focused_contacts_store = __esm({
         if (email === myEmail) {
           penalties += score;
         }
-        const notCommonDomain = !import_utils18.default.emailHasCommonDomain(myEmail);
-        const sameDomain = import_utils18.default.emailsHaveSameDomain(myEmail, email);
+        const notCommonDomain = !import_utils19.default.emailHasCommonDomain(myEmail);
+        const sameDomain = import_utils19.default.emailsHaveSameDomain(myEmail, email);
         if (notCommonDomain && sameDomain) {
           penalties += score * 0.9;
         }
@@ -272420,11 +272428,11 @@ var delta_processor_exports = {};
 __export(delta_processor_exports, {
   default: () => delta_processor_default
 });
-var import_actions30, DeltaProcessor, delta_processor_default;
+var import_actions33, DeltaProcessor, delta_processor_default;
 var init_delta_processor = __esm({
   "src/services/delta-processor.js"() {
     init_index_all();
-    import_actions30 = __toESM(require_actions());
+    import_actions33 = __toESM(require_actions());
     init_thread();
     init_message();
     init_database_store();
@@ -272437,7 +272445,7 @@ var init_delta_processor = __esm({
         try {
           const deltas = await this._decorateDeltas(rawDeltas);
           if (source === "n1Cloud") {
-            import_actions30.default.longPollReceivedRawDeltas(deltas);
+            import_actions33.default.longPollReceivedRawDeltas(deltas);
           }
           const { modelDeltas, accountDeltas, metadataDeltas } = this._extractDeltaTypes(deltas);
           this._handleAccountDeltas(accountDeltas);
@@ -272450,7 +272458,7 @@ var init_delta_processor = __esm({
           console.error("DeltaProcessor: Process failed.", err);
           NylasEnv.reportError(err);
         } finally {
-          import_actions30.default.longPollProcessedDeltas();
+          import_actions33.default.longPollProcessedDeltas();
         }
       }
       /**
@@ -272489,11 +272497,11 @@ var init_delta_processor = __esm({
         const { modify } = this._clusterDeltas(accountDeltas);
         if (!modify.account) return;
         for (const accountJSON of index_default_default.values(modify.account)) {
-          import_actions30.default.updateAccount(accountJSON.account_id, {
+          import_actions33.default.updateAccount(accountJSON.account_id, {
             syncState: accountJSON.sync_state
           });
           if (accountJSON.sync_state !== "running") {
-            import_actions30.default.recordUserEvent("Account Sync Errored", {
+            import_actions33.default.recordUserEvent("Account Sync Errored", {
               accountId: accountJSON.account_id,
               syncState: accountJSON.sync_state
             });
@@ -272507,7 +272515,7 @@ var init_delta_processor = __esm({
         if (syncbackRequests.length === 0) {
           return;
         }
-        import_actions30.default.didReceiveSyncbackRequestDeltas(syncbackRequests);
+        import_actions33.default.didReceiveSyncbackRequestDeltas(syncbackRequests);
       }
       async _saveModels(modelDeltas) {
         const { create: create3, modify, destroy } = this._clusterDeltas(modelDeltas);
@@ -272669,7 +272677,7 @@ var init_delta_processor = __esm({
         if (newUnread.length === 0) {
           return;
         }
-        import_actions30.default.onNewMailDeltas(created);
+        import_actions33.default.onNewMailDeltas(created);
       }
       _handleDestroyDelta(delta) {
         const klass = apiObjectToClassMap[delta.object];
@@ -272691,14 +272699,14 @@ var init_delta_processor = __esm({
 });
 
 // src/services/delta-streaming-connection.js
-var import_node_module24, import_actions31, import_meta25, nodeRequire25, MAX_RETRY_DELAY, BASE_RETRY_DELAY, DeltaStreamingConnection, delta_streaming_connection_default;
+var import_node_module24, import_actions34, import_meta25, nodeRequire25, MAX_RETRY_DELAY, BASE_RETRY_DELAY, DeltaStreamingConnection, delta_streaming_connection_default;
 var init_delta_streaming_connection = __esm({
   "src/services/delta-streaming-connection.js"() {
     import_node_module24 = require("module");
     init_index_all();
     init_isomorphic_core();
     init_n1_cloud_api();
-    import_actions31 = __toESM(require_actions());
+    import_actions34 = __toESM(require_actions());
     init_errors2();
     init_account();
     init_delta_processor();
@@ -272782,7 +272790,7 @@ var init_delta_streaming_connection = __esm({
       }
       _setupListeners() {
         this._unsubscribers = [
-          import_actions31.default.retryDeltaConnection.listen(this.restart, this),
+          import_actions34.default.retryDeltaConnection.listen(this.restart, this),
           online_status_store_default.listen(this._onOnlineStatusChanged, this),
           identity_store_default.listen(this._onIdentityChanged, this)
         ];
@@ -272813,7 +272821,7 @@ var init_delta_streaming_connection = __esm({
         this._writeStateDebounced();
         const { Closed, Connected } = nylas_long_connection_default.Status;
         if (status === Connected) {
-          import_actions31.default.updateAccount(this._account.id, {
+          import_actions34.default.updateAccount(this._account.id, {
             n1CloudState: Account.N1_CLOUD_STATE_RUNNING
           });
         }
@@ -272856,7 +272864,7 @@ var init_delta_streaming_connection = __esm({
           NylasEnv.reportError(err);
         }
         if (err.statusCode === 401) {
-          import_actions31.default.updateAccount(this._account.id, {
+          import_actions34.default.updateAccount(this._account.id, {
             n1CloudState: Account.N1_CLOUD_STATE_AUTH_FAILED
           });
         }
@@ -272911,16 +272919,16 @@ var delta_connection_store_exports = {};
 __export(delta_connection_store_exports, {
   default: () => delta_connection_store_default
 });
-var import_rx_lite6, import_nylas_store23, DeltaConnectionStore, delta_connection_store_default;
+var import_rx_lite9, import_nylas_store26, DeltaConnectionStore, delta_connection_store_default;
 var init_delta_connection_store = __esm({
   "src/flux/stores/delta-connection-store.js"() {
     init_index_all();
-    import_rx_lite6 = __toESM(require_rx_lite());
-    import_nylas_store23 = __toESM(require_nylas_store());
+    import_rx_lite9 = __toESM(require_rx_lite());
+    import_nylas_store26 = __toESM(require_nylas_store());
     init_account_store();
     init_database_store();
     init_delta_streaming_connection();
-    DeltaConnectionStore = class extends import_nylas_store23.default {
+    DeltaConnectionStore = class extends import_nylas_store26.default {
       constructor() {
         super();
         this._unsubscribers = [];
@@ -272998,7 +273006,7 @@ var init_delta_connection_store = __esm({
           const query = database_store_default.findJSONBlob(
             `DeltaStreamingConnectionStatus:${accountId}`
           );
-          const subscription = import_rx_lite6.default.Observable.fromQuery(query).subscribe((json2) => {
+          const subscription = import_rx_lite9.default.Observable.fromQuery(query).subscribe((json2) => {
             this._updateState(accountId, { ...json2 });
           });
           this._connectionStatusSubscriptionsByAccountId.set(
@@ -273046,16 +273054,16 @@ var thread_list_actions_store_exports = {};
 __export(thread_list_actions_store_exports, {
   default: () => thread_list_actions_store_default
 });
-var import_nylas_store24, import_actions32, import_utils19, ThreadListActionsStore, thread_list_actions_store_default;
+var import_nylas_store27, import_actions35, import_utils20, ThreadListActionsStore, thread_list_actions_store_default;
 var init_thread_list_actions_store = __esm({
   "src/flux/stores/thread-list-actions-store.js"() {
-    import_nylas_store24 = __toESM(require_nylas_store());
-    import_actions32 = __toESM(require_actions());
-    import_utils19 = __toESM(require_utils());
+    import_nylas_store27 = __toESM(require_nylas_store());
+    import_actions35 = __toESM(require_actions());
+    import_utils20 = __toESM(require_utils());
     init_task_factory();
     init_account_store();
     init_focused_perspective_store();
-    ThreadListActionsStore = class extends import_nylas_store24.default {
+    ThreadListActionsStore = class extends import_nylas_store27.default {
       constructor() {
         super();
         this._timers = /* @__PURE__ */ new Map();
@@ -273064,26 +273072,26 @@ var init_thread_list_actions_store = __esm({
         if (!NylasEnv.isMainWindow()) {
           return;
         }
-        this.listenTo(import_actions32.default.archiveThreads, this._onArchiveThreads);
-        this.listenTo(import_actions32.default.trashThreads, this._onTrashThreads);
-        this.listenTo(import_actions32.default.markAsSpamThreads, this._onMarkAsSpamThreads);
-        this.listenTo(import_actions32.default.toggleStarredThreads, this._onToggleStarredThreads);
-        this.listenTo(import_actions32.default.toggleUnreadThreads, this._onToggleUnreadThreads);
-        this.listenTo(import_actions32.default.setUnreadThreads, this._onSetUnreadThreads);
-        this.listenTo(import_actions32.default.removeThreadsFromView, this._onRemoveThreadsFromView);
+        this.listenTo(import_actions35.default.archiveThreads, this._onArchiveThreads);
+        this.listenTo(import_actions35.default.trashThreads, this._onTrashThreads);
+        this.listenTo(import_actions35.default.markAsSpamThreads, this._onMarkAsSpamThreads);
+        this.listenTo(import_actions35.default.toggleStarredThreads, this._onToggleStarredThreads);
+        this.listenTo(import_actions35.default.toggleUnreadThreads, this._onToggleUnreadThreads);
+        this.listenTo(import_actions35.default.setUnreadThreads, this._onSetUnreadThreads);
+        this.listenTo(import_actions35.default.removeThreadsFromView, this._onRemoveThreadsFromView);
         this.listenTo(
-          import_actions32.default.moveThreadsToPerspective,
+          import_actions35.default.moveThreadsToPerspective,
           this._onMoveThreadsToPerspective
         );
         this.listenTo(
-          import_actions32.default.removeCategoryFromThreads,
+          import_actions35.default.removeCategoryFromThreads,
           this._onRemoveCategoryFromThreads
         );
         this.listenTo(
-          import_actions32.default.applyCategoryToThreads,
+          import_actions35.default.applyCategoryToThreads,
           this._onApplyCategoryToThreads
         );
-        this.listenTo(import_actions32.default.threadListDidUpdate, this._onThreadListDidUpdate);
+        this.listenTo(import_actions35.default.threadListDidUpdate, this._onThreadListDidUpdate);
       }
       deactivate() {
         this.stopListeningToAll();
@@ -273098,7 +273106,7 @@ var init_thread_list_actions_store = __esm({
           );
           if (threadsHaveBeenRemoved) {
             const actionTimeMs = NylasEnv.timer.stop(timerId, updatedAt);
-            import_actions32.default.recordPerfMetric({
+            import_actions35.default.recordPerfMetric({
               action,
               source,
               provider,
@@ -273128,7 +273136,7 @@ var init_thread_list_actions_store = __esm({
           );
         }
         const tIds = threadIds || threads.map((t) => t.id);
-        const timerId = import_utils19.default.generateTempId();
+        const timerId = import_utils20.default.generateTempId();
         let accounts;
         if (!threads) {
           accounts = accountIds.map((id) => account_store_default.accountForId(id)).filter(Boolean);
@@ -273165,7 +273173,7 @@ var init_thread_list_actions_store = __esm({
           targetCategory: "archive"
         });
         const tasks = task_factory_default.tasksForArchiving({ threads, source });
-        import_actions32.default.queueTasks(tasks);
+        import_actions35.default.queueTasks(tasks);
       };
       _onTrashThreads = ({ threads, source } = {}) => {
         if (!threads) {
@@ -273181,7 +273189,7 @@ var init_thread_list_actions_store = __esm({
           targetCategory: "trash"
         });
         const tasks = task_factory_default.tasksForMovingToTrash({ threads, source });
-        import_actions32.default.queueTasks(tasks);
+        import_actions35.default.queueTasks(tasks);
       };
       _onMarkAsSpamThreads = ({ threads, source } = {}) => {
         if (!threads) {
@@ -273197,7 +273205,7 @@ var init_thread_list_actions_store = __esm({
           targetCategory: "spam"
         });
         const tasks = task_factory_default.tasksForMarkingAsSpam({ threads, source });
-        import_actions32.default.queueTasks(tasks);
+        import_actions35.default.queueTasks(tasks);
       };
       _onToggleStarredThreads = ({ threads, source } = {}) => {
         if (!threads) {
@@ -273207,7 +273215,7 @@ var init_thread_list_actions_store = __esm({
           return;
         }
         const task = task_factory_default.taskForInvertingStarred({ threads, source });
-        import_actions32.default.queueTask(task);
+        import_actions35.default.queueTask(task);
       };
       _onToggleUnreadThreads = ({ threads, canBeUndone, source } = {}) => {
         if (!threads) {
@@ -273221,7 +273229,7 @@ var init_thread_list_actions_store = __esm({
           source,
           canBeUndone
         });
-        import_actions32.default.queueTask(task);
+        import_actions35.default.queueTask(task);
       };
       _onSetUnreadThreads = ({ threads, unread, canBeUndone, source } = {}) => {
         if (!threads) {
@@ -273236,7 +273244,7 @@ var init_thread_list_actions_store = __esm({
           source,
           canBeUndone
         });
-        import_actions32.default.queueTask(task);
+        import_actions35.default.queueTask(task);
       };
       _onRemoveThreadsFromView = ({ threads, ruleset, source } = {}) => {
         if (!threads) {
@@ -273258,7 +273266,7 @@ var init_thread_list_actions_store = __esm({
             action: "remove-threads-from-list"
           });
         }
-        import_actions32.default.queueTasks(tasks);
+        import_actions35.default.queueTasks(tasks);
       };
       _onMoveThreadsToPerspective = ({
         targetPerspective,
@@ -273299,7 +273307,7 @@ var init_thread_list_actions_store = __esm({
           source,
           category: categoryToApply
         });
-        import_actions32.default.queueTask(task);
+        import_actions35.default.queueTask(task);
       };
       _onRemoveCategoryFromThreads = ({
         threads,
@@ -273325,7 +273333,7 @@ var init_thread_list_actions_store = __esm({
           source,
           category: categoryToRemove
         });
-        import_actions32.default.queueTask(task);
+        import_actions35.default.queueTask(task);
       };
     };
     thread_list_actions_store_default = new ThreadListActionsStore();
@@ -273407,13 +273415,13 @@ function InflatesDraftClientId(ComposedComponent) {
         return;
       }
       if (this.state.draft.pristine) {
-        import_actions33.default.destroyDraft(this.props.draftClientId);
+        import_actions36.default.destroyDraft(this.props.draftClientId);
       }
     }
     // Returns a promise for use in composer/main.es6, to show the window
     // once the composer is rendered and focused.
     focus() {
-      return import_utils20.default.waitFor(() => this.composedRef?.current).then(() => this.composedRef?.current.focus()).catch(() => {
+      return import_utils21.default.waitFor(() => this.composedRef?.current).then(() => this.composedRef?.current.focus()).catch(() => {
       });
     }
     render() {
@@ -273431,14 +273439,14 @@ function InflatesDraftClientId(ComposedComponent) {
     }
   };
 }
-var import_react57, import_prop_types62, import_actions33, import_utils20, inflates_draft_client_id_default;
+var import_react57, import_prop_types62, import_actions36, import_utils21, inflates_draft_client_id_default;
 var init_inflates_draft_client_id = __esm({
   "src/decorators/inflates-draft-client-id.jsx"() {
     import_react57 = __toESM(require_react());
     import_prop_types62 = __toESM(require_prop_types());
     init_draft_store();
-    import_actions33 = __toESM(require_actions());
-    import_utils20 = __toESM(require_utils());
+    import_actions36 = __toESM(require_actions());
+    import_utils21 = __toESM(require_utils());
     inflates_draft_client_id_default = InflatesDraftClientId;
   }
 });
@@ -273791,11 +273799,11 @@ var priority_ui_coordinator_exports = {};
 __export(priority_ui_coordinator_exports, {
   default: () => priority_ui_coordinator_default
 });
-var import_utils21, generateTempId2, PriorityUICoordinator, priority_ui_coordinator_default;
+var import_utils22, generateTempId2, PriorityUICoordinator, priority_ui_coordinator_default;
 var init_priority_ui_coordinator = __esm({
   "src/priority-ui-coordinator.js"() {
-    import_utils21 = __toESM(require_utils());
-    ({ generateTempId: generateTempId2 } = import_utils21.default.default || import_utils21.default);
+    import_utils22 = __toESM(require_utils());
+    ({ generateTempId: generateTempId2 } = import_utils22.default.default || import_utils22.default);
     PriorityUICoordinator = class {
       constructor() {
         this.tasks = {};
@@ -274146,16 +274154,16 @@ __export(fs_utils_exports, {
   atomicWriteFileSync: () => atomicWriteFileSync
 });
 function atomicWriteFileSync(filepath, content) {
-  const randomId = import_utils22.default.generateTempId();
+  const randomId = import_utils23.default.generateTempId();
   const backupPath = `${filepath}.${randomId}.bak`;
   import_node_fs6.default.writeFileSync(backupPath, content);
   import_node_fs6.default.renameSync(backupPath, filepath);
 }
-var import_node_fs6, import_utils22;
+var import_node_fs6, import_utils23;
 var init_fs_utils = __esm({
   "src/fs-utils.js"() {
     import_node_fs6 = __toESM(require("fs"));
-    import_utils22 = __toESM(require_utils());
+    import_utils23 = __toESM(require_utils());
   }
 });
 
@@ -276468,7 +276476,7 @@ var require_contenteditable = __commonJS({
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var React51 = require_react();
     var ReactDOM26 = require_react_dom();
-    var { Utils: Utils24, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Utils: Utils25, DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var { KeyCommandsRegion: KeyCommandsRegion2 } = (init_nylas_component_kit(), __toCommonJS(nylas_component_kit_exports));
     var FloatingToolbar = require_floating_toolbar();
     var EditorAPI2 = require_editor_api();
@@ -276623,7 +276631,7 @@ var require_contenteditable = __commonJS({
       // When we have a composition event in progress, we should not update
       // because otherwise our composition event will be blown away.
       shouldComponentUpdate(nextProps, nextState) {
-        return !this._inCompositionEvent && (!Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state));
+        return !this._inCompositionEvent && (!Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state));
       }
       componentDidUpdate() {
         if (this._shouldRestoreSelectionOnUpdate()) {
@@ -277181,14 +277189,14 @@ var overlaid_components_exports = {};
 __export(overlaid_components_exports, {
   default: () => OverlaidComponents
 });
-var import_react60, import_prop_types64, import_react_dom26, import_utils23, import_contenteditable, MUTATION_CONFIG, OverlaidComponents;
+var import_react60, import_prop_types64, import_react_dom26, import_utils24, import_contenteditable, MUTATION_CONFIG, OverlaidComponents;
 var init_overlaid_components = __esm({
   "src/components/overlaid-components/overlaid-components.jsx"() {
     init_index_all();
     import_react60 = __toESM(require_react());
     import_prop_types64 = __toESM(require_prop_types());
     import_react_dom26 = __toESM(require_react_dom());
-    import_utils23 = __toESM(require_utils());
+    import_utils24 = __toESM(require_utils());
     init_custom_contenteditable_components();
     import_contenteditable = __toESM(require_contenteditable());
     init_anchor_constants();
@@ -277216,7 +277224,7 @@ var init_overlaid_components = __esm({
         return JSON.stringify(props).replace(/"/g, "&quot;");
       }
       static buildAnchorTag(componentKey, props = {}, existingId = null, style = "") {
-        const overlayId = existingId || import_utils23.default.generateTempId();
+        const overlayId = existingId || import_utils24.default.generateTempId();
         let className = `${import_contenteditable.IgnoreMutationClassName} ${ANCHOR_CLASS}`;
         if (props.className) {
           className = `${className} ${props.className}`;
@@ -277980,11 +277988,11 @@ var battery_status_manager_exports = {};
 __export(battery_status_manager_exports, {
   default: () => battery_status_manager_default
 });
-var import_moment_timezone3, import_actions34, BatteryStatusManager, manager, battery_status_manager_default;
+var import_moment_timezone3, import_actions37, BatteryStatusManager, manager, battery_status_manager_default;
 var init_battery_status_manager = __esm({
   "src/services/battery-status-manager.js"() {
     import_moment_timezone3 = __toESM(require_moment_timezone2());
-    import_actions34 = __toESM(require_actions());
+    import_actions37 = __toESM(require_actions());
     BatteryStatusManager = class {
       constructor() {
         this._callbacks = [];
@@ -278007,7 +278015,7 @@ var init_battery_status_manager = __esm({
       }
       _onChargingChange = () => {
         const changeTime = Date.now();
-        import_actions34.default.recordUserEvent("Battery State Changed", {
+        import_actions37.default.recordUserEvent("Battery State Changed", {
           oldState: this.isBatteryCharging() ? "battery" : "ac",
           oldStateDuration: Math.min(
             changeTime - this._lastChangeTime,
@@ -278788,7 +278796,7 @@ __export(nylas_exports_exports, {
   CalendarDataSource: () => CalendarDataSource2,
   Category: () => Category3,
   CategoryStore: () => CategoryStore2,
-  ComponentRegistry: () => ComponentRegistry,
+  ComponentRegistry: () => ComponentRegistry2,
   ComposerExtension: () => ComposerExtension,
   Contact: () => Contact3,
   ContactStore: () => ContactStore,
@@ -278814,7 +278822,7 @@ __export(nylas_exports_exports, {
   InflatesDraftClientId: () => InflatesDraftClientId2,
   InlineStyleTransformer: () => InlineStyleTransformer2,
   KeyManager: () => KeyManager3,
-  MailRulesStore: () => MailRulesStore2,
+  MailRulesStore: () => MailRulesStore3,
   MailRulesTemplates: () => MailRulesTemplates,
   MailboxPerspective: () => MailboxPerspective2,
   Matcher: () => Matcher3,
@@ -278822,7 +278830,7 @@ __export(nylas_exports_exports, {
   MessageBodyProcessor: () => MessageBodyProcessor2,
   MessageStore: () => MessageStore2,
   MessageViewExtension: () => MessageViewExtension,
-  Model: () => Model11,
+  Model: () => Model12,
   ModelSearchIndexer: () => ModelSearchIndexer2,
   MutableQuerySubscription: () => MutableQuerySubscription2,
   N1CloudAPI: () => N1CloudAPI2,
@@ -278843,7 +278851,7 @@ __export(nylas_exports_exports, {
   Reflux: () => Reflux,
   RegExpUtils: () => RegExpUtils3,
   ReprocessMailRulesTask: () => ReprocessMailRulesTask2,
-  Rx: () => Rx8,
+  Rx: () => Rx10,
   SanitizeTransformer: () => SanitizeTransformer2,
   SearchIndexScheduler: () => SearchIndexScheduler2,
   SearchQueryParser: () => SearchQueryParser2,
@@ -278865,10 +278873,10 @@ __export(nylas_exports_exports, {
   UndoRedoStore: () => UndoRedoStore2,
   Utils: () => Utils13,
   VirtualDOMUtils: () => VirtualDOMUtils2,
-  WorkspaceStore: () => WorkspaceStore2,
+  WorkspaceStore: () => WorkspaceStore3,
   default: () => nylas_exports_default
 });
-var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore2, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model11, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React42, ReactDOM20, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx8, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore2;
+var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry2, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore3, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model12, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React42, ReactDOM20, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx10, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore3;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module26 = require("module");
@@ -279214,7 +279222,7 @@ var init_nylas_exports = __esm({
     );
     lazyLoadAndRegisterStore(
       `ContactStore`,
-      () => typeof require !== "undefined" && require.resolve ? require_contact_store().default || require_contact_store() : requireFromSrc2("../flux/stores/contact-store.js").default || requireFromSrc2("../flux/stores/contact-store.js")
+      () => typeof require !== "undefined" && require.resolve ? (init_contact_store(), __toCommonJS(contact_store_exports)).default || (init_contact_store(), __toCommonJS(contact_store_exports)) : requireFromSrc2("../flux/stores/contact-store.js").default || requireFromSrc2("../flux/stores/contact-store.js")
     );
     lazyLoadAndRegisterStore(
       `IdentityStore`,
@@ -279238,7 +279246,7 @@ var init_nylas_exports = __esm({
     );
     lazyLoadAndRegisterStore(
       `MailRulesStore`,
-      () => typeof require !== "undefined" && require.resolve ? require_mail_rules_store().default || require_mail_rules_store() : requireFromSrc2("../flux/stores/mail-rules-store.js").default || requireFromSrc2("../flux/stores/mail-rules-store.js")
+      () => typeof require !== "undefined" && require.resolve ? (init_mail_rules_store(), __toCommonJS(mail_rules_store_exports)).default || (init_mail_rules_store(), __toCommonJS(mail_rules_store_exports)) : requireFromSrc2("../flux/stores/mail-rules-store.js").default || requireFromSrc2("../flux/stores/mail-rules-store.js")
     );
     lazyLoadAndRegisterStore(
       `FileUploadStore`,
@@ -279270,7 +279278,7 @@ var init_nylas_exports = __esm({
     );
     lazyLoadAndRegisterStore(
       `FocusedContentStore`,
-      () => typeof require !== "undefined" && require.resolve ? require_focused_content_store().default || require_focused_content_store() : requireFromSrc2("../flux/stores/focused-content-store.js").default || requireFromSrc2("../flux/stores/focused-content-store.js")
+      () => typeof require !== "undefined" && require.resolve ? (init_focused_content_store(), __toCommonJS(focused_content_store_exports)).default || (init_focused_content_store(), __toCommonJS(focused_content_store_exports)) : requireFromSrc2("../flux/stores/focused-content-store.js").default || requireFromSrc2("../flux/stores/focused-content-store.js")
     );
     lazyLoadAndRegisterStore(
       `MessageBodyProcessor`,
@@ -279524,7 +279532,7 @@ var init_nylas_exports = __esm({
     CalendarDataSource2 = __lazy("CalendarDataSource");
     Category3 = __lazy("Category");
     CategoryStore2 = __lazy("CategoryStore");
-    ComponentRegistry = __lazy("ComponentRegistry");
+    ComponentRegistry2 = __lazy("ComponentRegistry");
     ComposerExtension = __lazy("ComposerExtension");
     Contact3 = __lazy("Contact");
     ContactStore = __lazy("ContactStore");
@@ -279552,7 +279560,7 @@ var init_nylas_exports = __esm({
     InflatesDraftClientId2 = __lazy("InflatesDraftClientId");
     InlineStyleTransformer2 = __lazy("InlineStyleTransformer");
     KeyManager3 = __lazy("KeyManager");
-    MailRulesStore2 = __lazy("MailRulesStore");
+    MailRulesStore3 = __lazy("MailRulesStore");
     MailRulesTemplates = __lazy("MailRulesTemplates");
     MailboxPerspective2 = __lazy("MailboxPerspective");
     Matcher3 = __lazy("Matcher");
@@ -279560,7 +279568,7 @@ var init_nylas_exports = __esm({
     MessageBodyProcessor2 = __lazy("MessageBodyProcessor");
     MessageStore2 = __lazy("MessageStore");
     MessageViewExtension = __lazy("MessageViewExtension");
-    Model11 = __lazy("Model");
+    Model12 = __lazy("Model");
     ModelSearchIndexer2 = __lazy("ModelSearchIndexer");
     MutableQuerySubscription2 = __lazy("MutableQuerySubscription");
     N1CloudAPI2 = __lazy("N1CloudAPI");
@@ -279581,7 +279589,7 @@ var init_nylas_exports = __esm({
     Reflux = __lazy("Reflux");
     RegExpUtils3 = __lazy("RegExpUtils");
     ReprocessMailRulesTask2 = __lazy("ReprocessMailRulesTask");
-    Rx8 = __lazy("Rx");
+    Rx10 = __lazy("Rx");
     SanitizeTransformer2 = __lazy("SanitizeTransformer");
     SearchIndexScheduler2 = __lazy("SearchIndexScheduler");
     SearchQueryParser2 = __lazy("SearchQueryParser");
@@ -279603,7 +279611,7 @@ var init_nylas_exports = __esm({
     UndoRedoStore2 = __lazy("UndoRedoStore");
     Utils13 = __lazy("Utils");
     VirtualDOMUtils2 = __lazy("VirtualDOMUtils");
-    WorkspaceStore2 = __lazy("WorkspaceStore");
+    WorkspaceStore3 = __lazy("WorkspaceStore");
   }
 });
 
@@ -279612,12 +279620,12 @@ var category_exports = {};
 __export(category_exports, {
   default: () => Category2
 });
-var import_node_module27, import_model10, import_meta28, nodeRequire28, AccountStore4, ToObject, StandardCategories, LockedCategories, HiddenCategories, Category2;
+var import_node_module27, import_model11, import_meta28, nodeRequire28, AccountStore4, ToObject, StandardCategories, LockedCategories, HiddenCategories, Category2;
 var init_category = __esm({
   "src/flux/models/category.js"() {
     import_node_module27 = require("module");
     init_nylas_exports();
-    import_model10 = __toESM(require_model());
+    import_model11 = __toESM(require_model());
     init_attributes();
     import_meta28 = {};
     nodeRequire28 = typeof import_meta28.url === "string" && import_meta28.url.startsWith("file:") ? (0, import_node_module27.createRequire)(import_meta28.url) : require;
@@ -279648,8 +279656,8 @@ var init_category = __esm({
       "important",
       "N1-Snoozed"
     ]);
-    Category2 = class extends import_model10.default {
-      static attributes = Object.assign({}, import_model10.default.attributes, {
+    Category2 = class extends import_model11.default {
+      static attributes = Object.assign({}, import_model11.default.attributes, {
         name: attributes_default.String({
           queryable: true,
           modelKey: "name"
@@ -279764,7 +279772,7 @@ var init_category = __esm({
 // src/global/nylas-observables.js
 var require_nylas_observables = __commonJS({
   "src/global/nylas-observables.js"(exports2, module2) {
-    var Rx9 = require_rx_lite();
+    var Rx11 = require_rx_lite();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var Category4 = null;
     var getCategory = () => Category4 || (Category4 = (init_category(), __toCommonJS(category_exports)).default);
@@ -279796,7 +279804,7 @@ var require_nylas_observables = __commonJS({
     };
     var CategoryObservables = {
       forAllAccounts: () => {
-        const observable = Rx9.Observable.fromQuery(
+        const observable = Rx11.Observable.fromQuery(
           getDatabaseStore().findAll(getCategory())
         );
         _4.extend(observable, CategoryOperators);
@@ -279805,11 +279813,11 @@ var require_nylas_observables = __commonJS({
       forAccount: (account) => {
         let observable;
         if (account) {
-          observable = Rx9.Observable.fromQuery(
+          observable = Rx11.Observable.fromQuery(
             getDatabaseStore().findAll(getCategory()).where({ accountId: account.id })
           );
         } else {
-          observable = Rx9.Observable.fromQuery(
+          observable = Rx11.Observable.fromQuery(
             getDatabaseStore().findAll(getCategory())
           );
         }
@@ -279817,7 +279825,7 @@ var require_nylas_observables = __commonJS({
         return observable;
       },
       standard: (account) => {
-        const observable = Rx9.Observable.fromConfig(
+        const observable = Rx11.Observable.fromConfig(
           "core.workspace.showImportant"
         ).flatMapLatest((showImportant) => {
           return CategoryObservables.forAccount(account).sort().categoryFilter((cat) => cat.isStandardCategory(showImportant));
@@ -279833,22 +279841,22 @@ var require_nylas_observables = __commonJS({
       }
     };
     module2.exports = { Categories: CategoryObservables };
-    Rx9.Observable.fromStore = (store7) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromStore = (store7) => {
+      return Rx11.Observable.create((observer) => {
         const unsubscribe = store7.listen(() => {
           return observer.onNext(store7);
         });
         observer.onNext(store7);
-        return Rx9.Disposable.create(unsubscribe);
+        return Rx11.Disposable.create(unsubscribe);
       });
     };
-    Rx9.Observable.fromListSelection = (originStore) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromListSelection = (originStore) => {
+      return Rx11.Observable.create((observer) => {
         let dataSourceDisposable = null;
-        const storeObservable = Rx9.Observable.fromStore(originStore);
+        const storeObservable = Rx11.Observable.fromStore(originStore);
         const disposable = storeObservable.subscribe(() => {
           const dataSource = originStore.dataSource();
-          const dataSourceObservable = Rx9.Observable.fromStore(dataSource);
+          const dataSourceObservable = Rx11.Observable.fromStore(dataSource);
           if (dataSourceDisposable) {
             dataSourceDisposable.dispose();
           }
@@ -279862,36 +279870,36 @@ var require_nylas_observables = __commonJS({
           }
           return disposable.dispose();
         };
-        return Rx9.Disposable.create(dispose);
+        return Rx11.Disposable.create(dispose);
       });
     };
-    Rx9.Observable.fromConfig = (configKey) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromConfig = (configKey) => {
+      return Rx11.Observable.create((observer) => {
         const disposable = NylasEnv.config.onDidChange(configKey, () => {
           return observer.onNext(NylasEnv.config.get(configKey));
         });
         observer.onNext(NylasEnv.config.get(configKey));
-        return Rx9.Disposable.create(disposable.dispose);
+        return Rx11.Disposable.create(disposable.dispose);
       });
     };
-    Rx9.Observable.fromAction = (action) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromAction = (action) => {
+      return Rx11.Observable.create((observer) => {
         const unsubscribe = action.listen((...args) => {
           return observer.onNext(...Array.from(args || []));
         });
-        return Rx9.Disposable.create(unsubscribe);
+        return Rx11.Disposable.create(unsubscribe);
       });
     };
-    Rx9.Observable.fromQuery = (query) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromQuery = (query) => {
+      return Rx11.Observable.create((observer) => {
         const unsubscribe = getQuerySubscriptionPool().add(query, (result2) => {
           return observer.onNext(result2);
         });
-        return Rx9.Disposable.create(unsubscribe);
+        return Rx11.Disposable.create(unsubscribe);
       });
     };
-    Rx9.Observable.fromNamedQuerySubscription = (name2, subscription) => {
-      return Rx9.Observable.create((observer) => {
+    Rx11.Observable.fromNamedQuerySubscription = (name2, subscription) => {
+      return Rx11.Observable.create((observer) => {
         const unsubscribe = getQuerySubscriptionPool().addPrivateSubscription(
           name2,
           subscription,
@@ -279899,7 +279907,7 @@ var require_nylas_observables = __commonJS({
             return observer.onNext(result2);
           }
         );
-        return Rx9.Disposable.create(unsubscribe);
+        return Rx11.Disposable.create(unsubscribe);
       });
     };
   }
@@ -279910,11 +279918,11 @@ var category_store_exports = {};
 __export(category_store_exports, {
   default: () => category_store_default
 });
-var import_nylas_store25, import_nylas_observables2, _standardCategoryNames, getStandardCategoryNames, asAccount, asAccountId, CategoryStore3, category_store_default;
+var import_nylas_store28, import_nylas_observables2, _standardCategoryNames, getStandardCategoryNames, asAccount, asAccountId, CategoryStore3, category_store_default;
 var init_category_store = __esm({
   "src/flux/stores/category-store.js"() {
     init_index_all();
-    import_nylas_store25 = __toESM(require_nylas_store());
+    import_nylas_store28 = __toESM(require_nylas_store());
     init_account_store();
     init_account();
     import_nylas_observables2 = __toESM(require_nylas_observables());
@@ -279940,7 +279948,7 @@ var init_category_store = __esm({
         return a;
       }
     };
-    CategoryStore3 = class extends import_nylas_store25.default {
+    CategoryStore3 = class extends import_nylas_store28.default {
       constructor() {
         super();
         this.getStandardCategory = this.getStandardCategory.bind(this);
@@ -280130,14 +280138,14 @@ var init_category_store = __esm({
 var require_workspace_store = __commonJS({
   "src/flux/stores/workspace-store.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Actions37 = require_actions().default;
+    var Actions39 = require_actions().default;
     var _AccountStore = (init_account_store(), __toCommonJS(account_store_exports)).default;
     var _CategoryStore = (init_category_store(), __toCommonJS(category_store_exports));
     var _MailboxPerspective = require_mailbox_perspective();
-    var NylasStore27 = require_nylas_store().default || require_nylas_store();
+    var NylasStore30 = require_nylas_store().default || require_nylas_store();
     var Sheet = {};
     var Location = {};
-    var WorkspaceStore5 = class _WorkspaceStore extends NylasStore27 {
+    var WorkspaceStore6 = class _WorkspaceStore extends NylasStore30 {
       static initClass() {
         _WorkspaceStore.prototype.triggerDebounced = _4.debounce(function() {
           return this.trigger(this);
@@ -280165,15 +280173,15 @@ var require_workspace_store = __commonJS({
         this.popToRootSheet = this.popToRootSheet.bind(this);
         this._resetInstanceVars();
         this._preferredLayoutMode = NylasEnv.config.get("core.workspace.mode");
-        this.listenTo(Actions37.selectRootSheet, this._onSelectRootSheet);
-        this.listenTo(Actions37.setFocus, this._onSetFocus);
+        this.listenTo(Actions39.selectRootSheet, this._onSelectRootSheet);
+        this.listenTo(Actions39.setFocus, this._onSetFocus);
         this.listenTo(
-          Actions37.toggleWorkspaceLocationHidden,
+          Actions39.toggleWorkspaceLocationHidden,
           this._onToggleLocationHidden
         );
-        this.listenTo(Actions37.popSheet, this.popSheet);
-        this.listenTo(Actions37.popToRootSheet, this.popToRootSheet);
-        this.listenTo(Actions37.pushSheet, this.pushSheet);
+        this.listenTo(Actions39.popSheet, this.popSheet);
+        this.listenTo(Actions39.popToRootSheet, this.popToRootSheet);
+        this.listenTo(Actions39.pushSheet, this.pushSheet);
         const { windowType } = NylasEnv.getLoadSettings();
         if (windowType !== "onboarding") {
           require("electron").webFrame?.setZoomLevelLimits?.(1, 1);
@@ -280273,12 +280281,12 @@ var require_workspace_store = __commonJS({
         }
         if (this._hiddenLocations[location2.id]) {
           if (location2 === this.Location.MessageListSidebar) {
-            Actions37.recordUserEvent("Sidebar Opened");
+            Actions39.recordUserEvent("Sidebar Opened");
           }
           delete this._hiddenLocations[location2.id];
         } else {
           if (location2 === this.Location.MessageListSidebar) {
-            Actions37.recordUserEvent("Sidebar Closed");
+            Actions39.recordUserEvent("Sidebar Closed");
           }
           this._hiddenLocations[location2.id] = location2;
         }
@@ -280436,7 +280444,7 @@ var require_workspace_store = __commonJS({
           this.trigger();
         }
         if (Sheet.Thread && sheet === Sheet.Thread) {
-          return Actions37.setFocus({ collection: "thread", item: null });
+          return Actions39.setFocus({ collection: "thread", item: null });
         }
       }
       // Return to the root sheet. This method triggers, allowing observers
@@ -280448,8 +280456,8 @@ var require_workspace_store = __commonJS({
         }
       }
     };
-    WorkspaceStore5.initClass();
-    module2.exports = new WorkspaceStore5();
+    WorkspaceStore6.initClass();
+    module2.exports = new WorkspaceStore6();
   }
 });
 
@@ -280459,7 +280467,7 @@ var require_sheet = __commonJS({
     var import_prop_types65 = __toESM(require_prop_types());
     var React51 = require_react();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var InjectedComponentSet4 = require_injected_component_set();
@@ -280500,12 +280508,12 @@ var require_sheet = __commonJS({
           this.unlisteners = [];
         }
         this.unlisteners.push(
-          ComponentRegistry2.listen((_event) => {
+          ComponentRegistry3.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
         return this.unlisteners.push(
-          WorkspaceStore5.listen((_event) => {
+          WorkspaceStore6.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
@@ -280599,7 +280607,7 @@ var require_sheet = __commonJS({
       _getStateFromStores() {
         let maxWidth;
         const state = {
-          mode: WorkspaceStore5.layoutMode(),
+          mode: WorkspaceStore6.layoutMode(),
           columns: []
         };
         let widest = -1;
@@ -280607,10 +280615,10 @@ var require_sheet = __commonJS({
         if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
           for (let idx = 0; idx < this.props.data.columns[state.mode].length; idx++) {
             var location2 = this.props.data.columns[state.mode][idx];
-            if (WorkspaceStore5.isLocationHidden(location2)) {
+            if (WorkspaceStore6.isLocationHidden(location2)) {
               continue;
             }
-            var entries2 = ComponentRegistry2.findComponentsMatching({
+            var entries2 = ComponentRegistry3.findComponentsMatching({
               location: location2,
               mode: state.mode
             });
@@ -280654,7 +280662,7 @@ var require_sheet = __commonJS({
         return state;
       }
       _pop() {
-        return Actions37.popSheet();
+        return Actions39.popSheet();
       }
     };
     Sheet.initClass();
@@ -280671,11 +280679,11 @@ var require_sheet_toolbar = __commonJS({
     var _Sheet = require_sheet();
     var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
     var RetinaImg5 = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var Utils24 = require_utils();
+    var Utils25 = require_utils();
     var { remote: remote9 } = require("electron");
     var _str3 = require_underscore();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ToolbarSpacer = class _ToolbarSpacer extends React51.Component {
       constructor(...args) {
         this.render = this.render.bind(this);
@@ -280779,7 +280787,7 @@ var require_sheet_toolbar = __commonJS({
         );
       }
       _onClick() {
-        return Actions37.popSheet();
+        return Actions39.popSheet();
       }
     };
     ToolbarBack.initClass();
@@ -280879,11 +280887,11 @@ var require_sheet_toolbar = __commonJS({
       }
     };
     ToolbarMenuControl.initClass();
-    ComponentRegistry2.register(ToolbarWindowControls, {
-      location: WorkspaceStore5.Sheet.Global.Toolbar.Left
+    ComponentRegistry3.register(ToolbarWindowControls, {
+      location: WorkspaceStore6.Sheet.Global.Toolbar.Left
     });
-    ComponentRegistry2.register(ToolbarMenuControl, {
-      location: WorkspaceStore5.Sheet.Global.Toolbar.Right
+    ComponentRegistry3.register(ToolbarMenuControl, {
+      location: WorkspaceStore6.Sheet.Global.Toolbar.Right
     });
     var Toolbar = class _Toolbar extends React51.Component {
       static initClass() {
@@ -280916,12 +280924,12 @@ var require_sheet_toolbar = __commonJS({
         this.mounted = true;
         this.unlisteners = [];
         this.unlisteners.push(
-          WorkspaceStore5.listen((_event) => {
+          WorkspaceStore6.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
         this.unlisteners.push(
-          ComponentRegistry2.listen((_event) => {
+          ComponentRegistry3.listen((_event) => {
             return this.setState(this._getStateFromStores());
           })
         );
@@ -280940,7 +280948,7 @@ var require_sheet_toolbar = __commonJS({
         return window.requestAnimationFrame(() => this.recomputeLayout());
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils24.isEqualReact(nextProps, this.props) || !Utils24.isEqualReact(nextState, this.state);
+        return !Utils25.isEqualReact(nextProps, this.props) || !Utils25.isEqualReact(nextState, this.state);
       }
       render() {
         const style = {
@@ -281017,16 +281025,16 @@ var require_sheet_toolbar = __commonJS({
           ({ props } = this);
         }
         const state = {
-          mode: WorkspaceStore5.layoutMode(),
+          mode: WorkspaceStore6.layoutMode(),
           columns: [],
           columnNames: []
         };
         if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
           for (loc of Array.from(this.props.data.columns[state.mode])) {
-            if (WorkspaceStore5.isLocationHidden(loc)) {
+            if (WorkspaceStore6.isLocationHidden(loc)) {
               continue;
             }
-            entries2 = ComponentRegistry2.findComponentsMatching({
+            entries2 = ComponentRegistry3.findComponentsMatching({
               location: loc.Toolbar,
               mode: state.mode
             });
@@ -281036,8 +281044,8 @@ var require_sheet_toolbar = __commonJS({
             }
           }
         }
-        for (loc of [WorkspaceStore5.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry2.findComponentsMatching({
+        for (loc of [WorkspaceStore6.Sheet.Global, this.props.data]) {
+          entries2 = ComponentRegistry3.findComponentsMatching({
             location: loc.Toolbar.Left,
             mode: state.mode
           });
@@ -281050,8 +281058,8 @@ var require_sheet_toolbar = __commonJS({
             state.columns[0].push(ToolbarBack);
           }
         }
-        for (loc of [WorkspaceStore5.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry2.findComponentsMatching({
+        for (loc of [WorkspaceStore6.Sheet.Global, this.props.data]) {
+          entries2 = ComponentRegistry3.findComponentsMatching({
             location: loc.Toolbar.Right,
             mode: state.mode
           });
@@ -281087,7 +281095,7 @@ var require_sheet_container = __commonJS({
     var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
     var InjectedComponentSet4 = require_injected_component_set();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions37, ComponentRegistry: ComponentRegistry2, WorkspaceStore: WorkspaceStore5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
+    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var SheetContainer2 = (() => {
       let _displayName;
       SheetContainer2 = class SheetContainer extends React51.Component {
@@ -281108,7 +281116,7 @@ var require_sheet_container = __commonJS({
           this.state = this._getStateFromStores();
         }
         componentDidMount() {
-          return this.unsubscribe = WorkspaceStore5.listen(this._onStoreChange);
+          return this.unsubscribe = WorkspaceStore6.listen(this._onStoreChange);
         }
         componentWillUnmount() {
           if (this.unsubscribe) {
@@ -281135,7 +281143,7 @@ var require_sheet_container = __commonJS({
               { name: "Header", style: { order: 1, zIndex: 2 } },
               React51.createElement(InjectedComponentSet4, {
                 matching: {
-                  locations: [topSheet.Header, WorkspaceStore5.Sheet.Global.Header]
+                  locations: [topSheet.Header, WorkspaceStore6.Sheet.Global.Header]
                 },
                 direction: "column",
                 id: topSheet.id
@@ -281163,7 +281171,7 @@ var require_sheet_container = __commonJS({
               { name: "Footer", style: { order: 3, zIndex: 4 } },
               React51.createElement(InjectedComponentSet4, {
                 matching: {
-                  locations: [topSheet.Footer, WorkspaceStore5.Sheet.Global.Footer]
+                  locations: [topSheet.Footer, WorkspaceStore6.Sheet.Global.Footer]
                 },
                 direction: "column",
                 id: topSheet.id
@@ -281227,8 +281235,8 @@ var require_sheet_container = __commonJS({
         }
         _getStateFromStores() {
           return {
-            stack: WorkspaceStore5.sheetStack(),
-            mode: WorkspaceStore5.layoutMode()
+            stack: WorkspaceStore6.sheetStack(),
+            mode: WorkspaceStore6.layoutMode()
           };
         }
       };
@@ -281255,12 +281263,12 @@ var import_source_map_support = __toESM(require_source_map_support());
 var import_window_event_handler = __toESM(require_window_event_handler());
 var import_styles_element = __toESM(require_styles_element());
 var import_store_registry2 = __toESM(require_store_registry());
-var import_utils24 = __toESM(require_utils());
+var import_utils25 = __toESM(require_utils());
 var import_config = __toESM(require_config());
 var import_theme_manager = __toESM(require_theme_manager());
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
-var import_workspace_store3 = __toESM(require_workspace_store());
+var import_workspace_store4 = __toESM(require_workspace_store());
 var import_react61 = __toESM(require_react());
 var import_react_dom27 = __toESM(require_react_dom());
 var import_sheet_container = __toESM(require_sheet_container());
@@ -281364,7 +281372,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
         decodeURIComponent(location.search.substr(14))
       );
     }
-    const cloned = import_utils24.default.deepClone(_NylasEnvConstructor.loadSettings);
+    const cloned = import_utils25.default.deepClone(_NylasEnvConstructor.loadSettings);
     Object.defineProperty(cloned, "windowState", {
       get: () => {
         const win = _NylasEnvConstructor.getCurrentWindow?.();
@@ -282065,8 +282073,8 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
   // bar, stoplights, etc. This saves ~100ms when populating the hot
   // windows.
   initializeBasicSheet() {
-    if (!import_workspace_store3.default.Sheet.Main) {
-      import_workspace_store3.default.defineSheet(
+    if (!import_workspace_store4.default.Sheet.Main) {
+      import_workspace_store4.default.defineSheet(
         "Main",
         { root: true },
         {

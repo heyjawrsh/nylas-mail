@@ -6,19 +6,20 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Message = require("../models/message.js").default;
-const _Actions = require("../actions.js").default;
-const NylasAPIHelpers = require("../nylas-api-helpers.js");
-const AccountStore = require("./account-store.js").default;
-const ContactStore = require("./contact-store.js");
-const DatabaseStore = require("./database-store.js").default;
-const UndoStack = require("../../undo-stack.js").default;
-const DraftHelpers = require("../stores/draft-helpers.js").default;
-const ExtensionRegistry = require("../../registries/extension-registry.js");
+import Message from "../models/message.js";
+import _Actions from "../actions.js";
+import * as NylasAPIHelpers from "../nylas-api-helpers.js";
+import AccountStore from "./account-store.js";
+import * as ContactStore from "./contact-store.js";
+import DatabaseStore from "./database-store.js";
+import UndoStack from "../../undo-stack.js";
+import * as DraftHelpersNS from "./draft-helpers.js";
+const DraftHelpers = DraftHelpersNS.default || DraftHelpersNS;
+import * as ExtensionRegistry from "../../registries/extension-registry.js";
 const { Listener, Publisher } = require("../modules/reflux-coffee.js");
 const CoffeeHelpers = require("../coffee-helpers.js");
-let DraftStore = null;
-const _ = require("underscore");
+import DraftStore from "./draft-store.js";
+import _ from "underscore";
 
 const MetadataChangePrefix = "metadata.";
 
@@ -156,9 +157,6 @@ class DraftEditingSession {
 		this.redo = this.redo.bind(this);
 		this._snapshot = this._snapshot.bind(this);
 		this.draftClientId = draftClientId;
-		if (DraftStore == null) {
-			DraftStore = require("./draft-store.js").default;
-		}
 		this.listenTo(DraftStore, this._onDraftChanged);
 
 		this._draft = false;
@@ -483,3 +481,4 @@ DraftEditingSession.initClass();
 DraftEditingSession.DraftChangeSet = DraftChangeSet;
 
 module.exports = DraftEditingSession;
+module.exports.default = DraftEditingSession;

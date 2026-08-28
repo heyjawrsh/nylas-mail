@@ -5,10 +5,10 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Rx = require("rx-lite");
-const NylasStore = require("nylas-store").default || require("nylas-store");
-const DatabaseStore = require("./database-store.js").default;
-const AccountStore = require("./account-store.js").default;
+import Rx from "rx-lite";
+import NylasStore from "nylas-store";
+import DatabaseStore from "./database-store.js";
+import AccountStore from "./account-store.js";
 
 class ContactRankingStore extends NylasStore {
 	constructor() {
@@ -92,4 +92,4 @@ class ContactRankingStore extends NylasStore {
 	}
 }
 
-module.exports = new ContactRankingStore();
+export default new ContactRankingStore();

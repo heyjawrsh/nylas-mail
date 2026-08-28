@@ -11,16 +11,15 @@ import _ from "underscore";
 import Rx from "rx-lite";
 import DatabaseStore from "./database-store.js";
 import TaskQueueStatusStore from "./task-queue-status-store.js";
-const ReprocessMailRulesTask =
-	require("../tasks/reprocess-mail-rules-task.js").default;
+import ReprocessMailRulesTask from "../tasks/reprocess-mail-rules-task.js";
 import Utils from "../models/utils.js";
 import Actions from "../actions.js";
 
-const {
+import {
 	ConditionMode,
 	ConditionTemplates,
 	ActionTemplates,
-} = require("../../mail-rules-templates.js");
+} from "../../mail-rules-templates.js";
 
 const RulesJSONBlobKey = "MailRules-V2";
 
@@ -143,4 +142,4 @@ class MailRulesStore extends NylasStore {
 	}
 }
 
-module.exports = new MailRulesStore();
+export default new MailRulesStore();
