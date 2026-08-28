@@ -7,10 +7,10 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const _ = require("underscore");
-const UnsafeComponent = require("./unsafe-component.jsx");
-const Flexbox = require("./flexbox.jsx").default;
+import React from "react";
+import _ from "underscore";
+import UnsafeComponent from "./unsafe-component.jsx";
+import Flexbox from "./flexbox.jsx";
 import InjectedComponentLabel from "./injected-component-label.jsx";
 const {
 	Utils,
@@ -218,4 +218,4 @@ class InjectedComponentSet extends React.Component {
 }
 InjectedComponentSet.initClass();
 
-module.exports = InjectedComponentSet;
+export default InjectedComponentSet;

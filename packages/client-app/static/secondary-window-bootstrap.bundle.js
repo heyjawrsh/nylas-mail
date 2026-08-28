@@ -20718,7 +20718,7 @@ var require_component_registry = __commonJS({
       "message:Toolbar": "ThreadActionsToolbarButton",
       "thread:Toolbar": "ThreadActionsToolbarButton"
     };
-    var ComponentRegistry3 = class _ComponentRegistry {
+    var ComponentRegistry4 = class _ComponentRegistry {
       static initClass() {
         _ComponentRegistry.include = CoffeeHelpers2.includeModule;
         _ComponentRegistry.include(Publisher3);
@@ -20935,8 +20935,8 @@ var require_component_registry = __commonJS({
         return this._showComponentRegions;
       }
     };
-    ComponentRegistry3.initClass();
-    module2.exports = new ComponentRegistry3();
+    ComponentRegistry4.initClass();
+    module2.exports = new ComponentRegistry4();
   }
 });
 
@@ -21158,8 +21158,8 @@ var require_window_event_handler = __commonJS({
           document.body,
           "window:toggle-component-regions",
           () => {
-            const ComponentRegistry3 = require_component_registry();
-            return ComponentRegistry3.toggleComponentRegions();
+            const ComponentRegistry4 = require_component_registry();
+            return ComponentRegistry4.toggleComponentRegions();
           }
         );
         const { webContents } = NylasEnv.getCurrentWindow();
@@ -26996,7 +26996,7 @@ var require_database_object_registry = __commonJS({
 // src/flux/models/utils.js
 var require_utils = __commonJS({
   "src/flux/models/utils.js"(exports2, module2) {
-    var Utils26;
+    var Utils27;
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var fs12 = require_fs_plus();
     var path15 = require("path");
@@ -27005,7 +27005,7 @@ var require_utils = __commonJS({
     var TaskRegistry2 = require_task_registry().default;
     var DatabaseObjectRegistry4 = require_database_object_registry().default;
     var imageData = null;
-    module2.exports = Utils26 = {
+    module2.exports = Utils27 = {
       waitFor(latch, options2) {
         if (options2 == null) {
           options2 = {};
@@ -27101,7 +27101,7 @@ var require_utils = __commonJS({
         if (str == null) {
           str = "";
         }
-        return new RegExp(`((?:^|\\W|$)${Utils26.escapeRegExp(str.trim())})`, "ig");
+        return new RegExp(`((?:^|\\W|$)${Utils27.escapeRegExp(str.trim())})`, "ig");
       },
       // Takes an optional customizer. The customizer is passed the key and the
       // new cloned value for that key. The customizer is expected to either
@@ -27134,7 +27134,7 @@ var require_utils = __commonJS({
         stackSeen.push(object2);
         stackRefs.push(newObject);
         for (var key of Array.from(Object.getOwnPropertyNames(object2))) {
-          var newVal = Utils26.deepClone(
+          var newVal = Utils27.deepClone(
             object2[key],
             customizer,
             stackSeen,
@@ -27192,7 +27192,7 @@ var require_utils = __commonJS({
         return Object.getOwnPropertyNames(o).forEach((key) => {
           const val = o[key];
           if (typeof val === "object" && val !== null && !Object.isFrozen(val)) {
-            return Utils26.modelFreeze(val);
+            return Utils27.modelFreeze(val);
           }
         });
       },
@@ -27225,30 +27225,30 @@ var require_utils = __commonJS({
         if (!imageData) {
           let left, left1;
           imageData = (left = NylasEnv.fileListCache().imageData) != null ? left : "{}";
-          Utils26.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
+          Utils27.images = (left1 = JSON.parse(imageData)) != null ? left1 : {};
         }
         if (!__guard__4(
-          Utils26 != null ? Utils26.images : void 0,
+          Utils27 != null ? Utils27.images : void 0,
           (x3) => x3[resourcePath2]
         )) {
-          if (Utils26.images == null) {
-            Utils26.images = {};
+          if (Utils27.images == null) {
+            Utils27.images = {};
           }
-          if (Utils26.images[resourcePath2] == null) {
-            Utils26.images[resourcePath2] = {};
+          if (Utils27.images[resourcePath2] == null) {
+            Utils27.images[resourcePath2] = {};
           }
           const imagesPath = path15.join(resourcePath2, "static", "images");
           const files = fs12.listTreeSync(imagesPath);
           for (var file of Array.from(files)) {
             file = file.replace(/\\/g, "/");
             var _basename = path15.basename(file);
-            Utils26.images[resourcePath2][path15.basename(file)] = file;
+            Utils27.images[resourcePath2][path15.basename(file)] = file;
           }
-          NylasEnv.fileListCache().imageData = JSON.stringify(Utils26.images);
+          NylasEnv.fileListCache().imageData = JSON.stringify(Utils27.images);
         }
         const plat = process.platform != null ? process.platform : "";
         const ratio = window.devicePixelRatio != null ? window.devicePixelRatio : 1;
-        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils26.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils26.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils26.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils26.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils26.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils26.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils26.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils26.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils26.images[resourcePath2][`${name2}@1x.${ext}`];
+        return (left2 = (left3 = (left4 = (left5 = (left6 = (left7 = Utils27.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] != null ? Utils27.images[resourcePath2][`${name2}-${plat}@${ratio}x.${ext}`] : Utils27.images[resourcePath2][`${name2}@${ratio}x.${ext}`]) != null ? left7 : Utils27.images[resourcePath2][`${name2}-${plat}.${ext}`]) != null ? left6 : Utils27.images[resourcePath2][`${name2}.${ext}`]) != null ? left5 : Utils27.images[resourcePath2][`${name2}-${plat}@2x.${ext}`]) != null ? left4 : Utils27.images[resourcePath2][`${name2}@2x.${ext}`]) != null ? left3 : Utils27.images[resourcePath2][`${name2}-${plat}@1x.${ext}`]) != null ? left2 : Utils27.images[resourcePath2][`${name2}@1x.${ext}`];
       },
       subjectWithPrefix(subject, prefix) {
         if (subject.search(/fwd:/i) === 0) {
@@ -27281,7 +27281,7 @@ var require_utils = __commonJS({
           email = "";
         }
         const domain = _4.last(email.toLowerCase().trim().split("@"));
-        return Utils26.commonDomains[domain] != null ? Utils26.commonDomains[domain] : false;
+        return Utils27.commonDomains[domain] != null ? Utils27.commonDomains[domain] : false;
       },
       // This looks for and removes plus-ing, it taks a VERY liberal approach
       // to match an email address. We'd rather let false positives through.
@@ -27303,8 +27303,8 @@ var require_utils = __commonJS({
         if (email1 === email2) {
           return true;
         }
-        email1 = Utils26.toEquivalentEmailForm(email1);
-        email2 = Utils26.toEquivalentEmailForm(email2);
+        email1 = Utils27.toEquivalentEmailForm(email1);
+        email2 = Utils27.toEquivalentEmailForm(email2);
         return email1 === email2;
       },
       rectVisibleInRect(r1, r2) {
@@ -27316,7 +27316,7 @@ var require_utils = __commonJS({
         }
         options2.functionsAreEqual = true;
         options2.ignoreKeys = (options2.ignoreKeys != null ? options2.ignoreKeys : []).push("clientId");
-        return Utils26.isEqual(a, b, options2);
+        return Utils27.isEqual(a, b, options2);
       },
       // Customized version of Underscore 1.8.2's isEqual function
       // You can pass the following options:
@@ -27327,7 +27327,7 @@ var require_utils = __commonJS({
         if (options2 == null) {
           options2 = {};
         }
-        const value = Utils26._isEqual(a, b, [], [], options2);
+        const value = Utils27._isEqual(a, b, [], [], options2);
         if (options2.logWhenFalse) {
           if (value === false) {
             console.log("isEqual is false", a, b, options2);
@@ -27412,7 +27412,7 @@ var require_utils = __commonJS({
             return false;
           }
           while (length--) {
-            if (!Utils26._isEqual(a[length], b[length], aStack, bStack, options2)) {
+            if (!Utils27._isEqual(a[length], b[length], aStack, bStack, options2)) {
               return false;
             }
           }
@@ -27434,7 +27434,7 @@ var require_utils = __commonJS({
             if (key in keysToIgnore) {
               continue;
             }
-            if (!(_4.has(b, key) && Utils26._isEqual(a[key], b[key], aStack, bStack, options2))) {
+            if (!(_4.has(b, key) && Utils27._isEqual(a[key], b[key], aStack, bStack, options2))) {
               return false;
             }
           }
@@ -27660,9 +27660,9 @@ var require_utils = __commonJS({
         if (values2.length === 0) {
           throw new Error("Can't stdev zero values");
         }
-        const avg = Utils26.mean(values2);
+        const avg = Utils27.mean(values2);
         const squareDiffs = values2.map((val) => (val - avg) ** 2);
-        return Math.sqrt(Utils26.mean(squareDiffs));
+        return Math.sqrt(Utils27.mean(squareDiffs));
       },
       // Resolves nested paths in objects of the form "key.subKey.subKey".
       // Null checks along the way.
@@ -56667,7 +56667,7 @@ var require_actions = __commonJS({
     var ActionScopeWindow = "window";
     var ActionScopeGlobal = "global";
     var ActionScopeWorkWindow = "work";
-    var Actions39 = class {
+    var Actions40 = class {
       /*
         Public: Fired when the Nylas API Connector receives new data from the API.
       
@@ -57143,22 +57143,22 @@ var require_actions = __commonJS({
       global: [],
       work: []
     };
-    for (const name2 of Object.getOwnPropertyNames(Actions39)) {
+    for (const name2 of Object.getOwnPropertyNames(Actions40)) {
       if (name2 === "length" || name2 === "name" || name2 === "arguments" || name2 === "caller" || name2 === "prototype") {
         continue;
       }
-      if (Actions39[name2] !== "window" && Actions39[name2] !== "global" && Actions39[name2] !== "work") {
+      if (Actions40[name2] !== "window" && Actions40[name2] !== "global" && Actions40[name2] !== "work") {
         continue;
       }
-      const scope = Actions39[name2];
+      const scope = Actions40[name2];
       scopes[scope].push(name2);
-      create3(Actions39, name2, scope);
+      create3(Actions40, name2, scope);
     }
-    Actions39.windowActions = scopes.window;
-    Actions39.workWindowActions = scopes.work;
-    Actions39.globalActions = scopes.global;
-    module2.exports = Actions39;
-    module2.exports.default = Actions39;
+    Actions40.windowActions = scopes.window;
+    Actions40.workWindowActions = scopes.work;
+    Actions40.globalActions = scopes.global;
+    module2.exports = Actions40;
+    module2.exports.default = Actions40;
   }
 });
 
@@ -58516,7 +58516,7 @@ var init_attributes = __esm({
 var require_model = __commonJS({
   "src/flux/models/model.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var Utils26 = require_utils();
+    var Utils27 = require_utils();
     var Attributes2 = (init_attributes(), __toCommonJS(attributes_exports)).default;
     var Model14 = class _Model {
       static initClass() {
@@ -58563,7 +58563,7 @@ var require_model = __commonJS({
         if (values2 == null) {
           values2 = {};
         }
-        if (values2.id && Utils26.isTempId(values2.id)) {
+        if (values2.id && Utils27.isTempId(values2.id)) {
           if (values2.clientId == null) {
             values2.clientId = values2.id;
           }
@@ -58582,7 +58582,7 @@ var require_model = __commonJS({
           this[key] = values2[key];
         }
         if (this.clientId == null) {
-          this.clientId = Utils26.generateTempId();
+          this.clientId = Utils27.generateTempId();
         }
         this;
       }
@@ -58608,7 +58608,7 @@ var require_model = __commonJS({
       // This method is chainable.
       //
       fromJSON(json2) {
-        if (json2.id && !Utils26.isTempId(json2.id)) {
+        if (json2.id && !Utils27.isTempId(json2.id)) {
           this.serverId = json2.id;
         }
         for (var key of Array.from(Object.keys(this.constructor.attributes))) {
@@ -105651,7 +105651,7 @@ var require_clone2 = __commonJS({
     "use strict";
     var Reach = require_reach();
     var Types2 = require_types4();
-    var Utils26 = require_utils5();
+    var Utils27 = require_utils5();
     var internals = {
       needsProtoHack: /* @__PURE__ */ new Set([Types2.set, Types2.map, Types2.weakSet, Types2.weakMap]),
       structuredCloneExists: typeof structuredClone === "function"
@@ -105701,7 +105701,7 @@ var require_clone2 = __commonJS({
           newObj.set(key, clone2(value, options2, seen));
         }
       }
-      const keys2 = Utils26.keys(obj2, options2);
+      const keys2 = Utils27.keys(obj2, options2);
       for (const key of keys2) {
         if (key === "__proto__") {
           continue;
@@ -105788,7 +105788,7 @@ var require_merge = __commonJS({
     "use strict";
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Utils26 = require_utils5();
+    var Utils27 = require_utils5();
     var internals = {};
     module2.exports = internals.merge = function(target, source, options2) {
       Assert(target && typeof target === "object", "Invalid target value: must be an object");
@@ -105807,7 +105807,7 @@ var require_merge = __commonJS({
         }
         return target;
       }
-      const keys2 = Utils26.keys(source, options2);
+      const keys2 = Utils27.keys(source, options2);
       for (let i = 0; i < keys2.length; ++i) {
         const key = keys2[i];
         if (key === "__proto__" || !Object.prototype.propertyIsEnumerable.call(source, key)) {
@@ -106191,7 +106191,7 @@ var require_contain = __commonJS({
     var Assert = require_assert();
     var DeepEqual = require_deepEqual();
     var EscapeRegex = require_escapeRegex();
-    var Utils26 = require_utils5();
+    var Utils27 = require_utils5();
     var internals = {};
     module2.exports = function(ref, values2, options2 = {}) {
       if (typeof values2 !== "object") {
@@ -106279,7 +106279,7 @@ var require_contain = __commonJS({
     };
     internals.object = function(ref, values2, options2) {
       Assert(options2.once === void 0, "Cannot use option once with object");
-      const keys2 = Utils26.keys(ref, options2);
+      const keys2 = Utils27.keys(ref, options2);
       if (!keys2.length) {
         return false;
       }
@@ -148787,13 +148787,13 @@ var require_data_types = __commonJS({
       BaseTypes.ARRAY.prototype._stringify = function _stringify(values2, options2) {
         let str = `ARRAY[${this._value(values2, options2).join(",")}]`;
         if (this.type) {
-          const Utils26 = require_utils6();
+          const Utils27 = require_utils6();
           let castKey = this.toSql();
           if (this.type instanceof BaseTypes.ENUM) {
             const table = options2.field.Model.getTableName();
             const useSchema = table.schema !== void 0;
-            const schemaWithDelimiter = useSchema ? `${Utils26.addTicks(table.schema, '"')}${table.delimiter}` : "";
-            castKey = `${Utils26.addTicks(Utils26.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
+            const schemaWithDelimiter = useSchema ? `${Utils27.addTicks(table.schema, '"')}${table.delimiter}` : "";
+            castKey = `${Utils27.addTicks(Utils27.generateEnumName(useSchema ? table.tableName : table, options2.field.field), '"')}[]`;
             str += `::${schemaWithDelimiter}${castKey}`;
           } else {
             str += `::${castKey}`;
@@ -153316,7 +153316,7 @@ var require_belongs_to = __commonJS({
         }
       return a;
     };
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153343,7 +153343,7 @@ var require_belongs_to = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils26.camelize([
+          this.foreignKey = Utils27.camelize([
             this.as,
             this.target.primaryKeyAttribute
           ].join("_"));
@@ -153381,7 +153381,7 @@ var require_belongs_to = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.target, this.source, this.options, this.targetKeyField);
-        Utils26.mergeDefaults(this.source.rawAttributes, newAttributes);
+        Utils27.mergeDefaults(this.source.rawAttributes, newAttributes);
         this.source.refreshAttributes();
         this.identifierField = this.source.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -153395,7 +153395,7 @@ var require_belongs_to = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -153496,7 +153496,7 @@ var require_has_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153523,7 +153523,7 @@ var require_has_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils26.singularize(this.as)
+              singular: Utils27.singularize(this.as)
             };
           }
         } else {
@@ -153537,7 +153537,7 @@ var require_has_many = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils26.camelize([
+          this.foreignKey = Utils27.camelize([
             this.source.options.name.singular,
             this.source.primaryKeyAttribute
           ].join("_"));
@@ -153584,7 +153584,7 @@ var require_has_many = __commonJS({
           constraintOptions.onUpdate = constraintOptions.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, constraintOptions, this.sourceKeyField);
-        Utils26.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils27.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.source.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
@@ -153658,7 +153658,7 @@ var require_has_many = __commonJS({
         return result2;
       }
       async count(instance, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2.attributes = [
           [
             this.sequelize.fn("COUNT", this.sequelize.col(`${this.target.name}.${this.target.primaryKeyField}`)),
@@ -153817,7 +153817,7 @@ var require_has_one = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -153844,8 +153844,8 @@ var require_has_one = __commonJS({
           this.foreignKey = this.options.foreignKey;
         }
         if (!this.foreignKey) {
-          this.foreignKey = Utils26.camelize([
-            Utils26.singularize(this.options.as || this.source.name),
+          this.foreignKey = Utils27.camelize([
+            Utils27.singularize(this.options.as || this.source.name),
             this.source.primaryKeyAttribute
           ].join("_"));
         }
@@ -153880,7 +153880,7 @@ var require_has_one = __commonJS({
           this.options.onUpdate = this.options.onUpdate || "CASCADE";
         }
         Helpers.addForeignKeyConstraints(newAttributes[this.foreignKey], this.source, this.target, this.options, this.sourceKeyField);
-        Utils26.mergeDefaults(this.target.rawAttributes, newAttributes);
+        Utils27.mergeDefaults(this.target.rawAttributes, newAttributes);
         this.target.refreshAttributes();
         this.identifierField = this.target.rawAttributes[this.foreignKey].field || this.foreignKey;
         Helpers.checkNamingCollision(this);
@@ -153894,7 +153894,7 @@ var require_has_one = __commonJS({
         const where3 = {};
         let Target = this.target;
         let instance;
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (Object.prototype.hasOwnProperty.call(options2, "scope")) {
           if (!options2.scope) {
             Target = Target.unscoped();
@@ -154013,7 +154013,7 @@ var require_belongs_to_many = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Helpers = require_helpers5();
     var _4 = require_lodash();
     var Association2 = require_base2();
@@ -154051,14 +154051,14 @@ var require_belongs_to_many = __commonJS({
           } else {
             this.options.name = {
               plural: this.as,
-              singular: Utils26.singularize(this.as)
+              singular: Utils27.singularize(this.as)
             };
           }
         } else {
           this.as = this.target.options.name.plural;
           this.options.name = this.target.options.name;
         }
-        this.combinedTableName = Utils26.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
+        this.combinedTableName = Utils27.combineTableNames(this.source.tableName, this.isSelfAssociation ? this.as || this.target.tableName : this.target.tableName);
         if (this.isSelfAssociation) {
           this.targetAssociation = this;
         }
@@ -154158,7 +154158,7 @@ var require_belongs_to_many = __commonJS({
           this.foreignKey = this.foreignKeyAttribute.name || this.foreignKeyAttribute.fieldName;
         } else {
           this.foreignKeyAttribute = {};
-          this.foreignKey = this.options.foreignKey || Utils26.camelize([
+          this.foreignKey = this.options.foreignKey || Utils27.camelize([
             this.source.options.name.singular,
             this.sourceKey
           ].join("_"));
@@ -154171,8 +154171,8 @@ var require_belongs_to_many = __commonJS({
             this.otherKeyDefault = true;
           }
           this.otherKeyAttribute = {};
-          this.otherKey = this.options.otherKey || Utils26.camelize([
-            this.isSelfAssociation ? Utils26.singularize(this.as) : this.target.options.name.singular,
+          this.otherKey = this.options.otherKey || Utils27.camelize([
+            this.isSelfAssociation ? Utils27.singularize(this.as) : this.target.options.name.singular,
             this.targetKey
           ].join("_"));
         }
@@ -154298,7 +154298,7 @@ var require_belongs_to_many = __commonJS({
         Helpers.mixinMethods(this, obj2, methods, aliases2);
       }
       async get(instance, options2) {
-        options2 = Utils26.cloneDeep(options2) || {};
+        options2 = Utils27.cloneDeep(options2) || {};
         const through = this.through;
         let scopeWhere;
         let throughWhere;
@@ -154346,7 +154346,7 @@ var require_belongs_to_many = __commonJS({
       }
       async count(instance, options2) {
         const sequelize = this.target.sequelize;
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2.attributes = [
           [sequelize.fn("COUNT", sequelize.col([this.target.name, this.targetKeyField].join("."))), "count"]
         ];
@@ -154582,7 +154582,7 @@ var require_instance_validator = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var sequelizeError = require_errors4();
     var DataTypes2 = require_data_types9();
     var BelongsTo2 = require_belongs_to();
@@ -154638,7 +154638,7 @@ var require_instance_validator = __commonJS({
             return;
           }
           const value = this.modelInstance.dataValues[field];
-          if (value instanceof Utils26.SequelizeMethod) {
+          if (value instanceof Utils27.SequelizeMethod) {
             return;
           }
           if (!rawAttribute._autoGenerated && !rawAttribute.autoIncrement) {
@@ -154760,7 +154760,7 @@ var require_instance_validator = __commonJS({
           }
         }
         if (rawAttribute.type instanceof DataTypes2.STRING || rawAttribute.type instanceof DataTypes2.TEXT || rawAttribute.type instanceof DataTypes2.CITEXT) {
-          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils26.SequelizeMethod) && !Buffer.isBuffer(value)) {
+          if (Array.isArray(value) || _4.isObject(value) && !(value instanceof Utils27.SequelizeMethod) && !Buffer.isBuffer(value)) {
             this.errors.push(new sequelizeError.ValidationErrorItem(`${field} cannot be an array or an object`, "string violation", field, value, this.modelInstance, "not_a_string"));
           }
         }
@@ -155117,7 +155117,7 @@ var require_model2 = __commonJS({
     var assert2 = require("assert");
     var _4 = require_lodash();
     var Dottie = require_dottie();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var { logger } = require_logger3();
     var BelongsTo2 = require_belongs_to();
     var BelongsToMany2 = require_belongs_to_many();
@@ -155220,7 +155220,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.constructor._hasDefaultValues) {
             defaults3 = _4.mapValues(this.constructor._defaultValues, (valueFn) => {
               const value = valueFn();
-              return value && value instanceof Utils26.SequelizeMethod ? value : _4.cloneDeep(value);
+              return value && value instanceof Utils27.SequelizeMethod ? value : _4.cloneDeep(value);
             });
           }
           if (this.constructor.primaryKeyAttributes.length) {
@@ -155231,20 +155231,20 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
           if (this.constructor._timestampAttributes.createdAt && defaults3[this.constructor._timestampAttributes.createdAt]) {
-            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.createdAt] = Utils27.toDefaultValue(defaults3[this.constructor._timestampAttributes.createdAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.createdAt];
           }
           if (this.constructor._timestampAttributes.updatedAt && defaults3[this.constructor._timestampAttributes.updatedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.updatedAt] = Utils27.toDefaultValue(defaults3[this.constructor._timestampAttributes.updatedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.updatedAt];
           }
           if (this.constructor._timestampAttributes.deletedAt && defaults3[this.constructor._timestampAttributes.deletedAt]) {
-            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils26.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
+            this.dataValues[this.constructor._timestampAttributes.deletedAt] = Utils27.toDefaultValue(defaults3[this.constructor._timestampAttributes.deletedAt], this.sequelize.options.dialect);
             delete defaults3[this.constructor._timestampAttributes.deletedAt];
           }
           for (key in defaults3) {
             if (values2[key] === void 0) {
-              this.set(key, Utils26.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
+              this.set(key, Utils27.toDefaultValue(defaults3[key], this.sequelize.options.dialect), { raw: true });
               delete values2[key];
             }
           }
@@ -155274,7 +155274,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           [Op2.eq]: null
         };
         deletedAtObject[deletedAtAttribute.field || deletedAtCol] = deletedAtDefaultValue;
-        if (Utils26.isWhereEmpty(options2.where)) {
+        if (Utils27.isWhereEmpty(options2.where)) {
           options2.where = deletedAtObject;
         } else {
           options2.where = { [Op2.and]: [deletedAtObject, options2.where] };
@@ -155483,7 +155483,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             }
             used.push(parent);
-            const thisInclude = Utils26.cloneDeep(include);
+            const thisInclude = Utils27.cloneDeep(include);
             thisInclude.model = model;
             if (as2) {
               thisInclude.as = as2;
@@ -155573,7 +155573,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (include.attributes && !options2.raw) {
           include.model._expandAttributes(include);
           include.originalAttributes = include.model._injectDependentVirtualAttributes(include.attributes);
-          include = Utils26.mapFinderOptions(include, include.model);
+          include = Utils27.mapFinderOptions(include, include.model);
           if (include.attributes.length) {
             _4.each(include.model.primaryKeys, (attr, key) => {
               if (!include.attributes.some((includeAttr) => {
@@ -155587,13 +155587,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             });
           }
         } else {
-          include = Utils26.mapFinderOptions(include, include.model);
+          include = Utils27.mapFinderOptions(include, include.model);
         }
         if (include._pseudo) {
           if (!include.attributes) {
             include.attributes = Object.keys(include.model.tableAttributes);
           }
-          return Utils26.mapFinderOptions(include, include.model);
+          return Utils27.mapFinderOptions(include, include.model);
         }
         const association = include.association || this._getIncludedAssociation(include.model, include.as);
         include.association = association;
@@ -155627,7 +155627,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!include.attributes) {
           include.attributes = Object.keys(include.model.tableAttributes);
         }
-        include = Utils26.mapFinderOptions(include, include.model);
+        include = Utils27.mapFinderOptions(include, include.model);
         if (include.required === void 0) {
           include.required = !!include.where;
         }
@@ -155727,7 +155727,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           if (this.options && this.options.whereMergeStrategy === "and") {
             return combineWheresWithAnd(objValue, srcValue);
           }
-          if (srcValue instanceof Utils26.SequelizeMethod) {
+          if (srcValue instanceof Utils27.SequelizeMethod) {
             srcValue = { [Op2.and]: srcValue };
           }
           if (_4.isPlainObject(objValue) && _4.isPlainObject(srcValue)) {
@@ -155741,7 +155741,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           });
         }
         if (srcValue) {
-          return Utils26.cloneDeep(srcValue, true);
+          return Utils27.cloneDeep(srcValue, true);
         }
         return srcValue === void 0 ? objValue : srcValue;
       }
@@ -155759,14 +155759,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this.sequelize = options2.sequelize;
         const globalOptions = this.sequelize.options;
-        options2 = Utils26.merge(_4.cloneDeep(globalOptions.define), options2);
+        options2 = Utils27.merge(_4.cloneDeep(globalOptions.define), options2);
         if (!options2.modelName) {
           options2.modelName = this.name;
         }
-        options2 = Utils26.merge({
+        options2 = Utils27.merge({
           name: {
-            plural: Utils26.pluralize(options2.modelName),
-            singular: Utils26.singularize(options2.modelName)
+            plural: Utils27.pluralize(options2.modelName),
+            singular: Utils27.singularize(options2.modelName)
           },
           indexes: [],
           omitNull: globalOptions.omitNull,
@@ -155799,7 +155799,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this._setupHooks(options2.hooks);
         this.underscored = this.options.underscored;
         if (!this.options.tableName) {
-          this.tableName = this.options.freezeTableName ? this.name : Utils26.underscoredIf(Utils26.pluralize(this.name), this.underscored);
+          this.tableName = this.options.freezeTableName ? this.name : Utils27.underscoredIf(Utils27.pluralize(this.name), this.underscored);
         } else {
           this.tableName = this.options.tableName;
         }
@@ -155830,7 +155830,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return attribute;
         });
         const tableName = this.getTableName();
-        this._indexes = this.options.indexes.map((index) => Utils26.nameIndex(this._conformIndex(index), tableName));
+        this._indexes = this.options.indexes.map((index) => Utils27.nameIndex(this._conformIndex(index), tableName));
         this.primaryKeys = {};
         this._readOnlyAttributes = /* @__PURE__ */ new Set();
         this._timestampAttributes = {};
@@ -155932,7 +155932,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           definition.fieldName = name2;
           definition._modelAttribute = true;
           if (definition.field === void 0) {
-            definition.field = Utils26.underscoredIf(name2, this.underscored);
+            definition.field = Utils27.underscoredIf(name2, this.underscored);
           }
           if (definition.primaryKey === true) {
             this.primaryKeys[name2] = definition;
@@ -155954,7 +155954,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this._virtualAttributes.add(name2);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "defaultValue")) {
-            this._defaultValues[name2] = () => Utils26.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
+            this._defaultValues[name2] = () => Utils27.toDefaultValue(definition.defaultValue, this.sequelize.options.dialect);
           }
           if (Object.prototype.hasOwnProperty.call(definition, "unique") && definition.unique) {
             let idxName;
@@ -155977,7 +155977,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             this.prototype.validators[name2] = definition.validate;
           }
           if (definition.index === true && definition.type instanceof DataTypes2.JSONB) {
-            this._indexes.push(Utils26.nameIndex(this._conformIndex({
+            this._indexes.push(Utils27.nameIndex(this._conformIndex({
               fields: [definition.field || name2],
               using: "gin"
             }), this.getTableName()));
@@ -156175,7 +156175,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
           if (scope) {
             this._conformIncludes(scope, this);
-            this._assignOptions(self2._scope, Utils26.cloneDeep(scope));
+            this._assignOptions(self2._scope, Utils27.cloneDeep(scope));
             self2._scopeNames.push(scopeName ? scopeName : "defaultScope");
           } else {
             throw new sequelizeErrors.SequelizeScopeError(`Invalid scope ${scopeName} called.`);
@@ -156195,7 +156195,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         this.warnOnInvalidOptions(options2, Object.keys(this.rawAttributes));
         const tableNames = {};
         tableNames[this.getTableName(options2)] = true;
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156227,7 +156227,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           options2.originalAttributes = this._injectDependentVirtualAttributes(options2.attributes);
         }
         this.options.whereCollection = options2.where || null;
-        Utils26.mapFinderOptions(options2, this);
+        Utils27.mapFinderOptions(options2, this);
         options2 = this._paranoidClause(this, options2);
         if (options2.hooks) {
           await this.runHooks("beforeFindAfterOptions", options2);
@@ -156306,7 +156306,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if ([null, void 0].includes(param)) {
           return null;
         }
-        options2 = Utils26.cloneDeep(options2) || {};
+        options2 = Utils27.cloneDeep(options2) || {};
         if (typeof param === "number" || typeof param === "bigint" || typeof param === "string" || Buffer.isBuffer(param)) {
           options2.where = {
             [this.primaryKeyAttribute]: param
@@ -156320,7 +156320,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findOne must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156329,7 +156329,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         if (options2.limit === void 0) {
           const uniqueSingleColumns = _4.chain(this.uniqueKeys).values().filter((c) => c.fields.length === 1).map("column").value();
-          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils26.isPrimitive(value) || Buffer.isBuffer(value)))) {
+          if (!options2.where || !_4.some(options2.where, (value, key) => (key === this.primaryKeyAttribute || uniqueSingleColumns.includes(key)) && (Utils27.isPrimitive(value) || Buffer.isBuffer(value)))) {
             options2.limit = 1;
           }
         }
@@ -156338,7 +156338,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }));
       }
       static async aggregate(attribute, aggregateFunction, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         const prevAttributes = options2.attributes;
         this._injectScope(options2);
         options2.attributes = prevAttributes;
@@ -156368,13 +156368,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else {
           options2.dataType = this.sequelize.normalizeDataType(options2.dataType);
         }
-        Utils26.mapOptionFieldNames(options2, this);
+        Utils27.mapOptionFieldNames(options2, this);
         options2 = this._paranoidClause(this, options2);
         const value = await this.queryInterface.rawSelect(this.getTableName(options2), options2, aggregateFunction, this);
         return value;
       }
       static async count(options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2 = _4.defaults(options2, { hooks: true });
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
@@ -156411,7 +156411,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (options2 !== void 0 && !_4.isPlainObject(options2)) {
           throw new Error("The argument passed to findAndCountAll must be an options object, use findByPk if you wish to pass a single primary key value");
         }
-        const countOptions = Utils26.cloneDeep(options2);
+        const countOptions = Utils27.cloneDeep(options2);
         if (countOptions.attributes) {
           countOptions.attributes = void 0;
         }
@@ -156454,7 +156454,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return valueSets.map((values2) => this.build(values2, options2));
       }
       static async create(values2, options2) {
-        options2 = Utils26.cloneDeep(options2 || {});
+        options2 = Utils27.cloneDeep(options2 || {});
         return await this.build(values2, {
           isNewRecord: true,
           attributes: options2.fields,
@@ -156472,7 +156472,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (instance === null) {
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils26.defaults(values2, options2.where);
+            values2 = Utils27.defaults(values2, options2.where);
           }
           instance = this.build(values2, options2);
           return [instance, true];
@@ -156504,13 +156504,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const t = await this.sequelize.transaction(options2);
           transaction = t;
           options2.transaction = t;
-          const found = await this.findOne(Utils26.defaults({ transaction }, options2));
+          const found = await this.findOne(Utils27.defaults({ transaction }, options2));
           if (found !== null) {
             return [found, false];
           }
           values2 = __spreadValues({}, options2.defaults);
           if (_4.isPlainObject(options2.where)) {
-            values2 = Utils26.defaults(values2, options2.where);
+            values2 = Utils27.defaults(values2, options2.where);
           }
           options2.exception = true;
           options2.returning = true;
@@ -156523,13 +156523,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           } catch (err) {
             if (!(err instanceof sequelizeErrors.UniqueConstraintError))
               throw err;
-            const flattenedWhere = Utils26.flattenObjectDeep(options2.where);
+            const flattenedWhere = Utils27.flattenObjectDeep(options2.where);
             const flattenedWhereKeys = Object.keys(flattenedWhere).map((name2) => _4.last(name2.split(".")));
             const whereFields = flattenedWhereKeys.map((name2) => _4.get(this.rawAttributes, `${name2}.field`, name2));
             const defaultFields = options2.defaults && Object.keys(options2.defaults).filter((name2) => this.rawAttributes[name2]).map((name2) => this.rawAttributes[name2].field || name2);
             const errFieldKeys = Object.keys(err.fields);
-            const errFieldsWhereIntersects = Utils26.intersects(errFieldKeys, whereFields);
-            if (defaultFields && !errFieldsWhereIntersects && Utils26.intersects(errFieldKeys, defaultFields)) {
+            const errFieldsWhereIntersects = Utils27.intersects(errFieldKeys, whereFields);
+            if (defaultFields && !errFieldsWhereIntersects && Utils27.intersects(errFieldKeys, defaultFields)) {
               throw err;
             }
             if (errFieldsWhereIntersects) {
@@ -156540,7 +156540,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 }
               });
             }
-            const otherCreated = await this.findOne(Utils26.defaults({
+            const otherCreated = await this.findOne(Utils27.defaults({
               transaction: internalTransaction ? null : transaction
             }, options2));
             if (otherCreated === null)
@@ -156559,7 +156559,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         let values2 = __spreadValues({}, options2.defaults);
         if (_4.isPlainObject(options2.where)) {
-          values2 = Utils26.defaults(values2, options2.where);
+          values2 = Utils27.defaults(values2, options2.where);
         }
         const found = await this.findOne(options2);
         if (found)
@@ -156584,7 +156584,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           hooks: true,
           returning: true,
           validate: true
-        }, Utils26.cloneDeep(options2));
+        }, Utils27.cloneDeep(options2));
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156605,9 +156605,9 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           await instance.validate(options2);
         }
         const updatedDataValues = _4.pick(instance.dataValues, changed);
-        const insertValues = Utils26.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
-        const updateValues = Utils26.mapValueFieldNames(updatedDataValues, options2.fields, this);
-        const now2 = Utils26.now(this.sequelize.options.dialect);
+        const insertValues = Utils27.mapValueFieldNames(instance.dataValues, Object.keys(instance.rawAttributes), this);
+        const updateValues = Utils27.mapValueFieldNames(updatedDataValues, options2.fields, this);
+        const now2 = Utils27.now(this.sequelize.options.dialect);
         if (createdAtAttr && !insertValues[createdAtAttr]) {
           const field = this.rawAttributes[createdAtAttr].field || createdAtAttr;
           insertValues[field] = this._getDefaultTimestamp(createdAtAttr) || now2;
@@ -156640,8 +156640,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           return [];
         }
         const dialect = this.sequelize.options.dialect;
-        const now2 = Utils26.now(this.sequelize.options.dialect);
-        options2 = Utils26.cloneDeep(options2);
+        const now2 = Utils27.now(this.sequelize.options.dialect);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156733,7 +156733,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                 if (!associationInstances.length) {
                   return;
                 }
-                const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
+                const includeOptions = _4(Utils27.cloneDeep(include)).omit(["association"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -156759,7 +156759,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   options22.fields.push(updatedAtAttr);
                 }
               }
-              const out = Utils26.mapValueFieldNames(values2, options22.fields, model);
+              const out = Utils27.mapValueFieldNames(values2, options22.fields, model);
               for (const key of model._virtualAttributes) {
                 delete out[key];
               }
@@ -156829,7 +156829,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               if (!associationInstances.length) {
                 return;
               }
-              const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
+              const includeOptions = _4(Utils27.cloneDeep(include)).omit(["association"]).defaults({
                 transaction: options22.transaction,
                 logging: options22.logging
               }).value();
@@ -156853,7 +156853,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
                   }
                   valueSets.push(values2);
                 }
-                const throughOptions = _4(Utils26.cloneDeep(include)).omit(["association", "attributes"]).defaults({
+                const throughOptions = _4(Utils27.cloneDeep(include)).omit(["association", "attributes"]).defaults({
                   transaction: options22.transaction,
                   logging: options22.logging
                 }).value();
@@ -156882,12 +156882,12 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return await recursiveBulkCreate(instances, options2);
       }
       static async truncate(options2) {
-        options2 = Utils26.cloneDeep(options2) || {};
+        options2 = Utils27.cloneDeep(options2) || {};
         options2.truncate = true;
         return await this.destroy(options2);
       }
       static async destroy(options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -156898,7 +156898,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!options2 || !(options2.where || options2.truncate)) {
           throw new Error("Missing where or truncate attribute in the options parameter of model.destroy.");
         }
-        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils26.SequelizeMethod)) {
+        if (!options2.truncate && !_4.isPlainObject(options2.where) && !Array.isArray(options2.where) && !(options2.where instanceof Utils27.SequelizeMethod)) {
           throw new Error("Expected plain object, array or sequelize method in the options.where parameter of model.destroy.");
         }
         options2 = _4.defaults(options2, {
@@ -156909,7 +156909,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           restartIdentity: false
         });
         options2.type = QueryTypes2.BULKDELETE;
-        Utils26.mapOptionFieldNames(options2, this);
+        Utils27.mapOptionFieldNames(options2, this);
         options2.model = this;
         if (options2.hooks) {
           await this.runHooks("beforeBulkDestroy", options2);
@@ -156928,7 +156928,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           const where3 = {
             [field]: Object.prototype.hasOwnProperty.call(deletedAtAttribute, "defaultValue") ? deletedAtAttribute.defaultValue : null
           };
-          attrValueHash[field] = Utils26.now(this.sequelize.options.dialect);
+          attrValueHash[field] = Utils27.now(this.sequelize.options.dialect);
           result2 = await this.queryInterface.bulkUpdate(this.getTableName(options2), attrValueHash, Object.assign(where3, options2.where), options2, this.rawAttributes);
         } else {
           result2 = await this.queryInterface.bulkDelete(this.getTableName(options2), options2.where, options2, this);
@@ -156956,7 +156956,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         options2.type = QueryTypes2.RAW;
         options2.model = this;
-        Utils26.mapOptionFieldNames(options2, this);
+        Utils27.mapOptionFieldNames(options2, this);
         if (options2.hooks) {
           await this.runHooks("beforeBulkRestore", options2);
         }
@@ -156981,7 +156981,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       static async update(values2, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157014,7 +157014,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
           }
         }
         if (this._timestampAttributes.updatedAt && !options2.silent) {
-          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils26.now(this.sequelize.options.dialect);
+          values2[this._timestampAttributes.updatedAt] = this._getDefaultTimestamp(this._timestampAttributes.updatedAt) || Utils27.now(this.sequelize.options.dialect);
         }
         options2.model = this;
         let valuesUse;
@@ -157100,8 +157100,8 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         } else if (_4.isEmpty(valuesUse) || Object.keys(valuesUse).length === 1 && valuesUse[this._timestampAttributes.updatedAt]) {
           result2 = [0];
         } else {
-          valuesUse = Utils26.mapValueFieldNames(valuesUse, options2.fields, this);
-          options2 = Utils26.mapOptionFieldNames(options2, this);
+          valuesUse = Utils27.mapValueFieldNames(valuesUse, options2.fields, this);
+          options2 = Utils27.mapOptionFieldNames(options2, this);
           options2.hasTrigger = this.options ? this.options.hasTrigger : false;
           const affectedRows = await this.queryInterface.bulkUpdate(this.getTableName(options2), valuesUse, options2.where, options2, this.tableAttributes);
           if (options2.returning) {
@@ -157127,7 +157127,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _getDefaultTimestamp(attr) {
         if (!!this.rawAttributes[attr] && !!this.rawAttributes[attr].defaultValue) {
-          return Utils26.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
+          return Utils27.toDefaultValue(this.rawAttributes[attr].defaultValue, this.sequelize.options.dialect);
         }
         return void 0;
       }
@@ -157145,7 +157145,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2.attributes = attributes;
       }
       static _injectScope(options2) {
-        const scope = Utils26.cloneDeep(this._scope);
+        const scope = Utils27.cloneDeep(this._scope);
         this._defaultsOptions(options2, scope);
       }
       static [/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")]() {
@@ -157177,13 +157177,13 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         }
         this._injectScope(options2);
         this._optionsMustContainWhere(options2);
-        options2 = Utils26.defaults({}, options2, {
+        options2 = Utils27.defaults({}, options2, {
           by: 1,
           where: {},
           increment: true
         });
         const isSubtraction = !options2.increment;
-        Utils26.mapOptionFieldNames(options2, this);
+        Utils27.mapOptionFieldNames(options2, this);
         const where3 = __spreadValues({}, options2.where);
         let incrementAmountsByField = {};
         if (Array.isArray(fields)) {
@@ -157201,7 +157201,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const updatedAtAttr = this._timestampAttributes.updatedAt;
         if (!options2.silent && updatedAtAttr && !incrementAmountsByField[updatedAtAttr]) {
           const attrName = this.rawAttributes[updatedAtAttr].field || updatedAtAttr;
-          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils26.now(this.sequelize.options.dialect);
+          extraAttributesToBeUpdated[attrName] = this._getDefaultTimestamp(updatedAtAttr) || Utils27.now(this.sequelize.options.dialect);
         }
         const tableName = this.getTableName(options2);
         let affectedRows;
@@ -157224,7 +157224,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       static _optionsMustContainWhere(options2) {
         assert2(options2 && options2.where, "Missing where attribute in the options parameter");
-        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils26.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
+        assert2(_4.isPlainObject(options2.where) || Array.isArray(options2.where) || options2.where instanceof Utils27.SequelizeMethod, "Expected plain object, array or sequelize method in the options.where parameter");
       }
       where(checkVersion) {
         const where3 = this.constructor.primaryKeyAttributes.reduce((result2, attribute) => {
@@ -157238,7 +157238,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (checkVersion && versionAttr) {
           where3[versionAttr] = this.get(versionAttr, { raw: true });
         }
-        return Utils26.mapWhereFieldNames(where3, this.constructor);
+        return Utils27.mapWhereFieldNames(where3, this.constructor);
       }
       toString() {
         return `[object SequelizeInstance:${this.constructor.name}]`;
@@ -157378,10 +157378,10 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return this;
             }
           }
-          if (!(value instanceof Utils26.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
+          if (!(value instanceof Utils27.SequelizeMethod) && Object.prototype.hasOwnProperty.call(this.constructor._dataTypeSanitizers, key)) {
             value = this.constructor._dataTypeSanitizers[key].call(this, value, options2);
           }
-          if (!options2.raw && (value instanceof Utils26.SequelizeMethod || !(value instanceof Utils26.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
+          if (!options2.raw && (value instanceof Utils27.SequelizeMethod || !(value instanceof Utils27.SequelizeMethod) && this.constructor._dataTypeChanges[key] && this.constructor._dataTypeChanges[key].call(this, value, originalValue, options2) || !this.constructor._dataTypeChanges[key] && !_4.isEqual(value, originalValue))) {
             this._previousDataValues[key] = originalValue;
             this.changed(key, true);
           }
@@ -157452,7 +157452,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (arguments.length > 1) {
           throw new Error("The second argument was removed in favor of the options object.");
         }
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
@@ -157484,7 +157484,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         const versionAttr = this.constructor._versionAttribute;
         const hook = this.isNewRecord ? "Create" : "Update";
         const wasNewRecord = this.isNewRecord;
-        const now2 = Utils26.now(this.sequelize.options.dialect);
+        const now2 = Utils27.now(this.sequelize.options.dialect);
         let updatedAtAttr = this.constructor._timestampAttributes.updatedAt;
         if (updatedAtAttr && options2.fields.length > 0 && !options2.fields.includes(updatedAtAttr)) {
           options2.fields.push(updatedAtAttr);
@@ -157553,7 +157553,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
             const instance = this.get(include.as);
             if (!instance)
               return;
-            const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils27.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -157568,7 +157568,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         if (!this.changed() && !this.isNewRecord)
           return this;
         const versionFieldName = _4.get(this.constructor.rawAttributes[versionAttr], "field") || versionAttr;
-        const values2 = Utils26.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
+        const values2 = Utils27.mapValueFieldNames(this.dataValues, options2.fields, this.constructor);
         let query = null;
         let args = [];
         let where3;
@@ -157610,7 +157610,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
               return;
             if (!Array.isArray(instances))
               instances = [instances];
-            const includeOptions = _4(Utils26.cloneDeep(include)).omit(["association"]).defaults({
+            const includeOptions = _4(Utils27.cloneDeep(include)).omit(["association"]).defaults({
               transaction: options2.transaction,
               logging: options2.logging,
               parentRecord: this
@@ -157650,7 +157650,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         return result2;
       }
       async reload(options2) {
-        options2 = Utils26.defaults({
+        options2 = Utils27.defaults({
           where: this.where()
         }, options2, {
           include: this._options.include || void 0
@@ -157675,14 +157675,14 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
         options2 = options2 || {};
         if (Array.isArray(options2))
           options2 = { fields: options2 };
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (options2.transaction === void 0 && this.sequelize.constructor._cls) {
           const t = this.sequelize.constructor._cls.get("transaction");
           if (t) {
             options2.transaction = t;
           }
         }
-        const setOptions = Utils26.cloneDeep(options2);
+        const setOptions = Utils27.cloneDeep(options2);
         setOptions.attributes = options2.fields;
         this.set(values2, setOptions);
         const sideEffects = _4.without(this.changed(), ...changedBefore);
@@ -157766,7 +157766,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       }
       async increment(fields, options2) {
         const identifier2 = this.where();
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2.where = __spreadValues(__spreadValues({}, options2.where), identifier2);
         options2.instance = this;
         await this.constructor.increment(fields, options2);
@@ -157812,7 +157812,7 @@ See https://sequelize.org/main/manual/model-basics.html#caveat-with-public-class
       if (!_4.isObject(where3)) {
         return where3;
       }
-      const keys2 = Utils26.getComplexKeys(where3);
+      const keys2 = Utils27.getComplexKeys(where3);
       if (keys2.length === 0) {
         return;
       }
@@ -158426,7 +158426,7 @@ var require_query_interface = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var DataTypes2 = require_data_types9();
     var Transaction2 = require_transaction();
     var QueryTypes2 = require_query_types();
@@ -158651,7 +158651,7 @@ var require_query_interface = __commonJS({
         if (!rawTablename) {
           rawTablename = tableName;
         }
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2.fields = attributes;
         const sql = this.queryGenerator.addIndexQuery(tableName, options2, rawTablename);
         return await this.sequelize.query(sql, __spreadProps(__spreadValues({}, options2), { supportsSearchPath: false }));
@@ -158695,7 +158695,7 @@ var require_query_interface = __commonJS({
         if (!options2.type) {
           throw new Error("Constraint type must be specified through options.type");
         }
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         const sql = this.queryGenerator.addConstraintQuery(tableName, options2);
         return await this.sequelize.query(sql, options2);
       }
@@ -158707,7 +158707,7 @@ var require_query_interface = __commonJS({
         return this.sequelize.query(this.queryGenerator.removeConstraintQuery(tableName, constraintName), options2);
       }
       async insert(instance, tableName, values2, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2.hasTrigger = instance && instance.constructor.options.hasTrigger;
         const sql = this.queryGenerator.insertQuery(tableName, values2, instance && instance.constructor.rawAttributes, options2);
         options2.type = QueryTypes2.INSERT;
@@ -158762,9 +158762,9 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkUpdate(tableName, values2, identifier2, options2, attributes) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         if (typeof identifier2 === "object")
-          identifier2 = Utils26.cloneDeep(identifier2);
+          identifier2 = Utils27.cloneDeep(identifier2);
         const sql = this.queryGenerator.updateQuery(tableName, values2, identifier2, options2, attributes);
         const table = _4.isObject(tableName) ? tableName : { tableName };
         const model = options2.model ? options2.model : _4.find(this.sequelize.modelManager.models, { tableName: table.tableName });
@@ -158800,13 +158800,13 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(sql, options2);
       }
       async bulkDelete(tableName, where3, options2, model) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2 = _4.defaults(options2, { limit: null });
         if (options2.truncate === true) {
           return this.sequelize.query(this.queryGenerator.truncateTableQuery(tableName, options2), options2);
         }
         if (typeof identifier === "object")
-          where3 = Utils26.cloneDeep(where3);
+          where3 = Utils27.cloneDeep(where3);
         return await this.sequelize.query(this.queryGenerator.deleteQuery(tableName, where3, options2, model), options2);
       }
       async select(model, tableName, optionsArg) {
@@ -158814,21 +158814,21 @@ var require_query_interface = __commonJS({
         return await this.sequelize.query(this.queryGenerator.selectQuery(tableName, options2, model), options2);
       }
       async increment(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("+", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async decrement(model, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         const sql = this.queryGenerator.arithmeticQuery("-", tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2);
         options2.type = QueryTypes2.UPDATE;
         options2.model = model;
         return await this.sequelize.query(sql, options2);
       }
       async rawSelect(tableName, options2, attributeSelector, Model14) {
-        options2 = Utils26.cloneDeep(options2);
+        options2 = Utils27.cloneDeep(options2);
         options2 = _4.defaults(options2, {
           raw: true,
           plain: true,
@@ -160920,7 +160920,7 @@ var require_operators2 = __commonJS({
     };
     var _4 = require_lodash();
     var Op2 = require_operators();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var OperatorHelpers = {
       OperatorMap: {
         [Op2.eq]: "=",
@@ -160975,7 +160975,7 @@ var require_operators2 = __commonJS({
         if (!this.OperatorsAliasMap) {
           return orig;
         }
-        Utils26.getOperators(orig).forEach((op) => {
+        Utils27.getOperators(orig).forEach((op) => {
           const item = orig[op];
           if (_4.isPlainObject(item)) {
             obj2[op] = this._replaceAliases(item);
@@ -161069,7 +161069,7 @@ var require_query_generator = __commonJS({
     var util = require("util");
     var _4 = require_lodash();
     var uuidv4 = (init_esm_node(), __toCommonJS(esm_node_exports)).v4;
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var deprecations = require_deprecations();
     var SqlString = require_sql_string();
     var DataTypes2 = require_data_types9();
@@ -161208,7 +161208,7 @@ var require_query_generator = __commonJS({
         if (this._dialect.supports.EXCEPTION && options2.exception) {
           options2.bindParam = false;
         }
-        valueHash = Utils26.removeNullValuesFromHash(valueHash, this.options.omitNull);
+        valueHash = Utils27.removeNullValuesFromHash(valueHash, this.options.omitNull);
         for (const key in valueHash) {
           if (Object.prototype.hasOwnProperty.call(valueHash, key)) {
             const value = valueHash[key];
@@ -161225,7 +161225,7 @@ var require_query_generator = __commonJS({
               if (modelAttributeMap && modelAttributeMap[key] && modelAttributeMap[key].autoIncrement === true) {
                 identityWrapperRequired = true;
               }
-              if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
+              if (value instanceof Utils27.SequelizeMethod || options2.bindParam === false) {
                 values2.push(this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }));
               } else {
                 values2.push(this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "INSERT" }, bindParam));
@@ -161255,7 +161255,7 @@ var require_query_generator = __commonJS({
             } else {
               fragments.push("DO UPDATE SET", updateKeys.join(","));
             }
-            onDuplicateKeyUpdate = ` ${Utils26.joinSQLFragments(fragments)}`;
+            onDuplicateKeyUpdate = ` ${Utils27.joinSQLFragments(fragments)}`;
           } else {
             const valueKeys = options2.updateOnDuplicate.map((attr) => `${this.quoteIdentifier(attr)}=VALUES(${this.quoteIdentifier(attr)})`);
             if (_4.isEmpty(valueKeys) && options2.upsertKeys) {
@@ -161368,7 +161368,7 @@ var require_query_generator = __commonJS({
           const returnValues = this.generateReturnValues(fieldMappedAttributes, options2);
           returning += returnValues.returningFragment;
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "INSERT",
           ignoreDuplicates,
           "INTO",
@@ -161385,7 +161385,7 @@ var require_query_generator = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils27.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const values2 = [];
         const bind = [];
         const modelAttributeMap = {};
@@ -161430,7 +161430,7 @@ var require_query_generator = __commonJS({
             continue;
           }
           const value = attrValueHash[key];
-          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils27.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -161450,7 +161450,7 @@ var require_query_generator = __commonJS({
       arithmeticQuery(operator, tableName, where3, incrementAmountsByField, extraAttributesToBeUpdated, options2) {
         options2 = options2 || {};
         _4.defaults(options2, { returning: true });
-        extraAttributesToBeUpdated = Utils26.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
+        extraAttributesToBeUpdated = Utils27.removeNullValuesFromHash(extraAttributesToBeUpdated, this.options.omitNull);
         let outputFragment = "";
         let returningFragment = "";
         if (this._dialect.supports.returnValues && options2.returning) {
@@ -161471,7 +161471,7 @@ var require_query_generator = __commonJS({
           const escapedValue = this.escape(newValue);
           updateSetSqlFragments.push(`${quotedField}=${escapedValue}`);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "UPDATE",
           this.quoteTable(tableName),
           "SET",
@@ -161495,7 +161495,7 @@ var require_query_generator = __commonJS({
           options2.prefix = options2.prefix.replace(/("|')/g, "");
         }
         const fieldsSql = options2.fields.map((field) => {
-          if (field instanceof Utils26.SequelizeMethod) {
+          if (field instanceof Utils27.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (typeof field === "string") {
@@ -161529,7 +161529,7 @@ var require_query_generator = __commonJS({
           return result2;
         });
         if (!options2.name) {
-          options2 = Utils26.nameIndex(options2, options2.prefix);
+          options2 = Utils27.nameIndex(options2, options2.prefix);
         }
         options2 = Model14._conformIndex(options2);
         if (!this._dialect.supports.index.type) {
@@ -161564,7 +161564,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "ADD",
@@ -161578,7 +161578,7 @@ var require_query_generator = __commonJS({
           if (typeof field === "string") {
             return this.quoteIdentifier(field);
           }
-          if (field instanceof Utils26.SequelizeMethod) {
+          if (field instanceof Utils27.SequelizeMethod) {
             return this.handleSequelizeMethod(field);
           }
           if (field.attribute) {
@@ -161646,7 +161646,7 @@ var require_query_generator = __commonJS({
         } else {
           tableName = this.quoteTable(tableName);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           tableName,
           "DROP CONSTRAINT",
@@ -161732,7 +161732,7 @@ var require_query_generator = __commonJS({
           let i = 0;
           for (i = 0; i < collectionLength - 1; i++) {
             item = collection[i];
-            if (typeof item === "string" || item._modelAttribute || item instanceof Utils26.SequelizeMethod) {
+            if (typeof item === "string" || item._modelAttribute || item instanceof Utils27.SequelizeMethod) {
               break;
             } else if (item instanceof Association2) {
               tableNames[i] = item.as;
@@ -161752,7 +161752,7 @@ var require_query_generator = __commonJS({
         if (collection._modelAttribute) {
           return `${this.quoteTable(collection.Model.name)}.${this.quoteIdentifier(collection.fieldName)}`;
         }
-        if (collection instanceof Utils26.SequelizeMethod) {
+        if (collection instanceof Utils27.SequelizeMethod) {
           return this.handleSequelizeMethod(collection);
         }
         if (_4.isPlainObject(collection) && collection.raw) {
@@ -161818,7 +161818,7 @@ var require_query_generator = __commonJS({
       escape(value, field, options2) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils26.SequelizeMethod) {
+          if (value instanceof Utils27.SequelizeMethod) {
             return this.handleSequelizeMethod(value);
           }
           if (field && field.type) {
@@ -161846,7 +161846,7 @@ var require_query_generator = __commonJS({
       format(value, field, options2, bindParam) {
         options2 = options2 || {};
         if (value !== null && value !== void 0) {
-          if (value instanceof Utils26.SequelizeMethod) {
+          if (value instanceof Utils27.SequelizeMethod) {
             throw new Error("Cannot pass SequelizeMethod as a bind parameter - use escape instead");
           }
           if (field && field.type) {
@@ -161889,7 +161889,7 @@ var require_query_generator = __commonJS({
           case "sqlite":
             if (this.dialect === "mysql") {
               paths = paths.map((subPath) => {
-                return /\D/.test(subPath) ? Utils26.addTicks(subPath, '"') : subPath;
+                return /\D/.test(subPath) ? Utils27.addTicks(subPath, '"') : subPath;
               });
             }
             pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
@@ -162052,7 +162052,7 @@ var require_query_generator = __commonJS({
                   [options2.groupedLimit.on.foreignIdentifierField]: value
                 };
               }
-              return Utils26.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
+              return Utils27.spliceStr(baseQuery, splicePos, placeHolder.length, this.getWhereConditions(groupWhere, groupedTableName));
             }).join(this._dialect.supports["UNION ALL"] ? " UNION ALL " : " UNION ")})`, mainTable.as));
           } else {
             mainQueryItems.push(this.selectFromTableFragment(options2, mainTable.model, attributes.main, mainTable.quotedName, mainTable.as));
@@ -162143,7 +162143,7 @@ var require_query_generator = __commonJS({
       escapeAttributes(attributes, options2, mainTableAs) {
         return attributes && attributes.map((attr) => {
           let addTable = true;
-          if (attr instanceof Utils26.SequelizeMethod) {
+          if (attr instanceof Utils27.SequelizeMethod) {
             return this.handleSequelizeMethod(attr);
           }
           if (Array.isArray(attr)) {
@@ -162151,7 +162151,7 @@ var require_query_generator = __commonJS({
               throw new Error(`${JSON.stringify(attr)} is not a valid attribute definition. Please use the following format: ['attribute definition', 'alias']`);
             }
             attr = attr.slice();
-            if (attr[0] instanceof Utils26.SequelizeMethod) {
+            if (attr[0] instanceof Utils27.SequelizeMethod) {
               attr[0] = this.handleSequelizeMethod(attr[0]);
               addTable = false;
             } else if (this.options.attributeBehavior === "escape" || !attr[0].includes("(") && !attr[0].includes(")")) {
@@ -162177,7 +162177,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             }
             attr = [attr[0], this.quoteIdentifier(alias)].join(" AS ");
           } else {
-            attr = !attr.includes(Utils26.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
+            attr = !attr.includes(Utils27.TICK_CHAR) && !attr.includes('"') ? this.quoteAttribute(attr, options2.model) : this.escape(attr);
           }
           if (!_4.isEmpty(options2.include) && (!attr.includes(".") || options2.dotNotation) && addTable) {
             attr = `${mainTableAs}.${attr}`;
@@ -162209,22 +162209,22 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         if (topLevelInfo.options.includeIgnoreAttributes !== false) {
           include.model._expandAttributes(include);
-          Utils26.mapFinderOptions(include, include.model);
+          Utils27.mapFinderOptions(include, include.model);
           const includeAttributes = include.attributes.map((attr) => {
             let attrAs = attr;
             let verbatim = false;
             if (Array.isArray(attr) && attr.length === 2) {
-              if (attr[0] instanceof Utils26.SequelizeMethod && (attr[0] instanceof Utils26.Literal || attr[0] instanceof Utils26.Cast || attr[0] instanceof Utils26.Fn)) {
+              if (attr[0] instanceof Utils27.SequelizeMethod && (attr[0] instanceof Utils27.Literal || attr[0] instanceof Utils27.Cast || attr[0] instanceof Utils27.Fn)) {
                 verbatim = true;
               }
-              attr = attr.map((attr2) => attr2 instanceof Utils26.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
+              attr = attr.map((attr2) => attr2 instanceof Utils27.SequelizeMethod ? this.handleSequelizeMethod(attr2) : attr2);
               attrAs = attr[1];
               attr = attr[0];
             }
-            if (attr instanceof Utils26.Literal) {
+            if (attr instanceof Utils27.Literal) {
               return attr.val;
             }
-            if (attr instanceof Utils26.Cast || attr instanceof Utils26.Fn) {
+            if (attr instanceof Utils27.Cast || attr instanceof Utils27.Fn) {
               throw new Error("Tried to select attributes using Sequelize.cast or Sequelize.fn without specifying an alias for the result, during eager loading. This means the attribute will not be added to the returned instance");
             }
             let prefix;
@@ -162243,7 +162243,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             if (this.options.minifyAliases) {
               alias = this._getMinifiedAlias(alias, includeAs.internalAs, topLevelInfo.options);
             }
-            return Utils26.joinSQLFragments([
+            return Utils27.joinSQLFragments([
               prefix,
               "AS",
               this.quoteIdentifier(alias, true)
@@ -162456,7 +162456,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           if (this.options.minifyAliases) {
             alias = this._getMinifiedAlias(alias, throughAs, topLevelInfo.options);
           }
-          return Utils26.joinSQLFragments([
+          return Utils27.joinSQLFragments([
             `${this.quoteIdentifier(throughAs)}.${this.quoteIdentifier(Array.isArray(attr) ? attr[0] : attr)}`,
             "AS",
             this.quoteIdentifier(alias)
@@ -162651,12 +162651,12 @@ https://github.com/sequelize/sequelize/discussions/15694`);
               if (aliasedAttribute) {
                 const modelName = this.quoteIdentifier(model.name);
                 const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-                order[0] = new Utils26.Col(alias || aliasedAttribute[1]);
+                order[0] = new Utils27.Col(alias || aliasedAttribute[1]);
               }
             }
             mainQueryOrder.push(this.quote(order, model, "->"));
           }
-        } else if (options2.order instanceof Utils26.SequelizeMethod) {
+        } else if (options2.order instanceof Utils27.SequelizeMethod) {
           const sql = this.quote(options2.order, model, "->");
           if (subQuery) {
             subQueryOrder.push(sql);
@@ -162708,15 +162708,15 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Object.prototype.hasOwnProperty.call(this.OperatorMap, smth.comparator)) {
           smth.comparator = this.OperatorMap[smth.comparator];
         }
-        if (smth instanceof Utils26.Where) {
+        if (smth instanceof Utils27.Where) {
           let value = smth.logic;
           let key;
-          if (smth.attribute instanceof Utils26.SequelizeMethod) {
+          if (smth.attribute instanceof Utils27.SequelizeMethod) {
             key = this.getWhereConditions(smth.attribute, tableName, factory, options2, prepend2);
           } else {
             key = `${this.quoteTable(smth.attribute.Model.name)}.${this.quoteIdentifier(smth.attribute.field || smth.attribute.fieldName)}`;
           }
-          if (value && value instanceof Utils26.SequelizeMethod) {
+          if (value && value instanceof Utils27.SequelizeMethod) {
             value = this.getWhereConditions(value, tableName, factory, options2, prepend2);
             if (value === "NULL") {
               if (smth.comparator === "=") {
@@ -162750,11 +162750,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return [key, value].join(` ${smth.comparator} `);
         }
-        if (smth instanceof Utils26.Literal) {
+        if (smth instanceof Utils27.Literal) {
           return smth.val;
         }
-        if (smth instanceof Utils26.Cast) {
-          if (smth.val instanceof Utils26.SequelizeMethod) {
+        if (smth instanceof Utils27.Cast) {
+          if (smth.val instanceof Utils27.SequelizeMethod) {
             result2 = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
           } else if (_4.isPlainObject(smth.val)) {
             result2 = this.whereItemsQuery(smth.val);
@@ -162763,9 +162763,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           }
           return `CAST(${result2} AS ${smth.type.toUpperCase()})`;
         }
-        if (smth instanceof Utils26.Fn) {
+        if (smth instanceof Utils27.Fn) {
           return `${smth.fn}(${smth.args.map((arg) => {
-            if (arg instanceof Utils26.SequelizeMethod) {
+            if (arg instanceof Utils27.SequelizeMethod) {
               return this.handleSequelizeMethod(arg, tableName, factory, options2, prepend2);
             }
             if (_4.isPlainObject(arg)) {
@@ -162774,7 +162774,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
             return this.escape(typeof arg === "string" ? arg.replace(/\$/g, "$$$") : arg);
           }).join(", ")})`;
         }
-        if (smth instanceof Utils26.Col) {
+        if (smth instanceof Utils27.Col) {
           if (Array.isArray(smth.col) && !factory) {
             throw new Error("Cannot call Sequelize.col() with array outside of order / group clause");
           }
@@ -162793,7 +162793,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return "";
       }
       whereItemsQuery(where3, options2, binding) {
-        if (where3 === null || where3 === void 0 || Utils26.getComplexSize(where3) === 0) {
+        if (where3 === null || where3 === void 0 || Utils27.getComplexSize(where3) === 0) {
           return "";
         }
         if (typeof where3 === "string") {
@@ -162804,7 +162804,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (binding[0] !== " ")
           binding = ` ${binding} `;
         if (_4.isPlainObject(where3)) {
-          Utils26.getComplexKeys(where3).forEach((prop) => {
+          Utils27.getComplexKeys(where3).forEach((prop) => {
             const item = where3[prop];
             items.push(this.whereItemQuery(prop, item, options2));
           });
@@ -162834,7 +162834,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (isPlainObject2) {
           value = this._replaceAliases(value);
         }
-        const valueKeys = isPlainObject2 && Utils26.getComplexKeys(value);
+        const valueKeys = isPlainObject2 && Utils27.getComplexKeys(value);
         if (key === void 0) {
           if (typeof value === "string") {
             return value;
@@ -162851,11 +162851,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           const opValue2 = options2.bindParam ? this.format(value, field, options2, options2.bindParam) : this.escape(value, field);
           return this._joinKeyValue(key, opValue2, this.OperatorMap[Op2.eq], options2.prefix);
         }
-        if (value instanceof Utils26.SequelizeMethod && !(key !== void 0 && value instanceof Utils26.Fn)) {
+        if (value instanceof Utils27.SequelizeMethod && !(key !== void 0 && value instanceof Utils27.Fn)) {
           return this.handleSequelizeMethod(value);
         }
         if (key === void 0 && isArray) {
-          if (Utils26.canTreatArrayAsAnd(value)) {
+          if (Utils27.canTreatArrayAsAnd(value)) {
             key = Op2.and;
           } else {
             throw new Error("Support for literal replacements in the `where` object has been removed.");
@@ -162913,7 +162913,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(value)) {
           value = value.map((item) => {
             let itemQuery = this.whereItemsQuery(item, options2, this.OperatorMap[Op2.and]);
-            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils26.getComplexSize(item) > 1) {
+            if (itemQuery && itemQuery.length && (Array.isArray(item) || _4.isPlainObject(item)) && Utils27.getComplexSize(item) > 1) {
               itemQuery = `(${itemQuery})`;
             }
             return itemQuery;
@@ -162929,7 +162929,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _whereBind(binding, key, value, options2) {
         if (_4.isPlainObject(value)) {
-          value = Utils26.getComplexKeys(value).map((prop) => {
+          value = Utils27.getComplexKeys(value).map((prop) => {
             const item = value[prop];
             return this.whereItemQuery(key, { [prop]: item }, options2);
           });
@@ -162943,13 +162943,13 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         const items = [];
         let baseKey = this.quoteIdentifier(key);
         if (options2.prefix) {
-          if (options2.prefix instanceof Utils26.Literal) {
+          if (options2.prefix instanceof Utils27.Literal) {
             baseKey = `${this.handleSequelizeMethod(options2.prefix)}.${baseKey}`;
           } else {
             baseKey = `${this.quoteTable(options2.prefix)}.${baseKey}`;
           }
         }
-        Utils26.getOperators(value).forEach((op) => {
+        Utils27.getOperators(value).forEach((op) => {
           const where3 = {
             [op]: value[op]
           };
@@ -162971,7 +162971,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         }
         let pathKey = this.jsonPathExtractionQuery(baseKey, path15);
         if (_4.isPlainObject(item)) {
-          Utils26.getOperators(item).forEach((op) => {
+          Utils27.getOperators(item).forEach((op) => {
             const value = this._toJSONValue(item[op]);
             let isJson = false;
             if (typeof value === "string" && op === Op2.contains) {
@@ -162998,9 +162998,9 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       _castKey(key, value, cast2, json2) {
         cast2 = cast2 || this._getJsonCast(Array.isArray(value) ? value[0] : value);
         if (cast2) {
-          return new Utils26.Literal(this.handleSequelizeMethod(new Utils26.Cast(new Utils26.Literal(key), cast2, json2)));
+          return new Utils27.Literal(this.handleSequelizeMethod(new Utils27.Cast(new Utils27.Literal(key), cast2, json2)));
         }
-        return new Utils26.Literal(key);
+        return new Utils27.Literal(key);
       }
       _getJsonCast(value) {
         if (typeof value === "number") {
@@ -163030,11 +163030,11 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         return [key, value].join(` ${comparator} `);
       }
       _getSafeKey(key, prefix) {
-        if (key instanceof Utils26.SequelizeMethod) {
+        if (key instanceof Utils27.SequelizeMethod) {
           key = this.handleSequelizeMethod(key);
           return this._prefixKey(this.handleSequelizeMethod(key), prefix);
         }
-        if (Utils26.isColString(key)) {
+        if (Utils27.isColString(key)) {
           key = key.substr(1, key.length - 2).split(".");
           if (key.length > 2) {
             key = [
@@ -163048,7 +163048,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       }
       _prefixKey(key, prefix) {
         if (prefix) {
-          if (prefix instanceof Utils26.Literal) {
+          if (prefix instanceof Utils27.Literal) {
             return [this.handleSequelizeMethod(prefix), key].join(".");
           }
           return [this.quoteTable(prefix), key].join(".");
@@ -163067,7 +163067,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         switch (prop) {
           case Op2.in:
           case Op2.notIn:
-            if (value instanceof Utils26.Literal) {
+            if (value instanceof Utils27.Literal) {
               return this._joinKeyValue(key, value.val, comparator, options2.prefix);
             }
             if (value.length) {
@@ -163103,7 +163103,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
           case Op2.endsWith:
           case Op2.substring:
             comparator = this.OperatorMap[Op2.like];
-            if (value instanceof Utils26.Literal) {
+            if (value instanceof Utils27.Literal) {
               value = value.val;
             }
             let pattern = `${value}%`;
@@ -163149,7 +163149,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (prepend2 === void 0) {
           prepend2 = true;
         }
-        if (smth && smth instanceof Utils26.SequelizeMethod) {
+        if (smth && smth instanceof Utils27.SequelizeMethod) {
           return this.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
         if (_4.isPlainObject(smth)) {
@@ -163184,7 +163184,7 @@ https://github.com/sequelize/sequelize/discussions/15694`);
         if (Array.isArray(smth)) {
           if (smth.length === 0 || smth.length > 0 && smth[0].length === 0)
             return "1=1";
-          if (Utils26.canTreatArrayAsAnd(smth)) {
+          if (Utils27.canTreatArrayAsAnd(smth)) {
             const _smth = { [Op2.and]: smth };
             return this.getWhereConditions(_smth, tableName, factory, options2, prepend2);
           }
@@ -163245,7 +163245,7 @@ var require_query_generator2 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -163280,7 +163280,7 @@ var require_query_generator2 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -163352,7 +163352,7 @@ var require_query_generator2 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -163387,7 +163387,7 @@ var require_query_generator2 = __commonJS({
         return `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = ${tableName} AND TABLE_SCHEMA = ${this.escape(this.sequelize.config.database)}`;
       }
       addColumnQuery(table, key, dataType) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -163401,7 +163401,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -163422,7 +163422,7 @@ var require_query_generator2 = __commonJS({
             attrString.push(`\`${attributeName}\` \`${attributeName}\` ${definition}`);
           }
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `CHANGE ${attrString.join(", ")}`,
@@ -163436,7 +163436,7 @@ var require_query_generator2 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`\`${attrBefore}\` \`${attrName}\` ${definition}`);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "CHANGE",
@@ -163445,7 +163445,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils26.Json) {
+        if (smth instanceof Utils27.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -163464,7 +163464,7 @@ var require_query_generator2 = __commonJS({
             }
             return str;
           }
-        } else if (smth instanceof Utils26.Cast) {
+        } else if (smth instanceof Utils27.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           } else if (smth.json && /boolean/i.test(smth.type)) {
@@ -163502,7 +163502,7 @@ var require_query_generator2 = __commonJS({
         return query + limit;
       }
       showIndexesQuery(tableName, options2) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           `SHOW INDEX FROM ${this.quoteTable(tableName)}`,
           options2 && options2.database && `FROM \`${options2.database}\``
         ]);
@@ -163510,7 +163510,7 @@ var require_query_generator2 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -163527,9 +163527,9 @@ var require_query_generator2 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -163550,7 +163550,7 @@ var require_query_generator2 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " auto_increment";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -163643,7 +163643,7 @@ var require_query_generator2 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -163656,7 +163656,7 @@ var require_query_generator2 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -163677,7 +163677,7 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -163686,11 +163686,11 @@ var require_query_generator2 = __commonJS({
         ]);
       }
       quoteIdentifier(identifier2, force) {
-        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
+        return Utils27.addTicks(Utils27.removeTicks(identifier2, "`"), "`");
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils26.addTicks(identifier2, "'");
+      return Utils27.addTicks(identifier2, "'");
     }
     module2.exports = MySQLQueryGenerator;
   }
@@ -163717,14 +163717,14 @@ var require_query_generator3 = __commonJS({
       return a;
     };
     var MySQLQueryGenerator = require_query_generator2();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var MariaDBQueryGenerator = class extends MySQLQueryGenerator {
       createSchema(schema, options2) {
         options2 = __spreadValues({
           charset: null,
           collate: null
         }, options2);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "CREATE SCHEMA IF NOT EXISTS",
           this.quoteIdentifier(schema),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -163746,7 +163746,7 @@ var require_query_generator3 = __commonJS({
             schemasToSkip.push(this.escape(schemaName));
           }
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT SCHEMA_NAME as schema_name",
           "FROM INFORMATION_SCHEMA.SCHEMATA",
           `WHERE SCHEMA_NAME NOT IN (${schemasToSkip.join(", ")})`,
@@ -163763,7 +163763,7 @@ var require_query_generator3 = __commonJS({
         return `${query};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
+        return Utils27.addTicks(Utils27.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = MariaDBQueryGenerator;
@@ -164415,7 +164415,7 @@ var require_query_generator4 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var DataTypes2 = require_data_types9();
     var TableHints2 = require_table_hints();
     var AbstractQueryGenerator = require_query_generator();
@@ -164573,7 +164573,7 @@ var require_query_generator4 = __commonJS({
           }
         }
         const quotedTableName = this.quoteTable(tableName);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           `IF OBJECT_ID('${quotedTableName}', 'U') IS NULL`,
           `CREATE TABLE ${quotedTableName} (${attributesClauseParts.join(", ")})`,
           ";",
@@ -164631,7 +164631,7 @@ var require_query_generator4 = __commonJS({
       }
       dropTableQuery(tableName) {
         const quoteTbl = this.quoteTable(tableName);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           `IF OBJECT_ID('${quoteTbl}', 'U') IS NOT NULL`,
           "DROP TABLE",
           quoteTbl,
@@ -164645,7 +164645,7 @@ var require_query_generator4 = __commonJS({
           commentStr = this.commentTemplate(dataType.comment, table, key);
           delete dataType["comment"];
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -164659,7 +164659,7 @@ var require_query_generator4 = __commonJS({
         return ` EXEC sp_addextendedproperty @name = N'MS_Description', @value = ${this.escape(comment)}, @level0type = N'Schema', @level0name = 'dbo', @level1type = N'Table', @level1name = ${this.quoteIdentifier(table)}, @level2type = N'Column', @level2name = ${this.quoteIdentifier(column)};`;
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -164685,7 +164685,7 @@ var require_query_generator4 = __commonJS({
             attrString.push(`${quotedAttrName} ${definition}`);
           }
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           attrString.length && `ALTER COLUMN ${attrString.join(", ")}`,
@@ -164696,7 +164696,7 @@ var require_query_generator4 = __commonJS({
       }
       renameColumnQuery(tableName, attrBefore, attributes) {
         const newName = Object.keys(attributes)[0];
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "EXEC sp_rename",
           `'${this.quoteTable(tableName)}.${attrBefore}',`,
           `'${newName}',`,
@@ -164854,7 +164854,7 @@ var require_query_generator4 = __commonJS({
       deleteQuery(tableName, where3, options2 = {}, model) {
         const table = this.quoteTable(tableName);
         const whereClause = this.getWhereConditions(where3, null, model, options2);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "DELETE",
           options2.limit && `TOP(${this.escape(options2.limit)})`,
           "FROM",
@@ -164874,7 +164874,7 @@ var require_query_generator4 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifiers(indexName)} ON ${this.quoteIdentifiers(tableName)}`;
       }
@@ -164904,13 +164904,13 @@ var require_query_generator4 = __commonJS({
         template2 = attribute.type.toString();
         if (attribute.allowNull === false) {
           template2 += " NOT NULL";
-        } else if (!attribute.primaryKey && !Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        } else if (!attribute.primaryKey && !Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += " NULL";
         }
         if (attribute.autoIncrement) {
           template2 += " IDENTITY(1,1)";
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -164989,7 +164989,7 @@ var require_query_generator4 = __commonJS({
       }
       getForeignKeyQuery(table, attributeName) {
         const tableName = table.tableName || table;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           this._getForeignKeysQueryPrefix(),
           "WHERE",
           `TB.NAME =${wrapSingleQuote(tableName)}`,
@@ -165000,7 +165000,7 @@ var require_query_generator4 = __commonJS({
       }
       getPrimaryKeyConstraintQuery(table, attributeName) {
         const tableName = wrapSingleQuote(table.tableName || table);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT K.TABLE_NAME AS tableName,",
           "K.COLUMN_NAME AS columnName,",
           "K.CONSTRAINT_NAME AS constraintName",
@@ -165017,7 +165017,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -165026,7 +165026,7 @@ var require_query_generator4 = __commonJS({
       }
       getDefaultConstraintQuery(tableName, attributeName) {
         const quotedTable = this.quoteTable(tableName);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT name FROM sys.default_constraints",
           `WHERE PARENT_OBJECT_ID = OBJECT_ID('${quotedTable}', 'U')`,
           `AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = ('${attributeName}')`,
@@ -165035,7 +165035,7 @@ var require_query_generator4 = __commonJS({
         ]);
       }
       dropConstraintQuery(tableName, constraintName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP CONSTRAINT",
@@ -165102,7 +165102,7 @@ var require_query_generator4 = __commonJS({
               const joinQueries = this.generateInclude(include, { externalAs: mainTableAs, internalAs: mainTableAs }, topLevelInfo);
               mainJoinQueries = mainJoinQueries.concat(joinQueries.mainQuery);
             }
-            return Utils26.joinSQLFragments([
+            return Utils27.joinSQLFragments([
               "SELECT TOP 100 PERCENT",
               attributes.join(", "),
               "FROM (",
@@ -165130,7 +165130,7 @@ var require_query_generator4 = __commonJS({
               `) AS ${tmpTable}`
             ]);
           }
-          return Utils26.joinSQLFragments([
+          return Utils27.joinSQLFragments([
             "SELECT TOP 100 PERCENT",
             attributes.join(", "),
             "FROM (",
@@ -165152,7 +165152,7 @@ var require_query_generator4 = __commonJS({
             `) AS ${tmpTable}`
           ]);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT",
           isSQLServer2008 && options2.limit && `TOP ${options2.limit}`,
           attributes.join(", "),
@@ -165180,17 +165180,17 @@ var require_query_generator4 = __commonJS({
             if (aliasedAttribute) {
               const modelName = this.quoteIdentifier(options2.tableAs || model.name);
               const alias = this._getAliasForField(modelName, aliasedAttribute[1], options2);
-              primaryKey = new Utils26.Col(alias || aliasedAttribute[1]);
+              primaryKey = new Utils27.Col(alias || aliasedAttribute[1]);
             }
             if (!options2.order || !options2.order.length) {
               fragment += ` ORDER BY ${tablePkFragment}`;
             } else {
               const orderFieldNames = (options2.order || []).map((order) => {
                 const value = Array.isArray(order) ? order[0] : order;
-                if (value instanceof Utils26.Col) {
+                if (value instanceof Utils27.Col) {
                   return value.col;
                 }
-                if (value instanceof Utils26.Literal) {
+                if (value instanceof Utils27.Literal) {
                   return value.val;
                 }
                 return value;
@@ -165219,7 +165219,7 @@ var require_query_generator4 = __commonJS({
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils26.addTicks(Utils26.removeTicks(identifier2, "'"), "'");
+      return Utils27.addTicks(Utils27.removeTicks(identifier2, "'"), "'");
     }
     module2.exports = MSSQLQueryGenerator;
   }
@@ -165246,7 +165246,7 @@ var require_query_interface3 = __commonJS({
       return a;
     };
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var QueryTypes2 = require_query_types();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
@@ -165278,7 +165278,7 @@ var require_query_interface3 = __commonJS({
         const model = options2.model;
         const wheres = [];
         options2 = __spreadValues({}, options2);
-        if (!Utils26.isWhereEmpty(where3)) {
+        if (!Utils27.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         let indexes = Object.values(model.uniqueKeys).map((item) => item.fields);
@@ -165993,7 +165993,7 @@ var require_query5 = __commonJS({
     var SequelizeErrors = require_errors4();
     var parserStore = require_parserStore()("oracle");
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var { logger } = require_logger3();
     var debug2 = logger.debugContext("sql:oracle");
     var OracleQuery = class extends AbstractQuery {
@@ -166453,7 +166453,7 @@ var require_query5 = __commonJS({
           const columns = {};
           columns.fields = acc[accKey].fields;
           if (acc[accKey].name.match(/sys_c[0-9]*/)) {
-            acc[accKey].name = Utils26.nameIndex(columns, acc[accKey].tableName).name;
+            acc[accKey].name = Utils27.nameIndex(columns, acc[accKey].tableName).name;
           }
           returnIndexes.push(acc[accKey]);
         }
@@ -166509,7 +166509,7 @@ var require_query_generator5 = __commonJS({
     __export2(exports2, {
       OracleQueryGenerator: () => OracleQueryGenerator
     });
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var _4 = require_lodash();
@@ -166732,12 +166732,12 @@ var require_query_generator5 = __commonJS({
             }
           });
         }
-        const query = Utils26.joinSQLFragments([
+        const query = Utils27.joinSQLFragments([
           "CREATE TABLE",
           values2.table,
           `(${values2.attributes})`
         ]);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "BEGIN",
           "EXECUTE IMMEDIATE",
           `${this.escape(query)};`,
@@ -166767,7 +166767,7 @@ var require_query_generator5 = __commonJS({
         ].join("");
       }
       renameTableQuery(before2, after2) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(before2),
           "RENAME TO",
@@ -166782,7 +166782,7 @@ var require_query_generator5 = __commonJS({
         return `SELECT owner as table_schema, table_name, 0 as lvl FROM all_tables where OWNER IN(SELECT USERNAME AS "schema_name" FROM ALL_USERS WHERE ORACLE_MAINTAINED = 'N')`;
       }
       dropTableQuery(tableName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "BEGIN ",
           "EXECUTE IMMEDIATE 'DROP TABLE",
           this.quoteTable(tableName),
@@ -166814,14 +166814,14 @@ var require_query_generator5 = __commonJS({
       }
       addColumnQuery(table, key, dataType) {
         dataType.field = key;
-        const attribute = Utils26.joinSQLFragments([
+        const attribute = Utils27.joinSQLFragments([
           this.quoteIdentifier(key),
           this.attributeToSQL(dataType, {
             attributeName: key,
             context: "addColumn"
           })
         ]);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -166829,7 +166829,7 @@ var require_query_generator5 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP COLUMN",
@@ -166861,7 +166861,7 @@ var require_query_generator5 = __commonJS({
           attributeNameConstant,
           ";"
         ].join(" ");
-        const secondQuery = Utils26.joinSQLFragments([
+        const secondQuery = Utils27.joinSQLFragments([
           `ALTER TABLE ${this.quoteIdentifier(tableName)}`,
           "ADD FOREIGN KEY",
           `(${this.quoteIdentifier(attributeName)})`,
@@ -166882,7 +166882,7 @@ var require_query_generator5 = __commonJS({
       }
       _modifyQuery(definition, table, attributeName) {
         definition = definition.startsWith("BLOB") ? definition.replace("BLOB ", "") : definition;
-        const query = Utils26.joinSQLFragments([
+        const query = Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "MODIFY",
@@ -167025,7 +167025,7 @@ var require_query_generator5 = __commonJS({
           }
           insertColumns.push(this.quoteIdentifier(key));
         }
-        let query = Utils26.joinSQLFragments([
+        let query = Utils27.joinSQLFragments([
           "INSERT",
           "INTO",
           this.quoteTable(tableName),
@@ -167035,7 +167035,7 @@ var require_query_generator5 = __commonJS({
         ]);
         if (returnColumn.length > 0) {
           options2.outBindAttributes = outBindBindDefMap;
-          query = Utils26.joinSQLFragments([
+          query = Utils27.joinSQLFragments([
             query,
             "RETURNING",
             `${returnColumn.join(",")}`,
@@ -167084,7 +167084,7 @@ var require_query_generator5 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX ${this.quoteIdentifier(indexName)}`;
       }
@@ -167107,7 +167107,7 @@ var require_query_generator5 = __commonJS({
           template2 += ` CHECK (${this.quoteIdentifier(options2.attributeName)} IS JSON)`;
           return template2;
         }
-        if (Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.allowNull === false) {
@@ -167136,13 +167136,13 @@ var require_query_generator5 = __commonJS({
             unsignedTemplate += ` check(${this.quoteIdentifier(options2.attributeName)} >= 0)`;
           }
           template2 = attribute.type.toString();
-          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
+          if (attribute.type && attribute.type !== "TEXT" && attribute.type._binary !== true && Utils27.defaultValueSchemable(attribute.defaultValue)) {
             template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
           }
           if (!attribute.autoIncrement) {
             if (attribute.allowNull === false) {
               template2 += " NOT NULL";
-            } else if (!attribute.primaryKey && !Utils26.defaultValueSchemable(attribute.defaultValue)) {
+            } else if (!attribute.primaryKey && !Utils27.defaultValueSchemable(attribute.defaultValue)) {
               template2 += " NULL";
             }
           }
@@ -167287,7 +167287,7 @@ var require_query_generator5 = __commonJS({
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
         let str;
-        if (smth instanceof Utils26.Json) {
+        if (smth instanceof Utils27.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -167306,8 +167306,8 @@ var require_query_generator5 = __commonJS({
             return str;
           }
         }
-        if (smth instanceof Utils26.Cast) {
-          if (smth.val instanceof Utils26.SequelizeMethod) {
+        if (smth instanceof Utils27.Cast) {
+          if (smth.val instanceof Utils27.SequelizeMethod) {
             str = this.handleSequelizeMethod(smth.val, tableName, factory, options2, prepend2);
             if (smth.type === "boolean") {
               str = `(CASE WHEN ${str}='true' THEN 1 ELSE 0 END)`;
@@ -167369,7 +167369,7 @@ var require_query_generator5 = __commonJS({
         let paths = _4.toPath(path15);
         const quotedColumn = this.isIdentifierQuoted(column) ? column : this.quoteIdentifier(column);
         paths = paths.map((subPath) => {
-          return /\D/.test(subPath) ? Utils26.addTicks(subPath, '"') : subPath;
+          return /\D/.test(subPath) ? Utils27.addTicks(subPath, '"') : subPath;
         });
         const pathStr = this.escape(["$"].concat(paths).join(".").replace(/\.(\d+)(?:(?=\.)|$)/g, (__, digit) => `[${digit}]`));
         return `json_value(${quotedColumn},${pathStr})`;
@@ -167401,12 +167401,12 @@ var require_query_generator5 = __commonJS({
       quoteIdentifier(identifier2, force = false) {
         const optForceQuote = force;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils27.removeTicks(identifier2, '"');
         const regExp = /^(([\w][\w\d_]*))$/g;
         if (optForceQuote !== true && optQuoteIdentifiers === false && regExp.test(rawIdentifier) && !ORACLE_RESERVED_WORDS.includes(rawIdentifier.toUpperCase())) {
           return rawIdentifier;
         }
-        return Utils26.addTicks(rawIdentifier, '"');
+        return Utils27.addTicks(rawIdentifier, '"');
       }
       bindParam(bind, posOffset = 0) {
         return (value) => {
@@ -168168,7 +168168,7 @@ var require_query_generator6 = __commonJS({
         }
       return a;
     };
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var util = require("util");
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
@@ -168318,7 +168318,7 @@ var require_query_generator6 = __commonJS({
         return hasJsonFunction;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils26.Json) {
+        if (smth instanceof Utils27.Json) {
           if (smth.conditions) {
             const conditions = this.parseConditionObject(smth.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -168465,7 +168465,7 @@ var require_query_generator6 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes, options2) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return [
           "DROP INDEX",
@@ -168519,7 +168519,7 @@ var require_query_generator6 = __commonJS({
             sql += " SERIAL";
           }
         }
-        if (Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (Utils27.defaultValueSchemable(attribute.defaultValue)) {
           sql += ` DEFAULT ${this.escape(attribute.defaultValue, attribute)}`;
         }
         if (attribute.unique === true) {
@@ -168629,7 +168629,7 @@ var require_query_generator6 = __commonJS({
         return `ALTER FUNCTION ${oldFunctionName}(${paramList}) RENAME TO ${newFunctionName};`;
       }
       pgEscapeAndQuote(val) {
-        return this.quoteIdentifier(Utils26.removeTicks(this.escape(val), "'"));
+        return this.quoteIdentifier(Utils27.removeTicks(this.escape(val), "'"));
       }
       _expandFunctionParamList(params) {
         if (params === void 0 || !Array.isArray(params)) {
@@ -168717,7 +168717,7 @@ var require_query_generator6 = __commonJS({
       pgEnumName(tableName, attr, options2) {
         options2 = options2 || {};
         const tableDetails = this.extractTableDetails(tableName, options2);
-        let enumName = Utils26.addTicks(Utils26.generateEnumName(tableDetails.tableName, attr), '"');
+        let enumName = Utils27.addTicks(Utils27.generateEnumName(tableDetails.tableName, attr), '"');
         if (options2.schema !== false && tableDetails.schema) {
           enumName = this.quoteIdentifier(tableDetails.schema) + tableDetails.delimiter + enumName;
         }
@@ -168813,9 +168813,9 @@ var require_query_generator6 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils27.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || POSTGRES_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils26.addTicks(rawIdentifier, '"');
+          return Utils27.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
@@ -168862,7 +168862,7 @@ var require_query_interface5 = __commonJS({
     var DataTypes2 = require_data_types9();
     var QueryTypes2 = require_query_types();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Deferrable2 = require_deferrable();
     var PostgresQueryInterface = class extends QueryInterface2 {
       async ensureEnums(tableName, attributes, options2, model) {
@@ -168956,7 +168956,7 @@ var require_query_interface5 = __commonJS({
         const query = this.queryGenerator.getForeignKeyReferencesQuery(table.tableName || table, this.sequelize.config.database, table.schema);
         const result2 = await this.sequelize.query(query, queryOptions);
         return result2.map((fkMeta) => {
-          const _a = Utils26.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
+          const _a = Utils27.camelizeObjectKeys(fkMeta), { initiallyDeferred, isDeferrable } = _a, remaining = __objRest(_a, ["initiallyDeferred", "isDeferrable"]);
           return __spreadProps(__spreadValues({}, remaining), {
             deferrable: isDeferrable === "NO" ? Deferrable2.NOT : initiallyDeferred === "NO" ? Deferrable2.INITIALLY_IMMEDIATE : Deferrable2.INITIALLY_DEFERRED
           });
@@ -169170,7 +169170,7 @@ var require_query7 = __commonJS({
   "../../node_modules/.pnpm/sequelize@6.37.8_mysql2@3.24.2_@types+node@26.3.0__sqlite3@6.0.1_supports-color@7.2.0/node_modules/sequelize/lib/dialects/sqlite/query.js"(exports2, module2) {
     "use strict";
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var AbstractQuery = require_query();
     var QueryTypes2 = require_query_types();
     var sequelizeErrors = require_errors4();
@@ -169424,10 +169424,10 @@ var require_query7 = __commonJS({
             }
             const referencesRegex = /REFERENCES.+\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
             const referenceConditions = constraintSql.match(referencesRegex)[0].split(" ");
-            referenceTableName = Utils26.removeTicks(referenceConditions[1]);
+            referenceTableName = Utils27.removeTicks(referenceConditions[1]);
             let columnNames = referenceConditions[2];
             columnNames = columnNames.replace(/\(|\)/g, "").split(", ");
-            referenceTableKeys = columnNames.map((column) => Utils26.removeTicks(column));
+            referenceTableKeys = columnNames.map((column) => Utils27.removeTicks(column));
           }
           const constraintCondition = constraintSql.match(/\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/)[0];
           constraintSql = constraintSql.replace(/\(.+\)/, "");
@@ -169436,7 +169436,7 @@ var require_query7 = __commonJS({
             constraint[1] += " KEY";
           }
           return {
-            constraintName: Utils26.removeTicks(constraint[0]),
+            constraintName: Utils27.removeTicks(constraint[0]),
             constraintType: constraint[1],
             updateAction,
             deleteAction,
@@ -169557,7 +169557,7 @@ var require_query_generator7 = __commonJS({
       return a;
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Transaction2 = require_transaction();
     var _4 = require_lodash();
     var MySqlQueryGenerator = require_query_generator2();
@@ -169671,10 +169671,10 @@ var require_query_generator7 = __commonJS({
         return value;
       }
       handleSequelizeMethod(smth, tableName, factory, options2, prepend2) {
-        if (smth instanceof Utils26.Json) {
+        if (smth instanceof Utils27.Json) {
           return super.handleSequelizeMethod(smth, tableName, factory, options2, prepend2);
         }
-        if (smth instanceof Utils26.Cast) {
+        if (smth instanceof Utils27.Cast) {
           if (/timestamp/i.test(smth.type)) {
             smth.type = "datetime";
           }
@@ -169695,7 +169695,7 @@ var require_query_generator7 = __commonJS({
       updateQuery(tableName, attrValueHash, where3, options2, attributes) {
         options2 = options2 || {};
         _4.defaults(options2, this.options);
-        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils27.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -169710,7 +169710,7 @@ var require_query_generator7 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils27.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -169728,7 +169728,7 @@ var require_query_generator7 = __commonJS({
       truncateTableQuery(tableName, options2 = {}) {
         return [
           `DELETE FROM ${this.quoteTable(tableName)}`,
-          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils26.addTicks(Utils26.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
+          options2.restartIdentity ? `; DELETE FROM ${this.quoteTable("sqlite_sequence")} WHERE ${this.quoteIdentifier("name")} = ${Utils27.addTicks(Utils27.removeTicks(this.quoteTable(tableName), "`"), "'")};` : ""
         ].join("");
       }
       deleteQuery(tableName, where3, options2 = {}, model) {
@@ -169752,7 +169752,7 @@ var require_query_generator7 = __commonJS({
             if (Object.prototype.hasOwnProperty.call(dataType, "allowNull") && !dataType.allowNull) {
               sql += " NOT NULL";
             }
-            if (Utils26.defaultValueSchemable(dataType.defaultValue)) {
+            if (Utils27.defaultValueSchemable(dataType.defaultValue)) {
               sql += ` DEFAULT ${this.escape(dataType.defaultValue, dataType)}`;
             }
             if (dataType.unique === true) {
@@ -169800,7 +169800,7 @@ var require_query_generator7 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         return `DROP INDEX IF EXISTS ${this.quoteIdentifier(indexName)}`;
       }
@@ -169894,7 +169894,7 @@ var require_query_generator7 = __commonJS({
         return `SELECT name FROM sqlite_master WHERE type='table' AND name=${this.escape(this.addSchema(tableName))};`;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils26.addTicks(Utils26.removeTicks(identifier2, "`"), "`");
+        return Utils27.addTicks(Utils27.removeTicks(identifier2, "`"), "`");
       }
     };
     module2.exports = SQLiteQueryGenerator;
@@ -170693,7 +170693,7 @@ var require_query_generator8 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var DataTypes2 = require_data_types9();
     var AbstractQueryGenerator = require_query_generator();
     var randomBytes = require("crypto").randomBytes;
@@ -170981,7 +170981,7 @@ var require_query_generator8 = __commonJS({
           sql.query = `SELECT * FROM FINAL TABLE (${sql.query});`;
           return sql;
         }
-        attrValueHash = Utils26.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
+        attrValueHash = Utils27.removeNullValuesFromHash(attrValueHash, options2.omitNull, options2);
         const modelAttributeMap = {};
         const values2 = [];
         const bind = [];
@@ -170996,7 +170996,7 @@ var require_query_generator8 = __commonJS({
         }
         for (const key in attrValueHash) {
           const value = attrValueHash[key];
-          if (value instanceof Utils26.SequelizeMethod || options2.bindParam === false) {
+          if (value instanceof Utils27.SequelizeMethod || options2.bindParam === false) {
             values2.push(`${this.quoteIdentifier(key)}=${this.escape(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" })}`);
           } else {
             values2.push(`${this.quoteIdentifier(key)}=${this.format(value, modelAttributeMap && modelAttributeMap[key] || void 0, { context: "UPDATE" }, bindParam)}`);
@@ -171139,7 +171139,7 @@ var require_query_generator8 = __commonJS({
         const sql = "DROP INDEX <%= indexName %>";
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
         const values2 = {
           tableName: this.quoteIdentifiers(tableName),
@@ -171178,7 +171178,7 @@ var require_query_generator8 = __commonJS({
           }
           template2 += ` GENERATED BY DEFAULT AS IDENTITY(START WITH ${initialValue}, INCREMENT BY 1)`;
         }
-        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (attribute.type !== "TEXT" && attribute.type._binary !== true && Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -171358,7 +171358,7 @@ var require_query_generator8 = __commonJS({
         for (const key in rawAttributes) {
           if (rawAttributes[key].unique && dataValues[key] === void 0) {
             if (rawAttributes[key].type instanceof DataTypes2.DATE) {
-              dataValues[key] = Utils26.now("db2");
+              dataValues[key] = Utils27.now("db2");
             } else if (rawAttributes[key].type instanceof DataTypes2.STRING) {
               dataValues[key] = `unique${uniqno++}`;
             } else if (rawAttributes[key].type instanceof DataTypes2.INTEGER) {
@@ -171371,7 +171371,7 @@ var require_query_generator8 = __commonJS({
         return uniqno;
       }
       quoteIdentifier(identifier2, force) {
-        return Utils26.addTicks(Utils26.removeTicks(identifier2, '"'), '"');
+        return Utils27.addTicks(Utils27.removeTicks(identifier2, '"'), '"');
       }
     };
     function wrapSingleQuote(identifier2) {
@@ -171408,7 +171408,7 @@ var require_query_interface7 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Op2 = require_operators();
     var { QueryInterface: QueryInterface2 } = require_query_interface();
     var QueryTypes2 = require_query_types();
@@ -171428,7 +171428,7 @@ var require_query_interface7 = __commonJS({
         let indexes = [];
         let indexFields;
         options2 = _4.clone(options2);
-        if (!Utils26.isWhereEmpty(where3)) {
+        if (!Utils27.isWhereEmpty(where3)) {
           wheres.push(where3);
         }
         indexes = _4.map(model.uniqueKeys, (value) => {
@@ -171984,7 +171984,7 @@ var require_query_generator9 = __commonJS({
     };
     var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var AbstractQueryGenerator = require_query_generator();
     var util = require("util");
     var Op2 = require_operators();
@@ -172020,7 +172020,7 @@ var require_query_generator9 = __commonJS({
           charset: null,
           collate: null
         }, options2);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "CREATE DATABASE IF NOT EXISTS",
           this.quoteIdentifier(databaseName),
           options2.charset && `DEFAULT CHARACTER SET ${this.escape(options2.charset)}`,
@@ -172091,7 +172091,7 @@ var require_query_generator9 = __commonJS({
             attributesClause += `, FOREIGN KEY (${this.quoteIdentifier(fkey)}) ${foreignKeys[fkey]}`;
           }
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "CREATE TABLE IF NOT EXISTS",
           table,
           `(${attributesClause})`,
@@ -172111,7 +172111,7 @@ var require_query_generator9 = __commonJS({
         return `SHOW FULL COLUMNS FROM ${table};`;
       }
       showTablesQuery(database) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           database ? `AND TABLE_SCHEMA = ${this.escape(database)}` : "AND TABLE_SCHEMA NOT IN ( 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA', 'SYS')",
           ";"
@@ -172120,7 +172120,7 @@ var require_query_generator9 = __commonJS({
       tableExistsQuery(table) {
         const tableName = table.tableName || table;
         const schema = table.schema;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
           `AND TABLE_SCHEMA = ${schema !== void 0 ? this.escape(schema) : "CURRENT_SCHEMA()"}`,
           `AND TABLE_NAME = ${this.escape(tableName)}`,
@@ -172128,7 +172128,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       addColumnQuery(table, key, dataType) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(table),
           "ADD",
@@ -172142,7 +172142,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       removeColumnQuery(tableName, attributeName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP",
@@ -172151,7 +172151,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       changeColumnQuery(tableName, attributes) {
-        const query = (...subQuerys) => Utils26.joinSQLFragments([
+        const query = (...subQuerys) => Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "ALTER COLUMN",
@@ -172194,7 +172194,7 @@ var require_query_generator9 = __commonJS({
           const definition = attributes[attrName];
           attrString.push(`'${attrBefore}' '${attrName}' ${definition}`);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "RENAME COLUMN",
@@ -172203,7 +172203,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       handleSequelizeMethod(attr, tableName, factory, options2, prepend2) {
-        if (attr instanceof Utils26.Json) {
+        if (attr instanceof Utils27.Json) {
           if (attr.conditions) {
             const conditions = this.parseConditionObject(attr.conditions).map((condition) => `${this.jsonPathExtractionQuery(condition.path[0], _4.tail(condition.path))} = '${condition.value}'`);
             return conditions.join(" AND ");
@@ -172222,7 +172222,7 @@ var require_query_generator9 = __commonJS({
             }
             return str;
           }
-        } else if (attr instanceof Utils26.Cast) {
+        } else if (attr instanceof Utils27.Cast) {
           if (/timestamp/i.test(attr.type)) {
             attr.type = "datetime";
           } else if (attr.json && /boolean/i.test(attr.type)) {
@@ -172236,7 +172236,7 @@ var require_query_generator9 = __commonJS({
         return super.handleSequelizeMethod(attr, tableName, factory, options2, prepend2);
       }
       truncateTableQuery(tableName) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "TRUNCATE",
           this.quoteTable(tableName)
         ]);
@@ -172257,7 +172257,7 @@ var require_query_generator9 = __commonJS({
           const pks = Object.values(model.primaryKeys).map((pk) => this.quoteIdentifier(pk.field)).join(",");
           primaryKeys = model.primaryKeyAttributes.length > 1 ? `(${pks})` : pks;
           primaryKeysSelection = pks;
-          return Utils26.joinSQLFragments([
+          return Utils27.joinSQLFragments([
             "DELETE FROM",
             table,
             "WHERE",
@@ -172272,7 +172272,7 @@ var require_query_generator9 = __commonJS({
             ";"
           ]);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "DELETE FROM",
           table,
           whereClause,
@@ -172285,7 +172285,7 @@ var require_query_generator9 = __commonJS({
       showConstraintsQuery(table, constraintName) {
         const tableName = table.tableName || table;
         const schemaName = table.schema;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT CONSTRAINT_CATALOG AS constraintCatalog,",
           "CONSTRAINT_NAME AS constraintName,",
           "CONSTRAINT_SCHEMA AS constraintSchema,",
@@ -172302,9 +172302,9 @@ var require_query_generator9 = __commonJS({
       removeIndexQuery(tableName, indexNameOrAttributes) {
         let indexName = indexNameOrAttributes;
         if (typeof indexName !== "string") {
-          indexName = Utils26.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
+          indexName = Utils27.underscore(`${tableName}_${indexNameOrAttributes.join("_")}`);
         }
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "DROP INDEX",
           this.quoteIdentifier(indexName),
           "ON",
@@ -172326,7 +172326,7 @@ var require_query_generator9 = __commonJS({
         if (attribute.autoIncrement) {
           template2 += " AUTOINCREMENT";
         }
-        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils26.defaultValueSchemable(attribute.defaultValue)) {
+        if (!typeWithoutDefault.has(attributeString) && attribute.type._binary !== true && Utils27.defaultValueSchemable(attribute.defaultValue)) {
           template2 += ` DEFAULT ${this.escape(attribute.defaultValue)}`;
         }
         if (attribute.unique === true) {
@@ -172437,7 +172437,7 @@ var require_query_generator9 = __commonJS({
       }
       getForeignKeysQuery(table, schemaName) {
         const tableName = table.tableName || table;
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           `FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '${tableName}'`,
@@ -172450,7 +172450,7 @@ var require_query_generator9 = __commonJS({
         const quotedSchemaName = table.schema ? wrapSingleQuote(table.schema) : "";
         const quotedTableName = wrapSingleQuote(table.tableName || table);
         const quotedColumnName = wrapSingleQuote(columnName);
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "SELECT",
           FOREIGN_KEY_FIELDS,
           "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE",
@@ -172471,7 +172471,7 @@ var require_query_generator9 = __commonJS({
         ]);
       }
       dropForeignKeyQuery(tableName, foreignKey) {
-        return Utils26.joinSQLFragments([
+        return Utils27.joinSQLFragments([
           "ALTER TABLE",
           this.quoteTable(tableName),
           "DROP FOREIGN KEY",
@@ -172491,15 +172491,15 @@ var require_query_generator9 = __commonJS({
       quoteIdentifier(identifier2, force) {
         const optForceQuote = force || false;
         const optQuoteIdentifiers = this.options.quoteIdentifiers !== false;
-        const rawIdentifier = Utils26.removeTicks(identifier2, '"');
+        const rawIdentifier = Utils27.removeTicks(identifier2, '"');
         if (optForceQuote === true || optQuoteIdentifiers !== false || identifier2.includes(".") || identifier2.includes("->") || SNOWFLAKE_RESERVED_WORDS.includes(rawIdentifier.toLowerCase())) {
-          return Utils26.addTicks(rawIdentifier, '"');
+          return Utils27.addTicks(rawIdentifier, '"');
         }
         return rawIdentifier;
       }
     };
     function wrapSingleQuote(identifier2) {
-      return Utils26.addTicks(identifier2, "'");
+      return Utils27.addTicks(identifier2, "'");
     }
     module2.exports = SnowflakeQueryGenerator;
   }
@@ -172988,7 +172988,7 @@ var require_sequelize = __commonJS({
     var pgConnectionString = require_pg_connection_string();
     var retry = require_dist3().default;
     var _4 = require_lodash();
-    var Utils26 = require_utils6();
+    var Utils27 = require_utils6();
     var Model14 = require_model2();
     var DataTypes2 = require_data_types9();
     var Deferrable2 = require_deferrable();
@@ -173432,16 +173432,16 @@ var require_sequelize = __commonJS({
         return this.fn("RAND");
       }
       static fn(fn2, ...args) {
-        return new Utils26.Fn(fn2, args);
+        return new Utils27.Fn(fn2, args);
       }
       static col(col2) {
-        return new Utils26.Col(col2);
+        return new Utils27.Col(col2);
       }
       static cast(val, type2) {
-        return new Utils26.Cast(val, type2);
+        return new Utils27.Cast(val, type2);
       }
       static literal(val) {
-        return new Utils26.Literal(val);
+        return new Utils27.Literal(val);
       }
       static and(...args) {
         return { [Op2.and]: args };
@@ -173450,10 +173450,10 @@ var require_sequelize = __commonJS({
         return { [Op2.or]: args };
       }
       static json(conditionsOrPath, value) {
-        return new Utils26.Json(conditionsOrPath, value);
+        return new Utils27.Json(conditionsOrPath, value);
       }
       static where(attr, comparator, logic) {
-        return new Utils26.Where(attr, comparator, logic);
+        return new Utils27.Where(attr, comparator, logic);
       }
       async transaction(options2, autoCallback) {
         if (typeof options2 === "function") {
@@ -173577,7 +173577,7 @@ var require_sequelize = __commonJS({
       }
     });
     Sequelize2.options = { hooks: {} };
-    Sequelize2.Utils = Utils26;
+    Sequelize2.Utils = Utils27;
     Sequelize2.Op = Op2;
     Sequelize2.TableHints = TableHints2;
     Sequelize2.IndexHints = IndexHints2;
@@ -173597,7 +173597,7 @@ var require_sequelize = __commonJS({
     }
     Sequelize2.Deferrable = Deferrable2;
     Sequelize2.prototype.Association = Sequelize2.Association = Association2;
-    Sequelize2.useInflection = Utils26.useInflection;
+    Sequelize2.useInflection = Utils27.useInflection;
     Hooks.applyTo(Sequelize2);
     Hooks.applyTo(Sequelize2.prototype);
     Sequelize2.Error = sequelizeErrors.BaseError;
@@ -202507,7 +202507,7 @@ var require_prop_types = __commonJS({
 var require_react_dom_production = __commonJS({
   "../../node_modules/.pnpm/react-dom@19.2.8_react@19.2.8/node_modules/react-dom/cjs/react-dom.production.js"(exports2) {
     "use strict";
-    var React55 = require_react();
+    var React57 = require_react();
     function formatProdErrorMessage(code) {
       var url6 = "https://react.dev/errors/" + code;
       if (1 < arguments.length) {
@@ -202547,7 +202547,7 @@ var require_react_dom_production = __commonJS({
         implementation
       };
     }
-    var ReactSharedInternals = React55.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    var ReactSharedInternals = React57.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
     function getCrossOriginStringAs(as2, input) {
       if ("font" === as2) return "";
       if ("string" === typeof input)
@@ -202701,7 +202701,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React55 = require_react(), Internals = {
+      var React57 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -202719,7 +202719,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React55.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React57.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -202985,13 +202985,13 @@ var require_classnames = __commonJS({
 // src/components/menu.jsx
 var require_menu = __commonJS({
   "src/components/menu.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_index_all();
     init_nylas_exports();
-    var MenuItem2 = class _MenuItem extends import_react67.default.Component {
+    var MenuItem2 = class _MenuItem extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -202999,15 +202999,15 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuItem.displayName = "MenuItem";
         _MenuItem.propTypes = {
-          divider: import_prop_types69.default.oneOfType([import_prop_types69.default.string, import_prop_types69.default.bool]),
-          selected: import_prop_types69.default.bool,
-          checked: import_prop_types69.default.bool
+          divider: import_prop_types70.default.oneOfType([import_prop_types70.default.string, import_prop_types70.default.bool]),
+          selected: import_prop_types70.default.bool,
+          checked: import_prop_types70.default.bool
         };
       }
       render() {
         if (this.props.divider) {
           const dividerLabel = index_default_default.isString(this.props.divider) ? this.props.divider : "";
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className: "item divider" },
             dividerLabel
@@ -203018,7 +203018,7 @@ var require_menu = __commonJS({
             selected: this.props.selected,
             checked: this.props.checked
           });
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className, onMouseDown: this.props.onMouseDown },
             this.props.content
@@ -203027,7 +203027,7 @@ var require_menu = __commonJS({
       }
     };
     MenuItem2.initClass();
-    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react67.default.Component {
+    var MenuNameEmailItem = class _MenuNameEmailItem extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -203035,24 +203035,24 @@ var require_menu = __commonJS({
       static initClass() {
         _MenuNameEmailItem.displayName = "MenuNameEmailItem";
         _MenuNameEmailItem.propTypes = {
-          name: import_prop_types69.default.string,
-          email: import_prop_types69.default.string
+          name: import_prop_types70.default.string,
+          email: import_prop_types70.default.string
         };
       }
       render() {
         if ((this.props.name != null ? this.props.name.length : void 0) > 0 && this.props.name !== this.props.email) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "span",
             null,
-            import_react67.default.createElement("span", { className: "primary" }, this.props.name),
-            import_react67.default.createElement(
+            import_react69.default.createElement("span", { className: "primary" }, this.props.name),
+            import_react69.default.createElement(
               "span",
               { className: "secondary" },
               `(${this.props.email})`
             )
           );
         } else {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "span",
             { className: "primary" },
             this.props.email
@@ -203061,21 +203061,21 @@ var require_menu = __commonJS({
       }
     };
     MenuNameEmailItem.initClass();
-    var Menu7 = class _Menu extends import_react67.default.Component {
+    var Menu7 = class _Menu extends import_react69.default.Component {
       static initClass() {
         _Menu.displayName = "Menu";
         _Menu.propTypes = {
-          className: import_prop_types69.default.string,
-          footerComponents: import_prop_types69.default.node,
-          headerComponents: import_prop_types69.default.node,
-          itemContext: import_prop_types69.default.object,
-          itemContent: import_prop_types69.default.func.isRequired,
-          itemKey: import_prop_types69.default.func.isRequired,
-          itemChecked: import_prop_types69.default.func,
-          items: import_prop_types69.default.array.isRequired,
-          onSelect: import_prop_types69.default.func.isRequired,
-          onEscape: import_prop_types69.default.func,
-          defaultSelectedIndex: import_prop_types69.default.number
+          className: import_prop_types70.default.string,
+          footerComponents: import_prop_types70.default.node,
+          headerComponents: import_prop_types70.default.node,
+          itemContext: import_prop_types70.default.object,
+          itemContent: import_prop_types70.default.func.isRequired,
+          itemKey: import_prop_types70.default.func.isRequired,
+          itemChecked: import_prop_types70.default.func,
+          items: import_prop_types70.default.array.isRequired,
+          onSelect: import_prop_types70.default.func.isRequired,
+          onEscape: import_prop_types70.default.func,
+          defaultSelectedIndex: import_prop_types70.default.number
         };
         _Menu.defaultProps = { onEscape() {
         } };
@@ -203154,19 +203154,19 @@ var require_menu = __commonJS({
         }
       }
       render() {
-        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react67.default.createElement("span", null);
-        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react67.default.createElement("span", null);
+        const hc = this.props.headerComponents != null ? this.props.headerComponents : import_react69.default.createElement("span", null);
+        const fc = this.props.footerComponents != null ? this.props.footerComponents : import_react69.default.createElement("span", null);
         const className = this.props.className ? this.props.className : "";
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           {
             onKeyDown: this._onKeyDown,
             className: `menu ${className}`,
             tabIndex: "-1"
           },
-          import_react67.default.createElement("div", { className: "header-container" }, hc),
+          import_react69.default.createElement("div", { className: "header-container" }, hc),
           this._contentContainer(),
-          import_react67.default.createElement("div", { className: "footer-container" }, fc)
+          import_react69.default.createElement("div", { className: "footer-container" }, fc)
         );
       }
       _onKeyDown(event2) {
@@ -203191,7 +203191,7 @@ var require_menu = __commonJS({
         const seenItemKeys = {};
         const items = (this.props.items || []).map((item, i) => {
           const content = this.props.itemContent(item);
-          if (import_react67.default.isValidElement(content) && content.type === MenuItem2) {
+          if (import_react69.default.isValidElement(content) && content.type === MenuItem2) {
             return content;
           }
           const onMouseDown = (event2) => {
@@ -203213,7 +203213,7 @@ var require_menu = __commonJS({
             );
           }
           seenItemKeys[key] = item;
-          return import_react67.default.createElement(MenuItem2, {
+          return import_react69.default.createElement(MenuItem2, {
             key,
             onMouseDown,
             checked: typeof this.props.itemChecked === "function" ? this.props.itemChecked(item) : void 0,
@@ -203225,7 +203225,7 @@ var require_menu = __commonJS({
           "content-container": true,
           empty: items.length === 0
         });
-        return import_react67.default.createElement("div", { className: contentClass }, items);
+        return import_react69.default.createElement("div", { className: contentClass }, items);
       }
       _onShiftSelectedIndex(delta) {
         if (this.props.items.length === 0) {
@@ -203361,16 +203361,16 @@ var init_drop_zone = __esm({
 // src/components/spinner.jsx
 var require_spinner = __commonJS({
   "src/components/spinner.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var Spinner4 = class _Spinner extends import_react67.default.Component {
+    var Spinner4 = class _Spinner extends import_react69.default.Component {
       static initClass() {
         _Spinner.propTypes = {
-          visible: import_prop_types69.default.bool,
-          withCover: import_prop_types69.default.bool,
-          style: import_prop_types69.default.object
+          visible: import_prop_types70.default.bool,
+          withCover: import_prop_types70.default.bool,
+          style: import_prop_types70.default.object
         };
       }
       constructor(props) {
@@ -203464,7 +203464,7 @@ var require_spinner = __commonJS({
             zIndex: 1e3
           }
         );
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: coverClasses, style },
           this._renderSpinnerDots()
@@ -203491,13 +203491,13 @@ var require_spinner = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           Object.assign({ className: spinnerClass }, otherProps, { style }),
-          import_react67.default.createElement("div", { className: "bounce1" }),
-          import_react67.default.createElement("div", { className: "bounce2" }),
-          import_react67.default.createElement("div", { className: "bounce3" }),
-          import_react67.default.createElement("div", { className: "bounce4" })
+          import_react69.default.createElement("div", { className: "bounce1" }),
+          import_react69.default.createElement("div", { className: "bounce2" }),
+          import_react69.default.createElement("div", { className: "bounce3" }),
+          import_react69.default.createElement("div", { className: "bounce4" })
         );
       }
     };
@@ -209723,21 +209723,21 @@ var init_syncing_list_state = __esm({
 // src/components/empty-list-state.jsx
 var require_empty_list_state = __commonJS({
   "src/components/empty-list-state.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     init_index_all();
-    var import_react67 = __toESM(require_react());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_classnames19 = __toESM(require_classnames());
     init_retina_img();
     init_nylas_exports();
     init_nylas_component_kit();
     var INBOX_ZERO_ANIMATIONS = ["gem", "oasis", "tron", "airstrip", "galaxy"];
-    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react67.default.Component {
+    var EmptyPerspectiveState = class _EmptyPerspectiveState extends import_react69.default.Component {
       static initClass() {
         _EmptyPerspectiveState.displayName = "EmptyPerspectiveState";
         _EmptyPerspectiveState.propTypes = {
-          perspective: import_prop_types69.default.object,
-          messageContent: import_prop_types69.default.node
+          perspective: import_prop_types70.default.object,
+          messageContent: import_prop_types70.default.node
         };
       }
       render() {
@@ -209752,19 +209752,19 @@ var require_empty_list_state = __commonJS({
         if (name2) {
           name2 = name2.toLowerCase();
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: "perspective-empty-state" },
-          name2 ? import_react67.default.createElement(retina_img_default, {
+          name2 ? import_react69.default.createElement(retina_img_default, {
             name: `ic-emptystate-${name2}.png`,
             mode: retina_img_default.Mode.ContentIsMask
           }) : void 0,
-          import_react67.default.createElement("div", { className: "message" }, messageContent)
+          import_react69.default.createElement("div", { className: "message" }, messageContent)
         );
       }
     };
     EmptyPerspectiveState.initClass();
-    var EmptyInboxState = class _EmptyInboxState extends import_react67.default.Component {
+    var EmptyInboxState = class _EmptyInboxState extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this._getScalingFactor = this._getScalingFactor.bind(this);
@@ -209772,7 +209772,7 @@ var require_empty_list_state = __commonJS({
       }
       static initClass() {
         _EmptyInboxState.displayName = "EmptyInboxState";
-        _EmptyInboxState.propTypes = { containerRect: import_prop_types69.default.object };
+        _EmptyInboxState.propTypes = { containerRect: import_prop_types70.default.object };
       }
       _getScalingFactor() {
         const { width } = this.props.containerRect;
@@ -209798,16 +209798,16 @@ var require_empty_list_state = __commonJS({
         const animationName = this._getAnimationName();
         const factor = this._getScalingFactor();
         const style = factor ? { transform: `scale(${factor})` } : {};
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: "inbox-zero-animation" },
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             { className: "animation-wrapper", style },
-            import_react67.default.createElement("iframe", {
+            import_react69.default.createElement("iframe", {
               src: `animations/inbox-zero/${animationName}/${animationName}.html`
             }),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "message" },
               "Hooray! You\u2019re done."
@@ -209817,10 +209817,10 @@ var require_empty_list_state = __commonJS({
       }
     };
     EmptyInboxState.initClass();
-    var EmptyListState = class _EmptyListState extends import_react67.default.Component {
+    var EmptyListState = class _EmptyListState extends import_react69.default.Component {
       static initClass() {
         _EmptyListState.displayName = "EmptyListState";
-        _EmptyListState.propTypes = { visible: import_prop_types69.default.bool.isRequired };
+        _EmptyListState.propTypes = { visible: import_prop_types70.default.bool.isRequired };
       }
       constructor(props) {
         this._getDimensions = this._getDimensions.bind(this);
@@ -209882,13 +209882,13 @@ var require_empty_list_state = __commonJS({
       }
       render() {
         if (!this.props.visible) {
-          return import_react67.default.createElement("span", null);
+          return import_react69.default.createElement("span", null);
         }
         let ContentComponent = EmptyPerspectiveState;
         const current = FocusedPerspectiveStore3.current();
         let messageContent = current.emptyMessage();
         if (this.state.syncing) {
-          messageContent = import_react67.default.createElement(void 0, { empty: true });
+          messageContent = import_react69.default.createElement(void 0, { empty: true });
         } else if (current.isInbox()) {
           ContentComponent = EmptyInboxState;
         }
@@ -209896,10 +209896,10 @@ var require_empty_list_state = __commonJS({
           "empty-state": true,
           active: this.state.active
         });
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: classes },
-          import_react67.default.createElement(ContentComponent, {
+          import_react69.default.createElement(ContentComponent, {
             perspective: current,
             containerRect: this.state.rect,
             messageContent
@@ -209973,18 +209973,18 @@ var init_scrollbar_ticks = __esm({
 // src/components/scroll-region.jsx
 var require_scroll_region = __commonJS({
   "src/components/scroll-region.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     init_index_all();
-    var import_react67 = __toESM(require_react());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
     var import_classnames19 = __toESM(require_classnames());
     init_scrollbar_ticks();
-    var Scrollbar = class _Scrollbar extends import_react67.default.Component {
+    var Scrollbar = class _Scrollbar extends import_react69.default.Component {
       static initClass() {
         _Scrollbar.displayName = "Scrollbar";
         _Scrollbar.propTypes = {
-          scrollTooltipComponent: import_prop_types69.default.func,
+          scrollTooltipComponent: import_prop_types70.default.func,
           // A scrollbarTickProvider is any object that has the `listen` and
           // `scrollbarTicks` method. Since ScrollRegions tend to encompass large
           // render trees it's more efficent for the scrollbar to listen for its
@@ -209993,8 +209993,8 @@ var require_scroll_region = __commonJS({
           // method must return an array of numbers between 0 and 1 which
           // represent the height percentages at which tick marks will be
           // rendered.
-          scrollbarTickProvider: import_prop_types69.default.object,
-          getScrollRegion: import_prop_types69.default.func
+          scrollbarTickProvider: import_prop_types70.default.object,
+          getScrollRegion: import_prop_types70.default.func
         };
       }
       constructor(props) {
@@ -210050,19 +210050,19 @@ var require_scroll_region = __commonJS({
         });
         let tooltip = [];
         if (this.props.scrollTooltipComponent && this.state.dragging) {
-          tooltip = import_react67.default.createElement(this.props.scrollTooltipComponent, {
+          tooltip = import_react69.default.createElement(this.props.scrollTooltipComponent, {
             viewportCenter: this.state.viewportScrollTop + this.state.viewportHeight / 2,
             totalHeight: this.state.totalHeight
           });
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           {
             className: containerClasses,
             style: this._scrollbarWrapStyles(),
             onMouseEnter: this.recomputeDimensions
           },
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             {
               className: "scrollbar-track-inner",
@@ -210070,7 +210070,7 @@ var require_scroll_region = __commonJS({
               onClick: this._onScrollJump
             },
             this._renderScrollbarTicks(),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               {
                 className: "scrollbar-handle",
@@ -210079,7 +210079,7 @@ var require_scroll_region = __commonJS({
                 ref: "handle",
                 onClick: this._onHandleClick
               },
-              import_react67.default.createElement("div", { className: "tooltip" }, tooltip)
+              import_react69.default.createElement("div", { className: "tooltip" }, tooltip)
             )
           )
         );
@@ -210107,7 +210107,7 @@ var require_scroll_region = __commonJS({
         if (!(this.state.scrollbarTicks.length > 0)) {
           return false;
         }
-        return import_react67.default.createElement(ScrollbarTicks, {
+        return import_react69.default.createElement(ScrollbarTicks, {
           ticks: this.state.scrollbarTicks
         });
       }
@@ -210186,17 +210186,17 @@ var require_scroll_region = __commonJS({
       }
     };
     Scrollbar.initClass();
-    var ScrollRegion5 = class _ScrollRegion extends import_react67.default.Component {
+    var ScrollRegion5 = class _ScrollRegion extends import_react69.default.Component {
       static initClass() {
         _ScrollRegion.displayName = "ScrollRegion";
         _ScrollRegion.propTypes = {
-          onScroll: import_prop_types69.default.func,
-          onScrollEnd: import_prop_types69.default.func,
-          className: import_prop_types69.default.string,
-          scrollTooltipComponent: import_prop_types69.default.func,
-          scrollbarTickProvider: import_prop_types69.default.object,
-          children: import_prop_types69.default.oneOfType([import_prop_types69.default.element, import_prop_types69.default.array]),
-          getScrollbar: import_prop_types69.default.func
+          onScroll: import_prop_types70.default.func,
+          onScrollEnd: import_prop_types70.default.func,
+          className: import_prop_types70.default.string,
+          scrollTooltipComponent: import_prop_types70.default.func,
+          scrollbarTickProvider: import_prop_types70.default.object,
+          children: import_prop_types70.default.oneOfType([import_prop_types70.default.element, import_prop_types70.default.array]),
+          getScrollbar: import_prop_types70.default.func
         };
         _ScrollRegion.ScrollPosition = {
           // Scroll so that the desired region is at the top of the viewport
@@ -210301,7 +210301,7 @@ var require_scroll_region = __commonJS({
         });
         if (!this.props.getScrollbar) {
           if (this._scrollbarComponent == null) {
-            this._scrollbarComponent = import_react67.default.createElement(Scrollbar, {
+            this._scrollbarComponent = import_react69.default.createElement(Scrollbar, {
               ref: "scrollbar",
               scrollbarTickProvider: this.props.scrollbarTickProvider,
               scrollTooltipComponent: this.props.scrollTooltipComponent,
@@ -210313,18 +210313,18 @@ var require_scroll_region = __commonJS({
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           Object.assign({ className: containerClasses }, otherProps),
           this._scrollbarComponent,
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             {
               className: "scroll-region-content",
               onScroll: this._onScroll,
               ref: "content"
             },
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "scroll-region-content-inner" },
               this.props.children
@@ -210339,7 +210339,7 @@ var require_scroll_region = __commonJS({
           param = {};
         }
         const { position, settle, done } = param;
-        if (node instanceof import_react67.default.Component) {
+        if (node instanceof import_react69.default.Component) {
           node = import_react_dom31.default.findDOMNode(node);
         }
         if (!(node instanceof Node)) {
@@ -210807,11 +210807,11 @@ var init_list_data_source = __esm({
 // src/components/list-tabular-item.jsx
 var require_list_tabular_item = __commonJS({
   "src/components/list-tabular-item.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     init_swipe_container();
     init_nylas_exports();
-    var ListTabularItem2 = class _ListTabularItem extends import_react67.default.Component {
+    var ListTabularItem2 = class _ListTabularItem extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -210822,13 +210822,13 @@ var require_list_tabular_item = __commonJS({
       static initClass() {
         _ListTabularItem.displayName = "ListTabularItem";
         _ListTabularItem.propTypes = {
-          metrics: import_prop_types69.default.object,
-          columns: import_prop_types69.default.arrayOf(import_prop_types69.default.object).isRequired,
-          item: import_prop_types69.default.object.isRequired,
-          itemProps: import_prop_types69.default.object,
-          onSelect: import_prop_types69.default.func,
-          onClick: import_prop_types69.default.func,
-          onDoubleClick: import_prop_types69.default.func
+          metrics: import_prop_types70.default.object,
+          columns: import_prop_types70.default.arrayOf(import_prop_types70.default.object).isRequired,
+          item: import_prop_types70.default.object.isRequired,
+          itemProps: import_prop_types70.default.object,
+          onSelect: import_prop_types70.default.func,
+          onClick: import_prop_types70.default.func,
+          onDoubleClick: import_prop_types70.default.func
         };
       }
       // DO NOT DELETE unless you know what you're doing! This method cuts
@@ -210856,7 +210856,7 @@ var require_list_tabular_item = __commonJS({
         if (this._columnCache == null) {
           this._columnCache = this._columns();
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           SwipeContainer,
           Object.assign({}, props, {
             onClick: this._onClick,
@@ -210867,7 +210867,7 @@ var require_list_tabular_item = __commonJS({
               height: this.props.metrics.height
             }
           }),
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             { className, style: { height: this.props.metrics.height } },
             this._columnCache
@@ -210884,7 +210884,7 @@ var require_list_tabular_item = __commonJS({
               );
             }
             names[column.name] = true;
-            return import_react67.default.createElement(
+            return import_react69.default.createElement(
               "div",
               {
                 key: column.name,
@@ -213429,30 +213429,35 @@ var init_mini_month_view = __esm({
 // src/searchable-components/search-constants.js
 var require_search_constants = __commonJS({
   "src/searchable-components/search-constants.js"(exports2, module2) {
-    var MAX_MATCHES = 999;
-    var CHAR_THRESHOLD = 2;
+    var MAX_MATCHES2 = 999;
+    var CHAR_THRESHOLD2 = 2;
     module2.exports = {
-      MAX_MATCHES,
-      CHAR_THRESHOLD
+      MAX_MATCHES: MAX_MATCHES2,
+      CHAR_THRESHOLD: CHAR_THRESHOLD2
     };
-    module2.exports.MAX_MATCHES = MAX_MATCHES;
-    module2.exports.CHAR_THRESHOLD = CHAR_THRESHOLD;
+    module2.exports.MAX_MATCHES = MAX_MATCHES2;
+    module2.exports.CHAR_THRESHOLD = CHAR_THRESHOLD2;
     module2.exports.default = module2.exports;
   }
 });
 
 // src/searchable-components/unified-dom-parser.js
-var require_unified_dom_parser = __commonJS({
-  "src/searchable-components/unified-dom-parser.js"(exports2, module2) {
-    var { Utils: Utils26 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var { MAX_MATCHES, CHAR_THRESHOLD } = require_search_constants();
-    var UnifiedDOMParser = class {
+var unified_dom_parser_exports = {};
+__export(unified_dom_parser_exports, {
+  default: () => unified_dom_parser_default
+});
+var import_search_constants, UnifiedDOMParser, unified_dom_parser_default;
+var init_unified_dom_parser = __esm({
+  "src/searchable-components/unified-dom-parser.js"() {
+    init_nylas_exports();
+    import_search_constants = __toESM(require_search_constants());
+    UnifiedDOMParser = class {
       constructor(regionId) {
         this.regionId = regionId;
         this.matchRenderIndex = 0;
       }
       matchesSearch(dom, searchTerm) {
-        if ((searchTerm || "").trim().length < CHAR_THRESHOLD) {
+        if ((searchTerm || "").trim().length < import_search_constants.CHAR_THRESHOLD) {
           return false;
         }
         const fullStrings = this.buildNormalizedText(dom);
@@ -213507,7 +213512,7 @@ var require_unified_dom_parser = __commonJS({
         const matches = [];
         let matchCount = 0;
         let match = re2.exec(rawString);
-        while (match && matchCount <= MAX_MATCHES) {
+        while (match && matchCount <= import_search_constants.MAX_MATCHES) {
           const matchStart = match.index;
           const matchEnd = match.index + match[0].length;
           matches.push([matchStart, matchEnd]);
@@ -213527,7 +213532,7 @@ var require_unified_dom_parser = __commonJS({
             const reText = matches[1];
             re2 = new RegExp(reText, "ig");
           } else {
-            re2 = new RegExp(Utils26.escapeRegExp(searchTerm), "ig");
+            re2 = new RegExp(Utils13.escapeRegExp(searchTerm), "ig");
           }
         } catch (_e2) {
           return null;
@@ -213633,8 +213638,7 @@ var require_unified_dom_parser = __commonJS({
       highlightSearch() {
       }
     };
-    module2.exports = UnifiedDOMParser;
-    module2.exports.default = UnifiedDOMParser;
+    unified_dom_parser_default = UnifiedDOMParser;
   }
 });
 
@@ -213643,8 +213647,8 @@ var require_real_dom_parser = __commonJS({
   "src/searchable-components/real-dom-parser.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports)).default || (init_index_all(), __toCommonJS(index_all_exports));
     var { DOMUtils: DOMUtils5 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var UnifiedDOMParser = require_unified_dom_parser().default || require_unified_dom_parser();
-    var RealDOMParser = class extends UnifiedDOMParser {
+    var UnifiedDOMParser2 = (init_unified_dom_parser(), __toCommonJS(unified_dom_parser_exports)).default || (init_unified_dom_parser(), __toCommonJS(unified_dom_parser_exports));
+    var RealDOMParser = class extends UnifiedDOMParser2 {
       *_pruningDOMWalker({ node, pruneFn, filterFn }) {
         if (filterFn(node)) {
           yield node;
@@ -213763,23 +213767,23 @@ var require_iframe_searcher = __commonJS({
 // src/components/evented-iframe.jsx
 var require_evented_iframe = __commonJS({
   "src/components/evented-iframe.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     var import_iframe_searcher = __toESM(require_iframe_searcher());
     var url6 = __toESM(require("url"));
     init_index_all();
     var {
-      Utils: Utils26,
+      Utils: Utils27,
       RegExpUtils: RegExpUtils6,
       IdentityStore: IdentityStore4,
       SearchableComponentMaker,
       SearchableComponentStore: SearchableComponentStore2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var EventedIFrame = class _EventedIFrame extends import_react67.default.Component {
+    var EventedIFrame = class _EventedIFrame extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
-        this._nodeRef = import_react67.default.createRef();
+        this._nodeRef = import_react69.default.createRef();
         this.render = this.render.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -213802,23 +213806,23 @@ var require_evented_iframe = __commonJS({
       static initClass() {
         _EventedIFrame.displayName = "EventedIFrame";
         _EventedIFrame.propTypes = {
-          searchable: import_prop_types69.default.bool,
-          onResize: import_prop_types69.default.func
+          searchable: import_prop_types70.default.bool,
+          onResize: import_prop_types70.default.func
         };
       }
       render() {
-        const otherProps = Utils26.fastOmit(
+        const otherProps = Utils27.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "iframe",
           Object.assign({ seamless: "seamless", ref: this._nodeRef }, otherProps)
         );
       }
       componentDidMount() {
         if (this.props.searchable) {
-          this._regionId = Utils26.generateTempId();
+          this._regionId = Utils27.generateTempId();
           this._searchUsub = SearchableComponentStore2.listen(
             this._onSearchableStoreChange
           );
@@ -213845,7 +213849,7 @@ var require_evented_iframe = __commonJS({
         }
       }
       shouldComponentUpdate(nextProps, nextState) {
-        return !Utils26.isEqualReact(nextProps, this.props) || !Utils26.isEqualReact(nextState, this.state);
+        return !Utils27.isEqualReact(nextProps, this.props) || !Utils27.isEqualReact(nextState, this.state);
       }
       /*
        Public: Call this method if you replace the contents of the iframe's document.
@@ -214201,28 +214205,28 @@ var require_evented_iframe = __commonJS({
 // src/components/button-dropdown.jsx
 var require_button_dropdown = __commonJS({
   "src/components/button-dropdown.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     init_retina_img();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react67 = __toESM(require_react());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
-    var ButtonDropdown2 = class _ButtonDropdown extends import_react67.default.Component {
+    var ButtonDropdown2 = class _ButtonDropdown extends import_react69.default.Component {
       static initClass() {
         _ButtonDropdown.displayName = "ButtonDropdown";
         _ButtonDropdown.propTypes = {
-          primaryItem: import_prop_types69.default.element,
-          primaryClick: import_prop_types69.default.func,
-          bordered: import_prop_types69.default.bool,
-          menu: import_prop_types69.default.element,
-          style: import_prop_types69.default.object,
-          closeOnMenuClick: import_prop_types69.default.bool
+          primaryItem: import_prop_types70.default.element,
+          primaryClick: import_prop_types70.default.func,
+          bordered: import_prop_types70.default.bool,
+          menu: import_prop_types70.default.element,
+          style: import_prop_types70.default.object,
+          closeOnMenuClick: import_prop_types70.default.bool
         };
         _ButtonDropdown.defaultProps = { style: {} };
       }
       constructor(props) {
         super();
-        this.buttonRef = import_react67.default.createRef();
-        this.secondaryItemsRef = import_react67.default.createRef();
+        this.buttonRef = import_react69.default.createRef();
+        this.secondaryItemsRef = import_react69.default.createRef();
         this.render = this.render.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this._onMenuClick = this._onMenuClick.bind(this);
@@ -214238,7 +214242,7 @@ var require_button_dropdown = __commonJS({
           bordered: this.props.bordered !== false
         });
         if (this.props.primaryClick) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214247,7 +214251,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               {
                 className: "primary-item",
@@ -214256,15 +214260,15 @@ var require_button_dropdown = __commonJS({
               },
               this.props.primaryItem
             ),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "secondary-picker", onClick: this.toggleDropdown },
-              import_react67.default.createElement(retina_img_default, {
+              import_react69.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214275,7 +214279,7 @@ var require_button_dropdown = __commonJS({
             )
           );
         } else {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             {
               ref: this.buttonRef,
@@ -214284,7 +214288,7 @@ var require_button_dropdown = __commonJS({
               className: `${classes} ${this.props.className != null ? this.props.className : ""}`,
               style: this.props.style
             },
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               {
                 className: "only-item",
@@ -214292,13 +214296,13 @@ var require_button_dropdown = __commonJS({
                 onClick: this.toggleDropdown
               },
               this.props.primaryItem,
-              import_react67.default.createElement(retina_img_default, {
+              import_react69.default.createElement(retina_img_default, {
                 name: "icon-thread-disclosure.png",
                 style: { marginLeft: 12 },
                 mode: retina_img_default.Mode.ContentIsMask
               })
             ),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               {
                 ref: this.secondaryItemsRef,
@@ -214978,10 +214982,10 @@ var init_multiselect_dropdown = __esm({
 // src/components/tab-group-region.jsx
 var require_tab_group_region = __commonJS({
   "src/components/tab-group-region.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
-    var TabGroupRegion = class _TabGroupRegion extends import_react67.default.Component {
+    var TabGroupRegion = class _TabGroupRegion extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -214989,7 +214993,7 @@ var require_tab_group_region = __commonJS({
         this.getChildContext = this.getChildContext.bind(this);
       }
       static initClass() {
-        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types69.default.object };
+        _TabGroupRegion.childContextTypes = { parentTabGroup: import_prop_types70.default.object };
       }
       _onKeyDown(event2) {
         if (event2.key === "Tab" && !event2.defaultPrevented) {
@@ -215032,7 +215036,7 @@ var require_tab_group_region = __commonJS({
         return { parentTabGroup: this };
       }
       render() {
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
           this.props.children
@@ -215045,10 +215049,6 @@ var require_tab_group_region = __commonJS({
 });
 
 // src/components/unsafe-component.jsx
-var unsafe_component_exports = {};
-__export(unsafe_component_exports, {
-  default: () => unsafe_component_default
-});
 var import_prop_types39, import_react35, import_react_dom15, UnsafeComponent, unsafe_component_default;
 var init_unsafe_component = __esm({
   "src/components/unsafe-component.jsx"() {
@@ -215223,25 +215223,25 @@ var init_injected_component_label = __esm({
 // src/components/injected-component.jsx
 var require_injected_component = __commonJS({
   "src/components/injected-component.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
     init_unsafe_component();
     init_injected_component_label();
-    var InjectedComponent2 = class _InjectedComponent extends import_react67.default.Component {
+    var InjectedComponent2 = class _InjectedComponent extends import_react69.default.Component {
       static initClass() {
         _InjectedComponent.displayName = "InjectedComponent";
         _InjectedComponent.propTypes = {
-          matching: import_prop_types69.default.object.isRequired,
-          className: import_prop_types69.default.string,
-          exposedProps: import_prop_types69.default.object,
-          fallback: import_prop_types69.default.func,
-          onComponentDidRender: import_prop_types69.default.func,
-          style: import_prop_types69.default.object,
-          requiredMethods: import_prop_types69.default.arrayOf(import_prop_types69.default.string),
-          onComponentDidChange: import_prop_types69.default.func
+          matching: import_prop_types70.default.object.isRequired,
+          className: import_prop_types70.default.string,
+          exposedProps: import_prop_types70.default.object,
+          fallback: import_prop_types70.default.func,
+          onComponentDidRender: import_prop_types70.default.func,
+          style: import_prop_types70.default.object,
+          requiredMethods: import_prop_types70.default.arrayOf(import_prop_types70.default.string),
+          onComponentDidChange: import_prop_types70.default.func
         };
         _InjectedComponent.defaultProps = {
           style: {},
@@ -215255,7 +215255,7 @@ var require_injected_component = __commonJS({
       }
       constructor(props) {
         super();
-        this.innerRef = import_react67.default.createRef();
+        this.innerRef = import_react69.default.createRef();
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -215273,7 +215273,7 @@ var require_injected_component = __commonJS({
         this._setRequiredMethods(this.props.requiredMethods);
       }
       componentDidMount() {
-        this._componentUnlistener = ComponentRegistry2.listen(() => {
+        this._componentUnlistener = ComponentRegistry3.listen(() => {
           return this.setState(this._getStateFromStores());
         });
         if ((this.state.component != null ? this.state.component.containerRequired : void 0) === false) {
@@ -215306,7 +215306,7 @@ var require_injected_component = __commonJS({
       render() {
         let element;
         if (!this.state.component) {
-          return import_react67.default.createElement("div", null);
+          return import_react69.default.createElement("div", null);
         }
         const exposedProps = Object.assign({}, this.props.exposedProps, {
           fallback: this.props.fallback
@@ -215320,15 +215320,15 @@ var require_injected_component = __commonJS({
           const privateProps = {
             key: Component20.displayName
           };
-          if (import_react67.default.Component.isPrototypeOf(Component20)) {
+          if (import_react69.default.Component.isPrototypeOf(Component20)) {
             privateProps.ref = "inner";
           }
-          element = import_react67.default.createElement(
+          element = import_react69.default.createElement(
             Component20,
             Object.assign({}, privateProps, exposedProps)
           );
         } else {
-          element = import_react67.default.createElement(
+          element = import_react69.default.createElement(
             unsafe_component_default,
             Object.assign(
               {
@@ -215344,18 +215344,18 @@ var require_injected_component = __commonJS({
           );
         }
         if (this.state.visible) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className, style: this.props.style },
             element,
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               InjectedComponentLabel,
               Object.assign({ matching: this.props.matching }, exposedProps)
             ),
-            import_react67.default.createElement("span", { style: { clear: "both" } })
+            import_react69.default.createElement("span", { style: { clear: "both" } })
           );
         } else {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className, style: this.props.style },
             element
@@ -215416,14 +215416,14 @@ var require_injected_component = __commonJS({
         if (props == null) {
           ({ props } = this);
         }
-        const components = ComponentRegistry2.findComponentsMatching(props.matching);
+        const components = ComponentRegistry3.findComponentsMatching(props.matching);
         if (components.length > 1) {
           console.warn(`There are multiple components available for ${JSON.stringify(props.matching)}. <InjectedComponent> is only rendering the first one.`);
         }
         const component = components.length === 0 ? this.props.fallback : components[0];
         return {
           component,
-          visible: ComponentRegistry2.showComponentRegions()
+          visible: ComponentRegistry3.showComponentRegions()
         };
       }
     };
@@ -218006,10 +218006,6 @@ var require_cjs2 = __commonJS({
 });
 
 // src/components/css-transition-group-compat.jsx
-var css_transition_group_compat_exports = {};
-__export(css_transition_group_compat_exports, {
-  default: () => ReactCSSTransitionGroup
-});
 var import_react39, import_prop_types43, import_react_transition_group, ReactCSSTransitionGroup;
 var init_css_transition_group_compat = __esm({
   "src/components/css-transition-group-compat.jsx"() {
@@ -218127,31 +218123,36 @@ var init_multiselect_toolbar = __esm({
 });
 
 // src/components/injected-component-set.jsx
-var require_injected_component_set = __commonJS({
-  "src/components/injected-component-set.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+var injected_component_set_exports = {};
+__export(injected_component_set_exports, {
+  default: () => injected_component_set_default
+});
+var import_prop_types45, import_react41, Utils15, Actions9, WorkspaceStore2, ComponentRegistry, InjectedComponentSet3, injected_component_set_default;
+var init_injected_component_set = __esm({
+  "src/components/injected-component-set.jsx"() {
+    import_prop_types45 = __toESM(require_prop_types());
+    import_react41 = __toESM(require_react());
+    init_index_all();
+    init_unsafe_component();
+    init_flexbox();
     init_injected_component_label();
-    var React55 = require_react();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var UnsafeComponent2 = (init_unsafe_component(), __toCommonJS(unsafe_component_exports));
-    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
-    var {
-      Utils: Utils26,
-      Actions: Actions39,
-      WorkspaceStore: WorkspaceStore6,
-      ComponentRegistry: ComponentRegistry3
-    } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var InjectedComponentSet5 = class _InjectedComponentSet extends React55.Component {
+    ({
+      Utils: Utils15,
+      Actions: Actions9,
+      WorkspaceStore: WorkspaceStore2,
+      ComponentRegistry
+    } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports)));
+    InjectedComponentSet3 = class _InjectedComponentSet extends import_react41.default.Component {
       static initClass() {
         _InjectedComponentSet.displayName = "InjectedComponentSet";
         _InjectedComponentSet.propTypes = {
-          matching: import_prop_types69.default.object.isRequired,
-          children: import_prop_types69.default.array,
-          className: import_prop_types69.default.string,
-          matchLimit: import_prop_types69.default.number,
-          exposedProps: import_prop_types69.default.object,
-          containersRequired: import_prop_types69.default.bool,
-          onComponentsDidRender: import_prop_types69.default.func
+          matching: import_prop_types45.default.object.isRequired,
+          children: import_prop_types45.default.array,
+          className: import_prop_types45.default.string,
+          matchLimit: import_prop_types45.default.number,
+          exposedProps: import_prop_types45.default.object,
+          containersRequired: import_prop_types45.default.bool,
+          onComponentsDidRender: import_prop_types45.default.func
         };
         _InjectedComponentSet.defaultProps = {
           direction: "row",
@@ -218174,7 +218175,7 @@ var require_injected_component_set = __commonJS({
         this._renderedComponents = /* @__PURE__ */ new Set();
       }
       componentDidMount() {
-        this._componentUnlistener = ComponentRegistry3.listen(() => {
+        this._componentUnlistener = ComponentRegistry.listen(() => {
           return this.setState(this._getStateFromStores());
         });
         if (this.props.containersRequired === false) {
@@ -218198,7 +218199,7 @@ var require_injected_component_set = __commonJS({
       }
       render() {
         this._renderedComponents = /* @__PURE__ */ new Set();
-        const flexboxProps = Utils26.fastOmit(
+        const flexboxProps = Utils15.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
@@ -218206,13 +218207,13 @@ var require_injected_component_set = __commonJS({
         const exposedProps = this.props.exposedProps != null ? this.props.exposedProps : {};
         const elements = this.state.components.map((Component20) => {
           if (this.props.containersRequired === false || Component20.containerRequired === false) {
-            return React55.createElement(
+            return import_react41.default.createElement(
               Component20,
               Object.assign({ key: Component20.displayName }, exposedProps)
             );
           } else {
-            return React55.createElement(
-              UnsafeComponent2,
+            return import_react41.default.createElement(
+              unsafe_component_default,
               Object.assign(
                 {
                   key: Component20.displayName,
@@ -218232,7 +218233,7 @@ var require_injected_component_set = __commonJS({
           elements.splice(
             0,
             0,
-            React55.createElement(
+            import_react41.default.createElement(
               InjectedComponentLabel,
               Object.assign(
                 { key: "_label", matching: this.props.matching },
@@ -218241,14 +218242,14 @@ var require_injected_component_set = __commonJS({
             )
           );
           elements.push(
-            React55.createElement("span", {
+            import_react41.default.createElement("span", {
               key: "_clear",
               style: { clear: "both" }
             })
           );
         }
-        return React55.createElement(
-          Flexbox3,
+        return import_react41.default.createElement(
+          Flexbox2,
           Object.assign({ className: flexboxClassName }, flexboxProps),
           elements,
           this.props.children != null ? this.props.children : []
@@ -218266,15 +218267,15 @@ var require_injected_component_set = __commonJS({
         }
         const limit = props.matchLimit;
         return {
-          components: ComponentRegistry3.findComponentsMatching(
+          components: ComponentRegistry.findComponentsMatching(
             this.props.matching
           ).slice(0, limit),
-          visible: ComponentRegistry3.showComponentRegions()
+          visible: ComponentRegistry.showComponentRegions()
         };
       }
     };
-    InjectedComponentSet5.initClass();
-    module2.exports = InjectedComponentSet5;
+    InjectedComponentSet3.initClass();
+    injected_component_set_default = InjectedComponentSet3;
   }
 });
 
@@ -218283,11 +218284,11 @@ var config_prop_container_exports = {};
 __export(config_prop_container_exports, {
   default: () => ConfigPropContainer
 });
-var import_react41, ConfigPropContainer;
+var import_react42, ConfigPropContainer;
 var init_config_prop_container = __esm({
   "src/components/config-prop-container.jsx"() {
-    import_react41 = __toESM(require_react());
-    ConfigPropContainer = class extends import_react41.default.Component {
+    import_react42 = __toESM(require_react());
+    ConfigPropContainer = class extends import_react42.default.Component {
       static displayName = "ConfigPropContainer";
       constructor(props) {
         super(props);
@@ -218340,7 +218341,7 @@ var init_config_prop_container = __esm({
         });
       }
       render() {
-        return import_react41.default.cloneElement(this.props.children, {
+        return import_react42.default.cloneElement(this.props.children, {
           config: this.state.config,
           configSchema: NylasEnv.config.getSchema("core")
         });
@@ -218352,15 +218353,15 @@ var init_config_prop_container = __esm({
 // src/components/disclosure-triangle.jsx
 var require_disclosure_triangle = __commonJS({
   "src/components/disclosure-triangle.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
-    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react67.default.Component {
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
+    var DisclosureTriangle2 = class _DisclosureTriangle extends import_react69.default.Component {
       static initClass() {
         _DisclosureTriangle.displayName = "DisclosureTriangle";
         _DisclosureTriangle.propTypes = {
-          collapsed: import_prop_types69.default.bool,
-          visible: import_prop_types69.default.bool,
-          onCollapseToggled: import_prop_types69.default.func
+          collapsed: import_prop_types70.default.bool,
+          visible: import_prop_types70.default.bool,
+          onCollapseToggled: import_prop_types70.default.func
         };
         _DisclosureTriangle.defaultProps = { onCollapseToggled() {
         } };
@@ -218373,10 +218374,10 @@ var require_disclosure_triangle = __commonJS({
         if (this.props.collapsed) {
           classnames14 += " collapsed";
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: classnames14, onClick: this.props.onCollapseToggled },
-          import_react67.default.createElement("div", null)
+          import_react69.default.createElement("div", null)
         );
       }
     };
@@ -218458,19 +218459,19 @@ var editable_list_exports = {};
 __export(editable_list_exports, {
   default: () => editable_list_default
 });
-var import_classnames12, import_react42, import_prop_types45, import_react_dom17, import_scroll_region2, EditableList, editable_list_default;
+var import_classnames12, import_react43, import_prop_types46, import_react_dom17, import_scroll_region2, EditableList, editable_list_default;
 var init_editable_list = __esm({
   "src/components/editable-list.jsx"() {
     init_index_all();
     init_dist_node();
     import_classnames12 = __toESM(require_classnames());
-    import_react42 = __toESM(require_react());
-    import_prop_types45 = __toESM(require_prop_types());
+    import_react43 = __toESM(require_react());
+    import_prop_types46 = __toESM(require_prop_types());
     import_react_dom17 = __toESM(require_react_dom());
     import_scroll_region2 = __toESM(require_scroll_region());
     init_key_commands_region();
     init_retina_img();
-    EditableList = class extends import_react42.Component {
+    EditableList = class extends import_react43.Component {
       static displayName = "EditableList";
       /**
        * If provided, this function will be called when the add button is clicked,
@@ -218517,19 +218518,19 @@ var init_editable_list = __esm({
            already removed from startIdx.
          */
       static propTypes = {
-        items: import_prop_types45.default.array.isRequired,
-        itemContent: import_prop_types45.default.func,
-        className: import_prop_types45.default.string,
-        showEditIcon: import_prop_types45.default.bool,
-        createInputProps: import_prop_types45.default.object,
-        onCreateItem: import_prop_types45.default.func,
-        onDeleteItem: import_prop_types45.default.func,
-        onReorderItem: import_prop_types45.default.func,
-        onItemEdited: import_prop_types45.default.func,
-        onItemCreated: import_prop_types45.default.func,
+        items: import_prop_types46.default.array.isRequired,
+        itemContent: import_prop_types46.default.func,
+        className: import_prop_types46.default.string,
+        showEditIcon: import_prop_types46.default.bool,
+        createInputProps: import_prop_types46.default.object,
+        onCreateItem: import_prop_types46.default.func,
+        onDeleteItem: import_prop_types46.default.func,
+        onReorderItem: import_prop_types46.default.func,
+        onItemEdited: import_prop_types46.default.func,
+        onItemCreated: import_prop_types46.default.func,
         /* Optional, if you choose to control selection externally */
-        selected: import_prop_types45.default.oneOfType([import_prop_types45.default.string, import_prop_types45.default.object]),
-        onSelectItem: import_prop_types45.default.func
+        selected: import_prop_types46.default.oneOfType([import_prop_types46.default.string, import_prop_types46.default.object]),
+        onSelectItem: import_prop_types46.default.func
       };
       static defaultProps = {
         items: [],
@@ -218546,7 +218547,7 @@ var init_editable_list = __esm({
       };
       constructor(props) {
         super(props);
-        this.itemsWrapperRef = import_react42.default.createRef();
+        this.itemsWrapperRef = import_react43.default.createRef();
         this.listId = v4_default2();
         this.state = {
           dropInsertionIndex: -1,
@@ -218744,7 +218745,7 @@ var init_editable_list = __esm({
         const onInputBlur = handlers.onInputBlur || this._onEditInputBlur;
         const onInputFocus = handlers.onInputFocus || this._onEditInputFocus;
         const onInputKeyDown = handlers.onInputKeyDown || this._onEditInputKeyDown;
-        return /* @__PURE__ */ import_react42.default.createElement(
+        return /* @__PURE__ */ import_react43.default.createElement(
           "input",
           {
             type: "text",
@@ -218768,14 +218769,14 @@ var init_editable_list = __esm({
           onBlur: this._onCreateInputBlur,
           onKeyDown: this._onCreateInputKeyDown
         });
-        return /* @__PURE__ */ import_react42.default.createElement("div", { className: "create-item-input", key: "create-item-input" }, /* @__PURE__ */ import_react42.default.createElement("input", { ...props }));
+        return /* @__PURE__ */ import_react43.default.createElement("div", { className: "create-item-input", key: "create-item-input" }, /* @__PURE__ */ import_react43.default.createElement("input", { ...props }));
       };
       // handlers object for testing
       _renderItem = (item, idx, { editingIndex } = this.state, handlers = {}) => {
         const onClick = handlers.onClick || this._onItemClick;
         const onEdit = handlers.onEdit || this._onItemEdit;
         let itemContent = this.props.itemContent(item);
-        const itemIsEditable = !import_react42.default.isValidElement(itemContent);
+        const itemIsEditable = !import_react43.default.isValidElement(itemContent);
         const classes = (0, import_classnames12.default)({
           "list-item": true,
           selected: item === this._getSelectedItem(),
@@ -218786,7 +218787,7 @@ var init_editable_list = __esm({
         if (editingIndex === idx && itemIsEditable) {
           itemContent = this._renderEditInput(item, itemContent, idx, handlers);
         }
-        return /* @__PURE__ */ import_react42.default.createElement(
+        return /* @__PURE__ */ import_react43.default.createElement(
           "div",
           {
             className: classes,
@@ -218798,7 +218799,7 @@ var init_editable_list = __esm({
             onDoubleClick: index_default_default.partial(onEdit, index_default_default, item, idx)
           },
           itemContent,
-          /* @__PURE__ */ import_react42.default.createElement(
+          /* @__PURE__ */ import_react43.default.createElement(
             retina_img_default,
             {
               className: "edit-icon",
@@ -218815,10 +218816,10 @@ var init_editable_list = __esm({
           "btn-editable-list": true,
           "btn-disabled": !this._getSelectedItem()
         });
-        return /* @__PURE__ */ import_react42.default.createElement("div", { className: "buttons-wrapper" }, /* @__PURE__ */ import_react42.default.createElement("div", { className: "btn-editable-list", onClick: this._onCreateItem }, /* @__PURE__ */ import_react42.default.createElement("span", null, "+")), /* @__PURE__ */ import_react42.default.createElement("div", { className: deleteClasses, onClick: this._onDeleteItem }, /* @__PURE__ */ import_react42.default.createElement("span", null, "\u2014")));
+        return /* @__PURE__ */ import_react43.default.createElement("div", { className: "buttons-wrapper" }, /* @__PURE__ */ import_react43.default.createElement("div", { className: "btn-editable-list", onClick: this._onCreateItem }, /* @__PURE__ */ import_react43.default.createElement("span", null, "+")), /* @__PURE__ */ import_react43.default.createElement("div", { className: deleteClasses, onClick: this._onDeleteItem }, /* @__PURE__ */ import_react43.default.createElement("span", null, "\u2014")));
       };
       _renderDropInsertion = () => {
-        return /* @__PURE__ */ import_react42.default.createElement("div", { className: "insertion-point" }, /* @__PURE__ */ import_react42.default.createElement("div", null));
+        return /* @__PURE__ */ import_react43.default.createElement("div", { className: "insertion-point" }, /* @__PURE__ */ import_react43.default.createElement("div", null));
       };
       render() {
         let items = this.props.items.map(
@@ -218834,14 +218835,14 @@ var init_editable_list = __esm({
             this._renderDropInsertion()
           );
         }
-        return /* @__PURE__ */ import_react42.default.createElement(
+        return /* @__PURE__ */ import_react43.default.createElement(
           KeyCommandsRegion,
           {
             tabIndex: "0",
             localHandlers: this._listKeymapHandlers(),
             className: `nylas-editable-list ${this.props.className}`
           },
-          /* @__PURE__ */ import_react42.default.createElement(
+          /* @__PURE__ */ import_react43.default.createElement(
             import_scroll_region2.default,
             {
               className: "items-wrapper",
@@ -218865,15 +218866,15 @@ var outline_view_item_exports = {};
 __export(outline_view_item_exports, {
   default: () => outline_view_item_default
 });
-var import_node_module16, import_classnames13, import_react43, import_prop_types46, import_react_dom18, import_disclosure_triangle, import_meta17, nodeRequire17, CounterStyles, OutlineViewItem, outline_view_item_default;
+var import_node_module16, import_classnames13, import_react44, import_prop_types47, import_react_dom18, import_disclosure_triangle, import_meta17, nodeRequire17, CounterStyles, OutlineViewItem, outline_view_item_default;
 var init_outline_view_item = __esm({
   "src/components/outline-view-item.jsx"() {
     import_node_module16 = require("module");
     init_index_all();
     init_nylas_exports();
     import_classnames13 = __toESM(require_classnames());
-    import_react43 = __toESM(require_react());
-    import_prop_types46 = __toESM(require_prop_types());
+    import_react44 = __toESM(require_react());
+    import_prop_types47 = __toESM(require_prop_types());
     import_react_dom18 = __toESM(require_react_dom());
     import_disclosure_triangle = __toESM(require_disclosure_triangle());
     init_drop_zone();
@@ -218884,7 +218885,7 @@ var init_outline_view_item = __esm({
       Default: "def",
       Alt: "alt"
     };
-    OutlineViewItem = class _OutlineViewItem extends import_react43.Component {
+    OutlineViewItem = class _OutlineViewItem extends import_react44.Component {
       static displayName = "OutlineView";
       /*
        * If provided, this function will be called when receiving a drop. It must
@@ -218932,25 +218933,25 @@ var init_outline_view_item = __esm({
        * @param {string} value - The new value
        */
       static propTypes = {
-        item: import_prop_types46.default.shape({
-          className: import_prop_types46.default.string,
-          id: import_prop_types46.default.string.isRequired,
-          children: import_prop_types46.default.array.isRequired,
-          name: import_prop_types46.default.string.isRequired,
-          iconName: import_prop_types46.default.string.isRequired,
-          count: import_prop_types46.default.number,
-          counterStyle: import_prop_types46.default.string,
-          inputPlaceholder: import_prop_types46.default.string,
-          collapsed: import_prop_types46.default.bool,
-          editing: import_prop_types46.default.bool,
-          selected: import_prop_types46.default.bool,
-          shouldAcceptDrop: import_prop_types46.default.func,
-          onCollapseToggled: import_prop_types46.default.func,
-          onInputCleared: import_prop_types46.default.func,
-          onDrop: import_prop_types46.default.func,
-          onSelect: import_prop_types46.default.func,
-          onDelete: import_prop_types46.default.func,
-          onEdited: import_prop_types46.default.func
+        item: import_prop_types47.default.shape({
+          className: import_prop_types47.default.string,
+          id: import_prop_types47.default.string.isRequired,
+          children: import_prop_types47.default.array.isRequired,
+          name: import_prop_types47.default.string.isRequired,
+          iconName: import_prop_types47.default.string.isRequired,
+          count: import_prop_types47.default.number,
+          counterStyle: import_prop_types47.default.string,
+          inputPlaceholder: import_prop_types47.default.string,
+          collapsed: import_prop_types47.default.bool,
+          editing: import_prop_types47.default.bool,
+          selected: import_prop_types47.default.bool,
+          shouldAcceptDrop: import_prop_types47.default.func,
+          onCollapseToggled: import_prop_types47.default.func,
+          onInputCleared: import_prop_types47.default.func,
+          onDrop: import_prop_types47.default.func,
+          onSelect: import_prop_types47.default.func,
+          onDelete: import_prop_types47.default.func,
+          onEdited: import_prop_types47.default.func
         }).isRequired
       };
       static CounterStyles = CounterStyles;
@@ -219172,16 +219173,16 @@ var outline_view_exports = {};
 __export(outline_view_exports, {
   default: () => outline_view_default
 });
-var import_react44, import_prop_types47, OutlineView, outline_view_default;
+var import_react45, import_prop_types48, OutlineView, outline_view_default;
 var init_outline_view = __esm({
   "src/components/outline-view.jsx"() {
     init_nylas_exports();
-    import_react44 = __toESM(require_react());
-    import_prop_types47 = __toESM(require_prop_types());
+    import_react45 = __toESM(require_react());
+    import_prop_types48 = __toESM(require_prop_types());
     init_drop_zone();
     init_retina_img();
     init_outline_view_item();
-    OutlineView = class extends import_react44.Component {
+    OutlineView = class extends import_react45.Component {
       static displayName = "OutlineView";
       /*
        * If provided, this function will be called when an item has been created.
@@ -219195,12 +219196,12 @@ var init_outline_view = __esm({
        * @param {object} props - The entire props object for this OutlineView
        */
       static propTypes = {
-        title: import_prop_types47.default.string,
-        iconName: import_prop_types47.default.string,
-        items: import_prop_types47.default.array,
-        collapsed: import_prop_types47.default.bool,
-        onItemCreated: import_prop_types47.default.func,
-        onCollapseToggled: import_prop_types47.default.func
+        title: import_prop_types48.default.string,
+        iconName: import_prop_types48.default.string,
+        items: import_prop_types48.default.array,
+        collapsed: import_prop_types48.default.bool,
+        onItemCreated: import_prop_types48.default.func,
+        onCollapseToggled: import_prop_types48.default.func
       };
       static defaultProps = {
         title: "",
@@ -219318,24 +219319,24 @@ var date_picker_exports = {};
 __export(date_picker_exports, {
   default: () => DatePicker
 });
-var import_react45, import_prop_types48, import_moment8, import_classnames14, DatePicker;
+var import_react46, import_prop_types49, import_moment8, import_classnames14, DatePicker;
 var init_date_picker = __esm({
   "src/components/date-picker.jsx"() {
-    import_react45 = __toESM(require_react());
-    import_prop_types48 = __toESM(require_prop_types());
+    import_react46 = __toESM(require_react());
+    import_prop_types49 = __toESM(require_prop_types());
     import_moment8 = __toESM(require_moment());
     import_classnames14 = __toESM(require_classnames());
     init_nylas_exports();
     init_nylas_component_kit();
-    DatePicker = class extends import_react45.default.Component {
+    DatePicker = class extends import_react46.default.Component {
       static displayName = "DatePicker";
       static propTypes = {
-        value: import_prop_types48.default.number,
-        onChange: import_prop_types48.default.func,
-        dateFormat: import_prop_types48.default.string
+        value: import_prop_types49.default.number,
+        onChange: import_prop_types49.default.func,
+        dateFormat: import_prop_types49.default.string
       };
       static contextTypes = {
-        parentTabGroup: import_prop_types48.default.object
+        parentTabGroup: import_prop_types49.default.object
       };
       static defaultProps = {
         dateFormat: null,
@@ -219386,7 +219387,7 @@ var init_date_picker = __esm({
       };
       _renderMiniMonthView() {
         if (this.state.focused) {
-          return /* @__PURE__ */ import_react45.default.createElement("div", { className: "mini-month-view-wrap" }, /* @__PURE__ */ import_react45.default.createElement(void 0, { onChange: this._onSelectDay, value: this.value() }));
+          return /* @__PURE__ */ import_react46.default.createElement("div", { className: "mini-month-view-wrap" }, /* @__PURE__ */ import_react46.default.createElement(void 0, { onChange: this._onSelectDay, value: this.value() }));
         }
         return false;
       }
@@ -219400,7 +219401,7 @@ var init_date_picker = __esm({
         if (val) {
           dayTxt = this.value().format(DateUtils.DATE_FORMAT_llll_NO_TIME);
         }
-        return /* @__PURE__ */ import_react45.default.createElement(
+        return /* @__PURE__ */ import_react46.default.createElement(
           "div",
           {
             className: "date-picker",
@@ -219408,7 +219409,7 @@ var init_date_picker = __esm({
             onFocus: this._onFocus,
             onBlur: this._onBlur
           },
-          /* @__PURE__ */ import_react45.default.createElement("div", { className }, dayTxt),
+          /* @__PURE__ */ import_react46.default.createElement("div", { className }, dayTxt),
           this._renderMiniMonthView()
         );
       }
@@ -219471,12 +219472,12 @@ var time_picker_exports = {};
 __export(time_picker_exports, {
   default: () => TimePicker
 });
-var import_node_module17, import_react46, import_prop_types49, import_react_dom19, import_moment9, import_classnames15, import_meta18, nodeRequire18, INTERVAL, TimePicker;
+var import_node_module17, import_react47, import_prop_types50, import_react_dom19, import_moment9, import_classnames15, import_meta18, nodeRequire18, INTERVAL, TimePicker;
 var init_time_picker = __esm({
   "src/components/time-picker.jsx"() {
     import_node_module17 = require("module");
-    import_react46 = __toESM(require_react());
-    import_prop_types49 = __toESM(require_prop_types());
+    import_react47 = __toESM(require_react());
+    import_prop_types50 = __toESM(require_prop_types());
     import_react_dom19 = __toESM(require_react_dom());
     import_moment9 = __toESM(require_moment());
     import_classnames15 = __toESM(require_classnames());
@@ -219484,16 +219485,16 @@ var init_time_picker = __esm({
     nodeRequire18 = typeof import_meta18.url === "string" && import_meta18.url.startsWith("file:") ? (0, import_node_module17.createRequire)(import_meta18.url) : require;
     require_moment_round();
     INTERVAL = [30, "minutes"];
-    TimePicker = class extends import_react46.default.Component {
+    TimePicker = class extends import_react47.default.Component {
       static displayName = "TimePicker";
       static propTypes = {
-        value: import_prop_types49.default.number,
-        onChange: import_prop_types49.default.func,
-        relativeTo: import_prop_types49.default.number
+        value: import_prop_types50.default.number,
+        onChange: import_prop_types50.default.func,
+        relativeTo: import_prop_types50.default.number
         // TODO For `renderTimeOptions`
       };
       static contextTypes = {
-        parentTabGroup: import_prop_types49.default.object
+        parentTabGroup: import_prop_types50.default.object
       };
       static defaultProps = {
         value: (0, import_moment9.default)().valueOf(),
@@ -219502,7 +219503,7 @@ var init_time_picker = __esm({
       };
       constructor(props) {
         super(props);
-        this.inputRef = import_react46.default.createRef();
+        this.inputRef = import_react47.default.createRef();
         this.state = {
           focused: false,
           rawText: this._valToTimeString(props.value)
@@ -219627,10 +219628,10 @@ var init_time_picker = __esm({
           });
           let relTxt = false;
           if (this.props.relativeTo) {
-            relTxt = /* @__PURE__ */ import_react46.default.createElement("span", { className: "rel-text" }, `(${timeIter.diff(relStart, "hours", true)}hr)`);
+            relTxt = /* @__PURE__ */ import_react47.default.createElement("span", { className: "rel-text" }, `(${timeIter.diff(relStart, "hours", true)}hr)`);
           }
           opts.push(
-            /* @__PURE__ */ import_react46.default.createElement(
+            /* @__PURE__ */ import_react47.default.createElement(
               "div",
               {
                 className: className2,
@@ -219647,7 +219648,7 @@ var init_time_picker = __esm({
           "time-options": true,
           "relative-to": this.props.relativeTo
         });
-        return /* @__PURE__ */ import_react46.default.createElement("div", { className, tabIndex: -1 }, opts);
+        return /* @__PURE__ */ import_react47.default.createElement("div", { className, tabIndex: -1 }, opts);
       }
       render() {
         const className = (0, import_classnames15.default)({
@@ -219655,7 +219656,7 @@ var init_time_picker = __esm({
           "no-select-end": true,
           invalid: !(0, import_moment9.default)(this.state.rawText, "h:ma").isValid()
         });
-        return /* @__PURE__ */ import_react46.default.createElement("div", { className: "time-picker-wrap" }, /* @__PURE__ */ import_react46.default.createElement(
+        return /* @__PURE__ */ import_react47.default.createElement("div", { className: "time-picker-wrap" }, /* @__PURE__ */ import_react47.default.createElement(
           "input",
           {
             className,
@@ -220368,21 +220369,21 @@ function getRange({ total, itemHeight, containerHeight, scrollTop = 0 } = {}) {
   );
   return { start, end };
 }
-var import_react47, import_prop_types50, import_react_dom20, MIN_RANGE_SIZE, LazyRenderedList, lazy_rendered_list_default;
+var import_react48, import_prop_types51, import_react_dom20, MIN_RANGE_SIZE, LazyRenderedList, lazy_rendered_list_default;
 var init_lazy_rendered_list = __esm({
   "src/components/lazy-rendered-list.jsx"() {
-    import_react47 = __toESM(require_react());
-    import_prop_types50 = __toESM(require_prop_types());
+    import_react48 = __toESM(require_react());
+    import_prop_types51 = __toESM(require_prop_types());
     import_react_dom20 = __toESM(require_react_dom());
     MIN_RANGE_SIZE = 2;
-    LazyRenderedList = class extends import_react47.Component {
+    LazyRenderedList = class extends import_react48.Component {
       static propTypes = {
-        items: import_prop_types50.default.array,
-        itemHeight: import_prop_types50.default.number,
-        containerHeight: import_prop_types50.default.number,
-        BufferTag: import_prop_types50.default.string,
-        ItemRenderer: import_prop_types50.default.oneOfType([import_prop_types50.default.func, import_prop_types50.default.string]),
-        RootRenderer: import_prop_types50.default.oneOfType([import_prop_types50.default.func, import_prop_types50.default.string])
+        items: import_prop_types51.default.array,
+        itemHeight: import_prop_types51.default.number,
+        containerHeight: import_prop_types51.default.number,
+        BufferTag: import_prop_types51.default.string,
+        ItemRenderer: import_prop_types51.default.oneOfType([import_prop_types51.default.func, import_prop_types51.default.string]),
+        RootRenderer: import_prop_types51.default.oneOfType([import_prop_types51.default.func, import_prop_types51.default.string])
       };
       static defaultProps = {
         items: [],
@@ -220725,34 +220726,34 @@ function TableCell(props) {
     children
   );
 }
-var import_classnames16, import_react48, import_prop_types51, import_pick_react_known_prop, RendererType, IndexType, TablePropTypes, TableRow, Table;
+var import_classnames16, import_react49, import_prop_types52, import_pick_react_known_prop, RendererType, IndexType, TablePropTypes, TableRow, Table;
 var init_table = __esm({
   "src/components/table/table.jsx"() {
     import_classnames16 = __toESM(require_classnames());
-    import_react48 = __toESM(require_react());
-    import_prop_types51 = __toESM(require_prop_types());
+    import_react49 = __toESM(require_react());
+    import_prop_types52 = __toESM(require_prop_types());
     import_pick_react_known_prop = __toESM(require_dist4());
     init_lazy_rendered_list();
     init_table_data_source();
-    RendererType = import_prop_types51.default.oneOfType([import_prop_types51.default.func, import_prop_types51.default.string]);
-    IndexType = import_prop_types51.default.oneOfType([import_prop_types51.default.number, import_prop_types51.default.string]);
+    RendererType = import_prop_types52.default.oneOfType([import_prop_types52.default.func, import_prop_types52.default.string]);
+    IndexType = import_prop_types52.default.oneOfType([import_prop_types52.default.number, import_prop_types52.default.string]);
     TablePropTypes = {
       idx: IndexType,
       renderer: RendererType,
-      tableDataSource: import_prop_types51.default.instanceOf(TableDataSource)
+      tableDataSource: import_prop_types52.default.instanceOf(TableDataSource)
     };
     TableCell.propTypes = {
-      isHeader: import_prop_types51.default.bool,
-      className: import_prop_types51.default.string
+      isHeader: import_prop_types52.default.bool,
+      className: import_prop_types52.default.string
     };
-    TableRow = class extends import_react48.Component {
+    TableRow = class extends import_react49.Component {
       static propTypes = {
-        className: import_prop_types51.default.string,
-        isHeader: import_prop_types51.default.bool,
-        displayNumbers: import_prop_types51.default.bool,
+        className: import_prop_types52.default.string,
+        isHeader: import_prop_types52.default.bool,
+        displayNumbers: import_prop_types52.default.bool,
         tableDataSource: TablePropTypes.tableDataSource.isRequired,
         rowIdx: TablePropTypes.idx,
-        extraProps: import_prop_types51.default.object,
+        extraProps: import_prop_types52.default.object,
         CellRenderer: TablePropTypes.renderer
       };
       static defaultProps = {
@@ -220782,16 +220783,16 @@ var init_table = __esm({
         }));
       }
     };
-    Table = class extends import_react48.Component {
+    Table = class extends import_react49.Component {
       static displayName = "Table";
       static propTypes = {
-        className: import_prop_types51.default.string,
-        displayHeader: import_prop_types51.default.bool,
-        displayNumbers: import_prop_types51.default.bool,
-        rowHeight: import_prop_types51.default.number,
-        bodyHeight: import_prop_types51.default.number,
+        className: import_prop_types52.default.string,
+        displayHeader: import_prop_types52.default.bool,
+        displayNumbers: import_prop_types52.default.bool,
+        rowHeight: import_prop_types52.default.number,
+        bodyHeight: import_prop_types52.default.number,
         tableDataSource: TablePropTypes.tableDataSource.isRequired,
-        extraProps: import_prop_types51.default.object,
+        extraProps: import_prop_types52.default.object,
         RowRenderer: TablePropTypes.renderer,
         CellRenderer: TablePropTypes.renderer
       };
@@ -220943,22 +220944,22 @@ function ListensToMovementKeys(ComposedComponent) {
       }
     };
     render() {
-      return /* @__PURE__ */ import_react49.default.createElement(
+      return /* @__PURE__ */ import_react50.default.createElement(
         KeyCommandsRegion,
         {
           tabIndex: "0",
           localHandlers: this.localKeyHandlers(),
           onKeyDown: this.onKeyDown
         },
-        /* @__PURE__ */ import_react49.default.createElement(ComposedComponent, { ref: this.composedRef, ...this.props })
+        /* @__PURE__ */ import_react50.default.createElement(ComposedComponent, { ref: this.composedRef, ...this.props })
       );
     }
   };
 }
-var import_react49, listens_to_movement_keys_default;
+var import_react50, listens_to_movement_keys_default;
 var init_listens_to_movement_keys = __esm({
   "src/components/decorators/listens-to-movement-keys.jsx"() {
-    import_react49 = __toESM(require_react());
+    import_react50 = __toESM(require_react());
     init_key_commands_region();
     listens_to_movement_keys_default = ListensToMovementKeys;
   }
@@ -220971,26 +220972,26 @@ __export(selectable_table_exports, {
   SelectableTableRow: () => SelectableTableRow,
   default: () => selectable_table_default
 });
-var import_react50, import_prop_types52, import_react_dom21, import_classnames17, SelectableTableCell, SelectableTableRow, SelectableTable, selectable_table_default;
+var import_react51, import_prop_types53, import_react_dom21, import_classnames17, SelectableTableCell, SelectableTableRow, SelectableTable, selectable_table_default;
 var init_selectable_table = __esm({
   "src/components/selectable-table.jsx"() {
     init_index_all();
-    import_react50 = __toESM(require_react());
-    import_prop_types52 = __toESM(require_prop_types());
+    import_react51 = __toESM(require_react());
+    import_prop_types53 = __toESM(require_prop_types());
     import_react_dom21 = __toESM(require_react_dom());
     import_classnames17 = __toESM(require_classnames());
     init_compose2();
     init_auto_focuses();
     init_listens_to_movement_keys();
     init_table();
-    SelectableTableCell = class extends import_react50.Component {
+    SelectableTableCell = class extends import_react51.Component {
       static propTypes = {
-        className: import_prop_types52.default.string,
+        className: import_prop_types53.default.string,
         tableDataSource: Table.propTypes.tableDataSource,
-        rowIdx: import_prop_types52.default.oneOfType([import_prop_types52.default.number, import_prop_types52.default.string]),
-        colIdx: import_prop_types52.default.oneOfType([import_prop_types52.default.number, import_prop_types52.default.string]),
-        selection: import_prop_types52.default.object,
-        onSetSelection: import_prop_types52.default.func.isRequired
+        rowIdx: import_prop_types53.default.oneOfType([import_prop_types53.default.number, import_prop_types53.default.string]),
+        colIdx: import_prop_types53.default.oneOfType([import_prop_types53.default.number, import_prop_types53.default.string]),
+        selection: import_prop_types53.default.object,
+        onSetSelection: import_prop_types53.default.func.isRequired
       };
       static defaultProps = {
         className: ""
@@ -221041,11 +221042,11 @@ var init_selectable_table = __esm({
         );
       }
     };
-    SelectableTableRow = class extends import_react50.Component {
+    SelectableTableRow = class extends import_react51.Component {
       static propTypes = {
-        className: import_prop_types52.default.string,
+        className: import_prop_types53.default.string,
         tableDataSource: Table.propTypes.tableDataSource,
-        selection: import_prop_types52.default.object,
+        selection: import_prop_types53.default.object,
         rowIdx: TableRow.propTypes.rowIdx
       };
       static defaultProps = {
@@ -221074,19 +221075,19 @@ var init_selectable_table = __esm({
         return /* @__PURE__ */ React.createElement(TableRow, { ...this.props, className: classes });
       }
     };
-    SelectableTable = class extends import_react50.Component {
+    SelectableTable = class extends import_react51.Component {
       static displayName = "SelectableTable";
       static propTypes = {
         tableDataSource: Table.propTypes.tableDataSource,
-        extraProps: import_prop_types52.default.object,
+        extraProps: import_prop_types53.default.object,
         RowRenderer: Table.propTypes.RowRenderer,
         CellRenderer: Table.propTypes.CellRenderer,
-        selection: import_prop_types52.default.shape({
-          rowIdx: import_prop_types52.default.number,
-          colIdx: import_prop_types52.default.number
+        selection: import_prop_types53.default.shape({
+          rowIdx: import_prop_types53.default.number,
+          colIdx: import_prop_types53.default.number
         }).isRequired,
-        onSetSelection: import_prop_types52.default.func.isRequired,
-        onShiftSelection: import_prop_types52.default.func.isRequired
+        onSetSelection: import_prop_types53.default.func.isRequired,
+        onShiftSelection: import_prop_types53.default.func.isRequired
       };
       static defaultProps = {
         extraProps: {},
@@ -221213,16 +221214,16 @@ function EditableTable(props) {
     }
   ))));
 }
-var import_react51, import_prop_types53, import_pick_react_known_prop2, import_react_dom22, EditableTableCell, editable_table_default;
+var import_react52, import_prop_types54, import_pick_react_known_prop2, import_react_dom22, EditableTableCell, editable_table_default;
 var init_editable_table = __esm({
   "src/components/editable-table.jsx"() {
-    import_react51 = __toESM(require_react());
-    import_prop_types53 = __toESM(require_prop_types());
+    import_react52 = __toESM(require_react());
+    import_prop_types54 = __toESM(require_prop_types());
     import_pick_react_known_prop2 = __toESM(require_dist4());
     import_react_dom22 = __toESM(require_react_dom());
     init_retina_img();
     init_selectable_table();
-    EditableTableCell = class extends import_react51.Component {
+    EditableTableCell = class extends import_react52.Component {
       constructor(props) {
         super(props);
         this.cellRef = React.createRef();
@@ -221232,11 +221233,11 @@ var init_editable_table = __esm({
         tableDataSource: SelectableTableCell.propTypes.tableDataSource,
         rowIdx: SelectableTableCell.propTypes.colIdx,
         colIdx: SelectableTableCell.propTypes.colIdx,
-        isHeader: import_prop_types53.default.bool,
-        inputProps: import_prop_types53.default.object,
+        isHeader: import_prop_types54.default.bool,
+        inputProps: import_prop_types54.default.object,
         InputRenderer: selectable_table_default.propTypes.RowRenderer,
-        onAddRow: import_prop_types53.default.func,
-        onCellEdited: import_prop_types53.default.func.isRequired
+        onAddRow: import_prop_types54.default.func,
+        onCellEdited: import_prop_types54.default.func.isRequired
       };
       static defaultProps = {
         inputProps: {},
@@ -221307,13 +221308,13 @@ var init_editable_table = __esm({
     EditableTable.displayName = "EditableTable";
     EditableTable.propTypes = {
       tableDataSource: selectable_table_default.propTypes.tableDataSource,
-      inputProps: import_prop_types53.default.object,
-      InputRenderer: import_prop_types53.default.any,
-      onCellEdited: import_prop_types53.default.func.isRequired,
-      onAddColumn: import_prop_types53.default.func,
-      onRemoveColumn: import_prop_types53.default.func,
-      onAddRow: import_prop_types53.default.func,
-      onRemoveRow: import_prop_types53.default.func
+      inputProps: import_prop_types54.default.object,
+      InputRenderer: import_prop_types54.default.any,
+      onCellEdited: import_prop_types54.default.func.isRequired,
+      onAddColumn: import_prop_types54.default.func,
+      onRemoveColumn: import_prop_types54.default.func,
+      onAddRow: import_prop_types54.default.func,
+      onRemoveRow: import_prop_types54.default.func
     };
     editable_table_default = EditableTable;
   }
@@ -221324,19 +221325,19 @@ var toast_exports = {};
 __export(toast_exports, {
   default: () => toast_default
 });
-var import_react52, import_prop_types54, Toast, toast_default;
+var import_react53, import_prop_types55, Toast, toast_default;
 var init_toast = __esm({
   "src/components/toast.jsx"() {
-    import_react52 = __toESM(require_react());
-    import_prop_types54 = __toESM(require_prop_types());
+    import_react53 = __toESM(require_react());
+    import_prop_types55 = __toESM(require_prop_types());
     init_css_transition_group_compat();
-    Toast = class extends import_react52.Component {
+    Toast = class extends import_react53.Component {
       static displayName = "Toast";
       static propTypes = {
-        className: import_prop_types54.default.string,
-        visible: import_prop_types54.default.bool,
-        visibleDuration: import_prop_types54.default.number,
-        onDidHide: import_prop_types54.default.func
+        className: import_prop_types55.default.string,
+        visible: import_prop_types55.default.bool,
+        visibleDuration: import_prop_types55.default.number,
+        onDidHide: import_prop_types55.default.func
       };
       static defaultProps = {
         visible: false,
@@ -221433,16 +221434,16 @@ function UndoToast(props) {
     }
   ), /* @__PURE__ */ React.createElement("span", { className: "undo-action-text" }, "Undo")));
 }
-var import_prop_types55, undo_toast_default;
+var import_prop_types56, undo_toast_default;
 var init_undo_toast = __esm({
   "src/components/undo-toast.jsx"() {
-    import_prop_types55 = __toESM(require_prop_types());
+    import_prop_types56 = __toESM(require_prop_types());
     init_toast();
     init_retina_img();
     UndoToast.propTypes = {
-      className: import_prop_types55.default.string,
-      undoMessage: import_prop_types55.default.string,
-      onUndo: import_prop_types55.default.func
+      className: import_prop_types56.default.string,
+      undoMessage: import_prop_types56.default.string,
+      onUndo: import_prop_types56.default.func
     };
     undo_toast_default = UndoToast;
   }
@@ -221453,19 +221454,19 @@ var oauth_signin_page_exports = {};
 __export(oauth_signin_page_exports, {
   default: () => OAuthSignInPage
 });
-var import_node_module18, import_react53, import_prop_types56, import_electron5, import_meta19, nodeRequire19, clipboard2, OAuthSignInPage;
+var import_node_module18, import_react54, import_prop_types57, import_electron5, import_meta19, nodeRequire19, clipboard2, OAuthSignInPage;
 var init_oauth_signin_page = __esm({
   "src/components/oauth-signin-page.jsx"() {
     import_node_module18 = require("module");
-    import_react53 = __toESM(require_react());
-    import_prop_types56 = __toESM(require_prop_types());
+    import_react54 = __toESM(require_react());
+    import_prop_types57 = __toESM(require_prop_types());
     import_electron5 = require("electron");
     init_nylas_exports();
     init_nylas_component_kit();
     import_meta19 = {};
     nodeRequire19 = typeof import_meta19.url === "string" && import_meta19.url.startsWith("file:") ? (0, import_node_module18.createRequire)(import_meta19.url) : require;
     clipboard2 = nodeRequire19("electron").clipboard;
-    OAuthSignInPage = class extends import_react53.default.Component {
+    OAuthSignInPage = class extends import_react54.default.Component {
       static displayName = "OAuthSignInPage";
       static propTypes = {
         /**
@@ -221473,7 +221474,7 @@ var init_oauth_signin_page = __esm({
          * the native provider's website. We pass along a key and a redirect
          * url to a Nylas-owned server
          */
-        providerAuthPageUrl: import_prop_types56.default.string,
+        providerAuthPageUrl: import_prop_types57.default.string,
         /**
          * Step 2: Poll a Nylas server with this function looking for the key.
          * Once users complete the auth successfully, Nylas servers will get
@@ -221481,7 +221482,7 @@ var init_oauth_signin_page = __esm({
          * since we don't know how long it'll take users to log in on their
          * provider's website.
          */
-        tokenRequestPollFn: import_prop_types56.default.func,
+        tokenRequestPollFn: import_prop_types57.default.func,
         /**
          * Once we have the token, we can use that to retrieve the full
          * account credentials or establish a direct connection ourselves.
@@ -221491,17 +221492,17 @@ var init_oauth_signin_page = __esm({
          * IMAP connection directly that may have its own set of failure
          * cases.
          */
-        accountFromTokenFn: import_prop_types56.default.func,
+        accountFromTokenFn: import_prop_types57.default.func,
         /**
          * Called once we have successfully received the account data from
          * `accountFromTokenFn`
          */
-        onSuccess: import_prop_types56.default.func,
-        onTryAgain: import_prop_types56.default.func,
-        iconName: import_prop_types56.default.string,
-        sessionKey: import_prop_types56.default.string,
-        serviceName: import_prop_types56.default.string,
-        accountInfo: import_prop_types56.default.object
+        onSuccess: import_prop_types57.default.func,
+        onTryAgain: import_prop_types57.default.func,
+        iconName: import_prop_types57.default.string,
+        sessionKey: import_prop_types57.default.string,
+        serviceName: import_prop_types57.default.string,
+        accountInfo: import_prop_types57.default.object
       };
       constructor() {
         super();
@@ -221591,14 +221592,14 @@ var init_oauth_signin_page = __esm({
       _renderCertificateErrorHeader() {
         const { onTryAgain } = this.props;
         const { errorMessage } = this.state;
-        return /* @__PURE__ */ import_react53.default.createElement("div", null, /* @__PURE__ */ import_react53.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react53.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react53.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react53.default.createElement("p", { className: "message error error-message" }, "The certificate for this server is invalid. Would you like to connect to the server anyway?"), /* @__PURE__ */ import_react53.default.createElement("br", null), /* @__PURE__ */ import_react53.default.createElement("div", null, /* @__PURE__ */ import_react53.default.createElement(
+        return /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react54.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react54.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react54.default.createElement("p", { className: "message error error-message" }, "The certificate for this server is invalid. Would you like to connect to the server anyway?"), /* @__PURE__ */ import_react54.default.createElement("br", null), /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement(
           "button",
           {
             className: "btn btn-large btn-gradient btn-add-account",
             onClick: onTryAgain
           },
           "Try again"
-        ), /* @__PURE__ */ import_react53.default.createElement(
+        ), /* @__PURE__ */ import_react54.default.createElement(
           "button",
           {
             className: "btn btn-large btn-gradient btn-add-account",
@@ -221613,23 +221614,23 @@ var init_oauth_signin_page = __esm({
         const { serviceName, onTryAgain } = this.props;
         const { authStage, isCertificateError, errorMessage } = this.state;
         if (authStage === "initial" || authStage === "polling") {
-          return /* @__PURE__ */ import_react53.default.createElement("h2", null, "Sign in with ", serviceName, " in", /* @__PURE__ */ import_react53.default.createElement("br", null), "your browser.");
+          return /* @__PURE__ */ import_react54.default.createElement("h2", null, "Sign in with ", serviceName, " in", /* @__PURE__ */ import_react54.default.createElement("br", null), "your browser.");
         } else if (authStage === "fetchingAccount") {
-          return /* @__PURE__ */ import_react53.default.createElement("h2", null, "Connecting to ", serviceName, "\u2026");
+          return /* @__PURE__ */ import_react54.default.createElement("h2", null, "Connecting to ", serviceName, "\u2026");
         } else if (authStage === "accountSuccess") {
-          return /* @__PURE__ */ import_react53.default.createElement("div", null, /* @__PURE__ */ import_react53.default.createElement("h2", null, "Successfully connected to ", serviceName, "!"), /* @__PURE__ */ import_react53.default.createElement("h3", null, "Adding your account to Nylas Mail\u2026"));
+          return /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement("h2", null, "Successfully connected to ", serviceName, "!"), /* @__PURE__ */ import_react54.default.createElement("h3", null, "Adding your account to Nylas Mail\u2026"));
         }
         if (isCertificateError) {
           return this._renderCertificateErrorHeader();
         }
-        return /* @__PURE__ */ import_react53.default.createElement("div", null, /* @__PURE__ */ import_react53.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react53.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react53.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react53.default.createElement("p", { className: "extra" }, "Please ", /* @__PURE__ */ import_react53.default.createElement("a", { onClick: onTryAgain }, "try again"), " later.")));
+        return /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement("h2", null, "Sorry, we had trouble logging you in"), /* @__PURE__ */ import_react54.default.createElement("div", { className: "error-region" }, /* @__PURE__ */ import_react54.default.createElement("p", { className: "message error error-message" }, errorMessage), /* @__PURE__ */ import_react54.default.createElement("p", { className: "extra" }, "Please ", /* @__PURE__ */ import_react54.default.createElement("a", { onClick: onTryAgain }, "try again"), " later.")));
       }
       _renderAlternative() {
         let classnames14 = "input hidden";
         if (this.state.authStage === "polling" && this.state.showAlternative) {
           classnames14 += " fadein";
         }
-        return /* @__PURE__ */ import_react53.default.createElement("div", { className: "alternative-auth" }, /* @__PURE__ */ import_react53.default.createElement("div", { className: classnames14 }, /* @__PURE__ */ import_react53.default.createElement("div", { style: { marginTop: 40 } }, "Page didn't open? Paste this URL into your browser:"), /* @__PURE__ */ import_react53.default.createElement(
+        return /* @__PURE__ */ import_react54.default.createElement("div", { className: "alternative-auth" }, /* @__PURE__ */ import_react54.default.createElement("div", { className: classnames14 }, /* @__PURE__ */ import_react54.default.createElement("div", { style: { marginTop: 40 } }, "Page didn't open? Paste this URL into your browser:"), /* @__PURE__ */ import_react54.default.createElement(
           "input",
           {
             type: "url",
@@ -221637,7 +221638,7 @@ var init_oauth_signin_page = __esm({
             value: this.props.providerAuthPageUrl,
             readOnly: true
           }
-        ), /* @__PURE__ */ import_react53.default.createElement(
+        ), /* @__PURE__ */ import_react54.default.createElement(
           "div",
           {
             className: "copy-to-clipboard",
@@ -221645,7 +221646,7 @@ var init_oauth_signin_page = __esm({
             onMouseDown: () => this.setState({ pressed: true }),
             onMouseUp: () => this.setState({ pressed: false })
           },
-          /* @__PURE__ */ import_react53.default.createElement(
+          /* @__PURE__ */ import_react54.default.createElement(
             void 0,
             {
               name: "icon-copytoclipboard.png",
@@ -221655,12 +221656,12 @@ var init_oauth_signin_page = __esm({
         )));
       }
       render() {
-        return /* @__PURE__ */ import_react53.default.createElement(
+        return /* @__PURE__ */ import_react54.default.createElement(
           "div",
           {
             className: `page account-setup ${this.props.serviceName.toLowerCase()}`
           },
-          /* @__PURE__ */ import_react53.default.createElement("div", { className: "logo-container" }, /* @__PURE__ */ import_react53.default.createElement(
+          /* @__PURE__ */ import_react54.default.createElement("div", { className: "logo-container" }, /* @__PURE__ */ import_react54.default.createElement(
             void 0,
             {
               name: this.props.iconName,
@@ -221719,38 +221720,38 @@ function AttachmentActionIcon(props) {
   };
   return /* @__PURE__ */ React.createElement("div", { className: "file-action-icon", onClick: onClickActionIcon }, /* @__PURE__ */ React.createElement(retina_img_default, { name: actionIconName, mode: retinaImgMode }));
 }
-var import_node_fs3, import_node_path10, import_classnames18, import_react54, import_prop_types57, import_react_dom23, import_pick_react_known_prop3, import_spinner3, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
+var import_node_fs3, import_node_path10, import_classnames18, import_react55, import_prop_types58, import_react_dom23, import_pick_react_known_prop3, import_spinner3, propTypes, defaultProps, SPACE, AttachmentItem, ImageAttachmentItem;
 var init_attachment_items = __esm({
   "src/components/attachment-items.jsx"() {
     import_node_fs3 = __toESM(require("fs"));
     import_node_path10 = __toESM(require("path"));
     import_classnames18 = __toESM(require_classnames());
-    import_react54 = __toESM(require_react());
-    import_prop_types57 = __toESM(require_prop_types());
+    import_react55 = __toESM(require_react());
+    import_prop_types58 = __toESM(require_prop_types());
     import_react_dom23 = __toESM(require_react_dom());
     import_pick_react_known_prop3 = __toESM(require_dist4());
     init_retina_img();
     init_flexbox();
     import_spinner3 = __toESM(require_spinner());
     propTypes = {
-      className: import_prop_types57.default.string,
-      draggable: import_prop_types57.default.bool,
-      focusable: import_prop_types57.default.bool,
-      previewable: import_prop_types57.default.bool,
-      filePath: import_prop_types57.default.string,
-      contentType: import_prop_types57.default.string,
-      download: import_prop_types57.default.shape({
-        state: import_prop_types57.default.string,
-        percent: import_prop_types57.default.number
+      className: import_prop_types58.default.string,
+      draggable: import_prop_types58.default.bool,
+      focusable: import_prop_types58.default.bool,
+      previewable: import_prop_types58.default.bool,
+      filePath: import_prop_types58.default.string,
+      contentType: import_prop_types58.default.string,
+      download: import_prop_types58.default.shape({
+        state: import_prop_types58.default.string,
+        percent: import_prop_types58.default.number
       }),
-      displayName: import_prop_types57.default.string,
-      displaySize: import_prop_types57.default.string,
-      fileIconName: import_prop_types57.default.string,
-      filePreviewPath: import_prop_types57.default.string,
-      onOpenAttachment: import_prop_types57.default.func,
-      onRemoveAttachment: import_prop_types57.default.func,
-      onDownloadAttachment: import_prop_types57.default.func,
-      onAbortDownload: import_prop_types57.default.func
+      displayName: import_prop_types58.default.string,
+      displaySize: import_prop_types58.default.string,
+      fileIconName: import_prop_types58.default.string,
+      filePreviewPath: import_prop_types58.default.string,
+      onOpenAttachment: import_prop_types58.default.func,
+      onRemoveAttachment: import_prop_types58.default.func,
+      onDownloadAttachment: import_prop_types58.default.func,
+      onAbortDownload: import_prop_types58.default.func
     };
     defaultProps = {
       draggable: true
@@ -221758,12 +221759,12 @@ var init_attachment_items = __esm({
     SPACE = " ";
     ProgressBar.propTypes = propTypes;
     AttachmentActionIcon.propTypes = {
-      removeIcon: import_prop_types57.default.string,
-      downloadIcon: import_prop_types57.default.string,
-      retinaImgMode: import_prop_types57.default.string,
+      removeIcon: import_prop_types58.default.string,
+      downloadIcon: import_prop_types58.default.string,
+      retinaImgMode: import_prop_types58.default.string,
       ...propTypes
     };
-    AttachmentItem = class extends import_react54.Component {
+    AttachmentItem = class extends import_react55.Component {
       constructor(props) {
         super(props);
         this.fileIconImgRef = React.createRef();
@@ -221899,10 +221900,10 @@ var init_attachment_items = __esm({
         );
       }
     };
-    ImageAttachmentItem = class extends import_react54.Component {
+    ImageAttachmentItem = class extends import_react55.Component {
       static displayName = "ImageAttachmentItem";
       static propTypes = {
-        imgProps: import_prop_types57.default.object,
+        imgProps: import_prop_types58.default.object,
         ...propTypes
       };
       static defaultProps = defaultProps;
@@ -221961,14 +221962,14 @@ __export(code_snippet_exports, {
 function CodeSnippet(props) {
   return /* @__PURE__ */ React.createElement("div", { className: props.className }, props.intro, /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("textarea", { disabled: true, value: props.code }));
 }
-var import_prop_types58;
+var import_prop_types59;
 var init_code_snippet = __esm({
   "src/components/code-snippet.jsx"() {
-    import_prop_types58 = __toESM(require_prop_types());
+    import_prop_types59 = __toESM(require_prop_types());
     CodeSnippet.propTypes = {
-      intro: import_prop_types58.default.string,
-      code: import_prop_types58.default.string,
-      className: import_prop_types58.default.string
+      intro: import_prop_types59.default.string,
+      code: import_prop_types59.default.string,
+      className: import_prop_types59.default.string
     };
   }
 });
@@ -221978,19 +221979,19 @@ var dropdown_menu_exports = {};
 __export(dropdown_menu_exports, {
   default: () => DropdownMenu
 });
-var import_prop_types59, DropdownMenu;
+var import_prop_types60, DropdownMenu;
 var init_dropdown_menu = __esm({
   "src/components/dropdown-menu.jsx"() {
     init_nylas_exports();
-    import_prop_types59 = __toESM(require_prop_types());
+    import_prop_types60 = __toESM(require_prop_types());
     init_nylas_component_kit();
-    DropdownMenu = class extends React43.Component {
-      _rootRef = React43.createRef();
+    DropdownMenu = class extends React44.Component {
+      _rootRef = React44.createRef();
       static propTypes = {
-        intitialSelectionItem: import_prop_types59.default.object,
-        onSelect: import_prop_types59.default.func,
-        itemContent: import_prop_types59.default.fun,
-        headerComponents: import_prop_types59.default.element
+        intitialSelectionItem: import_prop_types60.default.object,
+        onSelect: import_prop_types60.default.func,
+        itemContent: import_prop_types60.default.fun,
+        headerComponents: import_prop_types60.default.element
       };
       constructor(props) {
         super(props);
@@ -222031,9 +222032,9 @@ var init_dropdown_menu = __esm({
         this._close();
       };
       render() {
-        let dropdown = /* @__PURE__ */ React43.createElement("span", null);
+        let dropdown = /* @__PURE__ */ React44.createElement("span", null);
         if (this.state.expanded) {
-          dropdown = /* @__PURE__ */ React43.createElement(
+          dropdown = /* @__PURE__ */ React44.createElement(
             void 0,
             {
               ...this.props,
@@ -222042,7 +222043,7 @@ var init_dropdown_menu = __esm({
             }
           );
         }
-        return /* @__PURE__ */ React43.createElement(
+        return /* @__PURE__ */ React44.createElement(
           "div",
           {
             ref: this._rootRef,
@@ -222050,7 +222051,7 @@ var init_dropdown_menu = __esm({
             onBlur: this._onBlur,
             style: { display: "inline-block" }
           },
-          /* @__PURE__ */ React43.createElement(
+          /* @__PURE__ */ React44.createElement(
             "div",
             {
               onClick: this._toggleExpanded,
@@ -222058,7 +222059,7 @@ var init_dropdown_menu = __esm({
             },
             this.props.itemContent(this.state.currentSelection)
           ),
-          /* @__PURE__ */ React43.createElement("div", { style: { position: "absolute", zIndex: "10" } }, dropdown)
+          /* @__PURE__ */ React44.createElement("div", { style: { position: "absolute", zIndex: "10" } }, dropdown)
         );
       }
     };
@@ -222068,14 +222069,14 @@ var init_dropdown_menu = __esm({
 // src/components/resizable-region.jsx
 var require_resizable_region = __commonJS({
   "src/components/resizable-region.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var React55 = require_react();
+    var import_prop_types70 = __toESM(require_prop_types());
+    var React57 = require_react();
     var ReactDOM29 = require_react_dom();
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var {
-      Utils: Utils26,
-      Actions: Actions39,
-      ComponentRegistry: ComponentRegistry3,
+      Utils: Utils27,
+      Actions: Actions40,
+      ComponentRegistry: ComponentRegistry4,
       PriorityUICoordinator: PriorityUICoordinator2
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ResizableHandle = {
@@ -222140,19 +222141,19 @@ var require_resizable_region = __commonJS({
         }
       }
     };
-    var ResizableRegion3 = class _ResizableRegion extends React55.Component {
+    var ResizableRegion3 = class _ResizableRegion extends React57.Component {
       static initClass() {
         _ResizableRegion.displayName = "ResizableRegion";
         _ResizableRegion.propTypes = {
-          handle: import_prop_types69.default.object.isRequired,
-          onResize: import_prop_types69.default.func,
-          initialWidth: import_prop_types69.default.number,
-          minWidth: import_prop_types69.default.number,
-          maxWidth: import_prop_types69.default.number,
-          initialHeight: import_prop_types69.default.number,
-          minHeight: import_prop_types69.default.number,
-          maxHeight: import_prop_types69.default.number,
-          style: import_prop_types69.default.object
+          handle: import_prop_types70.default.object.isRequired,
+          onResize: import_prop_types70.default.func,
+          initialWidth: import_prop_types70.default.number,
+          minWidth: import_prop_types70.default.number,
+          maxWidth: import_prop_types70.default.number,
+          initialHeight: import_prop_types70.default.number,
+          minHeight: import_prop_types70.default.number,
+          maxHeight: import_prop_types70.default.number,
+          style: import_prop_types70.default.object
         };
       }
       constructor(props) {
@@ -222203,21 +222204,21 @@ var require_resizable_region = __commonJS({
             containerStyle.flex = 1;
           }
         }
-        const otherProps = Utils26.fastOmit(
+        const otherProps = Utils27.fastOmit(
           this.props,
           Object.keys(this.constructor.propTypes)
         );
-        return React55.createElement(
+        return React57.createElement(
           "div",
           Object.assign({ style: containerStyle }, otherProps),
           this.props.children,
-          React55.createElement(
+          React57.createElement(
             "div",
             {
               className: this.props.handle.className,
               onMouseDown: this._mouseDown
             },
-            React55.createElement("div", null)
+            React57.createElement("div", null)
           )
         );
       }
@@ -222303,11 +222304,11 @@ __export(mail_label_exports, {
   LabelColorizer: () => LabelColorizer,
   MailLabel: () => MailLabel
 });
-var import_react55, import_prop_types60, LabelColorizer, MailLabel;
+var import_react56, import_prop_types61, LabelColorizer, MailLabel;
 var init_mail_label = __esm({
   "src/components/mail-label.jsx"() {
-    import_react55 = __toESM(require_react());
-    import_prop_types60 = __toESM(require_prop_types());
+    import_react56 = __toESM(require_react());
+    import_prop_types61 = __toESM(require_prop_types());
     init_retina_img();
     LabelColorizer = {
       color(label) {
@@ -222331,10 +222332,10 @@ var init_mail_label = __esm({
         return styles;
       }
     };
-    MailLabel = class extends import_react55.default.Component {
+    MailLabel = class extends import_react56.default.Component {
       static propTypes = {
-        label: import_prop_types60.default.object.isRequired,
-        onRemove: import_prop_types60.default.func
+        label: import_prop_types61.default.object.isRequired,
+        onRemove: import_prop_types61.default.func
       };
       shouldComponentUpdate(nextProps) {
         if (nextProps.label.id === this.props.label.id) {
@@ -222351,8 +222352,8 @@ var init_mail_label = __esm({
         let x3 = null;
         if (this._removable()) {
           classname += " removable";
-          content = /* @__PURE__ */ import_react55.default.createElement("span", { className: "inner" }, content);
-          x3 = /* @__PURE__ */ import_react55.default.createElement(
+          content = /* @__PURE__ */ import_react56.default.createElement("span", { className: "inner" }, content);
+          x3 = /* @__PURE__ */ import_react56.default.createElement(
             retina_img_default,
             {
               className: "x",
@@ -222363,7 +222364,7 @@ var init_mail_label = __esm({
             }
           );
         }
-        return /* @__PURE__ */ import_react55.default.createElement(
+        return /* @__PURE__ */ import_react56.default.createElement(
           "div",
           {
             className: classname,
@@ -236872,7 +236873,7 @@ var require_task_queue = __commonJS({
     var TaskRegistry2 = require_task_registry().default;
     var _Utils = require_utils();
     var _Reflux2 = require_src();
-    var Actions39 = require_actions().default;
+    var Actions40 = require_actions().default;
     var DatabaseStore5 = (init_database_store(), __toCommonJS(database_store_exports)).default;
     var { APIError: APIError5 } = (init_errors2(), __toCommonJS(errors_exports2));
     var JSONBlobStorageKey = "task-queue";
@@ -236921,18 +236922,18 @@ var require_task_queue = __commonJS({
             });
             return false;
           });
-          this.listenTo(Actions39.queueTask, this.enqueue);
-          this.listenTo(Actions39.queueTasks, (tasks) => {
+          this.listenTo(Actions40.queueTask, this.enqueue);
+          this.listenTo(Actions40.queueTasks, (tasks) => {
             if (!tasks || !(tasks.length > 0)) {
               return;
             }
             return Array.from(tasks).map((t) => this.enqueue(t));
           });
-          this.listenTo(Actions39.undoTaskId, this.enqueueUndoOfTaskId);
-          this.listenTo(Actions39.dequeueTask, this.dequeue);
-          this.listenTo(Actions39.dequeueAllTasks, this.dequeueAll);
-          this.listenTo(Actions39.dequeueMatchingTask, this.dequeueMatching);
-          this.listenTo(Actions39.clearDeveloperConsole, this.clearCompleted);
+          this.listenTo(Actions40.undoTaskId, this.enqueueUndoOfTaskId);
+          this.listenTo(Actions40.dequeueTask, this.dequeue);
+          this.listenTo(Actions40.dequeueAllTasks, this.dequeueAll);
+          this.listenTo(Actions40.dequeueMatchingTask, this.dequeueMatching);
+          this.listenTo(Actions40.clearDeveloperConsole, this.clearCompleted);
         }
         queue() {
           return this._queue;
@@ -237140,7 +237141,7 @@ var require_task_queue = __commonJS({
             maxValue: 1e3,
             sample: 0.1
           });
-          return Actions39.recordPerfMetric(eventData);
+          return Actions40.recordPerfMetric(eventData);
         }
         _processTask(task) {
           if (task.queueState.isProcessing) {
@@ -237698,7 +237699,7 @@ var require_mailbox_perspective = __commonJS({
     init_thread();
     init_category();
     var import_actions38 = __toESM(require_actions());
-    var Utils26 = UtilsNS6.default || UtilsNS6;
+    var Utils27 = UtilsNS6.default || UtilsNS6;
     var ChangeUnreadTask2 = null;
     var MailboxPerspective3 = class _MailboxPerspective {
       static initClass() {
@@ -237711,13 +237712,13 @@ var require_mailbox_perspective = __commonJS({
             if (json2.type === CategoryMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils26.registeredObjectReviver
+                Utils27.registeredObjectReviver
               );
               return _MailboxPerspective.forCategories(categories);
             } else if (json2.type === UnreadMailboxPerspective.name) {
               categories = JSON.parse(
                 json2.serializedCategories,
-                Utils26.registeredObjectReviver
+                Utils27.registeredObjectReviver
               );
               return _MailboxPerspective.forUnread(categories);
             } else if (json2.type === StarredMailboxPerspective.name) {
@@ -238034,7 +238035,7 @@ var require_mailbox_perspective = __commonJS({
         const json2 = super.toJSON(...arguments);
         json2.serializedCategories = JSON.stringify(
           this._categories,
-          Utils26.registeredObjectReplacer
+          Utils27.registeredObjectReplacer
         );
         return json2;
       }
@@ -239254,26 +239255,26 @@ var mail_label_set_exports = {};
 __export(mail_label_set_exports, {
   default: () => MailLabelSet
 });
-var import_react56, import_prop_types61, import_actions16, import_injected_component_set, LabelComponentCache, MailLabelSet;
+var import_react57, import_prop_types62, import_actions16, LabelComponentCache, MailLabelSet;
 var init_mail_label_set = __esm({
   "src/components/mail-label-set.jsx"() {
-    import_react56 = __toESM(require_react());
-    import_prop_types61 = __toESM(require_prop_types());
+    import_react57 = __toESM(require_react());
+    import_prop_types62 = __toESM(require_prop_types());
     init_focused_perspective_store();
     init_category_store();
     init_message_store();
     init_account_store();
     init_mail_label();
     import_actions16 = __toESM(require_actions());
-    import_injected_component_set = __toESM(require_injected_component_set());
+    init_injected_component_set();
     LabelComponentCache = {};
-    MailLabelSet = class extends import_react56.default.Component {
+    MailLabelSet = class extends import_react57.default.Component {
       static displayName = "MailLabelSet";
       static propTypes = {
-        thread: import_prop_types61.default.object.isRequired,
-        messages: import_prop_types61.default.array,
-        includeCurrentCategories: import_prop_types61.default.bool,
-        removable: import_prop_types61.default.bool
+        thread: import_prop_types62.default.object.isRequired,
+        messages: import_prop_types62.default.array,
+        includeCurrentCategories: import_prop_types62.default.bool,
+        removable: import_prop_types62.default.bool
       };
       _onRemoveLabel(label) {
         import_actions16.default.removeCategoryFromThreads({
@@ -239300,7 +239301,7 @@ var init_mail_label_set = __esm({
             }
             if (this.props.removable) {
               labels.push(
-                /* @__PURE__ */ import_react56.default.createElement(
+                /* @__PURE__ */ import_react57.default.createElement(
                   MailLabel,
                   {
                     label,
@@ -239311,14 +239312,14 @@ var init_mail_label_set = __esm({
               );
             } else {
               if (LabelComponentCache[label.id] === void 0) {
-                LabelComponentCache[label.id] = /* @__PURE__ */ import_react56.default.createElement(MailLabel, { label, key: label.id });
+                LabelComponentCache[label.id] = /* @__PURE__ */ import_react57.default.createElement(MailLabel, { label, key: label.id });
               }
               labels.push(LabelComponentCache[label.id]);
             }
           }
         }
-        return /* @__PURE__ */ import_react56.default.createElement(
-          import_injected_component_set.default,
+        return /* @__PURE__ */ import_react57.default.createElement(
+          injected_component_set_default,
           {
             inline: true,
             containersRequired: false,
@@ -239336,13 +239337,13 @@ var init_mail_label_set = __esm({
 // src/components/mail-important-icon.jsx
 var require_mail_important_icon = __commonJS({
   "src/components/mail-important-icon.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var React55 = require_react();
+    var React57 = require_react();
     var classNames6 = require_classnames();
     var {
-      Actions: Actions39,
-      Utils: Utils26,
+      Actions: Actions40,
+      Utils: Utils27,
       Thread: Thread4,
       TaskFactory: TaskFactory3,
       CategoryStore: CategoryStore4,
@@ -239350,12 +239351,12 @@ var require_mail_important_icon = __commonJS({
       AccountStore: AccountStore5
     } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
     var ShowImportantKey = "core.workspace.showImportant";
-    var MailImportantIcon = class _MailImportantIcon extends React55.Component {
+    var MailImportantIcon = class _MailImportantIcon extends React57.Component {
       static initClass() {
         _MailImportantIcon.displayName = "MailImportantIcon";
         _MailImportantIcon.propTypes = {
-          thread: import_prop_types69.default.object,
-          showIfAvailableForAnyAccount: import_prop_types69.default.bool
+          thread: import_prop_types70.default.object,
+          showIfAvailableForAnyAccount: import_prop_types70.default.bool
         };
       }
       constructor(props) {
@@ -239445,7 +239446,7 @@ var require_mail_important_icon = __commonJS({
         } else {
           title = "Mark as important";
         }
-        return React55.createElement("div", {
+        return React57.createElement("div", {
           className: classes,
           title,
           onClick: this._onToggleImportant
@@ -239458,13 +239459,13 @@ var require_mail_important_icon = __commonJS({
           const threads = [this.props.thread];
           const source = "Important Icon";
           if (!isImportant) {
-            Actions39.applyCategoryToThreads({
+            Actions40.applyCategoryToThreads({
               threads,
               categoryToApply: category,
               source
             });
           } else {
-            Actions39.removeCategoryFromThreads({
+            Actions40.removeCategoryFromThreads({
               threads,
               categoryToRemove: category,
               source
@@ -239482,21 +239483,21 @@ var require_mail_important_icon = __commonJS({
 // src/components/generated-form.jsx
 var require_generated_form = __commonJS({
   "src/components/generated-form.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react67 = __toESM(require_react());
+    var import_react69 = __toESM(require_react());
     init_nylas_exports();
     init_date_picker();
     var import_tab_group_region = __toESM(require_tab_group_region());
-    var idPropType = import_prop_types69.default.oneOfType([import_prop_types69.default.string, import_prop_types69.default.number]);
-    var FormItem = class _FormItem extends import_react67.default.Component {
+    var idPropType = import_prop_types70.default.oneOfType([import_prop_types70.default.string, import_prop_types70.default.number]);
+    var FormItem = class _FormItem extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
-        this.inputRef = import_react67.default.createRef();
-        this.formRef = import_react67.default.createRef();
-        this.inputWrapRef = import_react67.default.createRef();
-        this.formHeaderErrorRef = import_react67.default.createRef();
+        this.inputRef = import_react69.default.createRef();
+        this.formRef = import_react69.default.createRef();
+        this.inputWrapRef = import_react69.default.createRef();
+        this.formHeaderErrorRef = import_react69.default.createRef();
         this.render = this.render.bind(this);
         this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
         this._renderError = this._renderError.bind(this);
@@ -239532,63 +239533,63 @@ var require_generated_form = __commonJS({
           id: idPropType.isRequired,
           // Either a type of input or any type that can be passed into
           // `React.createElement(type, ...)`
-          type: import_prop_types69.default.string.isRequired,
+          type: import_prop_types70.default.string.isRequired,
           // The name as POSTed to the eventual endpoint.
-          name: import_prop_types69.default.string,
+          name: import_prop_types70.default.string,
           // The human-readable display label for the formItem
-          label: import_prop_types69.default.node,
+          label: import_prop_types70.default.node,
           // Most input types take strings, numbers, and bools. Some types (like
           // "reference" can get passed arrays)
-          value: import_prop_types69.default.oneOfType([
-            import_prop_types69.default.string,
-            import_prop_types69.default.number,
-            import_prop_types69.default.bool
+          value: import_prop_types70.default.oneOfType([
+            import_prop_types70.default.string,
+            import_prop_types70.default.number,
+            import_prop_types70.default.bool
           ]),
-          defaultValue: import_prop_types69.default.string,
+          defaultValue: import_prop_types70.default.string,
           // A function that takes two arguments:
           //   - The id of this FormItem
           //   - The new value of the FormItem
-          onChange: import_prop_types69.default.func,
+          onChange: import_prop_types70.default.func,
           // FormItems can either explicitly set the disabled state, or determine
           // the disabled state by whether or not this is a 'new' or 'update'
           // form.
-          formType: import_prop_types69.default.oneOf(["new", "update"]),
-          disabled: import_prop_types69.default.bool,
-          editableForNew: import_prop_types69.default.bool,
-          editableForUpdate: import_prop_types69.default.bool,
-          formItemError: import_prop_types69.default.shape({
+          formType: import_prop_types70.default.oneOf(["new", "update"]),
+          disabled: import_prop_types70.default.bool,
+          editableForNew: import_prop_types70.default.bool,
+          editableForUpdate: import_prop_types70.default.bool,
+          formItemError: import_prop_types70.default.shape({
             id: idPropType,
             // The formItemId
-            message: import_prop_types69.default.string
+            message: import_prop_types70.default.string
           }),
           // selectOptions
           // An array of options.
-          selectOptions: import_prop_types69.default.arrayOf(
-            import_prop_types69.default.shape({
-              label: import_prop_types69.default.node,
-              value: import_prop_types69.default.string
+          selectOptions: import_prop_types70.default.arrayOf(
+            import_prop_types70.default.shape({
+              label: import_prop_types70.default.node,
+              value: import_prop_types70.default.string
             })
           ),
           // Common <input> props.
           // Anything that can be passed into a standard React <input> item will
           // be passed along. Here are some common ones. There can be many more
-          multiple: import_prop_types69.default.bool,
-          required: import_prop_types69.default.bool,
-          prefilled: import_prop_types69.default.bool,
-          maxlength: import_prop_types69.default.number,
-          placeholder: import_prop_types69.default.node,
-          tabIndex: import_prop_types69.default.oneOfType([import_prop_types69.default.number, import_prop_types69.default.string]),
+          multiple: import_prop_types70.default.bool,
+          required: import_prop_types70.default.bool,
+          prefilled: import_prop_types70.default.bool,
+          maxlength: import_prop_types70.default.number,
+          placeholder: import_prop_types70.default.node,
+          tabIndex: import_prop_types70.default.oneOfType([import_prop_types70.default.number, import_prop_types70.default.string]),
           //### Used by "reference" type objects
-          customComponent: import_prop_types69.default.func,
-          contextData: import_prop_types69.default.object,
-          referenceTo: import_prop_types69.default.oneOfType([import_prop_types69.default.array, import_prop_types69.default.string]),
-          referenceType: import_prop_types69.default.oneOf([
+          customComponent: import_prop_types70.default.func,
+          contextData: import_prop_types70.default.object,
+          referenceTo: import_prop_types70.default.oneOfType([import_prop_types70.default.array, import_prop_types70.default.string]),
+          referenceType: import_prop_types70.default.oneOf([
             "belongsTo",
             "hasMany",
             "hasManyThrough"
           ]),
-          referenceThrough: import_prop_types69.default.string,
-          currentFormValues: import_prop_types69.default.object
+          referenceThrough: import_prop_types70.default.string,
+          currentFormValues: import_prop_types70.default.object
         };
       }
       render() {
@@ -239600,25 +239601,25 @@ var require_generated_form = __commonJS({
         });
         let { label } = this.props;
         if (this.props.required) {
-          label = import_react67.default.createElement(
+          label = import_react69.default.createElement(
             "strong",
             null,
-            import_react67.default.createElement("span", { className: "required" }, "*"),
+            import_react69.default.createElement("span", { className: "required" }, "*"),
             this.props.label
           );
         }
         if (this.props.type === "hidden") {
           return this._renderInput();
         } else {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className: classes, ref: this.inputWrapRef },
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "label-area" },
-              import_react67.default.createElement("label", { htmlFor: this.props.id }, label)
+              import_react69.default.createElement("label", { htmlFor: this.props.id }, label)
             ),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "input-area" },
               this._renderInput(),
@@ -239643,7 +239644,7 @@ var require_generated_form = __commonJS({
           return false;
         }
         const msg = this.props.formItemError.message;
-        return import_react67.default.createElement("div", { className: "form-error" }, msg);
+        return import_react69.default.createElement("div", { className: "form-error" }, msg);
       }
       _isDisabled() {
         return this.props.disabled || this.props.formType === "new" && this.props.editableForNew === false || this.props.formType === "update" && this.props.editableForUpdate === false;
@@ -239668,10 +239669,10 @@ var require_generated_form = __commonJS({
           inputProps.disabled = true;
         }
         if (_FormItem.inputElementTypes[this.props.type]) {
-          return import_react67.default.createElement("input", inputProps);
+          return import_react69.default.createElement("input", inputProps);
         } else if (this.props.type === "select") {
           const options2 = (this.props.selectOptions != null ? this.props.selectOptions : []).map(
-            (optionData) => import_react67.default.createElement(
+            (optionData) => import_react69.default.createElement(
               "option",
               Object.assign({}, optionData, {
                 key: `${Utils13.generateTempId()}-optionData.value`
@@ -239680,24 +239681,24 @@ var require_generated_form = __commonJS({
             )
           );
           options2.unshift(
-            import_react67.default.createElement("option", {
+            import_react69.default.createElement("option", {
               key: `${Utils13.generateTempId()}-blank-option`
             })
           );
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "select",
             Object.assign({}, inputProps),
             options2
           );
         } else if (this.props.type === "textarea") {
-          return import_react67.default.createElement("textarea", inputProps);
+          return import_react69.default.createElement("textarea", inputProps);
         } else if (this.props.type === "date") {
           inputProps.dateFormat = "YYYY-MM-DD";
-          return import_react67.default.createElement(DatePicker, inputProps);
+          return import_react69.default.createElement(DatePicker, inputProps);
         } else if (this.props.type === "EmptySpace") {
-          return import_react67.default.createElement("div", { className: "empty-space" });
+          return import_react69.default.createElement("div", { className: "empty-space" });
         } else if (index_default_default.isFunction(this.props.customComponent)) {
-          return import_react67.default.createElement(this.props.customComponent, inputProps);
+          return import_react69.default.createElement(this.props.customComponent, inputProps);
         } else {
           return console.warn(
             `We do not support type ${this.props.type} with attributes:`,
@@ -239707,7 +239708,7 @@ var require_generated_form = __commonJS({
       }
     };
     FormItem.initClass();
-    var GeneratedFieldset = class _GeneratedFieldset extends import_react67.default.Component {
+    var GeneratedFieldset = class _GeneratedFieldset extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239723,28 +239724,28 @@ var require_generated_form = __commonJS({
         _GeneratedFieldset.propTypes = {
           // Some sort of unique identifier
           id: idPropType.isRequired,
-          formItems: import_prop_types69.default.arrayOf(
-            import_prop_types69.default.shape(
+          formItems: import_prop_types70.default.arrayOf(
+            import_prop_types70.default.shape(
               index_default_default.extend(FormItem.propTypes, {
-                row: import_prop_types69.default.number,
-                column: import_prop_types69.default.number
+                row: import_prop_types70.default.number,
+                column: import_prop_types70.default.number
               })
             )
           ),
           // The key is the formItem id, the value is the error object
-          formItemErrors: import_prop_types69.default.arrayOf(FormItem.propTypes.formItemError),
+          formItemErrors: import_prop_types70.default.arrayOf(FormItem.propTypes.formItemError),
           // A function that takes two arguments:
           //   - The id of this GeneratedFieldset
           //   - A new array of updated formItems with the correct value.
-          onChange: import_prop_types69.default.func,
-          heading: import_prop_types69.default.node,
-          useHeading: import_prop_types69.default.bool,
-          formType: import_prop_types69.default.oneOf(["new", "update"]),
-          zIndex: import_prop_types69.default.number,
-          lastFieldset: import_prop_types69.default.bool,
-          firstFieldset: import_prop_types69.default.bool,
-          contextData: import_prop_types69.default.object,
-          currentFormValues: import_prop_types69.default.object
+          onChange: import_prop_types70.default.func,
+          heading: import_prop_types70.default.node,
+          useHeading: import_prop_types70.default.bool,
+          formType: import_prop_types70.default.oneOf(["new", "update"]),
+          zIndex: import_prop_types70.default.number,
+          lastFieldset: import_prop_types70.default.bool,
+          firstFieldset: import_prop_types70.default.bool,
+          contextData: import_prop_types70.default.object,
+          currentFormValues: import_prop_types70.default.object
         };
       }
       render() {
@@ -239752,14 +239753,14 @@ var require_generated_form = __commonJS({
           "first-fieldset": this.props.firstFieldset,
           "last-fieldset": this.props.lastFieldset
         });
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "fieldset",
           {
             style: { zIndex: this.props.zIndex != null ? this.props.zIndex : 0 },
             className: classStr
           },
           this._renderHeader(),
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             { className: "fieldset-form-items" },
             this._renderFormItems()
@@ -239772,13 +239773,13 @@ var require_generated_form = __commonJS({
       }
       _renderHeader() {
         if (this.props.useHeading) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "header",
             null,
-            import_react67.default.createElement("legend", null, this.props.heading)
+            import_react69.default.createElement("legend", null, this.props.heading)
           );
         } else {
-          return import_react67.default.createElement("div", null);
+          return import_react69.default.createElement("div", null);
         }
       }
       _renderFormItems() {
@@ -239794,7 +239795,7 @@ var require_generated_form = __commonJS({
           if (allHidden) {
             style.display = "none";
           }
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className: "row", "data-row-num": rowNum, style, key: rowNum },
             index_default_default.map(byCol, (itemsInCol, colNum) => {
@@ -239802,12 +239803,12 @@ var require_generated_form = __commonJS({
                 itemsInCol = [];
               }
               const colEls = [
-                import_react67.default.createElement(
+                import_react69.default.createElement(
                   "div",
                   { className: "column", "data-col-num": colNum, key: colNum },
                   itemsInCol.map((formItemData) => {
                     const props = this._propsFromFormItemData(formItemData);
-                    return import_react67.default.createElement(
+                    return import_react69.default.createElement(
                       FormItem,
                       Object.assign({}, props, {
                         key: `form-item-${formItemData.id}`
@@ -239818,7 +239819,7 @@ var require_generated_form = __commonJS({
               ];
               if (colNum !== numCols - 1) {
                 colEls.push(
-                  import_react67.default.createElement("div", {
+                  import_react69.default.createElement("div", {
                     className: "column-spacer",
                     "data-col-num": `${colNum}-spacer`,
                     key: `${colNum}-spacer`
@@ -239858,11 +239859,11 @@ var require_generated_form = __commonJS({
         return this.props.onChange(this.props.id, newFormItems);
       }
       _renderFooter() {
-        return import_react67.default.createElement("footer", null);
+        return import_react69.default.createElement("footer", null);
       }
     };
     GeneratedFieldset.initClass();
-    var GeneratedForm = class _GeneratedForm extends import_react67.default.Component {
+    var GeneratedForm = class _GeneratedForm extends import_react69.default.Component {
       constructor(...args) {
         super(...args);
         this.render = this.render.bind(this);
@@ -239880,24 +239881,24 @@ var require_generated_form = __commonJS({
         _GeneratedForm.propTypes = {
           // Some sort of unique identifier
           id: idPropType,
-          errors: import_prop_types69.default.shape({
-            formError: import_prop_types69.default.shape({
-              message: import_prop_types69.default.string,
-              location: import_prop_types69.default.string
+          errors: import_prop_types70.default.shape({
+            formError: import_prop_types70.default.shape({
+              message: import_prop_types70.default.string,
+              location: import_prop_types70.default.string
               // Can be "header" (default) or "footer"
             }),
             formItemErrors: GeneratedFieldset.propTypes.formItemErrors
           }),
-          fieldsets: import_prop_types69.default.arrayOf(
-            import_prop_types69.default.shape(GeneratedFieldset.propTypes)
+          fieldsets: import_prop_types70.default.arrayOf(
+            import_prop_types70.default.shape(GeneratedFieldset.propTypes)
           ),
           // A function whose argument is a new set of Props
-          onChange: import_prop_types69.default.func.isRequired,
-          onSubmit: import_prop_types69.default.func.isRequired,
-          style: import_prop_types69.default.object,
-          formType: import_prop_types69.default.oneOf(["new", "update"]),
-          prefilled: import_prop_types69.default.bool,
-          contextData: import_prop_types69.default.object
+          onChange: import_prop_types70.default.func.isRequired,
+          onSubmit: import_prop_types70.default.func.isRequired,
+          style: import_prop_types70.default.object,
+          formType: import_prop_types70.default.oneOf(["new", "update"]),
+          prefilled: import_prop_types70.default.bool,
+          contextData: import_prop_types70.default.object
         };
         _GeneratedForm.defaultProps = {
           style: {},
@@ -239907,7 +239908,7 @@ var require_generated_form = __commonJS({
       }
       render() {
         const submitText = this.props.formType === "new" ? "Create" : "Update";
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "form",
           {
             className: "generated-form",
@@ -239917,20 +239918,20 @@ var require_generated_form = __commonJS({
             onKeyDown: this._onKeyDown,
             noValidate: true
           },
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             import_tab_group_region.default,
             null,
             this._renderHeaderFormError(),
             this._renderPrefilledMessage(),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "fieldsets" },
               this._renderFieldsets()
             ),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "div",
               { className: "form-footer" },
-              import_react67.default.createElement(
+              import_react69.default.createElement(
                 "button",
                 {
                   type: "button",
@@ -239958,11 +239959,11 @@ var require_generated_form = __commonJS({
       }
       _renderPrefilledMessage() {
         if (this.props.prefilled) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             { className: "prefilled-message" },
             `The `,
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               "span",
               { className: "highlighted" },
               "highlighted"
@@ -239973,7 +239974,7 @@ var require_generated_form = __commonJS({
       }
       _renderHeaderFormError() {
         if (this.props.errors != null ? this.props.errors.formError : void 0) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "div",
             {
               ref: this.formHeaderErrorRef,
@@ -239994,7 +239995,7 @@ var require_generated_form = __commonJS({
             props.currentFormValues = this._currentFormValues();
             props.firstFieldset = i === 0;
             props.lastFieldset = i !== 0 && i === this.props.fieldsets.length - 1;
-            return import_react67.default.createElement(
+            return import_react69.default.createElement(
               GeneratedFieldset,
               Object.assign({}, props, { ref: `fieldset-${fieldset.id}` })
             );
@@ -240175,18 +240176,18 @@ var init_scenario_editor_models = __esm({
 // src/components/scenario-editor-row.jsx
 var require_scenario_editor_row = __commonJS({
   "src/components/scenario-editor-row.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     init_index_all();
     var import_rx_lite10 = __toESM(require_rx_lite());
     var SOURCE_SELECT_NULL = "NULL";
-    var SourceSelect = class _SourceSelect extends import_react67.default.Component {
+    var SourceSelect = class _SourceSelect extends import_react69.default.Component {
       static initClass() {
         _SourceSelect.displayName = "SourceSelect";
         _SourceSelect.propTypes = {
-          value: import_prop_types69.default.string,
-          onChange: import_prop_types69.default.func.isRequired,
-          options: import_prop_types69.default.oneOfType([import_prop_types69.default.object, import_prop_types69.default.array]).isRequired
+          value: import_prop_types70.default.string,
+          onChange: import_prop_types70.default.func.isRequired,
+          options: import_prop_types70.default.oneOfType([import_prop_types70.default.object, import_prop_types70.default.array]).isRequired
         };
       }
       constructor(props) {
@@ -240230,18 +240231,18 @@ var require_scenario_editor_row = __commonJS({
       }
       render() {
         const { options: options2 } = this.state;
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "select",
           {
             value: this.props.value || SOURCE_SELECT_NULL,
             onChange: this._onChange
           },
-          import_react67.default.createElement("option", {
+          import_react69.default.createElement("option", {
             key: SOURCE_SELECT_NULL,
             value: SOURCE_SELECT_NULL
           }),
           this.state.options.map(({ value, name: name2 }) => {
-            return import_react67.default.createElement(
+            return import_react69.default.createElement(
               "option",
               { key: value, value },
               name2
@@ -240258,16 +240259,16 @@ var require_scenario_editor_row = __commonJS({
       }
     };
     SourceSelect.initClass();
-    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react67.default.Component {
+    var ScenarioEditorRow = class _ScenarioEditorRow extends import_react69.default.Component {
       static initClass() {
         _ScenarioEditorRow.displayName = "ScenarioEditorRow";
         _ScenarioEditorRow.propTypes = {
-          instance: import_prop_types69.default.object.isRequired,
-          removable: import_prop_types69.default.bool,
-          templates: import_prop_types69.default.array.isRequired,
-          onChange: import_prop_types69.default.func,
-          onInsert: import_prop_types69.default.func,
-          onRemove: import_prop_types69.default.func
+          instance: import_prop_types70.default.object.isRequired,
+          removable: import_prop_types70.default.bool,
+          templates: import_prop_types70.default.array.isRequired,
+          onChange: import_prop_types70.default.func,
+          onInsert: import_prop_types70.default.func,
+          onRemove: import_prop_types70.default.func
         };
       }
       constructor(props) {
@@ -240286,33 +240287,33 @@ var require_scenario_editor_row = __commonJS({
           key: this.props.instance.templateKey
         });
         if (!template2) {
-          return import_react67.default.createElement(
+          return import_react69.default.createElement(
             "span",
             null,
             " Could not find template for instance key: ",
             this.props.instance.templateKey
           );
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           Flexbox,
           { direction: "row", className: "well-row" },
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "span",
             null,
             this._renderTemplateSelect(template2),
             this._renderComparator(template2),
-            import_react67.default.createElement("span", null, template2.valueLabel),
+            import_react69.default.createElement("span", null, template2.valueLabel),
             this._renderValue(template2)
           ),
-          import_react67.default.createElement("div", { style: { flex: 1 } }),
+          import_react69.default.createElement("div", { style: { flex: 1 } }),
           this._renderActions()
         );
       }
       _renderTemplateSelect(_template) {
         const options2 = this.props.templates.map(({ key, name: name2 }) => {
-          return import_react67.default.createElement("option", { value: key, key }, name2);
+          return import_react69.default.createElement("option", { value: key, key }, name2);
         });
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "select",
           {
             value: this.props.instance.templateKey,
@@ -240323,12 +240324,12 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderComparator(template2) {
         const options2 = index_default_default.map(template2.comparators, ({ name: name2 }, key) => {
-          return import_react67.default.createElement("option", { key, value: key }, name2);
+          return import_react69.default.createElement("option", { key, value: key }, name2);
         });
         if (!(options2.length > 0)) {
           return false;
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "select",
           {
             value: this.props.instance.comparatorKey,
@@ -240339,13 +240340,13 @@ var require_scenario_editor_row = __commonJS({
       }
       _renderValue(template2) {
         if (template2.type === Template.Type.Enum) {
-          return import_react67.default.createElement(SourceSelect, {
+          return import_react69.default.createElement(SourceSelect, {
             value: this.props.instance.value,
             onChange: this._onChangeValue,
             options: template2.values
           });
         } else if (template2.type === Template.Type.String) {
-          return import_react67.default.createElement("input", {
+          return import_react69.default.createElement("input", {
             type: "text",
             value: this.props.instance.value,
             onChange: this._onChangeValue
@@ -240355,15 +240356,15 @@ var require_scenario_editor_row = __commonJS({
         }
       }
       _renderActions() {
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: "actions" },
-          this.props.removable ? import_react67.default.createElement(
+          this.props.removable ? import_react69.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onRemove },
             "\u2212"
           ) : void 0,
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             { className: "btn", onClick: this.props.onInsert },
             "+"
@@ -240400,18 +240401,18 @@ var require_scenario_editor_row = __commonJS({
 // src/components/scenario-editor.jsx
 var require_scenario_editor = __commonJS({
   "src/components/scenario-editor.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     init_scenario_editor_models();
     var import_scenario_editor_row = __toESM(require_scenario_editor_row());
-    var ScenarioEditor = class _ScenarioEditor extends import_react67.default.Component {
+    var ScenarioEditor = class _ScenarioEditor extends import_react69.default.Component {
       static initClass() {
         _ScenarioEditor.displayName = "ScenarioEditor";
         _ScenarioEditor.propTypes = {
-          instances: import_prop_types69.default.array,
-          className: import_prop_types69.default.string,
-          onChange: import_prop_types69.default.func,
-          templates: import_prop_types69.default.array
+          instances: import_prop_types70.default.array,
+          className: import_prop_types70.default.string,
+          onChange: import_prop_types70.default.func,
+          templates: import_prop_types70.default.array
         };
         _ScenarioEditor.Template = Template2;
         _ScenarioEditor.Comparator = Comparator;
@@ -240427,11 +240428,11 @@ var require_scenario_editor = __commonJS({
         this.state = { collapsed: true };
       }
       render() {
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: this.props.className },
           (this.props.instances || []).map((instance, idx) => {
-            return import_react67.default.createElement(import_scenario_editor_row.default, {
+            return import_react69.default.createElement(import_scenario_editor_row.default, {
               key: idx,
               instance,
               removable: this.props.instances.length > 1,
@@ -240487,7 +240488,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
   if (TipsStore.hasSeenTip(TipKey)) {
     return ComposedComponent;
   }
-  return class extends import_react57.default.Component {
+  return class extends import_react58.default.Component {
     static displayName = ComposedComponent.displayName;
     static containerRequired = ComposedComponent.containerRequired;
     static containerStyles = ComposedComponent.containerStyles;
@@ -240572,7 +240573,7 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       );
       TipsBackgroundEl.style.webkitMaskPosition = `0 0, ${rectCX}px ${rectCY}px`;
       Actions5.openPopover(
-        /* @__PURE__ */ import_react57.default.createElement(
+        /* @__PURE__ */ import_react58.default.createElement(
           TipPopoverContents,
           {
             tipKey: TipKey,
@@ -240611,15 +240612,15 @@ function HasTutorialTip(ComposedComponent, TipConfig) {
       attempt();
     };
     render() {
-      return /* @__PURE__ */ import_react57.default.createElement(ComposedComponent, { ...this.props });
+      return /* @__PURE__ */ import_react58.default.createElement(ComposedComponent, { ...this.props });
     }
   };
 }
-var import_react57, import_prop_types62, import_react_dom24, import_nylas_store8, TipsBackgroundEl, TipsContainerEl, TipsStoreCls, TipsStore, TipPopoverContents;
+var import_react58, import_prop_types63, import_react_dom24, import_nylas_store8, TipsBackgroundEl, TipsContainerEl, TipsStoreCls, TipsStore, TipPopoverContents;
 var init_has_tutorial_tip = __esm({
   "src/components/decorators/has-tutorial-tip.jsx"() {
-    import_react57 = __toESM(require_react());
-    import_prop_types62 = __toESM(require_prop_types());
+    import_react58 = __toESM(require_react());
+    import_prop_types63 = __toESM(require_prop_types());
     import_react_dom24 = __toESM(require_react_dom());
     init_index_all();
     init_nylas_exports();
@@ -240659,12 +240660,12 @@ var init_has_tutorial_tip = __esm({
       };
     };
     TipsStore = new TipsStoreCls();
-    TipPopoverContents = class extends import_react57.default.Component {
+    TipPopoverContents = class extends import_react58.default.Component {
       static propTypes = {
-        title: import_prop_types62.default.string,
-        tipKey: import_prop_types62.default.string,
-        instructions: import_prop_types62.default.oneOfType([import_prop_types62.default.string, import_prop_types62.default.element]),
-        onDismissed: import_prop_types62.default.func
+        title: import_prop_types63.default.string,
+        tipKey: import_prop_types63.default.string,
+        instructions: import_prop_types63.default.oneOfType([import_prop_types63.default.string, import_prop_types63.default.element]),
+        onDismissed: import_prop_types63.default.func
       };
       componentDidMount() {
         if (TipsBackgroundEl.parentNode === null) {
@@ -240687,11 +240688,11 @@ var init_has_tutorial_tip = __esm({
       render() {
         let content = null;
         if (typeof this.props.instructions === "string") {
-          content = /* @__PURE__ */ import_react57.default.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.instructions } });
+          content = /* @__PURE__ */ import_react58.default.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.instructions } });
         } else {
-          content = /* @__PURE__ */ import_react57.default.createElement("p", null, this.props.instructions);
+          content = /* @__PURE__ */ import_react58.default.createElement("p", null, this.props.instructions);
         }
-        return /* @__PURE__ */ import_react57.default.createElement("div", { style: { width: 250, padding: 20, paddingTop: 0 } }, /* @__PURE__ */ import_react57.default.createElement("h2", null, this.props.title), content, /* @__PURE__ */ import_react57.default.createElement("button", { className: "btn", onClick: this.onDone }, "Got it!"));
+        return /* @__PURE__ */ import_react58.default.createElement("div", { style: { width: 250, padding: 20, paddingTop: 0 } }, /* @__PURE__ */ import_react58.default.createElement("h2", null, this.props.title), content, /* @__PURE__ */ import_react58.default.createElement("button", { className: "btn", onClick: this.onDone }, "Got it!"));
       }
     };
   }
@@ -240899,7 +240900,7 @@ var init_nylas_component_kit = __esm({
         );
         _NylasComponentKit.load(
           "InjectedComponentSet",
-          () => require_injected_component_set()
+          () => (init_injected_component_set(), __toCommonJS(injected_component_set_exports))
         );
         _NylasComponentKit.load(
           "MetadataComposerToggleButton",
@@ -242126,7 +242127,7 @@ function verifySendAction(sendAction = {}, extension = {}) {
   return true;
 }
 function configKeyFromTitle(title) {
-  return import_underscore70.default.dasherize(title.toLowerCase());
+  return import_underscore71.default.dasherize(title.toLowerCase());
 }
 function getSendActions() {
   return [DefaultSendAction].concat(
@@ -242145,11 +242146,11 @@ function getSendActions() {
     }, [])
   );
 }
-var import_underscore70, import_nylas_store9, import_actions17, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
+var import_underscore71, import_nylas_store9, import_actions17, ACTION_CONFIG_KEY, DefaultSendActionKey, DefaultSendAction, SendActionsStore, send_actions_store_default;
 var init_send_actions_store = __esm({
   "src/flux/stores/send-actions-store.js"() {
     init_index_all();
-    import_underscore70 = __toESM(require_underscore());
+    import_underscore71 = __toESM(require_underscore());
     import_nylas_store9 = __toESM(require_nylas_store());
     import_actions17 = __toESM(require_actions());
     init_send_draft_task();
@@ -242936,7 +242937,7 @@ var require_window_bridge = __commonJS({
   "src/window-bridge.js"(exports2, module2) {
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
     var { ipcRenderer: ipcRenderer8 } = require("electron");
-    var Utils26 = require_utils();
+    var Utils27 = require_utils();
     var WindowBridge = class {
       constructor() {
         this._onResults = this._onResults.bind(this);
@@ -242946,10 +242947,10 @@ var require_window_bridge = __commonJS({
         ipcRenderer8.on("run-in-window", this._onRunInWindow);
       }
       runInWindow(window2, objectName, methodName, args) {
-        const taskId = Utils26.generateTempId();
+        const taskId = Utils27.generateTempId();
         return new Promise((resolve7, reject2) => {
           this._tasks[taskId] = { resolve: resolve7, reject: reject2 };
-          args = JSON.stringify(args, Utils26.registeredObjectReplacer);
+          args = JSON.stringify(args, Utils27.registeredObjectReplacer);
           const params = { window: window2, objectName, methodName, args, taskId };
           return ipcRenderer8.send("run-in-window", params);
         });
@@ -242965,7 +242966,7 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { returnValue, taskId } = param;
-        returnValue = JSON.parse(returnValue, Utils26.registeredObjectReviver);
+        returnValue = JSON.parse(returnValue, Utils27.registeredObjectReviver);
         this._tasks[taskId].resolve(returnValue);
         return delete this._tasks[taskId];
       }
@@ -242974,20 +242975,20 @@ var require_window_bridge = __commonJS({
           param = {};
         }
         let { objectName, methodName, args, taskId } = param;
-        args = JSON.parse(args, Utils26.registeredObjectReviver);
+        args = JSON.parse(args, Utils27.registeredObjectReviver);
         const exports3 = globalThis.$n || (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
         const result2 = exports3[objectName][methodName].apply(null, args);
         if (_4.isFunction(result2.then)) {
           return result2.then((returnValue) => {
             returnValue = JSON.stringify(
               returnValue,
-              Utils26.registeredObjectReplacer
+              Utils27.registeredObjectReplacer
             );
             return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
           });
         } else {
           let returnValue = result2;
-          returnValue = JSON.stringify(returnValue, Utils26.registeredObjectReplacer);
+          returnValue = JSON.stringify(returnValue, Utils27.registeredObjectReplacer);
           return ipcRenderer8.send("remote-run-results", { returnValue, taskId });
         }
       }
@@ -272976,11 +272977,11 @@ __export(inflates_draft_client_id_exports, {
   default: () => inflates_draft_client_id_default
 });
 function InflatesDraftClientId(ComposedComponent) {
-  return class extends import_react58.default.Component {
+  return class extends import_react59.default.Component {
     static displayName = ComposedComponent.displayName;
     static propTypes = {
-      draftClientId: import_prop_types63.default.string,
-      onDraftReady: import_prop_types63.default.func
+      draftClientId: import_prop_types64.default.string,
+      onDraftReady: import_prop_types64.default.func
     };
     static defaultProps = {
       onDraftReady: () => {
@@ -272989,7 +272990,7 @@ function InflatesDraftClientId(ComposedComponent) {
     static containerRequired = false;
     constructor(props) {
       super(props);
-      this.composedRef = import_react58.default.createRef();
+      this.composedRef = import_react59.default.createRef();
       this.state = {
         session: null,
         draft: null
@@ -273056,9 +273057,9 @@ function InflatesDraftClientId(ComposedComponent) {
     }
     render() {
       if (!this.state.draft) {
-        return /* @__PURE__ */ import_react58.default.createElement("span", null);
+        return /* @__PURE__ */ import_react59.default.createElement("span", null);
       }
-      return /* @__PURE__ */ import_react58.default.createElement(
+      return /* @__PURE__ */ import_react59.default.createElement(
         ComposedComponent,
         {
           ref: this.composedRef,
@@ -273069,11 +273070,11 @@ function InflatesDraftClientId(ComposedComponent) {
     }
   };
 }
-var import_react58, import_prop_types63, import_actions36, import_utils21, inflates_draft_client_id_default;
+var import_react59, import_prop_types64, import_actions36, import_utils21, inflates_draft_client_id_default;
 var init_inflates_draft_client_id = __esm({
   "src/decorators/inflates-draft-client-id.jsx"() {
-    import_react58 = __toESM(require_react());
-    import_prop_types63 = __toESM(require_prop_types());
+    import_react59 = __toESM(require_react());
+    import_prop_types64 = __toESM(require_prop_types());
     init_draft_store();
     import_actions36 = __toESM(require_actions());
     import_utils21 = __toESM(require_utils());
@@ -274073,16 +274074,16 @@ var virtual_dom_utils_exports = {};
 __export(virtual_dom_utils_exports, {
   default: () => virtual_dom_utils_default
 });
-var import_react59, VirtualDOMUtils, virtual_dom_utils_default;
+var import_react60, VirtualDOMUtils, virtual_dom_utils_default;
 var init_virtual_dom_utils = __esm({
   "src/virtual-dom-utils.js"() {
     init_index_all();
-    import_react59 = __toESM(require_react());
+    import_react60 = __toESM(require_react());
     VirtualDOMUtils = {
       *walk({ element, parentNode, childOffset, pruneFn = () => {
       } }) {
         yield { element, parentNode, childOffset };
-        if (import_react59.default.isValidElement(element) && !pruneFn(element)) {
+        if (import_react60.default.isValidElement(element) && !pruneFn(element)) {
           const children = element.props.children;
           if (!children) {
             return;
@@ -274599,23 +274600,23 @@ var init_custom_contenteditable_components = __esm({
 // src/components/contenteditable/floating-toolbar.jsx
 var require_floating_toolbar = __commonJS({
   "src/components/contenteditable/floating-toolbar.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
+    var import_prop_types70 = __toESM(require_prop_types());
     init_index_all();
     var import_classnames19 = __toESM(require_classnames());
-    var import_react67 = __toESM(require_react());
-    var FloatingToolbar2 = class _FloatingToolbar extends import_react67.default.Component {
+    var import_react69 = __toESM(require_react());
+    var FloatingToolbar2 = class _FloatingToolbar extends import_react69.default.Component {
       static initClass() {
         _FloatingToolbar.displayName = "FloatingToolbar";
         _FloatingToolbar.propTypes = {
-          atomicEdit: import_prop_types69.default.func,
-          extensions: import_prop_types69.default.array
+          atomicEdit: import_prop_types70.default.func,
+          extensions: import_prop_types70.default.array
         };
         _FloatingToolbar.innerPropTypes = {
-          dragging: import_prop_types69.default.bool,
-          selection: import_prop_types69.default.object,
-          doubleDown: import_prop_types69.default.bool,
-          hoveringOver: import_prop_types69.default.object,
-          editableNode: import_prop_types69.default.object
+          dragging: import_prop_types70.default.bool,
+          selection: import_prop_types70.default.object,
+          doubleDown: import_prop_types70.default.bool,
+          hoveringOver: import_prop_types70.default.object,
+          editableNode: import_prop_types70.default.object
         };
         _FloatingToolbar.defaultProps = { extensions: [] };
         _FloatingToolbar.defaultInnerProps = {
@@ -274689,10 +274690,10 @@ var require_floating_toolbar = __commonJS({
         if (!ToolbarComponent) {
           return false;
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: "floating-toolbar-container" },
-          import_react67.default.createElement(
+          import_react69.default.createElement(
             "div",
             {
               ref: "floatingToolbar",
@@ -274700,7 +274701,7 @@ var require_floating_toolbar = __commonJS({
               style: this._toolbarStyles()
             },
             this._renderPointer(),
-            import_react67.default.createElement(
+            import_react69.default.createElement(
               ToolbarComponent,
               Object.assign({}, this.state.toolbarComponentProps)
             )
@@ -274860,14 +274861,14 @@ var require_floating_toolbar = __commonJS({
         if (this.state.hidePointer) {
           return false;
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           {
             className: "toolbar-pointer-container",
             style: this._toolbarPointerStyles()
           },
-          import_react67.default.createElement("div", { className: "shadow" }),
-          import_react67.default.createElement("div", { className: "foreground" })
+          import_react69.default.createElement("div", { className: "shadow" }),
+          import_react69.default.createElement("div", { className: "foreground" })
         );
       }
     };
@@ -274929,21 +274930,21 @@ var init_tab_manager = __esm({
 // src/components/contenteditable/link-editor.jsx
 var require_link_editor = __commonJS({
   "src/components/contenteditable/link-editor.jsx"(exports2, module2) {
-    var import_prop_types69 = __toESM(require_prop_types());
-    var import_react67 = __toESM(require_react());
+    var import_prop_types70 = __toESM(require_prop_types());
+    var import_react69 = __toESM(require_react());
     var import_react_dom31 = __toESM(require_react_dom());
     init_nylas_exports();
-    var LinkEditor2 = class _LinkEditor extends import_react67.default.Component {
+    var LinkEditor2 = class _LinkEditor extends import_react69.default.Component {
       static initClass() {
         _LinkEditor.displayName = "LinkEditor";
         _LinkEditor.propTypes = {
           // A callback function we use to save the URL to the Contenteditable
-          onSaveUrl: import_prop_types69.default.func,
+          onSaveUrl: import_prop_types70.default.func,
           // The current DOM link we are modifying
-          linkToModify: import_prop_types69.default.object,
+          linkToModify: import_prop_types70.default.object,
           // A callback used when a link has been cancled, completed, or escaped
           // from. Used to notify our parent to switch modes.
-          onDoneWithLink: import_prop_types69.default.func
+          onDoneWithLink: import_prop_types70.default.func
         };
       }
       constructor(props) {
@@ -274975,7 +274976,7 @@ var require_link_editor = __commonJS({
         let removeBtn = "";
         if (this._initialUrl()) {
           widthCorrection += 32;
-          removeBtn = import_react67.default.createElement(
+          removeBtn = import_react69.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -274983,12 +274984,12 @@ var require_link_editor = __commonJS({
               style: { float: "right" },
               onMouseDown: this._removeUrl
             },
-            import_react67.default.createElement("i", { className: "fa fa-times" })
+            import_react69.default.createElement("i", { className: "fa fa-times" })
           );
         }
         if (this.state.urlInputValue.length === 0 || this.state.urlInputValue !== this._initialUrl()) {
           widthCorrection += 32;
-          checkBtn = import_react67.default.createElement(
+          checkBtn = import_react69.default.createElement(
             "button",
             {
               className: "btn btn-icon",
@@ -274997,14 +274998,14 @@ var require_link_editor = __commonJS({
               onKeyPress: this._saveUrlOnEnter,
               onMouseDown: this._saveUrl
             },
-            import_react67.default.createElement("i", { className: "fa fa-check" })
+            import_react69.default.createElement("i", { className: "fa fa-check" })
           );
         }
-        return import_react67.default.createElement(
+        return import_react69.default.createElement(
           "div",
           { className: "toolbar-new-link" },
-          import_react67.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
-          import_react67.default.createElement("input", {
+          import_react69.default.createElement("i", { className: "fa fa-link preview-btn-icon" }),
+          import_react69.default.createElement("input", {
             type: "text",
             ref: "urlInput",
             style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
@@ -275856,32 +275857,32 @@ var init_blockquote_manager = __esm({
 });
 
 // src/components/contenteditable/toolbar-buttons.jsx
-var import_react60, import_prop_types64, ToolbarButtons;
+var import_react61, import_prop_types65, ToolbarButtons;
 var init_toolbar_buttons = __esm({
   "src/components/contenteditable/toolbar-buttons.jsx"() {
-    import_react60 = __toESM(require_react());
-    import_prop_types64 = __toESM(require_prop_types());
+    import_react61 = __toESM(require_react());
+    import_prop_types65 = __toESM(require_prop_types());
     init_nylas_component_kit();
-    ToolbarButtons = class extends import_react60.default.Component {
+    ToolbarButtons = class extends import_react61.default.Component {
       static displayName = "ToolbarButtons";
       static propTypes = {
         // Declares what buttons should appear in the toolbar. An array of
         // config objects.
-        buttonConfigs: import_prop_types64.default.array
+        buttonConfigs: import_prop_types65.default.array
       };
       static defaultProps = {
         buttonConfigs: []
       };
       render() {
         const buttons = this.props.buttonConfigs.map((config, i) => {
-          const icon = (config.iconUrl || "").length > 0 ? /* @__PURE__ */ import_react60.default.createElement(
+          const icon = (config.iconUrl || "").length > 0 ? /* @__PURE__ */ import_react61.default.createElement(
             void 0,
             {
               mode: (void 0).Mode.ContentIsMask,
               url: "#{config.iconUrl}"
             }
           ) : null;
-          return /* @__PURE__ */ import_react60.default.createElement(
+          return /* @__PURE__ */ import_react61.default.createElement(
             "button",
             {
               className: `btn toolbar-btn ${config.className || ""}`,
@@ -275892,7 +275893,7 @@ var init_toolbar_buttons = __esm({
             icon
           );
         });
-        return /* @__PURE__ */ import_react60.default.createElement("div", { className: "toolbar-buttons" }, buttons);
+        return /* @__PURE__ */ import_react61.default.createElement("div", { className: "toolbar-buttons" }, buttons);
       }
     };
   }
@@ -276073,12 +276074,12 @@ var init_paragraph_formatting_extension = __esm({
 function __guard__2(value, transform) {
   return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
 }
-var import_prop_types65, import_react61, import_react_dom27, import_floating_toolbar, import_extended_selection, import_dom_normalizer, Contenteditable, IgnoreMutationClassName;
+var import_prop_types66, import_react62, import_react_dom27, import_floating_toolbar, import_extended_selection, import_dom_normalizer, Contenteditable, IgnoreMutationClassName;
 var init_contenteditable = __esm({
   "src/components/contenteditable/contenteditable.jsx"() {
-    import_prop_types65 = __toESM(require_prop_types());
+    import_prop_types66 = __toESM(require_prop_types());
     init_index_all();
-    import_react61 = __toESM(require_react());
+    import_react62 = __toESM(require_react());
     import_react_dom27 = __toESM(require_react_dom());
     init_nylas_exports();
     init_nylas_component_kit();
@@ -276095,20 +276096,20 @@ var init_contenteditable = __esm({
     init_toolbar_button_manager();
     init_emphasis_formatting_extension();
     init_paragraph_formatting_extension();
-    Contenteditable = class _Contenteditable extends import_react61.default.Component {
+    Contenteditable = class _Contenteditable extends import_react62.default.Component {
       static initClass() {
         _Contenteditable.displayName = "Contenteditable";
         _Contenteditable.IgnoreMutationClassName = "ignore-mutations";
         _Contenteditable.propTypes = {
           // The current html state, as a string, of the contenteditable.
-          value: import_prop_types65.default.string,
+          value: import_prop_types66.default.string,
           // Handlers
-          onChange: import_prop_types65.default.func.isRequired,
-          onFilePaste: import_prop_types65.default.func,
+          onChange: import_prop_types66.default.func.isRequired,
+          onFilePaste: import_prop_types66.default.func,
           // A list of objects that extend {ContenteditableExtension}
-          extensions: import_prop_types65.default.array,
-          spellcheck: import_prop_types65.default.bool,
-          floatingToolbar: import_prop_types65.default.bool
+          extensions: import_prop_types66.default.array,
+          spellcheck: import_prop_types66.default.bool,
+          floatingToolbar: import_prop_types66.default.bool
         };
         _Contenteditable.defaultProps = {
           extensions: [],
@@ -276307,14 +276308,14 @@ var init_contenteditable = __esm({
       //############################# Render ################################
       //#####################################################################
       render() {
-        return import_react61.default.createElement(
+        return import_react62.default.createElement(
           void 0,
           {
             className: "contenteditable-container",
             localHandlers: this._keymapHandlers()
           },
           this._renderFloatingToolbar(),
-          import_react61.default.createElement(
+          import_react62.default.createElement(
             "div",
             Object.assign(
               {
@@ -276334,7 +276335,7 @@ var init_contenteditable = __esm({
         if (!this.props.floatingToolbar) {
           return;
         }
-        return import_react61.default.createElement(import_floating_toolbar.default, {
+        return import_react62.default.createElement(import_floating_toolbar.default, {
           ref: "toolbarController",
           atomicEdit: this.atomicEdit,
           extensions: this._extensions()
@@ -276788,12 +276789,12 @@ var init_anchor_constants = __esm({
 });
 
 // src/components/overlaid-components/overlaid-components.jsx
-var import_react62, import_prop_types66, import_react_dom28, import_utils24, MUTATION_CONFIG, OverlaidComponents;
+var import_react63, import_prop_types67, import_react_dom28, import_utils24, MUTATION_CONFIG, OverlaidComponents;
 var init_overlaid_components = __esm({
   "src/components/overlaid-components/overlaid-components.jsx"() {
     init_index_all();
-    import_react62 = __toESM(require_react());
-    import_prop_types66 = __toESM(require_prop_types());
+    import_react63 = __toESM(require_react());
+    import_prop_types67 = __toESM(require_prop_types());
     import_react_dom28 = __toESM(require_react_dom());
     import_utils24 = __toESM(require_utils());
     init_custom_contenteditable_components();
@@ -276807,12 +276808,12 @@ var init_overlaid_components = __esm({
       attributeOldValue: true,
       characterDataOldValue: true
     };
-    OverlaidComponents = class _OverlaidComponents extends import_react62.default.Component {
+    OverlaidComponents = class _OverlaidComponents extends import_react63.default.Component {
       static displayName = "OverlaidComponents";
       static propTypes = {
-        children: import_prop_types66.default.node,
-        className: import_prop_types66.default.string,
-        exposedProps: import_prop_types66.default.object
+        children: import_prop_types67.default.node,
+        className: import_prop_types67.default.string,
+        exposedProps: import_prop_types67.default.object
       };
       static defaultProps = {
         children: false,
@@ -276955,7 +276956,7 @@ var init_overlaid_components = __esm({
         if (this.state.previewMode) {
           msg = "Return to editor";
         }
-        return /* @__PURE__ */ import_react62.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
+        return /* @__PURE__ */ import_react63.default.createElement("a", { className: "toggle-preview", onClick: this._onTogglePreview }, msg);
       }
       _renderOverlaidComponents() {
         const els = [];
@@ -276979,7 +276980,7 @@ var init_overlaid_components = __esm({
           );
           previewToggleVisible = previewToggleVisible || supportsPreviewWithinEditor;
           els.push(
-            /* @__PURE__ */ import_react62.default.createElement(
+            /* @__PURE__ */ import_react63.default.createElement(
               "span",
               {
                 key: id,
@@ -276987,22 +276988,22 @@ var init_overlaid_components = __esm({
                 style,
                 "data-overlay-id": id
               },
-              import_react62.default.createElement(component, props)
+              import_react63.default.createElement(component, props)
             )
           );
         }
         const toggle = previewToggleVisible ? this._renderPreviewToggle() : false;
-        return /* @__PURE__ */ import_react62.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
+        return /* @__PURE__ */ import_react63.default.createElement("div", { ref: "overlaidComponents", className: "overlaid-components" }, toggle, els);
       }
       render() {
         const { className } = this.props;
-        return /* @__PURE__ */ import_react62.default.createElement(
+        return /* @__PURE__ */ import_react63.default.createElement(
           "div",
           {
             className: `overlaid-components-wrap ${className || ""}`,
             style: { position: "relative" }
           },
-          /* @__PURE__ */ import_react62.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
+          /* @__PURE__ */ import_react63.default.createElement("div", { className: "anchor-container", ref: "anchorContainer" }, this.props.children),
           this._renderOverlaidComponents()
         );
       }
@@ -277015,12 +277016,12 @@ var editor_api_exports = {};
 __export(editor_api_exports, {
   default: () => editor_api_default
 });
-var import_react63, import_extended_selection2, EditorAPI, editor_api_default;
+var import_react64, import_extended_selection2, EditorAPI, editor_api_default;
 var init_editor_api = __esm({
   "src/components/contenteditable/editor-api.js"() {
     init_index_all();
     init_nylas_exports();
-    import_react63 = __toESM(require_react());
+    import_react64 = __toESM(require_react());
     import_extended_selection2 = __toESM(require_extended_selection());
     init_overlaid_components();
     EditorAPI = class {
@@ -278397,7 +278398,7 @@ __export(nylas_exports_exports, {
   CalendarDataSource: () => CalendarDataSource2,
   Category: () => Category3,
   CategoryStore: () => CategoryStore2,
-  ComponentRegistry: () => ComponentRegistry2,
+  ComponentRegistry: () => ComponentRegistry3,
   ComposerExtension: () => ComposerExtension,
   Contact: () => Contact3,
   ContactStore: () => ContactStore,
@@ -278447,7 +278448,7 @@ __export(nylas_exports_exports, {
   QueryResultSet: () => QueryResultSet2,
   QuerySubscription: () => QuerySubscription2,
   QuotedHTMLTransformer: () => QuotedHTMLTransformer2,
-  React: () => React43,
+  React: () => React44,
   ReactDOM: () => ReactDOM21,
   Reflux: () => Reflux,
   RegExpUtils: () => RegExpUtils3,
@@ -278477,7 +278478,7 @@ __export(nylas_exports_exports, {
   WorkspaceStore: () => WorkspaceStore,
   default: () => nylas_exports_default
 });
-var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry2, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI2, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore3, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model12, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React43, ReactDOM21, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx10, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore;
+var import_node_module26, import_task_registry, import_store_registry, import_database_object_registry3, import_meta27, nodeRequire27, resolveExport, requireFromSrc2, $n, RequireCache, lazyLoadWithGetter, lazyLoad, lazyLoadAndRegisterStore, lazyLoadAndRegisterModel, lazyLoadAndRegisterTask, lazyLoadDeprecated, nylas_exports_default, __lazy, APIError4, APMWrapper, Account2, AccountStore3, Actions5, Attributes, BadgeStore2, BaseDraftTask2, Calendar, CalendarDataSource2, Category3, CategoryStore2, ComponentRegistry3, ComposerExtension, Contact3, ContactStore, ContenteditableExtension, CustomContenteditableComponents2, DOMUtils4, DatabaseStore4, DateUtils, DefaultClientHelper, DestroyModelTask2, DraftHelpers2, DraftStore2, EditorAPI2, Event3, ExtensionRegistry2, FeatureUsageStore2, FileDownloadStore2, FocusedContactsStore2, FocusedContentStore, FocusedPerspectiveStore3, FolderSyncProgressStore, IdentityStore3, InflatesDraftClientId2, InlineStyleTransformer2, KeyManager3, MailRulesStore3, MailRulesTemplates, MailboxPerspective2, Matcher3, Message2, MessageBodyProcessor2, MessageStore2, MessageViewExtension, Model12, ModelSearchIndexer2, MutableQuerySubscription2, N1CloudAPI2, NativeNotifications2, NylasAPI2, NylasAPIHelpers, NylasAPIRequest2, NylasLongConnection2, NylasTestUtils, ObservableListDataSource2, OnlineStatusStore2, PreferencesUIStore2, QueryResultSet2, QuerySubscription2, QuotedHTMLTransformer2, React44, ReactDOM21, Reflux, RegExpUtils3, ReprocessMailRulesTask2, Rx10, SanitizeTransformer2, SearchIndexScheduler2, SearchQueryParser2, SearchableComponentStore, SendActionsStore2, SendDraftTask2, SignatureStore2, SoundRegistry3, Spellchecker2, SyncbackCategoryTask2, SyncbackEventTask2, SyncbackMetadataTask2, SystemStartService2, Task2, TaskFactory2, TaskQueue3, TaskQueueStatusStore2, Thread3, UndoRedoStore2, Utils13, VirtualDOMUtils2, WorkspaceStore;
 var init_nylas_exports = __esm({
   "src/global/nylas-exports.js"() {
     import_node_module26 = require("module");
@@ -279133,7 +279134,7 @@ var init_nylas_exports = __esm({
     CalendarDataSource2 = __lazy("CalendarDataSource");
     Category3 = __lazy("Category");
     CategoryStore2 = __lazy("CategoryStore");
-    ComponentRegistry2 = __lazy("ComponentRegistry");
+    ComponentRegistry3 = __lazy("ComponentRegistry");
     ComposerExtension = __lazy("ComposerExtension");
     Contact3 = __lazy("Contact");
     ContactStore = __lazy("ContactStore");
@@ -279185,7 +279186,7 @@ var init_nylas_exports = __esm({
     QueryResultSet2 = __lazy("QueryResultSet");
     QuerySubscription2 = __lazy("QuerySubscription");
     QuotedHTMLTransformer2 = __lazy("QuotedHTMLTransformer");
-    React43 = __lazy("React");
+    React44 = __lazy("React");
     ReactDOM21 = __lazy("ReactDOM");
     Reflux = __lazy("Reflux");
     RegExpUtils3 = __lazy("RegExpUtils");
@@ -279746,7 +279747,7 @@ var require_workspace_store = __commonJS({
     var import_nylas_store29 = __toESM(require_nylas_store());
     var Sheet2 = {};
     var Location = {};
-    var WorkspaceStore6 = class _WorkspaceStore extends import_nylas_store29.default {
+    var WorkspaceStore7 = class _WorkspaceStore extends import_nylas_store29.default {
       static initClass() {
         _WorkspaceStore.prototype.triggerDebounced = index_default_default.debounce(function() {
           return this.trigger(this);
@@ -280057,804 +280058,8 @@ var require_workspace_store = __commonJS({
         }
       }
     };
-    WorkspaceStore6.initClass();
-    module2.exports = new WorkspaceStore6();
-  }
-});
-
-// src/sheet.jsx
-var sheet_exports = {};
-__export(sheet_exports, {
-  default: () => sheet_default
-});
-var import_prop_types67, import_react64, import_injected_component_set2, import_resizable_region, FLEX, Sheet, sheet_default;
-var init_sheet = __esm({
-  "src/sheet.jsx"() {
-    import_prop_types67 = __toESM(require_prop_types());
-    import_react64 = __toESM(require_react());
-    init_index_all();
-    init_nylas_exports();
-    init_retina_img();
-    init_flexbox();
-    import_injected_component_set2 = __toESM(require_injected_component_set());
-    import_resizable_region = __toESM(require_resizable_region());
-    FLEX = 1e4;
-    Sheet = class _Sheet extends import_react64.default.Component {
-      static initClass() {
-        _Sheet.displayName = "Sheet";
-        _Sheet.propTypes = {
-          data: import_prop_types67.default.object.isRequired,
-          depth: import_prop_types67.default.number.isRequired,
-          onColumnSizeChanged: import_prop_types67.default.func
-        };
-        _Sheet.defaultProps = { onColumnSizeChanged() {
-        } };
-        _Sheet.childContextTypes = { sheetDepth: import_prop_types67.default.number };
-      }
-      getChildContext() {
-        return { sheetDepth: this.props.depth };
-      }
-      constructor(props) {
-        super();
-        this.getChildContext = this.getChildContext.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentDidUpdate = this.componentDidUpdate.bind(this);
-        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.render = this.render.bind(this);
-        this._columnFlexboxElements = this._columnFlexboxElements.bind(this);
-        this._onColumnResize = this._onColumnResize.bind(this);
-        this._getStateFromStores = this._getStateFromStores.bind(this);
-        this._pop = this._pop.bind(this);
-        this.props = props;
-        this.state = this._getStateFromStores();
-      }
-      componentDidMount() {
-        if (this.unlisteners == null) {
-          this.unlisteners = [];
-        }
-        this.unlisteners.push(
-          ComponentRegistry2.listen((_event) => {
-            return this.setState(this._getStateFromStores());
-          })
-        );
-        return this.unlisteners.push(
-          WorkspaceStore.listen((_event) => {
-            return this.setState(this._getStateFromStores());
-          })
-        );
-      }
-      componentDidUpdate() {
-        this.props.onColumnSizeChanged(this);
-        let minWidth = 0;
-        for (var col2 of Array.from(this.state.columns)) {
-          minWidth += col2.minWidth;
-        }
-        return NylasEnv.setMinimumWidth(minWidth);
-      }
-      shouldComponentUpdate(nextProps, nextState) {
-        return !index_default_default.isEqual(nextProps, this.props) || !index_default_default.isEqual(nextState, this.state);
-      }
-      componentWillUnmount() {
-        return Array.from(this.unlisteners).map((unlisten) => unlisten());
-      }
-      render() {
-        const style = {
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          zIndex: 1
-        };
-        return import_react64.default.createElement(
-          "div",
-          {
-            name: "Sheet",
-            style,
-            className: `sheet mode-${this.state.mode}`,
-            "data-id": this.props.data.id
-          },
-          import_react64.default.createElement(
-            Flexbox2,
-            { direction: "row", style: { overflow: "hidden" } },
-            this._columnFlexboxElements()
-          )
-        );
-      }
-      _columnFlexboxElements() {
-        return this.state.columns.map((column, idx) => {
-          const { maxWidth, minWidth, handle, location: location2, width } = column;
-          if (minWidth !== maxWidth && maxWidth < FLEX) {
-            return import_react64.default.createElement(
-              import_resizable_region.default,
-              {
-                key: `${this.props.data.id}:${idx}`,
-                name: `${this.props.data.id}:${idx}`,
-                className: `column-${location2.id}`,
-                style: { height: "100%" },
-                "data-column": idx,
-                onResize: this._onColumnResize.bind(this, column),
-                initialWidth: width,
-                minWidth,
-                maxWidth,
-                handle
-              },
-              import_react64.default.createElement(import_injected_component_set2.default, {
-                direction: "column",
-                matching: { location: location2, mode: this.state.mode }
-              })
-            );
-          } else {
-            const style = {
-              height: "100%",
-              minWidth,
-              overflow: "hidden"
-            };
-            if (maxWidth < FLEX) {
-              style.width = maxWidth;
-            } else {
-              style.flex = 1;
-            }
-            return import_react64.default.createElement(import_injected_component_set2.default, {
-              direction: "column",
-              key: `${this.props.data.id}:${idx}`,
-              name: `${this.props.data.id}:${idx}`,
-              className: `column-${location2.id}`,
-              "data-column": idx,
-              style,
-              matching: { location: location2, mode: this.state.mode }
-            });
-          }
-        });
-      }
-      _onColumnResize(column, width) {
-        NylasEnv.storeColumnWidth({ id: column.location.id, width });
-        return this.props.onColumnSizeChanged(this);
-      }
-      _getStateFromStores() {
-        let maxWidth;
-        const state = {
-          mode: WorkspaceStore.layoutMode(),
-          columns: []
-        };
-        let widest = -1;
-        let widestWidth = -1;
-        if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
-          for (let idx = 0; idx < this.props.data.columns[state.mode].length; idx++) {
-            var location2 = this.props.data.columns[state.mode][idx];
-            if (WorkspaceStore.isLocationHidden(location2)) {
-              continue;
-            }
-            var entries2 = ComponentRegistry2.findComponentsMatching({
-              location: location2,
-              mode: state.mode
-            });
-            maxWidth = index_default_default.reduce(
-              entries2,
-              (m, component) => Math.min(
-                (component.containerStyles != null ? component.containerStyles.maxWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.maxWidth : void 0 : 1e4,
-                m
-              ),
-              1e4
-            );
-            var minWidth = index_default_default.reduce(
-              entries2,
-              (m, component) => Math.max(
-                (component.containerStyles != null ? component.containerStyles.minWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.minWidth : void 0 : 0,
-                m
-              ),
-              0
-            );
-            var width = NylasEnv.getColumnWidth(location2.id);
-            var col2 = { maxWidth, minWidth, location: location2, width };
-            state.columns.push(col2);
-            if (maxWidth > widestWidth) {
-              widestWidth = maxWidth;
-              widest = idx;
-            }
-          }
-        }
-        if (state.columns.length > 0) {
-          let i;
-          let end;
-          let end1;
-          state.columns[widest].maxWidth = FLEX;
-          for (i = 0, end = widest - 1; i <= end; i++) {
-            state.columns[i].handle = import_resizable_region.default.Handle.Right;
-          }
-          for (i = widest, end1 = state.columns.length - 1; i <= end1; i++) {
-            state.columns[i].handle = import_resizable_region.default.Handle.Left;
-          }
-        }
-        return state;
-      }
-      _pop() {
-        return Actions5.popSheet();
-      }
-    };
-    Sheet.initClass();
-    sheet_default = Sheet;
-  }
-});
-
-// src/sheet-toolbar.jsx
-var sheet_toolbar_exports = {};
-__export(sheet_toolbar_exports, {
-  default: () => sheet_toolbar_default
-});
-function __guard__3(value, transform) {
-  return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
-}
-var import_prop_types68, import_react65, import_react_dom29, import_utils25, import_electron10, import_underscore95, ToolbarSpacer, WindowTitle, Category4, FocusedPerspectiveStore4, ToolbarBack, ToolbarWindowControls, ToolbarMenuControl, Toolbar, sheet_toolbar_default;
-var init_sheet_toolbar = __esm({
-  "src/sheet-toolbar.jsx"() {
-    import_prop_types68 = __toESM(require_prop_types());
-    import_react65 = __toESM(require_react());
-    import_react_dom29 = __toESM(require_react_dom());
-    init_sheet();
-    init_flexbox();
-    init_retina_img();
-    import_utils25 = __toESM(require_utils());
-    import_electron10 = require("electron");
-    import_underscore95 = __toESM(require_underscore());
-    init_index_all();
-    init_nylas_exports();
-    ToolbarSpacer = class _ToolbarSpacer extends import_react65.default.Component {
-      constructor(...args) {
-        this.render = this.render.bind(this);
-        super(...args);
-      }
-      static initClass() {
-        _ToolbarSpacer.displayName = "ToolbarSpacer";
-        _ToolbarSpacer.propTypes = { order: import_prop_types68.default.number };
-      }
-      render() {
-        return import_react65.default.createElement("div", {
-          className: "item-spacer",
-          style: {
-            flex: 1,
-            order: this.props.order != null ? this.props.order : 0
-          }
-        });
-      }
-    };
-    ToolbarSpacer.initClass();
-    WindowTitle = class _WindowTitle extends import_react65.default.Component {
-      static initClass() {
-        _WindowTitle.displayName = "WindowTitle";
-      }
-      constructor(props) {
-        this.props = props;
-        this.state = NylasEnv.getLoadSettings();
-      }
-      componentDidMount() {
-        return this.unlisten = NylasEnv.onWindowPropsReceived((_windowProps) => {
-          return this.setState(NylasEnv.getLoadSettings());
-        });
-      }
-      componentWillUnmount() {
-        return typeof this.unlisten === "function" ? this.unlisten() : void 0;
-      }
-      render() {
-        return import_react65.default.createElement(
-          "div",
-          { className: "window-title" },
-          this.state.title
-        );
-      }
-    };
-    WindowTitle.initClass();
-    Category4 = null;
-    FocusedPerspectiveStore4 = null;
-    ToolbarBack = class _ToolbarBack extends import_react65.default.Component {
-      static initClass() {
-        _ToolbarBack.displayName = "ToolbarBack";
-      }
-      // These stores are only required when this Toolbar is actually needed.
-      // This is because loading these stores has database side effects.
-      constructor(props) {
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.render = this.render.bind(this);
-        this._onClick = this._onClick.bind(this);
-        this.props = props;
-        if (Category4 == null) {
-          Category4 = (init_category(), __toCommonJS(category_exports)).default;
-        }
-        if (FocusedPerspectiveStore4 == null) {
-          FocusedPerspectiveStore4 = (init_focused_perspective_store(), __toCommonJS(focused_perspective_store_exports)).default;
-        }
-        this.state = { categoryName: FocusedPerspectiveStore4.current().name };
-      }
-      componentDidMount() {
-        return this._unsubscriber = FocusedPerspectiveStore4.listen(() => {
-          return this.setState({
-            categoryName: FocusedPerspectiveStore4.current().name
-          });
-        });
-      }
-      componentWillUnmount() {
-        if (this._unsubscriber) {
-          return this._unsubscriber();
-        }
-      }
-      render() {
-        let title;
-        if (this.state.categoryName === Category4.AllMailName) {
-          title = "All Mail";
-        } else if (this.state.categoryName) {
-          title = import_underscore95.default.titleize(this.state.categoryName);
-        } else {
-          title = "Back";
-        }
-        return import_react65.default.createElement(
-          "div",
-          {
-            className: "item-back",
-            onClick: this._onClick,
-            title: `Return to ${title}`
-          },
-          import_react65.default.createElement(retina_img_default, {
-            name: "sheet-back.png",
-            mode: retina_img_default.Mode.ContentIsMask
-          }),
-          import_react65.default.createElement("div", { className: "item-back-title" }, title)
-        );
-      }
-      _onClick() {
-        return Actions5.popSheet();
-      }
-    };
-    ToolbarBack.initClass();
-    ToolbarWindowControls = class _ToolbarWindowControls extends import_react65.default.Component {
-      static initClass() {
-        _ToolbarWindowControls.displayName = "ToolbarWindowControls";
-      }
-      constructor(props) {
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.render = this.render.bind(this);
-        this._onAlt = this._onAlt.bind(this);
-        this._onMaximize = this._onMaximize.bind(this);
-        this.props = props;
-        this.state = { alt: false };
-      }
-      componentDidMount() {
-        if (process.platform === "darwin") {
-          window.addEventListener("keydown", this._onAlt);
-          return window.addEventListener("keyup", this._onAlt);
-        }
-      }
-      componentWillUnmount() {
-        if (process.platform === "darwin") {
-          window.removeEventListener("keydown", this._onAlt);
-          return window.removeEventListener("keyup", this._onAlt);
-        }
-      }
-      render() {
-        return import_react65.default.createElement(
-          "div",
-          {
-            name: "ToolbarWindowControls",
-            className: `toolbar-window-controls alt-${this.state.alt}`
-          },
-          import_react65.default.createElement("button", {
-            tabIndex: -1,
-            className: "close",
-            onClick() {
-              return NylasEnv.close();
-            }
-          }),
-          import_react65.default.createElement("button", {
-            tabIndex: -1,
-            className: "minimize",
-            onClick() {
-              return NylasEnv.minimize();
-            }
-          }),
-          import_react65.default.createElement("button", {
-            tabIndex: -1,
-            className: "maximize",
-            onClick: this._onMaximize
-          })
-        );
-      }
-      _onAlt(event2) {
-        if (this.state.alt !== event2.altKey) {
-          return this.setState({ alt: event2.altKey });
-        }
-      }
-      _onMaximize(event2) {
-        if (process.platform === "darwin" && !event2.altKey) {
-          return NylasEnv.setFullScreen(!NylasEnv.isFullScreen());
-        } else {
-          return NylasEnv.maximize();
-        }
-      }
-    };
-    ToolbarWindowControls.initClass();
-    ToolbarMenuControl = class _ToolbarMenuControl extends import_react65.default.Component {
-      constructor(...args) {
-        this.render = this.render.bind(this);
-        this._openMenu = this._openMenu.bind(this);
-        super(...args);
-      }
-      static initClass() {
-        _ToolbarMenuControl.displayName = "ToolbarMenuControl";
-      }
-      render() {
-        return import_react65.default.createElement(
-          "div",
-          { className: "toolbar-menu-control" },
-          import_react65.default.createElement(
-            "button",
-            { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
-            import_react65.default.createElement(retina_img_default, {
-              name: "windows-menu-icon.png",
-              mode: retina_img_default.Mode.ContentIsMask
-            })
-          )
-        );
-      }
-      _openMenu() {
-        const { applicationMenu } = import_electron10.remote.getGlobal("application");
-        return applicationMenu.menu.popup(NylasEnv.getCurrentWindow());
-      }
-    };
-    ToolbarMenuControl.initClass();
-    ComponentRegistry2.register(ToolbarWindowControls, {
-      location: WorkspaceStore.Sheet.Global.Toolbar.Left
-    });
-    ComponentRegistry2.register(ToolbarMenuControl, {
-      location: WorkspaceStore.Sheet.Global.Toolbar.Right
-    });
-    Toolbar = class _Toolbar extends import_react65.default.Component {
-      static initClass() {
-        _Toolbar.displayName = "Toolbar";
-        _Toolbar.propTypes = {
-          data: import_prop_types68.default.object,
-          depth: import_prop_types68.default.number
-        };
-        _Toolbar.childContextTypes = { sheetDepth: import_prop_types68.default.number };
-      }
-      getChildContext() {
-        return { sheetDepth: this.props.depth };
-      }
-      constructor(props) {
-        this.getChildContext = this.getChildContext.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
-        this.componentDidUpdate = this.componentDidUpdate.bind(this);
-        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-        this.render = this.render.bind(this);
-        this._flexboxForComponents = this._flexboxForComponents.bind(this);
-        this.recomputeLayout = this.recomputeLayout.bind(this);
-        this._onWindowResize = this._onWindowResize.bind(this);
-        this._getStateFromStores = this._getStateFromStores.bind(this);
-        this.props = props;
-        this.state = this._getStateFromStores();
-      }
-      componentDidMount() {
-        this.mounted = true;
-        this.unlisteners = [];
-        this.unlisteners.push(
-          WorkspaceStore.listen((_event) => {
-            return this.setState(this._getStateFromStores());
-          })
-        );
-        this.unlisteners.push(
-          ComponentRegistry2.listen((_event) => {
-            return this.setState(this._getStateFromStores());
-          })
-        );
-        window.addEventListener("resize", this._onWindowResize);
-        return window.requestAnimationFrame(() => this.recomputeLayout());
-      }
-      componentWillUnmount() {
-        this.mounted = false;
-        window.removeEventListener("resize", this._onWindowResize);
-        return Array.from(this.unlisteners).map((unlistener) => unlistener());
-      }
-      UNSAFE_componentWillReceiveProps(props) {
-        return this.setState(this._getStateFromStores(props));
-      }
-      componentDidUpdate() {
-        return window.requestAnimationFrame(() => this.recomputeLayout());
-      }
-      shouldComponentUpdate(nextProps, nextState) {
-        return !import_utils25.default.isEqualReact(nextProps, this.props) || !import_utils25.default.isEqualReact(nextState, this.state);
-      }
-      render() {
-        const style = {
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          zIndex: 1
-        };
-        const toolbars = this.state.columns.map((components, idx) => {
-          return import_react65.default.createElement(
-            "div",
-            {
-              style: { position: "absolute", top: 0, display: "none" },
-              className: `toolbar-${this.state.columnNames[idx]}`,
-              "data-column": idx,
-              key: idx
-            },
-            this._flexboxForComponents(components)
-          );
-        });
-        return import_react65.default.createElement(
-          "div",
-          {
-            style,
-            className: `sheet-toolbar-container mode-${this.state.mode}`,
-            "data-id": this.props.data.id
-          },
-          toolbars
-        );
-      }
-      _flexboxForComponents(components) {
-        const elements = components.map((Component20) => {
-          return import_react65.default.createElement(
-            Component20,
-            Object.assign({ key: Component20.displayName }, this.props)
-          );
-        });
-        return import_react65.default.createElement(
-          Flexbox2,
-          { className: "item-container", direction: "row" },
-          elements,
-          import_react65.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
-          import_react65.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
-        );
-      }
-      recomputeLayout() {
-        if (!this.mounted) {
-          return;
-        }
-        const el = import_react_dom29.default.findDOMNode(this);
-        const columnToolbarEls = el.querySelectorAll("[data-column]");
-        const sheet = document.querySelectorAll("[name='Sheet']")[this.props.depth];
-        if (!sheet) {
-          return;
-        }
-        for (var columnToolbarEl of Array.from(columnToolbarEls)) {
-          var { column } = columnToolbarEl.dataset;
-          var columnEl = sheet.querySelector(`[data-column='${column}']`);
-          if (!columnEl) {
-            continue;
-          }
-          columnToolbarEl.style.display = "inherit";
-          columnToolbarEl.style.left = `${columnEl.offsetLeft}px`;
-          columnToolbarEl.style.width = `${columnEl.offsetWidth}px`;
-        }
-        return import_electron10.remote.getCurrentWindow().setSheetOffset(el.clientHeight);
-      }
-      _onWindowResize() {
-        return this.recomputeLayout();
-      }
-      _getStateFromStores(props) {
-        let entries2, loc;
-        if (props == null) {
-          ({ props } = this);
-        }
-        const state = {
-          mode: WorkspaceStore.layoutMode(),
-          columns: [],
-          columnNames: []
-        };
-        if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
-          for (loc of Array.from(this.props.data.columns[state.mode])) {
-            if (WorkspaceStore.isLocationHidden(loc)) {
-              continue;
-            }
-            entries2 = ComponentRegistry2.findComponentsMatching({
-              location: loc.Toolbar,
-              mode: state.mode
-            });
-            state.columns.push(entries2);
-            if (entries2) {
-              state.columnNames.push(loc.Toolbar.id.split(":")[0]);
-            }
-          }
-        }
-        for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry2.findComponentsMatching({
-            location: loc.Toolbar.Left,
-            mode: state.mode
-          });
-          if (state.columns[0] != null) {
-            state.columns[0].push(...Array.from(entries2 || []));
-          }
-        }
-        if (this.props.depth > 0) {
-          if (state.columns[0] != null) {
-            state.columns[0].push(ToolbarBack);
-          }
-        }
-        for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
-          entries2 = ComponentRegistry2.findComponentsMatching({
-            location: loc.Toolbar.Right,
-            mode: state.mode
-          });
-          __guard__3(
-            state.columns[state.columns.length - 1],
-            (x3) => x3.push(...Array.from(entries2 || []))
-          );
-        }
-        if (state.mode === "popout") {
-          if (state.columns[0] != null) {
-            state.columns[0].push(WindowTitle);
-          }
-        }
-        return state;
-      }
-    };
-    Toolbar.initClass();
-    sheet_toolbar_default = Toolbar;
-  }
-});
-
-// src/sheet-container.jsx
-var require_sheet_container = __commonJS({
-  "src/sheet-container.jsx"(exports2, module2) {
-    var React55 = require_react();
-    var ReactCSSTransitionGroup2 = (init_css_transition_group_compat(), __toCommonJS(css_transition_group_compat_exports));
-    var Sheet2 = (init_sheet(), __toCommonJS(sheet_exports));
-    var Toolbar2 = (init_sheet_toolbar(), __toCommonJS(sheet_toolbar_exports));
-    var Flexbox3 = (init_flexbox(), __toCommonJS(flexbox_exports)).default;
-    var _RetinaImg = (init_retina_img(), __toCommonJS(retina_img_exports)).default;
-    var InjectedComponentSet5 = require_injected_component_set();
-    var _4 = (init_index_all(), __toCommonJS(index_all_exports));
-    var { Actions: Actions39, ComponentRegistry: ComponentRegistry3, WorkspaceStore: WorkspaceStore6 } = (init_nylas_exports(), __toCommonJS(nylas_exports_exports));
-    var SheetContainer2 = (() => {
-      let _displayName;
-      SheetContainer2 = class SheetContainer extends React55.Component {
-        static initClass() {
-          _displayName = "SheetContainer";
-        }
-        constructor(props) {
-          this.componentDidMount = this.componentDidMount.bind(this);
-          this.componentWillUnmount = this.componentWillUnmount.bind(this);
-          this.render = this.render.bind(this);
-          this._toolbarContainerElement = this._toolbarContainerElement.bind(this);
-          this._toolbarElements = this._toolbarElements.bind(this);
-          this._sheetElements = this._sheetElements.bind(this);
-          this._onColumnSizeChanged = this._onColumnSizeChanged.bind(this);
-          this._onStoreChange = this._onStoreChange.bind(this);
-          this._getStateFromStores = this._getStateFromStores.bind(this);
-          this.props = props;
-          this.state = this._getStateFromStores();
-        }
-        componentDidMount() {
-          return this.unsubscribe = WorkspaceStore6.listen(this._onStoreChange);
-        }
-        componentWillUnmount() {
-          if (this.unsubscribe) {
-            return this.unsubscribe();
-          }
-        }
-        render() {
-          const totalSheets = this.state.stack.length;
-          const topSheet = this.state.stack[totalSheets - 1];
-          if (!topSheet) {
-            return React55.createElement("div", null);
-          }
-          const sheetElements = this._sheetElements();
-          return React55.createElement(
-            Flexbox3,
-            {
-              direction: "column",
-              className: `layout-mode-${this.state.mode}`,
-              style: { overflow: "hidden" }
-            },
-            this._toolbarContainerElement(),
-            React55.createElement(
-              "div",
-              { name: "Header", style: { order: 1, zIndex: 2 } },
-              React55.createElement(InjectedComponentSet5, {
-                matching: {
-                  locations: [topSheet.Header, WorkspaceStore6.Sheet.Global.Header]
-                },
-                direction: "column",
-                id: topSheet.id
-              })
-            ),
-            React55.createElement(
-              "div",
-              {
-                name: "Center",
-                style: { order: 2, flex: 1, position: "relative", zIndex: 1 }
-              },
-              sheetElements[0],
-              React55.createElement(
-                ReactCSSTransitionGroup2,
-                {
-                  transitionLeaveTimeout: 125,
-                  transitionEnterTimeout: 125,
-                  transitionName: "sheet-stack"
-                },
-                sheetElements.slice(1)
-              )
-            ),
-            React55.createElement(
-              "div",
-              { name: "Footer", style: { order: 3, zIndex: 4 } },
-              React55.createElement(InjectedComponentSet5, {
-                matching: {
-                  locations: [topSheet.Footer, WorkspaceStore6.Sheet.Global.Footer]
-                },
-                direction: "column",
-                id: topSheet.id
-              })
-            )
-          );
-        }
-        _toolbarContainerElement() {
-          const { toolbar } = NylasEnv.getLoadSettings();
-          if (!toolbar) {
-            return [];
-          }
-          const toolbarElements = this._toolbarElements();
-          return React55.createElement(
-            "div",
-            {
-              name: "Toolbar",
-              style: { order: 0, zIndex: 3 },
-              className: "sheet-toolbar"
-            },
-            toolbarElements[0],
-            React55.createElement(
-              ReactCSSTransitionGroup2,
-              {
-                transitionLeaveTimeout: 125,
-                transitionEnterTimeout: 125,
-                transitionName: "opacity-125ms"
-              },
-              toolbarElements.slice(1)
-            )
-          );
-        }
-        _toolbarElements() {
-          return this.state.stack.map(
-            (sheet, index) => React55.createElement(Toolbar2, {
-              data: sheet,
-              ref: `toolbar-${index}`,
-              key: `${index}:${sheet.id}:toolbar`,
-              depth: index
-            })
-          );
-        }
-        _sheetElements() {
-          return this.state.stack.map((sheet, index) => {
-            return React55.createElement(Sheet2, {
-              data: sheet,
-              depth: index,
-              key: `${index}:${sheet.id}`,
-              onColumnSizeChanged: this._onColumnSizeChanged
-            });
-          });
-        }
-        _onColumnSizeChanged(sheet) {
-          if (this.refs[`toolbar-${sheet.props.depth}`] != null) {
-            this.refs[`toolbar-${sheet.props.depth}`].recomputeLayout();
-          }
-          return window.dispatchEvent(new Event("resize"));
-        }
-        _onStoreChange() {
-          return this.setState(this._getStateFromStores());
-        }
-        _getStateFromStores() {
-          return {
-            stack: WorkspaceStore6.sheetStack(),
-            mode: WorkspaceStore6.layoutMode()
-          };
-        }
-      };
-      SheetContainer2.initClass();
-      return SheetContainer2;
-    })();
-    module2.exports = SheetContainer2;
+    WorkspaceStore7.initClass();
+    module2.exports = new WorkspaceStore7();
   }
 });
 
@@ -281244,9 +280449,783 @@ var theme_manager_default = ThemeManager;
 var import_style_manager = __toESM(require_style_manager());
 var import_error_logger = __toESM(require_error_logger());
 var import_workspace_store4 = __toESM(require_workspace_store());
-var import_react66 = __toESM(require_react());
+var import_react68 = __toESM(require_react());
 var import_react_dom30 = __toESM(require_react_dom());
-var import_sheet_container = __toESM(require_sheet_container());
+
+// src/sheet-container.jsx
+var import_react67 = __toESM(require_react());
+init_css_transition_group_compat();
+
+// src/sheet.jsx
+var import_prop_types68 = __toESM(require_prop_types());
+var import_react65 = __toESM(require_react());
+init_index_all();
+init_nylas_exports();
+init_retina_img();
+init_flexbox();
+init_injected_component_set();
+var import_resizable_region = __toESM(require_resizable_region());
+var FLEX = 1e4;
+var Sheet = class _Sheet extends import_react65.default.Component {
+  static initClass() {
+    _Sheet.displayName = "Sheet";
+    _Sheet.propTypes = {
+      data: import_prop_types68.default.object.isRequired,
+      depth: import_prop_types68.default.number.isRequired,
+      onColumnSizeChanged: import_prop_types68.default.func
+    };
+    _Sheet.defaultProps = { onColumnSizeChanged() {
+    } };
+    _Sheet.childContextTypes = { sheetDepth: import_prop_types68.default.number };
+  }
+  getChildContext() {
+    return { sheetDepth: this.props.depth };
+  }
+  constructor(props) {
+    super();
+    this.getChildContext = this.getChildContext.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.render = this.render.bind(this);
+    this._columnFlexboxElements = this._columnFlexboxElements.bind(this);
+    this._onColumnResize = this._onColumnResize.bind(this);
+    this._getStateFromStores = this._getStateFromStores.bind(this);
+    this._pop = this._pop.bind(this);
+    this.props = props;
+    this.state = this._getStateFromStores();
+  }
+  componentDidMount() {
+    if (this.unlisteners == null) {
+      this.unlisteners = [];
+    }
+    this.unlisteners.push(
+      ComponentRegistry3.listen((_event) => {
+        return this.setState(this._getStateFromStores());
+      })
+    );
+    return this.unlisteners.push(
+      WorkspaceStore.listen((_event) => {
+        return this.setState(this._getStateFromStores());
+      })
+    );
+  }
+  componentDidUpdate() {
+    this.props.onColumnSizeChanged(this);
+    let minWidth = 0;
+    for (var col2 of Array.from(this.state.columns)) {
+      minWidth += col2.minWidth;
+    }
+    return NylasEnv.setMinimumWidth(minWidth);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !index_default_default.isEqual(nextProps, this.props) || !index_default_default.isEqual(nextState, this.state);
+  }
+  componentWillUnmount() {
+    return Array.from(this.unlisteners).map((unlisten) => unlisten());
+  }
+  render() {
+    const style = {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      zIndex: 1
+    };
+    return import_react65.default.createElement(
+      "div",
+      {
+        name: "Sheet",
+        style,
+        className: `sheet mode-${this.state.mode}`,
+        "data-id": this.props.data.id
+      },
+      import_react65.default.createElement(
+        Flexbox2,
+        { direction: "row", style: { overflow: "hidden" } },
+        this._columnFlexboxElements()
+      )
+    );
+  }
+  _columnFlexboxElements() {
+    return this.state.columns.map((column, idx) => {
+      const { maxWidth, minWidth, handle, location: location2, width } = column;
+      if (minWidth !== maxWidth && maxWidth < FLEX) {
+        return import_react65.default.createElement(
+          import_resizable_region.default,
+          {
+            key: `${this.props.data.id}:${idx}`,
+            name: `${this.props.data.id}:${idx}`,
+            className: `column-${location2.id}`,
+            style: { height: "100%" },
+            "data-column": idx,
+            onResize: this._onColumnResize.bind(this, column),
+            initialWidth: width,
+            minWidth,
+            maxWidth,
+            handle
+          },
+          import_react65.default.createElement(injected_component_set_default, {
+            direction: "column",
+            matching: { location: location2, mode: this.state.mode }
+          })
+        );
+      } else {
+        const style = {
+          height: "100%",
+          minWidth,
+          overflow: "hidden"
+        };
+        if (maxWidth < FLEX) {
+          style.width = maxWidth;
+        } else {
+          style.flex = 1;
+        }
+        return import_react65.default.createElement(injected_component_set_default, {
+          direction: "column",
+          key: `${this.props.data.id}:${idx}`,
+          name: `${this.props.data.id}:${idx}`,
+          className: `column-${location2.id}`,
+          "data-column": idx,
+          style,
+          matching: { location: location2, mode: this.state.mode }
+        });
+      }
+    });
+  }
+  _onColumnResize(column, width) {
+    NylasEnv.storeColumnWidth({ id: column.location.id, width });
+    return this.props.onColumnSizeChanged(this);
+  }
+  _getStateFromStores() {
+    let maxWidth;
+    const state = {
+      mode: WorkspaceStore.layoutMode(),
+      columns: []
+    };
+    let widest = -1;
+    let widestWidth = -1;
+    if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
+      for (let idx = 0; idx < this.props.data.columns[state.mode].length; idx++) {
+        var location2 = this.props.data.columns[state.mode][idx];
+        if (WorkspaceStore.isLocationHidden(location2)) {
+          continue;
+        }
+        var entries2 = ComponentRegistry3.findComponentsMatching({
+          location: location2,
+          mode: state.mode
+        });
+        maxWidth = index_default_default.reduce(
+          entries2,
+          (m, component) => Math.min(
+            (component.containerStyles != null ? component.containerStyles.maxWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.maxWidth : void 0 : 1e4,
+            m
+          ),
+          1e4
+        );
+        var minWidth = index_default_default.reduce(
+          entries2,
+          (m, component) => Math.max(
+            (component.containerStyles != null ? component.containerStyles.minWidth : void 0) != null ? component.containerStyles != null ? component.containerStyles.minWidth : void 0 : 0,
+            m
+          ),
+          0
+        );
+        var width = NylasEnv.getColumnWidth(location2.id);
+        var col2 = { maxWidth, minWidth, location: location2, width };
+        state.columns.push(col2);
+        if (maxWidth > widestWidth) {
+          widestWidth = maxWidth;
+          widest = idx;
+        }
+      }
+    }
+    if (state.columns.length > 0) {
+      let i;
+      let end;
+      let end1;
+      state.columns[widest].maxWidth = FLEX;
+      for (i = 0, end = widest - 1; i <= end; i++) {
+        state.columns[i].handle = import_resizable_region.default.Handle.Right;
+      }
+      for (i = widest, end1 = state.columns.length - 1; i <= end1; i++) {
+        state.columns[i].handle = import_resizable_region.default.Handle.Left;
+      }
+    }
+    return state;
+  }
+  _pop() {
+    return Actions5.popSheet();
+  }
+};
+Sheet.initClass();
+var sheet_default = Sheet;
+
+// src/sheet-toolbar.jsx
+var import_prop_types69 = __toESM(require_prop_types());
+var import_react66 = __toESM(require_react());
+var import_react_dom29 = __toESM(require_react_dom());
+init_flexbox();
+init_retina_img();
+var import_utils25 = __toESM(require_utils());
+var import_electron10 = require("electron");
+var import_underscore96 = __toESM(require_underscore());
+init_index_all();
+init_nylas_exports();
+var ToolbarSpacer = class _ToolbarSpacer extends import_react66.default.Component {
+  constructor(...args) {
+    this.render = this.render.bind(this);
+    super(...args);
+  }
+  static initClass() {
+    _ToolbarSpacer.displayName = "ToolbarSpacer";
+    _ToolbarSpacer.propTypes = { order: import_prop_types69.default.number };
+  }
+  render() {
+    return import_react66.default.createElement("div", {
+      className: "item-spacer",
+      style: {
+        flex: 1,
+        order: this.props.order != null ? this.props.order : 0
+      }
+    });
+  }
+};
+ToolbarSpacer.initClass();
+var WindowTitle = class _WindowTitle extends import_react66.default.Component {
+  static initClass() {
+    _WindowTitle.displayName = "WindowTitle";
+  }
+  constructor(props) {
+    this.props = props;
+    this.state = NylasEnv.getLoadSettings();
+  }
+  componentDidMount() {
+    return this.unlisten = NylasEnv.onWindowPropsReceived((_windowProps) => {
+      return this.setState(NylasEnv.getLoadSettings());
+    });
+  }
+  componentWillUnmount() {
+    return typeof this.unlisten === "function" ? this.unlisten() : void 0;
+  }
+  render() {
+    return import_react66.default.createElement(
+      "div",
+      { className: "window-title" },
+      this.state.title
+    );
+  }
+};
+WindowTitle.initClass();
+var Category4 = null;
+var FocusedPerspectiveStore4 = null;
+var ToolbarBack = class _ToolbarBack extends import_react66.default.Component {
+  static initClass() {
+    _ToolbarBack.displayName = "ToolbarBack";
+  }
+  // These stores are only required when this Toolbar is actually needed.
+  // This is because loading these stores has database side effects.
+  constructor(props) {
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.render = this.render.bind(this);
+    this._onClick = this._onClick.bind(this);
+    this.props = props;
+    if (Category4 == null) {
+      Category4 = (init_category(), __toCommonJS(category_exports)).default;
+    }
+    if (FocusedPerspectiveStore4 == null) {
+      FocusedPerspectiveStore4 = (init_focused_perspective_store(), __toCommonJS(focused_perspective_store_exports)).default;
+    }
+    this.state = { categoryName: FocusedPerspectiveStore4.current().name };
+  }
+  componentDidMount() {
+    return this._unsubscriber = FocusedPerspectiveStore4.listen(() => {
+      return this.setState({
+        categoryName: FocusedPerspectiveStore4.current().name
+      });
+    });
+  }
+  componentWillUnmount() {
+    if (this._unsubscriber) {
+      return this._unsubscriber();
+    }
+  }
+  render() {
+    let title;
+    if (this.state.categoryName === Category4.AllMailName) {
+      title = "All Mail";
+    } else if (this.state.categoryName) {
+      title = import_underscore96.default.titleize(this.state.categoryName);
+    } else {
+      title = "Back";
+    }
+    return import_react66.default.createElement(
+      "div",
+      {
+        className: "item-back",
+        onClick: this._onClick,
+        title: `Return to ${title}`
+      },
+      import_react66.default.createElement(retina_img_default, {
+        name: "sheet-back.png",
+        mode: retina_img_default.Mode.ContentIsMask
+      }),
+      import_react66.default.createElement("div", { className: "item-back-title" }, title)
+    );
+  }
+  _onClick() {
+    return Actions5.popSheet();
+  }
+};
+ToolbarBack.initClass();
+var ToolbarWindowControls = class _ToolbarWindowControls extends import_react66.default.Component {
+  static initClass() {
+    _ToolbarWindowControls.displayName = "ToolbarWindowControls";
+  }
+  constructor(props) {
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.render = this.render.bind(this);
+    this._onAlt = this._onAlt.bind(this);
+    this._onMaximize = this._onMaximize.bind(this);
+    this.props = props;
+    this.state = { alt: false };
+  }
+  componentDidMount() {
+    if (process.platform === "darwin") {
+      window.addEventListener("keydown", this._onAlt);
+      return window.addEventListener("keyup", this._onAlt);
+    }
+  }
+  componentWillUnmount() {
+    if (process.platform === "darwin") {
+      window.removeEventListener("keydown", this._onAlt);
+      return window.removeEventListener("keyup", this._onAlt);
+    }
+  }
+  render() {
+    return import_react66.default.createElement(
+      "div",
+      {
+        name: "ToolbarWindowControls",
+        className: `toolbar-window-controls alt-${this.state.alt}`
+      },
+      import_react66.default.createElement("button", {
+        tabIndex: -1,
+        className: "close",
+        onClick() {
+          return NylasEnv.close();
+        }
+      }),
+      import_react66.default.createElement("button", {
+        tabIndex: -1,
+        className: "minimize",
+        onClick() {
+          return NylasEnv.minimize();
+        }
+      }),
+      import_react66.default.createElement("button", {
+        tabIndex: -1,
+        className: "maximize",
+        onClick: this._onMaximize
+      })
+    );
+  }
+  _onAlt(event2) {
+    if (this.state.alt !== event2.altKey) {
+      return this.setState({ alt: event2.altKey });
+    }
+  }
+  _onMaximize(event2) {
+    if (process.platform === "darwin" && !event2.altKey) {
+      return NylasEnv.setFullScreen(!NylasEnv.isFullScreen());
+    } else {
+      return NylasEnv.maximize();
+    }
+  }
+};
+ToolbarWindowControls.initClass();
+var ToolbarMenuControl = class _ToolbarMenuControl extends import_react66.default.Component {
+  constructor(...args) {
+    this.render = this.render.bind(this);
+    this._openMenu = this._openMenu.bind(this);
+    super(...args);
+  }
+  static initClass() {
+    _ToolbarMenuControl.displayName = "ToolbarMenuControl";
+  }
+  render() {
+    return import_react66.default.createElement(
+      "div",
+      { className: "toolbar-menu-control" },
+      import_react66.default.createElement(
+        "button",
+        { tabIndex: -1, className: "btn btn-toolbar", onClick: this._openMenu },
+        import_react66.default.createElement(retina_img_default, {
+          name: "windows-menu-icon.png",
+          mode: retina_img_default.Mode.ContentIsMask
+        })
+      )
+    );
+  }
+  _openMenu() {
+    const { applicationMenu } = import_electron10.remote.getGlobal("application");
+    return applicationMenu.menu.popup(NylasEnv.getCurrentWindow());
+  }
+};
+ToolbarMenuControl.initClass();
+ComponentRegistry3.register(ToolbarWindowControls, {
+  location: WorkspaceStore.Sheet.Global.Toolbar.Left
+});
+ComponentRegistry3.register(ToolbarMenuControl, {
+  location: WorkspaceStore.Sheet.Global.Toolbar.Right
+});
+var Toolbar = class _Toolbar extends import_react66.default.Component {
+  static initClass() {
+    _Toolbar.displayName = "Toolbar";
+    _Toolbar.propTypes = {
+      data: import_prop_types69.default.object,
+      depth: import_prop_types69.default.number
+    };
+    _Toolbar.childContextTypes = { sheetDepth: import_prop_types69.default.number };
+  }
+  getChildContext() {
+    return { sheetDepth: this.props.depth };
+  }
+  constructor(props) {
+    this.getChildContext = this.getChildContext.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.UNSAFE_componentWillReceiveProps = this.UNSAFE_componentWillReceiveProps.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+    this.render = this.render.bind(this);
+    this._flexboxForComponents = this._flexboxForComponents.bind(this);
+    this.recomputeLayout = this.recomputeLayout.bind(this);
+    this._onWindowResize = this._onWindowResize.bind(this);
+    this._getStateFromStores = this._getStateFromStores.bind(this);
+    this.props = props;
+    this.state = this._getStateFromStores();
+  }
+  componentDidMount() {
+    this.mounted = true;
+    this.unlisteners = [];
+    this.unlisteners.push(
+      WorkspaceStore.listen((_event) => {
+        return this.setState(this._getStateFromStores());
+      })
+    );
+    this.unlisteners.push(
+      ComponentRegistry3.listen((_event) => {
+        return this.setState(this._getStateFromStores());
+      })
+    );
+    window.addEventListener("resize", this._onWindowResize);
+    return window.requestAnimationFrame(() => this.recomputeLayout());
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+    window.removeEventListener("resize", this._onWindowResize);
+    return Array.from(this.unlisteners).map((unlistener) => unlistener());
+  }
+  UNSAFE_componentWillReceiveProps(props) {
+    return this.setState(this._getStateFromStores(props));
+  }
+  componentDidUpdate() {
+    return window.requestAnimationFrame(() => this.recomputeLayout());
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !import_utils25.default.isEqualReact(nextProps, this.props) || !import_utils25.default.isEqualReact(nextState, this.state);
+  }
+  render() {
+    const style = {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      zIndex: 1
+    };
+    const toolbars = this.state.columns.map((components, idx) => {
+      return import_react66.default.createElement(
+        "div",
+        {
+          style: { position: "absolute", top: 0, display: "none" },
+          className: `toolbar-${this.state.columnNames[idx]}`,
+          "data-column": idx,
+          key: idx
+        },
+        this._flexboxForComponents(components)
+      );
+    });
+    return import_react66.default.createElement(
+      "div",
+      {
+        style,
+        className: `sheet-toolbar-container mode-${this.state.mode}`,
+        "data-id": this.props.data.id
+      },
+      toolbars
+    );
+  }
+  _flexboxForComponents(components) {
+    const elements = components.map((Component20) => {
+      return import_react66.default.createElement(
+        Component20,
+        Object.assign({ key: Component20.displayName }, this.props)
+      );
+    });
+    return import_react66.default.createElement(
+      Flexbox2,
+      { className: "item-container", direction: "row" },
+      elements,
+      import_react66.default.createElement(ToolbarSpacer, { key: "spacer-50", order: -50 }),
+      import_react66.default.createElement(ToolbarSpacer, { key: "spacer+50", order: 50 })
+    );
+  }
+  recomputeLayout() {
+    if (!this.mounted) {
+      return;
+    }
+    const el = import_react_dom29.default.findDOMNode(this);
+    const columnToolbarEls = el.querySelectorAll("[data-column]");
+    const sheet = document.querySelectorAll("[name='Sheet']")[this.props.depth];
+    if (!sheet) {
+      return;
+    }
+    for (var columnToolbarEl of Array.from(columnToolbarEls)) {
+      var { column } = columnToolbarEl.dataset;
+      var columnEl = sheet.querySelector(`[data-column='${column}']`);
+      if (!columnEl) {
+        continue;
+      }
+      columnToolbarEl.style.display = "inherit";
+      columnToolbarEl.style.left = `${columnEl.offsetLeft}px`;
+      columnToolbarEl.style.width = `${columnEl.offsetWidth}px`;
+    }
+    return import_electron10.remote.getCurrentWindow().setSheetOffset(el.clientHeight);
+  }
+  _onWindowResize() {
+    return this.recomputeLayout();
+  }
+  _getStateFromStores(props) {
+    let entries2, loc;
+    if (props == null) {
+      ({ props } = this);
+    }
+    const state = {
+      mode: WorkspaceStore.layoutMode(),
+      columns: [],
+      columnNames: []
+    };
+    if ((this.props.data != null ? this.props.data.columns[state.mode] : void 0) != null) {
+      for (loc of Array.from(this.props.data.columns[state.mode])) {
+        if (WorkspaceStore.isLocationHidden(loc)) {
+          continue;
+        }
+        entries2 = ComponentRegistry3.findComponentsMatching({
+          location: loc.Toolbar,
+          mode: state.mode
+        });
+        state.columns.push(entries2);
+        if (entries2) {
+          state.columnNames.push(loc.Toolbar.id.split(":")[0]);
+        }
+      }
+    }
+    for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
+      entries2 = ComponentRegistry3.findComponentsMatching({
+        location: loc.Toolbar.Left,
+        mode: state.mode
+      });
+      if (state.columns[0] != null) {
+        state.columns[0].push(...Array.from(entries2 || []));
+      }
+    }
+    if (this.props.depth > 0) {
+      if (state.columns[0] != null) {
+        state.columns[0].push(ToolbarBack);
+      }
+    }
+    for (loc of [WorkspaceStore.Sheet.Global, this.props.data]) {
+      entries2 = ComponentRegistry3.findComponentsMatching({
+        location: loc.Toolbar.Right,
+        mode: state.mode
+      });
+      __guard__3(
+        state.columns[state.columns.length - 1],
+        (x3) => x3.push(...Array.from(entries2 || []))
+      );
+    }
+    if (state.mode === "popout") {
+      if (state.columns[0] != null) {
+        state.columns[0].push(WindowTitle);
+      }
+    }
+    return state;
+  }
+};
+Toolbar.initClass();
+var sheet_toolbar_default = Toolbar;
+function __guard__3(value, transform) {
+  return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
+}
+
+// src/sheet-container.jsx
+init_flexbox();
+init_retina_img();
+init_injected_component_set();
+init_index_all();
+init_nylas_exports();
+var SheetContainer = (() => {
+  let _displayName;
+  SheetContainer = class SheetContainer extends import_react67.default.Component {
+    static initClass() {
+      _displayName = "SheetContainer";
+    }
+    constructor(props) {
+      this.componentDidMount = this.componentDidMount.bind(this);
+      this.componentWillUnmount = this.componentWillUnmount.bind(this);
+      this.render = this.render.bind(this);
+      this._toolbarContainerElement = this._toolbarContainerElement.bind(this);
+      this._toolbarElements = this._toolbarElements.bind(this);
+      this._sheetElements = this._sheetElements.bind(this);
+      this._onColumnSizeChanged = this._onColumnSizeChanged.bind(this);
+      this._onStoreChange = this._onStoreChange.bind(this);
+      this._getStateFromStores = this._getStateFromStores.bind(this);
+      this.props = props;
+      this.state = this._getStateFromStores();
+    }
+    componentDidMount() {
+      return this.unsubscribe = WorkspaceStore.listen(this._onStoreChange);
+    }
+    componentWillUnmount() {
+      if (this.unsubscribe) {
+        return this.unsubscribe();
+      }
+    }
+    render() {
+      const totalSheets = this.state.stack.length;
+      const topSheet = this.state.stack[totalSheets - 1];
+      if (!topSheet) {
+        return import_react67.default.createElement("div", null);
+      }
+      const sheetElements = this._sheetElements();
+      return import_react67.default.createElement(
+        Flexbox2,
+        {
+          direction: "column",
+          className: `layout-mode-${this.state.mode}`,
+          style: { overflow: "hidden" }
+        },
+        this._toolbarContainerElement(),
+        import_react67.default.createElement(
+          "div",
+          { name: "Header", style: { order: 1, zIndex: 2 } },
+          import_react67.default.createElement(injected_component_set_default, {
+            matching: {
+              locations: [topSheet.Header, WorkspaceStore.Sheet.Global.Header]
+            },
+            direction: "column",
+            id: topSheet.id
+          })
+        ),
+        import_react67.default.createElement(
+          "div",
+          {
+            name: "Center",
+            style: { order: 2, flex: 1, position: "relative", zIndex: 1 }
+          },
+          sheetElements[0],
+          import_react67.default.createElement(
+            ReactCSSTransitionGroup,
+            {
+              transitionLeaveTimeout: 125,
+              transitionEnterTimeout: 125,
+              transitionName: "sheet-stack"
+            },
+            sheetElements.slice(1)
+          )
+        ),
+        import_react67.default.createElement(
+          "div",
+          { name: "Footer", style: { order: 3, zIndex: 4 } },
+          import_react67.default.createElement(injected_component_set_default, {
+            matching: {
+              locations: [topSheet.Footer, WorkspaceStore.Sheet.Global.Footer]
+            },
+            direction: "column",
+            id: topSheet.id
+          })
+        )
+      );
+    }
+    _toolbarContainerElement() {
+      const { toolbar } = NylasEnv.getLoadSettings();
+      if (!toolbar) {
+        return [];
+      }
+      const toolbarElements = this._toolbarElements();
+      return import_react67.default.createElement(
+        "div",
+        {
+          name: "Toolbar",
+          style: { order: 0, zIndex: 3 },
+          className: "sheet-toolbar"
+        },
+        toolbarElements[0],
+        import_react67.default.createElement(
+          ReactCSSTransitionGroup,
+          {
+            transitionLeaveTimeout: 125,
+            transitionEnterTimeout: 125,
+            transitionName: "opacity-125ms"
+          },
+          toolbarElements.slice(1)
+        )
+      );
+    }
+    _toolbarElements() {
+      return this.state.stack.map(
+        (sheet, index) => import_react67.default.createElement(sheet_toolbar_default, {
+          data: sheet,
+          ref: `toolbar-${index}`,
+          key: `${index}:${sheet.id}:toolbar`,
+          depth: index
+        })
+      );
+    }
+    _sheetElements() {
+      return this.state.stack.map((sheet, index) => {
+        return import_react67.default.createElement(sheet_default, {
+          data: sheet,
+          depth: index,
+          key: `${index}:${sheet.id}`,
+          onColumnSizeChanged: this._onColumnSizeChanged
+        });
+      });
+    }
+    _onColumnSizeChanged(sheet) {
+      if (this.refs[`toolbar-${sheet.props.depth}`] != null) {
+        this.refs[`toolbar-${sheet.props.depth}`].recomputeLayout();
+      }
+      return window.dispatchEvent(new Event("resize"));
+    }
+    _onStoreChange() {
+      return this.setState(this._getStateFromStores());
+    }
+    _getStateFromStores() {
+      return {
+        stack: WorkspaceStore.sheetStack(),
+        mode: WorkspaceStore.layoutMode()
+      };
+    }
+  };
+  SheetContainer.initClass();
+  return SheetContainer;
+})();
+var sheet_container_default = SheetContainer;
+
+// src/nylas-env.js
 init_nylas_exports();
 init_nylas_component_kit();
 var import_meta29 = {};
@@ -282201,7 +282180,7 @@ var NylasEnvConstructor = class _NylasEnvConstructor {
     this.item.setAttribute("id", "sheet-container");
     this.item.setAttribute("class", "sheet-container");
     this.item.setAttribute("tabIndex", "-1");
-    import_react_dom30.default.render(import_react66.default.createElement(import_sheet_container.default), this.item);
+    import_react_dom30.default.render(import_react68.default.createElement(sheet_container_default), this.item);
     return document.querySelector(this.workspaceViewParentSelector).appendChild(this.item);
   }
   deserializePackageStates() {

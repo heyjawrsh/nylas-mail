@@ -1,5 +1,5 @@
-const { Utils } = require("nylas-exports");
-const { MAX_MATCHES, CHAR_THRESHOLD } = require("./search-constants.js");
+import { Utils } from "nylas-exports";
+import { MAX_MATCHES, CHAR_THRESHOLD } from "./search-constants.js";
 
 class UnifiedDOMParser {
 	constructor(regionId) {
@@ -206,5 +206,4 @@ class UnifiedDOMParser {
 	highlightSearch() {}
 }
 
-module.exports = UnifiedDOMParser;
-module.exports.default = UnifiedDOMParser;
+export default UnifiedDOMParser;

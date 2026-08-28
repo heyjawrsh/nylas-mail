@@ -1,9 +1,8 @@
-const _ = require("underscore").default || require("underscore");
-const React = require("react").default || require("react");
-const { VirtualDOMUtils } = require("nylas-exports");
+import _ from "underscore";
+import React from "react";
+import { VirtualDOMUtils } from "nylas-exports";
 
-const SearchMatch =
-	require("./search-match.jsx").default || require("./search-match.jsx");
+import SearchMatch from "./search-match.jsx";
 const UnifiedDOMParser =
 	require("./unified-dom-parser.js").default ||
 	require("./unified-dom-parser.js");
@@ -169,5 +168,4 @@ class VirtualDOMParser extends UnifiedDOMParser {
 	}
 }
 
-module.exports = VirtualDOMParser;
-module.exports.default = VirtualDOMParser;
+export default VirtualDOMParser;

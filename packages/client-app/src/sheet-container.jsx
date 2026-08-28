@@ -6,16 +6,16 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const React = require("react");
-const ReactCSSTransitionGroup = require("./components/css-transition-group-compat.jsx");
-const Sheet = require("./sheet.jsx");
-const Toolbar = require("./sheet-toolbar.jsx");
-const Flexbox = require("./components/flexbox.jsx").default;
-const _RetinaImg = require("./components/retina-img.jsx").default;
-const InjectedComponentSet = require("./components/injected-component-set.jsx");
-const _ = require("underscore");
+import React from "react";
+import ReactCSSTransitionGroup from "./components/css-transition-group-compat.jsx";
+import Sheet from "./sheet.jsx";
+import Toolbar from "./sheet-toolbar.jsx";
+import Flexbox from "./components/flexbox.jsx";
+import _RetinaImg from "./components/retina-img.jsx";
+import InjectedComponentSet from "./components/injected-component-set.jsx";
+import _ from "underscore";
 
-const { Actions, ComponentRegistry, WorkspaceStore } = require("nylas-exports");
+import { Actions, ComponentRegistry, WorkspaceStore } from "nylas-exports";
 
 var SheetContainer = (() => {
 	let _displayName;
@@ -182,4 +182,4 @@ var SheetContainer = (() => {
 	return SheetContainer;
 })();
 
-module.exports = SheetContainer;
+export default SheetContainer;
