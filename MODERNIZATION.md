@@ -576,3 +576,19 @@ A thin-coverage round that bought durable infrastructure knowledge:
 
 Cumulative: **0.32% → 37.47%**, 11 → 2,338 tests, fifteen swarm rounds.
 ~22.5 points remain to the 60% gate.
+
+
+## Loop 31 — Coverage round 16: contenteditable core (commit 8276ddf22)
+
+client-app: 37.47% → **38.57% lines** (2,360 tests, 126/126 files green).
+
+The contenteditable editor component landed after three worker crashes —
+its full ESM conversion (managers, services, toolbar imports hoisted)
+plus a restored named export the bundle gate caught.
+
+dom-utils is formally dropped from the swarm queue after four crashes:
+1,039 lines of DOM edge cases that defeat every prompt formulation. If
+the 60% gate needs it, it gets hand-written targeted specs.
+
+Cumulative: **0.32% → 38.57%**, 11 → 2,360 tests, sixteen swarm rounds.
+~21.5 points remain.
