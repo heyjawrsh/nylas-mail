@@ -3,7 +3,7 @@
  * DS101: Remove unnecessary use of Array.from
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Reflux = require("reflux");
+import Reflux from "reflux";
 
 const Actions = ["focusAccounts", "setKeyCollapsed"];
 
@@ -12,4 +12,4 @@ for (var idx of Array.from(Actions)) {
 	Actions[idx].sync = true;
 }
 
-module.exports = Actions;
+export default Actions;

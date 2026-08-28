@@ -51,3 +51,16 @@ globalThis.NylasEnv = {
 	},
 	loadSettings: {},
 };
+
+// Bluebird-ism still present in original package code (unread-notifications,
+// snooze-utils, thread-search). Minimal polyfill for tests.
+if (!Promise.props) {
+	Promise.props = function props(object) {
+		const keys = Object.keys(object);
+		return Promise.all(keys.map((key) => Promise.resolve(object[key]))).then((values) => {
+			const result = {};
+			keys.forEach((key, i) => { result[key] = values[i]; });
+			return result;
+		});
+	};
+}

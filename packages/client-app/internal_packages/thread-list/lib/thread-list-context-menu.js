@@ -1,5 +1,6 @@
 /* eslint global-require: 0*/
 import _ from "underscore";
+import { remote } from "electron";
 import {
 	Thread,
 	Actions,
@@ -176,7 +177,6 @@ export default class ThreadListContextMenu {
 	}
 
 	displayMenu() {
-		const { remote } = require("electron");
 		this.menuItemTemplate().then((template) => {
 			remote.Menu.buildFromTemplate(template).popup(remote.getCurrentWindow());
 		});

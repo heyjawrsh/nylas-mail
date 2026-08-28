@@ -12,6 +12,17 @@ const root = path.resolve(__dirname, "..");
 const BANNER = `
 (function () {
 	if (typeof window === "undefined" || window.NylasEnv) return;
+	// Bluebird-ism used across task/model code (Promise.props).
+	if (typeof Promise.props !== "function") {
+		Promise.props = function (object) {
+			var keys = Object.keys(object);
+			return Promise.all(keys.map(function (k) { return Promise.resolve(object[k]); })).then(function (values) {
+				var result = {};
+				keys.forEach(function (k, i) { result[k] = values[i]; });
+				return result;
+			});
+		};
+	}
 	var qs = {};
 	try {
 		var params = new URLSearchParams(window.location.search);

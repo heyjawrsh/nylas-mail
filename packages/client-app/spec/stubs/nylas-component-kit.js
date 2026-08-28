@@ -93,3 +93,4 @@ export const TimePicker = lazy("TimePicker");
 export const TokenizingTextField = lazy("TokenizingTextField");
 export const UndoToast = lazy("UndoToast");
 export default bridge;
+export const OutlineViewItem = lazy("OutlineViewItem");

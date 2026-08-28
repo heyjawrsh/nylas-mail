@@ -121,3 +121,4 @@ export const Utils = lazy("Utils");
 export const VirtualDOMUtils = lazy("VirtualDOMUtils");
 export const WorkspaceStore = lazy("WorkspaceStore");
 export default bridgeNS;
+export const DestroyCategoryTask = lazy("DestroyCategoryTask");

@@ -5,8 +5,8 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const {
+import _ from "underscore";
+import {
 	Actions,
 	SyncbackCategoryTask,
 	DestroyCategoryTask,
@@ -14,9 +14,9 @@ const {
 	Category,
 	ExtensionRegistry,
 	RegExpUtils,
-} = require("nylas-exports");
-const SidebarItem = require("./sidebar-item");
-const SidebarActions = require("./sidebar-actions");
+} from "nylas-exports";
+import SidebarItem from "./sidebar-item";
+import SidebarActions from "./sidebar-actions";
 
 const isSectionCollapsed = (title) => {
 	if (NylasEnv.savedState.sidebarKeysCollapsed[title] !== undefined) {
@@ -279,4 +279,4 @@ class SidebarSection {
 	}
 }
 
-module.exports = SidebarSection;
+export default SidebarSection;

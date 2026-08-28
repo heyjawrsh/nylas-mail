@@ -6,8 +6,8 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const { Actions, MenuHelpers } = require("nylas-exports");
+import _ from "underscore";
+import { Actions, MenuHelpers } from "nylas-exports";
 
 class AccountCommands {
 	static initClass() {
@@ -148,4 +148,4 @@ class AccountCommands {
 }
 AccountCommands.initClass();
 
-module.exports = AccountCommands;
+export default AccountCommands;

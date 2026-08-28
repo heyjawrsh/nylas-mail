@@ -6,10 +6,10 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const NylasStore = require("nylas-store");
+import _ from "underscore";
+import NylasStore from "nylas-store";
 
-const {
+import {
 	Rx,
 	Thread,
 	Message,
@@ -19,10 +19,10 @@ const {
 	FocusedContentStore,
 	TaskQueueStatusStore,
 	FocusedPerspectiveStore,
-} = require("nylas-exports");
-const { ListTabular } = require("nylas-component-kit");
+} from "nylas-exports";
+import { ListTabular } from "nylas-component-kit";
 
-const ThreadListDataSource = require("./thread-list-data-source").default;
+import ThreadListDataSource from "./thread-list-data-source.js";
 
 class ThreadListStore extends NylasStore {
 	constructor() {
@@ -136,7 +136,7 @@ class ThreadListStore extends NylasStore {
 	}
 }
 
-module.exports = new ThreadListStore();
+export default new ThreadListStore();
 
 function __guard__(value, transform) {
 	return typeof value !== "undefined" && value !== null

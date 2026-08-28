@@ -3,9 +3,9 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _React = require("react");
-const AccountSidebar = require("./components/account-sidebar");
-const { ComponentRegistry, WorkspaceStore } = require("nylas-exports");
+import _React from "react";
+import AccountSidebar from "./components/account-sidebar.jsx";
+import { ComponentRegistry, WorkspaceStore } from "nylas-exports";
 
 module.exports = {
 	item: null, // The DOM item the main React component renders into

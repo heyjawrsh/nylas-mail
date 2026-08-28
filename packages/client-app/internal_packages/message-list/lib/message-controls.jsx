@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
-const React = require("react");
-const { remote } = require("electron");
+import React from "react";
+import { remote } from "electron";
 const {
 	Actions,
 	NylasAPI,
 	NylasAPIRequest,
 	AccountStore,
 } = require("nylas-exports");
-const { RetinaImg, ButtonDropdown, Menu } = require("nylas-component-kit");
+import { RetinaImg, ButtonDropdown, Menu } from "nylas-component-kit";
 
 class MessageControls extends React.Component {
 	static displayName = "MessageControls";
@@ -199,4 +199,4 @@ class MessageControls extends React.Component {
 	}
 }
 
-module.exports = MessageControls;
+export default MessageControls;
