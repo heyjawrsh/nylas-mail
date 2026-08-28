@@ -441,3 +441,29 @@ Cumulative: **0.32% → 25.83%** lines, 11 → 1,596 tests, nine swarm rounds.
 Remaining to 60%: ~34 points. The uncovered mass is now mostly React
 components and their stores — exactly what the workers are producing specs
 for at ~1 pt/round. Mechanical, stable, continuing.
+
+
+## Loop 25 — Coverage round 10: deep internals (commit 5dd6f2859)
+
+client-app: 25.83% → **25.97% lines** (1,744 tests, 100/100 files green).
+
+Round 10 pushed into the harder internals: the account-sidebar module
+family, thread-list store/context-menu, message-controls, attachments/
+tracking, print, reminders, search prefixes, unread notifications,
+activity data source. 148 new tests landed.
+
+Two structural findings this round, both now codified:
+
+1. **The interop-require trap.** Files mixing ESM imports with CJS
+   `require()` (sidebar-section, thread-list-store) bypass vi.mock and
+   static-link against the stub — surfacing as misleading
+   `does not provide an export named 'X'` SyntaxErrors. The fix is the
+   same ESM conversion; the trap is now named so future rounds recognize
+   it in seconds.
+
+2. **Promise.props is load-bearing.** The bluebird-ism survives in four
+   core task files and three internal packages. Polyfilled in test
+   setup AND the bundle banner — the renderer would have crashed on
+   first starred/folder toggle without it.
+
+Cumulative: **0.32% → 25.97%**, 11 → 1,744 tests, ten swarm rounds.
