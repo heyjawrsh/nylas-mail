@@ -630,3 +630,14 @@ from the queue (hand-write if needed).
 
 Cumulative: **0.32% → 41.40%**, 11 → 2,525 tests, eighteen swarm rounds.
 ~18.6 points (~4,300 lines) remain.
+
+
+## Loop 34 — Coverage round 19: deep stores/env (commit f18f1e81b)
+
+client-app: 41.40% → **42.39% lines** (2,648 tests, 139/139 files green).
+
+Deepen-existing-file round: a second spec file per already-specced module
+(database-store +37, account-store +34, nylas-env +30, evented-iframe
++22) proved the most reliable worker pattern — every family delivered.
+Cumulative: **0.32% → 42.39%**, 11 → 2,648 tests, nineteen swarm rounds.
+~17.6 points (~4,080 lines) remain.
