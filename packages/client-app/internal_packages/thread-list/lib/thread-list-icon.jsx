@@ -7,16 +7,16 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const {
+import _ from "underscore";
+import React from "react";
+import {
 	DraftHelpers,
 	Actions,
 	Thread,
 	ChangeStarredTask,
 	ExtensionRegistry,
 	AccountStore,
-} = require("nylas-exports");
+} from "nylas-exports";
 
 class ThreadListIcon extends React.Component {
 	constructor(...args) {

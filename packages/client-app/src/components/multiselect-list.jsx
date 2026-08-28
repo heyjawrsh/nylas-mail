@@ -9,23 +9,18 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const _ = require("underscore");
-const React = require("react");
-const ReactDOM = require("react-dom");
-const classNames = require("classnames");
-const ListTabular = require("./list-tabular.jsx").default;
-const Spinner = require("./spinner.jsx");
-const {
-	Actions,
-	Utils,
-	WorkspaceStore,
-	AccountStore,
-} = require("nylas-exports");
-const { KeyCommandsRegion } = require("nylas-component-kit");
-const { EventEmitter } = require("node:events");
+import _ from "underscore";
+import React from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
+import ListTabular from "./list-tabular.jsx";
+import Spinner from "./spinner.jsx";
+import { Actions, Utils, WorkspaceStore, AccountStore } from "nylas-exports";
+import { KeyCommandsRegion } from "nylas-component-kit";
+import { EventEmitter } from "node:events";
 
-const MultiselectListInteractionHandler = require("./multiselect-list-interaction-handler.js");
-const MultiselectSplitInteractionHandler = require("./multiselect-split-interaction-handler.js");
+import MultiselectListInteractionHandler from "./multiselect-list-interaction-handler.js";
+import MultiselectSplitInteractionHandler from "./multiselect-split-interaction-handler.js";
 
 /*
 Public: MultiselectList wraps {ListTabular} and makes it easy to present a
@@ -362,7 +357,7 @@ class MultiselectList extends React.Component {
 }
 MultiselectList.initClass();
 
-module.exports = MultiselectList;
+export default MultiselectList;
 
 function __guard__(value, transform) {
 	return typeof value !== "undefined" && value !== null

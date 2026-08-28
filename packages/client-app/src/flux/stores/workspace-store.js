@@ -7,12 +7,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
-const Actions = require("../actions.js").default;
-const _AccountStore = require("./account-store.js").default;
-const _CategoryStore = require("./category-store.js");
-const _MailboxPerspective = require("../../mailbox-perspective.js");
-const NylasStore = require("nylas-store").default || require("nylas-store");
+import _ from "underscore";
+import Actions from "../actions.js";
+import _AccountStore from "./account-store.js";
+import _CategoryStore from "./category-store.js";
+import * as _MailboxPerspectiveNS from "../../mailbox-perspective.js";
+const _MailboxPerspective =
+	_MailboxPerspectiveNS.default || _MailboxPerspectiveNS;
+import NylasStore from "nylas-store";
 
 let Sheet = {};
 let Location = {};

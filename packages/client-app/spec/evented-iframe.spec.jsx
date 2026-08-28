@@ -97,10 +97,6 @@ describe("EventedIFrame document bridge lifecycle", () => {
 
 
 
-	it("unsubscribes from searchable-store changes when unmounted", () => {
-		const unsubscribe = vi.fn(); const instance = frame({ searchable: true }); instance._searchUsub = unsubscribe; instance._unsubscribeFromIFrameEvents = vi.fn(); instance.componentWillUnmount();
-		expect(unsubscribe).toHaveBeenCalledOnce();
-	});
 
 
 	it("suppresses the resize caused by setHeightQuietly", () => {

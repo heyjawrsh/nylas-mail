@@ -9,25 +9,22 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const _ = require("underscore");
+import _ from "underscore";
 
-const Utils = require("./flux/models/utils.js");
-const TaskFactory = require("./flux/tasks/task-factory.js").default;
-const AccountStore = require("./flux/stores/account-store.js").default;
-const CategoryStore = require("./flux/stores/category-store.js");
-const DatabaseStore = require("./flux/stores/database-store.js").default;
-const OutboxStore = require("./flux/stores/outbox-store.js").default;
-const ThreadCountsStore = require("./flux/stores/thread-counts-store.js");
-const _RecentlyReadStore =
-	require("./flux/stores/recently-read-store.js").default;
-const MutableQuerySubscription =
-	require("./flux/models/mutable-query-subscription.js").default;
-const UnreadQuerySubscription =
-	require("./flux/models/unread-query-subscription.js").default;
-const _Matcher = require("./flux/attributes/matcher.js").default;
-const Thread = require("./flux/models/thread.js").default;
-const Category = require("./flux/models/category.js").default;
-const Actions = require("./flux/actions.js").default;
+import * as UtilsNS from "./flux/models/utils.js";
+const Utils = UtilsNS.default || UtilsNS;
+import TaskFactory from "./flux/tasks/task-factory.js";
+import AccountStore from "./flux/stores/account-store.js";
+import CategoryStore from "./flux/stores/category-store.js";
+import DatabaseStore from "./flux/stores/database-store.js";
+import OutboxStore from "./flux/stores/outbox-store.js";
+import ThreadCountsStore from "./flux/stores/thread-counts-store.js";
+import _Matcher from "./flux/attributes/matcher.js";
+import MutableQuerySubscription from "./flux/models/mutable-query-subscription.js";
+import UnreadQuerySubscription from "./flux/models/unread-query-subscription.js";
+import Thread from "./flux/models/thread.js";
+import Category from "./flux/models/category.js";
+import Actions from "./flux/actions.js";
 let ChangeUnreadTask = null;
 
 // This is a class cluster. Subclasses are not for external use!
@@ -289,12 +286,12 @@ MailboxPerspective.initClass();
 
 class DraftsMailboxPerspective extends MailboxPerspective {
 	constructor(accountIds) {
+		super(accountIds);
 		this.threads = this.threads.bind(this);
 		this.unreadCount = this.unreadCount.bind(this);
 		this.canReceiveThreadsFromAccountIds =
 			this.canReceiveThreadsFromAccountIds.bind(this);
 		this.accountIds = accountIds;
-		super(this.accountIds);
 		this.name = "Drafts";
 		this.iconName = "drafts.png";
 		this.drafts = true; // The DraftListStore looks for this
@@ -320,13 +317,13 @@ class DraftsMailboxPerspective extends MailboxPerspective {
 
 class StarredMailboxPerspective extends MailboxPerspective {
 	constructor(accountIds) {
+		super(accountIds);
 		this.threads = this.threads.bind(this);
 		this.canReceiveThreadsFromAccountIds =
 			this.canReceiveThreadsFromAccountIds.bind(this);
 		this.receiveThreads = this.receiveThreads.bind(this);
 		this.tasksForRemovingItems = this.tasksForRemovingItems.bind(this);
 		this.accountIds = accountIds;
-		super(this.accountIds);
 		this.name = "Starred";
 		this.iconName = "starred.png";
 		this;
@@ -400,6 +397,7 @@ class EmptyMailboxPerspective extends MailboxPerspective {
 
 class CategoryMailboxPerspective extends MailboxPerspective {
 	constructor(_categories) {
+		super(_.uniq(_.pluck(_categories, "accountId")));
 		this.toJSON = this.toJSON.bind(this);
 		this.isEqual = this.isEqual.bind(this);
 		this.threads = this.threads.bind(this);
@@ -412,7 +410,6 @@ class CategoryMailboxPerspective extends MailboxPerspective {
 		this.receiveThreads = this.receiveThreads.bind(this);
 		this.tasksForRemovingItems = this.tasksForRemovingItems.bind(this);
 		this._categories = _categories;
-		super(_.uniq(_.pluck(this._categories, "accountId")));
 
 		if (this._categories.length === 0) {
 			throw new Error(
@@ -627,11 +624,11 @@ class CategoryMailboxPerspective extends MailboxPerspective {
 
 class UnreadMailboxPerspective extends CategoryMailboxPerspective {
 	constructor(categories) {
+		super(categories);
 		this.threads = this.threads.bind(this);
 		this.unreadCount = this.unreadCount.bind(this);
 		this.receiveThreads = this.receiveThreads.bind(this);
 		this.tasksForRemovingItems = this.tasksForRemovingItems.bind(this);
-		super(categories);
 		this.name = "Unread";
 		this.iconName = "unread.png";
 		this;

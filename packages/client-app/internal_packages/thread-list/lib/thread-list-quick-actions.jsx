@@ -7,14 +7,14 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
-const React = require("react");
-const {
+import React from "react";
+import {
 	Actions,
 	CategoryStore,
 	TaskFactory,
 	AccountStore,
 	FocusedPerspectiveStore,
-} = require("nylas-exports");
+} from "nylas-exports";
 
 class ThreadArchiveQuickAction extends React.Component {
 	constructor(...args) {
