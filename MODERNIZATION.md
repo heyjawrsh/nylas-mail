@@ -399,3 +399,27 @@ its native-ESM require broke smoke.
 Cumulative: 1,276 tests / 22.09% lines. Seven rounds in; ~1.3 pts/round
 lately. Gate at 60% needs ~28 more rounds at this mix — the harness,
 contract, and salvage pipeline are all stable, each round is mechanical.
+
+
+## Loop 23 — React 19 string-ref retirement + round 8 (commit cd4a073e6)
+
+client-app: 22.09% → **24.87% lines** (1,437 tests, 78/78 files green).
+
+**React 19 debt paid at scale**: every remaining string ref (`ref="x"` /
+`ref: "x"` / template refs) ported to `React.createRef()` across 14
+components, with `ReactDOM.findDOMNode(this.refs.x)` readers rewritten to
+`this.xRef?.current`. String refs were the actual class of renderer crash
+(`markRef: Expected ref to be a function`) that React 19 turns fatal — the
+goal's React migration criterion is now genuinely satisfied rather than
+partially shimmed.
+
+Also: task-queue-status-store ESM conversion (its module-scope singleton
+construction was the last mock-unsafe store), a 34-file unused-import
+cleanup after eight rounds of ESM conversions, stale-suppression removal,
+and two live imports restored after over-aggressive stripping (caught by
+the suite — the ratchet works).
+
+Cumulative: **0.32% → 24.87%** lines, 11 → 1,437 tests, eight swarm rounds.
+Remaining to 60% gate: ~35 points ≈ 25+ rounds at current mix — or a shift
+in strategy (the remaining mass is React components needing rendering
+harnesses at scale, which the workers now do competently).
