@@ -488,3 +488,22 @@ the esbuild pass in the battery is earning its keep.
 
 Cumulative: **0.32% → 29.22%**, 11 → 1,860 tests, eleven swarm rounds.
 ~31 points remain to the 60% gate.
+
+
+## Loop 27 — Coverage round 12: writer/connection/components (commit cdc34b4f8)
+
+client-app: 29.22% → **30.74% lines** (2,010 tests, 111/111 files green).
+
+Round 12 took database-writer (0% → 39 tests), nylas-long-connection
+(0% → 32 tests), and the big component-kit surfaces: tokenizing-text-field
+(33 tests, last string ref retired), evented-iframe (findDOMNode ported to
+createRef across 6 sites), scroll-region, searchable-component-store.
+
+The interop-require trap showed up INSIDE src/ this time — evented-iframe's
+`const _ = require("underscore")` in an ESM file silently bypassed vi.mock,
+producing tests that passed assertions but never exercised the real paths.
+The sweep continues to pay: every round finds one more file where a CJS
+require hid inside an ESM conversion.
+
+Cumulative: **0.32% → 30.74%**, 11 → 2,010 tests, twelve swarm rounds.
+~29 points remain to the 60% gate.
