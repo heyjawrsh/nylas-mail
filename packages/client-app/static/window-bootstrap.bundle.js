@@ -38664,7 +38664,6 @@ var require_package2 = __commonJS({
 var require_package3 = __commonJS({
   "src/package.js"(exports2, module2) {
     var _error;
-    var Package;
     var packagesCache;
     var path15 = require("path");
     var _4 = (init_index_all(), __toCommonJS(index_all_exports));
@@ -38683,6 +38682,7 @@ var require_package3 = __commonJS({
       _error = error1;
       packagesCache = {};
     }
+    var Package;
     module2.exports = Package = (() => {
       Package = class Package2 {
         static initClass() {

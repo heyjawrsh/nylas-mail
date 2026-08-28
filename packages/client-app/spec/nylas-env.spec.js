@@ -12,6 +12,7 @@ const m = vi.hoisted(() => {
 	const application = { getAllWindowDimensions: vi.fn(() => [{ width: 800 }]), fileListCache: {} };
 	return {
 		win, application, send: vi.fn(), beep: vi.fn(), quit: vi.fn(),
+		display: { workAreaSize: { width: 1920, height: 1080 }, workArea: { width: 1920, height: 1080 } },
 		existsSync: vi.fn(), readFileSync: vi.fn(), writeFileSync: vi.fn(),
 		showMessageBox: vi.fn(() => 0), deepClone: vi.fn((value) => structuredClone(value)),
 	};
@@ -23,25 +24,38 @@ vi.mock("node:module", () => {
 });
 vi.mock("node:path", () => ({ default: { join: (...parts) => parts.join("/") }, join: (...parts) => parts.join("/") }));
 vi.mock("electron", () => ({
-	default: { ipcRenderer: { send: m.send }, shell: { beep: m.beep }, remote: { app: { getVersion: () => "0.0.0", getPath: () => "/tmp" } } },
+	default: {
+		ipcRenderer: { send: m.send }, shell: { beep: m.beep },
+		remote: {
+			app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
+			screen: { getPrimaryDisplay: () => m.display },
+			dialog: { showMessageBox: m.showMessageBox },
+			getCurrentWindow: () => m.win, getGlobal: () => m.application,
+		},
+	},
 	ipcRenderer: { send: m.send }, shell: { beep: m.beep },
-	remote: { app: { getVersion: () => "0.0.0", getPath: () => "/tmp" } },
+	remote: {
+		app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
+		screen: { getPrimaryDisplay: () => m.display },
+		dialog: { showMessageBox: m.showMessageBox },
+		getCurrentWindow: () => m.win, getGlobal: () => m.application,
+	},
 }));
 vi.mock("@electron/remote", () => ({
-	default: { remote: {}, ipcRenderer: { send: m.send }, shell: { beep: m.beep } },
+	default: { ipcRenderer: { send: m.send }, shell: { beep: m.beep } },
 	ipcRenderer: { send: m.send }, shell: { beep: m.beep },
-	screen: { getPrimaryDisplay: () => ({ workArea: { width: 1440, height: 900 } }) },
+	screen: { getPrimaryDisplay: () => m.display },
 	dialog: { showMessageBox: m.showMessageBox },
 	getCurrentWindow: () => m.win, getGlobal: () => m.application,
 	app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
 	remote: {
 		app: { quit: m.quit, getVersion: () => "0.0.0", getPath: () => "/tmp" },
-		screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1440, height: 900 }, workArea: { width: 1440, height: 900 } }) },
+		screen: { getPrimaryDisplay: () => m.display },
 		dialog: { showMessageBox: m.showMessageBox },
 		getCurrentWindow: () => m.win, getGlobal: () => m.application,
 		require: () => ({}),
 		app: { quit: m.quit }, dialog: { showMessageBox: m.showMessageBox },
-		screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1920, height: 1080 } }) },
+		screen: { getPrimaryDisplay: () => m.display },
 	},
 }));
 vi.mock("underscore", () => {
@@ -175,7 +189,9 @@ describe("NylasEnv public surface", () => {
 	});
 	it("returns complete window dimensions", () => { expect(env.getWindowDimensions()).toEqual({ x: 1, y: 2, width: 800, height: 600, maximized: false, fullScreen: false }); });
 	it("rejects dimensions that are wholly offscreen", () => { expect(env.isValidDimensions({ x: -500, y: 0, width: 100, height: 100 })).toBe(false); });
-	it("caps default dimensions and centers the result", () => { expect(env.getDefaultWindowDimensions()).toEqual({ x: 240, y: 90, width: 1440, height: 900 }); });
+	it("caps default dimensions and centers the result", () => {
+		expect(env.getDefaultWindowDimensions()).toEqual({ x: 240, y: 90, width: 1440, height: 900 });
+	});
 	it("stores and retrieves column widths", () => { env.storeColumnWidth({ id: "message", width: 320 }); expect(env.getColumnWidth("message")).toBe(320); });
 	it("delegates new windows over IPC", () => { env.newWindow({ windowType: "composer" }); expect(m.send).toHaveBeenCalledWith("new-window", { windowType: "composer" }); });
 	it("emits beep events even when audio is disabled", () => { env.config = { get: vi.fn(() => false) }; const callback = vi.fn(); env.onDidBeep(callback); env.beep(); expect(callback).toHaveBeenCalledOnce(); });

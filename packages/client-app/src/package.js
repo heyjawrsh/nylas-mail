@@ -9,7 +9,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-let _error, Package, packagesCache;
+let _error, packagesCache;
 const path = require("node:path");
 
 const _ = require("underscore");
@@ -38,6 +38,7 @@ try {
 
 // Loads and activates a package's main module and resources such as
 // stylesheets, keymaps, and menus.
+let Package;
 module.exports = Package = (() => {
 	Package = class Package {
 		static initClass() {
