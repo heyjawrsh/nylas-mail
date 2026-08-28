@@ -610,3 +610,23 @@ specs exercise exported-function surface only.
 
 Cumulative: **0.32% → 40.77%**, 11 → 2,466 tests, seventeen swarm
 rounds. ~19.3 points remain (~4,450 covered lines).
+
+
+## Loop 33 — Coverage round 18: dom-utils by hand (commit bf7a7eb97)
+
+client-app: 40.77% → **41.40% lines** (2,525 tests, 135/135 files green).
+
+dom-utils (458 lines, biggest single uncovered file) fell to a hand-
+written spec after four worker crashes — 28 tests over the jsdom-testable
+surface. The exercise found a genuinely broken function: `DOMUtils
+.lastNode` was an unresolved reference left by decaffeinate (a coffee-
+scoped helper that vanished in conversion); `lastDescendent` has been
+recursing into a TypeError for years. Fixed to self-recursion.
+
+extended-selection (31 tests) salvaged from the round's one surviving
+worker family; the five flux/component retry families crashed again —
+file-download-store and task-queue are now three-time crashers, dropped
+from the queue (hand-write if needed).
+
+Cumulative: **0.32% → 41.40%**, 11 → 2,525 tests, eighteen swarm rounds.
+~18.6 points (~4,300 lines) remain.
