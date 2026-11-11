@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UX Design Validation: nylas_mail</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+
+    --verdict-strong: #16a34a;
+    --verdict-adequate: #65a30d;
+    --verdict-thin: #d97706;
+    --verdict-broken: #dc2626;
+
+    --sev-low: #64748b;
+    --sev-medium: #ca8a04;
+    --sev-high: #ea580c;
+    --sev-critical: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  header.report-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .title h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .title .subtitle { color: var(--muted); font-size: 13px; margin-top: 4px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  .synthesis {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--muted);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 15.5px;
+  }
+  .synthesis p { margin: 0 0 10px; }
+  .synthesis p:last-child { margin-bottom: 0; }
+
+  .dimension-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .dim-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .dim-card .dim-name { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .dim-card .dim-verdict { font-size: 14px; font-weight: 600; }
+
+  section.dimension, section.reviewer-section { margin-bottom: 14px; }
+  section.dimension details, section.reviewer-section details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  section summary {
+    padding: 14px 20px;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  section summary::-webkit-details-marker { display: none; }
+  section summary::before {
+    content: "▸";
+    display: inline-block;
+    color: var(--muted);
+    transition: transform 0.15s ease;
+  }
+  section details[open] summary::before { transform: rotate(90deg); }
+  section summary h2 {
+    display: inline;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    flex: 1;
+  }
+  .verdict-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: white;
+  }
+  .verdict-strong { background: var(--verdict-strong); }
+  .verdict-adequate { background: var(--verdict-adequate); }
+  .verdict-thin { background: var(--verdict-thin); }
+  .verdict-broken { background: var(--verdict-broken); }
+
+  .dim-body { padding: 4px 20px 18px; }
+  .dim-judgment { color: var(--text); font-size: 14.5px; }
+  .dim-judgment p { margin: 0 0 10px; }
+
+  .findings-list { padding: 0 20px 4px; }
+  article.finding {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  article.finding:first-child { border-top: none; }
+  article.finding header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .badge {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .badge-sev-low { background: rgba(100, 116, 139, 0.12); color: var(--sev-low); }
+  .badge-sev-medium { background: rgba(202, 138, 4, 0.14); color: var(--sev-medium); }
+  .badge-sev-high { background: rgba(234, 88, 12, 0.14); color: var(--sev-high); }
+  .badge-sev-critical { background: rgba(220, 38, 38, 0.14); color: var(--sev-critical); }
+  .finding-title { margin: 0; font-size: 15px; font-weight: 500; flex: 1; min-width: 200px; }
+  .finding-location { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; color: var(--muted); }
+  .finding-note, .finding-fix { margin-top: 6px; font-size: 14px; }
+  .finding-fix strong { color: var(--muted); font-weight: 500; }
+
+  .reviewer-source {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  .mechanical {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 24px;
+    font-size: 14px;
+  }
+  .mechanical h3 { margin: 0 0 10px; font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .mechanical ul { margin: 0; padding-left: 20px; }
+  .mechanical li { margin-bottom: 4px; color: var(--text); }
+
+  footer.report-footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  footer .meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .finding-raised { margin-top: 6px; font-size: 12.5px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .finding-note code, .finding-fix code, .dim-judgment code, .mechanical code, .finding-title code, .finding-location code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em; background: rgba(120, 113, 108, 0.10); padding: 0 3px; border-radius: 3px; }
+  .merged-list { margin: 0 0 10px; padding-left: 20px; font-size: 14px; }
+  .merged-list li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="report-header">
+      <div class="title">
+        <h1>nylas_mail: theme and style system — UX Design Validation Report</h1>
+        <div class="subtitle">_bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/</div>
+      </div>
+    </header>
+
+    <div class="synthesis">
+      <p>The pair is a carefully reasoned contract that traces back to its decisions. Every decision in <code>.memlog.md</code> landed, with superseded entries (L35, L40, L49) correctly overridden by later ones (L51, L60). All 229 <code>{token}</code> references resolve, and all four journeys are complete flows. It is not yet a contract downstream can build colour from. Only one of the 24 required token sets has values (Loft, light, standard contrast), so the default look in dark mode and under Increase contrast is unspecified. The Appearance page, which is the feature's main surface, has no component tokens for its own controls. Fix the critical finding and the nine high findings before architecture. The medium and low findings can go into an Update.</p>
+      <p>The accessibility, adversarial and edge-case reviewers push the picture further, from "close the token gaps, then hand off" to "not ready for architecture as a release spec". Their 146 findings plus the rubric's 32 combine into 74: 6 critical, 25 high, 26 medium and 17 low. They converge on six areas. <strong>Default contrast policy:</strong> accessibility and adversarial both rate the mockup-exact default critical, because the most-read text sits at 2.0–3.9:1 and the fix lives on a page that renders in the failing theme. <strong>Scope of free mix:</strong> the role contract can't express three of the six themes, "style" has no technical definition behind about 40 layouts, some mixes have no visible structure, and nothing names a minimum shippable slice or the LESS-to-runtime migration underneath. <strong>Per-style frameless chrome:</strong> it is new work on Windows and Linux, at odds with Loft's inset and with where each OS puts its controls in RTL. <strong>Theme-file safety:</strong> token values have no grammar, so an installed file can inject CSS or fetch remote URLs, and identity, the last-valid cache and live reload are undefined. <strong>Forced colours:</strong> Windows Contrast themes strip the shadows and tints Loft depends on, and Linux may report no contrast signal at all. <strong>Fonts:</strong> Nylas-Pro is proprietary and Jost's bundling is unstated. Many high findings challenge deliberate decisions (L21, L31, L46, L64), which the reviewers frame as risks for the user to weigh. They agree the foundation holds, so this is fix-forward work, not a restart.</p>
+    </div>
+
+    <div class="dimension-summary">
+      <div class="dim-card">
+        <div class="dim-name">Flow coverage</div>
+        <div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Token completeness</div>
+        <div class="dim-verdict" style="color: var(--verdict-thin)">thin</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Component coverage</div>
+        <div class="dim-verdict" style="color: var(--verdict-thin)">thin</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">State coverage</div>
+        <div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Visual reference coverage</div>
+        <div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Bloat &amp; overspecification</div>
+        <div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Inheritance discipline</div>
+        <div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Shape fit</div>
+        <div class="dim-verdict" style="color: var(--verdict-strong)">strong</div>
+      </div>
+    </div>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>Flow coverage</h2>
+          <span class="verdict-pill verdict-adequate">adequate</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>No ticket Requirements were available, so <code>.memlog.md</code> journeys L25–L28 served as the source, as refined by L64, L71 and L74. All four journeys (Ines, Dev, Ruth, Marco) have a Key Flow. Each has a named protagonist, numbered steps, a marked climax and a failure path, and each name matches the memlog verbatim. Mechanically there are no misses. The findings are contradictions inside the flows.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Density's default has no rule for what happens when the style changes</h3>
+              <span class="finding-location">EXPERIENCE IA table L29; Flow 4 steps 2–3 L283–284; DESIGN Layout &amp; Spacing › Density L478–482</span>
+            </header>
+            <div class="finding-note">The IA table makes the Density default "the style's native density", while the axes are "independent". Marco picks Less-is-more (native Compact) and then picks Compact by hand, which implies density does not follow style, but the IA table implies it might. The settings schema depends on the answer: it stores either an explicit value or a "follow style" sentinel.</div>
+            <div class="finding-raised">Raised by: Rubric, Flow coverage (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> State the rule. For example: density stays on "Style default" until the user picks a level, and the control shows what that resolves to.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Theme identity and "Export a copy…" naming are undefined</h3>
+              <span class="finding-location">EXPERIENCE Flow 2 steps 1–2 and 6 L255–260; Theme Authoring › Packaging L208; Component Patterns › Install theme…</span>
+            </header>
+            <div class="finding-note">Exporting a built-in writes a complete file with all four variants and every role, so Flow 2 step 2's "derived on the variants he hasn't written" never happens unless he deletes them. Until step 6 adds <code>$metadata</code>, the copy has no defined display name and can duplicate the built-in's. The edge-case reviewer widens this into a build blocker: nothing says whether a theme is identified by filename or by <code>$metadata.name</code>, so two files with the same name (Flow 2's own path) collide; a third-party file named "Loft" or "Nylas" makes fallback copy ("Using Loft instead") ambiguous; <code>$metadata</code> is neither required nor optional; and Export's default location and filename are open.</div>
+            <div class="finding-raised">Raised by: Rubric, Flow coverage (medium); Edge cases #24 (high); Edge cases #25 (high); Edge cases #26 (medium); Edge cases #36 (medium); Edge cases #37 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Identify a theme by filename stem and display <code>$metadata.name</code> (optional, defaulting to the stem), appending the filename when names collide. Reserve built-in names: a third-party "Loft" shows as "Loft (custom)", and fallback always means the built-in. Say what Export writes (all variants, or light standard only as a starter), and pre-fill "&lt;Theme&gt; copy.tokens.json" in the themes folder with <code>$metadata.name</code> "&lt;Theme&gt; copy", then offer "Preview it".</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The theme fallback chain is circular and splits two ways</h3>
+              <span class="finding-location">EXPERIENCE Flow 1 Failure L249; State Patterns › Theme fails to load L134; memlog L65</span>
+            </header>
+            <div class="finding-note">Ines's failure path falls back to Loft when the chosen theme fails to load, but Loft is both the default and the fallback, so the path is circular unless bundled built-ins can't fail. The adversarial reviewer adds that the two fallback rules disagree: a failed theme falls back to Loft, while a missing role fills from Nylas. A Classic user with a broken theme lands on Loft's theme in Classic's layout, a mix nobody chose.</div>
+            <div class="finding-raised">Raised by: Rubric, Flow coverage (low); Adversarial F16 (fallback part) (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Say whether bundled built-ins can fail; if they can, name a terminal fallback such as a compiled-in Loft light. Fall back to the active style's native theme rather than a fixed built-in, and use one rule for failed files and missing roles.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details open>
+        <summary>
+          <h2>Token completeness</h2>
+          <span class="verdict-pill verdict-thin">thin</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>The rubric extracted every frontmatter token: 31 colours, 18 typography roles, 6 radii, 23 spacing tokens and 24 components. It resolved every <code>{path}</code> reference: 99 in the DESIGN frontmatter, 118 in the DESIGN body and 12 in EXPERIENCE. All of them resolve. The light reference set is complete, and each value carries its source. The gaps are the variants the contract itself requires, roles that are missing, and roles used outside their meaning. The adversarial reviewer escalates the role gap to critical: the contract was derived from Loft alone and cannot express three of the six themes.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">Only one of the 24 required token sets has values, and the default look's dark mode is undesigned</h3>
+              <span class="finding-location">DESIGN frontmatter <code>colors</code> L8–45; Colors › Variants L411–416; Categorical palette L394; memlog L51, L73</span>
+            </header>
+            <div class="finding-note">Only Loft light at standard contrast exists. There are no <code>-dark</code> or <code>-hc</code> keys and no theme file, yet Mode Auto follows the OS from first launch, so on any OS in dark mode the default look has no specified colours, and Ruth's flow starts in high contrast with none either. The categorical dark and high-contrast values are only "derived, then checked by hand", and none exist yet. The adversarial reviewer argues derivation can't close this: Loft separates surfaces with a 1.08:1 tint and blue-grey shadows that vanish on a dark ground, and derivation can't invent the elevation strategy dark mode needs. A large share of first users run dark mode, so their first impression is a look nobody designed. The log also contradicts itself: L73 calls for a designed dark mode for Darkside and Less-is-more, while L51 says every built-in variant is derived then hand-checked.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (critical); Adversarial F8 (high); Edge cases #5 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add Loft <code>*-dark</code>, <code>*-hc</code> and <code>*-dark-hc</code> keys, or commit <code>loft.tokens.json</code> beside the spine and link it. At minimum, write down the OKLCH derivation recipe (lightness mapping, chroma clamp, contrast solve) and mark the hand-check as a blocker. Treat Loft dark as a designed deliverable with a mockup inside the Loft epic, add an elevation-strategy role (<code>shadow | tint | border</code>), and keep undesigned dark variants out of onboarding. Track all 24 sets as build deliverables.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">The role contract is Loft-shaped, and the five ported themes have no role-level values</h3>
+              <span class="finding-location">DESIGN Colors › Theme catalogue L396–409; frontmatter <code>colors</code>; Elevation &amp; Depth L498; memlog L11, L12, L48</span>
+            </header>
+            <div class="finding-note">The catalogue gives 4–8 representative hex values per theme, taken from a comment block in a <code>.working/</code> HTML file, and nothing maps the 143 LESS variables onto the 31 colour roles (the Nylas theme has no stated <code>text-snippet</code>, <code>text-reading</code>, <code>surface-field</code>, <code>highlight-*</code>, <code>scrim</code>, <code>category-1…8</code> or <code>accent-on</code>; where a theme has no accent shadow, <code>shadow-accent</code> is unresolved). The adversarial reviewer goes further: the contract can't express three of the six themes at all. Darkside's dark sidebar and Ubuntu's dark toolbar have no regional surface role, and the Taiga style's bordered cards and outlined selection need a border ramp that Loft's single hairline role lacks. Every role added after the token API goes public is a breaking change for published third-party themes.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (high); Adversarial F1 (critical)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Run a role inventory across all six themes and the styles that ship, then add regional surfaces with <code>on-*</code> text roles (<code>surface-sidebar</code>, <code>surface-toolbar</code>), a border ramp (<code>border-subtle</code>, <code>border-default</code>, <code>border-strong</code>), selection roles and explicit "none" values (for example <code>shadow-accent: none</code>). Map LESS variables to roles per theme, or ship a token file per theme. Version the contract (<code>$metadata.contractVersion</code>) so a missing role falls back to its nearest parent role, not to the Nylas theme.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Typeface delivery and licensing are unresolved, and Nylas-Pro is proprietary</h3>
+              <span class="finding-location">DESIGN Typography L433; Theme catalogue L402–409; EXPERIENCE Component Patterns › Font select L102; <code>nylas-private-fonts/package.json</code></span>
+            </header>
+            <div class="finding-note">Nothing says Jost is bundled; if it isn't, Loft renders in Avenir Next or the system font and fails the <code>loft-01.webp</code> diff. The Taiga, Darkside and Less-is-more typefaces are only "the legacy theme's font", and nothing says whether Inter, IBM Plex Sans and Atkinson Hyperlegible ship with the app. The adversarial reviewer checked the repo: <code>nylas-private-fonts</code> is <code>"license": "Proprietary"</code>, so Nylas-Pro, the typeface of the Classic onboarding look and the upgrade target for three legacy themes, probably can't ship in a public OSS release, and redistributing it is a real copyright exposure. The edge-case reviewer notes there is no fallback when a theme's own face is missing; the Font missing state covers only the override.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (high); Adversarial F10 (high); Edge cases #39 (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Treat "where licensable" as resolved: Nylas-Pro is out. Pick an OFL stand-in with similar metrics before anyone hand-checks the Classic port, and remove <code>nylas-private-fonts</code> from the release build. Name each theme's family and stack, list the fonts the app bundles, and let a missing theme face fall back silently down its stack.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Toast tokens borrow roles that make toasts unreadable in dark themes</h3>
+              <span class="finding-location">DESIGN frontmatter <code>components.toast</code>, <code>toast-error</code> L295–302; Colors role table L357, L367; Components › Upgrade notice toast L548</span>
+            </header>
+            <div class="finding-note"><code>toast.background</code> is <code>{colors.text-strong}</code>, and <code>toast.foreground</code>, <code>toast-error.foreground</code> and the upgrade toast's action text are all <code>{colors.accent-on}</code>. In Nylas dark the heading colour is <code>#ffffff</code> and <code>accent-on</code> is white, so the toast is white on white. <code>accent-on</code> only has to contrast with the accent, not with this fill. Toasts are the only feedback for theme-load errors.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (high); Edge cases #96 (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add <code>surface-inverse</code>, <code>text-on-inverse</code> and <code>status-danger-on</code> roles, defined per variant, and repoint the toasts to them.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Contrast pairs are not enumerated, and the 360-combination sweep can't verify the floor</h3>
+              <span class="finding-location">DESIGN Colors › Measured Loft contrast L418–429; Colors › Variants; EXPERIENCE Verification Matrix; memlog L57</span>
+            </header>
+            <div class="finding-note">The measured table lists four failing pairs, but other load-bearing pairs fail at standard contrast: white on <code>status-danger</code> 3.9:1 (error toast), <code>accent-default</code> on <code>accent-tint</code> 3.5:1 (inbox badge), <code>accent-default</code> on white 3.9:1 (active nav), <code>highlight-text</code> on <code>highlight-bg</code> 4.4:1 (search hits), <code>text-secondary</code> and <code>text-snippet</code> on <code>surface-sunken</code> 2.3:1 and 2.0:1, and <code>icon-default</code> on white 2.5:1 against the 3:1 icon target. The edge-case reviewer notes the derivation is said to "pass AA automatically" with no pair list defined anywhere. Accessibility and adversarial both find the sweep can't guarantee the floor: axe checks computed text contrast only, missing focus rings, icons, dots, boundaries and any state not on screen; 180 of the 360 runs will be red by design at standard contrast, hiding real regressions; text size, RTL, the OSes, forced colours and third-party themes are excluded; and no screenshot, axe or Electron-driver dependency exists, so the sweep has no harness and about 2,160 baselines to approve.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (medium); Accessibility H5 (high); Adversarial F9 (high); Edge cases #30 (high); Edge cases #97 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Publish one role-pair table in DESIGN › Colors: each foreground role × each background role it is used on, per component and state, with its 4.5:1 or 3:1 threshold. Derivation, the author guide and a deterministic unit-test lint across all 24 built-in variants read that table, and the lint runs at install and live reload on third-party files. Keep a baseline of known standard-contrast failures so new ones show. Limit visual baselines to native pairs plus a small adversarial set, drive states in the screenshot pass, budget manual screen-reader passes of the four flows, and build the Electron screenshot harness as its own costed story.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Text roles for categorical fills and unread rows are missing</h3>
+              <span class="finding-location">DESIGN Categorical palette L377–394; Components › Message row L537, Calendar view L545; frontmatter L243</span>
+            </header>
+            <div class="finding-note">Avatar initials and calendar chip labels sit on category fills with no text role, so each style would pick its own colour, which free mix forbids, and high-contrast variants need such a role to pass 4.5:1. The unread subject is "darker", but <code>message-row.subject-color</code> is <code>text-strong</code> for read and unread rows alike, and no role is darker. Accessibility notes <code>text-strong</code> on <code>category-1</code> passes at 6.69:1 today, but no rule requires it.</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (medium); Edge cases #85 (medium); Adversarial F19 (initials part); Accessibility M6 (palette part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add <code>text-on-category</code> (or per-category <code>-on</code> roles) at 4.5:1 or better per variant, and add those pairs to the contrast pair table. Add <code>text-unread</code>, or state that unread differs by the dot alone.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Shadow roles sit outside the token contract</h3>
+              <span class="finding-location">DESIGN header note L318; Elevation &amp; Depth L490–498; EXPERIENCE Theme Authoring › Contents L200</span>
+            </header>
+            <div class="finding-note">The three shadow roles exist only as literals in <code>components</code> and as names in the Elevation table. Theme authors writing DTCG shadow tokens have no role keys to target, and the legacy themes' shadows are described only in words ("small 1px", "hairline").</div>
+            <div class="finding-raised">Raised by: Rubric, Token completeness (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> List the shadow role keys and their values for each theme, in Theme Authoring or in an extension group in the frontmatter.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details open>
+        <summary>
+          <h2>Component coverage</h2>
+          <span class="verdict-pill verdict-thin">thin</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>The rubric extracted 24 frontmatter components, 18 rows for Loft surfaces and 12 for the Appearance page in DESIGN, and 31 rows in EXPERIENCE Component Patterns. The mail surfaces are well covered in both spines. The Appearance page has thorough behavioural rows, but its visual specs are prose only, and three of them are explicitly open.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">The Appearance page's own controls have no tokens or state visuals</h3>
+              <span class="finding-location">DESIGN Components › Appearance page L551–568; frontmatter <code>components</code> L303–311</span>
+            </header>
+            <div class="finding-note">The frontmatter covers only <code>appearance-preview</code>, <code>appearance-mini-preview</code> and <code>apply-bar</code>. None of the page's controls has a radius, size, or selected, hover, focus or disabled appearance: the style card, theme swatch, segmented controls (Mode, Contrast, Density, Pending/Applied), slider, select, switch, the "Previewing" and "Applied" tags, the OS-state chip and the derived badge. Apart from its text tag, a selected card has no visual. This is the feature's main surface.</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add a component token for each control, with its state visuals, read from role tokens only.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">The "separate Preferences window" doesn't exist, and its owning style is undefined</h3>
+              <span class="finding-location">DESIGN Components › Appearance page L553; EXPERIENCE IA L39; Responsive &amp; Platform L178; memlog L59; <code>preferences/lib/main.jsx:54</code></span>
+            </header>
+            <div class="finding-note">Appearance "renders in the applied theme", but nothing says which style's radius, spacing and title bar the frameless Preferences window uses, or whether it takes the applied text size and font, which Ruth needs. The adversarial reviewer found the premise is false: Preferences is a Sheet pushed inside the main window (<code>Actions.pushSheet</code>), not a separate window, though the spines say "separate Preferences window" six times. A real separate window would be a new renderer with no mail stores, and "your own inbox in the preview" would mean shipping thread data across processes.</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (medium); Edge cases #11 (medium); Adversarial F7 (premise part) (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Fix the premise in the spines: Appearance stays a sheet, or a new window becomes an explicit, scoped decision. Then state the rule for its look, for example: Preferences uses the applied theme, contrast, text size and font, with its own fixed layout rather than the style's.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Some interactive and data-driven elements have no behavioural or visual spec</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Top bar L112, Calendar view L119; DESIGN Components › Right rail L541, Reading card L540</span>
+            </header>
+            <div class="finding-note">The bell has no behaviour in either spine. Nothing says what data drives the presence dot. The "Show remote images" chip has no visual spec and no persistence rule (per message or per sender). The account switcher dropdown rows have no visual spec. Modals and popovers (New event, New contact, event detail, day popover) have no <code>modal</code> or <code>popover</code> component, although <code>rounded.xl</code>, shadow-card and <code>scrim</code> all cite "modals".</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add the rows, or defer each element by name to a feature epic in Open Questions.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">"Numbered markers" are email content, not a component</h3>
+              <span class="finding-location">DESIGN Colors role table L364; Elevation &amp; Depth L496</span>
+            </header>
+            <div class="finding-note">They are listed as accent-filled elements with shadow-accent, but in <code>loft-01.webp</code> and <code>loft-02.webp</code> the numbered circles 1–3 sit inside the email body, which is sender HTML, not app chrome. A consumer will either hunt for a component that doesn't exist or apply app tokens to email content.</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Remove "numbered markers", or reclassify them as example email content.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Component names differ between the spines</h3>
+              <span class="finding-location">DESIGN Components; EXPERIENCE Component Patterns, IA</span>
+            </header>
+            <div class="finding-note">EXPERIENCE has one "Search pill / search overlay" row where DESIGN has two; "Message list / message row" against "Message row"; five control rows (Mode, Contrast, Density, Font, Adapt) against "Display rows"; two rows for "Install theme…" and "Theme author link" against one combined row; and "Upgrade notice toast" and the '"New: Appearance" notice' have no DESIGN row.</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use one name per component in both files.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Several DESIGN components have no Component Patterns row</h3>
+              <span class="finding-location">DESIGN Components; EXPERIENCE Component Patterns</span>
+            </header>
+            <div class="finding-note">Focus ring, App frame / app card, Older thread messages, Badge, Nav item and the primary and secondary buttons have no behaviour row. Their behaviour lives elsewhere or is static. The buttons have no press or disabled behaviour, because Loft's 0.12s transitions and its 1px press nudge were dropped in the reconcile.</div>
+            <div class="finding-raised">Raised by: Rubric, Component coverage (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add short rows, or note that these components are static.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>State coverage</h2>
+          <span class="verdict-pill verdict-adequate">adequate</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>The rubric walked every IA surface: Preferences window, Preferences › Appearance, the onboarding looks step, the "New: Appearance" notice and the themes folder. Appearance is strong on the pending, applied, derived, load-failure, invalid-file, live-reload, name-clash and missing-font states. Deferring the empty, loading and error states of the mail surfaces to the feature epics is explicit and defensible (L146). Every extra reviewer found more states here, so several findings below absorb theirs.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Forced colours and Linux high contrast are unhandled, and the platform signals are unverified</h3>
+              <span class="finding-location">EXPERIENCE State Patterns › OS Increase contrast on L133; Responsive &amp; Platform L180–181; Flow 3 steps 3–4 L271–272; Voice and Tone L72; DESIGN Elevation &amp; Depth</span>
+            </header>
+            <div class="finding-note">Ruth's flow depends on Electron reading <code>prefers-contrast</code> on Windows and Linux, and on an OS text scale being readable, yet no code reads <code>prefers-contrast</code>, <code>forced-colors</code> or <code>nativeTheme.shouldUseHighContrastColors</code> today. Windows Contrast themes turn on <code>forced-colors: active</code>, which overrides every token (the hand-checked high-contrast variant included) and strips <code>box-shadow</code>. In Loft that erases every region and control boundary, the selected card's fill, segmented-control selection, the unread and presence dots and category colour. On Linux Chromium probably maps neither GNOME's high-contrast switch nor a usable dark signal, so Follow system and Auto may never fire, and Flow 3's "Failure: none for built-in themes" quietly fails there. The chip string "Following macOS: on" has no Windows or Linux version, and nothing covers an OS that reports nothing.</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (high); Accessibility H2 (high); Adversarial F4 (Windows and Linux part); Edge cases #3 (high); Edge cases #4 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Run a spike on all three OSes before architecture. Honour forced colours (all three reviewers lean this way) with a contract every style meets: boundaries as borders in a transparent role, selection in <code>Highlight</code>/<code>HighlightText</code>, focus drawn with <code>outline</code>, dots in <code>currentColor</code>, and no broad <code>forced-color-adjust: none</code>. Show "Windows contrast theme is on" by the contrast control. On Linux read GNOME's high-contrast key in the main process, or show "Your system doesn't report this" and resolve to Off and Light. Add per-OS chip strings, and add light and dark Contrast themes to the checks.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Users of community LESS themes have no upgrade rule, and upgraders' onboarding is ambiguous</h3>
+              <span class="finding-location">EXPERIENCE State Patterns › Upgrade from a legacy theme L140; Theme Authoring › Legacy L206; IA Onboarding L41</span>
+            </header>
+            <div class="finding-note">The spines map the six built-in themes only. A user whose <code>core.themes</code> names a community LESS theme gets no fallback look and no message, and Install theme… pointed at an old LESS theme would show a confusing generic error. The adversarial reviewer adds that the upgraded Classic gains a top-bar search, an account chip and a right rail, so "the original three-pane layout" changes under users who were promised continuity, and the split/list <code>layoutMode</code> preference isn't mapped. Nothing says whether upgraders see the onboarding looks step, which is "shown on every first launch", or only the toast.</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (high); Adversarial F20 (medium); Edge cases #44 (high); Edge cases #50 (medium); Edge cases #34 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add a state row: an unknown legacy theme lands on Classic + Nylas (Mode Dark pinned if the old theme was detectably dark), and the toast names the theme that no longer loads. Add an Install error: "This looks like an old LESS theme. Nylas Mail now uses token files." Map <code>layoutMode</code> explicitly, and keep Classic's new regions in the existing Locations or make them opt-in. Upgraders get the toast only; "first launch" means no accounts are configured.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">The embedded live preview has no focus, screen-reader or data model</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Appearance preview L92, Pending/Applied switch, Mini-preview; Accessibility Floor L164–172; memlog L18, L41, L45, L75</span>
+            </header>
+            <div class="finding-note">The preview renders the real app as "view-only". If it isn't inert, Tab walks through a second inbox and screen readers read out the user's mail; if it is inert, keyboard users can't scroll it. Its own live regions and toasts (new mail, sync) may fire into the screen reader, and the Pending/Applied switch has no semantics. The adversarial reviewer calls the build underestimated: in one DOM the page must render two styles, themes, densities and text sizes, plugins registered into Locations will render inside the preview with live side effects, and a 160px scaled strip can't show a density or text-size change legibly, which is the mini-preview's whole job. The edge-case reviewer asks what the preview shows on a fresh account with no mail yet, given Flow 1 promises "her own inbox".</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (high); Accessibility M1 (medium); Adversarial F7 (preview part) (high); Edge cases #19 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Render the real components (message list, reading card, top bar) on fixture data inside a container scoped by <code>[data-style][data-theme][data-density]</code>, with plugin Locations stubbed and notifications suppressed. Make the content <code>inert</code> and <code>aria-hidden</code> inside a focusable <code>role="region"</code> wrapper named, for example, "Preview: Loft style, Taiga theme, pending", scrollable with arrow and Page keys, and point <code>aria-describedby</code> at the apply-bar summary. Build Pending/Applied as a two-option radio group. Make the mini-preview an unscaled crop of two or three rows, kept out of the tab order. Label fallback content "Sample messages" when the inbox is empty.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">The theme lifecycle has gaps: removal, deletion while running, the last-valid cache</h3>
+              <span class="finding-location">EXPERIENCE State Patterns L134–138; Component Patterns › Install theme… L105; Theme Authoring L201–204</span>
+            </header>
+            <div class="finding-note">There is no way to remove an installed theme or reveal the themes folder. Nothing covers the applied or pending theme's file being deleted or renamed while the app runs, a missing or unwritable themes folder during Install or Export, Install pointed at a file already in the folder (Replace onto itself risks truncating it), Replace against a built-in's name, or "Keep both" naming. Both fallback rules rely on a "last valid version", but nothing says where it is stored, when it is written, or whether it survives a restart, a deletion or a reinstall.</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (medium); Edge cases #27 (high); Edge cases #28 (high); Edge cases #38 (high); Edge cases #18 (medium); Edge cases #33 (medium); Edge cases #35 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add "Remove…" (with confirmation) and "Show in folder" to third-party swatches. Cache each theme's last valid parse in the app data directory, outside the themes folder, keyed by theme id and written after every successful load. A deleted active theme keeps rendering from cache for the session with a persistent toast, then falls back on next start; a deleted pending theme reverts the pending theme to the applied one. Detect same-path installs ("'Ocean' is already installed"). "Keep both" appends " 2" to the stem and the display name.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The onboarding looks step has no defined controls, keyboard model or fit at 150%</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Onboarding look card L107; Interaction Primitives › Banned L160; Voice L83; Flow 1 L245–246; Flow 3 L273; <code>window-manager.js:240-250</code></span>
+            </header>
+            <div class="finding-note">Picking a card "applies directly", and Flow 1 implies it also advances to the inbox, yet Ruth sets text size on the slider in the same step, so she must do it before picking; only "Skip" is named. If the cards are radios with selection following focus, each arrow press applies a whole look, and it is unclear whether the slider applies live given the ban on applying outside the preview. Accessibility adds that on macOS Ruth gets through account setup and OAuth at 100% text before she reaches the slider. The adversarial reviewer notes the onboarding window is fixed at 900×600 and non-resizable, so the heading, three cards and slider won't fit at 150%, and the slider adds a control to the one-click step L64 protects.</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (medium); Accessibility M9 (medium); Adversarial F17 (medium); Edge cases #55 (medium); Edge cases #56 (medium); Edge cases #57 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> A pick applies, selects the card and re-themes the step; a "Continue" button advances; re-picking is allowed; Skip reads "Skip (uses Loft)". Choose one keyboard model (buttons named by look plus description, or a radio group under the style-card rules), and give the slider <code>aria-valuetext</code> "125%". Resize the step live and let the window grow or scroll. Consider a single "Aa" affordance that opens the slider inline, plus an Increase contrast switch and a "⌘+ to zoom" hint on the first onboarding screen.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Toasts have no announcement, pause or keyboard rule</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Toast L121; Accessibility Floor; DESIGN <code>components.toast-error</code></span>
+            </header>
+            <div class="finding-note">Standard toasts auto-dismiss after 5 seconds with no live-region rule and no pause on hover or focus, which leaves a screen-reader user no time to read them. Persistent error toasts have no keyboard route, and roles aren't stated.</div>
+            <div class="finding-raised">Raised by: Rubric, State coverage (low); Accessibility L1 (low); Edge cases #92 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use <code>role="status"</code> for standard toasts and <code>role="alert"</code> for errors. Pause on hover and focus, and lengthen the timeout for longer messages. Add F6 or a shortcut that focuses the toast stack, and let Esc dismiss the focused toast. Put the rule in one line of the Accessibility Floor.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>Visual reference coverage</h2>
+          <span class="verdict-pill verdict-adequate">adequate</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>Visual reference files: <code>imports/loft-01.webp</code>, <code>imports/loft-02.webp</code>, <code>imports/loft-DESIGN.md</code>, <code>imports/loft-global.css</code> and <code>.working/appearance-directions.html</code> (there is no <code>mockups/</code> or <code>wireframes/</code> folder). Every file is linked inline at least once, so there are no orphans. Each spine states once that the spine wins on conflict: DESIGN at L510, EXPERIENCE at L45.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The only Appearance layout reference lives in <code>.working/</code> and drifts from the spine</h3>
+              <span class="finding-location">DESIGN Theme catalogue L398; Components L510; EXPERIENCE IA L45; Voice L70</span>
+            </header>
+            <div class="finding-note"><code>.working/appearance-directions.html</code> is the only layout reference for the Appearance page and the only source of the legacy theme hex values, which sit in a style comment, but consumers treat <code>.working/</code> as scratch. The mockup's Theme intro reads "Colour, type, corner and shadow tokens.", which EXPERIENCE quotes as "(mockup)" in an edited form, and its Increase contrast control is a two-state switch, not the spine's three-way segmented control.</div>
+            <div class="finding-raised">Raised by: Rubric, Visual reference coverage (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Move the file to <code>mockups/</code> and link direction A by anchor. Lift the legacy hex extraction into the spine or into theme files. Mark the Voice quote as edited.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title"><code>reconcile-loft-DESIGN.md</code> is stale but linked as the record of dropped content</h3>
+              <span class="finding-location">EXPERIENCE IA L61</span>
+            </header>
+            <div class="finding-note">It cites Open Questions 6, 7, 9, 13 and 14 and [GAP] items that no longer exist, a <code>settings-measure</code> token, an "Add account" sidebar label and seven themes. It lists highlight escaping and Ctrl+K as dropped, though both are now carried, and calls the CSS-wins badge value "not a memlog decision", though memlog L77 now covers it.</div>
+            <div class="finding-raised">Raised by: Rubric, Visual reference coverage (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Re-run the reconcile, or add a "superseded snapshot" header and move the list of dropped items into the spine.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">The two Loft images aren't told apart</h3>
+              <span class="finding-location">DESIGN Components L510; EXPERIENCE Inspiration L228</span>
+            </header>
+            <div class="finding-note">Both are described as the "main mail view". <code>loft-01</code> is the framed composition (app card on the ground) and the verification target; <code>loft-02</code> is a full-bleed crop with no app-frame inset.</div>
+            <div class="finding-raised">Raised by: Rubric, Visual reference coverage (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Say what each image illustrates, and that the app-frame inset follows <code>loft-01</code>.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>Bloat &amp; overspecification</h2>
+          <span class="verdict-pill verdict-adequate">adequate</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>DESIGN's editorial prose is restrained and tied to decisions. EXPERIENCE prose stays behavioural. The main cost is that the same rules are restated across sections, not that the files are padded.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The same rules are restated across sections</h3>
+              <span class="finding-location">DESIGN Variants L416, Do's L578; EXPERIENCE State Patterns L132, Accessibility Floor L166, Theme Authoring L204, Verification L223, Flows 2 and 3</span>
+            </header>
+            <div class="finding-note">The AA thresholds (4.5:1 and 3:1) appear about 8 times, the window-chrome rule 5 times, the narrow-window collapse rule 3 times, and the text size and zoom rule 5 times. Each copy is a drift risk.</div>
+            <div class="finding-raised">Raised by: Rubric, Bloat &amp; overspecification (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Give each rule one owning section, and have the others link to it.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Pixel literals stand in for existing tokens</h3>
+              <span class="finding-location">DESIGN Components › Right rail L541; EXPERIENCE L94, L153</span>
+            </header>
+            <div class="finding-note">The right-rail email and timeline snippets are "12px", which is <code>{typography.meta}</code>. EXPERIENCE says "about 160px", which is <code>{spacing.appearance-mini-preview}</code>. Avatar sizes 36, 40, 44 and 72 are scattered literals.</div>
+            <div class="finding-raised">Raised by: Rubric, Bloat &amp; overspecification (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Reference the tokens, and consider adding avatar size tokens.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">The feature-scope boundary is inconsistent</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns; State Patterns L146</span>
+            </header>
+            <div class="finding-note">Component Patterns specifies feature behaviour for Calendar (popover versus side panel), Contacts, Compose and the search operators, while State Patterns hands those surfaces' states to the feature epics. The adversarial reviewer's release-scope finding turns on the same seam (see "No minimum shippable slice" under the adversarial review).</div>
+            <div class="finding-raised">Raised by: Rubric, Bloat &amp; overspecification (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Keep only the contracts for cross-style placement and the security contract, and link the feature epics for the rest.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>Inheritance discipline</h2>
+          <span class="verdict-pill verdict-adequate">adequate</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>Journey names match memlog L25–28 verbatim. EXPERIENCE token references all resolve to DESIGN tokens by name. Theme and style names agree across both spines.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Neither spine has <code>sources</code> frontmatter, and the tracking issue is stale</h3>
+              <span class="finding-location">DESIGN and EXPERIENCE frontmatter; GitHub issue #1 "Themes" bullet; memlog L55, L60</span>
+            </header>
+            <div class="finding-note">The tracking issue (<code>heyjawrsh/nylas-mail#2</code>) isn't referenced, and its body is stale: its Themes bullet lists seven themes ("Light, Dark, Ubuntu, Taiga, Darkside, Less-is-more and Loft"), against the spines' six with Nylas. A PO slicing epics from the issue would produce separate Light and Dark theme stories.</div>
+            <div class="finding-raised">Raised by: Rubric, Inheritance discipline (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add <code>sources:</code> (the memlog, issue #1 and the imports), and update the issue's Themes bullet.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Contrast-variant naming drifts, and the theme file's shape is unspecified</h3>
+              <span class="finding-location">DESIGN Brand &amp; Style L331, frontmatter L11, L322; EXPERIENCE Verification Matrix L217, Theme Authoring L199–200; memlog L32</span>
+            </header>
+            <div class="finding-note">The variant is "high contrast" in DESIGN and "increased" in the frontmatter comment and the Verification Matrix; the setting is "Increase contrast". Theme Authoring doesn't define how a DTCG file expresses mode × contrast, or whether roles are flat (<code>surface-app</code>) or nested (<code>surface.app</code>); DESIGN says only "may nest". The adversarial reviewer notes the DTCG format module has no concept of modes (they live in the separate Resolver spec or in vendor <code>$extensions</code>), so a single four-variant <code>.tokens.json</code> is a Nylas-specific convention, and the Figma and Tokens Studio interop claim holds only after a documented conversion. The edge-case reviewer adds file-shape cases nobody answers: a theme that ships only dark (derivation runs only from light), an intentionally single-mode theme, a file that sets style-owned radius or spacing, and a newer-version file read by an older app.</div>
+            <div class="finding-raised">Raised by: Rubric, Inheritance discipline (medium); Adversarial F16 (modes part); Edge cases #6 (high); Edge cases #40 (medium); Edge cases #7 (low); Edge cases #41 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use one term: "high contrast" for the variant, "Increase contrast" for the setting. Specify the file shape now (the DTCG Resolver or a documented <code>$extensions.nylas.modes</code>) with a minimal example, and ship a converter for Figma and Tokens Studio exports. Define the derivation source order (light standard, then dark standard, then whatever exists), allow <code>$metadata.modes</code>, ignore style-owned tokens with an author warning, and add <code>$metadata.schemaVersion</code> so a newer major version is rejected clearly.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">The RTL overhang wording conflicts with the frontmatter key</h3>
+              <span class="finding-location">EXPERIENCE Responsive &amp; Platform L182, Accessibility Floor L169; DESIGN L538</span>
+            </header>
+            <div class="finding-note">Responsive &amp; Platform says the selected card "overhangs at inline-start", but the key is <code>overhang-inline-end</code>. The edge-case reviewer confirms it is geometrically consistent (the list's inline-end edge is the reading pane's inline-start edge) but easy to build mirrored twice. With logical properties, RTL needs no special handling, and the extra sentences invite a wrong flip.</div>
+            <div class="finding-raised">Raised by: Rubric, Inheritance discipline (low); Edge cases #69 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Say "past the list's inline-end edge, into the reading pane" everywhere, and add an RTL reference screenshot.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary>
+          <h2>Shape fit</h2>
+          <span class="verdict-pill verdict-strong">strong</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>DESIGN sections are in canonical order (Brand &amp; Style → Colors → Typography → Layout &amp; Spacing → Elevation &amp; Depth → Shapes → Components → Do's and Don'ts), with Open Questions appended after them. EXPERIENCE has every required default. Responsive &amp; Platform is triggered (three OSes and window widths) and present. Inspiration is triggered (directions B and C rejected, plus the legacy themes and the Loft mockup) and present. Three sections are invented: Email Body Rendering and Theme Authoring earn their place (the authoring API is user-facing, memlog L24); the Verification Matrix is decision-backed (L57) but is acceptance criteria and could live in the ticket.</p>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">The frontmatter departs from the spec in places</h3>
+              <span class="finding-location">EXPERIENCE frontmatter; DESIGN <code>spacing</code>, <code>components.appearance-mini-preview</code></span>
+            </header>
+            <div class="finding-note">EXPERIENCE lacks the <code>name</code> and <code>sources</code> that both examples carry. DESIGN <code>spacing</code> holds <code>app-min-width</code>, which isn't spacing, and <code>components.appearance-mini-preview.position: sticky</code> is CSS behaviour, not a token.</div>
+            <div class="finding-raised">Raised by: Rubric, Shape fit (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add the missing keys. Move <code>app-min-width</code> to a layout note or a <code>size</code> group, and move <code>position</code> to prose.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="reviewer-section">
+      <details>
+        <summary>
+          <h2>Accessibility review</h2>
+          <span class="reviewer-source">review-accessibility.md</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p><strong>Verdict: not ready for a public release as specified. Fix forward; nothing needs a restart.</strong> Standard: WCAG 2.2 AA, plus macOS, Windows and Linux platform accessibility conventions. Ratios come from the WCAG relative-luminance formula applied to the token hexes, not from renders, so in-place ratios will be slightly worse. Platform-behaviour claims are marked <em>verify</em> where they need a spike.</p>
+            <p>The spines do more for accessibility than most theme systems: an explicit Increase contrast axis that follows the OS, a text-size setting separate from zoom, a reduced-motion rule, RTL through logical properties, radio-group semantics, text tags instead of tint, a labelled apply bar, and an onboarding text-size slider. The foundation is sound. Five problems stand between it and an AA claim: the default experience is below AA, with the only path to AA a setting most affected users will never turn on (deliberate, L21 and L35); the focus ring cannot meet its own 3:1 rule; Windows Contrast themes and GNOME high contrast are not handled; the accessibility settings sit behind Preview → Apply; and reflow is defined only down to "collapse the rail, then the folders". The 360-combination sweep cannot catch most of these, because axe doesn't test focus indicators, non-text contrast, states, forced colours or reflow.</p>
+            <p>Where a finding challenges a deliberate decision, the reviewer frames it as a risk to weigh, not an error. Raw count: 1 critical, 5 high, 12 medium, 7 low (25).</p>
+            <p><strong>Also raised here, merged into findings elsewhere in this report:</strong></p>
+            <ul class="merged-list">
+              <li><code>H5</code> → Contrast pairs are not enumerated, and the 360-combination sweep can't verify the floor <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>M6 (palette part)</code> → Text roles for categorical fills and unread rows are missing <span class="reviewer-source">(Token completeness, medium)</span></li>
+              <li><code>H2</code> → Forced colours and Linux high contrast are unhandled, and the platform signals are unverified <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>M1</code> → The embedded live preview has no focus, screen-reader or data model <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>M9</code> → The onboarding looks step has no defined controls, keyboard model or fit at 150% <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>L1</code> → Toasts have no announcement, pause or keyboard rule <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>M8</code> → Per-style frameless chrome on three operating systems is a platform project <span class="reviewer-source">(Adversarial review, high)</span></li>
+              <li><code>L4</code> → Density regresses Classic and contradicts Less-is-more's own signature <span class="reviewer-source">(Adversarial review, medium)</span></li>
+              <li><code>M7 (memory part)</code> → View original memory has no key or scope <span class="reviewer-source">(Edge-case review, medium)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">The default look fails AA, and Increase contrast is the only way out</h3>
+              <span class="finding-location">DESIGN Brand &amp; Style; Colors › Measured Loft contrast; Do's and Don'ts; EXPERIENCE Accessibility Floor › Increase contrast; IA; memlog L21, L24, L35, L71</span>
+            </header>
+            <div class="finding-note">Deliberate (L21, L35), so both reviewers frame it as a risk to weigh. In the default look (Loft style, Loft theme, light, standard contrast) the most-read text fails 4.5:1: list snippets 2.02:1 on <code>surface-sunken</code>, sender and time 2.33:1, nav labels, dates and the Appearance explanations 2.52:1, every email body 3.03:1, primary button labels and the selected-row subject 3.94:1, the inbox badge 3.54:1, search hits 4.44:1. WCAG technique G174 lets a toggle satisfy 1.4.3 only if the control sits on the page and meets contrast itself; here it lives in Preferences, which renders in the failing theme, so a low-vision user reads a 2.3:1 page to find the fix. On macOS and Windows "Increase contrast" means more than a legible default, and people with mild low vision, ageing eyes or glare rarely turn it on. The adversarial reviewer calibrates the risk: legal exposure is low for a solo OSS maintainer (the EAA and Section 508 don't bind it), but reputational and user-harm risk is high, because audits and distro reviewers check the default, and "accessible only if you find a toggle" reads as a defect. It also collides with L24: "accessibility is not optional".</div>
+            <div class="finding-raised">Raised by: Accessibility C1 (critical); Adversarial F4 (critical)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Both reviewers prefer the same fix: make standard contrast AA for text and keep everything else mockup-exact (tints, dividers, decoration). <code>text-reading</code> <code>#8b95a5</code> → <code>#6b7585</code> gives 4.66:1; <code>#646e7d</code> for secondary text gives 4.77:1 on <code>surface-sunken</code> and 5.16:1 on white; <code>accent-hover</code> <code>#1e63d0</code> (or <code>#2a6fe0</code>) under white labels gives 5.6:1 (4.72:1). Offer the exact mockup as an opt-in ("Reference contrast", or Increase contrast "Off (reference colours)"), and let Increase contrast On go beyond AA. If the decision stands, meet G174 properly: Preferences, onboarding and the contrast control always render at AA whatever the applied theme, Increase contrast joins the onboarding step and a View menu command, and the release notes say the default doesn't meet AA.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">A focus ring bound to <code>accent-default</code> can't meet 3:1 in five of six themes</h3>
+              <span class="finding-location">DESIGN frontmatter <code>components.focus-ring.color</code>; Components › Focus ring; EXPERIENCE Accessibility Floor › Focus</span>
+            </header>
+            <div class="finding-note">L67 requires 3:1 in every variant, and L21 keeps accents reference-exact; once the ring is bound to the accent, the two contradict. Legacy accents against their own panels: Nylas light 2.88, Ubuntu 2.83, Darkside 2.59, Taiga 2.46 (2.27 on its tint), Nylas dark 2.67 and 2.23. Only Loft (3.94) and Less-is-more (5.53) pass. On accent-filled elements (the selected card, primary buttons) an accent ring 2px from an accent fill is 1.0:1 and reads as a slightly bigger button. <code>imports/loft-global.css</code> sets <code>outline: none</code> on focused inputs, and the mockup draws select focus as a <code>box-shadow</code>, which vanishes under forced colours. The edge-case reviewer adds that a weak third-party accent makes "3:1 against adjacent colours" unreachable.</div>
+            <div class="finding-raised">Raised by: Accessibility H1 (high); Edge cases #90 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add a dedicated <code>focus-ring</code> colour role to the contract and DTCG schema; no mockup draws focus, so it may differ from the reference. Derive it for third-party themes with the same 3:1 guarantee, or use a two-tone ring (<code>focus-ring</code> plus a <code>surface-panel</code> or <code>text-strong</code> halo) that reaches 3:1 on any background, accent fills included. Add a Don't: never port <code>outline: none</code>, and draw focus with <code>outline</code>, not <code>box-shadow</code>.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Accessibility settings wait behind Preview → Apply and are discarded silently</h3>
+              <span class="finding-location">EXPERIENCE Interaction Primitives › Preview, then Apply; State Patterns › Leaving Appearance with pending changes; Flow 3; memlog L31, L64, L71</span>
+            </header>
+            <div class="finding-note">Deliberate, and a risk to weigh. Ruth raises text size to 150% or turns Increase contrast on, and only the embedded preview changes; the controls, labels and the Apply button she must find stay at the old size and contrast. If she closes the window she loses the change without notice, and the edge-case reviewer notes nothing says whether switching Preferences tabs also counts as closing. Preview → Apply suits taste decisions (style, theme). It is the wrong model for access needs. The two reviewers differ only on font: accessibility would apply it at once, adversarial would keep it previewed.</div>
+            <div class="finding-raised">Raised by: Accessibility H3 (high); Adversarial F11 (high); Edge cases #12 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Take Increase contrast and text size (and arguably Mode and font) out of the pending set, so they apply at once to the whole app, Appearance included, with a 10-second Undo toast; keep Preview → Apply for style, theme and density. Never discard silently: keep pending changes while the Preferences window stays open and across close and reopen, or ask on close.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Reflow is defined only down to "collapse the rail, then the folders"</h3>
+              <span class="finding-location">EXPERIENCE Responsive &amp; Platform › Narrow windows, Text size and zoom; DESIGN Layout &amp; Spacing › Window chrome and minimum width; frontmatter <code>spacing</code>; <code>imports/loft-global.css</code>; memlog L30, L69</span>
+            </header>
+            <div class="finding-note">Reaching 200% text needs text size 150% plus zoom of about 133%, leaving about 825 CSS px in an 1100px window. The top bar needs about 1040 and has no collapse rule; after the rail and folders collapse, the reading card gets about 330px; at 400% zoom (320 CSS px) nothing is defined. "Folders" could mean the whole sidebar or only its list, nothing says where collapsed regions go or how to reach them, and steps that don't apply (no rail in Calendar) aren't explicitly skipped. Fixed heights clip at 150%: a 22px badge holding 18px type, a 40px search pill, a 72px top bar. It is unstated whether <code>app-min-width</code> is CSS px after zoom, and the other four styles declare no minimum. The adversarial reviewer adds that a 1280×800 laptop at 125% scaling gives about 1024 CSS px, so the default look opens with its rail already collapsed, and the source CSS does the opposite of the rule (<code>min-width: 1100px</code>, scrolling sideways).</div>
+            <div class="finding-raised">Raised by: Accessibility H4 (high); Adversarial F18 (medium); Edge cases #8 (high); Edge cases #73 (high); Edge cases #10 (medium); Edge cases #74 (medium); Edge cases #75 (medium); Edge cases #9 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define the full collapse ladder in CSS px, so zoom and text size trigger it: rail becomes a toggle overlay; sidebar becomes an icon strip, then a menu button; search pill becomes an icon and the account chip its avatar; a final single-pane mode (list ↔ reading, with Back) down to 320 CSS px. Every collapsed region opens from a named <code>aria-expanded</code> button, steps skip per view, and every step reverses. Widths become <code>max-*</code>, heights become <code>min-height</code>, and rows grow past the density floor. Bound the guarantee (for example 150% text or 125% zoom at a 1280px window), set each style's minimum width in its epic, and add 150% plus 200% zoom, 400% zoom and the 1.4.12 spacing check to the sweep.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Dark email adaptation hides transparent logos and has no contrast floor</h3>
+              <span class="finding-location">EXPERIENCE Email Body Rendering; View original toggle; Open Questions 2; DESIGN <code>colors.text-reading</code>; Do's and Don'ts; <code>ui-dark/styles/email-frame.less</code></span>
+            </header>
+            <div class="finding-note">"No text below the active contrast floor" has no number at standard contrast, where themes are below AA by design, so the adaptation could legally aim for 3:1. Plain-text bodies use the app's own <code>text-reading</code> at 3.03:1, which isn't sender content, so the third-party exemption doesn't apply. "Images untouched" plus darkened backgrounds makes dark logos and signatures on transparent PNGs disappear, the most common corporate email failure. The adversarial and edge-case reviewers add that senders who ship their own dark CSS get adapted twice, mixed light and dark sections are unaddressed, and nothing sets precedence between View original or Adapt off and Increase contrast. This replaces today's <code>invert() hue-rotate(180deg)</code>, so it is new work, not a port.</div>
+            <div class="finding-raised">Raised by: Accessibility M7 (medium); Adversarial F15 (medium); Edge cases #60 (high); Edge cases #65 (high); Edge cases #59 (medium); Edge cases #62 (medium); Edge cases #61 (low); Edge cases #68 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Set the adapted-text floor at 4.5:1 at both contrast levels. Give transparent images a light backing plate, which changes their surroundings, not their pixels. Detect sender dark CSS (<code>color-scheme</code>, <code>prefers-color-scheme</code>) and adapt only bodies that declare none; leave already-dark sections alone. State that an explicit user choice wins, with an "Original colours may be hard to read" note under Increase contrast. Plain text is theme-rendered with no toggle; open bodies re-adapt when the OS flips; under forced colours Chromium forces the frame. Put these fixtures in the spike's corpus.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Esc discards every pending change, with no undo</h3>
+              <span class="finding-location">EXPERIENCE Interaction Primitives › Esc; State Patterns › Leaving Appearance with pending changes; Voice ("Esc discards")</span>
+            </header>
+            <div class="finding-note">Deliberate (L31, L64), and a risk to weigh. Counting Esc presses is fragile: native <code>&lt;select&gt;</code> popups on macOS are OS menus whose Esc never reaches the page, so the user's next Esc discards every pending change. Screen-reader users press Esc reflexively to leave interaction or browse modes, and macOS Preferences windows don't discard on Esc. Nothing says what Esc does when nothing is pending and no menu is open.</div>
+            <div class="finding-raised">Raised by: Accessibility M2 (medium); Edge cases #13 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> After a discard, show "Changes discarded" with Undo (<code>role="status"</code>, ⌘Z works), or make Esc discard only when focus is in the apply bar. With nothing pending, pass Esc through to the Preferences window's own behaviour.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Focus after Apply jumps to the heading, and the announcement says too little</h3>
+              <span class="finding-location">EXPERIENCE Accessibility Floor › Focus; State Patterns › Applied; Voice</span>
+            </header>
+            <div class="finding-note">Deliberate (L67, L75). ⌘↵ pressed from the text-size slider throws focus to the top of the page, though focus was never in the apply bar. A focus move and a live announcement fired together often cut each other off in VoiceOver and NVDA. A text-size-only change would announce "Loft, Taiga", which says nothing, and nothing says where focus lands in the main window after a style switch re-lays it out.</div>
+            <div class="finding-raised">Raised by: Accessibility M3 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> On ⌘↵, leave focus where it is. On an Apply or Revert click, which removes the button, move focus to the last-changed control, falling back to the heading with <code>tabindex="-1"</code>. Announce through a polite live region present at page load, listing every changed axis. After Apply, restore main-window focus to the equivalent element, such as the selected thread.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Radio-group details: nested actions, an unreachable tooltip, selection that follows focus</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Theme swatch, Derived badge, Style card, Mode/Increase contrast/Density controls, Text size slider; <code>.working/appearance-directions.html</code></span>
+            </header>
+            <div class="finding-note">"Export a copy…" inside a swatch puts an interactive control inside <code>role="radio"</code>, which is invalid nesting. The derived badge's tooltip sits on a non-focusable element. Arrow keys select, so each press re-renders the near-full-width preview with a cross-fade, and holding a key cycles themes rapidly. The segmented controls and slider have no stated semantics, and the directions mockup uses <code>aria-pressed</code> buttons, contradicting the spine.</div>
+            <div class="finding-raised">Raised by: Accessibility M4 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Move "Export a copy…" outside the group (one button acting on the checked swatch, or a per-swatch More menu after the group). Expose the tags and badge text through <code>aria-describedby</code>, and show the tooltip on focus. Debounce preview updates during key repeat. Build Mode, Increase contrast and Density as radio groups; the slider uses <code>role="slider"</code>, <code>aria-valuetext="125 percent"</code>, Home/End and 12.5% steps. Tell the build ticket not to copy the mockup's markup.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The sticky mini-preview and pinned apply bar can hide the focused control</h3>
+              <span class="finding-location">EXPERIENCE Mini-preview, Apply bar; DESIGN <code>spacing.appearance-mini-preview</code>; Appearance page › Apply bar</span>
+            </header>
+            <div class="finding-note">Deliberate (L45). In an 800px-tall Preferences window at 200% zoom (about 400 CSS px of viewport), the 160px strip and the ~72px apply bar cover more than half of it, so tabbing down the Display rows lands focus under one of them (WCAG 2.4.11).</div>
+            <div class="finding-raised">Raised by: Accessibility M5 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Set <code>scroll-padding-block</code> to the sticky heights. Shrink or hide the mini-preview below a viewport-height threshold and give it a collapse button. Test at 150% text plus 200% zoom.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Colour is the only signal for presence, unread, the current timeline item and calendars</h3>
+              <span class="finding-location">DESIGN Categorical palette; Components › Message row, Selected message card, Right rail, Calendar view; <code>components.presence-dot</code>, <code>message-row.unread-dot</code>; EXPERIENCE Accessibility Floor › Never by colour alone</span>
+            </header>
+            <div class="finding-note">The green presence dot is 2.28:1 on white, and colour is its only meaning. The accent unread dot disappears (1.0:1) on the accent-filled selected card. The current timeline item is marked only by accent colour and a filled dot. Calendar chips show their calendar by colour alone; eight hash-assigned colours collide often, and the L 0.88 pastels are 1.31–1.45:1 against white and hard to tell apart with colour-vision deficiency. "Never by colour alone" covers only the Appearance tags.</div>
+            <div class="finding-raised">Raised by: Accessibility M6 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Extend "Never by colour alone" to the whole app. Presence gets an accessible name ("Online") and a shape for away and busy. The unread dot uses <code>accent-on</code> on the selected card, and the row's accessible name starts "Unread". The timeline uses <code>aria-current="true"</code> plus a visible cue. Chips carry the calendar name in their name and tooltip, with a legend. Add a colour-vision check to the hand-check of colours 5–8.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title"><code>/</code> is a single-character shortcut with no off switch</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Search pill / search overlay; Interaction Primitives › Keyboard</span>
+            </header>
+            <div class="finding-note">Inherited from the Loft spec rather than logged. Speech-input users of Dragon and Voice Control can trigger it by accident (WCAG 2.1.4), and no rule says it is inactive in text fields.</div>
+            <div class="finding-raised">Raised by: Accessibility M10 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Route it through Nylas Mail's existing keymap preference so it can be disabled or remapped, and keep it inactive while focus is in any editable field.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Boundaries are drawn only by shadow and tint, even under Increase contrast</h3>
+              <span class="finding-location">DESIGN Elevation &amp; Depth; Do's and Don'ts ("Add borders in Loft beyond the right-rail divider"); <code>components.button-secondary</code>, <code>search-pill</code></span>
+            </header>
+            <div class="finding-note">Deliberate (L48 and Loft's no-borders rule). <code>surface-sunken</code> against white is 1.08:1 and the search pill fill 1.10:1; secondary pills are white on white, defined only by <code>shadow-soft</code>. The high-contrast variant is colour-only and the style bans borders, so field and region boundaries stay near 1.1:1 even with Increase contrast on. The adversarial reviewer hits the same gap from the free-mix side (Less-is-more on Loft, under "Free mix produces structurally broken combinations").</div>
+            <div class="finding-raised">Raised by: Accessibility M11 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add <code>border-control</code> and <code>border-region</code> theme roles: transparent at standard contrast, keeping the look exact, and 3:1 or better in high contrast. Styles always draw them, and the same borders become visible under forced colours.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The right rail and timeline have no screen-reader structure</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Right rail; State Patterns › Narrow window; DESIGN Components › Right rail</span>
+            </header>
+            <div class="finding-note">Clicking a timeline item scrolls the view but doesn't move focus, which strands keyboard and screen-reader users. The rail has no landmark or heading structure, and there is no route back once it collapses at narrow widths.</div>
+            <div class="finding-raised">Raised by: Accessibility M12 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Make the rail <code>&lt;aside aria-label="Conversation details"&gt;</code> with its three headings. Build the timeline as a list of buttons with <code>aria-current</code>, and move focus to the message on activation (<code>tabindex="-1"</code> on the article). Reopen a collapsed rail from a named <code>aria-expanded</code> toggle.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The text-size range and OS tracking leave gaps</h3>
+              <span class="finding-location">EXPERIENCE IA › Text size; Accessibility Floor › Text size; memlog L30, L67</span>
+            </header>
+            <div class="finding-note">150% alone doesn't reach 200%, and later Windows or GNOME text-scale changes are ignored, unlike contrast, which has Follow system. The edge-case reviewer adds that OS values outside the range (Windows up to 225%, GNOME 0.8) or off the 12.5% step (Windows 110%) have no fitting rule, and that at 87.5% <code>{typography.caption}</code> renders near 9.6px. The adversarial reviewer notes Electron has no API for Windows <code>TextScaleFactor</code> or GNOME <code>text-scaling-factor</code>; both are native lookups the spines treat as givens.</div>
+            <div class="finding-raised">Raised by: Accessibility L3 (low); Edge cases #17 (medium); Edge cases #91 (low); Adversarial F17 (OS text-size part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Clamp OS values to 87.5–150% and round to the nearest step, telling the user when a value was clamped ("window zoom goes further"). Add a Follow system state that mirrors contrast, consider extending the range to 175–200%, set a 10px rendered floor for every role, and treat the OS reads as a spike with a fallback.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Reduced motion covers only this feature</h3>
+              <span class="finding-location">EXPERIENCE Accessibility Floor › Reduced motion; <code>imports/loft-global.css</code></span>
+            </header>
+            <div class="finding-note">Loft's own motion isn't governed (the hover lift, button press, toast slide-in and search overlay), nor is a live OS switch, including one that lands during the 200ms apply or 120ms preview fade.</div>
+            <div class="finding-raised">Raised by: Accessibility L2 (low); Edge cases #89 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Make <code>prefers-reduced-motion</code> a style-contract rule, so every style's transitions become instant or opacity-only, and finish any running fade when it turns on. Verify that GTK <code>gtk-enable-animations</code> maps through Chromium.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">The Apply shortcut isn't discoverable</h3>
+              <span class="finding-location">EXPERIENCE Voice and Tone › Apply bar; Component Patterns › Apply bar</span>
+            </header>
+            <div class="finding-note">The hint says only "Esc discards".</div>
+            <div class="finding-raised">Raised by: Accessibility L5 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Hint "⌘↵ applies · Esc discards" (Ctrl+Enter on Windows and Linux), put <code>aria-keyshortcuts</code> on Apply, and make the shortcut work while focus is in the preview.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Search overlay semantics are unspecified</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Search pill / search overlay; DESIGN Search overlay, <code>search-hit</code></span>
+            </header>
+            <div class="finding-note">No combobox or listbox model, no result-count announcement, no stated focus return on Esc, and hit highlights at 4.44:1. The escaping contract (L54) is unaffected.</div>
+            <div class="finding-raised">Raised by: Accessibility L6 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Build a combobox with a grouped listbox, announce the result count politely, return focus to the trigger on Esc, and raise hits to 4.5:1.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Custom scrollbars are faint and narrow</h3>
+              <span class="finding-location">DESIGN <code>colors.scrollbar-thumb</code>; <code>imports/loft-global.css</code></span>
+            </header>
+            <div class="finding-note">The thumb is 1.30:1 on <code>surface-sunken</code> and 8px wide.</div>
+            <div class="finding-raised">Raised by: Accessibility L7 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use a 3:1 or better thumb in high-contrast variants, respect the OS always-show setting, and leave scrollbars native under forced colours.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="reviewer-section">
+      <details>
+        <summary>
+          <h2>Adversarial review</h2>
+          <span class="reviewer-source">review-adversarial.md</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p><strong>Not ready to hand to architecture as a release spec. It works as a long-term vision.</strong></p>
+            <p>The spines are carefully written and mostly consistent inside each document. The trouble is the combined scope. Taken together, the decisions describe a terminal state: five full-layout styles × six four-variant themes × three densities, a live real-app preview, per-style frameless chrome on three operating systems, RTL, text scaling, dark email adaptation and a third-party token API. That state sits on a foundation the codebase doesn't have yet: no CSS custom properties, about 15k lines of compile-time LESS, hard-coded JS row heights, no screenshot or axe harness, and about 52% test coverage mid-modernization. Nothing in the log names a smallest shippable slice. The free-mix guarantee is the central promise of the design, and the token contract cannot keep it, because the contract was derived from one theme (Loft) and cannot express three of the other five.</p>
+            <p>Four decisions turn a large project into an unbounded one: free mix across five styles that each lay out every feature; mockup-exact contrast as the default; per-style window chrome on three operating systems; and promoting three legacy restyles to full styles. Each one has a cheaper alternative that keeps most of the user value. The three to revisit first: ship two styles (Classic and Loft) and freeze a role contract built from all six themes; make standard contrast AA for text and keep the exact mockup as an opt-in, with accessibility settings applying at once; and use one app-owned title bar with style slots, keeping a native frame on Linux. Runner-up: correct the "separate window" premise and preview real components on fixture data.</p>
+            <p>The evidence is measured in the repo, not assumed: 156 LESS files and 15,043 lines; 2,427 <code>@var</code> references; 317 compile-time colour functions; 200 component hex literals; 648 physical <code>left</code>/<code>right</code> declarations; <code>itemHeight = 36</code>/<code>85</code> hard-coded in <code>thread-list.jsx</code>; native frames on Windows and Linux (<code>window-launcher.js:36</code>); Preferences as a pushed Sheet (<code>preferences/lib/main.jsx:54</code>); <code>pathwatcher</code> not installed; <code>nylas-private-fonts</code> marked <code>"license": "Proprietary"</code>; no code reading <code>prefers-contrast</code> or <code>forced-colors</code>; no Playwright, axe or Spectron dependency. Eleven internal contradictions are collected in the source file, among them L24 ("accessibility is not optional") against L21 and L35, L73 (designed dark) against L51 (derived), and L13 (Loft includes Calendar and Contacts) against L16 (another initiative owns them). Raw count: 4 critical, 8 high, 8 medium, 3 low (23).</p>
+            <p><strong>Also raised here, merged into findings elsewhere in this report:</strong></p>
+            <ul class="merged-list">
+              <li><code>F16 (fallback part)</code> → The theme fallback chain is circular and splits two ways <span class="reviewer-source">(Flow coverage, medium)</span></li>
+              <li><code>F8</code> → Only one of the 24 required token sets has values, and the default look's dark mode is undesigned <span class="reviewer-source">(Token completeness, critical)</span></li>
+              <li><code>F1</code> → The role contract is Loft-shaped, and the five ported themes have no role-level values <span class="reviewer-source">(Token completeness, critical)</span></li>
+              <li><code>F10</code> → Typeface delivery and licensing are unresolved, and Nylas-Pro is proprietary <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>F9</code> → Contrast pairs are not enumerated, and the 360-combination sweep can't verify the floor <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>F19 (initials part)</code> → Text roles for categorical fills and unread rows are missing <span class="reviewer-source">(Token completeness, medium)</span></li>
+              <li><code>F7 (premise part)</code> → The "separate Preferences window" doesn't exist, and its owning style is undefined <span class="reviewer-source">(Component coverage, high)</span></li>
+              <li><code>F4 (Windows and Linux part)</code> → Forced colours and Linux high contrast are unhandled, and the platform signals are unverified <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>F20</code> → Users of community LESS themes have no upgrade rule, and upgraders' onboarding is ambiguous <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>F7 (preview part)</code> → The embedded live preview has no focus, screen-reader or data model <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>F17</code> → The onboarding looks step has no defined controls, keyboard model or fit at 150% <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>F16 (modes part)</code> → Contrast-variant naming drifts, and the theme file's shape is unspecified <span class="reviewer-source">(Inheritance discipline, high)</span></li>
+              <li><code>F4</code> → The default look fails AA, and Increase contrast is the only way out <span class="reviewer-source">(Accessibility review, critical)</span></li>
+              <li><code>F11</code> → Accessibility settings wait behind Preview → Apply and are discarded silently <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>F18</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>F15</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>F17 (OS text-size part)</code> → The text-size range and OS tracking leave gaps <span class="reviewer-source">(Accessibility review, medium)</span></li>
+              <li><code>F16 (injection part)</code> → Theme files from strangers have no value grammar: CSS injection and remote fetches <span class="reviewer-source">(Edge-case review, critical)</span></li>
+              <li><code>F15 (print and reply part)</code> → Adapted colours could leak into replies, and print has no palette <span class="reviewer-source">(Edge-case review, high)</span></li>
+              <li><code>F19 (collision part)</code> → Categorical colours: overrides, renames and collisions are undefined <span class="reviewer-source">(Edge-case review, high)</span></li>
+              <li><code>F15 (memory part)</code> → View original memory has no key or scope <span class="reviewer-source">(Edge-case review, medium)</span></li>
+              <li><code>F16 (reload part)</code> → Live reload has no working watcher and no partial-save rule <span class="reviewer-source">(Edge-case review, medium)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">"Style" has no technical definition, yet each one has to lay out every feature</h3>
+              <span class="finding-location">Attacks memlog L12, L13, L16; EXPERIENCE › Surfaces every style must lay out</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L16 ("each style must lay them out"), L13, L12. Five styles × at least 8 surfaces comes to about 40 layout designs, and only Loft's have a mockup. The legacy themes predate Contacts and Calendar, so "promoting" Taiga, Darkside and Less-is-more to styles means inventing four apps' worth of layout. It isn't a port. Layout lives in <code>WorkspaceStore.defineSheet</code> columns and about 93 <code>ComponentRegistry</code> registrations into fixed Locations, and CSS can reposition elements but can't re-parent them: Loft puts the right rail inside the reading card, while <code>participant-profile</code> registers into the sibling <code>MessageListSidebar</code>. So a style either stays CSS-only and can't produce Loft, or defines its own sheets and containers and becomes a code package that has to keep every plugin Location working. The existing split/list <code>layoutMode</code> is a second layout axis the spines never mention. The edge-case reviewer asks the follow-on question: what renders when a style hasn't laid out a shared surface yet?</div>
+            <div class="finding-raised">Raised by: Adversarial F2 (critical); Edge cases #80 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> define a style as (1) a region manifest mapping abstract regions (<code>nav</code>, <code>list</code>, <code>reading</code>, <code>rail</code>, <code>search</code>, <code>account</code>) onto the stable existing Locations, (2) a CSS layer scoped under <code>[data-style=…]</code>, and (3) optional container components for regions that need re-parenting. Styles are built-in only; say so. Every style renders every Location, or the manifest names a fallback host. Contacts and Calendar get one shared layout that reads style tokens; a style may override it but doesn't have to. That turns 40 layouts into about 8 plus overrides, and the shared layout is the answer for any surface a style hasn't laid out.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">The runtime migration underneath all of this isn't in scope, and it's the critical path</h3>
+              <span class="finding-location">Attacks memlog L15, L22, L30, L32, L47, L68; <code>theme-manager.js:367</code>; <code>thread-list/lib/thread-list.jsx:188-191</code></span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L32 ("architecture ratifies the runtime mapping"), plus L15, L47, L30, L22 and L68. The spines treat DTCG-to-custom-properties as a detail. It's the largest single work item: 2,427 LESS variable references to move to <code>var(--…)</code>; 317 compile-time colour functions with no runtime equivalent, each becoming a new role every theme must define or a <code>color-mix()</code> whose output nobody contrast-checked; 200 component hex literals; 648 physical declarations to move to logical properties before RTL is even possible; and row heights hard-coded in JS (<code>itemHeight = 36</code> / <code>85</code>) that the virtualized <code>ListTabular</code> must recompute on density or text-size change. Third-party plugin LESS has the same problem. Until this lands, the 120ms preview cross-fade and ~200ms apply are impossible; the code itself calls a LESS cache refresh "very expensive (hundreds of ms)". The build-sequencing rule puts this first. The spines put it nowhere.</div>
+            <div class="finding-raised">Raised by: Adversarial F3 (critical)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> make "token runtime + LESS retirement" an explicit epic zero with its own acceptance test: Classic + Nylas light renders pixel-identical to today with zero LESS colour functions, every colour a <code>var()</code>, and row height driven by a token. Count the colour-function call sites and budget for them. Gate every other epic on it.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">No minimum shippable slice, and the default style depends on another initiative</h3>
+              <span class="finding-location">Attacks memlog L13, L16 (no release-scope entry in the log)</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> the absence of any release-scope entry in the log, and L16 ("Contacts/Calendar may be scheduled under the state-of-the-art initiative") read against L13 (Loft's scope includes calendar and contacts). The default look's scope includes two features another initiative owns and that don't exist yet. Loft can't be declared complete, or verified against its mockup (L57), until that initiative ships. The release either slips, or ships a Loft whose sidebar view switcher points at missing views. (The rubric's bloat finding on the feature-scope boundary sits on the same seam.)</div>
+            <div class="finding-raised">Raised by: Adversarial F5 (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative v1 slice:</strong> the token runtime and a contract built from all six themes; styles Classic (today's layout) and Loft (mail view, search overlay, compose, right rail); all six themes, with Ubuntu, Taiga, Darkside and Less-is-more as themes on Classic, which is what they are today; Increase contrast (Follow system on macOS and Windows, plus a forced-colours layer), text size and density on the message list; and Appearance with a real-component preview on fixture data. Defer the three legacy styles, per-style Calendar and Contacts layouts, the Install theme… UI (themes folder only, documented as beta), per-sender email memory, the onboarding slider, the full 360 sweep and RTL beyond lint-enforced logical properties. That cuts the style × surface matrix from about 40 to about 10, and verification from 360 to 144 combinations.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Per-style frameless chrome on three operating systems is a platform project</h3>
+              <span class="finding-location">Attacks memlog L46, L69; <code>src/browser/window-launcher.js:36</code>; DESIGN Layout &amp; Spacing › Window chrome; EXPERIENCE Responsive &amp; Platform</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L46 (frameless; each style owns the title bar on every OS) and L69 (<code>titleBarOverlay</code> at inline-end; the top bar is the drag region). It's new work: Windows and Linux run on native frames today. <code>titleBarOverlay</code> controls are drawn natively, so colour, symbol colour and height have to be pushed through <code>setTitleBarOverlay</code> on every change of theme, mode, contrast and style, and the fixed overlay height ignores text size and zoom, so Loft's 72px top bar and the overlay drift apart. On Linux the controls are Chromium-drawn, and Wayland compositors vary on resize edges, snapping and double-click-to-maximize. Loft's own geometry contradicts the rule: the app card is inset 28/32px, so the corner where the overlay sits is on the ground, not in the style's top bar. Accessibility and edge cases pile on: the OS, not the style, decides the control side in RTL (an RTL app on an LTR OS reverses it), GNOME left-side button layouts are ignored, the window title and keyboard window moves (Alt+Space, Alt+F7) are unspecified, narrow widths may leave almost no drag area, macOS full screen hides the traffic lights, and composer and thread popouts have no defined chrome. That's 5 styles × 3 OSes × 2 directions = 30 chrome configurations, none of which a headless screenshot sees.</div>
+            <div class="finding-raised">Raised by: Adversarial F6 (high); Accessibility M8 (medium); Edge cases #72 (high); Edge cases #78 (medium); Edge cases #77 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> one app-owned title-bar component, with style-provided slots (<code>start</code>, <code>center</code>, <code>end</code>) and two tokens (height, background). Styles never touch the OS controls. Lay out around <code>env(titlebar-area-x/width)</code> and <code>getTitlebarAreaRect()</code>, not a logical side. Keep the native frame as the Linux default or as a user option, or honour GNOME <code>button-layout</code>. Specify what Loft's inset does at the window edge (full-width top bar when maximized, or a painted overlay region). Keep the window title current ("Inbox — Nylas Mail"), guarantee about 48px of drag area, drop the reserved inset in full screen, and give popouts a minimal top bar under the same per-OS rule. Verify <code>titleBarOverlay</code> and <code>trafficLightPosition</code> in RTL before committing.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Free mix produces structurally broken combinations, not just ugly ones</h3>
+              <span class="finding-location">Attacks memlog L11, L48; DESIGN Elevation &amp; Depth ("Less-is-more uses none")</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L11 (free mix), L48 (the theme owns shadow). The Less-is-more theme (ground <code>#ffffff</code>, no shadows, a 1px ring) on the Loft style renders a white floating card on a white ground with no shadow and no border, because Loft bans borders. The app has no visible structure. The Darkside theme on Loft loses its dark sidebar (see the role-contract finding), and the Ubuntu theme on Loft puts an orange <code>shadow-accent</code> everywhere. The first screenshots of these mixes on a forum or in a review become the reputation.</div>
+            <div class="finding-raised">Raised by: Adversarial F12 (high)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> keep free mix, but make it safe. Styles declare required capabilities (<code>needs: elevation.shadow</code> or <code>separation.border</code>), and themes declare what they provide. Where a capability is missing, the style uses a defined fallback, such as rendering <code>border-subtle</code> when there's no shadow. The picker leads with curated looks ("Recommended", each style's native theme on top) and shows "Mix and match" second. That's direction C's strength, without its weakness.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">The ownership split contradicts itself on rhythm and type</h3>
+              <span class="finding-location">Attacks memlog L23, L30, L48</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L48 ("shape and rhythm are structural", owned by the style) against L23 and L48 (the theme owns the type ramp), and L30 (text size reflows). Type size is vertical rhythm. If a theme sets <code>heading-reading</code> to 32px or a 28px wordmark, Loft's fixed 72px top bar and its px columns (sidebar 236, list 380, search 440) overflow, and the style can't stop it. With 150% text on top, the px widths don't scale at all. The theme also owns shadow, yet "every accent-filled element gets shadow-accent" is a Loft style rule.</div>
+            <div class="finding-raised">Raised by: Adversarial F13 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> the theme owns family, weight, tracking and one base size. The style owns the ramp as ratios and states layout dimensions in <code>rem</code> or <code>em</code>, so text size reflows them. Shadows split the same way: the theme provides tint and opacity, the style decides which elements are elevated.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Density regresses Classic and contradicts Less-is-more's own signature</h3>
+              <span class="finding-location">Attacks memlog L22, L68; DESIGN Style catalogue; Layout &amp; Spacing › Density</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L68 (44px floor at Compact; Less-is-more is natively Compact) and L22 (any style at any density). Classic's wide-mode rows are 36px today, so "Compact Classic" is less dense than today's default, and Marco-type upgraders lose rows. Less-is-more's confirmed signature is "No toolbar, generous padding, hairline dividers", and its native density is Compact. Those two statements contradict each other. Accessibility comes at the floor from the other side: timeline rows, calendar chips and "+N more" are likely under WCAG 2.5.8's 24px at Compact, and nothing guarantees the minimum.</div>
+            <div class="finding-raised">Raised by: Adversarial F14 (medium); Edge cases #49 (medium); Accessibility L4 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> make the floor per style (Classic 32px, Loft 44px). The real floor is WCAG 2.5.8's 24px target, applied at every density. Recheck Less-is-more's native density against the legacy <code>ui-less-is-more</code> rendering, and fix either the description or the default.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Trademark</h3>
+              <span class="finding-location">Attacks memlog L60, L62</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L60 (the theme is named "Nylas") and L62 (the Nylas Mail logo in the top bar). A public revival that ships Nylas, Inc.'s name as the default theme and its logo in every top bar invites a takedown, and L62's "or the fork's name if rebranded" shows the risk is already known.</div>
+            <div class="finding-raised">Raised by: Adversarial F21 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> use a neutral theme name ("Classic Light/Dark" or the fork's name), and make the logo a build-time brand token.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Breaking legacy community themes is acceptable</h3>
+              <span class="finding-location">Attacks memlog L19</span>
+            </header>
+            <div class="finding-note"><strong>Assessment:</strong> the ecosystem has been dormant since 2017, and those themes override DOM selectors this initiative changes anyway. The break costs little.</div>
+            <div class="finding-raised">Raised by: Adversarial F22 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Keep it, document it, and cover the unknown-theme upgrade case (see the community LESS theme finding under State coverage).</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Whole-window cross-fades can end on a half-painted frame</h3>
+              <span class="finding-location">Attacks memlog L36, L64</span>
+            </header>
+            <div class="finding-note"><strong>Attacks:</strong> L36 (~200ms app cross-fade) and L64 (120ms preview cross-fade). Cross-fading an entire Electron window between two styles means snapshotting the old frame (<code>capturePage</code>) and overlaying it while the DOM re-lays out. On a large mailbox the re-layout can take longer than 200ms, so the fade ends on a half-painted frame.</div>
+            <div class="finding-raised">Raised by: Adversarial F23 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> <strong>Alternative:</strong> overlay the snapshot until the next idle frame, then fade, with a bounded duration.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="reviewer-section">
+      <details>
+        <summary>
+          <h2>Edge-case review</h2>
+          <span class="reviewer-source">review-edge-cases.md</span>
+        </summary>
+        <div class="dim-body">
+          <div class="dim-judgment">
+            <p>Every branching path and boundary the reviewer could find, with what the spines say about it: 98 rows across settings combinations, theme files, upgrades, onboarding, email bodies, layout, categorical colours, accessibility settings and toasts. "Unspecified" means neither spine nor the decision log settles it. Raw count: 1 critical, 25 high, 44 medium, 28 low (98).</p>
+            <p>Twelve unspecified items block a build, because each shapes a data model, a persistence key, a security boundary or a token contract: the theme identity key; the last-valid-version cache; the token value grammar and limits; the contrast pair table; inverse surface roles for toasts; categorical override storage and rename behaviour; the collapse sequence past "rail, then folders"; window-control placement per OS in RTL and on Linux; legacy migration rules; Windows forced colours; outgoing mail and print colours; and toast stacking and de-duplication. Each is folded into a combined finding below or in the rubric sections.</p>
+            <p><strong>Also raised here, merged into findings elsewhere in this report:</strong></p>
+            <ul class="merged-list">
+              <li><code>#24</code> → Theme identity and "Export a copy…" naming are undefined <span class="reviewer-source">(Flow coverage, high)</span></li>
+              <li><code>#25</code> → Theme identity and "Export a copy…" naming are undefined <span class="reviewer-source">(Flow coverage, high)</span></li>
+              <li><code>#26</code> → Theme identity and "Export a copy…" naming are undefined <span class="reviewer-source">(Flow coverage, high)</span></li>
+              <li><code>#36</code> → Theme identity and "Export a copy…" naming are undefined <span class="reviewer-source">(Flow coverage, high)</span></li>
+              <li><code>#37</code> → Theme identity and "Export a copy…" naming are undefined <span class="reviewer-source">(Flow coverage, high)</span></li>
+              <li><code>#5</code> → Only one of the 24 required token sets has values, and the default look's dark mode is undesigned <span class="reviewer-source">(Token completeness, critical)</span></li>
+              <li><code>#39</code> → Typeface delivery and licensing are unresolved, and Nylas-Pro is proprietary <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>#96</code> → Toast tokens borrow roles that make toasts unreadable in dark themes <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>#30</code> → Contrast pairs are not enumerated, and the 360-combination sweep can't verify the floor <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>#97</code> → Contrast pairs are not enumerated, and the 360-combination sweep can't verify the floor <span class="reviewer-source">(Token completeness, high)</span></li>
+              <li><code>#85</code> → Text roles for categorical fills and unread rows are missing <span class="reviewer-source">(Token completeness, medium)</span></li>
+              <li><code>#11</code> → The "separate Preferences window" doesn't exist, and its owning style is undefined <span class="reviewer-source">(Component coverage, high)</span></li>
+              <li><code>#3</code> → Forced colours and Linux high contrast are unhandled, and the platform signals are unverified <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#4</code> → Forced colours and Linux high contrast are unhandled, and the platform signals are unverified <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#44</code> → Users of community LESS themes have no upgrade rule, and upgraders' onboarding is ambiguous <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#50</code> → Users of community LESS themes have no upgrade rule, and upgraders' onboarding is ambiguous <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#34</code> → Users of community LESS themes have no upgrade rule, and upgraders' onboarding is ambiguous <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#19</code> → The embedded live preview has no focus, screen-reader or data model <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#27</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#28</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#38</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#18</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#33</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#35</code> → The theme lifecycle has gaps: removal, deletion while running, the last-valid cache <span class="reviewer-source">(State coverage, high)</span></li>
+              <li><code>#55</code> → The onboarding looks step has no defined controls, keyboard model or fit at 150% <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>#56</code> → The onboarding looks step has no defined controls, keyboard model or fit at 150% <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>#57</code> → The onboarding looks step has no defined controls, keyboard model or fit at 150% <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>#92</code> → Toasts have no announcement, pause or keyboard rule <span class="reviewer-source">(State coverage, medium)</span></li>
+              <li><code>#6</code> → Contrast-variant naming drifts, and the theme file's shape is unspecified <span class="reviewer-source">(Inheritance discipline, high)</span></li>
+              <li><code>#40</code> → Contrast-variant naming drifts, and the theme file's shape is unspecified <span class="reviewer-source">(Inheritance discipline, high)</span></li>
+              <li><code>#7</code> → Contrast-variant naming drifts, and the theme file's shape is unspecified <span class="reviewer-source">(Inheritance discipline, high)</span></li>
+              <li><code>#41</code> → Contrast-variant naming drifts, and the theme file's shape is unspecified <span class="reviewer-source">(Inheritance discipline, high)</span></li>
+              <li><code>#69</code> → The RTL overhang wording conflicts with the frontmatter key <span class="reviewer-source">(Inheritance discipline, low)</span></li>
+              <li><code>#90</code> → A focus ring bound to <code>accent-default</code> can't meet 3:1 in five of six themes <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#12</code> → Accessibility settings wait behind Preview → Apply and are discarded silently <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#8</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#73</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#10</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#74</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#75</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#9</code> → Reflow is defined only down to "collapse the rail, then the folders" <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#60</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#65</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#59</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#62</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#61</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#68</code> → Dark email adaptation hides transparent logos and has no contrast floor <span class="reviewer-source">(Accessibility review, high)</span></li>
+              <li><code>#13</code> → Esc discards every pending change, with no undo <span class="reviewer-source">(Accessibility review, medium)</span></li>
+              <li><code>#17</code> → The text-size range and OS tracking leave gaps <span class="reviewer-source">(Accessibility review, medium)</span></li>
+              <li><code>#91</code> → The text-size range and OS tracking leave gaps <span class="reviewer-source">(Accessibility review, medium)</span></li>
+              <li><code>#89</code> → Reduced motion covers only this feature <span class="reviewer-source">(Accessibility review, low)</span></li>
+              <li><code>#80</code> → "Style" has no technical definition, yet each one has to lay out every feature <span class="reviewer-source">(Adversarial review, critical)</span></li>
+              <li><code>#72</code> → Per-style frameless chrome on three operating systems is a platform project <span class="reviewer-source">(Adversarial review, high)</span></li>
+              <li><code>#78</code> → Per-style frameless chrome on three operating systems is a platform project <span class="reviewer-source">(Adversarial review, high)</span></li>
+              <li><code>#77</code> → Per-style frameless chrome on three operating systems is a platform project <span class="reviewer-source">(Adversarial review, high)</span></li>
+              <li><code>#49</code> → Density regresses Classic and contradicts Less-is-more's own signature <span class="reviewer-source">(Adversarial review, medium)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="findings-list">
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-critical">critical</span>
+              <h3 class="finding-title">Theme files from strangers have no value grammar: CSS injection and remote fetches</h3>
+              <span class="finding-location">EXPERIENCE Theme Authoring ("an invalid value rejects the file"); Component Patterns › Install theme…; memlog L65</span>
+            </header>
+            <div class="finding-note">Token values become CSS custom properties, and validation has no grammar. A value like <code>red; } * { display:none</code>, a <code>url(https://tracker/…)</code> beacon, <code>expression()</code>, <code>@import</code>, or a font-family that loads a remote font is CSS injection or a tracking fetch from an "Install theme…" file in a public release. The adversarial reviewer raises the same attack. Nothing caps file size (50 MB) or nesting depth, and nothing says whether alias cycles (<code>{a}</code> → <code>{b}</code> → <code>{a}</code>) or aliases to tokens that don't exist count as invalid values or missing roles.</div>
+            <div class="finding-raised">Raised by: Edge cases #23 (critical); Edge cases #22 (high); Adversarial F16 (injection part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Validate strictly by DTCG <code>$type</code>: colours parsed (hex, rgb(a), hsl, oklch), dimensions, fontFamily as a list of names, shadow and typography composites rebuilt from parts. Never interpolate raw strings into CSS; reject anything containing <code>;</code>, <code>{</code>, <code>}</code>, <code>url(</code> or <code>@</code>. Cap file size (for example 1 MB) and alias depth, treat cycles and dangling aliases as invalid with an error naming the token path, and parse off the UI thread. Document the grammar in the author guide.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Third-party contrast isn't enforced when a theme loads</h3>
+              <span class="finding-location">DESIGN Colors › Variants; Brand &amp; Style; EXPERIENCE Accessibility Floor; Theme Authoring</span>
+            </header>
+            <div class="finding-note">DESIGN says "every high-contrast variant, hand-checked or derived, must meet 4.5:1", but nothing enforces it when a third party authors a failing high-contrast variant. At standard contrast a third-party theme can ship text equal to its background, or a focus ring below 3:1, although the ring must reach 3:1 "in every theme variant".</div>
+            <div class="finding-raised">Raised by: Edge cases #29 (high); Edge cases #31 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Check authored high-contrast variants against the pair table on load. If one fails, replace the failing roles with derived values, show the derived badge, and tell the author which pairs failed. At standard contrast, warn only, except for the focus ring, which is always enforced (falling back to <code>text-strong</code>).</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Legacy migration rules are missing: downgrade, stacked themes, user stylesheets, plugin LESS</h3>
+              <span class="finding-location">EXPERIENCE State Patterns › Upgrade from a legacy theme; Foundation; Component Patterns › Upgrade notice toast</span>
+            </header>
+            <div class="finding-note">A downgrade after upgrading, or a re-upgrade, can leave <code>core.themes</code> unrecognisable or overwrite choices made in the new version. <code>core.themes</code> can list several entries (a stale <code>ui-light</code> base plus the chosen theme). A user <code>~/.nylas-mail/styles.less</code> references removed variables and selectors. Third-party plugins that <code>@import "ui-variables"</code> or use the 143 LESS variables break, and "old community LESS themes stop working" covers themes, not plugins. A <code>ui-light</code> user on a dark OS gets Mode Auto and sees the app turn dark after the upgrade. Whether an undismissed upgrade toast returns next launch is open.</div>
+            <div class="finding-raised">Raised by: Edge cases #43 (high); Edge cases #46 (high); Edge cases #47 (high); Edge cases #45 (medium); Edge cases #48 (medium); Edge cases #51 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Leave <code>core.themes</code> untouched and write the new settings under new keys, running the mapping only when they're absent, and key the notice to a "seen" flag. Use the last non-base entry that maps. Load a user <code>styles.css</code> after the token layer and say what happens to <code>styles.less</code>. Keep a one-release compatibility layer that aliases the old LESS variable names to custom properties, or say plainly that plugin styles break. Pin Light for upgrading <code>ui-light</code> and <code>ui-ubuntu</code> users, with the toast pointing to Auto. The toast returns each launch until dismissed or acted on.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Adapted colours could leak into replies, and print has no palette</h3>
+              <span class="finding-location">EXPERIENCE Email Body Rendering</span>
+            </header>
+            <div class="finding-note">Replying to or forwarding an adapted message could quote the adapted DOM, and typing in the dark-mode composer could write theme colours inline into outgoing HTML. Printing a message in dark mode or high contrast has no defined palette. The adversarial reviewer flags print (the <code>print</code> package) and the reply quote as the same unspecified edges.</div>
+            <div class="finding-raised">Raised by: Edge cases #66 (high); Edge cases #67 (high); Adversarial F15 (print and reply part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Quote the original HTML, never the adapted DOM, and keep composer colours in CSS only, with a test. Print always uses sender colours on white, with Nylas light standard tokens for chrome, regardless of mode, contrast, View original or text size.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Toasts have no stacking, de-duplication or placement rule</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Toast; DESIGN Loft mail surfaces</span>
+            </header>
+            <div class="finding-note">The first launch after an upgrade can raise the upgrade notice, a theme-load error and a font-missing error together, but the spine has one bottom-centre toast. Dev saving a broken file 20 times gets 20 persistent toasts. Nothing says which window shows a toast (main, Preferences, a popout), the compose card collides with the toast at 1100px, and "clicking any toast dismisses it" lets an off-target click lose the upgrade toast's action.</div>
+            <div class="finding-raised">Raised by: Edge cases #93 (high); Edge cases #94 (high); Edge cases #95 (medium); Edge cases #79 (low); Edge cases #98 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Stack upward from the bottom centre, newest nearest the edge, at most three plus "+N more", with errors above notices and each dismissible on its own. Keep one toast per theme file, replaced in place and dismissed when the next save succeeds. Theme errors show in the focused window and the main window, never twice in one; Appearance errors show in Preferences. Toasts shift to clear an open compose card. Only a close control dismisses toasts that carry an action.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-high">high</span>
+              <h3 class="finding-title">Categorical colours: overrides, renames and collisions are undefined</h3>
+              <span class="finding-location">DESIGN Categorical palette; memlog L56, L76</span>
+            </header>
+            <div class="finding-note">An override that stores a hex breaks free mix, dark mode and AA. Renaming a folder changes its colour, because the hash is of the name. Nested labels (<code>Work/Clients</code>) and same-named folders across accounts have no hashing rule, provider label colours are unaddressed, and there is no UI for overriding. The adversarial reviewer quantifies the collisions: with 8 colours and hash assignment, two of five folders share a colour 79% of the time, and the hand-check load is 8 × 4 × 6 = 192 values.</div>
+            <div class="finding-raised">Raised by: Edge cases #84 (high); Edge cases #83 (medium); Edge cases #87 (medium); Edge cases #81 (low); Edge cases #82 (low); Edge cases #86 (low); Adversarial F19 (collision part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Overrides store a category index (1–8), never a hex, resolved per theme and variant. Pin the index at first sight, or hash a stable folder id, so a rename keeps the colour. Assign folder colours round-robin and keep the hash for avatars. Hash the full path without the account. Ignore provider colours or map them to the nearest index. Offer the override from the folder or calendar context menu, with eight swatches from the active theme and "Automatic".</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">View original memory has no key or scope</h3>
+              <span class="finding-location">EXPERIENCE Email Body Rendering; View original toggle</span>
+            </header>
+            <div class="finding-note">"Remembered per sender" doesn't say whether the key is the exact address, the display name or the domain, which matters for rotating addresses (<code>bounce+123@</code>), one person with several addresses, and spoofable From headers. Nor does it say whether the memory is per account or global. Accessibility calls it invisible state; the adversarial reviewer notes the toggle is per message while the memory is per sender, so flipping one newsletter changes every message from that address.</div>
+            <div class="finding-raised">Raised by: Edge cases #63 (medium); Edge cases #64 (low); Accessibility M7 (memory part); Adversarial F15 (memory part)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Make the memory explicit ("Always show original for this sender") rather than implicit, keyed by exact lowercase address or the authenticated sender domain, with "Always for &lt;domain&gt;" as an option, and keep it global. Make the toggle a button with <code>aria-pressed</code>, placed before the body in reading order, and add "Reset email colour choices" on Appearance.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">OS mode and contrast changes during pending edits are unspecified</h3>
+              <span class="finding-location">EXPERIENCE Interaction Primitives › Live OS tracking; Component Patterns › Increase contrast control</span>
+            </header>
+            <div class="finding-note">The app follows the OS live, but nothing says whether the preview, the Pending/Applied comparison or "Right now that's Light" re-resolve when the OS flips light/dark or <code>prefers-contrast</code> mid-edit, whether the pending set survives, or whether an OS-driven change is announced.</div>
+            <div class="finding-raised">Raised by: Edge cases #1 (medium); Edge cases #2 (medium); Edge cases #88 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Auto and Follow system resolve live everywhere: the main app, both preview segments, the mode copy and the OS chip. An OS event never discards or changes a pending set, and the apply-bar summary shows "Follow system", not the resolved value. No announcement; the chip updates.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Live reload has no working watcher and no partial-save rule</h3>
+              <span class="finding-location">EXPERIENCE Theme Authoring; State Patterns › Live-reload error; <code>theme-manager.js:18-21, 66-71</code></span>
+            </header>
+            <div class="finding-note">The adversarial reviewer found <code>pathwatcher</code> isn't installed and <code>theme-manager.js</code> silently no-ops without it, so "live reload on save" has no working watcher today. Editors write 0-byte files during atomic saves, and a new file with no valid version yet has no defined behaviour. Swap, temp and cloud conflict copies land in the folder. Nothing says reload reaches every surface rendering the theme: the applied theme in every window, popouts included, and the pending theme in the preview.</div>
+            <div class="finding-raised">Raised by: Adversarial F16 (reload part); Edge cases #20 (medium); Edge cases #32 (medium); Edge cases #21 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use <code>fs.watch</code> or chokidar, debounced about 300ms, watching only <code>*.tokens.json</code>, ignoring dotfiles and 0-byte writes that a non-empty write follows. List files that never loaded under an "Errors" row in the grid instead of raising a toast. Reload every surface currently rendering that theme.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Onboarding re-entry and the pre-pick look are undefined</h3>
+              <span class="finding-location">EXPERIENCE IA › Onboarding looks step; State Patterns</span>
+            </header>
+            <div class="finding-note">Nothing covers quitting after adding an account but before picking a look, adding a second account (the legacy app reuses the onboarding window for account setup), the look the onboarding window renders in before any pick, or whether card thumbnails honour OS Increase contrast.</div>
+            <div class="finding-raised">Raised by: Edge cases #52 (medium); Edge cases #53 (medium); Edge cases #54 (medium); Edge cases #58 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Reopen on the looks step until a pick or Skip is recorded, and never show it for a second account. Render onboarding in Loft at the OS mode, contrast and text size, the same look Skip produces, with thumbnails in the active contrast.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-medium">medium</span>
+              <h3 class="finding-title">Mixed direction and non-Latin scripts aren't handled</h3>
+              <span class="finding-location">DESIGN Typography; EXPERIENCE Responsive &amp; Platform › RTL</span>
+            </header>
+            <div class="finding-note">An RTL UI with LTR mail, or Arabic and Hebrew subjects in an LTR list, has no direction rule. Jost has no Arabic or Hebrew glyphs, <code>letterSpacing: 0.01em</code> on every role breaks Arabic cursive joining, and <code>0.08em</code> uppercase labels make no sense for scripts without case.</div>
+            <div class="finding-raised">Raised by: Edge cases #70 (medium); Edge cases #71 (medium)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Set message bodies, subjects and snippets to <code>dir="auto"</code>, with UI direction from the locale. Give each theme a per-script fallback stack, and set letter-spacing to 0 and text-transform to none for <code>:lang(ar, fa, he, ur)</code>.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Apply-bar and Pending/Applied edge behaviour</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Pending/Applied switch, Apply bar; Interaction Primitives; Voice and Tone</span>
+            </header>
+            <div class="finding-note">Changing a control while the switch shows "Applied" is unspecified. A summary listing every changed setting overflows at 150% text. It's unclear whether "Adapt email colours in dark mode" is pending like every other Appearance control, given the preview shows the inbox, not a dark email body.</div>
+            <div class="finding-raised">Raised by: Edge cases #14 (low); Edge cases #15 (low); Edge cases #16 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Any control change flips the switch back to Pending. Truncate the summary after two items with "+N more", keeping the full list in the region's accessible description. Say whether Adapt is pending or applies immediately.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Grid order with many installed themes</h3>
+              <span class="finding-location">EXPERIENCE Component Patterns › Theme swatch</span>
+            </header>
+            <div class="finding-note">Scores of installed themes have no order or scrolling rule.</div>
+            <div class="finding-raised">Raised by: Edge cases #42 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> Built-ins first, then third-party themes sorted by name. The grid wraps, and the mini-preview stays pinned.</div>
+          </article>
+          <article class="finding">
+            <header>
+              <span class="badge badge-sev-low">low</span>
+              <h3 class="finding-title">Mixed-DPI monitors blur hairlines</h3>
+              <span class="finding-location">DESIGN Layout &amp; Spacing › Window chrome; <code>colors.border-subtle</code></span>
+            </header>
+            <div class="finding-note">Moving the window between 1×, 1.25× and 2× monitors blurs or drops the 1px <code>border-subtle</code> divider and the shadows, and the minimum width's unit isn't stated.</div>
+            <div class="finding-raised">Raised by: Edge cases #76 (low)</div>
+            <div class="finding-fix"><strong>Fix:</strong> State that the minimum width is in DIP, snap hairlines to device pixels or use a tint instead, and run the sweep at 1× and 2×.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <div class="mechanical">
+      <h3>Mechanical notes</h3>
+      <ul>
+        <li><strong>Cross-references:</strong> all 229 <code>{path}</code> references resolve (99 in the DESIGN frontmatter, 118 in the DESIGN body, 12 in EXPERIENCE). The only unresolved string is <code>{path.to.token}</code> in EXPERIENCE Foundation L13, which illustrates the syntax.</li>
+        <li><strong>Unreferenced tokens:</strong> <code>colors.scrollbar-thumb</code>, <code>colors.text-faint</code>, <code>spacing.list-width</code> and <code>typography.input</code> are defined but never referenced with <code>{}</code>. <code>list-width</code> appears only as the literal "380px" in the layout diagram, and <code>typography.input</code> is used nowhere.</li>
+        <li><strong>Hex format:</strong> <code>colors.scrim</code> is an 8-digit hex (<code>#1e283c59</code>). Confirm that the DTCG pipeline and the parser accept alpha hex.</li>
+        <li><strong>Frontmatter:</strong> DESIGN has <code>name</code> and <code>description</code>. EXPERIENCE has neither <code>name</code> nor <code>sources</code>. The initiative file has frontmatter only, and links both spines.</li>
+        <li><strong>Superseded memlog entries are handled correctly:</strong> L35 "Classic (Light)" → Nylas (L60); L40 "28 token sets" → 24 (L51, L60); L49 "420" → 360 (L60); L60 "designed light mode" → dark (L73); L11 "theme owns radius" → style owns radius (L48).</li>
+        <li><strong>Codebase names:</strong> issue #1 names <code>theme-package.js</code> and a <code>theme-picker</code> package; EXPERIENCE Foundation names only <code>theme-manager.js</code>. The retired modal is presumably <code>theme-picker</code>, so name it.</li>
+        <li><strong>Mermaid:</strong> none. The ASCII layout diagram (DESIGN L453–461) is fine.</li>
+        <li><strong>Spine-wins rule:</strong> consistent across the spines (DESIGN L510 "any mockup or import"; EXPERIENCE L45 "the mockup").</li>
+        <li><strong>De-duplication:</strong> 178 raw findings (rubric 32, accessibility 25, adversarial 23, edge cases 98) combine into 74. A combined finding takes the highest severity any reviewer gave it and lists every source with its own rating; "part" means only part of that source finding was merged there. Each finding lives once: in its rubric category when the rubric raised it, otherwise under the reviewer who raised it most severely.</li>
+      </ul>
+    </div>
+
+    <footer class="report-footer">
+      <div class="meta">
+        <span>Rubric: _bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/review-rubric.md</span>
+        <span>DESIGN.md: _bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/DESIGN.md</span>
+        <span>EXPERIENCE.md: _bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/EXPERIENCE.md</span>
+        <span>Generated: 2026-11-09</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
