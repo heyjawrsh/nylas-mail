@@ -257,7 +257,7 @@ Empty, loading and error states for the mail surfaces themselves (inbox, search,
 |---|---|---|
 | **Upgrade from a built-in legacy theme** | First launch after upgrade | `ui-taiga` → Taiga style + Taiga theme; `ui-darkside` → Darkside + Darkside; `ui-less-is-more` → Less-is-more + Less-is-more; `ui-light` and `ui-dark` → Classic style + Classic theme; `ui-ubuntu` → Classic style + Aubergine. A `ui-dark` user keeps Mode pinned to Dark. The "New: Appearance" toast appears and persists until dismissed. |
 | **Upgrade from a community LESS theme** | First launch after upgrade | Lands on Classic style + Classic theme, with a persistent toast naming the theme that no longer loads. |
-| **Legacy settings and files** | Upgrade | The legacy `core.themes` key is left untouched (so a downgrade still works); new settings use new keys. When themes are stacked, the first non-base entry is the one that maps. A user's `styles.less` still loads after the tokens, but is unsupported. Plugins that `@import` `ui-variables` get a LESS-variable → CSS-variable shim (architecture). |
+| **Legacy settings and files** | Upgrade | The legacy `core.themes` key is left untouched (so a downgrade still works); new settings use new keys. When themes are stacked, the first non-base entry is the one that maps. A user's `styles.less` still loads after the tokens, but is unsupported. Every package stylesheet gets `ui-variables` injected rather than importing it, so the LESS-variable → CSS-variable shim covers every package stylesheet (architecture). |
 
 ### Reading pane
 

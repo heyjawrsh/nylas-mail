@@ -1,0 +1,145 @@
+# The initiative's epics, approved 2026-11-11. Table order is build order. `id` is permanent, never reused.
+# `parts` names what each epic delivers of an id it shares with others; tickets.py ignores it.
+
+[[epic]]
+id = 1
+slug = "epic-token-platform"
+title = "Every look comes from role tokens at runtime"
+description = "Role tokens compile from DTCG files to runtime custom properties, the region, row-height and title-bar contracts exist, Classic is the first token theme, the main window is frameless on every OS, and package LESS reads role tokens through the shim, in an installable pre-release build. Every later epic builds on these contracts."
+covers = ["R1", "R2", "R3", "R4", "R5", "R13", "R14", "R15", "R16", "R18", "R19", "R20", "R28", "R30", "R32"]
+parts = { R1 = "the new setting keys and their independence", R2 = "the contract that styles read role tokens only", R3 = "the region contract and style runtime", R4 = "the role contract, which Classic defines", R5 = "Classic light and dark, ported from ui-light and ui-dark", R14 = "the Increase contrast switch, tracking prefers-contrast", R15 = "forced colours and border-strong edges in the runtime", R16 = "text-size scaling", R18 = "density scaling, and list rows from style, density and text size", R19 = "the shared focus ring, reduced motion and logical-property foundations", R20 = "the frameless main window on all three OSes and the title-bar contract", R28 = "the shim over every package stylesheet, core.themes untouched, styles.less loading", R32 = "the sweep harness and direct contrast-pair checks" }
+
+[[epic]]
+id = 2
+slug = "epic-loft"
+title = "Loft is the default look"
+description = "The Loft style and Loft theme deliver the Loft mail view, the shared toast, modal and popover, the bundled-font pipeline epic-themes uses, and the visual specs epic-email-dark-mode builds from, in an installable pre-release build that passes its by-eye check and its diff against loft-01.webp."
+covers = ["R2", "R3", "R4", "R5", "R6", "R7", "R8", "R14", "R15", "R18", "R19", "R20", "R21", "R31", "R32"]
+parts = { R2 = "Loft with every theme built so far", R3 = "Loft places or hides every region", R4 = "the Loft theme defines every role", R5 = "the Loft theme in all four variants", R6 = "the Loft style", R7 = "Loft lays out every surface shipped so far", R14 = "Loft's high-contrast variants pass every pair", R15 = "Loft's border-strong edges", R18 = "Loft's natural-height rows per density", R19 = "Loft meets the obligations", R20 = "Loft's title bar", R21 = "Loft's reflow ladder", R32 = "Loft's by-eye check and diff against loft-01.webp" }
+after = [{ epic = 1, needs = "the token runtime, regions, row-height and title-bar contracts" }]
+
+[[epic]]
+id = 3
+slug = "epic-appearance"
+title = "People change their look in Preferences › Appearance"
+description = "Preferences › Appearance sets every look setting with a live preview, the two apply models and the cross-fade, and the theme-picker modal is gone, in an installable pre-release build. It gives epic-email-dark-mode its Adapt email colours slot and epics 10 to 12 their page."
+covers = ["R1", "R9", "R10", "R11", "R17"]
+parts = { R1 = "changing one setting in Appearance leaves the others as set", R9 = "the page and every control, with Adapt email colours as a slot epic-email-dark-mode fills" }
+after = [
+  { epic = 1, needs = "the setting keys, the token runtime and live variant switching" },
+  { epic = 2, needs = "the shared toast and the Loft look the preview shows" },
+]
+
+[[epic]]
+id = 4
+slug = "epic-email-dark-mode"
+title = "Email bodies read well in dark mode"
+description = "In dark mode email bodies are adapted to the active contrast floor with images untouched, View original works per message and is remembered per sender, replies, forwards and print use original colours, and Adapt email colours turns it off, in an installable pre-release build."
+covers = ["R9", "R22"]
+parts = { R9 = "the Adapt email colours control in its Appearance slot" }
+after = [
+  { epic = 1, needs = "the token runtime and active contrast floor; the adaptation spike can start once it is done" },
+  { epic = 2, needs = "the View original toggle visual spec" },
+  { epic = 3, needs = "the Appearance slot for Adapt email colours" },
+]
+
+[[epic]]
+id = 5
+slug = "epic-themes"
+title = "All nine built-in themes ship complete"
+description = "Aubergine, Taiga, Darkside, Less-is-more, Volt, Ember and Dusk ship as bundled token themes in all four variants, Classic gets its high-contrast variants, every high-contrast variant passes every contrast pair, and nylas-private-fonts is out of the public build, in an installable pre-release build. Epics 7 to 9 and 12 use these themes."
+covers = ["R4", "R5", "R14", "R32"]
+parts = { R4 = "every role in the seven themes it ports or adds", R5 = "the seven themes in four variants, and Classic's high-contrast variants", R14 = "their high-contrast variants pass every pair", R32 = "contrast pairs and axe on its high-contrast variants" }
+after = [
+  { epic = 1, needs = "the token runtime and the DTCG theme format" },
+  { epic = 2, needs = "the bundled-font pipeline" },
+]
+
+[[epic]]
+id = 6
+slug = "epic-classic-style"
+title = "Classic arranges every surface and the shared kit is frozen"
+description = "The four short style specs are written at its start, the Classic style lays out every surface shipped so far, and the shared component kit freezes at its end for epics 7 to 9 and 11, in an installable pre-release build."
+covers = ["R2", "R3", "R6", "R7", "R15", "R18", "R19", "R20", "R21", "R32"]
+parts = { R2 = "Classic with every theme built so far", R3 = "Classic places or hides every region", R6 = "the Classic style, with narrow-list row heights", R7 = "Classic lays out every surface shipped so far", R15 = "Classic's border-strong edges", R18 = "Classic's rows per density", R19 = "Classic meets the obligations", R20 = "Classic's title bar", R21 = "Classic's reflow ladder", R32 = "Classic's by-eye check" }
+after = [
+  { epic = 2, needs = "the Loft surfaces and shared components Classic arranges" },
+  { epic = 4, needs = "the View original toggle, so it joins the shared kit before the freeze" },
+]
+
+[[epic]]
+id = 7
+slug = "epic-taiga-style"
+title = "Taiga arranges every surface"
+description = "The Taiga style, built on the frozen kit and ported from ui-taiga's layout LESS, lays out every surface shipped so far with every built-in theme, in an installable pre-release build. epic-onboarding-upgrade maps legacy Taiga users onto it."
+covers = ["R2", "R3", "R6", "R7", "R15", "R18", "R19", "R20", "R21", "R32"]
+parts = { R2 = "Taiga with every built-in theme", R3 = "Taiga places or hides every region", R6 = "the Taiga style", R7 = "Taiga lays out every surface shipped so far", R15 = "Taiga's border-strong edges", R18 = "Taiga's rows per density", R19 = "Taiga meets the obligations", R20 = "Taiga's title bar", R21 = "Taiga's reflow ladder", R32 = "Taiga's by-eye check" }
+after = [
+  { epic = 5, needs = "the Taiga theme" },
+  { epic = 6, needs = "the frozen shared kit and the Taiga style spec" },
+]
+
+[[epic]]
+id = 8
+slug = "epic-darkside-style"
+title = "Darkside arranges every surface"
+description = "The Darkside style, built on the frozen kit and ported from ui-darkside's layout LESS, lays out every surface shipped so far with every built-in theme, in an installable pre-release build. epic-onboarding-upgrade offers it as a look and maps legacy Darkside users onto it."
+covers = ["R2", "R3", "R6", "R7", "R15", "R18", "R19", "R20", "R21", "R32"]
+parts = { R2 = "Darkside with every built-in theme", R3 = "Darkside places or hides every region", R6 = "the Darkside style", R7 = "Darkside lays out every surface shipped so far", R15 = "Darkside's border-strong edges", R18 = "Darkside's rows per density", R19 = "Darkside meets the obligations", R20 = "Darkside's title bar", R21 = "Darkside's reflow ladder", R32 = "Darkside's by-eye check" }
+after = [
+  { epic = 5, needs = "the Darkside theme" },
+  { epic = 6, needs = "the frozen shared kit and the Darkside style spec" },
+]
+
+[[epic]]
+id = 9
+slug = "epic-less-is-more-style"
+title = "Less-is-more arranges every surface"
+description = "The Less-is-more style, built on the frozen kit and ported from ui-less-is-more's layout LESS, lays out every surface shipped so far with every built-in theme, in an installable pre-release build. epic-onboarding-upgrade maps legacy Less-is-more users onto it."
+covers = ["R2", "R3", "R6", "R7", "R15", "R18", "R19", "R20", "R21", "R32"]
+parts = { R2 = "Less-is-more with every built-in theme", R3 = "Less-is-more places or hides every region", R6 = "the Less-is-more style", R7 = "Less-is-more lays out every surface shipped so far", R15 = "Less-is-more's border-strong edges", R18 = "Less-is-more's rows per density", R19 = "Less-is-more meets the obligations", R20 = "Less-is-more's title bar", R21 = "Less-is-more's reflow ladder", R32 = "Less-is-more's by-eye check" }
+after = [
+  { epic = 5, needs = "the Less-is-more theme" },
+  { epic = 6, needs = "the frozen shared kit and the Less-is-more style spec" },
+]
+
+[[epic]]
+id = 10
+slug = "epic-theme-authoring"
+title = "Theme authors ship one token file"
+description = "A third-party theme is one validated .tokens.json file that installs, exports, removes, live-reloads, falls back and fills in derived variants, with a published author guide linked from Appearance, in an installable pre-release build."
+covers = ["R23", "R24", "R25", "R26", "R29"]
+after = [
+  { epic = 1, needs = "the DTCG compiler and token runtime" },
+  { epic = 2, needs = "Loft as the fallback theme and the error toast" },
+  { epic = 3, needs = "the Appearance theme list and pending-theme preview" },
+]
+
+[[epic]]
+id = 11
+slug = "epic-style-api"
+title = "Plugin packages add community styles"
+description = "A public, CSS-only style API lets plugin packages add styles on the frozen kit; uncovered features render in Classic's arrangement and the style card names them, in an installable pre-release build."
+covers = ["R27"]
+after = [
+  { epic = 3, needs = "the Appearance style cards" },
+  { epic = 6, needs = "the frozen shared kit and Classic's arrangement as the fallback" },
+  { epic = 10, needs = "its Appearance tab changes, since both epics edit that tab" },
+]
+
+[[epic]]
+id = 12
+slug = "epic-onboarding-upgrade"
+title = "New users and upgraders land in the right look"
+description = "First launch offers the looks step in the 900×600 onboarding window, upgrading maps every legacy theme to its style and theme and retires the old LESS path, and the full 540-combination sweep and five-style coverage check pass, so the stable public release can follow."
+covers = ["R7", "R12", "R28", "R32"]
+parts = { R7 = "the final five-style coverage check of every shipped surface", R28 = "the legacy theme mapping, the Classic landing and its toast, the New: Appearance toast, and retiring the old LESS path", R32 = "the full 540-combination sweep and axe on the high-contrast variants" }
+after = [
+  { epic = 3, needs = "the look settings and Appearance as the New: Appearance toast's destination" },
+  { epic = 5, needs = "the nine themes legacy themes map onto" },
+  { epic = 7, needs = "the Taiga style" },
+  { epic = 8, needs = "the Darkside style, offered at onboarding" },
+  { epic = 9, needs = "the Less-is-more style" },
+  { epic = 10, needs = "the finished theme loading it retires the old path beside, and its surfaces for the final coverage check" },
+  { epic = 11, needs = "the finished package loading it retires the old path beside, and its surfaces for the final coverage check" },
+]

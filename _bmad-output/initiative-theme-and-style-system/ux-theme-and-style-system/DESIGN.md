@@ -554,14 +554,14 @@ Each theme defines an 8-colour categorical palette, with values for light, dark 
 | `{colors.category-7}` | `#d2ddba` sage | `#98a578` | Derived |
 | `{colors.category-8}` | `#b3e1ea` cyan | `#6daab5` | Derived |
 
-Light colours 5–8 were derived in OKLCH at the mean lightness and chroma of Loft's four pastels (L 0.880, C 0.049). Their hues (31°, 76°, 121°, 211°) fill the free slots of a 45° grid that the four source hues (155°, 264°, 303°, 349°) already sit close to. All four are in sRGB gamut and still need the hand-check (a build task, Open Questions 6). Night Slate's values come from the dark mockup.
+Light colours 5–8 were derived in OKLCH at the mean lightness and chroma of Loft's four pastels (L 0.880, C 0.049). Their hues (31°, 76°, 121°, 211°) fill the free slots of a 45° grid that the four source hues (155°, 264°, 303°, 349°) already sit close to. All four are in sRGB gamut and still need the hand-check (a build task, Open Questions 5). Night Slate's values come from the dark mockup.
 
 Assignment: avatar initials take their colour from a hash of the email address (`avatarColor(email)` in the Loft source). A folder or calendar takes its colour from a hash of its **id**, so a rename keeps its colour. The user can override the colour of any folder or calendar; the override is stored as a palette index (1–8) keyed by the folder's or calendar's id, never as a hex, so it resolves in every theme and variant.
 
 ### Variants: modes, contrast levels, derivation
 
 - **Every built-in ships all four variants.** Light and dark, each at standard and high contrast: 9 themes × 2 modes × 2 contrast levels = 36 token sets. Where no source exists, the variant is derived in OKLCH and hand-checked. Built-ins never show the "derived" badge. They are bundled, so they can't fail to load.
-- **Designed, not derived.** The dark modes for Darkside and Less-is-more and the light modes for Volt, Ember and Dusk must be designed. The build tasks are in Open Questions 6.
+- **Designed, not derived.** The dark modes for Darkside and Less-is-more and the light modes for Volt, Ember and Dusk must be designed. The build tasks are in Open Questions 5.
 - **Behaviour.** How a third-party theme's missing variants and roles are derived, badged and checked against Contrast pairs is in `EXPERIENCE.md` › Theme Authoring › Partial themes. How Mode follows the OS and how Increase contrast swaps to the high-contrast variant is in `EXPERIENCE.md` › Interaction Primitives and › Accessibility Floor.
 
 ### Contrast pairs
@@ -635,7 +635,7 @@ Built-ins are listed first; installed third-party themes follow alphabetically (
 | **Ember** | Ember Charcoal, same file ([#ember](mockups/color-themes-loft-dark.html#ember)) | Source Serif (bundled, OFL) for reading text: the email body and the reading-card subject. Inter for the UI chrome | Dark standard and high contrast | **Design a light mode**; hand-check all four variants |
 | **Dusk** | Dusk Float, same file ([#dusk](mockups/color-themes-loft-dark.html#dusk)) | Jost (bundled, OFL) | Dark standard and high contrast | **Design a light mode**; hand-check all four variants |
 
-Typefaces are set in Typography. The build tasks are collected in Open Questions 6.
+Typefaces are set in Typography. The build tasks are collected in Open Questions 5.
 
 ### High-contrast values
 
@@ -764,7 +764,7 @@ Every built-in theme defines every role. This table gives each built-in's value 
 
 **Standard-contrast failures that stay.** At standard contrast each theme matches its reference, so pairs the legacy app (or the dark mockup) actually draws keep their failing ratios, as Loft's do: for example Taiga `text-secondary` on `surface-panel` 2.50:1, Taiga `highlight-text` on `#fff000` 4.14:1, Classic `accent-on` on `accent-default` 2.88:1, Darkside `accent-on` on `accent-default` 2.59:1, and every theme's `accent-text` link blue on `surface-panel`. Three pairs meet only in new components and fail in some ported themes: the badge (`accent-text` on `accent-tint`, 2.37–3.83:1), the error-toast bar (`status-danger` on `inverse-surface`, 2.46–2.55:1) and the bell dot (`status-danger` on `surface-toolbar`, 2.62:1 Aubergine, 2.99:1 Darkside and Less-is-more). Each colour is legacy in its own use, so by decision these stay as they are at standard contrast; Increase contrast lifts them to the floor.
 
-**Not in this table, by decision.** The modes with no source today, and every high-contrast variant. Volt, Ember and Dusk take their high-contrast values from the dark mockup (Colors › High-contrast values). The build tasks for the rest are in Open Questions 6.
+**Not in this table, by decision.** The modes with no source today, and every high-contrast variant. Volt, Ember and Dusk take their high-contrast values from the dark mockup (Colors › High-contrast values). The build tasks for the rest are in Open Questions 5.
 
 ### LESS variable → role mapping (legacy themes)
 
@@ -817,7 +817,7 @@ The ported themes' legacy role values come from this table. Values are from the 
 
 ### Derived values pending hand-check
 
-Every value in this section is **(hand-check pending)**. A script derived each one in OKLCH, keeping the source hue and chroma (chroma is reduced only to stay inside sRGB) and moving lightness in 0.0005 steps to the nearest value that passes. Ratios are WCAG 2.x, measured on the rounded hex. The hand-check is a build task (see Open Questions 6).
+Every value in this section is **(hand-check pending)**. A script derived each one in OKLCH, keeping the source hue and chroma (chroma is reduced only to stay inside sRGB) and moving lightness in 0.0005 steps to the nearest value that passes. Ratios are WCAG 2.x, measured on the rounded hex. The hand-check is a build task (see Open Questions 5).
 
 Rules:
 
@@ -1128,10 +1128,9 @@ Visual questions and build tasks, open by decision. Architecture-owned ones are 
 
 1. **Loft multi-select** (Loft epic). The floating accent card marks the single open thread. How a bulk selection of threads looks is undecided.
 2. **Visual specs for the derived badge and the View original toggle** (Loft epic).
-3. **Non-Loft style specs** (owner: each style's epic: Classic, Taiga, Darkside, Less-is-more). Each style's spacing, row and selection treatment and rail placement are designed in a short style spec, an Update of these docs, at the start of its epic. These docs specify only the system and the Loft style; the arrangements in [`mockups/key-free-mix.html`](mockups/key-free-mix.html) are illustrative.
+3. **Non-Loft style specs** (owner: the Classic style epic). All four short style specs (Classic, Taiga, Darkside, Less-is-more) are written as one Update of these docs at the start of the Classic style epic, and the shared component kit freezes at that epic's end. Each spec designs its style's spacing, row and selection treatment and rail placement. These docs specify only the system and the Loft style; the arrangements in [`mockups/key-free-mix.html`](mockups/key-free-mix.html) are illustrative.
 4. **Theme type ramps** (owner: themes epic). Every theme except Loft gets its type ramp (sizes, weights, line heights in its own face) there.
-5. **New-component pairs in the ported themes** (owner: user, themes epic). The badge (`accent-text` on `accent-tint`), the error-toast bar (`status-danger` on `inverse-surface`) and the bell dot (`status-danger` on `surface-toolbar`) fail at standard contrast in some ported themes (Colors › Built-in theme role table). Each colour is legacy in its own use, so correcting them would move a legacy link, error or toast colour. Mapping errors to correct, or standard-contrast failures to keep like Loft's?
-6. **Build tasks.** The one list; the Theme catalogue's Build task column gives each theme's share.
+5. **Build tasks.** The one list; the Theme catalogue's Build task column gives each theme's share.
    - Design, not derive, the light modes for Volt, Ember and Dusk and the dark modes for Darkside and Less-is-more.
    - Derive the dark modes for Aubergine and Taiga in OKLCH and hand-check them. The derivation rule for a whole mode is not decided yet.
    - Derive every high-contrast variant of the ported themes (Classic, Aubergine, Taiga, Darkside, Less-is-more), then hand-check it against Colors › Contrast pairs.
