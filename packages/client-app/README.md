@@ -140,6 +140,12 @@ Just want to publish everything? There's a helper script that does it for you:
     script/publish-docs
 
 
+## Unsigned macOS build
+
+`pnpm --filter nylas-mail dist:mac` writes an unsigned `.dmg` and `.zip` (Apple silicon and Intel) to `dist/`. Because the app isn't signed or notarised, Gatekeeper blocks a double-click. Open it with right-click › Open, or clear the quarantine flag after copying it to Applications:
+
+    xattr -dr com.apple.quarantine "/Applications/Nylas Mail.app"
+
 ## Configuration
 You can configure Nylas Mail in a few ways—for instance, pointing it to your self-hosted instance of the sync engine or changing the interface zoom level. [Learn more about how.](https://github.com/nylas/nylas-mail/blob/master/CONFIGURATION.md)
 

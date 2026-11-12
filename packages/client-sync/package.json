@@ -26,8 +26,8 @@
 		"underscore": "^1.13.7"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "latest",
-		"vitest": "latest"
+		"@vitest/coverage-v8": "4.1.11",
+		"vitest": "4.1.11"
 	},
 	"author": "Nylas",
 	"license": "MIT",

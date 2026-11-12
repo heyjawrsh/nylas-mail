@@ -1,12 +1,11 @@
 // Node-resolution bridge for `electron` inside vitest's native (externalized)
 // ESM chains. The real npm `electron` package exports only the binary path
 // string, so named imports (ipcRenderer, remote, ...) fail at link time.
-// This bridge preserves the default export (the binary path — smoke.js relies
-// on it) and adds inert named-export stubs for the renderer surface. The
-// literal `module.exports.X =` form at the end is what cjs-module-lexer
-// detects for named imports.
-// The real package resolves (and may download) the binary on require; tests
-// never launch it, so the path string is a placeholder.
+// This bridge keeps a string default export (a placeholder — the real
+// package's binary path is never needed because tests don't launch Electron)
+// and adds inert named-export stubs for the renderer surface. The literal
+// `module.exports.X =` form at the end is what cjs-module-lexer detects for
+// named imports.
 const real = "electron";
 
 module.exports = new String(String(real));

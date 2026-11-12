@@ -2,7 +2,14 @@
 # Windows/Linux targets, signing and notarisation come later.
 # Build with `pnpm --filter nylas-mail dist:mac` (predist:mac builds the
 # renderer bundles first).
-appId: com.nylas.mail
+#
+# The build is unsigned, so Gatekeeper blocks a double-click. Open it with
+# right-click › Open, or clear the quarantine flag:
+#   xattr -dr com.apple.quarantine "/Applications/Nylas Mail.app"
+#
+# Matches the bundle id the app hard-codes (default-client-helper.js,
+# native-notifications.js).
+appId: com.nylas.nylas-mail
 productName: Nylas Mail
 copyright: Copyright (C) 2014-2017 Nylas, Inc. All rights reserved.
 
@@ -57,6 +64,6 @@ mac:
   notarize: false
   target:
     - target: dmg
-      arch: [arm64]
+      arch: [arm64, x64]
     - target: zip
-      arch: [arm64]
+      arch: [arm64, x64]

@@ -59,6 +59,7 @@ import StyleManager from "./style-manager.js";
 import ErrorLogger from "./error-logger.js";
 import WorkspaceStore from "../src/flux/stores/workspace-store.js";
 import React from "react";
+import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import SheetContainer from "./sheet-container.jsx";
 import { Actions } from "nylas-exports";
@@ -1231,7 +1232,9 @@ export default class NylasEnvConstructor {
 		this.item.setAttribute("class", "sheet-container");
 		this.item.setAttribute("tabIndex", "-1");
 		this.reactRoot = createRoot(this.item);
-		this.reactRoot.render(React.createElement(SheetContainer));
+		// Commit synchronously, as ReactDOM.render did: the window's startup
+		// continues on the assumption that SheetContainer is mounted.
+		flushSync(() => this.reactRoot.render(React.createElement(SheetContainer)));
 		return document
 			.querySelector(this.workspaceViewParentSelector)
 			.appendChild(this.item);

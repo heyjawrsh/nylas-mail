@@ -22,8 +22,8 @@
 		"xoauth2": "^1.2.0"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "latest",
-		"vitest": "latest"
+		"@vitest/coverage-v8": "4.1.11",
+		"vitest": "4.1.11"
 	},
 	"author": "Nylas",
 	"license": "ISC",
