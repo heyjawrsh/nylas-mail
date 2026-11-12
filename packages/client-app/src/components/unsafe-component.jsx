@@ -32,56 +32,71 @@ class InjectedRenderNotifier extends React.Component {
 	}
 }
 
-// Catches a throwing plugin inside the injected root. Dev shows the exception
-// panel, production an empty div; either way the error is reported. A later
-// re-render with new props tries the plugin again.
+// Dev-mode panel shown in place of a plugin that failed to render.
+const exceptionPanel = (displayName, error) => {
+	let stack = error?.stack || String(error);
+	let stackEnd = stack.indexOf("react/lib/");
+	if (stackEnd > 0) {
+		stackEnd = stack.lastIndexOf("\n", stackEnd);
+		stack = stack.substr(0, stackEnd);
+	}
+	return React.createElement(
+		"div",
+		{ className: "unsafe-component-exception" },
+		React.createElement(
+			"div",
+			{ className: "message" },
+			displayName,
+			" could not be displayed.",
+		),
+		React.createElement("div", { className: "trace" }, stack),
+	);
+};
+
+// Dev shows the exception panel, production an empty div.
+const failedElement = (displayName, error) =>
+	NylasEnv.inDevMode()
+		? exceptionPanel(displayName, error)
+		: React.createElement("div", null);
+
+// Catches a throwing plugin inside the injected root and reports it once. A
+// later render with different children tries the plugin again.
 class InjectedErrorBoundary extends React.Component {
 	static displayName = "InjectedErrorBoundary";
 
 	constructor(props) {
 		super(props);
-		this.state = { error: null };
+		// `failedChildren` is undefined until the render after a catch records
+		// the children that threw.
+		this.state = { error: null, failedChildren: undefined };
 	}
 
 	static getDerivedStateFromError(error) {
-		return { error };
+		return { error, failedChildren: undefined };
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		if (!state.error) {
+			return null;
+		}
+		if (state.failedChildren === undefined) {
+			return { failedChildren: props.children };
+		}
+		if (props.children !== state.failedChildren) {
+			return { error: null, failedChildren: undefined };
+		}
+		return null;
 	}
 
 	componentDidCatch(error) {
 		NylasEnv.reportError(error);
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.state.error && prevProps.children !== this.props.children) {
-			this.setState({ error: null });
-		}
-	}
-
 	render() {
 		const { error } = this.state;
-		if (!error) {
-			return this.props.children;
-		}
-		if (!NylasEnv.inDevMode()) {
-			return React.createElement("div", null);
-		}
-		let stack = error.stack || String(error);
-		let stackEnd = stack.indexOf("react/lib/");
-		if (stackEnd > 0) {
-			stackEnd = stack.lastIndexOf("\n", stackEnd);
-			stack = stack.substr(0, stackEnd);
-		}
-		return React.createElement(
-			"div",
-			{ className: "unsafe-component-exception" },
-			React.createElement(
-				"div",
-				{ className: "message" },
-				this.props.displayName,
-				" could not be displayed.",
-			),
-			React.createElement("div", { className: "trace" }, stack),
-		);
+		return error
+			? failedElement(this.props.displayName, error)
+			: this.props.children;
 	}
 }
 
@@ -197,7 +212,7 @@ class UnsafeComponent extends React.Component {
 			);
 		} catch (err) {
 			NylasEnv.reportError(err);
-			element = React.createElement("div", null);
+			element = failedElement(Component?.displayName, err);
 		}
 		// Schedules, never flushes: safe inside this component's commit.
 		this._root.render(element);

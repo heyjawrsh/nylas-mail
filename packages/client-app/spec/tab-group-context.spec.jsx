@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import React from "react";
 import { cleanup, fireEvent, render } from "@testing-library/react";
@@ -9,6 +10,14 @@ import TabGroupRegion from "../src/components/tab-group-region.jsx";
 import DatePicker from "../src/components/date-picker.jsx";
 import TimePicker from "../src/components/time-picker.jsx";
 import { TabGroupContext as KitTabGroupContext } from "nylas-component-kit";
+
+// TimePicker still measures itself with findDOMNode (story 3), which React 19
+// dropped; give it an empty node so it can mount.
+vi.mock("react-dom", async () => {
+	const actual = await vi.importActual("react-dom");
+	const findDOMNode = () => document.createElement("div");
+	return { ...actual, default: { ...actual, findDOMNode }, findDOMNode };
+});
 
 afterEach(cleanup);
 
@@ -25,7 +34,7 @@ afterEach(() => {
 });
 
 describe("TabGroupContext", () => {
-	it("is the same object the component kit exports", () => {
+	it("is the context the spec kit stub exports", () => {
 		expect(KitTabGroupContext).toBe(TabGroupContext);
 	});
 
@@ -80,6 +89,7 @@ describe("TabGroupContext", () => {
 });
 
 describe("Tab in a group", () => {
+	// Tab is handled by the region's own onKeyDown, so these cover the region.
 	const renderPickerInGroup = () =>
 		render(
 			<TabGroupRegion>
@@ -102,21 +112,64 @@ describe("Tab in a group", () => {
 		});
 		expect(shiftFocus).toHaveBeenCalledWith(-1);
 	});
+});
 
-	it("moves to the next field when Enter is pressed in the date picker", () => {
-		const { container } = renderPickerInGroup();
+describe("Enter in a group reaches the region through context", () => {
+	const renderInRegion = (child) => {
+		let region;
+		const result = render(
+			<TabGroupRegion
+				ref={(value) => {
+					region = value;
+				}}
+			>
+				{child}
+			</TabGroupRegion>,
+		);
+		return { ...result, region };
+	};
+
+	it("date picker calls shiftFocus(1) on its region", () => {
+		const { container, region } = renderInRegion(<DatePicker />);
 		fireEvent.keyDown(container.querySelector(".date-picker"), {
 			key: "Enter",
 		});
+		expect(shiftFocus).toHaveBeenCalledOnce();
 		expect(shiftFocus).toHaveBeenCalledWith(1);
+		expect(shiftFocus.mock.contexts[0]).toBe(region);
 	});
 
-	it("moves to the next field when the time picker gets Enter", () => {
-		const region = new TabGroupRegion({});
-		const picker = new TimePicker({ value: 0, onChange: () => {} });
-		picker.context = { parentTabGroup: region };
-		picker._onKeyDown({ key: "Enter", preventDefault() {} });
+	it("time picker calls shiftFocus(1) on its region", () => {
+		const { container, region } = renderInRegion(
+			<TimePicker value={0} onChange={() => {}} />,
+		);
+		fireEvent.keyDown(container.querySelector("input"), { key: "Enter" });
+		expect(shiftFocus).toHaveBeenCalledOnce();
 		expect(shiftFocus).toHaveBeenCalledWith(1);
+		expect(shiftFocus.mock.contexts[0]).toBe(region);
+	});
+});
+
+describe("component kit registration", () => {
+	// The real kit's registration pass, which vitest normally skips.
+	const KitClass = globalThis.NylasComponentKitClass;
+
+	it("exposes the tab-group context module as TabGroupContext", () => {
+		const requireFrom = vi
+			.spyOn(KitClass, "requireFrom")
+			.mockImplementation(() => {});
+		KitClass.initClass();
+		requireFrom.mockRestore();
+		const kit = new KitClass();
+		const fromKit = kit.TabGroupContext;
+		expect(fromKit.$$typeof).toBe(Symbol.for("react.context"));
+		expect(fromKit.displayName).toBe("TabGroupContext");
+		// The kit loads modules with Node's require, a separate graph from
+		// vitest's imports, so compare against Node's copy of the module.
+		const nodeRequire = createRequire(import.meta.url);
+		const nodeModule = nodeRequire("../src/components/tab-group-context.js");
+		expect(fromKit).toBe(nodeModule.default ?? nodeModule);
+		expect(kit.TabGroupContext).toBe(fromKit);
 	});
 });
 

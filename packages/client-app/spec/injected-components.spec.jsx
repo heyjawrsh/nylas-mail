@@ -27,7 +27,8 @@ vi.mock("nylas-exports", () => ({
 }));
 
 vi.mock("../src/components/unsafe-component.jsx", () => ({
-	default: ({ component: Component, onComponentDidRender, ...props }) => {
+	// A plain function (not an arrow) so it has a prototype for instanceof.
+	default: function UnsafeComponent({ component: Component, onComponentDidRender, ...props }) {
 		React.useEffect(() => onComponentDidRender(), [onComponentDidRender]);
 		return <Component {...props} />;
 	},
@@ -35,6 +36,7 @@ vi.mock("../src/components/unsafe-component.jsx", () => ({
 
 import InjectedComponent from "../src/components/injected-component.jsx";
 import InjectedComponentLabel from "../src/components/injected-component-label.jsx";
+import UnsafeComponent from "../src/components/unsafe-component.jsx";
 
 // injected-component.jsx is CommonJS; Vitest's default interop is the supported surface here.
 
@@ -173,6 +175,41 @@ describe("InjectedComponent", () => {
 		expect(() =>
 			render(<InjectedComponent matching={{ role: "strict" }} requiredMethods={["archive"]} />),
 		).toThrow(/must implement method `archive`/);
+	});
+});
+
+describe("InjectedComponent DOM methods", () => {
+	const withUnsafeInner = (inner) => {
+		let injected;
+		render(
+			<InjectedComponent
+				ref={(value) => {
+					injected = value;
+				}}
+				matching={{ role: "composer" }}
+			/>,
+		);
+		injected.innerRef = {
+			current: Object.assign(Object.create(UnsafeComponent.prototype), inner),
+		};
+		return injected;
+	};
+
+	it.each(["focus", "blur"])(
+		"%s falls back to the UnsafeComponent when it has no injected instance",
+		(method) => {
+			const inner = { injected: null, [method]: vi.fn() };
+			const injected = withUnsafeInner(inner);
+			expect(() => injected[method]()).not.toThrow();
+			expect(inner[method]).toHaveBeenCalledOnce();
+		},
+	);
+
+	it("prefers the injected instance's method when there is one", () => {
+		const inner = { injected: { focus: vi.fn() }, focus: vi.fn() };
+		withUnsafeInner(inner).focus();
+		expect(inner.injected.focus).toHaveBeenCalledOnce();
+		expect(inner.focus).not.toHaveBeenCalled();
 	});
 });
 

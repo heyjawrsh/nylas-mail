@@ -24,6 +24,7 @@ vi.mock("react-dom/client", async () => {
 	return { ...actual, default: { ...actual, createRoot: m.createRoot }, createRoot: m.createRoot };
 });
 
+import { Utils } from "nylas-exports";
 import UnsafeComponent from "../src/components/unsafe-component.jsx";
 
 class Plugin extends React.Component {
@@ -244,6 +245,35 @@ describe("UnsafeComponent with a throwing plugin", () => {
 			/>,
 		);
 		expect(onComponentDidRender).not.toHaveBeenCalled();
+	});
+
+	it("reports once when a plugin that rendered starts throwing on update", () => {
+		const { rerender } = render(<UnsafeComponent component={Broken} broken={false} />);
+		rerender(<UnsafeComponent component={Broken} broken />);
+		expect(NylasEnv.reportError).toHaveBeenCalledOnce();
+		expect(wrapper().innerHTML).toBe("<div></div>");
+	});
+
+	it("shows the exception panel in dev mode when building the element fails", () => {
+		NylasEnv.inDevMode.mockReturnValue(true);
+		const error = new Error("bad props");
+		vi.spyOn(Utils, "fastOmit").mockImplementationOnce(() => {
+			throw error;
+		});
+		render(<UnsafeComponent component={Plugin} />);
+		expect(NylasEnv.reportError).toHaveBeenCalledWith(error);
+		expect(
+			wrapper().querySelector(".unsafe-component-exception .message").textContent,
+		).toBe("Plugin could not be displayed.");
+	});
+
+	it("renders an empty div in production when building the element fails", () => {
+		vi.spyOn(Utils, "fastOmit").mockImplementationOnce(() => {
+			throw new Error("bad props");
+		});
+		render(<UnsafeComponent component={Plugin} />);
+		expect(NylasEnv.reportError).toHaveBeenCalledOnce();
+		expect(wrapper().innerHTML).toBe("<div></div>");
 	});
 
 	it("tries the plugin again when its props change", () => {

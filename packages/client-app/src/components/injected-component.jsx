@@ -227,7 +227,7 @@ class InjectedComponent extends React.Component {
 		let target = null;
 		if (
 			this.innerRef?.current instanceof UnsafeComponent &&
-			this.innerRef?.current.injected[method] != null
+			this.innerRef?.current.injected?.[method] != null
 		) {
 			target = this.innerRef?.current.injected;
 		} else if (
