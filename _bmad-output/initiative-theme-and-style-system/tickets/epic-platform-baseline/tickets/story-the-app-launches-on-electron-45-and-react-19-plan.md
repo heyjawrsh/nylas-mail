@@ -3,7 +3,7 @@ title: 'The app launches on Electron 45 and React 19'
 type: 'chore'
 ticket: '1'
 created: '2026-11-12'
-status: 'built'
+status: done
 baseline_revision: '2a18e4976bccc7cee1dc9fdfba46b393b7b18f57'
 route: 'full'
 route_source: 'auto'
