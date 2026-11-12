@@ -3,7 +3,7 @@ title: 'Modals and kit components render from the bundle'
 type: 'bugfix'
 ticket: '10'
 created: '2026-11-12'
-status: 'built'
+status: done
 baseline_revision: 'f2f725e5ccf5a763b0d006f0ce6125ccbdecd070'
 route: 'full'
 route_source: 'auto'
