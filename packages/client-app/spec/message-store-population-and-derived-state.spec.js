@@ -23,7 +23,7 @@ vi.mock("../src/flux/stores/focused-content-store.js", () => ({ default: { focus
 vi.mock("../src/flux/nylas-api-helpers.js", () => ({ default: { getCollection: m.getCollection }, getCollection: m.getCollection }));
 vi.mock("../src/registries/extension-registry.js", () => {
 	const MessageView = { extensions: m.extensions, register: m.register, unregister: m.unregister };
-	return { default: { MessageView }, MessageView };
+	return { MessageView };
 });
 vi.mock("../src/deprecate-utils.js", () => {
 	const deprecate = (_old, _next, context, fn) => fn.bind(context);

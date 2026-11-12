@@ -427,7 +427,14 @@ try {
 // The eager instance makes vite's CJS interop walk every prototype getter at
 // module-eval time (loading .jsx components through the CJS shim, which has
 // no JSX loader). Under vitest, export the class; consumers instantiate.
-if (typeof module !== "undefined" && module.exports && !process.env.VITEST) {
+// In the renderer bundle, nylas-component-kit-bundle.cjs owns the instance
+// (`module` there is the bundle file's own module).
+if (
+	typeof module !== "undefined" &&
+	module.exports &&
+	!process.env.VITEST &&
+	typeof NYLAS_RENDERER_BUNDLE === "undefined"
+) {
 	const kitInstance = new NylasComponentKit();
 	kitInstance.NylasComponentKit = NylasComponentKit; // class handle for specs
 	module.exports = kitInstance;

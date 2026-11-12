@@ -9,19 +9,14 @@ const Module = require("node:module");
 
 const PREFIX = "nylas-bundled:";
 
-let componentKit = null;
 const providers = {
 	"nylas-exports": () => {
 		require("nylas-exports");
 		return globalThis.$n;
 	},
-	"nylas-component-kit": () => {
-		require("nylas-component-kit");
-		if (!componentKit) {
-			componentKit = new globalThis.NylasComponentKitClass();
-		}
-		return componentKit;
-	},
+	// The bundle's own kit instance (src/global/nylas-component-kit-bundle.cjs),
+	// so bundled code and packages read the same components.
+	"nylas-component-kit": () => require("nylas-component-kit"),
 	"nylas-store": () => require("nylas-store"),
 	"nylas-observables": () => require("nylas-observables"),
 	// One React for the bundle and the packages: hooks and the JSX runtime

@@ -21,7 +21,8 @@ vi.mock("../src/flux/models/message.js", () => ({
 vi.mock("../src/flux/actions.js", () => ({ default: {} }));
 vi.mock("../src/flux/nylas-api-helpers.js", () => ({ makeDraftDeletionRequest: m.deletion }));
 vi.mock("../src/flux/stores/account-store.js", () => ({ default: { accountForEmail: m.accountForEmail } }));
-vi.mock("../src/flux/stores/contact-store.js", () => ({ isValidContact: m.isValidContact }));
+// contact-store.js exports the store instance as its default, nothing named
+vi.mock("../src/flux/stores/contact-store.js", () => ({ default: { isValidContact: m.isValidContact } }));
 vi.mock("../src/flux/stores/database-store.js", () => ({ default: { findBy: m.findBy, inTransaction: m.inTransaction } }));
 vi.mock("../src/undo-stack.js", () => ({ default: class UndoStack {
 	save(value) { return m.undoSave(value); }
@@ -222,6 +223,15 @@ describe("DraftEditingSession", () => {
 	it("reports missing recipients as an error", () => {
 		session._draft.to = [];
 		expect(session.validateDraftForSending().errors[0]).toContain("one or more recipients");
+	});
+
+	it("validates every recipient through ContactStore.isValidContact", () => {
+		const cc = { email: "cc@example.com" };
+		const bcc = { email: "bcc@example.com" };
+		session._draft.cc = [cc];
+		session._draft.bcc = [bcc];
+		expect(session.validateDraftForSending().errors).toEqual([]);
+		expect(m.isValidContact.mock.calls.map(([contact]) => contact.email)).toEqual(["to@example.com", "cc@example.com", "bcc@example.com"]);
 	});
 
 	it("reports invalid recipients as errors", () => {

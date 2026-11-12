@@ -3,6 +3,7 @@
 // app did this at runtime via compile-cache (babel/coffee JIT); the modernized
 // codebase does it once, ahead of launch, with esbuild.
 import { build } from "esbuild";
+import { realpathSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -104,7 +105,7 @@ const bundleRelativeNodeRequires = {
 	},
 };
 
-const entries = [
+export const entries = [
 	{
 		in: path.join(root, "src/window-bootstrap.js"),
 		out: "window-bootstrap.bundle",
@@ -115,8 +116,9 @@ const entries = [
 	},
 ];
 
-for (const entry of entries) {
-	await build({
+// esbuild options for one entry. Exported so specs can build in memory.
+export function buildOptions(entry) {
+	return {
 		entryPoints: [entry.in],
 		bundle: true,
 		format: "cjs",
@@ -160,15 +162,19 @@ for (const entry of entries) {
 			"node-uuid": "uuid",
 			// bridges the old ModuleCache runtime resolution
 			"nylas-exports": path.join(root, "src/global/nylas-exports.js"),
+			// CJS shim so named imports are property reads at use time
 			"nylas-component-kit": path.join(
 				root,
-				"src/global/nylas-component-kit.js",
+				"src/global/nylas-component-kit-bundle.cjs",
 			),
 			"nylas-store": path.join(root, "src/global/nylas-store.js"),
 			"nylas-observables": path.join(root, "src/global/nylas-observables.js"),
 		},
 		plugins: [bundleRelativeNodeRequires],
 		logLevel: "warning",
+		// An import its target doesn't export is undefined at runtime (every
+		// kit component once was); fail the build instead.
+		logOverride: { "import-is-undefined": "error" },
 		banner: {
 			// The flux layer reads the NylasEnv global at module-evaluation
 			// time (singletons constructed at module scope). The real env is
@@ -177,6 +183,16 @@ for (const entry of entries) {
 			// environment moments later.
 			js: BANNER,
 		},
-	});
-	console.log(`bundled ${entry.out}.js`);
+	};
+}
+
+// Build when run as a script, not when a spec imports the options.
+if (
+	process.argv[1] &&
+	realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))
+) {
+	for (const entry of entries) {
+		await build(buildOptions(entry));
+		console.log(`bundled ${entry.out}.js`);
+	}
 }

@@ -51,13 +51,12 @@ vi.mock("../src/flux/stores/focused-content-store.js", () => ({
 vi.mock("../src/flux/nylas-api-helpers.js", () => ({
 	default: { getCollection: vi.fn() },
 }));
+// extension-registry.js has named exports only
 vi.mock("../src/registries/extension-registry.js", () => ({
-	default: {
-		MessageView: {
-			extensions: vi.fn(() => []),
-			register: vi.fn(),
-			unregister: vi.fn(),
-		},
+	MessageView: {
+		extensions: vi.fn(() => []),
+		register: vi.fn(),
+		unregister: vi.fn(),
 	},
 }));
 vi.mock("../src/deprecate-utils.js", () => {

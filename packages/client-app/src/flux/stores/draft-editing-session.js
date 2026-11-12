@@ -10,7 +10,7 @@ import Message from "../models/message.js";
 import _Actions from "../actions.js";
 import * as NylasAPIHelpers from "../nylas-api-helpers.js";
 import AccountStore from "./account-store.js";
-import * as ContactStore from "./contact-store.js";
+import ContactStore from "./contact-store.js";
 import DatabaseStore from "./database-store.js";
 import UndoStack from "../../undo-stack.js";
 import * as DraftHelpersNS from "./draft-helpers.js";

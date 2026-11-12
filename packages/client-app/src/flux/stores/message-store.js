@@ -15,8 +15,7 @@ import DatabaseStore from "./database-store.js";
 import FocusedPerspectiveStore from "./focused-perspective-store.js";
 import FocusedContentStore from "./focused-content-store.js";
 import * as NylasAPIHelpers from "../nylas-api-helpers.js";
-import * as ExtensionRegistryNS from "../../registries/extension-registry.js";
-const ExtensionRegistry = ExtensionRegistryNS.default || ExtensionRegistryNS;
+import { MessageView as MessageViewExtensions } from "../../registries/extension-registry.js";
 import DeprecateUtilsNS from "../../deprecate-utils.js";
 const { deprecate } = DeprecateUtilsNS.default || DeprecateUtilsNS;
 import _ from "underscore";
@@ -111,7 +110,7 @@ class MessageStore extends NylasStore {
 
 	// Public: Returns the extensions registered with the MessageStore.
 	extensions() {
-		return ExtensionRegistry.MessageView.extensions();
+		return MessageViewExtensions.extensions();
 	}
 
 	// Public: Deprecated, use {ExtensionRegistry.MessageView.register} instead.
@@ -122,7 +121,7 @@ class MessageStore extends NylasStore {
 	// - `ext` A {MessageViewExtension} instance.
 	//
 	registerExtension(ext) {
-		return ExtensionRegistry.MessageView.register(ext);
+		return MessageViewExtensions.register(ext);
 	}
 
 	// Public: Deprecated, use {ExtensionRegistry.MessageView.unregister} instead.
@@ -131,7 +130,7 @@ class MessageStore extends NylasStore {
 	// - `ext` A {MessageViewExtension} instance.
 	//
 	unregisterExtension(ext) {
-		return ExtensionRegistry.MessageView.unregister(ext);
+		return MessageViewExtensions.unregister(ext);
 	}
 
 	_onExtensionsChanged(_role) {
@@ -150,7 +149,7 @@ class MessageStore extends NylasStore {
 	}
 
 	_registerListeners() {
-		this.listenTo(ExtensionRegistry.MessageView, this._onExtensionsChanged);
+		this.listenTo(MessageViewExtensions, this._onExtensionsChanged);
 		this.listenTo(DatabaseStore, this._onDataChanged);
 		this.listenTo(FocusedContentStore, this._onFocusChanged);
 		this.listenTo(
