@@ -21,7 +21,7 @@ const PGPKeyStore = require("./pgp-key-store");
 const Identity = require("./identity");
 const ModalKeyRecommender = require("./modal-key-recommender");
 const { RetinaImg } = require("nylas-component-kit");
-const { remote } = require("electron");
+const remote = require("@electron/remote");
 const pgp = require("kbpgp");
 const _ = require("underscore");
 

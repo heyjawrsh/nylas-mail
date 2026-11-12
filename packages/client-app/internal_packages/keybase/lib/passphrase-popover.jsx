@@ -24,6 +24,7 @@ module.exports = PassphrasePopover = (() => {
 			};
 		}
 		constructor() {
+			super();
 			this._onPassphraseChange = this._onPassphraseChange.bind(this);
 			this._onKeyUp = this._onKeyUp.bind(this);
 			this._validatePassphrase = this._validatePassphrase.bind(this);

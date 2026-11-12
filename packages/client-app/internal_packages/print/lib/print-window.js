@@ -1,6 +1,6 @@
 import path from "node:path";
 import fs from "node:fs";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 
 const { app, BrowserWindow } = remote;
 

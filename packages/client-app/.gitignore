@@ -1,0 +1,2 @@
+# renderer bundles, built from src by scripts/build-renderer.js
+static/*.bundle.js

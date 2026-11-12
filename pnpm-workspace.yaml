@@ -10,16 +10,22 @@ packages:
   - "packages/client-sync"
   - "packages/client-app"
 
-onlyBuiltDependencies:
-  - esbuild
-  - sqlite3
-  - unix-dgram
-  - better-sqlite3
-  - electron
-
-# @scarf/scarf is opt-out telemetry — never allow its postinstall
-neverBuiltDependencies:
-  - "@scarf/scarf"
+# Packages allowed to run install scripts (pnpm 11). Native modules and
+# binary downloaders only.
+allowBuilds:
+  better-sqlite3: true
+  electron: true
+  esbuild: true
+  sqlite3: true
+  unix-dgram: true
+  # @scarf/scarf is opt-out telemetry — never allow its postinstall
+  "@scarf/scarf": false
+  # Windows installer helper pulled in by electron-builder; mac-only build
+  electron-winstaller: false
+  # postinstall only prints a message
+  es5-ext: false
 
 verifyDepsBeforeRun: false
 
+minimumReleaseAgeExclude:
+  - electron@45.3.1

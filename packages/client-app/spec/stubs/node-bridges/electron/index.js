@@ -5,7 +5,9 @@
 // on it) and adds inert named-export stubs for the renderer surface. The
 // literal `module.exports.X =` form at the end is what cjs-module-lexer
 // detects for named imports.
-const real = require("/Users/jawrsh/Work/Repositories/nylas_mail/node_modules/.pnpm/electron@44.0.0_supports-color@7.2.0/node_modules/electron");
+// The real package resolves (and may download) the binary on require; tests
+// never launch it, so the path string is a placeholder.
+const real = "electron";
 
 module.exports = new String(String(real));
 

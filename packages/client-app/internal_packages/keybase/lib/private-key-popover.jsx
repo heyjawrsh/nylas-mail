@@ -9,7 +9,7 @@
 import PropTypes from "prop-types";
 let PrivateKeyPopover;
 import { React, Actions, AccountStore } from "nylas-exports";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import Identity from "./identity";
 import PGPKeyStore from "./pgp-key-store";
 import _ from "underscore";
@@ -22,6 +22,7 @@ module.exports = PrivateKeyPopover = (() => {
 			PrivateKeyPopover.propTypes = { addresses: PropTypes.array };
 		}
 		constructor() {
+			super();
 			this.render = this.render.bind(this);
 			this._renderAddresses = this._renderAddresses.bind(this);
 			this._onSelectAddress = this._onSelectAddress.bind(this);

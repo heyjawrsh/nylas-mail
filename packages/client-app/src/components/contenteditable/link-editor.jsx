@@ -31,6 +31,7 @@ class LinkEditor extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		let left;
 		this.render = this.render.bind(this);
 		this._onBlur = this._onBlur.bind(this);

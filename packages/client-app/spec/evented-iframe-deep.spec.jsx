@@ -67,7 +67,7 @@ vi.mock("underscore", () => {
 
 import EventedIFrame from "../src/components/evented-iframe.jsx";
 
-globalThis.NylasEnv = { windowEventHandler: { openLink: m.openLink } };
+globalThis.NylasEnv = { ...globalThis.NylasEnv, windowEventHandler: { openLink: m.openLink } };
 
 function makeNode({ body = document.createElement("body"), withWindow = true } = {}) {
 	const contentDocument = { body, addEventListener: vi.fn(), removeEventListener: vi.fn() };

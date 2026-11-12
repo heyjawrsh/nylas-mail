@@ -9,7 +9,12 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Actions, AccountStore, WorkspaceStore } from "nylas-exports";
+import {
+	Actions,
+	AccountStore,
+	SheetDepthContext,
+	WorkspaceStore,
+} from "nylas-exports";
 
 import { RetinaImg, KeyCommandsRegion } from "nylas-component-kit";
 
@@ -24,7 +29,7 @@ class CategoryPicker extends React.Component {
 
 		CategoryPicker.propTypes = { items: PropTypes.array };
 
-		CategoryPicker.contextTypes = { sheetDepth: PropTypes.number };
+		CategoryPicker.contextType = SheetDepthContext;
 	}
 
 	constructor(props) {

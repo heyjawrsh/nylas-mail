@@ -10,12 +10,12 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
 import _Sheet from "./sheet.jsx";
+import SheetDepthContext from "./sheet-depth-context.js";
 import Flexbox from "./components/flexbox.jsx";
 import RetinaImg from "./components/retina-img.jsx";
 import Utils from "./flux/models/utils.js";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import _str from "underscore.string";
 import _ from "underscore";
 
@@ -23,8 +23,8 @@ import { Actions, ComponentRegistry, WorkspaceStore } from "nylas-exports";
 
 class ToolbarSpacer extends React.Component {
 	constructor(...args) {
-		this.render = this.render.bind(this);
 		super(...args);
+		this.render = this.render.bind(this);
 	}
 
 	static initClass() {
@@ -50,6 +50,7 @@ class WindowTitle extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this.props = props;
 		this.state = NylasEnv.getLoadSettings();
 	}
@@ -84,6 +85,7 @@ class ToolbarBack extends React.Component {
 	// These stores are only required when this Toolbar is actually needed.
 	// This is because loading these stores has database side effects.
 	constructor(props) {
+		super(props);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.render = this.render.bind(this);
@@ -149,6 +151,7 @@ class ToolbarWindowControls extends React.Component {
 		ToolbarWindowControls.displayName = "ToolbarWindowControls";
 	}
 	constructor(props) {
+		super(props);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.render = this.render.bind(this);
@@ -219,9 +222,9 @@ ToolbarWindowControls.initClass();
 
 class ToolbarMenuControl extends React.Component {
 	constructor(...args) {
+		super(...args);
 		this.render = this.render.bind(this);
 		this._openMenu = this._openMenu.bind(this);
-		super(...args);
 	}
 
 	static initClass() {
@@ -265,15 +268,18 @@ class Toolbar extends React.Component {
 			data: PropTypes.object,
 			depth: PropTypes.number,
 		};
-
-		Toolbar.childContextTypes = { sheetDepth: PropTypes.number };
 	}
-	getChildContext() {
-		return { sheetDepth: this.props.depth };
+
+	_sheetDepthContext() {
+		if (this._depthContext?.sheetDepth !== this.props.depth) {
+			this._depthContext = { sheetDepth: this.props.depth };
+		}
+		return this._depthContext;
 	}
 
 	constructor(props) {
-		this.getChildContext = this.getChildContext.bind(this);
+		super(props);
+		this._containerRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
@@ -352,13 +358,18 @@ class Toolbar extends React.Component {
 		});
 
 		return React.createElement(
-			"div",
-			{
-				style: style,
-				className: `sheet-toolbar-container mode-${this.state.mode}`,
-				"data-id": this.props.data.id,
-			},
-			toolbars,
+			SheetDepthContext.Provider,
+			{ value: this._sheetDepthContext() },
+			React.createElement(
+				"div",
+				{
+					ref: this._containerRef,
+					style: style,
+					className: `sheet-toolbar-container mode-${this.state.mode}`,
+					"data-id": this.props.data.id,
+				},
+				toolbars,
+			),
 		);
 	}
 
@@ -386,7 +397,10 @@ class Toolbar extends React.Component {
 		}
 
 		// Find our item containers that are tied to specific columns
-		const el = ReactDOM.findDOMNode(this);
+		const el = this._containerRef.current;
+		if (!el) {
+			return;
+		}
 		const columnToolbarEls = el.querySelectorAll("[data-column]");
 
 		// Find the top sheet in the stack

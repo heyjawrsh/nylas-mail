@@ -159,11 +159,11 @@ class TemplateStore extends NylasStore {
 	}
 
 	_displayError(message) {
-		const dialog = require("electron").remote.dialog;
+		const dialog = require("@electron/remote").dialog;
 		dialog.showErrorBox("Template Creation Error", message);
 	}
 	_displayDialog(title, message, buttons) {
-		const dialog = require("electron").remote.dialog;
+		const dialog = require("@electron/remote").dialog;
 		return (
 			dialog.showMessageBox({
 				title: title,

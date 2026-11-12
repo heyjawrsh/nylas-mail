@@ -5,7 +5,7 @@ import {
 	CalendarEventPopover,
 } from "nylas-component-kit";
 import React from "react";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 
 export default class CalendarWrapper extends React.Component {
 	static displayName = "CalendarWrapper";

@@ -1,4 +1,4 @@
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 import { createRequire } from "node:module";
 const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")

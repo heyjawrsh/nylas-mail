@@ -12,7 +12,7 @@ export default defineConfig({
 		// runtime. In the vitest world they are plain aliases onto src/.
 		alias: {
 			electron: path.join(__dirname, "spec/stubs/electron.js"),
-			"@electron/remote": path.join(__dirname, "spec/stubs/electron.js"),
+			"@electron/remote": path.join(__dirname, "spec/stubs/electron-remote.js"),
 			"nylas-exports": path.join(__dirname, "spec/stubs/nylas-exports.js"), // eager re-export for named-import analysis
 			"nylas-component-kit": path.join(
 				__dirname,

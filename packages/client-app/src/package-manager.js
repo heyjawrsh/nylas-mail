@@ -15,7 +15,8 @@ const path = require("node:path");
 const url = require("node:url");
 
 const _ = require("underscore");
-const { ipcRenderer, remote } = require("electron");
+const { ipcRenderer } = require("electron");
+const remote = require("@electron/remote");
 const EmitterMixin = require("emissary").Emitter;
 const { Emitter } = require("event-kit");
 const fs = require("fs-plus");

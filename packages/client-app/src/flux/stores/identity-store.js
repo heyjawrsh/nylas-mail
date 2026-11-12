@@ -1,55 +1,14 @@
-import { createRequire } from "node:module";
-
-const nodeRequire =
-	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
-		? createRequire(import.meta.url)
-		: require;
-
-const NylasStore =
-	nodeRequire("nylas-store").default || nodeRequire("nylas-store");
-const electronNS = nodeRequire("electron");
-const { ipcRenderer } = electronNS.ipcRenderer
-	? electronNS
-	: { ipcRenderer: electronNS };
-const remoteNS = nodeRequire("@electron/remote");
-const remote = remoteNS.remote || remoteNS.default || remoteNS;
-const Rx = nodeRequire("rx-lite");
-const request = (() => {
-	try {
-		const rc = nodeRequire("../../request-compat.js");
-		return rc.default || rc;
-	} catch (_e) {
-		// Bundle context: resolve from the app root through the bridge helper.
-		const rc = globalThis.$nylasRequireSrc("request-compat.js");
-		return rc.default || rc;
-	}
-})();
-const url = nodeRequire("node:url");
-const Utils = (() => {
-	try {
-		return (
-			nodeRequire("../models/utils.js").default ||
-			nodeRequire("../models/utils.js")
-		);
-	} catch (_e) {
-		try {
-			return globalThis.$nylasRequireSrc("flux/models/utils.js").default;
-		} catch (_e2) {
-			// Test/bundle contexts without a live resolver: minimal surface.
-			return {
-				deepClone: (o) => JSON.parse(JSON.stringify(o)),
-				isTempId: (i) => typeof i === "string" && i.startsWith("local-"),
-			};
-		}
-	}
-})();
-const Actions = (() => {
-	try {
-		return nodeRequire("../actions.js").default;
-	} catch (_e) {
-		return globalThis.$nylasRequireSrc("flux/actions.js").default;
-	}
-})();
+import url from "node:url";
+import { ipcRenderer } from "electron";
+import * as remote from "@electron/remote";
+import NylasStore from "nylas-store";
+import Rx from "rx-lite";
+import KeyManager from "../../key-manager.js";
+import request from "../../request-compat.js";
+import Actions from "../actions.js";
+import { APIError } from "../errors.js";
+import Utils from "../models/utils.js";
+import DatabaseStore from "./database-store.js";
 
 // Note this key name is used when migrating to Nylas Pro accounts from
 // old N1.

@@ -24,46 +24,33 @@ const m = vi.hoisted(() => {
 	};
 });
 
-vi.mock("node:module", () => {
-	const createRequire = () => (id) => {
-		if (id === "nylas-store") return { default: class NylasStore {
-			listenTo(...args) { return m.listenTo(...args); }
-			stopListeningToAll(...args) { return m.stopListeningToAll(...args); }
-			trigger(...args) { return m.trigger(...args); }
-		} };
-		if (id === "electron") return { default: { ipcRenderer: m.ipcRenderer }, ipcRenderer: m.ipcRenderer };
-		if (id === "@electron/remote") return { default: m.remote, remote: m.remote, app: m.app };
-		if (id === "rx-lite") return { Observable: { fromQuery: m.fromQuery } };
-		if (id.endsWith("request-compat.js")) return { default: m.request };
-		if (id.endsWith("models/utils.js")) return { default: m.utils };
-		if (id.endsWith("actions.js")) return { default: m.actions };
-		return {};
-	};
-	return { default: { createRequire }, createRequire };
-});
 vi.mock("nylas-store", () => ({ default: class NylasStore {
 	listenTo(...args) { return m.listenTo(...args); }
 	stopListeningToAll(...args) { return m.stopListeningToAll(...args); }
 	trigger(...args) { return m.trigger(...args); }
 } }));
 vi.mock("electron", () => ({ default: { ipcRenderer: m.ipcRenderer }, ipcRenderer: m.ipcRenderer }));
-vi.mock("@electron/remote", () => ({ default: m.remote, remote: m.remote, app: m.app }));
+vi.mock("@electron/remote", () => ({ default: m.remote, ...m.remote, remote: m.remote }));
 vi.mock("rx-lite", () => ({ default: { Observable: { fromQuery: m.fromQuery } }, Observable: { fromQuery: m.fromQuery } }));
 vi.mock("../src/request-compat.js", () => ({ default: m.request }));
 vi.mock("../src/flux/models/utils.js", () => ({ default: m.utils }));
 vi.mock("../src/flux/actions.js", () => ({ default: m.actions }));
 
-globalThis.DatabaseStore = {
-	findJSONBlob: m.findJSONBlob, run: m.run, inTransaction: m.inTransaction,
-};
-globalThis.KeyManager = {
-	replacePassword: m.replacePassword, deletePassword: m.deletePassword, getPassword: m.getPassword,
-};
-globalThis.APIError = class APIError extends Error {
-	constructor(details) { super("API request failed"); Object.assign(this, details); }
-};
+vi.mock("../src/flux/stores/database-store.js", () => {
+	const DatabaseStore = { findJSONBlob: m.findJSONBlob, run: m.run, inTransaction: m.inTransaction };
+	return { default: DatabaseStore };
+});
+vi.mock("../src/key-manager.js", () => ({
+	default: { replacePassword: m.replacePassword, deletePassword: m.deletePassword, getPassword: m.getPassword },
+}));
+vi.mock("../src/flux/errors.js", () => ({
+	APIError: class APIError extends Error {
+		constructor(details) { super("API request failed"); Object.assign(this, details); }
+	},
+}));
 
 const { default: identitySingleton } = await import("../src/flux/stores/identity-store.js");
+const { APIError } = await import("../src/flux/errors.js");
 
 describe("IdentityStore deep identity lifecycle", () => {
 	let store;
@@ -212,7 +199,7 @@ describe("IdentityStore deep identity lifecycle", () => {
 	it("rejects HTTP error responses as API errors", async () => {
 		store._identity = { token: "secret" };
 		m.request.mockImplementation((options, callback) => callback(null, { statusCode: 500 }, { message: "bad" }));
-		await expect(store.nylasIDRequest({})).rejects.toBeInstanceOf(globalThis.APIError);
+		await expect(store.nylasIDRequest({})).rejects.toBeInstanceOf(APIError);
 	});
 
 

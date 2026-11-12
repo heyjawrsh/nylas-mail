@@ -15,6 +15,7 @@ import _RetinaImg from "./components/retina-img.jsx";
 import Flexbox from "./components/flexbox.jsx";
 import InjectedComponentSet from "./components/injected-component-set.jsx";
 import ResizableRegion from "./components/resizable-region.jsx";
+import SheetDepthContext from "./sheet-depth-context.js";
 
 const FLEX = 10000;
 
@@ -29,17 +30,17 @@ class Sheet extends React.Component {
 		};
 
 		Sheet.defaultProps = { onColumnSizeChanged() {} };
-
-		Sheet.childContextTypes = { sheetDepth: PropTypes.number };
 	}
 
-	getChildContext() {
-		return { sheetDepth: this.props.depth };
+	_sheetDepthContext() {
+		if (this._depthContext?.sheetDepth !== this.props.depth) {
+			this._depthContext = { sheetDepth: this.props.depth };
+		}
+		return this._depthContext;
 	}
 
 	constructor(props) {
 		super();
-		this.getChildContext = this.getChildContext.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -103,17 +104,21 @@ class Sheet extends React.Component {
 		// http://philipwalton.com/articles/what-no-one-told-you-about-z-index/
 
 		return React.createElement(
-			"div",
-			{
-				name: "Sheet",
-				style: style,
-				className: `sheet mode-${this.state.mode}`,
-				"data-id": this.props.data.id,
-			},
+			SheetDepthContext.Provider,
+			{ value: this._sheetDepthContext() },
 			React.createElement(
-				Flexbox,
-				{ direction: "row", style: { overflow: "hidden" } },
-				this._columnFlexboxElements(),
+				"div",
+				{
+					name: "Sheet",
+					style: style,
+					className: `sheet mode-${this.state.mode}`,
+					"data-id": this.props.data.id,
+				},
+				React.createElement(
+					Flexbox,
+					{ direction: "row", style: { overflow: "hidden" } },
+					this._columnFlexboxElements(),
+				),
 			),
 		);
 	}

@@ -1,5 +1,5 @@
 import _str from "underscore.string";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import SalesforceActions from "../salesforce-actions";
 
 const WINDOW_TYPE = "SalesforceObjectForm";

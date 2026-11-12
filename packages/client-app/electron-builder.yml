@@ -1,0 +1,62 @@
+# Unsigned macOS pre-release build (story 1 of epic-platform-baseline).
+# Windows/Linux targets, signing and notarisation come later.
+# Build with `pnpm --filter nylas-mail dist:mac` (predist:mac builds the
+# renderer bundles first).
+appId: com.nylas.mail
+productName: Nylas Mail
+copyright: Copyright (C) 2014-2017 Nylas, Inc. All rights reserved.
+
+directories:
+  output: dist
+  buildResources: build/resources
+
+files:
+  - package.json
+  - src/**/*
+  - static/**/*
+  - keymaps/**/*
+  - menus/**/*
+  - dot-nylas/**/*
+  - internal_packages/**/*
+  # client-sync is a symlink into the workspace; a real copy is added below
+  - "!internal_packages/client-sync{,/**/*}"
+  # licensed fonts never ship in public builds (architecture AD-17)
+  - "!internal_packages/nylas-private-fonts{,/**/*}"
+  - "!**/spec{,/**/*}"
+  - "!**/*.md"
+  - "!**/docs{,/**/*}"
+  - "!**/*.{gyp,cc,h,map}"
+  # FileSets go last: string patterns after one don't apply to the app files
+  - from: ../client-sync
+    to: internal_packages/client-sync
+    filter:
+      - "**/*"
+      - "!node_modules{,/**/*}"
+      - "!spec{,/**/*}"
+      - "!coverage{,/**/*}"
+
+# Native binaries and the esbuild executable can't run from inside the asar.
+asar: true
+asarUnpack:
+  - "**/*.node"
+  - "**/node_modules/esbuild/**/*"
+  - "**/node_modules/@esbuild/**/*"
+
+protocols:
+  - name: Nylas Protocol
+    schemes: [nylas]
+  - name: Mailto Protocol
+    schemes: [mailto]
+
+mac:
+  category: public.app-category.business
+  icon: build/resources/mac/nylas.icns
+  # unsigned: no identity, no notarisation, no hardened runtime
+  identity: null
+  hardenedRuntime: false
+  notarize: false
+  target:
+    - target: dmg
+      arch: [arm64]
+    - target: zip
+      arch: [arm64]

@@ -4,7 +4,8 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer } from "electron";
+import * as remote from "@electron/remote";
 import PropTypes from "prop-types";
 import React from "react";
 import { Actions } from "nylas-exports";

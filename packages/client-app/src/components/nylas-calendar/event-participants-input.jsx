@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "underscore";
 import { clipboard } from "electron";
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 import { Utils, Contact, ContactStore, RegExpUtils } from "nylas-exports";
 import {
 	TokenizingTextField,

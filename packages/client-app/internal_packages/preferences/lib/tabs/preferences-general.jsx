@@ -14,7 +14,7 @@ class PreferencesGeneral extends React.Component {
 	};
 
 	_reboot = () => {
-		const app = require("electron").remote.app;
+		const app = require("@electron/remote").app;
 		app.relaunch();
 		app.quit();
 	};

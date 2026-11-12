@@ -9,7 +9,14 @@ const nodeRequire =
 
 // Bundle context: nodeRequire resolves against the bundle file; fall
 // back to the app-root absolute path for native renderer loads.
-const loadFromSrc = (rel) => {
+const loadFromSrc = (rel, bundled) => {
+	// In the renderer bundle a literal require() is bundled; use it so the
+	// window shares one copy of the module with the rest of the bundle.
+	// NYLAS_RENDERER_BUNDLE is defined by scripts/build-renderer.js.
+	if (bundled && typeof NYLAS_RENDERER_BUNDLE !== "undefined") {
+		const mod = bundled();
+		return mod.default || mod;
+	}
 	try {
 		const mod = nodeRequire(rel);
 		return mod.default || mod;
@@ -29,7 +36,7 @@ const loadFromSrc = (rel) => {
 import path from "node:path";
 
 import { ipcRenderer, shell } from "electron";
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 
 import _ from "underscore";
 import { Emitter } from "event-kit";
@@ -52,7 +59,7 @@ import StyleManager from "./style-manager.js";
 import ErrorLogger from "./error-logger.js";
 import WorkspaceStore from "../src/flux/stores/workspace-store.js";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import SheetContainer from "./sheet-container.jsx";
 import { Actions } from "nylas-exports";
 import { CodeSnippet } from "nylas-component-kit";
@@ -224,10 +231,19 @@ export default class NylasEnvConstructor {
 		this.loadTime = null;
 		// Bundle context: nodeRequire resolves against the bundle; fall back
 		// to the app-root path for native loads.
-		const KeymapManager = loadFromSrc("./keymap-manager.js");
-		const CommandRegistry = loadFromSrc("./registries/command-registry.js");
-		const ActionBridge = loadFromSrc("./flux/action-bridge.js");
-		const MenuManager = loadFromSrc("./menu-manager.js");
+		const KeymapManager = loadFromSrc("./keymap-manager.js", () =>
+			require("./keymap-manager.js"),
+		);
+		const CommandRegistry = loadFromSrc(
+			"./registries/command-registry.js",
+			() => require("./registries/command-registry.js"),
+		);
+		const ActionBridge = loadFromSrc("./flux/action-bridge.js", () =>
+			require("./flux/action-bridge.js"),
+		);
+		const MenuManager = loadFromSrc("./menu-manager.js", () =>
+			require("./menu-manager.js"),
+		);
 
 		const {
 			devMode,
@@ -405,7 +421,13 @@ export default class NylasEnvConstructor {
 		});
 
 		if (this.inSpecMode() || (this.inDevMode() && !this.inBenchmarkMode())) {
-			return Promise.config({ longStackTraces: true });
+			// The bundled module graph creates Bluebird promises before this
+			// runs, and Bluebird refuses to switch long traces on after that.
+			try {
+				return Promise.config({ longStackTraces: true });
+			} catch (err) {
+				console.warn(`Long stack traces unavailable: ${err.message}`);
+			}
 		}
 		return null;
 	}
@@ -1208,10 +1230,22 @@ export default class NylasEnvConstructor {
 		this.item.setAttribute("id", "sheet-container");
 		this.item.setAttribute("class", "sheet-container");
 		this.item.setAttribute("tabIndex", "-1");
-		ReactDOM.render(React.createElement(SheetContainer), this.item);
+		this.reactRoot = createRoot(this.item);
+		this.reactRoot.render(React.createElement(SheetContainer));
 		return document
 			.querySelector(this.workspaceViewParentSelector)
 			.appendChild(this.item);
+	}
+
+	unmountReactRoot() {
+		if (this.reactRoot) {
+			this.reactRoot.unmount();
+			this.reactRoot = null;
+		}
+		if (this.item) {
+			this.item.remove();
+			this.item = null;
+		}
 	}
 
 	deserializePackageStates() {
@@ -1222,7 +1256,9 @@ export default class NylasEnvConstructor {
 	loadConfig() {
 		this.config.setSchema(null, {
 			type: "object",
-			properties: _.clone(loadFromSrc("./config-schema.js")),
+			properties: _.clone(
+				loadFromSrc("./config-schema.js", () => require("./config-schema.js")),
+			),
 		});
 		return this.config.load();
 	}

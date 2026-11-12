@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import path from "node:path";
 import fs from "node:fs";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import { Flexbox } from "nylas-component-kit";
 
 import displayedKeybindings from "./keymaps/displayed-keybindings";

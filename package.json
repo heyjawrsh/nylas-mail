@@ -13,7 +13,8 @@
 		"test": "pnpm -r run test",
 		"lint": "biome check .",
 		"format": "biome format --write .",
-		"build:renderer": "node scripts/build-renderer.js"
+		"build:renderer": "node packages/client-app/scripts/build-renderer.js",
+		"smoke": "pnpm --filter nylas-mail run smoke"
 	},
 	"repository": {
 		"type": "git",
@@ -24,6 +25,5 @@
 		"@biomejs/biome": "^2.5.10",
 		"tsx": "^4.23.12",
 		"vitest": "^4.1.11"
-	},
-	"smoke": "node scripts/build-renderer.js && node scripts/smoke.js"
+	}
 }

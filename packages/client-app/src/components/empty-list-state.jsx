@@ -126,6 +126,7 @@ class EmptyListState extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this._getDimensions = this._getDimensions.bind(this);
 		this._onResize = this._onResize.bind(this);
 		this.props = props;

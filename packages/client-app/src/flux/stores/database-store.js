@@ -10,13 +10,14 @@ import createDebug from "debug";
 import childProcess from "node:child_process";
 import PromiseQueue from "promise-queue";
 import { ipcRenderer } from "electron";
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 import { LRUCache } from "lru-cache";
 import { StringUtils, ExponentialBackoffScheduler } from "isomorphic-core";
 
 import NylasStore from "../../global/nylas-store.js";
 import Utils from "../models/utils.js";
 import Query from "../models/query.js";
+import JSONBlob from "../models/json-blob.js";
 import DatabaseChangeRecord from "./database-change-record.js";
 import DatabaseWriter from "./database-writer.js";
 import DatabaseSetupQueryBuilder from "./database-setup-query-builder.js";
@@ -41,8 +42,6 @@ const DEBUG_QUERY_PLANS =
 
 const BASE_RETRY_LOCK_DELAY = 50;
 const MAX_RETRY_LOCK_DELAY = 500;
-
-let JSONBlob = null;
 
 /*
 Public: N1 is built on top of a custom database layer modeled after
@@ -194,7 +193,9 @@ class DatabaseStore extends NylasStore {
 	}
 
 	_checkDatabaseVersion({ allowUnset } = {}, ready) {
-		const result = this._db.pragma("user_version", true);
+		// better-sqlite3 returns user_version as a number; the versions here
+		// are strings.
+		const result = String(this._db.pragma("user_version", { simple: true }));
 		const isUnsetVersion = result === "0";
 		const isWrongVersion = result !== DatabaseVersion;
 		if (isWrongVersion && !(isUnsetVersion && allowUnset)) {
@@ -648,12 +649,9 @@ class DatabaseStore extends NylasStore {
 		});
 	}
 
-	async findJSONBlob(id) {
-		JSONBlob =
-			JSONBlob ||
-			(typeof require !== "undefined"
-				? require("../models/json-blob.js").default
-				: (await import("../models/json-blob.js")).default);
+	// Returns the query itself (callers subscribe to it or run it); a query is
+	// thenable, so awaiting it still yields the blob.
+	findJSONBlob(id) {
 		return new JSONBlob.Query(JSONBlob, this).where({ id }).one();
 	}
 

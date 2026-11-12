@@ -20,6 +20,7 @@ module.exports = EmailPopover = (() => {
 			};
 		}
 		constructor() {
+			super();
 			this._onRecipientFieldChange = this._onRecipientFieldChange.bind(this);
 			this._onDone = this._onDone.bind(this);
 			this.state = { to: [], cc: [], bcc: [] };

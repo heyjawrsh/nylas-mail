@@ -25,6 +25,8 @@ var SheetContainer = (() => {
 		}
 
 		constructor(props) {
+			super(props);
+			this._toolbarRefs = {};
 			this.componentDidMount = this.componentDidMount.bind(this);
 			this.componentWillUnmount = this.componentWillUnmount.bind(this);
 			this.render = this.render.bind(this);
@@ -34,7 +36,6 @@ var SheetContainer = (() => {
 			this._onColumnSizeChanged = this._onColumnSizeChanged.bind(this);
 			this._onStoreChange = this._onStoreChange.bind(this);
 			this._getStateFromStores = this._getStateFromStores.bind(this);
-			this.props = props;
 			this.state = this._getStateFromStores();
 		}
 
@@ -142,7 +143,9 @@ var SheetContainer = (() => {
 			return this.state.stack.map((sheet, index) =>
 				React.createElement(Toolbar, {
 					data: sheet,
-					ref: `toolbar-${index}`,
+					ref: (el) => {
+						this._toolbarRefs[index] = el;
+					},
 					key: `${index}:${sheet.id}:toolbar`,
 					depth: index,
 				}),
@@ -161,8 +164,9 @@ var SheetContainer = (() => {
 		}
 
 		_onColumnSizeChanged(sheet) {
-			if (this.refs[`toolbar-${sheet.props.depth}`] != null) {
-				this.refs[`toolbar-${sheet.props.depth}`].recomputeLayout();
+			const toolbar = this._toolbarRefs[sheet.props.depth];
+			if (toolbar != null) {
+				toolbar.recomputeLayout();
 			}
 			return window.dispatchEvent(new Event("resize"));
 		}

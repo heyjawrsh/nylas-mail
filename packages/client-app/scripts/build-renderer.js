@@ -3,6 +3,7 @@
 // app did this at runtime via compile-cache (babel/coffee JIT); the modernized
 // codebase does it once, ahead of launch, with esbuild.
 import { build } from "esbuild";
+import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -37,7 +38,9 @@ const BANNER = `
 		loadSettings: qs,
 		inSpecMode: function () { return qs.specMode === "1" || qs.specMode === "true"; },
 		isWorkWindow: function () { return qs.windowType === "work" || false; },
-		isMainWindow: function () { return qs.windowType !== "work"; },
+		// same answers as the real NylasEnv (stores read these at load time)
+		isMainWindow: function () { return !!qs.mainWindow; },
+		isEmptyWindow: function () { return qs.windowType === "emptyWindow"; },
 		getWindowType: function () { return qs.windowType || "root"; },
 		getLoadSettings: function () { return qs; },
 		inDevMode: function () { return qs.devMode === "1" || qs.devMode === "true"; },
@@ -76,6 +79,31 @@ const BANNER = `
 })();
 `;
 
+// Dual-context sources reach their neighbours through `nodeRequire("./x")`
+// (createRequire under Node, the module's own require in the bundle). esbuild
+// only follows literal `require(...)`, so in the bundle those calls would load
+// a second, unbundled copy of the module from src/ (and fail outright for
+// paths relative to static/). Rewrite relative ones so they are bundled.
+const RELATIVE_NODE_REQUIRE =
+	/\bnodeRequire(\(\s*(["'`])\.{1,2}\/(?:(?!\2).)*\2\s*\))/g;
+const bundleRelativeNodeRequires = {
+	name: "bundle-relative-node-requires",
+	setup(pluginBuild) {
+		pluginBuild.onLoad({ filter: /\.jsx?$/ }, async (args) => {
+			if (args.path.includes(`${path.sep}node_modules${path.sep}`)) return;
+			const source = await fs.readFile(args.path, "utf8");
+			if (!source.includes("nodeRequire(")) return;
+			return {
+				// test helpers stay out of the bundle
+				contents: source.replace(RELATIVE_NODE_REQUIRE, (call, args) =>
+					args.includes("/spec/") ? call : `require${args}`,
+				),
+				loader: args.path.endsWith(".jsx") ? "jsx" : "js",
+			};
+		});
+	},
+};
+
 const entries = [
 	{
 		in: path.join(root, "src/window-bootstrap.js"),
@@ -94,11 +122,26 @@ for (const entry of entries) {
 		format: "cjs",
 		platform: "node",
 		target: "chrome130",
+		// same JSX runtime as the tests and the require-time compiler
+		jsx: "automatic",
+		// Models are keyed by class name (table names, registries); esbuild
+		// renames colliding bindings (Event -> Event2) unless told not to.
+		keepNames: true,
+		define: { NYLAS_RENDERER_BUNDLE: "true" },
 		outfile: path.join(root, "static", `${entry.out}.js`),
-		// electron must stay external — it only exists inside the app runtime
-		external: ["electron", "pg-hstore", "*.node", "windows-shortcuts"],
-		// native / optional modules: stubbed for the renderer bundle
+		// electron and @electron/remote must stay external — they only exist
+		// inside the app runtime (the real remote module routes by process.type).
+		// Native modules locate their binaries relative to their own package,
+		// so they load from node_modules too.
+		external: [
+			"electron",
+			"@electron/remote",
+			"better-sqlite3",
+			"pg-hstore",
+			"*.node",
+		],
 		alias: {
+			// native / optional modules: stubbed for the renderer bundle
 			keytar: path.join(root, "src/renderer-stubs/optional-native.js"),
 			pathwatcher: path.join(root, "src/renderer-stubs/optional-native.js"),
 			"electron-spellchecker": path.join(
@@ -110,9 +153,7 @@ for (const entry of entries) {
 				"src/renderer-stubs/optional-native.js",
 			),
 			"node-uuid": "uuid",
-		},
-		// the alias bridges the old ModuleCache runtime resolution
-		alias: {
+			// bridges the old ModuleCache runtime resolution
 			"nylas-exports": path.join(root, "src/global/nylas-exports.js"),
 			"nylas-component-kit": path.join(
 				root,
@@ -120,9 +161,8 @@ for (const entry of entries) {
 			),
 			"nylas-store": path.join(root, "src/global/nylas-store.js"),
 			"nylas-observables": path.join(root, "src/global/nylas-observables.js"),
-			// internal packages load through their own package.json at runtime
-			"internal_packages/*": "internal_packages/*",
 		},
+		plugins: [bundleRelativeNodeRequires],
 		logLevel: "warning",
 		banner: {
 			// The flux layer reads the NylasEnv global at module-evaluation

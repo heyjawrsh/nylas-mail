@@ -305,6 +305,7 @@ class ScrollRegion extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.UNSAFE_componentWillReceiveProps =

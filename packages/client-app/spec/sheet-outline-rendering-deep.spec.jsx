@@ -18,7 +18,9 @@ const m = vi.hoisted(() => {
 vi.mock("react", () => {
 	class Component { constructor(props) { this.props = props || {}; this.state = this.state || {}; } setState(next) { this.state = { ...this.state, ...(typeof next === "function" ? next(this.state, this.props) : next) }; } }
 	const createElement = (type, props, ...children) => ({ type, props: { ...(props || {}), children } });
-	const react = { Component, createElement };
+	const createContext = (value) => ({ Provider: "Provider", _currentValue: value });
+	const createRef = () => ({ current: null });
+	const react = { Component, createElement, createContext, createRef };
 	return { default: react, ...react };
 });
 vi.mock("prop-types", () => { const checker = Object.assign(() => null, { isRequired: null }); const types = new Proxy({ shape: () => checker }, { get: (target, key) => target[key] || checker }); return { default: types, ...types }; });
@@ -67,7 +69,7 @@ beforeEach(() => {
 });
 
 describe("Sheet column contracts", () => {
-	it("publishes its depth through child context", () => { expect(makeSheet({ depth: 3 }).getChildContext()).toEqual({ sheetDepth: 3 }); });
+	it("provides its depth through SheetDepthContext", () => { expect(makeSheet({ depth: 3 })._sheetDepthContext()).toEqual({ sheetDepth: 3 }); });
 	it("omits hidden locations", () => { m.workspace.isLocationHidden.mockReturnValueOnce(true); expect(makeSheet().state.columns).toEqual([]); });
 	it("uses the largest component minimum width", () => { m.registry.findComponentsMatching.mockReturnValue([{ containerStyles: { minWidth: 120 } }, { containerStyles: { minWidth: 240 } }]); expect(makeSheet().state.columns[0].minWidth).toBe(240); });
 	it("uses the smallest component maximum width before choosing flex", () => { const cols = [location("one"), location("two")]; m.registry.findComponentsMatching.mockImplementation(({ location: loc }) => loc.id === "one" ? [{ containerStyles: { maxWidth: 300 } }] : [{ containerStyles: { maxWidth: 500 } }]); const result = makeSheet({ data: sheetData(cols) }).state.columns; expect(result.map((col) => col.maxWidth)).toEqual([300, 10000]); });
@@ -79,13 +81,13 @@ describe("Sheet column contracts", () => {
 });
 
 describe("Sheet container contracts", () => {
-	const makeContainer = (stack = []) => { m.workspace.sheetStack.mockReturnValue(stack); const value = bare(SheetContainer, {}); value.state = value._getStateFromStores(); return value; };
+	const makeContainer = (stack = []) => { m.workspace.sheetStack.mockReturnValue(stack); const value = bare(SheetContainer, {}); value._toolbarRefs = {}; value.state = value._getStateFromStores(); return value; };
 	it("renders an empty div without a top sheet", () => { expect(makeContainer().render().type).toBe("div"); });
 	it("reflects the workspace layout mode", () => { m.workspace.layoutMode.mockReturnValue("split"); expect(makeContainer([sheetData()]).render().props.className).toBe("layout-mode-split"); });
 	it("omits the toolbar when load settings disable it", () => { NylasEnv.getLoadSettings.mockReturnValue({ toolbar: false }); expect(makeContainer([sheetData()])._toolbarContainerElement()).toEqual([]); });
 	it("creates one toolbar element per sheet", () => { expect(makeContainer([sheetData(), { ...sheetData(), id: "sheet-2" }])._toolbarElements()).toHaveLength(2); });
 	it("creates one sheet element per stack entry", () => { expect(makeContainer([sheetData(), { ...sheetData(), id: "sheet-2" }])._sheetElements()).toHaveLength(2); });
-	it("recomputes the toolbar for a resized sheet", () => { const container = makeContainer([sheetData()]); const toolbar = { recomputeLayout: vi.fn() }; container.refs["toolbar-0"] = toolbar; container._onColumnSizeChanged({ props: { depth: 0 } }); expect(toolbar.recomputeLayout).toHaveBeenCalledOnce(); });
+	it("recomputes the toolbar for a resized sheet", () => { const container = makeContainer([sheetData()]); const toolbar = { recomputeLayout: vi.fn() }; container._toolbarRefs = { 0: toolbar }; container._onColumnSizeChanged({ props: { depth: 0 } }); expect(toolbar.recomputeLayout).toHaveBeenCalledOnce(); });
 	it("dispatches a window resize after a column changes", () => { const listener = vi.fn(); window.addEventListener("resize", listener, { once: true }); makeContainer([sheetData()])._onColumnSizeChanged({ props: { depth: 0 } }); expect(listener).toHaveBeenCalledOnce(); });
 });
 

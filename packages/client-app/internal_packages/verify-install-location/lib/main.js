@@ -1,4 +1,5 @@
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer } from "electron";
+import * as remote from "@electron/remote";
 
 /**
  * We want to make sure that people have installed the app in a

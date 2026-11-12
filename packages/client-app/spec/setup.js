@@ -1,9 +1,39 @@
 import { vi } from "vitest";
+import { registerHooks } from "node:module";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, "..");
+
+// The vitest aliases only cover imports vite transforms. Source files also
+// reach the app-internal module names (and electron) through native
+// require/createRequire and require(esm) chains, which Node resolves itself.
+// Point those at the test bridges here, in-process, instead of symlinking
+// the bridges into node_modules (which poisoned real installs).
+const bridgeDir = path.join(__dirname, "stubs", "node-bridges");
+const BRIDGES = {
+	electron: "electron",
+	"@electron/remote": "at-electron-remote",
+	"@electron/remote/main": "at-electron-remote",
+	"@electron/remote/renderer": "at-electron-remote",
+	"nylas-exports": "nylas-exports",
+	"nylas-component-kit": "nylas-component-kit",
+	"nylas-store": "nylas-store",
+	"nylas-observables": "nylas-observables",
+};
+registerHooks({
+	resolve(specifier, context, nextResolve) {
+		const bridge = Object.hasOwn(BRIDGES, specifier) && BRIDGES[specifier];
+		if (bridge) {
+			return {
+				url: pathToFileURL(path.join(bridgeDir, bridge, "index.js")).href,
+				shortCircuit: true,
+			};
+		}
+		return nextResolve(specifier, context);
+	},
+});
 
 globalThis.NylasEnv = {
 	config: {

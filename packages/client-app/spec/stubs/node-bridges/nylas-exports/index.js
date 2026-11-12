@@ -11,7 +11,7 @@ let bridge;
 if (typeof process !== "undefined" && process.type === "renderer") {
 	bridge = globalThis.$n || {};
 } else {
-	bridge = require("/Users/jawrsh/Work/Repositories/nylas_mail/packages/client-app/src/global/nylas-exports.js");
+	bridge = require("../../../../src/global/nylas-exports.js");
 }
 module.exports = bridge;
 

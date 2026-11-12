@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Modal } from "nylas-component-kit";
 import NylasStore from "nylas-store";
 
@@ -17,10 +18,17 @@ class ModalStore extends NylasStore {
 		super();
 		this.isOpen = false;
 		this.container = createContainer(containerId);
-		ReactDOM.render(<span />, this.container);
+		this.root = createRoot(this.container);
+		this.renderSync(<span />);
 
 		this.listenTo(Actions.openModal, this.openModal);
 		this.listenTo(Actions.closeModal, this.closeModal);
+	}
+
+	// Synchronous commit, like the legacy ReactDOM.render the callers were
+	// written against: the content is mounted when this returns.
+	renderSync(element) {
+		flushSync(() => this.root.render(element));
 	}
 
 	isModalOpen = () => {
@@ -30,11 +38,10 @@ class ModalStore extends NylasStore {
 	renderModal = (child, props, callback) => {
 		const modal = <Modal {...props}>{child}</Modal>;
 
-		ReactDOM.render(modal, this.container, () => {
-			this.isOpen = true;
-			this.trigger();
-			callback();
-		});
+		this.renderSync(modal);
+		this.isOpen = true;
+		this.trigger();
+		callback();
 	};
 
 	openModal = ({ component, height, width }, callback = () => {}) => {
@@ -53,11 +60,10 @@ class ModalStore extends NylasStore {
 	};
 
 	closeModal = (callback = () => {}) => {
-		ReactDOM.render(<span />, this.container, () => {
-			this.isOpen = false;
-			this.trigger();
-			callback();
-		});
+		this.renderSync(<span />);
+		this.isOpen = false;
+		this.trigger();
+		callback();
 	};
 }
 

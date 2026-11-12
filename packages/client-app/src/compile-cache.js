@@ -6,12 +6,15 @@ const babelCompiler = require("./compile-support/babel.js");
 const coffeeCompiler = require("./compile-support/coffee-script.js");
 const typescriptCompiler = require("./compile-support/typescript.js");
 
+// `.js` goes through the esbuild compiler too, but only ESM-syntax app
+// sources are compiled; everything else falls through to Node's own loader.
 const COMPILERS = {
 	".jsx": babelCompiler,
 	".es6": babelCompiler,
 	".ts": typescriptCompiler,
 	".coffee": coffeeCompiler,
 	".cjsx": coffeeCompiler,
+	".js": babelCompiler,
 };
 
 const cacheStats = {};
@@ -161,11 +164,25 @@ require("source-map-support").install({
 
 Object.keys(COMPILERS).forEach((extension) => {
 	const compiler = COMPILERS[extension];
+	const originalLoader = require.extensions[extension];
 
 	Object.defineProperty(require.extensions, extension, {
 		enumerable: true,
 		writable: true,
 		value: (module, filePath) => {
+			if (originalLoader) {
+				// Extensions Node already loads (.js) keep its loader unless the
+				// compiler claims the file.
+				const isCandidate = compiler.isAppSource
+					? compiler.isAppSource(filePath)
+					: true;
+				if (
+					!isCandidate ||
+					!compiler.shouldCompile(fs.readFileSync(filePath, "utf8"), filePath)
+				) {
+					return originalLoader(module, filePath);
+				}
+			}
 			const code = compileFileAtPath(compiler, filePath, extension);
 			return module._compile(code, filePath);
 		},

@@ -24,6 +24,8 @@ global.Promise = nodeRequire("bluebird");
 const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
+// Before anything that requires the app-internal module names.
+import "./register-bundled-modules.js";
 import "./bootstrap-assign-env.js";
 import "./window";
 

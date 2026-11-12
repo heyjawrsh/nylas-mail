@@ -14,6 +14,8 @@ const timeout = global.setTimeout;
 Promise.setScheduler((fn) => timeout(fn, 0));
 
 // Like sands through the hourglass, so are the days of our lives.
+// Before anything that requires the app-internal module names.
+import "./register-bundled-modules.js";
 import "./bootstrap-assign-env.js";
 import "./window";
 

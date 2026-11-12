@@ -16,7 +16,7 @@ const m = vi.hoisted(() => {
 		deepClone: vi.fn((value) => structuredClone(value)),
 		openModal: vi.fn(), codeSnippet: vi.fn((props) => ({ type: "snippet", props })),
 		defineSheet: vi.fn(), activateAllStores: vi.fn(() => Promise.resolve()),
-		workspace: { Sheet: {} }, render: vi.fn(), createElement: vi.fn(() => "sheet-view"),
+		workspace: { Sheet: {} }, render: vi.fn(), unmount: vi.fn(), createRoot: vi.fn(function createRoot() { return { render: m.render, unmount: m.unmount }; }), createElement: vi.fn(() => "sheet-view"),
 	};
 });
 
@@ -94,7 +94,7 @@ vi.mock("../src/flux/stores/workspace-store.js", () => ({
 	default: { Sheet: m.workspace.Sheet, defineSheet: m.defineSheet },
 }));
 vi.mock("react", () => ({ default: { createElement: m.createElement }, createElement: m.createElement }));
-vi.mock("react-dom", () => ({ default: { render: m.render }, render: m.render }));
+vi.mock("react-dom/client", () => ({ default: { createRoot: m.createRoot }, createRoot: m.createRoot }));
 vi.mock("../src/sheet-container.jsx", () => ({ default: function SheetContainer() {} }));
 vi.mock("nylas-exports", () => ({ default: {}, Actions: { openModal: m.openModal } }));
 vi.mock("nylas-component-kit", () => ({ default: {}, CodeSnippet: m.codeSnippet }));
@@ -229,7 +229,8 @@ describe("NylasEnv config, themes, workspace, and menu delegation", () => {
 		const item = env.initializeReactRoot();
 		expect(item.id).toBe("sheet-container");
 		expect(parent.lastChild).toBe(item);
-		expect(m.render).toHaveBeenCalledWith("sheet-view", item);
+		expect(m.createRoot).toHaveBeenCalledWith(item);
+		expect(m.render).toHaveBeenCalledWith("sheet-view");
 		parent.remove();
 	});
 

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 const {
 	Actions,
 	NylasAPI,

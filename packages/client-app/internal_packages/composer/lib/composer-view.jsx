@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import { Utils, Actions, DraftStore, DraftHelpers } from "nylas-exports";
 import {
 	DropZone,

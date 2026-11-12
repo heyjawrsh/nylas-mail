@@ -167,17 +167,19 @@ lazyLoad(`NylasLongConnection`, () =>
 			requireFromSrc("../flux/nylas-long-connection.js"),
 );
 
-lazyLoad(
-	`PackageManager`,
-	() =>
-		requireFromSrc("../package-manager.js").default ||
-		requireFromSrc("../package-manager.js"),
+lazyLoad(`PackageManager`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../package-manager.js").default ||
+			require("../package-manager.js")
+		: requireFromSrc("../package-manager.js").default ||
+			requireFromSrc("../package-manager.js"),
 );
-lazyLoad(
-	`DatabaseChangeRecord`,
-	() =>
-		requireFromSrc("../flux/stores/database-change-record.js").default ||
-		requireFromSrc("../flux/stores/database-change-record.js"),
+lazyLoad(`DatabaseChangeRecord`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/stores/database-change-record.js").default ||
+			require("../flux/stores/database-change-record.js")
+		: requireFromSrc("../flux/stores/database-change-record.js").default ||
+			requireFromSrc("../flux/stores/database-change-record.js"),
 );
 // The Database
 lazyLoad(`Matcher`, () =>
@@ -208,9 +210,10 @@ lazyLoad(`QuerySubscription`, () =>
 		: requireFromSrc("../flux/models/query-subscription.js").default ||
 			requireFromSrc("../flux/models/query-subscription.js"),
 );
-lazyLoad(
-	`CalendarDataSource`,
-	"components/nylas-calendar/calendar-data-source",
+lazyLoad(`CalendarDataSource`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../components/nylas-calendar/calendar-data-source.js")
+		: requireFromSrc("../components/nylas-calendar/calendar-data-source.js"),
 );
 lazyLoad(`DatabaseWriter`, () =>
 	typeof require !== "undefined" && require.resolve
@@ -341,9 +344,10 @@ lazyLoadAndRegisterModel(`JSONBlob`, () =>
 		: requireFromSrc("../flux/models/json-blob.js").default ||
 			requireFromSrc("../flux/models/json-blob.js"),
 );
-lazyLoadAndRegisterModel(
-	`ProviderSyncbackRequest`,
-	"provider-syncback-request",
+lazyLoadAndRegisterModel(`ProviderSyncbackRequest`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/models/provider-syncback-request.js")
+		: requireFromSrc("../flux/models/provider-syncback-request.js"),
 );
 
 // Search Query Interfaces
@@ -505,13 +509,15 @@ lazyLoadAndRegisterTask(`ReprocessMailRulesTask`, () =>
 		: requireFromSrc("../flux/tasks/reprocess-mail-rules-task.js").default ||
 			requireFromSrc("../flux/tasks/reprocess-mail-rules-task.js"),
 );
-lazyLoadAndRegisterTask(
-	`SendFeatureUsageEventTask`,
-	"send-feature-usage-event-task",
+lazyLoadAndRegisterTask(`SendFeatureUsageEventTask`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/tasks/send-feature-usage-event-task.js")
+		: requireFromSrc("../flux/tasks/send-feature-usage-event-task.js"),
 );
-lazyLoadAndRegisterTask(
-	`EnsureMessageInSentFolderTask`,
-	"ensure-message-in-sent-folder-task",
+lazyLoadAndRegisterTask(`EnsureMessageInSentFolderTask`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/tasks/ensure-message-in-sent-folder-task.js")
+		: requireFromSrc("../flux/tasks/ensure-message-in-sent-folder-task.js"),
 );
 
 // Stores
@@ -623,6 +629,12 @@ lazyLoadAndRegisterStore(`WorkspaceStore`, () =>
 		: requireFromSrc("../flux/stores/workspace-store.js").default ||
 			requireFromSrc("../flux/stores/workspace-store.js"),
 );
+// Sheet depth for components inside a sheet (replaces legacy context)
+lazyLoad(`SheetDepthContext`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../sheet-depth-context.js")
+		: requireFromSrc("../sheet-depth-context.js"),
+);
 lazyLoadAndRegisterStore(`MailRulesStore`, () =>
 	typeof require !== "undefined" && require.resolve
 		? require("../flux/stores/mail-rules-store.js").default ||
@@ -714,9 +726,10 @@ lazyLoadAndRegisterStore(`TaskQueueStatusStore`, () =>
 		: requireFromSrc("../flux/stores/task-queue-status-store.js").default ||
 			requireFromSrc("../flux/stores/task-queue-status-store.js"),
 );
-lazyLoadAndRegisterStore(
-	`FolderSyncProgressStore`,
-	"folder-sync-progress-store",
+lazyLoadAndRegisterStore(`FolderSyncProgressStore`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/stores/folder-sync-progress-store.js")
+		: requireFromSrc("../flux/stores/folder-sync-progress-store.js"),
 );
 lazyLoadAndRegisterStore(`ThreadListActionsStore`, () =>
 	typeof require !== "undefined" && require.resolve
@@ -725,20 +738,29 @@ lazyLoadAndRegisterStore(`ThreadListActionsStore`, () =>
 		: requireFromSrc("../flux/stores/thread-list-actions-store.js").default ||
 			requireFromSrc("../flux/stores/thread-list-actions-store.js"),
 );
-lazyLoadAndRegisterStore(
-	`FocusedPerspectiveStore`,
-	"focused-perspective-store",
+lazyLoadAndRegisterStore(`FocusedPerspectiveStore`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/stores/focused-perspective-store.js")
+		: requireFromSrc("../flux/stores/focused-perspective-store.js"),
 );
-lazyLoadAndRegisterStore(
-	`SearchableComponentStore`,
-	"searchable-component-store",
+lazyLoadAndRegisterStore(`SearchableComponentStore`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../flux/stores/searchable-component-store.js")
+		: requireFromSrc("../flux/stores/searchable-component-store.js"),
 );
-lazyLoad(
-	`CustomContenteditableComponents`,
-	"components/overlaid-components/custom-contenteditable-components",
+lazyLoad(`CustomContenteditableComponents`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../components/overlaid-components/custom-contenteditable-components.js")
+		: requireFromSrc(
+				"../components/overlaid-components/custom-contenteditable-components.js",
+			),
 );
 
-lazyLoad(`ServiceRegistry`, `registries/service-registry`);
+lazyLoad(`ServiceRegistry`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../registries/service-registry.js")
+		: requireFromSrc("../registries/service-registry.js"),
+);
 
 // Decorators
 lazyLoad(`InflatesDraftClientId`, () =>
@@ -972,13 +994,15 @@ lazyLoad(`InlineStyleTransformer`, () =>
 		: requireFromSrc("../services/inline-style-transformer.js").default ||
 			requireFromSrc("../services/inline-style-transformer.js"),
 );
-lazyLoad(
-	`SearchableComponentMaker`,
-	"searchable-components/searchable-component-maker",
+lazyLoad(`SearchableComponentMaker`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../searchable-components/searchable-component-maker.jsx")
+		: requireFromSrc("../searchable-components/searchable-component-maker.jsx"),
 );
-lazyLoad(
-	`QuotedPlainTextTransformer`,
-	"services/quoted-plain-text-transformer",
+lazyLoad(`QuotedPlainTextTransformer`, () =>
+	typeof require !== "undefined" && require.resolve
+		? require("../services/quoted-plain-text-transformer.js")
+		: requireFromSrc("../services/quoted-plain-text-transformer.js"),
 );
 lazyLoad(`BatteryStatusManager`, () =>
 	typeof require !== "undefined" && require.resolve
@@ -1047,7 +1071,10 @@ lazyLoadDeprecated(
 );
 lazyLoadDeprecated(
 	`MessageStoreExtension`,
-	"flux/stores/message-store-extension",
+	() =>
+		typeof require !== "undefined" && require.resolve
+			? require("../flux/stores/message-store-extension.js")
+			: requireFromSrc("../flux/stores/message-store-extension.js"),
 	{
 		instead: "MessageViewExtension",
 	},
@@ -1059,13 +1086,41 @@ export default $n;
 // Named exports are lazy proxies: the bridge getters load real modules on
 // first ACCESS (post-cycle). Eager reads — even guarded — fire every getter
 // at module-eval time and re-enter the intentional model<->store cycles.
+// Function members come back wrapped so a call through the bridge runs with
+// the real object as `this`, while the function's own properties (a Reflux
+// action's `.listen`, a class's statics) stay reachable. A plain `.bind()`
+// drops those properties.
+const __boundMembers = new WeakMap();
+const __member = (real, fn, bridge) => {
+	if (typeof real !== "object" && typeof real !== "function") {
+		return fn.bind(real);
+	}
+	// keyed by owner too: prototype methods are shared between objects
+	let members = __boundMembers.get(real);
+	if (!members) {
+		members = new WeakMap();
+		__boundMembers.set(real, members);
+	}
+	let wrapped = members.get(fn);
+	if (!wrapped) {
+		wrapped = new Proxy(fn, {
+			apply(target, thisArg, args) {
+				const self =
+					thisArg === undefined || thisArg === bridge ? real : thisArg;
+				return Reflect.apply(target, self, args);
+			},
+		});
+		members.set(fn, wrapped);
+	}
+	return wrapped;
+};
 const __lazy = (name) =>
 	new Proxy(function lazyBridge() {}, {
-		get(_t, prop) {
+		get(_t, prop, receiver) {
 			const real = $n[name];
 			if (real === undefined || real === null) return real;
 			const v = real[prop];
-			return typeof v === "function" ? v.bind(real) : v;
+			return typeof v === "function" ? __member(real, v, receiver) : v;
 		},
 		apply(_t, _thisArg, args) {
 			return $n[name](...args);
@@ -1169,3 +1224,4 @@ export const UndoRedoStore = __lazy("UndoRedoStore");
 export const Utils = __lazy("Utils");
 export const VirtualDOMUtils = __lazy("VirtualDOMUtils");
 export const WorkspaceStore = __lazy("WorkspaceStore");
+export const SheetDepthContext = __lazy("SheetDepthContext");

@@ -120,6 +120,7 @@ class ScenarioEditorRow extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this.render = this.render.bind(this);
 		this._renderTemplateSelect = this._renderTemplateSelect.bind(this);
 		this._renderComparator = this._renderComparator.bind(this);

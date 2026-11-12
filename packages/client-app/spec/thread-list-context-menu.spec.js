@@ -30,6 +30,13 @@ vi.mock("electron", () => {
 	};
 	return { default: electron, ...electron };
 });
+// The code reads the remote surface from @electron/remote; reuse the electron
+// mock's remote so both stay in step.
+vi.mock("@electron/remote", async () => {
+	const electron = await import("electron");
+	const remote = electron.remote ?? electron.default?.remote;
+	return { default: remote, ...remote, remote };
+});
 
 import ThreadListContextMenu from "../internal_packages/thread-list/lib/thread-list-context-menu";
 

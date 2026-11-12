@@ -63,6 +63,7 @@ class InitialPreferencesOptions extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this._loadTemplates = this._loadTemplates.bind(this);
 		this._setConfigDefaultsForAccount =
 			this._setConfigDefaultsForAccount.bind(this);
@@ -224,6 +225,7 @@ class InitialPreferencesPage extends React.Component {
 	}
 
 	constructor(props) {
+		super(props);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this._onAccountStoreChange = this._onAccountStoreChange.bind(this);

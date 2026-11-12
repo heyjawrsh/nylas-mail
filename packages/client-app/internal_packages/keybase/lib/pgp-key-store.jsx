@@ -17,7 +17,8 @@ const {
 	MessageBodyProcessor,
 	RegExpUtils,
 } = require("nylas-exports");
-const { remote, shell } = require("electron");
+const { shell } = require("electron");
+const remote = require("@electron/remote");
 const Identity = require("./identity");
 const kb = require("./keybase");
 const pgp = require("kbpgp");
@@ -28,6 +29,7 @@ const os = require("node:os");
 
 class PGPKeyStore extends NylasStore {
 	constructor() {
+		super();
 		this.validAddress = this.validAddress.bind(this);
 		this.watch = this.watch.bind(this);
 		this.unwatch = this.unwatch.bind(this);
@@ -44,7 +46,6 @@ class PGPKeyStore extends NylasStore {
 		this.getDecrypted = this.getDecrypted.bind(this);
 		this.decrypt = this.decrypt.bind(this);
 		this.decryptAttachments = this.decryptAttachments.bind(this);
-		super();
 
 		this._identities = {};
 

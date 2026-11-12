@@ -1,6 +1,6 @@
 /* eslint global-require: 0*/
 import _ from "underscore";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import {
 	Thread,
 	Actions,

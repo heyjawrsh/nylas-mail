@@ -1,4 +1,8 @@
+import { createRequire } from "node:module";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const nodeRequire = createRequire(import.meta.url);
+const originalJsLoader = nodeRequire.extensions[".js"];
 
 const m = vi.hoisted(() => {
 	const path = {
@@ -91,6 +95,9 @@ globalThis._ = m.underscore;
 m.fs.resolve.mockImplementation((_dir, platform) => `${process.cwd()}/menus/${platform}.json`);
 const compileImport = await import("../src/compile-cache.js");
 const CompileCache = compileImport.default || compileImport;
+// compile-cache claims `.js` for app sources, and the compilers here are
+// mocks, so give Node its own loader back for the rest of the worker.
+nodeRequire.extensions[".js"] = originalJsLoader;
 const helpersImport = await import("../src/menu-helpers.js");
 const MenuHelpers = helpersImport.default || helpersImport;
 const managerImport = await import("../src/menu-manager.js");
@@ -104,7 +111,7 @@ describe("compile cache keying and compilation", () => {
 	beforeEach(() => { m.files.clear(); vi.clearAllMocks(); CompileCache.setCacheDirectory("/cache"); CompileCache.resetCacheStats(); });
 
 	it("stores the configured cache directory", () => { CompileCache.setCacheDirectory("/chosen"); expect(CompileCache.getCacheDirectory()).toBe("/chosen"); });
-	it("initializes counters for every compiler extension", () => { expect(Object.keys(CompileCache.getCacheStats())).toEqual([".jsx", ".es6", ".ts", ".coffee", ".cjsx"]); });
+	it("initializes counters for every compiler extension", () => { expect(Object.keys(CompileCache.getCacheStats())).toEqual([".jsx", ".es6", ".ts", ".coffee", ".cjsx", ".js"]); });
 });
 
 describe("menu template helpers", () => {

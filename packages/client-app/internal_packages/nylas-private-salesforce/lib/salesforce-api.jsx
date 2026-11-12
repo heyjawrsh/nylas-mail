@@ -1,4 +1,5 @@
-import { shell, remote } from "electron";
+import { shell } from "electron";
+import * as remote from "@electron/remote";
 import { Actions, NylasAPIRequest } from "nylas-exports";
 import SalesforceActions from "./salesforce-actions";
 import SalesforceOAuth from "./salesforce-oauth";

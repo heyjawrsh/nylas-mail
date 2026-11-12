@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import NylasStore from "nylas-store";
 import Actions from "../actions.js";
 import FixedPopover from "../../components/fixed-popover.jsx";
@@ -16,20 +17,26 @@ class PopoverStore extends NylasStore {
 		super();
 		this.isOpen = false;
 		this.container = createContainer(containerId);
-		ReactDOM.render(<span />, this.container);
+		this.root = createRoot(this.container);
+		this.renderSync(<span />);
 
 		this.listenTo(Actions.openPopover, this.openPopover);
 		this.listenTo(Actions.closePopover, this.closePopover);
 	}
 
+	// Synchronous commit, like the legacy ReactDOM.render the callers were
+	// written against: the content is mounted when this returns.
+	renderSync(element) {
+		flushSync(() => this.root.render(element));
+	}
+
 	renderPopover = (child, props, callback) => {
 		const popover = <FixedPopover {...props}>{child}</FixedPopover>;
 
-		ReactDOM.render(popover, this.container, () => {
-			this.isOpen = true;
-			this.trigger();
-			callback();
-		});
+		this.renderSync(popover);
+		this.isOpen = true;
+		this.trigger();
+		callback();
 	};
 
 	openPopover = (
@@ -59,11 +66,10 @@ class PopoverStore extends NylasStore {
 	};
 
 	closePopover = (callback = () => {}) => {
-		ReactDOM.render(<span />, this.container, () => {
-			this.isOpen = false;
-			this.trigger();
-			callback();
-		});
+		this.renderSync(<span />);
+		this.isOpen = false;
+		this.trigger();
+		callback();
 	};
 }
 

@@ -367,7 +367,8 @@ class EventedIFrame extends React.Component {
 		// "Copy Image" and "Search Google for 'Bla'"
 		event.preventDefault();
 
-		const { remote, clipboard, shell, nativeImage } = require("electron");
+		const { clipboard, shell, nativeImage } = require("electron");
+		const remote = require("@electron/remote");
 		const { Menu, MenuItem } = remote;
 		const path = require("node:path");
 		const fs = require("node:fs");

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import _ from "underscore";
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 import { Utils, RegExpUtils } from "nylas-exports";
 import { Menu } from "nylas-component-kit";
 

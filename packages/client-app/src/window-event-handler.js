@@ -9,7 +9,8 @@ let WindowEventHandler;
 const _path = require("node:path");
 const _ = require("underscore");
 const { Disposable } = require("event-kit");
-let { shell, ipcRenderer, remote } = require("electron");
+let { shell, ipcRenderer } = require("electron");
+let remote = require("@electron/remote");
 const _fs = require("fs-plus");
 const url = require("node:url");
 
@@ -178,7 +179,7 @@ module.exports = WindowEventHandler = class WindowEventHandler {
 	}
 
 	runUnloadFinished() {
-		({ remote } = require("electron"));
+		remote = require("@electron/remote");
 		return _.defer(() => {
 			if (remote.getGlobal("application").isQuitting()) {
 				return remote.app.quit();
@@ -282,7 +283,7 @@ module.exports = WindowEventHandler = class WindowEventHandler {
 		}
 		const word = event.target.value.substr(wordStart, wordEnd - wordStart);
 
-		({ remote } = require("electron"));
+		remote = require("@electron/remote");
 		const { Menu, MenuItem } = remote;
 		const menu = new Menu();
 

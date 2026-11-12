@@ -23,6 +23,7 @@ module.exports = KeyAdder = (() => {
 		}
 
 		constructor(_props) {
+			super(_props);
 			this._onPasteButtonClick = this._onPasteButtonClick.bind(this);
 			this._onGenerateButtonClick = this._onGenerateButtonClick.bind(this);
 			this._onImportButtonClick = this._onImportButtonClick.bind(this);

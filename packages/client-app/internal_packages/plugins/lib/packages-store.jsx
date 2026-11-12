@@ -3,7 +3,8 @@ import Reflux from "reflux";
 import path from "node:path";
 import fs from "fs-plus";
 import { APMWrapper } from "nylas-exports";
-import { ipcRenderer, shell, remote } from "electron";
+import { ipcRenderer, shell } from "electron";
+import * as remote from "@electron/remote";
 
 import PluginsActions from "./plugins-actions";
 

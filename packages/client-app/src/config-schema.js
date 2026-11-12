@@ -170,4 +170,9 @@ const __schema = {
 };
 
 module.exports = __schema;
-module.exports.default = __schema;
+// Non-enumerable: the schema is walked key by key, and an enumerable
+// self-reference sends Config.setDefaults into infinite recursion.
+Object.defineProperty(module.exports, "default", {
+	value: __schema,
+	enumerable: false,
+});

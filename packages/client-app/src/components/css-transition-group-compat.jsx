@@ -52,15 +52,37 @@ export default class ReactCSSTransitionGroup extends Component {
 				appear: transitionAppearTimeout || transitionEnterTimeout || 0,
 			},
 			classNames: transitionName,
-			...(child ? { key: child.key } : {}),
 		};
+
+		// react-transition-group reaches the DOM node with findDOMNode unless
+		// it gets a nodeRef, and React 19 removed findDOMNode. A DOM child can
+		// carry the ref itself.
+		let transitionChild = child;
+		if (child && typeof child.type === "string" && !child.props.ref) {
+			transitionProps.nodeRef = this._nodeRefFor(child.key);
+			transitionChild = React.cloneElement(child, {
+				ref: transitionProps.nodeRef,
+			});
+		}
 
 		return (
 			<TransitionGroup className={className} component={component} {...rest}>
 				{child ? (
-					<CSSTransition {...transitionProps}>{child}</CSSTransition>
+					<CSSTransition key={child.key} {...transitionProps}>
+						{transitionChild}
+					</CSSTransition>
 				) : null}
 			</TransitionGroup>
 		);
+	}
+
+	_nodeRefFor(key) {
+		if (!this._nodeRefs) {
+			this._nodeRefs = new Map();
+		}
+		if (!this._nodeRefs.has(key)) {
+			this._nodeRefs.set(key, React.createRef());
+		}
+		return this._nodeRefs.get(key);
 	}
 }

@@ -18,7 +18,7 @@ const {
 	Actions,
 } = require("nylas-exports");
 const PGPKeyStore = require("./pgp-key-store");
-const { remote } = require("electron");
+const remote = require("@electron/remote");
 const PassphrasePopover = require("./passphrase-popover");
 const PrivateKeyPopover = require("./private-key-popover");
 const _pgp = require("kbpgp");

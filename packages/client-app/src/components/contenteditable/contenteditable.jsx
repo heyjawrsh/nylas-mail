@@ -618,7 +618,7 @@ class Contenteditable extends React.Component {
 		}
 		event.preventDefault();
 
-		const { remote } = require("electron");
+		const remote = require("@electron/remote");
 		const { Menu, MenuItem } = remote;
 
 		const menu = new Menu();

@@ -3,7 +3,7 @@ import _ from "underscore";
 import React from "react";
 import classnames from "classnames";
 import { Actions, Contact } from "nylas-exports";
-const { Menu, MenuItem } = require("electron").remote;
+const { Menu, MenuItem } = require("@electron/remote");
 const MAX_COLLAPSED = 5;
 
 class MessageParticipants extends React.Component {

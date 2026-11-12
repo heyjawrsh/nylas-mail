@@ -144,7 +144,7 @@ class ActionBridge {
 				const DB = getDatabaseStore();
 				DB.triggeringFromActionBridge = true;
 				DB.trigger(new (getDatabaseChangeRecord())(args[0]));
-				DatabaseStore.triggeringFromActionBridge = false;
+				DB.triggeringFromActionBridge = false;
 			} else if (Actions[name]) {
 				Actions[name].firing = true;
 				Actions[name](...args);

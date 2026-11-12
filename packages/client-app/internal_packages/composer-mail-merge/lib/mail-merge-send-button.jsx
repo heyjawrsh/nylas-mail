@@ -1,4 +1,4 @@
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";

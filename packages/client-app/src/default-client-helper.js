@@ -6,7 +6,13 @@
  */
 const { exec } = require("node:child_process");
 const fs = require("node:fs");
-const { remote, shell } = require("electron");
+const { shell } = require("electron");
+// Loaded in both processes; only the renderer may use the remote bridge,
+// and the main process has the same modules on electron itself.
+const remote =
+	process.type === "renderer"
+		? require("@electron/remote")
+		: require("electron");
 
 const bundleIdentifier = "com.nylas.nylas-mail";
 

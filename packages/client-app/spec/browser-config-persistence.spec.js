@@ -101,8 +101,8 @@ describe("ConfigPersistenceManager", () => {
 	});
 
 	it("broadcasts loaded settings to every window", () => {
-		const first = { webContents: { getId: () => 1, send: vi.fn() } };
-		const second = { webContents: { getId: () => 2, send: vi.fn() } };
+		const first = { webContents: { id: 1, send: vi.fn() } };
+		const second = { webContents: { id: 2, send: vi.fn() } };
 		mocks.getAllWindows.mockReturnValue([first, second]);
 
 		createManager({ zoom: 1.25 });
@@ -112,8 +112,8 @@ describe("ConfigPersistenceManager", () => {
 	});
 
 	it("omits the source web contents when settings change", () => {
-		const source = { webContents: { getId: () => 7, send: vi.fn() } };
-		const peer = { webContents: { getId: () => 8, send: vi.fn() } };
+		const source = { webContents: { id: 7, send: vi.fn() } };
+		const peer = { webContents: { id: 8, send: vi.fn() } };
 		mocks.getAllWindows.mockReturnValue([source, peer]);
 		const manager = createManager();
 		vi.clearAllMocks();

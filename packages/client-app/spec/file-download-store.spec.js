@@ -23,7 +23,7 @@ vi.mock("../src/flux/nylas-api.js", () => ({ default: {} }));
 vi.mock("../src/flux/nylas-api-request.js", () => ({ default: class NylasAPIRequest {} }));
 vi.mock("@electron/remote", () => {
 	const remote = { dialog: { showMessageBox: mocks.showMessageBox } };
-	return { default: remote, remote };
+	return { default: remote, ...remote, remote };
 });
 vi.mock("electron", () => ({ remote: { dialog: { showMessageBox: mocks.showMessageBox } } }));
 vi.mock("request-progress", () => ({ default: vi.fn() }));

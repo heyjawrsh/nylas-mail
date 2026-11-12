@@ -34,16 +34,17 @@ vi.mock("react-dom", async (importOriginal) => {
 	const findDOMNode = (value) => value instanceof Element ? value : value?.inputRef?.current || value;
 	return { ...actual, default: { ...actual.default, findDOMNode }, findDOMNode };
 });
-vi.mock("@electron/remote", () => ({
-	remote: {
+vi.mock("@electron/remote", () => {
+	const remote = {
 		Menu: class Menu {
 			append(item) { m.menuItems.push(item); }
 			popup(window) { m.menuPopups(window); }
 		},
 		MenuItem: class MenuItem { constructor(options) { Object.assign(this, options); } },
 		getCurrentWindow: vi.fn(() => "current-window"),
-	},
-}));
+	};
+	return { default: remote, ...remote, remote };
+});
 vi.mock("nylas-exports", () => ({
 	Utils: { registeredObjectReplacer: m.registeredObjectReplacer, registeredObjectReviver: m.registeredObjectReviver },
 	RegExpUtils: { emailRegex: () => /[\w.+-]+@[\w.-]+\.[A-Za-z]+/ },

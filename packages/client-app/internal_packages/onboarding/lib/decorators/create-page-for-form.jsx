@@ -1,7 +1,6 @@
 import { shell } from "electron";
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { RetinaImg } from "nylas-component-kit";
 import { NylasAPI, Actions } from "nylas-exports";
 
@@ -20,6 +19,8 @@ const CreatePageForForm = (FormComponent) => {
 
 		constructor(props) {
 			super(props);
+			this._rootRef = React.createRef();
+			this._formRef = React.createRef();
 
 			this.state = Object.assign(
 				{
@@ -46,9 +47,11 @@ const CreatePageForForm = (FormComponent) => {
 				return;
 			}
 
-			const inputs = Array.from(
-				ReactDOM.findDOMNode(this).querySelectorAll("input"),
-			);
+			const root = this._rootRef.current;
+			if (!root) {
+				return;
+			}
+			const inputs = Array.from(root.querySelectorAll("input"));
 			if (inputs.length === 0) {
 				return;
 			}
@@ -93,7 +96,7 @@ const CreatePageForForm = (FormComponent) => {
 
 		onSubmit = () => {
 			OnboardingActions.setAccountInfo(this.state.accountInfo);
-			this.refs.form.submit();
+			this._formRef.current.submit();
 		};
 
 		onFieldKeyPress = (event) => {
@@ -278,7 +281,10 @@ const CreatePageForForm = (FormComponent) => {
 			const hideTitle = errorMessage && errorMessage.length > 120;
 
 			return (
-				<div className={`page account-setup ${FormComponent.displayName}`}>
+				<div
+					ref={this._rootRef}
+					className={`page account-setup ${FormComponent.displayName}`}
+				>
 					<div className="logo-container">
 						<RetinaImg
 							style={{ backgroundColor: AccountType.color, borderRadius: 44 }}
@@ -299,7 +305,7 @@ const CreatePageForForm = (FormComponent) => {
 					/>
 					{this._renderCredentialsNote()}
 					<FormComponent
-						ref="form"
+						ref={this._formRef}
 						accountInfo={accountInfo}
 						errorFieldNames={errorFieldNames}
 						submitting={submitting}

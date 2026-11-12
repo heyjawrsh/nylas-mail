@@ -4,7 +4,7 @@ const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
 		? createRequire(import.meta.url)
 		: require;
-import { remote } from "@electron/remote";
+import * as remote from "@electron/remote";
 
 // Optional native secret storage; the renderer bundle runs against a stub.
 let keytar = null;
