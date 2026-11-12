@@ -14,7 +14,7 @@ risk: medium
 
 ## Description
 
-At its start, one Update of the spines writes all four short style specs (Classic, Taiga, Darkside, Less-is-more), including Classic's narrow-list row heights (design Open Questions 3). The Classic style that epic-token-platform ported is then brought to its spec and arranges the shared components into the regions and lays out every surface shipped so far, including Loft's. At its end the shared component kit freezes, and epics 7 to 9 and epic-style-api build on it. Classic's arrangement is also the fallback for features a community style doesn't cover.
+At its start, one Update of the spines writes all four short style specs (Classic, Taiga, Darkside, Less-is-more), including Classic's narrow-list row heights (design Open Questions 3). The Classic style package that epic-style-contract set up is then brought to its spec and arranges the shared components into the regions and lays out every surface shipped so far, including Loft's. At its end the shared component kit freezes, and epics 7 to 9 and epic-style-api build on it. Classic's arrangement is also the fallback for features a community style doesn't cover.
 
 ## Outcome
 

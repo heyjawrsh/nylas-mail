@@ -22,7 +22,7 @@ For anyone using the pre-release, the look changes from one page with a preview 
 
 ## Done when
 
-- Each control changes only its own setting, the others stay as set, and density persists when switching between Classic (ported by epic-token-platform) and Loft (R1, R9).
+- Each control changes only its own setting, the others stay as set, and density persists when switching between Classic (set up as a style package by epic-style-contract) and Loft (R1, R9).
 - Style, theme, density and font change only the preview until Apply; Revert or Esc discards with Undo for 5s; leaving discards silently; the immediate controls apply at once (R10).
 - Apply cross-fades after the new look paints, keeps focus where it was and announces the whole new look to screen readers (R11).
 - A font override replaces the theme typeface app-wide, and a missing font falls back with a toast (R17).
@@ -46,5 +46,6 @@ For anyone using the pre-release, the look changes from one page with a preview 
 ## Notes
 
 - Waits on epic-token-platform because: it needs the setting keys, the token runtime and live variant switching.
+- Waits on epic-style-contract because: the preview renders real components through its preview data provider, and the style cards read its style manifest.
 - Waits on epic-loft because: it needs the shared toast and the Loft look the preview shows.
-- Decision: 2026-11-11 — the density-persistence check switches between Classic and Loft: epic-token-platform ports the Classic style and epic-loft ships Loft, so two styles exist when this epic runs (Josh).
+- Decision: 2026-11-11 — the density-persistence check switches between Classic and Loft: epic-token-platform ports the Classic style and epic-loft ships Loft. Since the 2026-11-12 split, epic-style-contract sets up the Classic style package, so two styles exist when this epic runs (Josh).

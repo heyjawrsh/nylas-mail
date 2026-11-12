@@ -14,7 +14,7 @@ risk: medium
 
 ## Description
 
-Aubergine (from `ui-ubuntu`), Taiga, Darkside and Less-is-more are ported to token themes, and Volt, Ember and Dusk are added. Each ships light and dark at standard and high contrast with its type ramp, and Classic gets its high-contrast variants. The build tasks in design Open Questions 5 are done and every derived value is hand-checked. The proprietary `nylas-private-fonts` package leaves the public build and becomes an optional private package. It uses the bundled-font pipeline from epic-loft, and epics 7 to 9 and 12 use its themes.
+Aubergine (from `ui-ubuntu`), Taiga, Darkside and Less-is-more are ported to token themes, and Volt, Ember and Dusk are added. Each ships light and dark at standard and high contrast with its type ramp. The build tasks in design Open Questions 5 are done and every derived value is hand-checked. The proprietary `nylas-private-fonts` package leaves the public build and becomes an optional private package. It uses the bundled-font pipeline from epic-loft, and epics 7 to 9 and 12 use its themes.
 
 ## Outcome
 
@@ -23,14 +23,14 @@ For people picking a theme, all nine built-ins load in every variant, none shows
 ## Done when
 
 - All nine built-in themes are bundled and define every role in all four variants; none fails to load or shows derived (R4, R5).
-- Every high-contrast variant of the seven themes and of Classic passes every pair in Contrast pairs through the direct check, and axe passes on them (R14, R32).
+- Every high-contrast variant of the seven themes passes every pair in Contrast pairs through the direct check, and axe passes on them (R14, R32).
 - Each theme except Loft has its type ramp in its own face.
 - The public build contains no Nylas-Pro files, and Nylas-Pro renders only when the optional private package is present.
 - It passes integrated verification in the real Electron app on macOS, Windows and Linux, and ships in an installable pre-release build.
 
 ## Boundaries
 
-- Out: the Loft theme (epic-loft) and Classic light and dark (epic-token-platform).
+- Out: the Loft theme (epic-loft) and Classic in all four variants (epic-token-platform, since 2026-11-12).
 - Out: the layout LESS in `ui-taiga`, `ui-darkside` and `ui-less-is-more` (epics 7 to 9).
 - Out: the licensing question for the public repo; it is a separate GitHub issue.
 - Out: theme distribution.

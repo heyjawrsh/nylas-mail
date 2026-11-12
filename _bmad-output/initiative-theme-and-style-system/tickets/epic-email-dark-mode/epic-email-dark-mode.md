@@ -45,3 +45,4 @@ For people reading mail in a dark theme, message bodies are readable without los
 - Waits on epic-loft because: it builds the View original toggle from Loft's visual spec.
 - Waits on epic-appearance because: Adapt email colours lives in its Appearance slot.
 - Decision: 2026-11-11 — this is the 4th epic, and its adaptation spike may start once epic-token-platform is done.
+- Decision: 2026-11-12 — epic-token-platform ships a minimal email-frame binding (`color-scheme` plus role values, story 1.13), so bodies stay legible once LESS is gone. This epic extends that binding with adaptation and the sandbox rather than creating it.

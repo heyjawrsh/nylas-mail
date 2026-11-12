@@ -47,5 +47,6 @@ For new users, Loft is a complete mail view in a pre-release build, and it match
 
 ## Notes
 
-- Waits on epic-token-platform because: it needs the token runtime, regions, row-height and title-bar contracts.
+- Waits on epic-token-platform because: it needs the token runtime.
+- Waits on epic-style-contract because: it needs the regions, row-height and title-bar contracts and the preview data provider.
 - Decision: 2026-11-11 — the Loft theme lives in this epic, not epic-themes.

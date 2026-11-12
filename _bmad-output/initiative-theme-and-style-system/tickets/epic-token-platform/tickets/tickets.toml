@@ -1,0 +1,150 @@
+# epic-token-platform stories, planned 2026-11-12. Table order is build order. `id` is permanent, never reused.
+
+[[entry]]
+id = 1
+type = "story"
+title = "One Classic role reaches the running app"
+description = "Adds the kernel sheet that declares the layer order and the stylesheet-loader step that wraps each sheet in its layer, a minimal build-time compiler for Classic light, a [data-look] root on the main window, and one surface that reads a role token instead of LESS."
+verify = "Changing surface-app in Classic's theme file and rebuilding repaints that surface in the running app, and the kernel sheet is the document's first stylesheet."
+covers = ["R2", "R3"]
+after = ["13.1"]
+hitl = false
+risk = "high"
+notes = ["Tracer bullet. Extra check: the role's value comes from the compiled sheet in DevTools, not from a LESS variable."]
+
+[[entry]]
+id = 2
+type = "story"
+title = "The theme compiler and Classic light and dark are complete"
+description = "Completes the compiler: Ajv validation against the DTCG 2025.10 schema and the role contract, error lines with positions, typed serialisation, deterministic output, missing-role fill and the build gate. Ports Classic light and dark from ui-light and ui-dark with every role. The compile runs in the electron-builder build, its output ships in the asar, and culori and ajv become production dependencies."
+verify = "Compiler specs cover every error kind with file and line, a built-in that needs derivation fails the build, Classic light and dark compile with every contract role, and the installed build loads the compiled sheet."
+covers = ["R2", "R3"]
+after = [1, "13.7"]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 12
+type = "story"
+title = "Classic's high-contrast variants pass every pair"
+description = "Derives Classic light-hc and dark-hc in OKLCH, has a person hand-check them against Contrast pairs, and ships them as complete groups in Classic's theme file, so the build gate checks all four variants."
+verify = "The compiler's high-contrast gate passes for Classic light-hc and dark-hc, and axe passes on both in the real app."
+covers = ["R3", "R5"]
+after = [2]
+hitl = true
+risk = "medium"
+notes = ["A person hand-checks every derived value against Contrast pairs."]
+
+[[entry]]
+id = 3
+type = "story"
+title = "The legacy map and port codemod exist"
+description = "Generates src/appearance/legacy-map.json for the 137 legacy variables from DESIGN's table, and builds the codemod that rewrites LESS to CSS on var(--role) with logical properties, motion keyed on :scope[data-reduced-motion], and an @layer baseline wrapper written only for static/ sheets (the loader layers package sheets)."
+verify = "A spec asserts every map entry references only roles the compiler emits, and the codemod turns fixture LESS files from static/ and a package into the expected CSS."
+covers = ["R8", "R9"]
+after = [2]
+hitl = false
+risk = "high"
+notes = ["Extra check: run the codemod on the three largest package stylesheets and diff the rendered windows before story 4 starts."]
+
+[[entry]]
+id = 4
+type = "story"
+title = "static/ styles are CSS on role tokens"
+description = "Ports the 56 LESS files in static/ (about 5.5k lines, including email-frame and the per-platform sheets) to CSS through the codemod, loaded through the layer order. The Nylas-Pro font-faces in email-frame go with the port. Sets the port's screenshot diff tolerance."
+verify = "Every window type renders in Classic light and dark with no static/ LESS loaded, and the harness screenshots match the pre-port reference screenshots within the set tolerance."
+covers = ["R8", "R9"]
+after = [3, 8, "13.8"]
+hitl = false
+risk = "high"
+notes = ["Extra check: a person compares the main window side by side with the pre-port build at 100% and 150% zoom."]
+
+[[entry]]
+id = 13
+type = "story"
+title = "Email bodies stay legible in light and dark"
+description = "Replaces EmailFrameStylesStore's scraping of app stylesheets with an explicit frame binding: the ported email-frame CSS plus the active look's color-scheme and role values, updated on look change. ui-dark's invert rules give way to the binding. Sender-colour adaptation and the sandbox stay in epic-email-dark-mode."
+verify = "Plain-text and unstyled HTML fixture emails render with Classic's text and surface colours in light and dark, follow a look change without a reload, and no stylesheet is copied from the app document into the frame."
+covers = ["R11"]
+after = [4, 8]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 5
+type = "story"
+title = "Mail package styles are CSS on role tokens"
+description = "Ports the LESS in thread-list, message-list, composer and the other mail packages to CSS through the codemod."
+verify = "Thread list, message view and composer render in Classic light and dark with no LESS loaded from those packages, and screenshots match the pre-port references within tolerance."
+covers = ["R8", "R9"]
+after = [4]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 6
+type = "story"
+title = "Every other package style is CSS on role tokens"
+description = "Ports the remaining internal package LESS (preferences, onboarding, notifications with the status-warning and status-info roles, and the rest) to CSS. ThemeManager stops activating theme packages, so ui-light, ui-dark, ui-ubuntu, nylas-private-fonts and the ui-taiga, ui-darkside and ui-less-is-more layout LESS stop loading."
+verify = "No internal package loads a .less file, every window type renders in Classic light and dark, and no theme package contributes a stylesheet."
+covers = ["R8", "R9"]
+after = [4]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 7
+type = "story"
+title = "LESS is gone"
+description = "Removes less, less-cache, src/less-compile-cache.js, the StyleManager compile path and ui-variables injection. The package loader keeps its folder and option paths (styles/, stylesheets/, mainStyleSheet, styleSheets, index) but loads only .css, and logs one deprecation per third-party package that ships .less. styles.less is neither loaded nor created. ThemeManager.setActiveTheme, theme-package enable and disable, and the theme-picker stop writing core.themes, and the theme-picker modal is hidden until epic-appearance retires it."
+verify = "less and less-cache are absent from the manifests and lockfile, no loaded .less remains, a fixture package shipping .less loads without it and logs one deprecation per launch, and no user action writes core.themes."
+covers = ["R9"]
+after = [5, 6, 13]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 8
+type = "story"
+title = "Every window opens with its look resolved"
+description = "Adds the core.appearance keys to config-schema, the pure resolveLook, a ThemeLibrary skeleton (built-in descriptors, get-theme-library, revisioned theme-changed, fallback to Classic until epic-loft ships), look sheets in every window type, look attributes and backgroundColor set before React mounts, revisioned look events, and the per-window commit queue. With no core.appearance the look is Classic."
+verify = "Specs cover resolveLook, ThemeLibrary fallback and the commit queue, and in the real app, changing one core.appearance key, including Mode Light and Dark, updates every open window without touching the other keys or core.themes."
+covers = ["R1", "R3", "R4"]
+after = [2, "13.8"]
+hitl = false
+risk = "high"
+notes = ["Extra check: open a composer popout and Preferences, change the mode, and confirm all three windows repaint with no white flash."]
+
+[[entry]]
+id = 9
+type = "story"
+title = "The look follows the OS live"
+description = "Adds the shell adapter and the AppearanceSignals service (color scheme, contrast, forced colours, reduced motion, reduced transparency) broadcasting revisioned signals, with the Linux XDG portal, the GTK heuristic, the packaged D-Bus client and the test-only override. Mode Auto, Increase contrast, forced colours and reduced motion take effect through it. It adds border-strong edges under Increase contrast wherever separation is by shadow or tint, and the forced-colours rule that drops shadows and tints and draws 1px borders. The person toggles the OS settings on each OS."
+verify = "On macOS, Windows and Linux, toggling dark mode, contrast and reduced motion in the OS changes the running app within a second. Windows forced colours draws the 1px borders and beats the high-contrast variant."
+covers = ["R4", "R5", "R6", "R8"]
+after = [6, 8, 12, "13.7"]
+hitl = true
+risk = "high"
+notes = ["A person toggles the OS settings on each of the three OSes. Extra check: on GNOME with no portal contrast key, the app reports no signal and Increase contrast On still works."]
+
+[[entry]]
+id = 10
+type = "story"
+title = "Text size and categorical colours"
+description = "Applies core.appearance.textSize as --text-scale on look roots at every step from 87.5 to 150%, stacking under window zoom, and resolves folder, calendar and avatar colours from the categorical palette by hash, with overrides stored as palette indexes."
+verify = "At every text-size step, all type scales and stacks under zoom in the real app, and one folder keeps its palette colour in Classic light and dark."
+covers = ["R7", "R10"]
+after = [4, 5, 6, 8, "13.8"]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 11
+type = "story"
+title = "Refactor sweep"
+description = "Cleans up what the other stories and their reviews deferred. Its scope is set from their plans when it starts, and it is cleanup only."
+verify = "The harness and Vitest pass in an installable pre-release build after the cleanup."
+covers = ["R9"]
+after = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, "13.8"]
+hitl = false
+risk = "low"

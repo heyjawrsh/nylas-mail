@@ -1,0 +1,102 @@
+# epic-platform-baseline stories, planned 2026-11-12. Table order is build order. `id` is permanent, never reused.
+
+[[entry]]
+id = 1
+type = "story"
+title = "The app launches on Electron 45 and React 19"
+description = "Installs Electron 45.3.1 and React 19 for real (the stale electron stub goes), fixes the root build:renderer script and esbuild's duplicate alias key, mounts the root with createRoot, fixes whatever the onboarding window hits, and adds an unsigned macOS electron-builder build."
+verify = "On a clean checkout, pnpm install at the root, then pnpm start in packages/client-app, opens the onboarding window with no React errors in the console, and the unsigned macOS build installs and opens the same window."
+covers = ["R2", "R3", "R4"]
+after = []
+hitl = true
+risk = "high"
+notes = ["Tracer bullet. The person runs the clean install and opens the macOS build."]
+
+[[entry]]
+id = 2
+type = "story"
+title = "Root rendering and context move to React 19 APIs"
+description = "Moves ModalStore, PopoverStore and UnsafeComponent off ReactDOM.render and unmountComponentAtNode onto createRoot, and replaces legacy context in sheet, sheet-toolbar, tab-group-region and their consumers with createContext. Adds the removed-API CI check that stories 3 to 6 extend."
+verify = "Vitest specs mount and unmount a modal, a popover and an UnsafeComponent and read sheet context, and a CI check finds no ReactDOM.render, unmountComponentAtNode, contextTypes or childContextTypes."
+covers = ["R3"]
+after = [1]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 3
+type = "story"
+title = "Shared components drop findDOMNode and string refs"
+description = "Replaces findDOMNode and string refs in src/components, src/decorators and the rest of src/ (scroll-region, tokenizing-text-field, fixed-popover, has-tutorial-tip, nylas-calendar's week view, sheet-toolbar, searchable-component-maker and the rest), extending the removed-API check with callback or object refs."
+verify = "Specs for each changed component pass, and a CI check finds no findDOMNode or string ref under src/."
+covers = ["R3"]
+after = [2]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 4
+type = "story"
+title = "Mail packages drop findDOMNode and string refs"
+description = "Replaces findDOMNode and string refs in thread-list, message-list, composer and the composer-* packages, and adds the fixture account (a seeded config folder and database) that story 8 reuses."
+verify = "With the fixture account, a thread opens in the running app, its messages render and a reply can be composed with no React errors, and the removed-API check finds no findDOMNode or string ref in those packages."
+covers = ["R3"]
+after = [2]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 5
+type = "story"
+title = "Remaining packages drop findDOMNode and string refs"
+description = "Replaces findDOMNode and string refs in every other internal package, including main-calendar, category-picker and keybase."
+verify = "The removed-API check finds no findDOMNode or string ref under internal_packages/, and every window type opens with no React errors."
+covers = ["R3"]
+after = [2]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 6
+type = "story"
+title = "Legacy lifecycles are rewritten"
+description = "Rewrites every componentWillMount, componentWillReceiveProps and componentWillUpdate as current lifecycles or hooks so React prints no legacy-lifecycle warnings."
+verify = "A CI check finds no componentWill* in src/ or internal_packages/, and launching the app logs no legacy-lifecycle warning."
+covers = ["R3"]
+after = [3, 4, 5]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 7
+type = "story"
+title = "Windows and Linux builds ship with no updater and no crash upload"
+description = "Adds unsigned Windows and Linux electron-builder targets and a CI job that builds all three OSes, disables the Squirrel startup handling and updater adapters, stops both crash-reporter starts from uploading, and excludes nylas-private-fonts from public builds at packaging time, with a CI check that enforces it."
+verify = "CI produces installable Windows and Linux packages that open the app, a forced crash with network capture uploads nothing, and no public package contains nylas-private-fonts."
+covers = ["R2", "R5", "R6"]
+after = [1]
+hitl = true
+risk = "medium"
+notes = ["A person installs and opens the Windows and Linux packages."]
+
+[[entry]]
+id = 8
+type = "story"
+title = "The real-app harness gates CI"
+description = "Adds Playwright 1.65 and @axe-core/playwright driving the built app on a temporary config folder with a fixture account. It opens the main window and every other window type, runs axe, and replaces smoke.js as the CI gate. The EnableNodeCliInspectArguments fuse stays on in test builds. It also captures the pre-port reference screenshots of every window type that stories 1.4 to 1.6 compare against. Stories 1.4 and 14.8 build on it."
+verify = "In CI the harness launches the built Linux app, opens every window type and runs axe, and a deliberately failing check fails the pipeline."
+covers = ["R1"]
+after = [3, 4, 5, 7]
+hitl = false
+risk = "high"
+
+[[entry]]
+id = 9
+type = "story"
+title = "Refactor sweep"
+description = "Cleans up what the other stories and their reviews deferred. Its scope is set from their plans when it starts, and it is cleanup only."
+verify = "The harness and Vitest pass on all three builds after the cleanup."
+covers = ["R3"]
+after = [1, 2, 3, 4, 5, 6, 7, 8]
+hitl = false
+risk = "low"

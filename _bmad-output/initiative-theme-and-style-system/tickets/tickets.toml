@@ -1,13 +1,35 @@
 # The initiative's epics, approved 2026-11-11. Table order is build order. `id` is permanent, never reused.
 # `parts` names what each epic delivers of an id it shares with others; tickets.py ignores it.
+# 2026-11-12: epic-token-platform split into epic-platform-baseline (13), epic-token-platform (1) and epic-style-contract (14).
+
+[[epic]]
+id = 13
+slug = "epic-platform-baseline"
+title = "The app installs, renders and is tested on current Electron and React"
+description = "The app runs on Electron 45 and React 19 with no removed React APIs left, unsigned electron-builder pre-release builds for macOS, Windows and Linux are built in CI, the Squirrel updater is disabled, crash dumps never leave the machine, and a Playwright harness on the built app gates CI. Every other epic verifies in the real app through it."
+covers = ["R32"]
+parts = { R32 = "the real-app Playwright harness and its CI gate" }
 
 [[epic]]
 id = 1
 slug = "epic-token-platform"
 title = "Every look comes from role tokens at runtime"
-description = "Role tokens compile from DTCG files to runtime custom properties, the region, row-height and title-bar contracts exist, Classic is the first token theme, the main window is frameless on every OS, and internal LESS is ported to CSS with no LESS compiler shipped, in an installable pre-release build. It opens with the platform baseline: unsigned electron-builder pre-release builds for macOS, Windows and Linux, the React 19 render fix (https://github.com/heyjawrsh/nylas-mail/issues/7), the legacy Squirrel updater disabled or replaced, and LESS removed. Every later epic builds on these contracts."
-covers = ["R1", "R2", "R3", "R4", "R5", "R13", "R14", "R15", "R16", "R18", "R19", "R20", "R28", "R30", "R32"]
-parts = { R1 = "the new setting keys and their independence", R2 = "the contract that styles read role tokens only", R3 = "the region contract and style runtime", R4 = "the role contract, which Classic defines", R5 = "Classic light and dark, ported from ui-light and ui-dark", R14 = "the Increase contrast switch, tracking prefers-contrast", R15 = "forced colours and border-strong edges in the runtime", R16 = "text-size scaling, starting at 100% on every OS", R18 = "density scaling, and list rows from style, density and text size", R19 = "the shared focus ring, reduced motion and logical-property foundations", R20 = "the frameless main window on all three OSes and the title-bar contract", R28 = "LESS removed, the .less deprecation log for third-party packages, core.themes untouched", R32 = "the sweep harness and direct contrast-pair checks" }
+description = "Role tokens compile from DTCG files to runtime custom properties under independent core.appearance keys, Classic is the first token theme in all four variants, email bodies keep a minimal look binding, the look follows the OS live, and all internal LESS is ported to CSS with no LESS compiler shipped, in an installable pre-release build. Every later epic builds on this runtime."
+covers = ["R1", "R4", "R5", "R13", "R14", "R15", "R16", "R19", "R28", "R30"]
+parts = { R1 = "the new setting keys and their independence", R4 = "the role contract, which Classic defines", R5 = "Classic in all four variants, ported from ui-light and ui-dark", R14 = "the Increase contrast switch, tracking the OS contrast signal, and Classic's high-contrast variants passing every pair", R15 = "forced colours and border-strong edges in the runtime", R16 = "text-size scaling, starting at 100% on every OS", R19 = "reduced motion and logical properties in the ported CSS", R28 = "LESS removed, the .less deprecation log for third-party packages, core.themes untouched" }
+after = [{ epic = 13, needs = "the app rendering on Electron 45 and React 19 in installable builds, and the real-app harness" }]
+
+[[epic]]
+id = 14
+slug = "epic-style-contract"
+title = "Styles arrange the app through one contract"
+description = "Classic is a style package arranging the seven regions, the list takes row height from style, density and text size, style geometry comes from the manifest, the main window is frameless on every OS, the preview data provider exists, style lint enforces the shared obligations, and the sweep harness runs every existing combination, in an installable pre-release build."
+covers = ["R2", "R3", "R18", "R19", "R20", "R32"]
+parts = { R2 = "the contract that styles read role tokens only, enforced by lint and the loader", R3 = "the region contract, the style manifest and the Classic style package", R18 = "density scaling, and list rows from style, density and text size", R19 = "the shared focus ring, the RTL sweep and the obligations lint", R20 = "the frameless main window on all three OSes and the title-bar contract", R32 = "the sweep harness and direct contrast-pair checks" }
+after = [
+  { epic = 13, needs = "the real-app harness and the installable builds" },
+  { epic = 1, needs = "the kernel layer order, the look runtime and the shell adapter" },
+]
 
 [[epic]]
 id = 2
@@ -16,7 +38,10 @@ title = "Loft is the default look"
 description = "The Loft style and Loft theme deliver the Loft mail view, the shared toast, modal and popover, the bundled-font pipeline epic-themes uses, and the visual specs epic-email-dark-mode builds from, in an installable pre-release build that passes its by-eye check and its diff against loft-01.webp."
 covers = ["R2", "R3", "R4", "R5", "R6", "R7", "R8", "R14", "R15", "R18", "R19", "R20", "R21", "R31", "R32"]
 parts = { R2 = "Loft with every theme built so far", R3 = "Loft places or hides every region", R4 = "the Loft theme defines every role", R5 = "the Loft theme in all four variants", R6 = "the Loft style", R7 = "Loft lays out every surface shipped so far", R14 = "Loft's high-contrast variants pass every pair", R15 = "Loft's border-strong edges", R18 = "Loft's natural-height rows per density", R19 = "Loft meets the obligations", R20 = "Loft's title bar", R21 = "Loft's reflow ladder", R32 = "Loft's by-eye check and diff against loft-01.webp" }
-after = [{ epic = 1, needs = "the token runtime, regions, row-height and title-bar contracts" }]
+after = [
+  { epic = 1, needs = "the token runtime" },
+  { epic = 14, needs = "the regions, row-height and title-bar contracts and the preview data provider" },
+]
 
 [[epic]]
 id = 3
@@ -27,6 +52,7 @@ covers = ["R1", "R9", "R10", "R11", "R17"]
 parts = { R1 = "changing one setting in Appearance leaves the others as set", R9 = "the page and every control, with Adapt email colours as a slot epic-email-dark-mode fills" }
 after = [
   { epic = 1, needs = "the setting keys, the token runtime and live variant switching" },
+  { epic = 14, needs = "the preview data provider and the style manifest the style cards read" },
   { epic = 2, needs = "the shared toast and the Loft look the preview shows" },
 ]
 
@@ -47,9 +73,9 @@ after = [
 id = 5
 slug = "epic-themes"
 title = "All nine built-in themes ship complete"
-description = "Aubergine, Taiga, Darkside, Less-is-more, Volt, Ember and Dusk ship as bundled token themes in all four variants, Classic gets its high-contrast variants, every high-contrast variant passes every contrast pair, and nylas-private-fonts is out of the public build, in an installable pre-release build. Epics 7 to 9 and 12 use these themes."
+description = "Aubergine, Taiga, Darkside, Less-is-more, Volt, Ember and Dusk ship as bundled token themes in all four variants, every high-contrast variant passes every contrast pair, and nylas-private-fonts is out of the public build, in an installable pre-release build. Epics 7 to 9 and 12 use these themes."
 covers = ["R4", "R5", "R14", "R32"]
-parts = { R4 = "every role in the seven themes it ports or adds", R5 = "the seven themes in four variants, and Classic's high-contrast variants", R14 = "their high-contrast variants pass every pair", R32 = "contrast pairs and axe on its high-contrast variants" }
+parts = { R4 = "every role in the seven themes it ports or adds", R5 = "the seven themes in four variants", R14 = "their high-contrast variants pass every pair", R32 = "contrast pairs and axe on its high-contrast variants" }
 after = [
   { epic = 1, needs = "the token runtime and the DTCG theme format" },
   { epic = 2, needs = "the bundled-font pipeline" },
