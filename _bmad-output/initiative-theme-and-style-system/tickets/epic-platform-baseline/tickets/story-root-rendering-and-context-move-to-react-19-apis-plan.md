@@ -3,7 +3,7 @@ title: 'Root rendering and context move to React 19 APIs'
 type: 'refactor'
 ticket: '2'
 created: '2026-11-12'
-status: 'built'
+status: done
 baseline_revision: 'ae7dc9d2df640b4950e94d602ac3a6f398dc2135'
 route: 'full'
 route_source: 'auto'
