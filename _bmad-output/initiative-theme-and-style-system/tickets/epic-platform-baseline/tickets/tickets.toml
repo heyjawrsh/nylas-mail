@@ -24,13 +24,35 @@ hitl = false
 risk = "medium"
 
 [[entry]]
+id = 10
+type = "story"
+title = "Modals and kit components render from the bundle"
+description = "Makes named imports from nylas-component-kit in bundled src/ files (Modal, CodeSnippet and the rest) resolve to the same kit instance internal packages get, instead of undefined, so modals, popovers and kit components render from bundled code."
+verify = "In the running app, opening a modal and a popover from bundled code renders them with no React errors, and a build check fails if any bundled nylas-component-kit named import resolves to undefined."
+covers = ["R3"]
+after = [2]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 11
+type = "story"
+title = "The work window loads and sync starts"
+description = "Fixes the hidden work window: client-sync is accepted as a valid package, worker-ui gets the Rx Observable helpers it expects (rx-lite fromQuery, not rxjs), and the database agent resolves from the app's own path in dev and packaged builds."
+verify = "Launching dev and the packaged build with a fresh config folder logs no package, module or Rx errors from the work window, and client-sync's sync worker starts."
+covers = ["R3"]
+after = [1]
+hitl = false
+risk = "high"
+
+[[entry]]
 id = 3
 type = "story"
 title = "Shared components drop findDOMNode and string refs"
 description = "Replaces findDOMNode and string refs in src/components, src/decorators and the rest of src/ (scroll-region, tokenizing-text-field, fixed-popover, has-tutorial-tip, nylas-calendar's week view, sheet-toolbar, searchable-component-maker and the rest), extending the removed-API check with callback or object refs."
 verify = "Specs for each changed component pass, and a CI check finds no findDOMNode or string ref under src/."
 covers = ["R3"]
-after = [2]
+after = [2, 10]
 hitl = false
 risk = "medium"
 
@@ -41,7 +63,7 @@ title = "Mail packages drop findDOMNode and string refs"
 description = "Replaces findDOMNode and string refs in thread-list, message-list, composer and the composer-* packages, and adds the fixture account (a seeded config folder and database) that story 8 reuses."
 verify = "With the fixture account, a thread opens in the running app, its messages render and a reply can be composed with no React errors, and the removed-API check finds no findDOMNode or string ref in those packages."
 covers = ["R3"]
-after = [2]
+after = [2, 10, 11]
 hitl = false
 risk = "medium"
 
@@ -52,7 +74,7 @@ title = "Remaining packages drop findDOMNode and string refs"
 description = "Replaces findDOMNode and string refs in every other internal package, including main-calendar, category-picker and keybase."
 verify = "The removed-API check finds no findDOMNode or string ref under internal_packages/, and every window type opens with no React errors."
 covers = ["R3"]
-after = [2]
+after = [2, 10]
 hitl = false
 risk = "medium"
 
@@ -86,7 +108,7 @@ title = "The real-app harness gates CI"
 description = "Adds Playwright 1.65 and @axe-core/playwright driving the built app on a temporary config folder with a fixture account. It opens the main window and every other window type, runs axe, and replaces smoke.js as the CI gate. The EnableNodeCliInspectArguments fuse stays on in test builds. It also captures the pre-port reference screenshots of every window type that stories 1.4 to 1.6 compare against. Stories 1.4 and 14.8 build on it."
 verify = "In CI the harness launches the built Linux app, opens every window type and runs axe, and a deliberately failing check fails the pipeline."
 covers = ["R1"]
-after = [3, 4, 5, 7]
+after = [3, 4, 5, 7, 11]
 hitl = false
 risk = "high"
 
@@ -97,6 +119,6 @@ title = "Refactor sweep"
 description = "Cleans up what the other stories and their reviews deferred. Its scope is set from their plans when it starts, and it is cleanup only."
 verify = "The harness and Vitest pass on all three builds after the cleanup."
 covers = ["R3"]
-after = [1, 2, 3, 4, 5, 6, 7, 8]
+after = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11]
 hitl = false
 risk = "low"
