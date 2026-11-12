@@ -25,6 +25,12 @@ allowBuilds:
   # postinstall only prints a message
   es5-ext: false
 
+# Install both macOS esbuild binaries so the dist:mac build can ship the
+# require-time compiler for Apple silicon and Intel alike.
+supportedArchitectures:
+  os: [current, darwin]
+  cpu: [current, arm64, x64]
+
 verifyDepsBeforeRun: false
 
 minimumReleaseAgeExclude:
