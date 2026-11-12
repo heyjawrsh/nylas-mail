@@ -105,6 +105,69 @@ const bundleRelativeNodeRequires = {
 	},
 };
 
+// The bundle reaches the kit through a CommonJS shim, so esbuild can't tell
+// whether `import { Name } from "nylas-component-kit"` names a real kit
+// component. Check those imports against the names the kit registers.
+const KIT_SOURCE = path.join(root, "src/global/nylas-component-kit.js");
+const KIT_REGISTRATION =
+	/NylasComponentKit\.(?:load|loadFrom|loadDeprecated|require|requireFrom)\(\s*"([\w$]+)"/g;
+const KIT_NAMED_IMPORT =
+	/\bimport\s+(?:[\w$]+\s*,\s*)?\{([^}]*)\}\s*from\s*["']nylas-component-kit["']/g;
+
+export function kitRegisteredNames(source) {
+	const names = new Set(["NylasComponentKit"]); // class handle set by the shim
+	for (const [, name] of source.matchAll(KIT_REGISTRATION)) names.add(name);
+	return names;
+}
+
+const lineAndColumn = (source, index) => {
+	const before = source.slice(0, index);
+	const line = before.split("\n").length;
+	return { line, column: index - (before.lastIndexOf("\n") + 1) };
+};
+
+export const checkKitNamedImports = {
+	name: "check-kit-named-imports",
+	setup(pluginBuild) {
+		let imports = [];
+		pluginBuild.onStart(() => {
+			imports = [];
+		});
+		pluginBuild.onLoad({ filter: /\.[cm]?jsx?$/ }, async (args) => {
+			if (args.path.includes(`${path.sep}node_modules${path.sep}`)) return;
+			const source = await fs.readFile(args.path, "utf8");
+			if (!source.includes("nylas-component-kit")) return;
+			for (const match of source.matchAll(KIT_NAMED_IMPORT)) {
+				const listStart = match.index + match[0].indexOf("{") + 1;
+				for (const spec of match[1].matchAll(/([\w$]+)(?:\s+as\s+[\w$]+)?/g)) {
+					const { line, column } = lineAndColumn(
+						source,
+						listStart + spec.index,
+					);
+					imports.push({
+						name: spec[1],
+						file: path.relative(root, args.path),
+						line,
+						column,
+						lineText: source.split("\n")[line - 1],
+					});
+				}
+			}
+			// no contents: the next plugin or esbuild loads the file
+		});
+		pluginBuild.onEnd(async () => {
+			const known = kitRegisteredNames(await fs.readFile(KIT_SOURCE, "utf8"));
+			const errors = imports
+				.filter(({ name }) => !known.has(name))
+				.map(({ name, ...location }) => ({
+					text: `Import "${name}" from "nylas-component-kit" is not a registered kit name (see src/global/nylas-component-kit.js)`,
+					location: { ...location, length: name.length },
+				}));
+			return { errors };
+		});
+	},
+};
+
 export const entries = [
 	{
 		in: path.join(root, "src/window-bootstrap.js"),
@@ -170,7 +233,7 @@ export function buildOptions(entry) {
 			"nylas-store": path.join(root, "src/global/nylas-store.js"),
 			"nylas-observables": path.join(root, "src/global/nylas-observables.js"),
 		},
-		plugins: [bundleRelativeNodeRequires],
+		plugins: [checkKitNamedImports, bundleRelativeNodeRequires],
 		logLevel: "warning",
 		// An import its target doesn't export is undefined at runtime (every
 		// kit component once was); fail the build instead.

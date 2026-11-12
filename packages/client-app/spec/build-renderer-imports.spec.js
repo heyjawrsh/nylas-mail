@@ -1,11 +1,14 @@
 // @vitest-environment node
+import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { promisify } from "node:util";
 import { build } from "esbuild";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { buildOptions, entries } from "../scripts/build-renderer.js";
 
+const execFileAsync = promisify(execFile);
 const quiet = { write: false, logLevel: "silent" };
 
 describe("renderer bundle imports", () => {
@@ -138,4 +141,105 @@ describe("build options", () => {
 		expect(kitA.NylasComponentKit).toBe(globalThis.NylasComponentKitClass);
 		delete globalThis.__kitReads;
 	});
+});
+
+describe("kit named-import check", () => {
+	let dir;
+
+	beforeAll(async () => {
+		dir = await fs.mkdtemp(path.join(os.tmpdir(), "build-renderer-kit-"));
+	});
+
+	afterAll(async () => {
+		await fs.rm(dir, { recursive: true, force: true });
+	});
+
+	it("fails the build on a name the kit doesn't register, naming file, line and name", async () => {
+		const importer = path.join(dir, "importer.jsx");
+		await fs.writeFile(
+			importer,
+			'import { Modal,\n\tModl } from "nylas-component-kit";\n\nexport default [Modal, Modl];\n',
+		);
+		const failure = await build({
+			...buildOptions(entries[0]),
+			entryPoints: [importer],
+			...quiet,
+		}).then(
+			() => null,
+			(error) => error,
+		);
+		expect(failure).not.toBeNull();
+		expect(failure.errors).toHaveLength(1);
+		const [error] = failure.errors;
+		expect(error.text).toMatch(/Import "Modl" from "nylas-component-kit"/);
+		expect(error.location.file).toMatch(/importer\.jsx$/);
+		expect(error.location.line).toBe(2);
+		expect(error.location.lineText).toContain("Modl");
+	}, 60_000);
+});
+
+describe("real kit in the bundle", () => {
+	let dir;
+
+	beforeAll(async () => {
+		dir = await fs.mkdtemp(path.join(os.tmpdir(), "build-renderer-real-kit-"));
+	});
+
+	afterAll(async () => {
+		await fs.rm(dir, { recursive: true, force: true });
+	});
+
+	it("makes no second instance and hands packages the bundle's own one", async () => {
+		const root = path.resolve(import.meta.dirname, "..");
+		const outfile = path.join(dir, "probe.bundle.js");
+		await build({
+			...buildOptions(entries[0]),
+			entryPoints: undefined,
+			stdin: {
+				contents: [
+					'const Module = require("node:module");',
+					// the bundle file's own module, which the kit's free `module` names
+					// (nylas-exports.js also assigns it); record every assignment
+					"const bundleModule = require.main;",
+					"const assigned = [];",
+					"let current = bundleModule.exports;",
+					'Object.defineProperty(bundleModule, "exports", { get: () => current, set: (v) => { assigned.push(v); current = v; } });',
+					// register-bundled-modules only patches resolution in a window
+					"globalThis.window = globalThis;",
+					// the app's NylasEnv answers this; the kit loads src/ files by it
+					"globalThis.NylasEnv = { getResourcePath: () => process.cwd(), inDevMode: () => false };",
+					'require("./src/register-bundled-modules.js");',
+					'const bundled = require("nylas-component-kit");',
+					// a runtime require, as an internal package makes it
+					'const viaResolver = Module.createRequire(__filename)("nylas-component-kit");',
+					"const Kit = globalThis.NylasComponentKitClass;",
+					"process.stdout.write(JSON.stringify({",
+					"\tsame: bundled === viaResolver,",
+					"\tisKit: bundled instanceof Kit,",
+					"\tclassHandle: bundled.NylasComponentKit === Kit,",
+					"\tregistered: typeof Object.getOwnPropertyDescriptor(Kit.prototype, \"Modal\")?.get,",
+					"\tkitInstances: assigned.filter((v) => v instanceof Kit).length,",
+					"}));",
+					"",
+				].join("\n"),
+				resolveDir: root,
+				sourcefile: "probe.js",
+			},
+			outfile,
+			logLevel: "silent",
+		});
+		const env = { ...process.env };
+		delete env.VITEST; // the real kit registers its getters outside vitest
+		const { stdout } = await execFileAsync(process.execPath, [outfile], {
+			env,
+			cwd: root,
+		});
+		expect(JSON.parse(stdout)).toEqual({
+			same: true,
+			isKit: true,
+			classHandle: true,
+			registered: "function",
+			kitInstances: 0,
+		});
+	}, 60_000);
 });

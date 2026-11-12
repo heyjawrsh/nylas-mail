@@ -32,10 +32,6 @@ vi.mock("../src/flux/stores/task-queue-status-store.js", () => ({
 	waitForPerformLocal: vi.fn(),
 }));
 vi.mock("../src/flux/nylas-api-helpers.js", () => ({}));
-vi.mock("../src/registries/extension-registry.js", () => {
-	const ExtensionRegistry = { deserialize: vi.fn(), extensions: vi.fn(() => []) };
-	return { default: ExtensionRegistry, ExtensionRegistry };
-});
 vi.mock("../src/flux/stores/badge-store.js", () => ({
 	default: { trigger: vi.fn(), listen: vi.fn(() => ({ dispose: vi.fn() })) },
 }));
