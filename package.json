@@ -12,6 +12,7 @@
 		"postinstall": "node scripts/link-workspaces.mjs",
 		"test": "pnpm -r run test",
 		"lint": "biome check .",
+		"check:react": "node scripts/check-removed-react-apis.mjs",
 		"format": "biome format --write .",
 		"build:renderer": "node packages/client-app/scripts/build-renderer.js",
 		"smoke": "pnpm --filter nylas-mail run smoke"

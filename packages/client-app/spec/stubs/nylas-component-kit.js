@@ -13,6 +13,7 @@ import DropZoneReal from "../../src/components/drop-zone.jsx";
 import DisclosureTriangleReal from "../../src/components/disclosure-triangle.jsx";
 import SwitchReal from "../../src/components/switch.jsx";
 import ModalReal from "../../src/components/modal.jsx";
+import TabGroupContextReal from "../../src/components/tab-group-context.js";
 
 const lazy = (name) =>
 	new Proxy(function lazyKit() {}, {
@@ -88,6 +89,8 @@ export const SearchBar = lazy("SearchBar");
 export const Spinner = SpinnerReal;
 export const Switch = SwitchReal;
 export const TabGroupRegion = lazy("TabGroupRegion");
+// A context object, not a component: React reads it directly, so no proxy.
+export const TabGroupContext = TabGroupContextReal;
 export const Table = lazy("Table");
 export const TimePicker = lazy("TimePicker");
 export const TokenizingTextField = lazy("TokenizingTextField");

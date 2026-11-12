@@ -19,14 +19,22 @@ vi.mock("../src/flux/actions.js", () => ({
 		closePopover: mocks.closePopover,
 	},
 }));
-vi.mock("react-dom", () => {
+vi.mock("nylas-store", () => {
+	class NylasStore {
+		listenTo() {}
+		trigger() {}
+	}
+	return { default: NylasStore };
+});
+vi.mock("react-dom", async () => {
+	const { flushSync } = await vi.importActual("react-dom");
 	const findDOMNode = (value) => {
 		if (value instanceof Element) return value;
 		const modal = document.querySelector(".modal-container");
 		if (modal) return modal;
 		return document.querySelector(".fixed-popover-container")?.parentElement;
 	};
-	return { default: { findDOMNode }, findDOMNode };
+	return { default: { findDOMNode, flushSync }, findDOMNode, flushSync };
 });
 vi.mock("../src/components/retina-img.jsx", () => ({
 	default: Object.assign(
@@ -73,6 +81,7 @@ vi.mock("../src/components/decorators/auto-focuses.jsx", () => ({
 
 import Modal from "../src/components/modal.jsx";
 import FixedPopover from "../src/components/fixed-popover.jsx";
+import PopoverStore from "../src/flux/stores/popover-store.jsx";
 
 afterEach(cleanup);
 
@@ -247,5 +256,50 @@ describe("FixedPopover", () => {
 			currentRect: { top: 10, left: 10, bottom: 120, right: 40 },
 			windowDimensions: { width: 100, height: 100 },
 		})).toEqual({ direction: "left", offset: {} });
+	});
+});
+
+describe("PopoverStore", () => {
+	const container = () => document.querySelector("nylas-popover-container");
+	let consoleError;
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+	});
+	afterEach(() => {
+		PopoverStore.closePopover();
+		consoleError.mockRestore();
+	});
+
+	it("mounts the popover synchronously on open", () => {
+		const callback = vi.fn(() => {
+			expect(container().textContent).toBe("Store popover");
+		});
+		PopoverStore.openPopover(<div>Store popover</div>, {
+			originRect,
+			direction: "down",
+			callback,
+		});
+		expect(callback).toHaveBeenCalledOnce();
+		expect(PopoverStore.isOpen).toBe(true);
+		expect(container().querySelector(".fixed-popover-container")).not.toBeNull();
+	});
+
+	it("unmounts the popover on close, with no React errors", () => {
+		PopoverStore.openPopover(<div>Store popover</div>, { originRect, direction: "down" });
+		const callback = vi.fn();
+		PopoverStore.closePopover(callback);
+		expect(callback).toHaveBeenCalledOnce();
+		expect(PopoverStore.isOpen).toBe(false);
+		expect(container().querySelector(".fixed-popover-container")).toBeNull();
+		expect(consoleError).not.toHaveBeenCalled();
+	});
+
+	it("replaces an open popover when another opens", () => {
+		PopoverStore.openPopover(<div>First</div>, { originRect, direction: "down" });
+		PopoverStore.openPopover(<div>Second</div>, { originRect, direction: "down" });
+		expect(container().textContent).toBe("Second");
+		expect(container().querySelectorAll(".fixed-popover-container")).toHaveLength(1);
 	});
 });

@@ -5,6 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import PropTypes from "prop-types";
+import { TabGroupContext } from "nylas-component-kit";
 import Utils from "./utils";
 import SimpleMDE from "simplemde";
 
@@ -39,7 +40,7 @@ class MarkdownEditor extends React.Component {
 
 		MarkdownEditor.containerRequired = false;
 
-		MarkdownEditor.contextTypes = { parentTabGroup: PropTypes.object };
+		MarkdownEditor.contextType = TabGroupContext;
 
 		MarkdownEditor.propTypes = {
 			body: PropTypes.string.isRequired,

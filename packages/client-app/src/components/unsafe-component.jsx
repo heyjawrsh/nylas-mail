@@ -8,8 +8,82 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Utils } from "nylas-exports";
+
+const isClassComponent = (Component) =>
+	Boolean(Component?.prototype?.isReactComponent);
+
+// Calls `onDidRender` after the injected tree under it commits, on mount and
+// on every re-render, like the old `ReactDOM.render` callback.
+class InjectedRenderNotifier extends React.Component {
+	static displayName = "InjectedRenderNotifier";
+
+	componentDidMount() {
+		this.props.onDidRender();
+	}
+
+	componentDidUpdate() {
+		this.props.onDidRender();
+	}
+
+	render() {
+		return this.props.children;
+	}
+}
+
+// Catches a throwing plugin inside the injected root. Dev shows the exception
+// panel, production an empty div; either way the error is reported. A later
+// re-render with new props tries the plugin again.
+class InjectedErrorBoundary extends React.Component {
+	static displayName = "InjectedErrorBoundary";
+
+	constructor(props) {
+		super(props);
+		this.state = { error: null };
+	}
+
+	static getDerivedStateFromError(error) {
+		return { error };
+	}
+
+	componentDidCatch(error) {
+		NylasEnv.reportError(error);
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.state.error && prevProps.children !== this.props.children) {
+			this.setState({ error: null });
+		}
+	}
+
+	render() {
+		const { error } = this.state;
+		if (!error) {
+			return this.props.children;
+		}
+		if (!NylasEnv.inDevMode()) {
+			return React.createElement("div", null);
+		}
+		let stack = error.stack || String(error);
+		let stackEnd = stack.indexOf("react/lib/");
+		if (stackEnd > 0) {
+			stackEnd = stack.lastIndexOf("\n", stackEnd);
+			stack = stack.substr(0, stackEnd);
+		}
+		return React.createElement(
+			"div",
+			{ className: "unsafe-component-exception" },
+			React.createElement(
+				"div",
+				{ className: "message" },
+				this.props.displayName,
+				" could not be displayed.",
+			),
+			React.createElement("div", { className: "trace" }, stack),
+		);
+	}
+}
 
 /*
 Public: Renders a component provided via the `component` prop, and ensures that
@@ -33,40 +107,40 @@ class MyComponent extends React.Component
 
 Section: Component Kit
 */
+
 class UnsafeComponent extends React.Component {
+	static displayName = "UnsafeComponent";
+
+	/*
+  Public: React `props` supported by UnsafeComponent:
+
+   - `component` The {React.Component} to display. All other props will be
+     passed on to this component.
+  */
+	static propTypes = {
+		component: PropTypes.func.isRequired,
+		onComponentDidRender: PropTypes.func,
+	};
+
+	static defaultProps = { onComponentDidRender() {} };
+
 	constructor(...args) {
 		super(...args);
-		this.componentDidMount = this.componentDidMount.bind(this);
-		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-		this.componentDidUpdate = this.componentDidUpdate.bind(this);
-		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.render = this.render.bind(this);
-		this.renderInjected = this.renderInjected.bind(this);
-		this.unmountInjected = this.unmountInjected.bind(this);
-		this.focus = this.focus.bind(this);
-		this.blur = this.blur.bind(this);
-		this._runInjectedDOMMethod = this._runInjectedDOMMethod.bind(this);
-	}
-
-	static initClass() {
-		UnsafeComponent.displayName = "UnsafeComponent";
-
-		/*
-    Public: React `props` supported by UnsafeComponent:
-  
-     - `component` The {React.Component} to display. All other props will be
-       passed on to this component.
-    */
-		UnsafeComponent.propTypes = {
-			component: PropTypes.func.isRequired,
-			onComponentDidRender: PropTypes.func,
+		this._wrapperRef = React.createRef();
+		this._root = null;
+		this.injected = null;
+		this._onInjectedRef = (instance) => {
+			this.injected = instance;
 		};
-
-		UnsafeComponent.defaultProps = { onComponentDidRender() {} };
+		this._onInjectedDidRender = () => {
+			this.props.onComponentDidRender();
+		};
 	}
 
 	componentDidMount() {
-		return this.renderInjected();
+		// One root per wrapper, reused on every update.
+		this._root = createRoot(this._wrapperRef.current);
+		this.renderInjected();
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -77,16 +151,17 @@ class UnsafeComponent extends React.Component {
 	}
 
 	componentDidUpdate() {
-		return this.renderInjected();
+		this.renderInjected();
 	}
 
 	componentWillUnmount() {
-		return this.unmountInjected();
+		this.unmountInjected();
 	}
 
 	render() {
 		return React.createElement("div", {
 			name: "unsafe-component-wrapper",
+			ref: this._wrapperRef,
 			style:
 				this.props.component != null
 					? this.props.component.containerStyles
@@ -95,62 +170,53 @@ class UnsafeComponent extends React.Component {
 	}
 
 	renderInjected() {
-		let props;
-		const node = ReactDOM.findDOMNode(this);
-		let element = null;
+		if (!this._root) {
+			return;
+		}
+		const Component = this.props.component;
+		let element;
 		try {
-			props = Utils.fastOmit(
+			const props = Utils.fastOmit(
 				this.props,
 				Object.keys(this.constructor.propTypes),
 			);
-			const Component = this.props.component;
-			element = React.createElement(
-				Component,
-				Object.assign({ key: name }, props),
-			);
-			return (this.injected = ReactDOM.render(
-				element,
-				node,
-				this.props.onComponentDidRender,
-			));
-		} catch (err) {
-			if (NylasEnv.inDevMode()) {
-				let { stack } = err;
-				let stackEnd = stack.indexOf("react/lib/");
-				if (stackEnd > 0) {
-					stackEnd = stack.lastIndexOf("\n", stackEnd);
-					stack = stack.substr(0, stackEnd);
-				}
-
-				element = React.createElement(
-					"div",
-					{ className: "unsafe-component-exception" },
-					React.createElement(
-						"div",
-						{ className: "message" },
-						this.props.component.displayName,
-						" could not be displayed.",
-					),
-					React.createElement("div", { className: "trace" }, stack),
-				);
+			// Only class components hand back an instance, as ReactDOM.render did.
+			if (isClassComponent(Component)) {
+				props.ref = this._onInjectedRef;
 			} else {
-				//# TODO
-				// Add some sort of notification code here that lets us know when
-				// production builds are having issues!
-				//
-				element = React.createElement("div", null);
-
-				this.injected = ReactDOM.render(element, node);
+				this.injected = null;
 			}
-			return NylasEnv.reportError(err);
+			element = React.createElement(
+				InjectedErrorBoundary,
+				{ displayName: Component?.displayName },
+				React.createElement(
+					InjectedRenderNotifier,
+					{ onDidRender: this._onInjectedDidRender },
+					React.createElement(Component, props),
+				),
+			);
+		} catch (err) {
+			NylasEnv.reportError(err);
+			element = React.createElement("div", null);
 		}
+		// Schedules, never flushes: safe inside this component's commit.
+		this._root.render(element);
 	}
 
 	unmountInjected() {
-		try {
-			const node = ReactDOM.findDOMNode(this);
-			return ReactDOM.unmountComponentAtNode(node);
-		} catch (_err) {}
+		const root = this._root;
+		this._root = null;
+		this.injected = null;
+		if (!root) {
+			return;
+		}
+		// Unmounting a root during another root's commit makes React warn about
+		// synchronously unmounting while rendering, so defer it a microtask.
+		queueMicrotask(() => {
+			try {
+				root.unmount();
+			} catch (_err) {}
+		});
 	}
 
 	focus() {
@@ -167,18 +233,21 @@ class UnsafeComponent extends React.Component {
 	// 3. Ourselves, so that the method always has /some/ effect.
 	//
 	_runInjectedDOMMethod(method) {
+		const wrapper = this._wrapperRef.current;
 		let target = null;
 		if (this.injected?.[method]) {
 			target = this.injected;
-		} else if (this.injected) {
-			target = ReactDOM.findDOMNode(this.injected);
+		} else if (this.injected && wrapper?.firstElementChild) {
+			// The injected component's own top-level node.
+			target = wrapper.firstElementChild;
 		} else {
-			target = ReactDOM.findDOMNode(this);
+			target = wrapper;
 		}
 
-		return typeof target[method] === "function" ? target[method]() : undefined;
+		return typeof target?.[method] === "function"
+			? target[method]()
+			: undefined;
 	}
 }
-UnsafeComponent.initClass();
 
 export default UnsafeComponent;

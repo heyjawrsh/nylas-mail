@@ -7,20 +7,18 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
+import TabGroupContext from "./tab-group-context.js";
 
 class TabGroupRegion extends React.Component {
 	constructor(...args) {
 		super(...args);
 		this._onKeyDown = this._onKeyDown.bind(this);
 		this.shiftFocus = this.shiftFocus.bind(this);
-		this.getChildContext = this.getChildContext.bind(this);
-	}
-
-	static initClass() {
-		TabGroupRegion.childContextTypes = { parentTabGroup: PropTypes.object };
+		// One value object for the region's lifetime, so consumers don't
+		// re-render just because the region did.
+		this._tabGroupContext = { parentTabGroup: this };
 	}
 
 	_onKeyDown(event) {
@@ -73,18 +71,17 @@ class TabGroupRegion extends React.Component {
 		);
 	}
 
-	getChildContext() {
-		return { parentTabGroup: this };
-	}
-
 	render() {
 		return React.createElement(
-			"div",
-			Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
-			this.props.children,
+			TabGroupContext.Provider,
+			{ value: this._tabGroupContext },
+			React.createElement(
+				"div",
+				Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
+				this.props.children,
+			),
 		);
 	}
 }
-TabGroupRegion.initClass();
 
 module.exports = TabGroupRegion;

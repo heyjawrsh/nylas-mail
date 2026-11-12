@@ -26,7 +26,8 @@ vi.mock("react", () => {
 vi.mock("prop-types", () => { const checker = Object.assign(() => null, { isRequired: null }); const types = new Proxy({ shape: () => checker }, { get: (target, key) => target[key] || checker }); return { default: types, ...types }; });
 vi.mock("underscore", () => { const underscore = { isEqual: (a, b) => a === b, reduce: (items, fn, initial) => items.reduce(fn, initial), includes: (items, value) => items.includes(value) }; return { default: underscore, ...underscore }; });
 vi.mock("classnames", () => { const classnames = (values) => Object.keys(values).filter((key) => values[key]).join(" "); return { default: classnames, classnames }; });
-vi.mock("react-dom", () => { const dom = { findDOMNode: m.findDOMNode, render: m.render, unmountComponentAtNode: m.unmount }; return { default: dom, ...dom }; });
+vi.mock("react-dom", () => { const dom = { findDOMNode: m.findDOMNode }; return { default: dom, ...dom }; });
+vi.mock("react-dom/client", () => { const client = { createRoot: vi.fn(() => ({ render: m.render, unmount: m.unmount })) }; return { default: client, ...client }; });
 vi.mock("electron", () => { const electron = { remote: m.remote }; return { default: electron, ...electron, remote: m.remote }; });
 vi.mock("@electron/remote", () => ({ default: m.remote, ...m.remote, remote: m.remote }));
 vi.mock("nylas-exports", () => { const exports = { Actions: m.actions, ComponentRegistry: m.registry, WorkspaceStore: m.workspace, Utils: m.utils }; return { default: exports, ...exports }; });
@@ -105,10 +106,10 @@ describe("Outline item contracts", () => {
 
 
 describe("Unsafe component contracts", () => {
-	const makeUnsafe = (props = {}) => bare(UnsafeComponent, { component: component("Plugin", { containerStyles: { flex: 1 } }), onComponentDidRender: vi.fn(), value: 7, ...props });
+	const makeUnsafe = (props = {}) => Object.assign(bare(UnsafeComponent, { component: component("Plugin", { containerStyles: { flex: 1 } }), onComponentDidRender: vi.fn(), value: 7, ...props }), { _wrapperRef: { current: null } });
 	it("applies injected component container styles", () => { expect(makeUnsafe().render().props.style).toEqual({ flex: 1 }); });
-	it("omits wrapper-only props from the injected element", () => { const unsafe = makeUnsafe(); m.findDOMNode.mockReturnValue(document.createElement("div")); m.render.mockReturnValue({}); unsafe.renderInjected(); expect(m.render.mock.calls[0][0].props.value).toBe(7); expect(m.render.mock.calls[0][0].props.component).toBeUndefined(); });
-	it("reports injected render failures", () => { const error = new Error("broken"); m.findDOMNode.mockReturnValue(document.createElement("div")); m.render.mockImplementationOnce(() => { throw error; }).mockReturnValueOnce({}); makeUnsafe().renderInjected(); expect(NylasEnv.reportError).toHaveBeenCalledWith(error); });
+	it("omits wrapper-only props from the injected element", () => { const unsafe = makeUnsafe(); unsafe._root = { render: m.render }; unsafe.renderInjected(); const injected = m.render.mock.calls[0][0].props.children[0].props.children[0]; expect(injected.props.value).toBe(7); expect(injected.props.component).toBeUndefined(); expect(injected.props.onComponentDidRender).toBeUndefined(); });
+	it("reports a failure building the injected element", () => { const error = new Error("broken"); const unsafe = makeUnsafe(); unsafe._root = { render: m.render }; vi.spyOn(m.utils, "fastOmit").mockImplementationOnce(() => { throw error; }); unsafe.renderInjected(); expect(NylasEnv.reportError).toHaveBeenCalledWith(error); expect(m.render.mock.calls[0][0].type).toBe("div"); });
 	it("prefers an injected focus method", () => { const unsafe = makeUnsafe(); unsafe.injected = { focus: vi.fn() }; unsafe.focus(); expect(unsafe.injected.focus).toHaveBeenCalledOnce(); });
-	it("unmounts the injected React tree", () => { const node = document.createElement("div"); m.findDOMNode.mockReturnValue(node); makeUnsafe().unmountInjected(); expect(m.unmount).toHaveBeenCalledWith(node); });
+	it("unmounts the injected root after the current commit", async () => { const unsafe = makeUnsafe(); unsafe._root = { unmount: m.unmount }; unsafe.unmountInjected(); expect(m.unmount).not.toHaveBeenCalled(); await Promise.resolve(); expect(m.unmount).toHaveBeenCalledOnce(); });
 });

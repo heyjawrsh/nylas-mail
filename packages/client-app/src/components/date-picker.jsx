@@ -4,6 +4,7 @@ import moment from "moment";
 import classnames from "classnames";
 import { DateUtils } from "nylas-exports";
 import { MiniMonthView } from "nylas-component-kit";
+import TabGroupContext from "./tab-group-context.js";
 
 export default class DatePicker extends React.Component {
 	static displayName = "DatePicker";
@@ -14,9 +15,7 @@ export default class DatePicker extends React.Component {
 		dateFormat: PropTypes.string,
 	};
 
-	static contextTypes = {
-		parentTabGroup: PropTypes.object,
-	};
+	static contextType = TabGroupContext;
 
 	static defaultProps = {
 		dateFormat: null, // Default to valueOf

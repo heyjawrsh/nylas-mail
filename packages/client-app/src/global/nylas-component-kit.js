@@ -168,6 +168,9 @@ class NylasComponentKit {
 		NylasComponentKit.load("TabGroupRegion", () =>
 			require("../components/tab-group-region.jsx"),
 		);
+		NylasComponentKit.load("TabGroupContext", () =>
+			require("../components/tab-group-context.js"),
+		);
 		NylasComponentKit.load("InjectedComponent", () =>
 			require("../components/injected-component.jsx"),
 		);

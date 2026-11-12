@@ -8,6 +8,7 @@ import {
 	KeyCommandsRegion,
 	ParticipantsTextField,
 	ListensToFluxStore,
+	TabGroupContext,
 } from "nylas-component-kit";
 import AccountContactField from "./account-contact-field";
 import CollapsedParticipants from "./collapsed-participants";
@@ -38,9 +39,7 @@ export default class ComposerHeader extends React.Component {
 		onNewHeaderComponents: PropTypes.func,
 	};
 
-	static contextTypes = {
-		parentTabGroup: PropTypes.object,
-	};
+	static contextType = TabGroupContext;
 
 	constructor(props = {}) {
 		super(props);
