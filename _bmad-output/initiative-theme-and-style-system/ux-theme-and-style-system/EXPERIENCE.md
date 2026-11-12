@@ -44,7 +44,7 @@ sources:
 | Mode | Preferences › Appearance | Auto (follows OS), Light, Dark | Auto. Onboarding follows the OS | Immediately |
 | Increase contrast | Preferences › Appearance; onboarding looks step; OS `prefers-contrast` | Follow system, On, Off | Follow system | Immediately |
 | Density | Preferences › Appearance | Compact, Comfortable, Spacious | First run: the onboarded style's native density (Comfortable, or Compact for Less-is-more). After that it persists across style switches | Preview, then Apply |
-| Text size | Preferences › Appearance; onboarding looks step | 87.5–150% in 12.5% steps | The OS text scale on first launch where Electron exposes it (Windows text scale, Linux GNOME `text-scaling-factor`); 100% on macOS. User-owned afterwards | Immediately |
+| Text size | Preferences › Appearance; onboarding looks step | 87.5–150% in 12.5% steps | 100% on every OS (Electron exposes no OS text scale). User-owned afterwards | Immediately |
 | Font | Preferences › Appearance | Theme default, System font, Inter, IBM Plex Sans, Atkinson Hyperlegible, Ubuntu, Choose installed font… | Theme default | Preview, then Apply |
 | Adapt email colours in dark mode | Preferences › Appearance | On / off | On | Immediately |
 | `/` search shortcut | Preferences › Shortcuts | On / off | On | Immediately |
@@ -257,7 +257,7 @@ Empty, loading and error states for the mail surfaces themselves (inbox, search,
 |---|---|---|
 | **Upgrade from a built-in legacy theme** | First launch after upgrade | `ui-taiga` → Taiga style + Taiga theme; `ui-darkside` → Darkside + Darkside; `ui-less-is-more` → Less-is-more + Less-is-more; `ui-light` and `ui-dark` → Classic style + Classic theme; `ui-ubuntu` → Classic style + Aubergine. A `ui-dark` user keeps Mode pinned to Dark. The "New: Appearance" toast appears and persists until dismissed. |
 | **Upgrade from a community LESS theme** | First launch after upgrade | Lands on Classic style + Classic theme, with a persistent toast naming the theme that no longer loads. |
-| **Legacy settings and files** | Upgrade | The legacy `core.themes` key is left untouched (so a downgrade still works); new settings use new keys. When themes are stacked, the first non-base entry is the one that maps. A user's `styles.less` still loads after the tokens, but is unsupported. Every package stylesheet gets `ui-variables` injected rather than importing it, so the LESS-variable → CSS-variable shim covers every package stylesheet (architecture). |
+| **Legacy settings and files** | Upgrade | The legacy `core.themes` key is left untouched (so a downgrade still works); new settings use new keys. When themes are stacked, the first non-base entry is the one that maps. A user's `styles.less` is not loaded; the app hasn't loaded one since Nylas removed it. No LESS compiler ships: a package's `.less` stylesheet is not loaded, and the app logs a deprecation naming the package once per launch. The theme and plugin author guide publishes the legacy-variable → role map so plugin authors can port to CSS on role tokens. |
 
 ### Reading pane
 
@@ -293,7 +293,7 @@ Behavioural. Contrast thresholds, pairs and measured values are owned by `DESIGN
 
 - **Increase contrast.** Follow system, On, Off; applies immediately. When on, every theme swaps to its high-contrast variant for the current mode, which passes every pair. At standard contrast themes match their reference, an accepted risk with two safeguards: onboarding offers Increase contrast, and the control's own label passes AA in every theme.
 - **Forced colours.** Windows Contrast themes and GNOME high contrast are honoured. What they change on screen, and the borders Increase contrast adds where separation is by shadow or tint only, is owned by `DESIGN.md` › Colors › Forced colours and Increase contrast borders.
-- **Text size.** 87.5–150%, applies immediately, separate from window zoom. Starts from the OS where Electron exposes it, 100% on macOS; every first launch offers the slider in the onboarding looks step. WCAG 1.4.4 (200%) is met by text size (max 150%) combined with zoom, and this is documented.
+- **Text size.** 87.5–150%, applies immediately, separate from window zoom. Starts at 100% on every OS, because Electron exposes no OS text scale; every first launch offers the slider in the onboarding looks step. WCAG 1.4.4 (200%) is met by text size (max 150%) combined with zoom, and this is documented.
 - **Reduced motion.** App-wide: every transition in every style is instant, Loft micro-motion included.
 - **Focus.** `{components.focus-ring}` in the dedicated `{colors.focus-ring}` role, drawn two-tone with a `{colors.surface-panel}` halo, 3:1 against every surface, never clipped by Loft's overhanging selected card. After Apply focus stays where it was. `scroll-padding` keeps focus clear of the sticky mini-preview and the apply bar (WCAG 2.4.11).
 - **Screen readers.** Style cards and theme swatches are radio groups that expose their "Previewing", "Applied" and "derived" tags; the derived tooltip is on `aria-describedby`. The apply bar is a labelled region ("Pending appearance changes", from the mockup). Apply announces the whole new look. The Appearance preview and mini-preview are inert and hidden from screen readers. Info toasts are `role="status"`, errors `role="alert"`. The right rail is a labelled complementary landmark; search is a combobox with a grouped listbox. Every icon-only button has an accessible name.
@@ -405,7 +405,7 @@ OS-level Increase contrast and larger text are on.
 1. Ruth has Increase contrast and larger text turned on in her OS.
 2. She installs and opens Nylas Mail.
 3. With Increase contrast on Follow system, the app starts in high contrast: AA in every theme, Loft included. If she uses a Windows Contrast theme, forced colours are honoured instead.
-4. On Windows or Linux, text size starts at her OS text scale. On macOS it starts at 100%.
+4. Text size starts at 100%, since the app can't read her OS text scale.
 5. The onboarding looks step shows the text-size slider and the Increase contrast control; both apply at once, to the step and the app. Loft is still recognisably Loft.
 6. Later, in Appearance, text size and Increase contrast still apply immediately, the Appearance page included.
 7. **Climax:** There is no setting to hunt for.
@@ -435,7 +435,6 @@ The visual questions (Loft multi-select, the derived badge and View original tog
    - the LESS-to-runtime migration
    - the email dark-adaptation algorithm (with a build spike)
    - the theme-folder file watcher
-   - the plugin LESS-variable → CSS-variable shim
    - cross-fade timing (starting after the new look has painted)
    - per-OS frameless title-bar mechanics
    - how one DTCG file per theme expresses mode × contrast (UX constraint: one file, four variant groups `light`, `dark`, `light-hc`, `dark-hc`)

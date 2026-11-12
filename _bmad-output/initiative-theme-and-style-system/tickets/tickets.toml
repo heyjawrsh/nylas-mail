@@ -5,9 +5,9 @@
 id = 1
 slug = "epic-token-platform"
 title = "Every look comes from role tokens at runtime"
-description = "Role tokens compile from DTCG files to runtime custom properties, the region, row-height and title-bar contracts exist, Classic is the first token theme, the main window is frameless on every OS, and package LESS reads role tokens through the shim, in an installable pre-release build. Every later epic builds on these contracts."
+description = "Role tokens compile from DTCG files to runtime custom properties, the region, row-height and title-bar contracts exist, Classic is the first token theme, the main window is frameless on every OS, and internal LESS is ported to CSS with no LESS compiler shipped, in an installable pre-release build. It opens with the platform baseline: unsigned electron-builder pre-release builds for macOS, Windows and Linux, the React 19 render fix (https://github.com/heyjawrsh/nylas-mail/issues/7), the legacy Squirrel updater disabled or replaced, and LESS removed. Every later epic builds on these contracts."
 covers = ["R1", "R2", "R3", "R4", "R5", "R13", "R14", "R15", "R16", "R18", "R19", "R20", "R28", "R30", "R32"]
-parts = { R1 = "the new setting keys and their independence", R2 = "the contract that styles read role tokens only", R3 = "the region contract and style runtime", R4 = "the role contract, which Classic defines", R5 = "Classic light and dark, ported from ui-light and ui-dark", R14 = "the Increase contrast switch, tracking prefers-contrast", R15 = "forced colours and border-strong edges in the runtime", R16 = "text-size scaling", R18 = "density scaling, and list rows from style, density and text size", R19 = "the shared focus ring, reduced motion and logical-property foundations", R20 = "the frameless main window on all three OSes and the title-bar contract", R28 = "the shim over every package stylesheet, core.themes untouched, styles.less loading", R32 = "the sweep harness and direct contrast-pair checks" }
+parts = { R1 = "the new setting keys and their independence", R2 = "the contract that styles read role tokens only", R3 = "the region contract and style runtime", R4 = "the role contract, which Classic defines", R5 = "Classic light and dark, ported from ui-light and ui-dark", R14 = "the Increase contrast switch, tracking prefers-contrast", R15 = "forced colours and border-strong edges in the runtime", R16 = "text-size scaling, starting at 100% on every OS", R18 = "density scaling, and list rows from style, density and text size", R19 = "the shared focus ring, reduced motion and logical-property foundations", R20 = "the frameless main window on all three OSes and the title-bar contract", R28 = "LESS removed, the .less deprecation log for third-party packages, core.themes untouched", R32 = "the sweep harness and direct contrast-pair checks" }
 
 [[epic]]
 id = 2
@@ -131,15 +131,15 @@ after = [
 id = 12
 slug = "epic-onboarding-upgrade"
 title = "New users and upgraders land in the right look"
-description = "First launch offers the looks step in the 900×600 onboarding window, upgrading maps every legacy theme to its style and theme and retires the old LESS path, and the full 540-combination sweep and five-style coverage check pass, so the stable public release can follow."
+description = "First launch offers the looks step in the 900×600 onboarding window, upgrading maps every legacy theme to its style and theme, and the full 540-combination sweep and five-style coverage check pass, so the stable public release can follow."
 covers = ["R7", "R12", "R28", "R32"]
-parts = { R7 = "the final five-style coverage check of every shipped surface", R28 = "the legacy theme mapping, the Classic landing and its toast, the New: Appearance toast, and retiring the old LESS path", R32 = "the full 540-combination sweep and axe on the high-contrast variants" }
+parts = { R7 = "the final five-style coverage check of every shipped surface", R28 = "the legacy theme mapping, the Classic landing and its toast, and the New: Appearance toast", R32 = "the full 540-combination sweep and axe on the high-contrast variants" }
 after = [
   { epic = 3, needs = "the look settings and Appearance as the New: Appearance toast's destination" },
   { epic = 5, needs = "the nine themes legacy themes map onto" },
   { epic = 7, needs = "the Taiga style" },
   { epic = 8, needs = "the Darkside style, offered at onboarding" },
   { epic = 9, needs = "the Less-is-more style" },
-  { epic = 10, needs = "the finished theme loading it retires the old path beside, and its surfaces for the final coverage check" },
-  { epic = 11, needs = "the finished package loading it retires the old path beside, and its surfaces for the final coverage check" },
+  { epic = 10, needs = "its surfaces for the final coverage check" },
+  { epic = 11, needs = "its surfaces for the final coverage check" },
 ]

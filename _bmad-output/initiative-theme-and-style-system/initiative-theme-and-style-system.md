@@ -8,6 +8,7 @@ sources:
 companions:
   - _bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/DESIGN.md
   - _bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/EXPERIENCE.md
+  - _bmad-output/initiative-theme-and-style-system/architecture-theme-and-style-system/architecture-theme-and-style-system.md
 after: []
 risk: high
 ---
@@ -39,7 +40,7 @@ For people installing the first public release, the app opens in Loft and lets t
 - R13 (experience Information Architecture › Where each setting lives; Responsive & Platform › OS appearance): Mode Auto follows the OS light/dark setting live on macOS, Windows and Linux; Light and Dark pin it.
 - R14 (experience Accessibility Floor › Increase contrast; design Colors › Contrast pairs): Increase contrast (Follow system, On, Off; tracking prefers-contrast live) swaps every theme to its high-contrast variant, and every high-contrast variant passes every pair in Contrast pairs.
 - R15 (design Colors › Forced colours and Increase contrast borders; experience Accessibility Floor › Forced colours): forced colours are honoured, and Increase contrast adds border-strong edges wherever separation is by shadow or tint only.
-- R16 (experience Accessibility Floor › Text size; design Typography): text size (87.5-150% in 12.5% steps) scales all type and reflows layout, stacks under window zoom, and starts from the OS text scale where Electron exposes it (100% on macOS).
+- R16 (experience Accessibility Floor › Text size; design Typography): text size (87.5-150% in 12.5% steps) scales all type and reflows layout, stacks under window zoom, and starts at 100% on every OS.
 - R17 (design Typography; experience State Patterns › OS signals): font override replaces the theme typeface app-wide; a missing font falls back to the theme default with a toast.
 - R18 (design Layout & Spacing › Density; experience Accessibility Floor › Pointer targets): density (Compact, Comfortable, Spacious) scales each style's spacing roles and applies that style's row height for the level; every message row keeps a 24px pointer target.
 - R19 (experience Style Contract › Obligations every style meets; Accessibility Floor): every style meets the shared obligations: two-tone focus ring at 3:1 never clipped, RTL via logical properties, instant motion under reduced motion, never colour alone, dir=auto on mixed scripts, and the listed screen-reader semantics.
@@ -51,7 +52,7 @@ For people installing the first public release, the app opens in Loft and lets t
 - R25 (experience Theme Authoring › Install, export, remove; Component Patterns › Install theme…): users install a theme from a file (it becomes the pending theme; clashes ask Replace or Keep both), export a copy of a built-in, and remove a third-party theme.
 - R26 (experience Theme Authoring › Partial themes; State Patterns › Theme files): a third-party theme's missing variants are derived in OKLCH, missing roles filled from Classic and failing high-contrast pairs re-derived, and its swatch shows derived.
 - R27 (experience Style Contract › Community styles; Theme Authoring › Styles): a public style API lets plugin packages add styles; a feature a community style doesn't cover renders in Classic's arrangement and its card names what it doesn't cover.
-- R28 (experience State Patterns › Upgrade): upgrading maps each legacy built-in theme to its style and theme, lands community LESS-theme users on Classic with a toast naming the theme, shows the New: Appearance toast, leaves core.themes untouched, keeps styles.less loading, and keeps every package stylesheet that uses ui-variables working through a shim.
+- R28 (experience State Patterns › Upgrade): upgrading maps each legacy built-in theme to its style and theme, lands community LESS-theme users on Classic with a toast naming the theme, shows the New: Appearance toast, and leaves core.themes untouched; a third-party package's `.less` stylesheet is not loaded and is logged as deprecated, and the legacy-variable → role map is published for authors.
 - R29 (experience Theme Authoring › Docs): a user-facing theme author guide exists and Appearance links to it.
 - R30 (design Colors › Categorical palette): folder, calendar and avatar colours come from the categorical palette by a hash of id or email, and a user override is stored as a palette index so it resolves in every theme and variant.
 - R31 (experience Component Patterns › Toast): toasts stack at most three, de-duplicated by key; info toasts auto-dismiss after 5s as status; error toasts persist as alerts and carry the word Error.
@@ -78,6 +79,7 @@ For people installing the first public release, the app opens in Loft and lets t
 - The bell renders only once the notifications feature's contract exists, so Loft never shows a dead button (user decision 2026-11-11).
 - Community style packages are CSS only: a style arranges shared components through CSS, and any JavaScript in a style package is not run (user decision 2026-11-11).
 - The onboarding looks step fits the existing 900×600 onboarding window, not the mock's 1504×956 (user decision 2026-11-11).
+- No LESS ships in the app (user decision 2026-11-12).
 
 ## Done when
 
@@ -105,8 +107,9 @@ For people installing the first public release, the app opens in Loft and lets t
   - Loft's in-window Settings view.
   - The app's own name.
   - Support for community LESS themes.
-- Touch point: `src/theme-manager.js`, `src/theme-package.js`, `src/package.js` stylesheet loading, `src/less-compile-cache.js` — the theme and style runtime, with legacy LESS themes still loading on the old path until epic-onboarding-upgrade; owner: epic-token-platform
-- Touch point: `static/variables/ui-variables.less` and about 15k lines of package LESS — move onto role tokens, with the plugin shim over every package stylesheet; owner: epic-token-platform
+- Touch point: `src/theme-manager.js`, `src/theme-package.js`, `src/package.js` stylesheet loading, `src/less-compile-cache.js` — the theme and style runtime; no legacy LESS theme loads, `src/less-compile-cache.js` goes, and a package's `.less` stylesheet is skipped with a deprecation log; owner: epic-token-platform
+- Touch point: `static/variables/ui-variables.less` and about 15k lines of package LESS — ported to CSS on role tokens, and `ui-variables` is no longer injected; owner: epic-token-platform
+- Touch point: `package.json` dependencies `less` and `less-cache` — removed, so no LESS compiler ships; owner: epic-token-platform
 - Touch point: `src/flux/stores/workspace-store.js`, `src/sheet.jsx`, `src/sheet-toolbar.jsx`, ComponentRegistry locations — the regions are expressed through them; owner: epic-token-platform
 - Touch point: `src/browser/window-launcher.js`, `src/browser/window-manager.js` — the main window becomes frameless on Windows and Linux too; owner: epic-token-platform
 - Touch point: `src/components/list-tabular.jsx`, `src/components/multiselect-list.jsx`, `internal_packages/thread-list` — row height from style, density and text size, and natural-height Loft rows; owner: epic-token-platform (Classic's narrow-list heights come from the Classic style spec in epic-classic-style)
@@ -125,13 +128,14 @@ For people installing the first public release, the app opens in Loft and lets t
 - Touch point: `internal_packages/mode-switch` — the single/split pane control, hidden under Loft; owner: epic-loft
 - Must not change: window zoom (⌘+/⌘−, `core.workspace.interfaceZoom`) stays separate from text size and stacks on top of it.
 - Must not change: the `core.workspace.mode` single and split pane preference keeps working in Classic, Taiga, Darkside and Less-is-more.
-- Must not change: the legacy `core.themes` key, and the loading of a user's `styles.less`.
+- Must not change: the legacy `core.themes` key.
 - Tracer path: a Loft role token compiles from its DTCG file to a runtime custom property (epic-token-platform), and the Loft style's message row reads it (epic-loft). Picking Loft in Preferences › Appearance then previews it, and Apply repaints the real Electron window of an installed pre-release build on macOS, Windows and Linux (epic-appearance).
 
 ## References
 
 - design — `_bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/DESIGN.md` (adopted companion: tokens, theme catalogue, contrast pairs, Loft layout, components)
 - experience — `_bmad-output/initiative-theme-and-style-system/ux-theme-and-style-system/EXPERIENCE.md` (adopted companion: IA, style contract, states, theme authoring, verification matrix, key flows)
+- architecture — `_bmad-output/initiative-theme-and-style-system/architecture-theme-and-style-system/architecture-theme-and-style-system.md` (adopted companion: AD-1–AD-35)
 - design — DESIGN.md, Colors › Contrast pairs (the AA thresholds and pair table every high-contrast variant passes)
 - design — DESIGN.md, Colors › Built-in theme role table and LESS variable → role mapping (the ported themes' values)
 - design — DESIGN.md, Layout & Spacing › Density (row heights per style)
@@ -143,15 +147,7 @@ For people installing the first public release, the app opens in Loft and lets t
 
 ## Notes
 
-- Open question: architecture — what technical form does the style contract take, including how regions map onto WorkspaceStore locations? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — how does the LESS-to-runtime migration work? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — what is the email dark-adaptation algorithm? Needs a build spike (experience Open Questions 1). Owner: bmad-architecture, plus epic-email-dark-mode's spike.
-- Open question: architecture — how does the theme-folder file watcher work? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — how does the plugin LESS-variable → CSS-variable shim work? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — how is the cross-fade timed so it starts after the new look has painted? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — what are the per-OS mechanics of the frameless title bar? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — how does one DTCG file per theme express mode × contrast under the four-variant-group constraint? (experience Open Questions 1). Owner: bmad-architecture.
-- Open question: architecture — how is the Linux high-contrast signal detected? (experience Open Questions 1). Owner: bmad-architecture.
+- Decision: 2026-11-12 — the architecture open questions are answered by the adopted spine: style contract AD-9, AD-20, AD-21; LESS migration AD-7, AD-35; email adaptation AD-18, AD-27 (thresholds in epic-email-dark-mode's spike); theme-folder watcher AD-16; cross-fade AD-13, AD-26; frameless title bar AD-15; mode × contrast AD-6; Linux high contrast AD-14.
 - Open question: how does a bulk selection of threads look in Loft? (design Open Questions 1). Owner: epic-loft.
 - Open question: what are the visual specs for the derived badge and the View original toggle? (design Open Questions 2). Owner: epic-loft.
 - Open question: what do the short style specs for Classic, Taiga, Darkside and Less-is-more say about spacing, row and selection treatment, rail placement, and Classic's narrow-list row heights? (design Open Questions 3). Owner: epic-classic-style, all four at its start as one bmad-ux Update of the spines.
@@ -168,17 +164,22 @@ For people installing the first public release, the app opens in Loft and lets t
 - Decision: 2026-11-11 — release: each epic delivers to installable pre-release builds. The stable public release follows epic-onboarding-upgrade, gated by five-style coverage (R7) and the full matrix (R32).
 - Decision: 2026-11-11 — the 12-epic split is approved in this build order: epic-token-platform, epic-loft, epic-appearance, epic-email-dark-mode, epic-themes, epic-classic-style, epic-taiga-style, epic-darkside-style, epic-less-is-more-style, epic-theme-authoring, epic-style-api, epic-onboarding-upgrade. The rule that cut it: one source capability, or a tightly coupled pair, per epic, delivered together, with at most a contract between two epics. The breakdown is `tickets/tickets.toml`.
 - Decision: 2026-11-11 — epic-token-platform stays one epic; a split is offered when its stories are planned.
-- Decision: 2026-11-11 — legacy LESS themes coexist on the old loading path until epic-onboarding-upgrade.
+- Decision: 2026-11-11 — legacy LESS themes coexist on the old loading path until epic-onboarding-upgrade. Superseded 2026-11-12: LESS is fully removed, and no legacy LESS theme loads.
 - Decision: 2026-11-11 — the Loft theme lives in epic-loft, not epic-themes.
 - Decision: 2026-11-11 — email dark mode is the 4th epic, and its adaptation spike may start once epic-token-platform is done.
 - Decision: 2026-11-11 — ported-theme new-component pairs (badge, error-toast bar, bell dot) keep the legacy colours at standard contrast, and Increase contrast lifts them to AA (UX decision; DESIGN Open Questions renumbered, so build tasks are 5).
 - Decision: 2026-11-11 — Nylas-Pro: epic-themes removes the proprietary `nylas-private-fonts` package from the public build and makes it an optional private package. The licensing question for the public repo is https://github.com/heyjawrsh/nylas-mail/issues/5.
 - Decision: 2026-11-11 — Classic narrow-list rows: the Classic style spec, written at epic-classic-style's start, adds row heights for the narrow-list case (today `thread-list.jsx` switches to 85px multi-line rows under 540px).
 - Decision: 2026-11-11 — ListTabular fixed `itemHeight`: the spec stands. epic-token-platform changes the list so it supports row height from style, density and text size, and natural-height Loft rows.
-- Decision: 2026-11-11 — plugin shim scope: the spec is corrected, and the shim covers every package stylesheet, because package stylesheets get `ui-variables` injected and don't import it (R28 re-worded). EXPERIENCE State Patterns › Upgrade now says the same.
+- Decision: 2026-11-11 — plugin shim scope: the spec is corrected, and the shim covers every package stylesheet, because package stylesheets get `ui-variables` injected and don't import it (R28 re-worded). EXPERIENCE State Patterns › Upgrade now says the same. Superseded 2026-11-12: the shim is retired with LESS.
 - Decision: 2026-11-11 — onboarding window: the looks step fits the existing 900×600 onboarding window, and epic-onboarding-upgrade re-checks the `key-onboarding.html` mock at that size.
 - Decision: 2026-11-11 — frameless window: the spec stands. epic-token-platform makes the main window frameless on Windows and Linux (today `window-launcher.js` gives them a native frame).
 - Decision: 2026-11-11 — epic-onboarding-upgrade waits on epic-theme-authoring and epic-style-api as whole-epic gates: it retires the theme and package loading both touch, and its final check covers their surfaces.
 - Decision: 2026-11-11 — epic-style-api waits on epic-theme-authoring, because both edit the Appearance tab.
 - Decision: 2026-11-11 — epic-classic-style waits on epic-email-dark-mode as a whole-epic gate, so the View original toggle joins the shared kit before the freeze.
 - Decision: 2026-11-11 — epic-appearance's density check switches between Classic and Loft: epic-token-platform ports the Classic style and epic-loft ships Loft, so two styles exist when epic-appearance runs.
+- Decision: 2026-11-12 — `styles.less` is dropped. The app hasn't loaded a user stylesheet since Nylas removed it, so there's nothing to keep, and there's no `user` cascade layer.
+- Decision: 2026-11-12 — LESS is fully removed, and no LESS compiler ships. Internal LESS is ported to CSS, the plugin LESS shim is retired, and `less` and `less-cache` are removed. A third-party package's `.less` stylesheet isn't loaded; the loader logs a deprecation naming the package once per launch. The legacy-variable → role map is published in the theme and plugin author guide. Built-in legacy LESS themes no longer coexist: an upgrader on a built-in theme that isn't ported yet lands on Classic until epic-themes ships its port. This supersedes the 2026-11-11 coexistence and plugin shim scope decisions.
+- Decision: 2026-11-12 — text size starts at 100% on every OS, because Electron has no OS text-scale API.
+- Decision: 2026-11-12 — the architecture spine (`architecture-theme-and-style-system.md`, AD-1–AD-35) is adopted as a companion.
+- Decision: 2026-11-12 — epic-token-platform opens with the platform baseline: unsigned electron-builder pre-release builds for macOS, Windows and Linux, the React 19 render fix (https://github.com/heyjawrsh/nylas-mail/issues/7), the legacy Squirrel updater disabled or replaced, and LESS removed.
