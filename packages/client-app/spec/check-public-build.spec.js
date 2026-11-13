@@ -1,7 +1,13 @@
 // Runs the public-build check (scripts/check-public-build.mjs) on fixture
 // source trees and fixture packages in a temp dir.
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import {
+	mkdirSync,
+	mkdtempSync,
+	rmSync,
+	symlinkSync,
+	writeFileSync,
+} from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -46,6 +52,16 @@ describe("check-public-build crash-upload settings", () => {
 		expect(findings).toHaveLength(1);
 		expect(findings[0]).toMatchObject({ file: rel, line: 2 });
 		expect(findings[0].text.startsWith(label)).toBe(true);
+	});
+
+	it("scans client-sync, which ships in the package", () => {
+		const rel = "packages/client-sync/src/probe.js";
+		write(rel, "crashReporter.start({\n\tautoSubmit: true,\n});\n");
+		write("packages/client-sync/node_modules/dep/index.js", "autoSubmit;\n");
+		write("packages/client-sync/spec/probe-spec.js", "autoSubmit;\n");
+		expect(findUploadSettings(root)).toEqual([
+			expect.objectContaining({ file: rel, line: 2 }),
+		]);
 	});
 
 	it("passes uploads that are off", () => {
@@ -153,6 +169,27 @@ describe("check-public-build CLI", () => {
 		await makePackage(path.join(dist, "linux-unpacked", "resources"), CLEAN_APP);
 		const result = run(dist);
 		expect(result.stderr).toBe("");
+		expect(result.stdout).toContain("Public build check passed");
 		expect(result.status).toBe(0);
+	});
+
+	it("still runs when invoked through a symlinked path", async () => {
+		const dist = path.join(root, "dist");
+		await makePackage(path.join(dist, "linux-unpacked", "resources"), CLEAN_APP);
+		const link = path.join(root, "linked-check.mjs");
+		symlinkSync(script, link);
+		const result = spawnSync(process.execPath, [link, dist], {
+			encoding: "utf8",
+		});
+		expect(result.stdout).toContain("Public build check passed");
+		expect(result.status).toBe(0);
+
+		// and still fails through the link
+		mkdirSync(path.join(root, "empty"));
+		const empty = spawnSync(process.execPath, [link, path.join(root, "empty")], {
+			encoding: "utf8",
+		});
+		expect(empty.status).toBe(1);
+		expect(empty.stderr).toContain("No package");
 	});
 });

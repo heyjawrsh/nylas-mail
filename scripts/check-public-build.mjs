@@ -6,7 +6,13 @@
 // Usage: pnpm check:public-build [distDir…]
 // With no dirs it checks the source, plus packages/client-app/dist if present.
 // A dir that is given but holds no package fails, so CI can't pass on nothing.
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import {
+	existsSync,
+	readdirSync,
+	readFileSync,
+	realpathSync,
+	statSync,
+} from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import asar from "@electron/asar";
@@ -16,11 +22,15 @@ const repoRoot = path.resolve(
 	"..",
 );
 
+// client-sync ships too: electron-builder copies ../client-sync into the
+// package. Its symlink under internal_packages isn't followed, so it's
+// scanned at its real path.
 const SOURCE_ROOTS = [
 	"packages/client-app/src",
 	"packages/client-app/internal_packages",
+	"packages/client-sync",
 ];
-const SKIP_DIRS = new Set(["node_modules", "spec"]);
+const SKIP_DIRS = new Set(["node_modules", "spec", "coverage"]);
 const EXTENSIONS = new Set([".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx"]);
 
 // Each crashReporter option that sends dumps somewhere.
@@ -145,9 +155,19 @@ export function findPrivateFonts(distDirs) {
 	return { findings, empty };
 }
 
+// realpaths, so a run through a symlinked path (/tmp -> /private/tmp)
+// still counts as a direct run
+const realpath = (p) => {
+	try {
+		return realpathSync(p);
+	} catch {
+		return p;
+	}
+};
 const runAsScript =
 	process.argv[1] &&
-	path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+	realpath(path.resolve(process.argv[1])) ===
+		realpath(fileURLToPath(import.meta.url));
 
 if (runAsScript) {
 	let distDirs = process.argv.slice(2).map((d) => path.resolve(d));

@@ -20,7 +20,8 @@ allowBuilds:
   unix-dgram: true
   # @scarf/scarf is opt-out telemetry — never allow its postinstall
   "@scarf/scarf": false
-  # Windows installer helper pulled in by electron-builder; mac-only build
+  # Squirrel.Windows installer helper pulled in by electron-builder; the
+  # Windows build is NSIS, which doesn't use it
   electron-winstaller: false
   # postinstall only prints a message
   es5-ext: false
