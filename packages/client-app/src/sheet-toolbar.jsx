@@ -15,6 +15,7 @@ import SheetDepthContext from "./sheet-depth-context.js";
 import Flexbox from "./components/flexbox.jsx";
 import RetinaImg from "./components/retina-img.jsx";
 import Utils from "./flux/models/utils.js";
+import shallowEqual from "./components/shallow-equal.js";
 import * as remote from "@electron/remote";
 import _str from "underscore.string";
 import _ from "underscore";
@@ -282,8 +283,6 @@ class Toolbar extends React.Component {
 		this._containerRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
@@ -318,11 +317,10 @@ class Toolbar extends React.Component {
 		return Array.from(this.unlisteners).map((unlistener) => unlistener());
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
-		return this.setState(this._getStateFromStores(props));
-	}
-
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
+		if (!shallowEqual(prevProps, this.props)) {
+			this.setState(this._getStateFromStores());
+		}
 		// Wait for other components that are dirty (the actual columns in the sheet)
 		return window.requestAnimationFrame(() => this.recomputeLayout());
 	}

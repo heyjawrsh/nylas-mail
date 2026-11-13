@@ -27,8 +27,7 @@ class SourceSelect extends React.Component {
 	constructor(props) {
 		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this._setupValuesSubscription = this._setupValuesSubscription.bind(this);
 		this.render = this.render.bind(this);
@@ -41,8 +40,11 @@ class SourceSelect extends React.Component {
 		return this._setupValuesSubscription();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		return this._setupValuesSubscription(nextProps);
+	// New options: dispose the old subscription, then follow the new ones.
+	componentDidUpdate(prevProps) {
+		if (prevProps.options !== this.props.options) {
+			this._setupValuesSubscription();
+		}
 	}
 
 	componentWillUnmount() {

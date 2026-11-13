@@ -32,11 +32,13 @@ class Toast extends Component {
 		this._ensureTimeout();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ visible: nextProps.visible });
-	}
-
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
+		// Follow the visible prop when it changes. A toast that hid itself stays
+		// hidden through an unrelated re-render.
+		if (prevProps.visible !== this.props.visible) {
+			this.setState({ visible: this.props.visible });
+			return;
+		}
 		this._ensureTimeout();
 	}
 

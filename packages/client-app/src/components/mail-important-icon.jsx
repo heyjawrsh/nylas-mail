@@ -36,21 +36,41 @@ class MailImportantIcon extends React.Component {
 		super();
 		this.getState = this.getState.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._onToggleImportant = this._onToggleImportant.bind(this);
 		this.props = props;
-		this.state = this.getState();
+		this.state = {
+			...this.getState(),
+			prevThread: props.thread,
+			prevShowIfAvailableForAnyAccount: props.showIfAvailableForAnyAccount,
+		};
 	}
 
-	getState(props) {
-		let accountId;
-		if (props == null) {
-			({ props } = this);
+	// Derived before render: shouldComponentUpdate only looks at state, so a
+	// new thread has to reach state before it runs.
+	static getDerivedStateFromProps(props, state) {
+		if (
+			props.thread === state.prevThread &&
+			props.showIfAvailableForAnyAccount ===
+				state.prevShowIfAvailableForAnyAccount
+		) {
+			return null;
 		}
+		return {
+			...MailImportantIcon.stateFor(props),
+			prevThread: props.thread,
+			prevShowIfAvailableForAnyAccount: props.showIfAvailableForAnyAccount,
+		};
+	}
+
+	getState(props = this.props) {
+		return MailImportantIcon.stateFor(props);
+	}
+
+	static stateFor(props) {
+		let accountId;
 		let category = null;
 		let visible = false;
 
@@ -97,10 +117,6 @@ class MailImportantIcon extends React.Component {
 				return this.setState(this.getState());
 			},
 		));
-	}
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		return this.setState(this.getState(nextProps));
 	}
 
 	componentWillUnmount() {

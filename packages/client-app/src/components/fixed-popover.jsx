@@ -77,18 +77,22 @@ class FixedPopover extends Component {
 		_.defer(this.onPopoverRendered);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.fallback = nextProps.fallbackDirection;
-		this.setState({ direction: nextProps.direction });
-	}
-
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			!_.isEqual(this.state, nextState) || !_.isEqual(this.props, nextProps)
 		);
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
+		// A new direction or fallback starts placement over. The deferred
+		// onPopoverRendered below runs after this setState lands.
+		if (
+			prevProps.direction !== this.props.direction ||
+			prevProps.fallbackDirection !== this.props.fallbackDirection
+		) {
+			this.fallback = this.props.fallbackDirection;
+			this.setState({ direction: this.props.direction });
+		}
 		_.defer(this.onPopoverRendered);
 	}
 

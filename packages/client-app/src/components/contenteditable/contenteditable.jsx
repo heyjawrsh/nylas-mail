@@ -161,7 +161,6 @@ class Contenteditable extends React.Component {
 		this.atomicEdit = this.atomicEdit.bind(this);
 		this.focus = this.focus.bind(this);
 		this.setSelection = this.setSelection.bind(this);
-		this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -207,10 +206,7 @@ class Contenteditable extends React.Component {
 			previousExportedSelection: null,
 		};
 		this._mutationObserver = new MutationObserver(this._onDOMMutated);
-	}
-
-	UNSAFE_componentWillMount() {
-		return this._setupServices();
+		this._setupServices();
 	}
 
 	componentDidMount() {

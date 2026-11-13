@@ -165,9 +165,11 @@ class OutlineViewItem extends Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (newProps.editing) {
-			this.setState({ editing: newProps.editing });
+	// An editing prop that turns on starts editing. Editing the user ended
+	// stays ended through an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (this.props.editing && prevProps.editing !== this.props.editing) {
+			this.setState({ editing: this.props.editing });
 		}
 	}
 

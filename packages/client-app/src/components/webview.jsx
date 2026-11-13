@@ -77,6 +77,7 @@ export default class Webview extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.webviewRef = React.createRef();
 		this.state = {
 			ready: false,
 			error: null,
@@ -88,10 +89,12 @@ export default class Webview extends React.Component {
 		this._setupWebview(this.props);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps = {}) {
-		if (this.props.src !== nextProps.src) {
+	// A new src resets the loading state (before paint) and points the
+	// webview at it.
+	componentDidUpdate(prevProps) {
+		if (prevProps.src !== this.props.src) {
 			this.setState({ error: null, webviewLoading: true, ready: false });
-			this._setupWebview(nextProps);
+			this._setupWebview(this.props);
 		}
 	}
 

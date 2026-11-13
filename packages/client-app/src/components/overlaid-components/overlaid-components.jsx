@@ -80,8 +80,11 @@ export default class OverlaidComponents extends React.Component {
 		this._setupMutationObservers();
 	}
 
-	UNSAFE_componentWillUpdate() {
+	// Disconnect before React touches the DOM, so the update's own mutations
+	// don't reach the observers. componentDidUpdate reconnects them.
+	getSnapshotBeforeUpdate() {
 		this._teardownMutationObservers();
+		return null;
 	}
 
 	componentDidUpdate() {

@@ -45,7 +45,7 @@ export default class MetadataComposerToggleButton extends React.Component {
 		return this._button.current;
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		if (this._isEnabledByDefault() && !this._isEnabled()) {
 			this._setEnabled(true);
 		}

@@ -123,8 +123,6 @@ class ResizableRegion extends React.Component {
 		this._rootRef = React.createRef();
 		this.render = this.render.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this._mouseDown = this._mouseDown.bind(this);
 		this._mouseUp = this._mouseUp.bind(this);
@@ -194,7 +192,8 @@ class ResizableRegion extends React.Component {
 		);
 	}
 
-	componentDidUpdate(_lastProps, lastState) {
+	componentDidUpdate(lastProps, lastState) {
+		this._applyInitialSize(lastProps);
 		if (lastState.dragging && !this.state.dragging) {
 			document.removeEventListener("mousemove", this._mouseMove);
 			return document.removeEventListener("mouseup", this._mouseUp);
@@ -204,18 +203,20 @@ class ResizableRegion extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
+	// A new initial size along the handle's axis replaces the current size.
+	_applyInitialSize(lastProps) {
+		const { handle } = this.props;
 		if (
-			nextProps.handle.axis === "vertical" &&
-			nextProps.initialHeight !== this.props.initialHeight
+			handle.axis === "vertical" &&
+			this.props.initialHeight !== lastProps.initialHeight
 		) {
-			this.setState({ height: nextProps.initialHeight });
+			this.setState({ height: this.props.initialHeight });
 		}
 		if (
-			nextProps.handle.axis === "horizontal" &&
-			nextProps.initialWidth !== this.props.initialWidth
+			handle.axis === "horizontal" &&
+			this.props.initialWidth !== lastProps.initialWidth
 		) {
-			return this.setState({ width: nextProps.initialWidth });
+			this.setState({ width: this.props.initialWidth });
 		}
 	}
 

@@ -10,6 +10,10 @@ import moment from "moment";
 import classnames from "classnames";
 import TabGroupContext from "./tab-group-context.js";
 
+// Same instant, whether given as a number, Date or moment.
+const sameTime = (a, b) =>
+	a === b || (a != null && b != null && moment(a).valueOf() === moment(b).valueOf());
+
 require("moment-round"); // overrides moment
 
 const INTERVAL = [30, "minutes"];
@@ -44,11 +48,12 @@ export default class TimePicker extends React.Component {
 		this._fixTimeOptionScroll();
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		this.setState({ rawText: this._valToTimeString(newProps.value) });
-	}
-
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
+		// Re-derive the text only when the time changes, so text being typed
+		// survives an unrelated re-render.
+		if (!sameTime(prevProps.value, this.props.value)) {
+			this.setState({ rawText: this._valToTimeString(this.props.value) });
+		}
 		if (this._gotoScrollStartOnUpdate) {
 			this._fixTimeOptionScroll();
 		}

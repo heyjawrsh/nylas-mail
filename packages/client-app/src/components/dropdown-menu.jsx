@@ -19,8 +19,12 @@ export default class DropdownMenu extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ currentSelection: nextProps.intitialSelectionItem });
+	// A new initial selection replaces the current one. A selection the user
+	// made survives an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.intitialSelectionItem !== this.props.intitialSelectionItem) {
+			this.setState({ currentSelection: this.props.intitialSelectionItem });
+		}
 	}
 
 	_toggleExpanded = () => {

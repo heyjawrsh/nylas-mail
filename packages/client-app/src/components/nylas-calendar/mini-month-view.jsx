@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import classnames from "classnames";
 
+// Same instant, whether given as a number, Date or moment.
+const sameTime = (a, b) =>
+	a === b || (a != null && b != null && moment(a).valueOf() === moment(b).valueOf());
+
 export default class MiniMonthView extends React.Component {
 	static displayName = "MiniMonthView";
 
@@ -23,8 +27,12 @@ export default class MiniMonthView extends React.Component {
 		this.state = this._stateFromProps(props);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		this.setState(this._stateFromProps(newProps));
+	// Show the new value's month when the value changes. A month the user
+	// paged to survives an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (!sameTime(prevProps.value, this.props.value)) {
+			this.setState(this._stateFromProps(this.props));
+		}
 	}
 
 	_stateFromProps(props) {

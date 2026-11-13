@@ -184,10 +184,12 @@ class EmptyListState extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (newProps.visible === false) {
-			return this.setState({ active: false });
+	// Hiding resets `active` before render, so showing again re-measures.
+	static getDerivedStateFromProps(props, state) {
+		if (props.visible === false && state.active !== false) {
+			return { active: false };
 		}
+		return null;
 	}
 
 	render() {

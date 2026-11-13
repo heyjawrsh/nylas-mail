@@ -219,8 +219,6 @@ class Menu extends React.Component {
 		this.clearSelection = this.clearSelection.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._onKeyDown = this._onKeyDown.bind(this);
@@ -235,6 +233,8 @@ class Menu extends React.Component {
 				this.props.defaultSelectedIndex != null
 					? this.props.defaultSelectedIndex
 					: 0,
+			prevItems: props.items,
+			prevDefaultSelectedIndex: props.defaultSelectedIndex,
 		};
 	}
 
@@ -262,35 +262,43 @@ class Menu extends React.Component {
 		return (this._mounted = false);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
+	// Runs before render, so the selection never lands on the wrong row (and
+	// componentDidUpdate never scrolls to it) for a frame.
+	static getDerivedStateFromProps(props, state) {
+		if (
+			props.items === state.prevItems &&
+			props.defaultSelectedIndex === state.prevDefaultSelectedIndex
+		) {
+			return null;
+		}
 		// Attempt to preserve selection across props.items changes by
 		// finding an item in the new list with a key matching the old
 		// selected item's key
 		let newSelectionIndex, selection;
-		if (this.state.selectedIndex >= 0) {
-			selection = this.props.items[this.state.selectedIndex];
+		if (state.selectedIndex >= 0) {
+			selection = (state.prevItems || [])[state.selectedIndex];
 			newSelectionIndex = 0;
 		} else {
 			newSelectionIndex =
-				newProps.defaultSelectedIndex != null
-					? newProps.defaultSelectedIndex
-					: -1;
+				props.defaultSelectedIndex != null ? props.defaultSelectedIndex : -1;
 		}
 
 		if (selection != null) {
-			const selectionKey = this.props.itemKey(selection);
+			const selectionKey = props.itemKey(selection);
 			const newSelection = _.find(
-				newProps.items,
-				(item) => this.props.itemKey(item) === selectionKey,
+				props.items,
+				(item) => props.itemKey(item) === selectionKey,
 			);
 			if (newSelection != null) {
-				newSelectionIndex = newProps.items.indexOf(newSelection);
+				newSelectionIndex = props.items.indexOf(newSelection);
 			}
 		}
 
-		return this.setState({
+		return {
 			selectedIndex: newSelectionIndex,
-		});
+			prevItems: props.items,
+			prevDefaultSelectedIndex: props.defaultSelectedIndex,
+		};
 	}
 
 	// The root node, for parents like TokenizingTextField.

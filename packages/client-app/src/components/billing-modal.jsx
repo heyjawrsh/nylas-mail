@@ -17,7 +17,8 @@ export default class BillingModal extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
+		this._mounted = true;
 		if (!this.state.src) {
 			IdentityStore.fetchSingleSignOnURL("/payment?embedded=true").then(
 				(url) => {
@@ -26,10 +27,6 @@ export default class BillingModal extends React.Component {
 				},
 			);
 		}
-	}
-
-	componentDidMount() {
-		this._mounted = true;
 	}
 
 	/**

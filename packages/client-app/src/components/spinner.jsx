@@ -37,8 +37,7 @@ class Spinner extends React.Component {
 		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.pauseAfterDelay = this.pauseAfterDelay.bind(this);
 		this.showAfterDelay = this.showAfterDelay.bind(this);
 		this.render = this.render.bind(this);
@@ -68,14 +67,20 @@ class Spinner extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.visible === this.props.visible &&
+			prevProps.withCover === this.props.withCover
+		) {
+			return;
+		}
 		// If we have a cover, show right away.
-		if (nextProps.withCover) {
-			this.setState({ hidden: !nextProps.visible });
+		if (this.props.withCover) {
+			this.setState({ hidden: !this.props.visible });
 			return;
 		}
 
-		const hidden = nextProps.visible != null ? !nextProps.visible : false;
+		const hidden = this.props.visible != null ? !this.props.visible : false;
 
 		if (this.state.hidden === false && hidden === true) {
 			this.setState({ hidden: true });

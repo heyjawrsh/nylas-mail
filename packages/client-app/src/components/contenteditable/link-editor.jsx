@@ -43,13 +43,23 @@ class LinkEditor extends React.Component {
 		this._urlInputRef = React.createRef();
 		this._removeBtnRef = React.createRef();
 		this.props = props;
+		this._derivedUrl = this._initialUrl();
 		this.state = {
-			urlInputValue: (left = this._initialUrl()) != null ? left : "",
+			urlInputValue: (left = this._derivedUrl) != null ? left : "",
 		};
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		return this.setState({ urlInputValue: this._initialUrl(newProps) });
+	// Re-derive the field only when the link (or its href) changes, so a URL
+	// being typed survives an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		const url = this._initialUrl();
+		if (
+			prevProps.linkToModify !== this.props.linkToModify ||
+			url !== this._derivedUrl
+		) {
+			this._derivedUrl = url;
+			this.setState({ urlInputValue: url });
+		}
 	}
 
 	componentDidMount() {

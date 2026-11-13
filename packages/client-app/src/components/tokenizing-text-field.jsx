@@ -103,23 +103,26 @@ class Token extends React.Component {
 	constructor(props) {
 		super(props);
 		this.inputRef = React.createRef();
+		this._derivedValue = this.props.item.toString();
 		this.state = {
 			editing: false,
-			editingValue: this.props.item.toString(),
+			editingValue: this._derivedValue,
 		};
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
-		// never override the text the user is editing if they're looking at it
-		if (this.state.editing) {
-			return;
-		}
-		this.setState({ editingValue: props.item.toString() });
-	}
-
-	componentDidUpdate(_prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState) {
 		if (this.state.editing && !prevState.editing) {
 			this.inputRef?.current.select();
+		}
+		// Re-derive the text only when the item changes, and never override the
+		// text the user is editing if they're looking at it.
+		const value = this.props.item.toString();
+		if (
+			!this.state.editing &&
+			(prevProps.item !== this.props.item || value !== this._derivedValue)
+		) {
+			this._derivedValue = value;
+			this.setState({ editingValue: value });
 		}
 	}
 
@@ -418,9 +421,14 @@ export default class TokenizingTextField extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (this.props.tokens.length === 0 && this.state.inputValue.length === 0) {
-			const newDefaultValue = newProps.defaultValue || "";
+	// A new defaultValue fills an empty field that has no tokens. Text the
+	// user typed, or cleared, survives an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.defaultValue === this.props.defaultValue) {
+			return;
+		}
+		if (prevProps.tokens.length === 0 && this.state.inputValue.length === 0) {
+			const newDefaultValue = this.props.defaultValue || "";
 			this.setState({ inputValue: newDefaultValue });
 			if (newDefaultValue.length > 0) {
 				this._refreshCompletions(newDefaultValue);

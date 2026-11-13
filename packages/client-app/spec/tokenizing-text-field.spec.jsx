@@ -344,3 +344,21 @@ describe("Token editing, focus, paste, and actions", () => {
 		expect(f.input().value).toBe("draft");
 	});
 });
+
+describe("TokenizingTextField defaultValue on re-render", () => {
+	const rerenderWith = (f, overrides) => f.rerender(<TokenizingTextField ref={f.ref} {...f.props} {...overrides} />);
+
+	it("fills an empty field when a new defaultValue arrives", () => {
+		const f = fixture({ tokens: [], defaultValue: "" });
+		rerenderWith(f, { defaultValue: "ca" });
+		expect(f.input().value).toBe("ca");
+		expect(f.props.onRequestCompletions).toHaveBeenLastCalledWith("ca", { clear: undefined });
+	});
+
+	it("keeps a field the user cleared through an unrelated re-render", () => {
+		const f = fixture({ tokens: [], defaultValue: "ca" });
+		fireEvent.change(f.input(), { target: { value: "" } });
+		rerenderWith(f, { defaultValue: "ca", placeholder: "To" });
+		expect(f.input().value).toBe("");
+	});
+});

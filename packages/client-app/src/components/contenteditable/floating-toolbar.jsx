@@ -13,6 +13,7 @@ import _ from "underscore";
 import classNames from "classnames";
 import React from "react";
 import { Utils, DOMUtils } from "nylas-exports";
+import shallowEqual from "../shallow-equal.js";
 
 // Positions and renders a FloatingToolbar in the composer.
 //
@@ -65,8 +66,6 @@ class FloatingToolbar extends React.Component {
 		super();
 		this.componentWillReceiveInnerProps =
 			this.componentWillReceiveInnerProps.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this._calculatePositionState = this._calculatePositionState.bind(this);
 		this._toolbarClasses = this._toolbarClasses.bind(this);
 		this._toolbarStyles = this._toolbarStyles.bind(this);
@@ -90,8 +89,12 @@ class FloatingToolbar extends React.Component {
 		this.innerProps = FloatingToolbar.defaultInnerProps;
 	}
 
+	// New props objects always update (even when deep-equal), so
+	// componentDidUpdate re-measures the toolbar as the old
+	// componentWillReceiveProps did on every parent render.
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
+			!shallowEqual(nextProps, this.props) ||
 			!Utils.isEqualReact(nextProps, this.props) ||
 			!Utils.isEqualReact(nextState, this.state)
 		);
@@ -113,9 +116,14 @@ class FloatingToolbar extends React.Component {
 		return this.setState(this._getStateFromProps(fullProps));
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const fullProps = _.extend(this.innerProps, nextProps);
-		return this.setState(this._getStateFromProps(fullProps));
+	// Folds the new props into innerProps and re-measures the toolbar against
+	// the DOM they rendered.
+	componentDidUpdate(prevProps) {
+		if (shallowEqual(prevProps, this.props)) {
+			return;
+		}
+		const fullProps = _.extend(this.innerProps, this.props);
+		this.setState(this._getStateFromProps(fullProps));
 	}
 
 	// The context menu, when activated, needs to make sure that the toolbar
