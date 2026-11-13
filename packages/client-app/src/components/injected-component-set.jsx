@@ -11,6 +11,7 @@ import React from "react";
 import _ from "underscore";
 import UnsafeComponent from "./unsafe-component.jsx";
 import Flexbox from "./flexbox.jsx";
+import { domNodeOf } from "./dom-node.js";
 import InjectedComponentLabel from "./injected-component-label.jsx";
 const {
 	Utils,
@@ -85,6 +86,7 @@ class InjectedComponentSet extends React.Component {
 
 	constructor(props) {
 		super();
+		this._flexboxRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
@@ -189,10 +191,17 @@ class InjectedComponentSet extends React.Component {
 
 		return React.createElement(
 			Flexbox,
-			Object.assign({ className: flexboxClassName }, flexboxProps),
+			Object.assign({ className: flexboxClassName }, flexboxProps, {
+				ref: this._flexboxRef,
+			}),
 			elements,
 			this.props.children != null ? this.props.children : [],
 		);
+	}
+
+	// The Flexbox root node, for parents that measure or animate it.
+	getDOMNode() {
+		return domNodeOf(this._flexboxRef.current);
 	}
 
 	_onComponentDidRender(componentName) {

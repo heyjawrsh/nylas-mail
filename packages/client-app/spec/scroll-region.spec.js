@@ -2,16 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
 	debounced: [],
-	findDOMNode: vi.fn((value) => value),
 	rectVisible: vi.fn(() => false),
 }));
 
 vi.mock("prop-types", () => ({ default: new Proxy({}, { get: () => (() => null) }) }));
 vi.mock("react", () => {
-	const react = { Component: class Component {}, createElement: vi.fn() };
+	const react = { Component: class Component {}, createElement: vi.fn(), createRef: () => ({ current: null }) };
 	return { default: react, ...react };
 });
-vi.mock("react-dom", () => ({ default: { findDOMNode: m.findDOMNode }, findDOMNode: m.findDOMNode }));
 vi.mock("nylas-exports", () => ({ Utils: {
 	fastOmit: (object, keys) => Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key))),
 	isEqualReact: (a, b) => a === b,
@@ -37,12 +35,14 @@ const region = (props = {}) => {
 	const instance = Object.create(ScrollRegion.prototype);
 	instance.props = props;
 	instance.state = { totalHeight: 500, viewportHeight: 100, viewportScrollTop: 0, scrolling: false };
-	instance.refs = {};
+	instance._rootRef = { current: null };
+	instance._contentRef = { current: null };
+	instance._scrollbarRef = { current: null };
 	instance._scrollToTaskId = 0;
 	instance.setState = vi.fn((state) => Object.assign(instance.state, state));
 	Object.defineProperty(instance, "scrollTop", {
-		get: () => instance.refs.content.scrollTop,
-		set: (value) => { instance.refs.content.scrollTop = value; },
+		get: () => instance._contentRef.current.scrollTop,
+		set: (value) => { instance._contentRef.current.scrollTop = value; },
 	});
 	return instance;
 };
@@ -69,68 +69,68 @@ describe("ScrollRegion scrolling", () => {
 	});
 
 	it("scrolls a rectangle to the top", () => {
-		const instance = region(); instance.refs.content = content({ scrollTop: 10 });
+		const instance = region(); instance._contentRef.current = content({ scrollTop: 10 });
 		instance.scrollToRect({ top: 70, bottom: 90, height: 20 }, { position: ScrollRegion.ScrollPosition.Top });
 		expect(instance.scrollTop).toBe(60);
 	});
 
 	it("scrolls a rectangle to the bottom", () => {
-		const instance = region(); instance.refs.content = content();
+		const instance = region(); instance._contentRef.current = content();
 		instance.scrollToRect({ top: 170, bottom: 190, height: 20 }, { position: ScrollRegion.ScrollPosition.Bottom });
 		expect(instance.scrollTop).toBe(70);
 	});
 
 	it("centers a rectangle", () => {
-		const instance = region(); instance.refs.content = content();
+		const instance = region(); instance._contentRef.current = content();
 		instance.scrollToRect({ top: 170, bottom: 190, height: 20 }, { position: ScrollRegion.ScrollPosition.Center });
 		expect(instance.scrollTop).toBe(110);
 	});
 
 	it("does not center an already visible rectangle", () => {
 		m.rectVisible.mockReturnValue(true);
-		const instance = region(); instance.refs.content = content({ scrollTop: 12 });
+		const instance = region(); instance._contentRef.current = content({ scrollTop: 12 });
 		instance.scrollToRect({ top: 40, bottom: 60, height: 20 }, { position: ScrollRegion.ScrollPosition.CenterIfInvisible });
 		expect(instance.scrollTop).toBe(12);
 	});
 
 	it("moves the least distance to reveal content below the viewport", () => {
-		const instance = region(); instance.refs.content = content();
+		const instance = region(); instance._contentRef.current = content();
 		instance.scrollToRect({ top: 110, bottom: 150, height: 40 });
 		expect(instance.scrollTop).toBe(30);
 	});
 
 	it("reports a completed scroll", () => {
-		const done = vi.fn(); const instance = region(); instance.refs.content = content();
+		const done = vi.fn(); const instance = region(); instance._contentRef.current = content();
 		instance.scrollToRect({ top: 30, bottom: 50, height: 20 }, { done });
 		expect(done).toHaveBeenCalledWith(true);
 	});
 
 	it("ignores bubbled scroll events from descendants", () => {
-		const onScroll = vi.fn(); const instance = region({ onScroll }); instance.refs.content = content();
+		const onScroll = vi.fn(); const instance = region({ onScroll }); instance._contentRef.current = content();
 		instance._onScroll({ target: document.createElement("textarea") });
 		expect(onScroll).not.toHaveBeenCalled();
 	});
 
 	it("marks the first native scroll as active", () => {
-		const instance = region(); instance.refs.content = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn();
-		instance._onScroll({ target: instance.refs.content });
+		const instance = region(); instance._contentRef.current = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn();
+		instance._onScroll({ target: instance._contentRef.current });
 		expect(instance._setSharedState).toHaveBeenCalledWith({ scrolling: true });
 	});
 
 	it("uses cached dimensions during an active scroll", () => {
-		const instance = region(); instance.state.scrolling = true; instance.refs.content = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn();
-		instance._onScroll({ target: instance.refs.content });
+		const instance = region(); instance.state.scrolling = true; instance._contentRef.current = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn();
+		instance._onScroll({ target: instance._contentRef.current });
 		expect(instance.recomputeDimensions).toHaveBeenCalledWith({ useCachedValues: true });
 	});
 
 	it("forwards native scroll events", () => {
-		const onScroll = vi.fn(); const instance = region({ onScroll }); instance.refs.content = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn(); const event = { target: instance.refs.content };
+		const onScroll = vi.fn(); const instance = region({ onScroll }); instance._contentRef.current = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn(); const event = { target: instance._contentRef.current };
 		instance._onScroll(event);
 		expect(onScroll).toHaveBeenCalledWith(event);
 	});
 
 	it("ends scrolling and notifies after the debounced callback", () => {
-		const onScrollEnd = vi.fn(); const instance = region({ onScrollEnd }); instance.refs.content = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn(); const event = { target: instance.refs.content };
+		const onScrollEnd = vi.fn(); const instance = region({ onScrollEnd }); instance._contentRef.current = content(); instance.recomputeDimensions = vi.fn(); instance._setSharedState = vi.fn(); const event = { target: instance._contentRef.current };
 		instance._onScroll(event);
 		expect(onScrollEnd).toHaveBeenCalledWith(event);
 		expect(instance._setSharedState).toHaveBeenLastCalledWith({ scrolling: false });

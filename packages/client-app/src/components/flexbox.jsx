@@ -29,6 +29,13 @@ export default class Flexbox extends React.Component {
 		style: {},
 	};
 
+	_rootRef = React.createRef();
+
+	// The root node, for parents that measure or animate it.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	render() {
 		const style = Object.assign(
 			{},
@@ -51,7 +58,7 @@ export default class Flexbox extends React.Component {
 		);
 
 		return (
-			<div style={style} {...otherProps}>
+			<div ref={this._rootRef} style={style} {...otherProps}>
 				{this.props.children}
 			</div>
 		);

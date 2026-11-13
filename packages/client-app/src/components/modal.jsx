@@ -1,7 +1,6 @@
 import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import Actions from "../flux/actions.js";
 import RetinaImg from "./retina-img.jsx";
 
@@ -15,6 +14,7 @@ class Modal extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = React.createRef();
 		this.state = {
 			offset: 0,
 			dimensions: {},
@@ -26,7 +26,10 @@ class Modal extends React.Component {
 	}
 
 	_focusImportantElement = () => {
-		const modalNode = ReactDOM.findDOMNode(this);
+		const modalNode = this._rootRef.current;
+		if (!modalNode) {
+			return;
+		}
 
 		const focusable = modalNode.querySelectorAll("[tabIndex], input");
 		const matches = _.sortBy(focusable, (node) => {
@@ -82,6 +85,7 @@ class Modal extends React.Component {
 
 		return (
 			<div
+				ref={this._rootRef}
 				style={containerStyle}
 				className="modal-container"
 				onKeyDown={this._onKeyDown}

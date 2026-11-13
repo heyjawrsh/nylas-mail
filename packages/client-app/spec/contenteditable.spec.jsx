@@ -22,19 +22,6 @@ vi.mock("underscore", () => {
 	};
 	return { default: underscore, ...underscore };
 });
-vi.mock("react", async (importOriginal) => {
-	const actual = await importOriginal();
-	const createElement = (type, props, ...children) => {
-		const safeProps = props?.ref && typeof props.ref === "string" ? { ...props, ref: undefined } : props;
-		return actual.createElement(type, safeProps, ...children);
-	};
-	return { ...actual, default: { ...actual, createElement }, createElement };
-});
-vi.mock("react-dom", async (importOriginal) => {
-	const actual = await importOriginal();
-	const findDOMNode = () => document.querySelector(".contenteditable");
-	return { ...actual, default: { ...actual.default, findDOMNode }, findDOMNode };
-});
 vi.mock("electron", () => {
 	const ipcRenderer = { on: vi.fn(), send: vi.fn() };
 	const remote = {
@@ -166,6 +153,12 @@ describe("Contenteditable controlled value contract", () => {
 	it("renders an editable DOM node", () => {
 		const f = fixture();
 		expect(f.editable().getAttribute("contenteditable")).toBe("true");
+	});
+
+	it("reaches its editable node and container through object refs", () => {
+		const f = fixture();
+		expect(f.ref.current._editableNode()).toBe(f.editable());
+		expect(f.ref.current.getDOMNode()).toBe(f.editable().parentNode);
 	});
 
 	it("uses the component's actual disabled spellcheck behavior", () => {

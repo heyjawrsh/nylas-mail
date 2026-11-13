@@ -10,7 +10,6 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
 import { RegExpUtils } from "nylas-exports";
 
 class LinkEditor extends React.Component {
@@ -41,6 +40,8 @@ class LinkEditor extends React.Component {
 		this._saveUrlOnEnter = this._saveUrlOnEnter.bind(this);
 		this._removeUrl = this._removeUrl.bind(this);
 		this._initialUrl = this._initialUrl.bind(this);
+		this._urlInputRef = React.createRef();
+		this._removeBtnRef = React.createRef();
 		this.props = props;
 		this.state = {
 			urlInputValue: (left = this._initialUrl()) != null ? left : "",
@@ -53,7 +54,7 @@ class LinkEditor extends React.Component {
 
 	componentDidMount() {
 		if (this.props.focusOnMount) {
-			return ReactDOM.findDOMNode(this.refs.urlInput).focus();
+			return this._urlInputRef.current?.focus();
 		}
 	}
 
@@ -67,7 +68,7 @@ class LinkEditor extends React.Component {
 				"button",
 				{
 					className: "btn btn-icon",
-					ref: "removeBtn",
+					ref: this._removeBtnRef,
 					style: { float: "right" },
 					onMouseDown: this._removeUrl,
 				},
@@ -99,7 +100,7 @@ class LinkEditor extends React.Component {
 			React.createElement("i", { className: "fa fa-link preview-btn-icon" }),
 			React.createElement("input", {
 				type: "text",
-				ref: "urlInput",
+				ref: this._urlInputRef,
 				style: { height: 34, width: `calc(100% - ${widthCorrection}px)` },
 				value: this.state.urlInputValue,
 				onBlur: this._onBlur,
@@ -118,11 +119,8 @@ class LinkEditor extends React.Component {
 	// bluring the field.
 	_onBlur(event) {
 		const targets = [];
-		if (this.refs.saveBtn) {
-			targets.push(ReactDOM.findDOMNode(this.refs.saveBtn));
-		}
-		if (this.refs.removeBtn) {
-			targets.push(ReactDOM.findDOMNode(this.refs.removeBtn));
+		if (this._removeBtnRef.current) {
+			targets.push(this._removeBtnRef.current);
 		}
 
 		if (Array.from(targets).includes(event.relatedTarget)) {

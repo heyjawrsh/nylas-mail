@@ -12,7 +12,7 @@ const m = vi.hoisted(() => {
 		fastOmit: (object, keys) => Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key))),
 	};
 	const remote = { Menu: class Menu { constructor() { this.items = []; } append(item) { this.items.push(item); } popup() {} }, MenuItem: class MenuItem { constructor(options) { Object.assign(this, options); } }, getCurrentWindow: vi.fn(() => "window") };
-	return { registry, workspace, actions, utils, remote, findDOMNode: vi.fn(), render: vi.fn(), unmount: vi.fn() };
+	return { registry, workspace, actions, utils, remote, render: vi.fn(), unmount: vi.fn() };
 });
 
 vi.mock("react", () => {
@@ -26,7 +26,6 @@ vi.mock("react", () => {
 vi.mock("prop-types", () => { const checker = Object.assign(() => null, { isRequired: null }); const types = new Proxy({ shape: () => checker }, { get: (target, key) => target[key] || checker }); return { default: types, ...types }; });
 vi.mock("underscore", () => { const underscore = { isEqual: (a, b) => a === b, reduce: (items, fn, initial) => items.reduce(fn, initial), includes: (items, value) => items.includes(value) }; return { default: underscore, ...underscore }; });
 vi.mock("classnames", () => { const classnames = (values) => Object.keys(values).filter((key) => values[key]).join(" "); return { default: classnames, classnames }; });
-vi.mock("react-dom", () => { const dom = { findDOMNode: m.findDOMNode }; return { default: dom, ...dom }; });
 vi.mock("react-dom/client", () => { const client = { createRoot: vi.fn(() => ({ render: m.render, unmount: m.unmount })) }; return { default: client, ...client }; });
 vi.mock("electron", () => { const electron = { remote: m.remote }; return { default: electron, ...electron, remote: m.remote }; });
 vi.mock("@electron/remote", () => ({ default: m.remote, ...m.remote, remote: m.remote }));

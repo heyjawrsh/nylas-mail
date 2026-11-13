@@ -10,9 +10,8 @@ const nodeRequire =
 		: require;
 import { Utils } from "nylas-exports";
 import classnames from "classnames";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import DisclosureTriangle from "./disclosure-triangle.jsx";
 import DropZone from "./drop-zone.jsx";
 import RetinaImg from "./retina-img.jsx";
@@ -148,6 +147,7 @@ class OutlineViewItem extends Component {
 	constructor(props) {
 		super(props);
 		this._expandTimeout = null;
+		this._rootRef = createRef();
 		this.state = {
 			isDropping: false,
 			editing: props.item.editing || false,
@@ -156,7 +156,9 @@ class OutlineViewItem extends Component {
 
 	componentDidMount() {
 		if (this._shouldShowContextMenu()) {
-			ReactDOM.findDOMNode(this).addEventListener(
+			// Kept so unmount removes the listener from the same node.
+			this._contextMenuNode = this._rootRef.current;
+			this._contextMenuNode.addEventListener(
 				"contextmenu",
 				this._onShowContextMenu,
 			);
@@ -178,11 +180,12 @@ class OutlineViewItem extends Component {
 
 	componentWillUnmount() {
 		clearTimeout(this._expandTimeout);
-		if (this._shouldShowContextMenu()) {
-			ReactDOM.findDOMNode(this).removeEventListener(
+		if (this._shouldShowContextMenu() && this._contextMenuNode) {
+			this._contextMenuNode.removeEventListener(
 				"contextmenu",
 				this._onShowContextMenu,
 			);
+			this._contextMenuNode = null;
 		}
 	}
 
@@ -390,7 +393,7 @@ class OutlineViewItem extends Component {
 			dropping: this.state.isDropping,
 		});
 		return (
-			<div>
+			<div ref={this._rootRef}>
 				<span className={containerClasses}>
 					<DisclosureTriangle
 						collapsed={item.collapsed}

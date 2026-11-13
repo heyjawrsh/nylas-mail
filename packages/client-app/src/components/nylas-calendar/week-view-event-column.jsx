@@ -47,7 +47,6 @@ export default class WeekViewEventColumn extends React.Component {
 		} = this.props;
 		return events.map((e) => (
 			<CalendarEvent
-				ref={`event-${e.id}`}
 				event={e}
 				selected={selectedEvents.includes(e)}
 				order={eventOverlap[e.id].order}

@@ -5,17 +5,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 afterEach(cleanup);
 
 const mocks = vi.hoisted(() => ({
-	findDOMNode: vi.fn(),
 	closePopover: vi.fn(),
 	openPopover: vi.fn(),
 	workspaceListen: vi.fn(() => vi.fn()),
 	topSheet: vi.fn(() => ({ id: "top-sheet" })),
 	nodeIsVisible: vi.fn(() => true),
-}));
-
-vi.mock("react-dom", async (importOriginal) => ({
-	...(await importOriginal()),
-	findDOMNode: mocks.findDOMNode,
 }));
 
 vi.mock("nylas-exports", () => ({
@@ -87,8 +81,6 @@ describe("compose", () => {
 });
 
 describe("AutoFocuses", () => {
-	beforeEach(() => mocks.findDOMNode.mockReset());
-
 	it("injects its focus callback into the wrapped component", () => {
 		const Decorated = AutoFocuses(FixtureComponent, { onMount: false });
 		render(<Decorated label="hello" />);
@@ -100,8 +92,8 @@ describe("AutoFocuses", () => {
 		root.focus = vi.fn();
 		root.innerHTML = '<input data-testid="plain"><button tabindex="4">four</button><button tabindex="2">two</button>';
 		document.body.appendChild(root);
-		mocks.findDOMNode.mockReturnValue(root);
 		const instance = new (AutoFocuses(FixtureComponent))({});
+		instance._autoFocusTargetRef.current = root;
 		instance.mounted = true;
 		instance.focusElementWithTabIndex();
 		expect(document.activeElement.textContent).toBe("two");
@@ -114,8 +106,8 @@ describe("AutoFocuses", () => {
 		document.body.appendChild(root);
 		const input = root.querySelector("input");
 		input.focus();
-		mocks.findDOMNode.mockReturnValue(root);
 		const instance = new (AutoFocuses(FixtureComponent))({});
+		instance._autoFocusTargetRef.current = root;
 		instance.mounted = true;
 		instance.focusElementWithTabIndex();
 		expect(document.activeElement).toBe(input);
@@ -124,8 +116,34 @@ describe("AutoFocuses", () => {
 
 	it("does nothing before mounting", () => {
 		const instance = new (AutoFocuses(FixtureComponent))({});
+		const getDOMNode = vi.spyOn(instance, "getDOMNode");
 		instance.focusElementWithTabIndex();
-		expect(mocks.findDOMNode).not.toHaveBeenCalled();
+		expect(getDOMNode).not.toHaveBeenCalled();
+	});
+
+	it("focuses the wrapped component's node on mount through its getDOMNode()", () => {
+		class Focusable extends React.Component {
+			static displayName = "Focusable";
+			rootRef = React.createRef();
+			getDOMNode() {
+				return this.rootRef.current;
+			}
+			render() {
+				return (
+					<div ref={this.rootRef}>
+						<input data-testid="later" />
+						<button type="button" tabIndex={1}>
+							first
+						</button>
+					</div>
+				);
+			}
+		}
+		const Decorated = AutoFocuses(Focusable);
+		const ref = React.createRef();
+		render(<Decorated ref={ref} />);
+		expect(document.activeElement.textContent).toBe("first");
+		expect(ref.current.getDOMNode()).toBe(document.activeElement.parentNode);
 	});
 
 	it("honors disabled mount and update focusing", () => {

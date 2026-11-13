@@ -18,11 +18,6 @@ vi.mock("prop-types", () => {
 	});
 	return { default: types, ...types };
 });
-vi.mock("react-dom", async (importOriginal) => {
-	const actual = await importOriginal();
-	const findDOMNode = (value) => value instanceof Element ? value : value?.inputRef?.current || value;
-	return { default: { ...actual.default, findDOMNode }, ...actual, findDOMNode };
-});
 vi.mock("classnames", () => {
 	const classNames = (...values) => values.flatMap((value) => {
 		if (typeof value === "string") return [value];

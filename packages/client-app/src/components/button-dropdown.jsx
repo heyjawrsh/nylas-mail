@@ -11,7 +11,6 @@ import RetinaImg from "./retina-img.jsx";
 import classnames from "classnames";
 
 import React from "react";
-import ReactDOM from "react-dom";
 class ButtonDropdown extends React.Component {
 	static initClass() {
 		ButtonDropdown.displayName = "ButtonDropdown";
@@ -127,11 +126,11 @@ class ButtonDropdown extends React.Component {
 		if (this.state.open !== false) {
 			return this.setState({ open: false });
 		} else {
+			// buttonRef is on the root div in both render branches.
 			const buttonBottom =
-				ReactDOM.findDOMNode(this).getBoundingClientRect().bottom;
-			const openHeight = ReactDOM.findDOMNode(
-				this.secondaryItemsRef?.current,
-			).getBoundingClientRect().height;
+				this.buttonRef.current.getBoundingClientRect().bottom;
+			const openHeight =
+				this.secondaryItemsRef.current.getBoundingClientRect().height;
 			if (buttonBottom + openHeight > window.innerHeight) {
 				return this.setState({ open: "up" });
 			} else {

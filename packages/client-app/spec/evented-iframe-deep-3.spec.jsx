@@ -20,10 +20,6 @@ vi.mock("react", () => {
 	};
 	return { default: react, ...react };
 });
-vi.mock("react-dom", () => {
-	const reactDOM = { findDOMNode: vi.fn() };
-	return { default: reactDOM, ...reactDOM };
-});
 vi.mock("nylas-exports", () => {
 	const exports = {
 		Utils: {

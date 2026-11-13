@@ -138,7 +138,6 @@ class FloatingToolbar extends React.Component {
 			React.createElement(
 				"div",
 				{
-					ref: "floatingToolbar",
 					className: this._toolbarClasses(),
 					style: this._toolbarStyles(),
 				},

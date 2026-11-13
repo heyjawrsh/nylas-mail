@@ -29,11 +29,6 @@ vi.mock("underscore", () => {
 	};
 	return { default: underscore, ...underscore };
 });
-vi.mock("react-dom", async (importOriginal) => {
-	const actual = await importOriginal();
-	const findDOMNode = (value) => value instanceof Element ? value : value?.inputRef?.current || value;
-	return { ...actual, default: { ...actual.default, findDOMNode }, findDOMNode };
-});
 vi.mock("@electron/remote", () => {
 	const remote = {
 		Menu: class Menu {
@@ -51,9 +46,11 @@ vi.mock("nylas-exports", () => ({
 }));
 vi.mock("nylas-component-kit", () => ({
 	Menu: class Menu extends React.Component {
+		rootRef = React.createRef();
 		getSelectedItem() { return this.props.items[0] || null; }
+		getDOMNode() { return this.rootRef.current; }
 		render() {
-			return <div className={this.props.className} tabIndex={-1}>
+			return <div ref={this.rootRef} className={this.props.className} tabIndex={-1}>
 				{this.props.headerComponents}
 				{this.props.items.map((item) => <button type="button" data-testid={`suggestion-${item.id}`} key={item.id} onMouseDown={() => this.props.onSelect(item)}>{this.props.itemContent(item)}</button>)}
 			</div>;
@@ -252,6 +249,26 @@ describe("TokenizingTextField keyboard and token management", () => {
 });
 
 describe("Token editing, focus, paste, and actions", () => {
+	it("hands over the Menu's root node as its own", () => {
+		const f = fixture();
+		expect(f.ref.current.getDOMNode()).toBe(f.container.querySelector(".tokenizing-field"));
+	});
+
+	it("focus() reaches the input through the SizeToFitInput ref", () => {
+		const f = fixture();
+		f.ref.current.focus();
+		expect(document.activeElement).toBe(f.input());
+	});
+
+	it("keeps typed text when focus moves to its own root, and adds it otherwise", () => {
+		const f = fixture();
+		fireEvent.change(f.input(), { target: { value: "dra" } });
+		act(() => f.ref.current._onInputBlurred({ relatedTarget: f.ref.current.getDOMNode() }));
+		expect(f.props.onAdd).not.toHaveBeenCalled();
+		act(() => f.ref.current._onInputBlurred({ relatedTarget: document.body }));
+		expect(f.props.onAdd).toHaveBeenCalledWith("dra", {});
+	});
+
 	it("enters token editing mode on double click", () => {
 		fixture({ onEdit: vi.fn() });
 		fireEvent.doubleClick(screen.getByText("Alice"));

@@ -24,10 +24,6 @@ vi.mock("react", () => {
 	const react = { Component: class Component {}, createElement: m.createElement, createRef: vi.fn(() => ({ current: null })) };
 	return { default: react, ...react };
 });
-vi.mock("react-dom", () => {
-	const reactDOM = { findDOMNode: vi.fn() };
-	return { default: reactDOM, ...reactDOM };
-});
 vi.mock("nylas-exports", () => {
 	const exports = {
 		Utils: {

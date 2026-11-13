@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
-	defer: vi.fn((fn) => fn()), findDOMNode: vi.fn(), generateTempId: vi.fn(() => "region-1"),
+	defer: vi.fn((fn) => fn()), currentNode: null, generateTempId: vi.fn(() => "region-1"),
 	highlight: vi.fn(), listen: vi.fn(), register: vi.fn(), unregister: vi.fn(),
 }));
 
@@ -10,7 +10,6 @@ vi.mock("react", () => {
 	const react = { Component: class Component {}, createElement: vi.fn() };
 	return { default: react, ...react };
 });
-vi.mock("react-dom", () => ({ default: { findDOMNode: m.findDOMNode }, findDOMNode: m.findDOMNode }));
 vi.mock("nylas-exports", () => ({
 	Utils: { fastOmit: (object, keys) => Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key))), generateTempId: m.generateTempId, isEqualReact: (a, b) => a === b },
 	RegExpUtils: {}, IdentityStore: { URLRoot: "https://billing.test/", fetchSingleSignOnURL: vi.fn() }, SearchableComponentMaker: {},
@@ -34,7 +33,7 @@ const frameNode = () => {
 const frame = (props = {}) => {
 	const instance = Object.create(EventedIFrame.prototype);
 	instance.props = props;
-	instance._nodeRef = { current: m.findDOMNode() };
+	instance._nodeRef = { current: m.currentNode };
 	instance.state = {};
 	instance._onIFrameClick = vi.fn(); instance._onIFrameKeyEvent = vi.fn(); instance._onIFrameMouseEvent = vi.fn(); instance._onIFrameContextualMenu = vi.fn(); instance._onIFrameFocus = vi.fn(); instance._onIFrameBlur = vi.fn(); instance._onIFrameResize = vi.fn();
 	return instance;
@@ -42,7 +41,7 @@ const frame = (props = {}) => {
 
 describe("EventedIFrame document bridge lifecycle", () => {
 	let node;
-	beforeEach(() => { vi.clearAllMocks(); node = frameNode(); m.findDOMNode.mockReturnValue(node); m.listen.mockReturnValue(vi.fn()); });
+	beforeEach(() => { vi.clearAllMocks(); node = frameNode(); m.currentNode = node; m.listen.mockReturnValue(vi.fn()); });
 
 	it("subscribes to iframe document clicks", () => {
 		frame()._subscribeToIFrameEvents();

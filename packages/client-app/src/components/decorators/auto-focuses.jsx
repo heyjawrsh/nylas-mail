@@ -1,5 +1,6 @@
 import _ from "underscore";
-import { findDOMNode } from "react-dom";
+import React from "react";
+import { domNodeOf } from "../dom-node.js";
 
 const FOCUSABLE_SELECTOR = "input, textarea, [contenteditable], [tabIndex]";
 
@@ -11,6 +12,14 @@ function AutoFocuses(
 		static displayName = ComposedComponent.displayName;
 		static containerRequired = ComposedComponent.containerRequired;
 		static containerStyles = ComposedComponent.containerStyles;
+
+		// A ref to the rendered ComposedComponent, which hands over its root
+		// node through getDOMNode(), since React 19 can't look it up.
+		_autoFocusTargetRef = React.createRef();
+
+		getDOMNode() {
+			return domNodeOf(this._autoFocusTargetRef.current);
+		}
 
 		componentDidMount() {
 			this.mounted = true;
@@ -29,7 +38,7 @@ function AutoFocuses(
 			}
 		}
 
-		isFocusable(currentNode = findDOMNode(this)) {
+		isFocusable(currentNode = this.getDOMNode()) {
 			currentNode.focus();
 			return document.activeElement === currentNode;
 		}
@@ -39,8 +48,8 @@ function AutoFocuses(
 				return;
 			}
 			// Automatically focus the element inside us with the lowest tab index
-			const currentNode = findDOMNode(this);
-			if (currentNode.contains(document.activeElement)) {
+			const currentNode = this.getDOMNode();
+			if (!currentNode || currentNode.contains(document.activeElement)) {
 				return;
 			}
 
@@ -68,6 +77,7 @@ function AutoFocuses(
 			return (
 				<ComposedComponent
 					{...this.props}
+					ref={this._autoFocusTargetRef}
 					focusElementWithTabIndex={this.focusElementWithTabIndex}
 				/>
 			);

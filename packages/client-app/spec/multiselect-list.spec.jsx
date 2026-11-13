@@ -4,8 +4,7 @@ const m = vi.hoisted(() => ({ layoutMode: vi.fn(() => "list"), listen: vi.fn(), 
 
 vi.mock("prop-types", () => ({ default: new Proxy({}, { get: () => Object.assign(() => null, { isRequired: null }) }) }));
 vi.mock("underscore", () => { const underscore = { values: (o) => Object.values(o || {}), uniq: (a) => [...new Set(a || [])], extend: Object.assign, debounce: (fn) => fn, defer: (fn) => fn(), isEqual: (a, b) => a === b }; return { default: underscore, ...underscore }; });
-vi.mock("react", () => { class Component {} const react = { Component, createElement: (type, props, ...children) => ({ type, props: { ...props, children } }) }; return { default: react, ...react }; });
-vi.mock("react-dom", () => ({ default: { findDOMNode: vi.fn() }, findDOMNode: vi.fn() }));
+vi.mock("react", () => { class Component {} const react = { Component, createElement: (type, props, ...children) => ({ type, props: { ...props, children } }), createRef: () => ({ current: null }) }; return { default: react, ...react }; });
 vi.mock("classnames", () => ({ default: (classes) => Object.keys(classes).filter((key) => classes[key]).join(" ") }));
 vi.mock("../src/components/list-tabular.jsx", () => ({ default: Object.assign(function ListTabular() {}, { Column: class Column { constructor(options) { Object.assign(this, options); } } }) }));
 vi.mock("../src/components/spinner.jsx", () => ({ default: function Spinner() {} }));
@@ -21,6 +20,8 @@ const makeList = (overrides = {}) => {
 	const instance = Object.create(MultiselectList.prototype);
 	instance.props = { className: "mail", columns: [{ name: "Subject" }], itemPropsProvider: () => ({}), dataSource: { itemsCurrentlyInViewMatching: () => ["a", "b"] }, ...overrides };
 	instance.state = { handler: null, layoutMode: "list" };
+	instance._rootRef = { current: null };
+	instance._listRef = { current: null };
 	instance.setState = vi.fn((next) => { instance.state = { ...instance.state, ...next }; });
 	return instance;
 };
@@ -77,7 +78,7 @@ describe("MultiselectList selection and keyboard handlers", () => {
 	});
 
 	it("scrolls the backing list by a page", () => {
-		const list = makeList(); list.refs = { list: { scrollByPage: vi.fn() } }; list._onScrollByPage(-1); expect(list.refs.list.scrollByPage).toHaveBeenCalledWith(-1);
+		const list = makeList(); list._listRef.current = { scrollByPage: vi.fn() }; list._onScrollByPage(-1); expect(list._listRef.current.scrollByPage).toHaveBeenCalledWith(-1);
 	});
 
 	it("subscribes to workspace changes on setup", () => {

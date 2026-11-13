@@ -5,19 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
 	closePopover: vi.fn(),
 	destroyDraft: vi.fn(),
-	findDOMNode: vi.fn(),
 	nodeIsVisible: vi.fn(() => true),
 	openPopover: vi.fn(),
 	sessionForClientId: vi.fn(),
 	topSheet: vi.fn(() => ({ id: "top" })),
 	waitFor: vi.fn((callback) => Promise.resolve(callback())),
 	workspaceListen: vi.fn(() => vi.fn()),
-}));
-
-vi.mock("react-dom", async (importOriginal) => ({
-	...(await importOriginal()),
-	default: { findDOMNode: mocks.findDOMNode },
-	findDOMNode: mocks.findDOMNode,
 }));
 
 vi.mock("nylas-exports", () => ({
@@ -322,7 +315,10 @@ describe("InflatesDraftClientId", () => {
 
 describe("HasTutorialTip render behavior", () => {
 	let anchor;
-	let target;
+	// Renders inside the tooltip anchor, the way a toolbar button sits in a
+	// [data-tooltips-anchor] region in the app.
+	const renderInAnchor = (element) =>
+		render(element, { container: anchor.appendChild(document.createElement("div")) });
 
 	beforeEach(() => {
 		vi.clearAllMocks();
@@ -336,41 +332,50 @@ describe("HasTutorialTip render behavior", () => {
 		anchor = document.createElement("section");
 		anchor.dataset.tooltipsAnchor = "true";
 		anchor.innerHTML = '<div class="tooltips-container"></div>';
-		target = document.createElement("button");
-		anchor.appendChild(target);
 		document.body.appendChild(anchor);
-		mocks.findDOMNode.mockReturnValue(target);
 	});
 
-	it("renders the wrapped component without adding a React container", () => {
+	afterEach(() => {
+		anchor.remove();
+	});
+
+	it("renders the wrapped component inside a wrapper that adds no box", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated label="wrapped" />);
-		expect(screen.getByRole("button", { name: "wrapped" })).toBeDefined();
+		renderInAnchor(<Decorated label="wrapped" />);
+		const button = screen.getByRole("button", { name: "wrapped" });
+		expect(button.parentNode.style.display).toBe("contents");
+	});
+
+	it("hands over the wrapped component's root node", () => {
+		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
+		const ref = React.createRef();
+		renderInAnchor(<Decorated ref={ref} label="wrapped" />);
+		expect(ref.current.getDOMNode()).toBe(screen.getByRole("button", { name: "wrapped" }));
 	});
 
 	it("appends its visual marker to the nearest tooltip anchor", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated />);
+		renderInAnchor(<Decorated />);
 		expect(anchor.querySelector(".tooltips-container > .tutorial-tip")).not.toBeNull();
 	});
 
 	it("marks the first unseen mounted tip visible", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated />);
+		renderInAnchor(<Decorated />);
 		expect(anchor.querySelector(".tutorial-tip").classList.contains("visible")).toBe(true);
 	});
 
 	it("keeps a tip hidden when its DOM node is not visible", () => {
 		mocks.nodeIsVisible.mockReturnValue(false);
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated />);
+		renderInAnchor(<Decorated />);
 		expect(anchor.querySelector(".tutorial-tip").classList.contains("visible")).toBe(false);
 	});
 
 	it("opens the configured popover when a visible target is hovered", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "A useful title", instructions: "Useful help" });
-		render(<Decorated />);
-		fireEvent.mouseOver(target);
+		renderInAnchor(<Decorated />);
+		fireEvent.mouseOver(screen.getByRole("button"));
 		expect(mocks.openPopover).toHaveBeenCalledOnce();
 		const [contents, options] = mocks.openPopover.mock.calls[0];
 		expect(contents.props).toMatchObject({ title: "A useful title", instructions: "Useful help" });
@@ -380,8 +385,8 @@ describe("HasTutorialTip render behavior", () => {
 	it("does not open a popover when the tip is hidden", () => {
 		mocks.nodeIsVisible.mockReturnValue(false);
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated />);
-		fireEvent.mouseOver(target);
+		renderInAnchor(<Decorated />);
+		fireEvent.mouseOver(screen.getByRole("button"));
 		expect(mocks.openPopover).not.toHaveBeenCalled();
 	});
 
@@ -391,7 +396,7 @@ describe("HasTutorialTip render behavior", () => {
 		mocks.workspaceListen.mockImplementation((callback) => { workspaceChanged = callback; return vi.fn(); });
 		vi.useFakeTimers();
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		render(<Decorated />);
+		renderInAnchor(<Decorated />);
 		mocks.nodeIsVisible.mockReturnValue(true);
 		React.act(() => {
 			workspaceChanged();
@@ -406,7 +411,7 @@ describe("HasTutorialTip render behavior", () => {
 		mocks.workspaceListen.mockReturnValue(workspaceUnlisten);
 		NylasEnv.themes.onDidChangeActiveThemes.mockReturnValue({ dispose: themeDispose });
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		const view = render(<Decorated />);
+		const view = renderInAnchor(<Decorated />);
 		view.unmount();
 		expect(anchor.querySelector(".tutorial-tip")).toBeNull();
 		expect(workspaceUnlisten).toHaveBeenCalledOnce();

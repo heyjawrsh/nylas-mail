@@ -1,12 +1,12 @@
 import _ from "underscore";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import compose from "./decorators/compose.js";
 import AutoFocuses from "./decorators/auto-focuses.jsx";
 import ListensToMovementKeys from "./decorators/listens-to-movement-keys.jsx";
 import Table, { TableRow, TableCell } from "./table/table.jsx";
+import { domNodeOf } from "./dom-node.js";
 
 /*
 SelectableTable component which renders a {Table} that supports selecting
@@ -169,9 +169,16 @@ export class SelectableTableRow extends Component {
 		return rowChanged || selectionStateChanged || selectedColChanged;
 	}
 
+	_rowRef = createRef();
+
+	// The row's <tr>, through the TableRow it renders.
+	getDOMNode() {
+		return domNodeOf(this._rowRef.current);
+	}
+
 	componentDidUpdate() {
 		if (this.isSelected(this.props)) {
-			ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(false);
+			this.getDOMNode()?.scrollIntoViewIfNeeded(false);
 		}
 	}
 
@@ -185,7 +192,7 @@ export class SelectableTableRow extends Component {
 			[className]: true,
 			selected: this.isSelected(this.props),
 		});
-		return <TableRow {...this.props} className={classes} />;
+		return <TableRow {...this.props} ref={this._rowRef} className={classes} />;
 	}
 }
 

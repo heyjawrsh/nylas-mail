@@ -10,7 +10,6 @@
 import PropTypes from "prop-types";
 import _ from "underscore";
 import React from "react";
-import ReactDOM from "react-dom";
 import classNames from "classnames";
 import RetinaImg from "./retina-img.jsx";
 import {
@@ -127,6 +126,7 @@ class EmptyListState extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = React.createRef();
 		this._getDimensions = this._getDimensions.bind(this);
 		this._onResize = this._onResize.bind(this);
 		this.props = props;
@@ -211,7 +211,7 @@ class EmptyListState extends React.Component {
 
 		return React.createElement(
 			"div",
-			{ className: classes },
+			{ ref: this._rootRef, className: classes },
 			React.createElement(ContentComponent, {
 				perspective: current,
 				containerRect: this.state.rect,
@@ -224,7 +224,10 @@ class EmptyListState extends React.Component {
 		if (!this._mounted) {
 			return null;
 		}
-		const node = ReactDOM.findDOMNode(this);
+		const node = this._rootRef.current;
+		if (!node) {
+			return null;
+		}
 		const rect = node.getBoundingClientRect();
 		return { width: rect.width, height: rect.height };
 	}

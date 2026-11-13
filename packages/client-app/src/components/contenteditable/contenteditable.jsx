@@ -13,10 +13,10 @@
 import PropTypes from "prop-types";
 import _ from "underscore";
 import React from "react";
-import ReactDOM from "react-dom";
 
 import { Utils, DOMUtils } from "nylas-exports";
 import { KeyCommandsRegion } from "nylas-component-kit";
+import { domNodeOf } from "../dom-node.js";
 import FloatingToolbar from "./floating-toolbar.jsx";
 
 import EditorAPI from "./editor-api.js";
@@ -155,6 +155,9 @@ class Contenteditable extends React.Component {
 
 	constructor(props) {
 		super();
+		this._regionRef = React.createRef();
+		this._contenteditableRef = React.createRef();
+		this._toolbarControllerRef = React.createRef();
 		this.atomicEdit = this.atomicEdit.bind(this);
 		this.focus = this.focus.bind(this);
 		this.setSelection = this.setSelection.bind(this);
@@ -261,8 +264,8 @@ class Contenteditable extends React.Component {
 		}
 		this.innerState = _.extend(this.innerState, innerState);
 		if (this._broadcastInnerStateToToolbar) {
-			if (this.refs.toolbarController != null) {
-				this.refs.toolbarController.componentWillReceiveInnerProps(
+			if (this._toolbarControllerRef.current != null) {
+				this._toolbarControllerRef.current.componentWillReceiveInnerProps(
 					this.innerState,
 				);
 			}
@@ -308,6 +311,7 @@ class Contenteditable extends React.Component {
 		return React.createElement(
 			KeyCommandsRegion,
 			{
+				ref: this._regionRef,
 				className: "contenteditable-container",
 				localHandlers: this._keymapHandlers(),
 			},
@@ -318,7 +322,7 @@ class Contenteditable extends React.Component {
 				Object.assign(
 					{
 						className: "contenteditable no-open-link-events",
-						ref: "contenteditable",
+						ref: this._contenteditableRef,
 						contentEditable: true,
 						spellCheck: false,
 						placeholder: this.props.placeholder,
@@ -335,14 +339,19 @@ class Contenteditable extends React.Component {
 			return;
 		}
 		return React.createElement(FloatingToolbar, {
-			ref: "toolbarController",
+			ref: this._toolbarControllerRef,
 			atomicEdit: this.atomicEdit,
 			extensions: this._extensions(),
 		});
 	}
 
 	_editableNode() {
-		return ReactDOM.findDOMNode(this.refs.contenteditable);
+		return this._contenteditableRef.current;
+	}
+
+	// The root node: the KeyCommandsRegion's .contenteditable-container div.
+	getDOMNode() {
+		return domNodeOf(this._regionRef.current);
 	}
 
 	//#####################################################################
@@ -613,8 +622,8 @@ class Contenteditable extends React.Component {
 	}
 
 	_onShowContextMenu(event) {
-		if (this.refs.toolbarController != null) {
-			this.refs.toolbarController.forceClose();
+		if (this._toolbarControllerRef.current != null) {
+			this._toolbarControllerRef.current.forceClose();
 		}
 		event.preventDefault();
 

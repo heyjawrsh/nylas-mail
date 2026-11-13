@@ -72,6 +72,11 @@ class EventedIFrame extends React.Component {
 		};
 	}
 
+	// The <iframe>, for SearchableComponentMaker and parents that need it.
+	getDOMNode() {
+		return this._nodeRef.current;
+	}
+
 	render() {
 		const otherProps = Utils.fastOmit(
 			this.props,

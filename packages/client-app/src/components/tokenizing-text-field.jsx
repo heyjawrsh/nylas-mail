@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 import classNames from "classnames";
 import _ from "underscore";
 import * as remote from "@electron/remote";
@@ -17,7 +17,6 @@ class SizeToFitInput extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.completionsRef = React.createRef();
 		this.inputRef = React.createRef();
 		this.measureRef = React.createRef();
 		this.state = {};
@@ -37,8 +36,8 @@ class SizeToFitInput extends React.Component {
 		}
 		// Measure the width of the text in the input and
 		// resize the input field to fit.
-		const inputEl = ReactDOM.findDOMNode(this.inputRef?.current);
-		const measureEl = ReactDOM.findDOMNode(this.measureRef?.current);
+		const inputEl = this.inputRef.current;
+		const measureEl = this.measureRef.current;
 		measureEl.innerText = inputEl.value;
 		measureEl.style.top = `${inputEl.offsetTop}px`;
 		measureEl.style.left = `${inputEl.offsetLeft}px`;
@@ -48,11 +47,11 @@ class SizeToFitInput extends React.Component {
 	}
 
 	select() {
-		ReactDOM.findDOMNode(this.inputRef?.current).select();
+		this.inputRef.current.select();
 	}
 
 	selectionRange() {
-		const inputEl = ReactDOM.findDOMNode(this.inputRef?.current);
+		const inputEl = this.inputRef.current;
 		return {
 			start: inputEl.selectionStart,
 			end: inputEl.selectionEnd,
@@ -60,7 +59,7 @@ class SizeToFitInput extends React.Component {
 	}
 
 	focus() {
-		ReactDOM.findDOMNode(this.inputRef?.current).focus();
+		this.inputRef.current.focus();
 	}
 
 	render() {
@@ -103,7 +102,7 @@ class Token extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.fieldDropTargetRef = React.createRef();
+		this.inputRef = React.createRef();
 		this.state = {
 			editing: false,
 			editingValue: this.props.item.toString(),
@@ -400,6 +399,9 @@ export default class TokenizingTextField extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.inputRef = React.createRef();
+		this.completionsRef = React.createRef();
+		this.fieldDropTargetRef = React.createRef();
 		this.state = {
 			inputValue: props.defaultValue || "",
 			completions: [],
@@ -430,6 +432,11 @@ export default class TokenizingTextField extends React.Component {
 		this._mounted = false;
 	}
 
+	// The root node: the Menu this field renders.
+	getDOMNode() {
+		return domNodeOf(this.completionsRef.current);
+	}
+
 	// Maintaining Input State
 
 	_onClick = (event) => {
@@ -437,7 +444,7 @@ export default class TokenizingTextField extends React.Component {
 		// like an editable token's input
 		if (
 			event.target.tagName === "INPUT" &&
-			ReactDOM.findDOMNode(this).contains(event.target)
+			this.getDOMNode()?.contains(event.target)
 		) {
 			return;
 		}
@@ -618,7 +625,7 @@ export default class TokenizingTextField extends React.Component {
 			return;
 		}
 
-		if (event.relatedTarget === ReactDOM.findDOMNode(this)) {
+		if (event.relatedTarget === this.getDOMNode()) {
 			return;
 		}
 

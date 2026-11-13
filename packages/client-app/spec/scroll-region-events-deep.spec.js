@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
 	debounces: [],
-	findDOMNode: vi.fn((value) => value),
 	isEqualReact: vi.fn((a, b) => a === b),
 }));
 
@@ -26,12 +25,12 @@ vi.mock("react", () => {
 		constructor(props) { this.props = props; this.state = {}; }
 		setState(update) { Object.assign(this.state, typeof update === "function" ? update(this.state, this.props) : update); }
 	}
-	const react = { Component, createElement: (type, props, ...children) => ({ type, props: { ...props, children } }) };
+	const react = {
+		Component,
+		createElement: (type, props, ...children) => ({ type, props: { ...props, children } }),
+		createRef: () => ({ current: null }),
+	};
 	return { default: react, ...react };
-});
-vi.mock("react-dom", () => {
-	const reactDOM = { findDOMNode: m.findDOMNode };
-	return { default: reactDOM, ...reactDOM };
 });
 vi.mock("nylas-exports", () => {
 	const Utils = {
@@ -56,7 +55,6 @@ const Scrollbar = ScrollRegion.Scrollbar;
 const scrollbar = (overrides = {}) => {
 	const scrollRegion = { scrollTop: 0, _recomputeDimensions: vi.fn() };
 	const instance = new Scrollbar({ getScrollRegion: () => scrollRegion, ...overrides });
-	instance.refs = {};
 	return { instance, scrollRegion };
 };
 
@@ -64,7 +62,9 @@ const region = (props = {}) => {
 	const instance = Object.create(ScrollRegion.prototype);
 	instance.props = props;
 	instance.state = { totalHeight: 0, viewportHeight: 0, viewportScrollTop: 0, scrolling: false };
-	instance.refs = {};
+	instance._rootRef = { current: null };
+	instance._contentRef = { current: null };
+	instance._scrollbarRef = { current: null };
 	instance.setState = vi.fn((update) => Object.assign(instance.state, update));
 	return instance;
 };
@@ -83,7 +83,6 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		m.debounces.length = 0;
-		m.findDOMNode.mockImplementation((value) => value);
 	});
 
 	it("enforces the forty pixel minimum handle height", () => {
@@ -141,15 +140,15 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 
 	it("reads a changed track height from the DOM", () => {
 		const { instance } = scrollbar();
-		instance.refs.track = { clientHeight: 240 };
+		instance._trackRef.current = { clientHeight: 240 };
 		instance._recomputeDimensions({ useCachedValues: false });
 		expect(instance.state.trackHeight).toBe(240);
 	});
 
 	it("records mouse offsets when handle dragging begins", () => {
 		const { instance } = scrollbar();
-		instance.refs.track = { getBoundingClientRect: () => ({ top: 25 }) };
-		instance.refs.handle = { getBoundingClientRect: () => ({ top: 40 }) };
+		instance._trackRef.current = { getBoundingClientRect: () => ({ top: 25 }) };
+		instance._handleRef.current = { getBoundingClientRect: () => ({ top: 40 }) };
 		instance._onHandleDown({ pageY: 55, preventDefault: vi.fn() });
 		expect([instance._trackOffset, instance._mouseOffsetWithinHandle]).toEqual([25, 15]);
 		instance._onHandleUp({ preventDefault: vi.fn() });
@@ -158,8 +157,8 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 	it("updates scrollTop from a real window mousemove", () => {
 		const { instance, scrollRegion } = scrollbar();
 		Object.assign(instance.state, { totalHeight: 1000, viewportHeight: 200, trackHeight: 200 });
-		instance.refs.track = { getBoundingClientRect: () => ({ top: 20 }) };
-		instance.refs.handle = { getBoundingClientRect: () => ({ top: 30 }) };
+		instance._trackRef.current = { getBoundingClientRect: () => ({ top: 20 }) };
+		instance._handleRef.current = { getBoundingClientRect: () => ({ top: 30 }) };
 		instance._onHandleDown({ pageY: 40, preventDefault: vi.fn() });
 		window.dispatchEvent(new MouseEvent("mousemove", { clientY: 110 }));
 		expect(scrollRegion.scrollTop).toBe(400);
@@ -168,8 +167,8 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 
 	it("ends dragging from a real window mouseup", () => {
 		const { instance } = scrollbar();
-		instance.refs.track = { getBoundingClientRect: () => ({ top: 0 }) };
-		instance.refs.handle = { getBoundingClientRect: () => ({ top: 0 }) };
+		instance._trackRef.current = { getBoundingClientRect: () => ({ top: 0 }) };
+		instance._handleRef.current = { getBoundingClientRect: () => ({ top: 0 }) };
 		instance._onHandleDown({ pageY: 0, preventDefault: vi.fn() });
 		window.dispatchEvent(new MouseEvent("mouseup"));
 		expect(instance.state.dragging).toBe(false);
@@ -185,7 +184,7 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 	it("centers the handle on a clicked track position", () => {
 		const { instance, scrollRegion } = scrollbar();
 		Object.assign(instance.state, { totalHeight: 1000, viewportHeight: 200, trackHeight: 200 });
-		instance.refs.track = { getBoundingClientRect: () => ({ top: 10 }) };
+		instance._trackRef.current = { getBoundingClientRect: () => ({ top: 10 }) };
 		instance._onScrollJump({ pageY: 110, preventDefault: vi.fn() });
 		expect(scrollRegion.scrollTop).toBe(400);
 	});
@@ -200,7 +199,7 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 
 	it("shares fresh DOM dimensions with the scrollbar", () => {
 		const instance = region();
-		instance.refs.content = sizedContent();
+		instance._contentRef.current = sizedContent();
 		instance._setSharedState = vi.fn();
 		instance._recomputeDimensions({ useCachedValues: false });
 		expect(instance._setSharedState).toHaveBeenCalledWith({ totalHeight: 600, viewportScrollTop: 12, viewportHeight: 150 });
@@ -209,7 +208,7 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 	it("retains cached heights while refreshing scrollTop", () => {
 		const instance = region();
 		instance.state = { totalHeight: 500, viewportHeight: 100, viewportScrollTop: 0 };
-		instance.refs.content = sizedContent({ scrollTop: 35, scrollHeight: 900, clientHeight: 300 });
+		instance._contentRef.current = sizedContent({ scrollTop: 35, scrollHeight: 900, clientHeight: 300 });
 		instance._setSharedState = vi.fn();
 		instance._recomputeDimensions({ useCachedValues: true });
 		expect(instance._setSharedState).toHaveBeenCalledWith({ totalHeight: 500, viewportScrollTop: 35, viewportHeight: 100 });
@@ -220,7 +219,7 @@ describe("ScrollRegion deep scrollbar and DOM event behavior", () => {
 		const onScroll = vi.fn();
 		const instance = region({ onScroll });
 		const node = sizedContent();
-		instance.refs.content = node;
+		instance._contentRef.current = node;
 		node.addEventListener("scroll", instance._onScroll);
 		node.dispatchEvent(new WheelEvent("wheel", { deltaY: 40 }));
 		expect(onScroll).not.toHaveBeenCalled();

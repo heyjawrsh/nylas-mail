@@ -1,5 +1,5 @@
 import _ from "underscore";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "../components/dom-node.js";
 import Utils from "../flux/models/utils.js";
 import VirtualDOMParser from "./virtual-dom-parser.js";
 import SearchableComponentStore from "../flux/stores/searchable-component-store.js";
@@ -13,7 +13,7 @@ class SearchableComponent {
 		});
 		SearchableComponentStore.registerSearchRegion(
 			this.__regionId,
-			ReactDOM.findDOMNode(this),
+			domNodeOf(this),
 		);
 	}
 
@@ -55,7 +55,7 @@ class SearchableComponent {
 		if (superMethod) superMethod.apply(this, args);
 		SearchableComponentStore.registerSearchRegion(
 			this.__regionId,
-			ReactDOM.findDOMNode(this),
+			domNodeOf(this),
 		);
 	}
 
@@ -80,7 +80,8 @@ class SearchableComponent {
 }
 
 /**
- * Takes a React component and makes it searchable
+ * Takes a React component and makes it searchable. The component hands
+ * over its root DOM node through a getDOMNode() method.
  */
 export default class SearchableComponentMaker {
 	static extend(component) {

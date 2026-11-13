@@ -11,7 +11,7 @@
 import PropTypes from "prop-types";
 import _ from "underscore";
 import React from "react";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 import classNames from "classnames";
 import ListTabular from "./list-tabular.jsx";
 import Spinner from "./spinner.jsx";
@@ -49,6 +49,9 @@ class MultiselectList extends React.Component {
 
 	constructor(props) {
 		super();
+		// The root: a KeyCommandsRegion, or a div while the list loads.
+		this._rootRef = React.createRef();
+		this._listRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
 			this.UNSAFE_componentWillReceiveProps.bind(this);
@@ -93,19 +96,28 @@ class MultiselectList extends React.Component {
 			prevProps.focusedId !== this.props.focusedId ||
 			prevProps.keyboardCursorId !== this.props.keyboardCursorId
 		) {
-			let item = ReactDOM.findDOMNode(this).querySelector(".focused");
+			const root = this.getDOMNode();
+			if (!root) {
+				return;
+			}
+			let item = root.querySelector(".focused");
 			if (item == null) {
-				item = ReactDOM.findDOMNode(this).querySelector(".keyboard-cursor");
+				item = root.querySelector(".keyboard-cursor");
 			}
 			if (!(item instanceof Node)) {
 				return;
 			}
-			return this.refs.list.scrollTo(item);
+			return this._listRef.current?.scrollTo(item);
 		}
 	}
 
 	componentWillUnmount() {
 		return this.teardownForProps();
+	}
+
+	// The root node, through the KeyCommandsRegion or the loading div.
+	getDOMNode() {
+		return domNodeOf(this._rootRef.current);
 	}
 
 	teardownForProps() {
@@ -189,12 +201,16 @@ class MultiselectList extends React.Component {
 
 			return React.createElement(
 				KeyCommandsRegion,
-				{ globalHandlers: this._globalKeymapHandlers(), className: className },
+				{
+					ref: this._rootRef,
+					globalHandlers: this._globalKeymapHandlers(),
+					className: className,
+				},
 				React.createElement(
 					ListTabular,
 					Object.assign(
 						{
-							ref: "list",
+							ref: this._listRef,
 							columns: this.state.computedColumns,
 							dataSource: this.props.dataSource,
 							itemPropsProvider: this.itemPropsProvider,
@@ -208,7 +224,7 @@ class MultiselectList extends React.Component {
 		} else {
 			return React.createElement(
 				"div",
-				Object.assign({ className: className }, otherProps),
+				Object.assign({ ref: this._rootRef, className: className }, otherProps),
 				React.createElement(Spinner, { visible: true }),
 			);
 		}
@@ -269,7 +285,7 @@ class MultiselectList extends React.Component {
 	}
 
 	_onScrollByPage(delta) {
-		return this.refs.list.scrollByPage(delta);
+		return this._listRef.current?.scrollByPage(delta);
 	}
 
 	_onChange() {

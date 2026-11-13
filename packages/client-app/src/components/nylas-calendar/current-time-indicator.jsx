@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import Moment from "moment";
 import classNames from "classnames";
 
@@ -15,6 +14,7 @@ export default class CurrentTimeIndicator extends React.Component {
 	constructor(props) {
 		super(props);
 		this._movementTimer = null;
+		this._rootRef = React.createRef();
 		this.state = this.getStateFromTime();
 	}
 
@@ -23,7 +23,7 @@ export default class CurrentTimeIndicator extends React.Component {
 		this._movementTimer = setInterval(() => {
 			this.setState(this.getStateFromTime());
 		}, 60 * 1000);
-		ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(true);
+		this._rootRef.current?.scrollIntoViewIfNeeded(true);
 	}
 
 	componentWillUnmount() {
@@ -56,6 +56,7 @@ export default class CurrentTimeIndicator extends React.Component {
 
 		return (
 			<div
+				ref={this._rootRef}
 				className={classNames({
 					"current-time-indicator": true,
 					visible: visible,

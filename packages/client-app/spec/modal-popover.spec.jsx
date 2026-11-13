@@ -1,5 +1,5 @@
 import React from "react";
-import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
@@ -26,59 +26,12 @@ vi.mock("nylas-store", () => {
 	}
 	return { default: NylasStore };
 });
-vi.mock("react-dom", async () => {
-	const { flushSync } = await vi.importActual("react-dom");
-	const findDOMNode = (value) => {
-		if (value instanceof Element) return value;
-		const modal = document.querySelector(".modal-container");
-		if (modal) return modal;
-		return document.querySelector(".fixed-popover-container")?.parentElement;
-	};
-	return { default: { findDOMNode, flushSync }, findDOMNode, flushSync };
-});
 vi.mock("../src/components/retina-img.jsx", () => ({
 	default: Object.assign(
 		(props) => <button type="button" aria-label="Close modal" {...props} />,
 		{ Mode: { ContentDark: "dark" } },
 	),
 }));
-vi.mock("../src/components/decorators/compose.js", async () => {
-	const ReactModule = await vi.importActual("react");
-	const replaceStringRefs = (node, owner) => {
-		if (!ReactModule.isValidElement(node)) return node;
-		const props = {};
-		if (typeof node.props.ref === "string") {
-			const refName = node.props.ref;
-			props.ref = (element) => { owner.refs[refName] = element; };
-		}
-		if (node.props.children !== undefined) {
-			props.children = ReactModule.Children.map(
-				node.props.children,
-				(child) => replaceStringRefs(child, owner),
-			);
-		}
-		return ReactModule.cloneElement(node, props);
-	};
-
-	return {
-		default: (Component) => class React19CompatibleComponent extends Component {
-			constructor(props) {
-				super(props);
-				// The production component still uses legacy string refs. Adapt them only
-				// in the spec; React 19 no longer accepts them and source edits are out of scope.
-				Object.defineProperty(this, "refs", { value: {}, configurable: true });
-			}
-
-			render() {
-				return replaceStringRefs(super.render(), this);
-			}
-		},
-	};
-});
-vi.mock("../src/components/decorators/auto-focuses.jsx", () => ({
-	default: (Component) => Component,
-}));
-
 import Modal from "../src/components/modal.jsx";
 import FixedPopover from "../src/components/fixed-popover.jsx";
 import PopoverStore from "../src/flux/stores/popover-store.jsx";
@@ -141,6 +94,32 @@ describe("Modal", () => {
 		fireEvent.keyDown(document.querySelector(".modal-container"), { key: "Enter" });
 		expect(mocks.closeModal).not.toHaveBeenCalled();
 	});
+
+	it("focuses its lowest positive tabIndex element on mount", () => {
+		render(
+			<Modal>
+				<div>
+					<input aria-label="name" />
+					<button type="button" tabIndex={2}>second</button>
+					<button type="button" tabIndex={1}>first</button>
+				</div>
+			</Modal>,
+		);
+		expect(document.activeElement).toBe(screen.getByRole("button", { name: "first" }));
+	});
+
+	it("focuses an input when nothing has a positive tabIndex", () => {
+		render(<Modal><div><input aria-label="name" /></div></Modal>);
+		expect(document.activeElement).toBe(screen.getByRole("textbox", { name: "name" }));
+	});
+
+	it("mounts and unmounts with no React errors", () => {
+		const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+		const view = render(<Modal><div><input aria-label="name" /></div></Modal>);
+		view.unmount();
+		expect(consoleError).not.toHaveBeenCalled();
+		consoleError.mockRestore();
+	});
 });
 
 describe("FixedPopover", () => {
@@ -172,20 +151,52 @@ describe("FixedPopover", () => {
 		expect(document.querySelector(".fixed-popover-container").className).not.toContain("popout");
 	});
 
-	it("adds the popout class when visible", () => {
-		let component;
+	it("adds the popout class once positioning has run", async () => {
+		renderPopover();
+		await waitFor(() => {
+			expect(document.querySelector(".fixed-popover-container").className).toContain("popout");
+		});
+	});
+
+	it("focuses the first focusable node inside it on mount (AutoFocuses)", () => {
 		render(
-			<FixedPopover
-				ref={(value) => { component = value; }}
-				direction="down"
-				originRect={originRect}
-				focusElementWithTabIndex={() => {}}
-			>
+			<FixedPopover direction="down" originRect={originRect}>
+				<div><input aria-label="search" /></div>
+			</FixedPopover>,
+		);
+		expect(document.activeElement).toBe(screen.getByRole("textbox", { name: "search" }));
+	});
+
+	it("hands over its root node through the decorator", () => {
+		const ref = React.createRef();
+		render(
+			<FixedPopover ref={ref} direction="down" originRect={originRect}>
 				<div>Popover content</div>
 			</FixedPopover>,
 		);
-		act(() => component.setState({ visible: true }));
-		expect(document.querySelector(".fixed-popover-container").className).toContain("popout");
+		const root = ref.current.getDOMNode();
+		expect(root.querySelector(".fixed-popover-container")).not.toBeNull();
+		expect(root.querySelector(".fixed-popover-blur-trap")).not.toBeNull();
+	});
+
+	it("stays open when focus moves to a node inside it", () => {
+		render(
+			<FixedPopover direction="down" originRect={originRect}>
+				<div><input aria-label="inside" /></div>
+			</FixedPopover>,
+		);
+		fireEvent.blur(document.querySelector(".fixed-popover-container"), {
+			relatedTarget: screen.getByRole("textbox", { name: "inside" }),
+		});
+		expect(mocks.closePopover).not.toHaveBeenCalled();
+	});
+
+	it("mounts and unmounts with no React errors", () => {
+		const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+		const view = renderPopover();
+		view.unmount();
+		expect(consoleError).not.toHaveBeenCalled();
+		consoleError.mockRestore();
 	});
 
 	it("closes on Escape", () => {

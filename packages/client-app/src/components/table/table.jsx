@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
 import LazyRenderedList from "../lazy-rendered-list.jsx";
@@ -95,6 +95,13 @@ export class TableRow extends Component {
 		CellRenderer: TableCell,
 	};
 
+	_rootRef = createRef();
+
+	// The row's <tr>, for wrappers like SelectableTableRow that scroll it.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	render() {
 		const {
 			className,
@@ -113,7 +120,7 @@ export class TableRow extends Component {
 		});
 
 		return (
-			<tr className={classes} {...pickHTMLProps(props)}>
+			<tr ref={this._rootRef} className={classes} {...pickHTMLProps(props)}>
 				{displayNumbers ? (
 					<TableCell className="numbered-cell" isHeader={isHeader}>
 						{isHeader ? "" : rowIdx + 1}

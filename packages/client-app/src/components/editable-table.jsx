@@ -1,7 +1,6 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { pickHTMLProps } from "pick-react-known-prop";
-import ReactDOM from "react-dom";
 
 import RetinaImg from "./retina-img.jsx";
 import SelectableTable, { SelectableTableCell } from "./selectable-table.jsx";
@@ -67,8 +66,8 @@ import SelectableTable, { SelectableTableCell } from "./selectable-table.jsx";
 export class EditableTableCell extends Component {
 	constructor(props) {
 		super(props);
-		this.cellRef = React.createRef();
-		this.inputContainerRef = React.createRef();
+		this.cellRef = createRef();
+		this.inputContainerRef = createRef();
 	}
 
 	static propTypes = {
@@ -91,17 +90,13 @@ export class EditableTableCell extends Component {
 
 	componentDidMount() {
 		if (this.shouldFocusInput()) {
-			ReactDOM.findDOMNode(this.inputContainerRef?.current)
-				.querySelector("input")
-				.focus();
+			this.inputContainerRef.current?.querySelector("input")?.focus();
 		}
 	}
 
 	componentDidUpdate() {
 		if (this.shouldFocusInput()) {
-			ReactDOM.findDOMNode(this.inputContainerRef?.current)
-				.querySelector("input")
-				.focus();
+			this.inputContainerRef.current?.querySelector("input")?.focus();
 		}
 	}
 
@@ -128,7 +123,7 @@ export class EditableTableCell extends Component {
 			}
 		} else if (key === "Escape") {
 			event.stopPropagation();
-			ReactDOM.findDOMNode(this.inputContainerRef?.current).focus();
+			this.inputContainerRef.current?.focus();
 		}
 	};
 

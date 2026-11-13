@@ -49,15 +49,6 @@ vi.mock("classnames", () => {
 });
 vi.mock("node:fs", () => ({ default: { existsSync: m.existsSync }, existsSync: m.existsSync }));
 vi.mock("node:path", () => ({ default: { basename: (value) => value.split("/").at(-1) }, basename: (value) => value.split("/").at(-1) }));
-vi.mock("react-dom", async (importOriginal) => {
-	const actual = await importOriginal();
-	const findDOMNode = (value) => {
-		if (value?.constructor?.displayName === "ImageAttachmentItem") return document.querySelector(".image-attachment-item");
-		if (value?.constructor?.displayName === "AttachmentItem") return document.querySelector(".file-attachment-item");
-		return value?.__node || value;
-	};
-	return { default: { ...actual, findDOMNode }, ...actual, findDOMNode };
-});
 vi.mock("pick-react-known-prop", () => {
 	const pickHTMLProps = (props) => Object.fromEntries(Object.entries(props).filter(([key]) => key.startsWith("data-") || key === "title"));
 	return { default: { pickHTMLProps }, pickHTMLProps };

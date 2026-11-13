@@ -115,6 +115,13 @@ class RetinaImg extends React.Component {
 		return Utils.imageNamed(pathName, this.props.resourcePath);
 	};
 
+	_imgRef = React.createRef();
+
+	// The <img>, for parents that measure it or use it as a drag image.
+	getDOMNode() {
+		return this._imgRef.current;
+	}
+
 	render() {
 		const path =
 			this.props.url ||
@@ -154,6 +161,7 @@ class RetinaImg extends React.Component {
 		);
 		return (
 			<img
+				ref={this._imgRef}
 				alt={this.props.name}
 				className={className}
 				src={path}

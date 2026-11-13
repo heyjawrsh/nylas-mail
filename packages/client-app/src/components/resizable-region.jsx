@@ -8,7 +8,6 @@
  */
 import PropTypes from "prop-types";
 const React = require("react");
-const ReactDOM = require("react-dom");
 const _ = require("underscore");
 const {
 	Utils,
@@ -121,6 +120,7 @@ class ResizableRegion extends React.Component {
 
 	constructor(props) {
 		super();
+		this._rootRef = React.createRef();
 		this.render = this.render.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
@@ -179,7 +179,9 @@ class ResizableRegion extends React.Component {
 
 		return React.createElement(
 			"div",
-			Object.assign({ style: containerStyle }, otherProps),
+			Object.assign({ style: containerStyle }, otherProps, {
+				ref: this._rootRef,
+			}),
 			this.props.children,
 			React.createElement(
 				"div",
@@ -228,7 +230,7 @@ class ResizableRegion extends React.Component {
 		if (event.button !== 0) {
 			return;
 		}
-		const bcr = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const bcr = this._rootRef.current.getBoundingClientRect();
 		this.setState({
 			dragging: true,
 			bcr,

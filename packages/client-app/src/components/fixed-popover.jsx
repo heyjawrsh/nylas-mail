@@ -1,7 +1,6 @@
 import _ from "underscore";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { findDOMNode } from "react-dom";
 import Actions from "../flux/actions.js";
 import compose from "./decorators/compose.js";
 import AutoFocuses from "./decorators/auto-focuses.jsx";
@@ -54,6 +53,7 @@ class FixedPopover extends Component {
 
 	constructor(props) {
 		super(props);
+		this.rootRef = React.createRef();
 		this.blurTrapRef = React.createRef();
 		this.popoverRef = React.createRef();
 		this.popoverContainerRef = React.createRef();
@@ -69,7 +69,7 @@ class FixedPopover extends Component {
 
 	componentDidMount() {
 		this.mounted = true;
-		findDOMNode(this.popoverContainerRef?.current).addEventListener(
+		this.popoverContainerRef.current.addEventListener(
 			"animationend",
 			this.onAnimationEnd,
 		);
@@ -94,7 +94,7 @@ class FixedPopover extends Component {
 
 	componentWillUnmount() {
 		this.mounted = false;
-		findDOMNode(this.popoverContainerRef?.current).removeEventListener(
+		this.popoverContainerRef.current?.removeEventListener(
 			"animationend",
 			this.onAnimationEnd,
 		);
@@ -146,7 +146,7 @@ class FixedPopover extends Component {
 		if (!this.props.closeOnAppBlur && target === null) {
 			return;
 		}
-		if (!target || !findDOMNode(this).contains(target)) {
+		if (!target || !this.rootRef.current?.contains(target)) {
 			Actions.closePopover();
 		}
 	};
@@ -158,8 +158,13 @@ class FixedPopover extends Component {
 	};
 
 	getCurrentRect = () => {
-		return findDOMNode(this.popoverRef?.current).getBoundingClientRect();
+		return this.popoverRef.current.getBoundingClientRect();
 	};
+
+	// The root node, for the AutoFocuses decorator that wraps this component.
+	getDOMNode() {
+		return this.rootRef.current;
+	}
 
 	getWindowDimensions = () => {
 		return {
@@ -348,7 +353,7 @@ class FixedPopover extends Component {
 		const animateClass = visible ? " popout" : "";
 
 		return (
-			<div>
+			<div ref={this.rootRef}>
 				<div
 					ref={this.blurTrapRef}
 					className="fixed-popover-blur-trap"

@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 
 import ScrollRegion from "./scroll-region.jsx";
 import KeyCommandsRegion from "./key-commands-region.jsx";
@@ -120,6 +120,7 @@ class EditableList extends Component {
 	constructor(props) {
 		super(props);
 		this.itemsWrapperRef = React.createRef();
+		this._regionRef = React.createRef();
 		this.listId = uuid();
 		this.state = {
 			dropInsertionIndex: -1,
@@ -175,7 +176,7 @@ class EditableList extends Component {
 	};
 
 	_focusSelf = () => {
-		ReactDOM.findDOMNode(this).focus();
+		domNodeOf(this._regionRef.current)?.focus();
 	};
 
 	/**
@@ -185,7 +186,7 @@ class EditableList extends Component {
 	_scrollTo = (idx) => {
 		if (!idx) return;
 		const list = this.itemsWrapperRef?.current;
-		const nodes = ReactDOM.findDOMNode(list).querySelectorAll(".list-item");
+		const nodes = domNodeOf(list).querySelectorAll(".list-item");
 		list.scrollTo(nodes[idx]);
 	};
 
@@ -298,7 +299,7 @@ class EditableList extends Component {
 	};
 
 	_onDragOver = (event) => {
-		const wrapperNode = ReactDOM.findDOMNode(this.itemsWrapperRef?.current);
+		const wrapperNode = domNodeOf(this.itemsWrapperRef.current);
 
 		// As of Chromium 53, we cannot access the contents of the drag pasteboard
 		// until the user drops for security reasons. Pull the list id from the
@@ -477,6 +478,7 @@ class EditableList extends Component {
 
 		return (
 			<KeyCommandsRegion
+				ref={this._regionRef}
 				tabIndex="0"
 				localHandlers={this._listKeymapHandlers()}
 				className={`nylas-editable-list ${this.props.className}`}

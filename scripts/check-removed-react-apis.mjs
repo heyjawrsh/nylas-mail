@@ -22,8 +22,9 @@ const REMOVED_DOM_NAMES = "render|hydrate|unmountComponentAtNode";
 const REACT_DOM = `["']react-dom["']`;
 
 // Each entry: a label for the report, a regex run over the whole file (so it
-// can span lines), and what to use instead. A line is reported once, under
-// the first entry that matches it.
+// can span lines), and what to use instead. An entry with `only` checks just
+// the roots it lists. A line is reported once, under the first entry that
+// matches it.
 export const BANNED = [
 	{
 		label: "ReactDOM.render",
@@ -76,6 +77,33 @@ export const BANNED = [
 		pattern: /\bgetChildContext\b/,
 		why: "use a context Provider",
 	},
+	// The entries below cover src/ only for now; internal_packages/ joins
+	// them once its last use is gone.
+	{
+		label: "findDOMNode",
+		pattern: /\bfindDOMNode\b/,
+		why: "put a ref on the element, or call the child's getDOMNode()",
+		only: ["packages/client-app/src"],
+	},
+	{
+		label: "string ref",
+		// ref="x" or ref='x' in JSX, and ref: "x" in createElement props.
+		pattern: /\bref\s*[=:]\s*["']/,
+		why: "use createRef() or a callback ref",
+		only: ["packages/client-app/src"],
+	},
+	{
+		label: "string ref",
+		pattern: /\bref\s*=\s*\{\s*["'`]/,
+		why: "use createRef() or a callback ref",
+		only: ["packages/client-app/src"],
+	},
+	{
+		label: "this.refs",
+		pattern: /\.refs\b/,
+		why: "read the object ref's .current",
+		only: ["packages/client-app/src"],
+	},
 ];
 
 function* sourceFiles(dir) {
@@ -96,7 +124,8 @@ for (const root of ROOTS) {
 	for (const file of sourceFiles(path.join(repoRoot, root))) {
 		const text = readFileSync(file, "utf8");
 		const reported = new Set();
-		for (const { label, pattern, why } of BANNED) {
+		for (const { label, pattern, why, only } of BANNED) {
+			if (only && !only.includes(root)) continue;
 			const global = new RegExp(pattern.source, `${pattern.flags}g`);
 			for (const match of text.matchAll(global)) {
 				const line = lineAt(text, match.index);

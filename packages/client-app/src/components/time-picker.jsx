@@ -6,7 +6,6 @@ const nodeRequire =
 		: require;
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import moment from "moment";
 import classnames from "classnames";
 import TabGroupContext from "./tab-group-context.js";
@@ -34,6 +33,7 @@ export default class TimePicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.inputRef = React.createRef();
+		this._rootRef = React.createRef();
 		this.state = {
 			focused: false,
 			rawText: this._valToTimeString(props.value),
@@ -136,7 +136,10 @@ export default class TimePicker extends React.Component {
 
 	_fixTimeOptionScroll() {
 		this._gotoScrollStartOnUpdate = false;
-		const el = ReactDOM.findDOMNode(this);
+		const el = this._rootRef.current;
+		if (!el) {
+			return;
+		}
 		const scrollTo = el.querySelector(".scroll-start");
 		const scrollWrap = el.querySelector(".time-options");
 		if (scrollTo && scrollWrap) {
@@ -222,7 +225,7 @@ export default class TimePicker extends React.Component {
 			invalid: !moment(this.state.rawText, "h:ma").isValid(),
 		});
 		return (
-			<div className="time-picker-wrap">
+			<div ref={this._rootRef} className="time-picker-wrap">
 				<input
 					className={className}
 					type="text"

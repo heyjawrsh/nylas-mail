@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { domNodeOf } from "./dom-node.js";
 
 /**
  * Compat wrapper preserving the legacy `react-addons-css-transition-group`
@@ -54,15 +55,15 @@ export default class ReactCSSTransitionGroup extends Component {
 			classNames: transitionName,
 		};
 
-		// react-transition-group reaches the DOM node with findDOMNode unless
-		// it gets a nodeRef, and React 19 removed findDOMNode. A DOM child can
-		// carry the ref itself.
+		// react-transition-group looks up the DOM node through a react-dom API
+		// that React 19 removed unless it gets a nodeRef, so every child gets
+		// one. A DOM child carries the ref itself. A component child hands
+		// over its root node through getDOMNode() (see dom-node.js).
 		let transitionChild = child;
-		if (child && typeof child.type === "string" && !child.props.ref) {
-			transitionProps.nodeRef = this._nodeRefFor(child.key);
-			transitionChild = React.cloneElement(child, {
-				ref: transitionProps.nodeRef,
-			});
+		if (child) {
+			const entry = this._entryFor(child);
+			transitionProps.nodeRef = entry.nodeRef;
+			transitionChild = React.cloneElement(child, { ref: entry.ref });
 		}
 
 		return (
@@ -76,13 +77,47 @@ export default class ReactCSSTransitionGroup extends Component {
 		);
 	}
 
-	_nodeRefFor(key) {
-		if (!this._nodeRefs) {
-			this._nodeRefs = new Map();
+	// One entry per child key: the ref given to the child, and the nodeRef
+	// given to CSSTransition, which resolves to the child's DOM node.
+	_entryFor(child) {
+		if (!this._entries) {
+			this._entries = new Map();
 		}
-		if (!this._nodeRefs.has(key)) {
-			this._nodeRefs.set(key, React.createRef());
+		const { key } = child;
+		let entry = this._entries.get(key);
+		if (!entry) {
+			entry = { value: null, childRef: null };
+			entry.ref = (value) => {
+				entry.value = value;
+				setRef(entry.childRef, value);
+			};
+			entry.nodeRef = {
+				get current() {
+					// A child with no node to hand over still gets a node, so the
+					// transition skips its classes rather than throwing.
+					return domNodeOf(entry.value) || detachedNode();
+				},
+			};
+			this._entries.set(key, entry);
 		}
-		return this._nodeRefs.get(key);
+		// Keep any ref the caller put on the child working.
+		entry.childRef = child.props.ref ?? null;
+		return entry;
 	}
+}
+
+function setRef(ref, value) {
+	if (typeof ref === "function") {
+		ref(value);
+	} else if (ref && typeof ref === "object") {
+		ref.current = value;
+	}
+}
+
+let _detachedNode = null;
+function detachedNode() {
+	if (!_detachedNode) {
+		_detachedNode = document.createElement("span");
+	}
+	return _detachedNode;
 }

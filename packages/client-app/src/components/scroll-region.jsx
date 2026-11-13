@@ -10,7 +10,7 @@
 import PropTypes from "prop-types";
 import _ from "underscore";
 import React from "react";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 import { Utils } from "nylas-exports";
 import classNames from "classnames";
 import ScrollbarTicks from "./scrollbar-ticks.jsx";
@@ -48,6 +48,8 @@ class Scrollbar extends React.Component {
 		this._onHandleClick = this._onHandleClick.bind(this);
 		this._onScrollJump = this._onScrollJump.bind(this);
 		this._getHandleHeight = this._getHandleHeight.bind(this);
+		this._trackRef = React.createRef();
+		this._handleRef = React.createRef();
 		this.props = props;
 		this.state = {
 			totalHeight: 0,
@@ -118,7 +120,7 @@ class Scrollbar extends React.Component {
 				"div",
 				{
 					className: "scrollbar-track-inner",
-					ref: "track",
+					ref: this._trackRef,
 					onClick: this._onScrollJump,
 				},
 				this._renderScrollbarTicks(),
@@ -128,7 +130,7 @@ class Scrollbar extends React.Component {
 						className: "scrollbar-handle",
 						onMouseDown: this._onHandleDown,
 						style: this._scrollbarHandleStyles(),
-						ref: "handle",
+						ref: this._handleRef,
 						onClick: this._onHandleClick,
 					},
 					React.createElement("div", { className: "tooltip" }, tooltip),
@@ -173,7 +175,7 @@ class Scrollbar extends React.Component {
 
 	_recomputeDimensions({ useCachedValues }) {
 		if (!useCachedValues) {
-			const trackNode = ReactDOM.findDOMNode(this.refs.track);
+			const trackNode = this._trackRef.current;
 			if (!trackNode) {
 				return;
 			}
@@ -214,10 +216,8 @@ class Scrollbar extends React.Component {
 	}
 
 	_onHandleDown(event) {
-		const handleNode = ReactDOM.findDOMNode(this.refs.handle);
-		this._trackOffset = ReactDOM.findDOMNode(
-			this.refs.track,
-		).getBoundingClientRect().top;
+		const handleNode = this._handleRef.current;
+		this._trackOffset = this._trackRef.current.getBoundingClientRect().top;
 		this._mouseOffsetWithinHandle =
 			event.pageY - handleNode.getBoundingClientRect().top;
 		window.addEventListener("mousemove", this._onHandleMove);
@@ -249,9 +249,7 @@ class Scrollbar extends React.Component {
 	}
 
 	_onScrollJump(event) {
-		this._trackOffset = ReactDOM.findDOMNode(
-			this.refs.track,
-		).getBoundingClientRect().top;
+		this._trackOffset = this._trackRef.current.getBoundingClientRect().top;
 		this._mouseOffsetWithinHandle = this._getHandleHeight() / 2;
 		return this._onHandleMove(event);
 	}
@@ -321,6 +319,9 @@ class ScrollRegion extends React.Component {
 		this._recomputeDimensions = this._recomputeDimensions.bind(this);
 		this._onScroll = this._onScroll.bind(this);
 		this._getSelf = this._getSelf.bind(this);
+		this._rootRef = React.createRef();
+		this._contentRef = React.createRef();
+		this._scrollbarRef = React.createRef();
 		this.props = props;
 		this._scrollToTaskId = 0;
 		this._scrollbarComponent = null;
@@ -333,10 +334,10 @@ class ScrollRegion extends React.Component {
 
 		Object.defineProperty(this, "scrollTop", {
 			get() {
-				return ReactDOM.findDOMNode(this.refs.content).scrollTop;
+				return this._contentRef.current.scrollTop;
 			},
 			set(val) {
-				return (ReactDOM.findDOMNode(this.refs.content).scrollTop = val);
+				return (this._contentRef.current.scrollTop = val);
 			},
 		});
 	}
@@ -358,15 +359,12 @@ class ScrollRegion extends React.Component {
 			}
 		});
 
-		return this._heightObserver.observe(
-			ReactDOM.findDOMNode(this.refs.content),
-			{
-				subtree: true,
-				attributes: true,
-				attributeOldValue: true,
-				attributeFilter: ["style"],
-			},
-		);
+		return this._heightObserver.observe(this._contentRef.current, {
+			subtree: true,
+			attributes: true,
+			attributeOldValue: true,
+			attributeFilter: ["style"],
+		});
 	}
 
 	componentDidUpdate(prevProps, _prevState) {
@@ -415,7 +413,7 @@ class ScrollRegion extends React.Component {
 		if (!this.props.getScrollbar) {
 			if (this._scrollbarComponent == null) {
 				this._scrollbarComponent = React.createElement(Scrollbar, {
-					ref: "scrollbar",
+					ref: this._scrollbarRef,
 					scrollbarTickProvider: this.props.scrollbarTickProvider,
 					scrollTooltipComponent: this.props.scrollTooltipComponent,
 					getScrollRegion: this._getSelf,
@@ -430,14 +428,16 @@ class ScrollRegion extends React.Component {
 
 		return React.createElement(
 			"div",
-			Object.assign({ className: containerClasses }, otherProps),
+			Object.assign({ className: containerClasses }, otherProps, {
+				ref: this._rootRef,
+			}),
 			this._scrollbarComponent,
 			React.createElement(
 				"div",
 				{
 					className: "scroll-region-content",
 					onScroll: this._onScroll,
-					ref: "content",
+					ref: this._contentRef,
 				},
 				React.createElement(
 					"div",
@@ -456,7 +456,8 @@ class ScrollRegion extends React.Component {
 		}
 		const { position, settle, done } = param;
 		if (node instanceof React.Component) {
-			node = ReactDOM.findDOMNode(node);
+			// The component hands over its node through getDOMNode().
+			node = domNodeOf(node);
 		}
 		if (!(node instanceof Node)) {
 			throw new Error(
@@ -492,7 +493,7 @@ class ScrollRegion extends React.Component {
 
 	_scroll({ position, settle, done }, clientRectProviderCallback) {
 		let settleFn;
-		const contentNode = ReactDOM.findDOMNode(this.refs.content);
+		const contentNode = this._contentRef.current;
 		if (position == null) {
 			position = ScrollRegion.ScrollPosition.Visible;
 		}
@@ -556,7 +557,7 @@ class ScrollRegion extends React.Component {
 	}
 
 	_settleHeight(callback) {
-		const contentNode = ReactDOM.findDOMNode(this.refs.content);
+		const contentNode = this._contentRef.current;
 		let lastContentHeight = -1;
 		var scrollIfSettled = () => {
 			if (!this._mounted) {
@@ -584,7 +585,7 @@ class ScrollRegion extends React.Component {
 					? this.props.getScrollbar()
 					: undefined) != null
 				? left
-				: this.refs.scrollbar;
+				: this._scrollbarRef.current;
 		if (scrollbar) {
 			scrollbar._recomputeDimensions(options);
 		}
@@ -593,10 +594,7 @@ class ScrollRegion extends React.Component {
 
 	_recomputeDimensions({ useCachedValues }) {
 		let totalHeight, viewportHeight;
-		if (!this.refs.content) {
-			return;
-		}
-		const contentNode = ReactDOM.findDOMNode(this.refs.content);
+		const contentNode = this._contentRef.current;
 		if (!contentNode) {
 			return;
 		}
@@ -646,7 +644,7 @@ class ScrollRegion extends React.Component {
 					? this.props.getScrollbar()
 					: undefined) != null
 				? left
-				: this.refs.scrollbar;
+				: this._scrollbarRef.current;
 		if (scrollbar) {
 			scrollbar.setStateFromScrollRegion(state);
 		}
@@ -657,7 +655,7 @@ class ScrollRegion extends React.Component {
 		// onScroll events propogate, which is a bit strange. We could actually be
 		// receiving a scroll event for a textarea inside the scroll region.
 		// See Preferences > Signatures > textarea
-		if (event.target !== ReactDOM.findDOMNode(this.refs.content)) {
+		if (event.target !== this._contentRef.current) {
 			return;
 		}
 
@@ -686,6 +684,11 @@ class ScrollRegion extends React.Component {
 
 	_getSelf() {
 		return this;
+	}
+
+	// The root node, for parents that measure or query it.
+	getDOMNode() {
+		return this._rootRef.current;
 	}
 }
 ScrollRegion.initClass();

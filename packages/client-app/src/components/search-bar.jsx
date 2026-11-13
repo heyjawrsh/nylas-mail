@@ -51,7 +51,7 @@ class SearchBar extends Component {
 		const { onClearSearchQuery } = this.props;
 		onClearSearchQuery();
 
-		// React 19: string refs/findDOMNode removed — createRef + current.
+		// React 19 removed string refs, so this is an object ref.
 		const inputEl = this.searchInputRef.current;
 		if (inputEl) {
 			inputEl.blur();

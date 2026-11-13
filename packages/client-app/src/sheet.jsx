@@ -41,6 +41,7 @@ class Sheet extends React.Component {
 
 	constructor(props) {
 		super();
+		this._rootRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
@@ -89,6 +90,11 @@ class Sheet extends React.Component {
 		return Array.from(this.unlisteners).map((unlisten) => unlisten());
 	}
 
+	// The root node, for the sheet-stack transition in SheetContainer.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	render() {
 		const style = {
 			position: "absolute",
@@ -109,6 +115,7 @@ class Sheet extends React.Component {
 			React.createElement(
 				"div",
 				{
+					ref: this._rootRef,
 					name: "Sheet",
 					style: style,
 					className: `sheet mode-${this.state.mode}`,

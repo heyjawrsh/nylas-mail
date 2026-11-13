@@ -2,7 +2,7 @@
 import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "../dom-node.js";
 import moment from "moment-timezone";
 import classnames from "classnames";
 import { Utils } from "nylas-exports";
@@ -57,6 +57,10 @@ export default class WeekView extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._eventGridWrapRef = React.createRef();
+		this._eventGridLegendWrapRef = React.createRef();
+		this._calendarAreaWrapRef = React.createRef();
+		this._scrollbarRef = React.createRef();
 		this.state = {
 			events: [],
 			intervalHeight: MIN_INTERVAL_HEIGHT,
@@ -309,7 +313,6 @@ export default class WeekView extends React.Component {
 			<button
 				key="today"
 				className="btn"
-				ref="todayBtn"
 				onClick={this._onClickToday}
 				style={{ position: "absolute", left: 10 }}
 			>
@@ -339,7 +342,7 @@ export default class WeekView extends React.Component {
 	}
 
 	_centerScrollRegion() {
-		const wrap = ReactDOM.findDOMNode(this.refs.eventGridWrap);
+		const wrap = domNodeOf(this._eventGridWrapRef.current);
 		wrap.scrollTop =
 			this._gridHeight() / 2 - wrap.getBoundingClientRect().height / 2;
 	}
@@ -380,23 +383,21 @@ export default class WeekView extends React.Component {
 		if (!this._mounted) {
 			return;
 		} // Resize unmounting is delayed in tests
-		const wrap = ReactDOM.findDOMNode(this.refs.eventGridWrap);
+		const wrap = domNodeOf(this._eventGridWrapRef.current);
 		const wrapHeight = wrap.getBoundingClientRect().height;
 		if (this._lastWrapHeight === wrapHeight) {
 			return;
 		}
 		this._lastWrapHeight = wrapHeight;
 		const numIntervals = Math.floor(DAY_DUR / INTERVAL_TIME);
-		ReactDOM.findDOMNode(this.refs.eventGridLegendWrap).style.height =
-			`${wrapHeight}px`;
+		this._eventGridLegendWrapRef.current.style.height = `${wrapHeight}px`;
 		this.setState({
 			intervalHeight: Math.max(wrapHeight / numIntervals, MIN_INTERVAL_HEIGHT),
 		});
 	};
 
 	_onScrollGrid = (event) => {
-		ReactDOM.findDOMNode(this.refs.eventGridLegendWrap).scrollTop =
-			event.target.scrollTop;
+		this._eventGridLegendWrapRef.current.scrollTop = event.target.scrollTop;
 	};
 
 	_onScrollCalendarArea = (event) => {
@@ -425,7 +426,7 @@ export default class WeekView extends React.Component {
 		const weekEnd = this.state.endMoment.unix();
 		let percent = (this._scrollTime - weekStart) / (weekEnd - weekStart);
 		percent = Math.min(Math.max(percent, 0), 1);
-		const wrap = ReactDOM.findDOMNode(this.refs.calendarAreaWrap);
+		const wrap = this._calendarAreaWrapRef.current;
 		wrap.scrollLeft = wrap.scrollWidth * percent;
 	}
 
@@ -487,7 +488,6 @@ export default class WeekView extends React.Component {
 		return (
 			<div className="calendar-view week-view">
 				<CalendarEventContainer
-					ref="calendarEventContainer"
 					onCalendarMouseUp={this.props.onCalendarMouseUp}
 					onCalendarMouseDown={this.props.onCalendarMouseDown}
 					onCalendarMouseMove={this.props.onCalendarMouseMove}
@@ -496,7 +496,6 @@ export default class WeekView extends React.Component {
 
 					<HeaderControls
 						title={this._currentWeekText()}
-						ref="headerControls"
 						headerComponents={this._headerComponents()}
 						nextAction={this._onClickNextWeek}
 						prevAction={this._onClickPrevWeek}
@@ -512,7 +511,10 @@ export default class WeekView extends React.Component {
 							>
 								<span className="legend-text">All Day</span>
 							</div>
-							<div className="event-grid-legend-wrap" ref="eventGridLegendWrap">
+							<div
+								className="event-grid-legend-wrap"
+								ref={this._eventGridLegendWrapRef}
+							>
 								<div
 									className="event-grid-legend"
 									style={{ height: gridHeight }}
@@ -524,7 +526,7 @@ export default class WeekView extends React.Component {
 
 						<div
 							className="calendar-area-wrap"
-							ref="calendarAreaWrap"
+							ref={this._calendarAreaWrapRef}
 							onScroll={this._onScrollCalendarArea}
 						>
 							<div
@@ -536,7 +538,6 @@ export default class WeekView extends React.Component {
 								</div>
 
 								<WeekViewAllDayEvents
-									ref="weekViewAllDayEvents"
 									minorDim={MIN_INTERVAL_HEIGHT}
 									end={this.state.endMoment.unix()}
 									height={this._allDayEventHeight(allDayOverlap)}
@@ -547,8 +548,8 @@ export default class WeekView extends React.Component {
 							</div>
 							<ScrollRegion
 								className="event-grid-wrap"
-								ref="eventGridWrap"
-								getScrollbar={() => this.refs.scrollbar}
+								ref={this._eventGridWrapRef}
+								getScrollbar={() => this._scrollbarRef.current}
 								onScroll={this._onScrollGrid}
 								style={{ width: `${this._bufferRatio() * 100}%` }}
 							>
@@ -567,15 +568,14 @@ export default class WeekView extends React.Component {
 										height={gridHeight}
 										intervalHeight={this.state.intervalHeight}
 										numColumns={BUFFER_DAYS * 2 + DAYS_IN_VIEW}
-										ref="eventGridBg"
 										tickGenerator={tickGen}
 									/>
 								</div>
 							</ScrollRegion>
 						</div>
 						<ScrollRegion.Scrollbar
-							ref="scrollbar"
-							getScrollRegion={() => this.refs.eventGridWrap}
+							ref={this._scrollbarRef}
+							getScrollRegion={() => this._eventGridWrapRef.current}
 						/>
 					</div>
 

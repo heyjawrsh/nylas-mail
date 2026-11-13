@@ -11,29 +11,24 @@ import DatePicker from "../src/components/date-picker.jsx";
 import TimePicker from "../src/components/time-picker.jsx";
 import { TabGroupContext as KitTabGroupContext } from "nylas-component-kit";
 
-// TimePicker still measures itself with findDOMNode (story 3), which React 19
-// dropped; give it an empty node so it can mount.
-vi.mock("react-dom", async () => {
-	const actual = await vi.importActual("react-dom");
-	const findDOMNode = () => document.createElement("div");
-	return { ...actual, default: { ...actual, findDOMNode }, findDOMNode };
-});
-
 afterEach(cleanup);
 
+// Most specs here only check that the context reaches the region, so they
+// stub shiftFocus. "shiftFocus moves focus" runs the real one.
 let shiftFocus;
-beforeEach(() => {
-	// The real shiftFocus still walks the DOM through findDOMNode (story 3);
-	// these specs only check that the context reaches the region.
-	shiftFocus = vi
-		.spyOn(TabGroupRegion.prototype, "shiftFocus")
-		.mockImplementation(() => {});
-});
-afterEach(() => {
-	shiftFocus.mockRestore();
-});
+const stubShiftFocus = () => {
+	beforeEach(() => {
+		shiftFocus = vi
+			.spyOn(TabGroupRegion.prototype, "shiftFocus")
+			.mockImplementation(() => {});
+	});
+	afterEach(() => {
+		shiftFocus.mockRestore();
+	});
+};
 
 describe("TabGroupContext", () => {
+	stubShiftFocus();
 	it("is the context the spec kit stub exports", () => {
 		expect(KitTabGroupContext).toBe(TabGroupContext);
 	});
@@ -89,6 +84,7 @@ describe("TabGroupContext", () => {
 });
 
 describe("Tab in a group", () => {
+	stubShiftFocus();
 	// Tab is handled by the region's own onKeyDown, so these cover the region.
 	const renderPickerInGroup = () =>
 		render(
@@ -115,6 +111,7 @@ describe("Tab in a group", () => {
 });
 
 describe("Enter in a group reaches the region through context", () => {
+	stubShiftFocus();
 	const renderInRegion = (child) => {
 		let region;
 		const result = render(
@@ -147,6 +144,61 @@ describe("Enter in a group reaches the region through context", () => {
 		expect(shiftFocus).toHaveBeenCalledOnce();
 		expect(shiftFocus).toHaveBeenCalledWith(1);
 		expect(shiftFocus.mock.contexts[0]).toBe(region);
+	});
+});
+
+describe("shiftFocus moves focus through the region's own DOM", () => {
+	const renderFields = () =>
+		render(
+			<TabGroupRegion>
+				<input className="first" />
+				<input className="skipped" tabIndex={-1} />
+				<textarea className="second" />
+				<TimePicker value={0} onChange={() => {}} />
+			</TabGroupRegion>,
+		);
+
+	it("moves focus to the next focusable node on Tab", () => {
+		const { container } = renderFields();
+		const first = container.querySelector(".first");
+		first.focus();
+		fireEvent.keyDown(first, { key: "Tab" });
+		expect(document.activeElement).toBe(container.querySelector(".second"));
+	});
+
+	it("skips nodes with tabIndex -1 and reaches the time picker input", () => {
+		const { container } = renderFields();
+		const second = container.querySelector(".second");
+		second.focus();
+		fireEvent.keyDown(second, { key: "Tab" });
+		expect(document.activeElement).toBe(
+			container.querySelector("input.time-picker"),
+		);
+	});
+
+	it("wraps to the last node on Shift+Tab from the first", () => {
+		const { container } = renderFields();
+		const first = container.querySelector(".first");
+		first.focus();
+		fireEvent.keyDown(first, { key: "Tab", shiftKey: true });
+		expect(document.activeElement).toBe(
+			container.querySelector("input.time-picker"),
+		);
+	});
+
+	it("does nothing once the region has unmounted", () => {
+		let region;
+		const view = render(
+			<TabGroupRegion
+				ref={(value) => {
+					if (value) region = value;
+				}}
+			>
+				<input />
+			</TabGroupRegion>,
+		);
+		view.unmount();
+		expect(() => region.shiftFocus(1)).not.toThrow();
 	});
 });
 

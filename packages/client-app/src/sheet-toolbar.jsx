@@ -336,6 +336,11 @@ class Toolbar extends React.Component {
 		);
 	}
 
+	// The root node, for the toolbar transition in SheetContainer.
+	getDOMNode() {
+		return this._containerRef.current;
+	}
+
 	render() {
 		const style = {
 			position: "absolute",

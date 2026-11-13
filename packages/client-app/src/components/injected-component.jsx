@@ -9,7 +9,7 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 import _ from "underscore";
 import { Actions, WorkspaceStore, ComponentRegistry } from "nylas-exports";
 import UnsafeComponent from "./unsafe-component.jsx";
@@ -84,6 +84,7 @@ class InjectedComponent extends React.Component {
 	constructor(props) {
 		super();
 		this.innerRef = React.createRef();
+		this._rootRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.UNSAFE_componentWillReceiveProps =
@@ -150,7 +151,7 @@ class InjectedComponent extends React.Component {
 	render() {
 		let element;
 		if (!this.state.component) {
-			return React.createElement("div", null);
+			return React.createElement("div", { ref: this._rootRef });
 		}
 
 		const exposedProps = Object.assign({}, this.props.exposedProps, {
@@ -167,7 +168,7 @@ class InjectedComponent extends React.Component {
 				key: Component.displayName,
 			};
 			if (React.Component.isPrototypeOf(Component)) {
-				privateProps.ref = "inner";
+				privateProps.ref = this.innerRef;
 			}
 			element = React.createElement(
 				Component,
@@ -193,7 +194,7 @@ class InjectedComponent extends React.Component {
 		if (this.state.visible) {
 			return React.createElement(
 				"div",
-				{ className: className, style: this.props.style },
+				{ ref: this._rootRef, className: className, style: this.props.style },
 				element,
 				React.createElement(
 					InjectedComponentLabel,
@@ -204,7 +205,7 @@ class InjectedComponent extends React.Component {
 		} else {
 			return React.createElement(
 				"div",
-				{ className: className, style: this.props.style },
+				{ ref: this._rootRef, className: className, style: this.props.style },
 				element,
 			);
 		}
@@ -236,14 +237,19 @@ class InjectedComponent extends React.Component {
 		) {
 			target = this.innerRef?.current;
 		} else if (this.innerRef?.current) {
-			target = ReactDOM.findDOMNode(this.innerRef?.current);
+			target = domNodeOf(this.innerRef.current) || this.getDOMNode();
 		} else {
-			target = ReactDOM.findDOMNode(this);
+			target = this.getDOMNode();
 		}
 
-		if (target[method]) {
+		if (target?.[method]) {
 			return target[method].bind(target)(...Array.from(args || []));
 		}
+	}
+
+	// The root node: the wrapper div this component renders.
+	getDOMNode() {
+		return this._rootRef.current;
 	}
 
 	_setRequiredMethods(methods) {

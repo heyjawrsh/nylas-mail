@@ -1,13 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import classnames from "classnames";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { pickHTMLProps } from "pick-react-known-prop";
 import RetinaImg from "./retina-img.jsx";
 import Flexbox from "./flexbox.jsx";
 import Spinner from "./spinner.jsx";
+import { domNodeOf } from "./dom-node.js";
 
 const propTypes = {
 	className: PropTypes.string,
@@ -98,7 +98,8 @@ AttachmentActionIcon.propTypes = {
 export class AttachmentItem extends Component {
 	constructor(props) {
 		super(props);
-		this.fileIconImgRef = React.createRef();
+		this.rootRef = createRef();
+		this.fileIconImgRef = createRef();
 	}
 
 	static displayName = "AttachmentItem";
@@ -130,7 +131,7 @@ export class AttachmentItem extends Component {
 			const downloadURL = `${contentType}:${path.basename(filePath)}:file://${filePath}`;
 			event.dataTransfer.setData("DownloadURL", downloadURL);
 			event.dataTransfer.setData("text/nylas-file-url", downloadURL);
-			const fileIconImg = ReactDOM.findDOMNode(this.fileIconImgRef?.current);
+			const fileIconImg = domNodeOf(this.fileIconImgRef.current);
 			const rect = fileIconImg.getBoundingClientRect();
 			const x = window.devicePixelRatio === 2 ? rect.height / 2 : rect.height;
 			const y = window.devicePixelRatio === 2 ? rect.width / 2 : rect.width;
@@ -156,7 +157,7 @@ export class AttachmentItem extends Component {
 			this._previewAttachment();
 		}
 		if (event.key === "Escape") {
-			const attachmentNode = ReactDOM.findDOMNode(this);
+			const attachmentNode = this.rootRef.current;
 			if (attachmentNode) {
 				attachmentNode.blur();
 			}
@@ -193,6 +194,7 @@ export class AttachmentItem extends Component {
 
 		return (
 			<div
+				ref={this.rootRef}
 				style={style}
 				className={classes}
 				tabIndex={tabIndex}
@@ -262,6 +264,8 @@ export class ImageAttachmentItem extends Component {
 
 	static containerRequired = false;
 
+	rootRef = createRef();
+
 	_onOpenAttachment = () => {
 		const { onOpenAttachment } = this.props;
 		if (onOpenAttachment != null) {
@@ -274,7 +278,7 @@ export class ImageAttachmentItem extends Component {
 		// watching the DOM to trigger. This is a good thing, because the image may
 		// change dimensions. (We use this to reflow the draft body when this component
 		// is within an OverlaidComponent)
-		const el = ReactDOM.findDOMNode(this);
+		const el = this.rootRef.current;
 		if (el) {
 			el.classList.add("loaded");
 		}
@@ -307,7 +311,11 @@ export class ImageAttachmentItem extends Component {
 		const { className, displayName, download, ...extraProps } = this.props;
 		const classes = `nylas-attachment-item image-attachment-item ${className || ""}`;
 		return (
-			<div className={classes} {...pickHTMLProps(extraProps)}>
+			<div
+				ref={this.rootRef}
+				className={classes}
+				{...pickHTMLProps(extraProps)}
+			>
 				<div>
 					<ProgressBar download={download} />
 					<AttachmentActionIcon

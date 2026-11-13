@@ -5,11 +5,6 @@ import { afterEach } from "vitest";
 
 afterEach(cleanup);
 
-vi.mock("react-dom", async (importOriginal) => ({
-	...(await importOriginal()),
-	findDOMNode: () => document.querySelector(".menu"),
-}));
-
 import InjectedComponentLabel from "../src/components/injected-component-label.jsx";
 import Menu from "../src/components/menu.jsx";
 

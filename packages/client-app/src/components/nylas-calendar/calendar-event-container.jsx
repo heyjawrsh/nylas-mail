@@ -2,7 +2,6 @@ import moment from "moment";
 
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 
 export default class CalendarEventContainer extends React.Component {
 	static displayName = "CalendarEventContainer";
@@ -15,6 +14,7 @@ export default class CalendarEventContainer extends React.Component {
 
 	constructor() {
 		super();
+		this._rootRef = React.createRef();
 		this._DOMCache = {};
 	}
 
@@ -103,7 +103,7 @@ export default class CalendarEventContainer extends React.Component {
 	}
 
 	_onWindowMouseUp = (event) => {
-		if (ReactDOM.findDOMNode(this).contains(event.target)) {
+		if (this._rootRef.current?.contains(event.target)) {
 			return;
 		}
 		this._onCalendarMouseUp(event);
@@ -112,6 +112,7 @@ export default class CalendarEventContainer extends React.Component {
 	render() {
 		return (
 			<div
+				ref={this._rootRef}
 				className="calendar-mouse-handler"
 				onMouseUp={this._onCalendarMouseUp}
 				onMouseDown={this._onCalendarMouseDown}

@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
 	overlapsBounds: vi.fn((bounds, event) => bounds.start <= event.end && event.start <= bounds.end),
-	findDOMNode: vi.fn((node) => node),
 }));
 
 vi.mock("underscore", () => {
@@ -27,7 +26,6 @@ vi.mock("prop-types", () => {
 	} });
 	return { default: types, ...types };
 });
-vi.mock("react-dom", () => ({ default: { findDOMNode: m.findDOMNode }, findDOMNode: m.findDOMNode }));
 vi.mock("moment-timezone", async (importOriginal) => {
 	const actual = await importOriginal();
 	return { ...actual, default: actual.default };
@@ -64,6 +62,15 @@ const subject = () => {
 	return view;
 };
 
+// The grid wrap is a ScrollRegion, which hands over its root node through
+// getDOMNode(); the other wraps are plain DOM refs.
+const setRefs = (view, { eventGridWrap, eventGridLegendWrap, calendarAreaWrap } = {}) => {
+	if (eventGridWrap) view._eventGridWrapRef.current = { getDOMNode: () => eventGridWrap };
+	if (eventGridLegendWrap) view._eventGridLegendWrapRef.current = eventGridLegendWrap;
+	if (calendarAreaWrap) view._calendarAreaWrapRef.current = calendarAreaWrap;
+	return { eventGridWrap, eventGridLegendWrap, calendarAreaWrap };
+};
+
 describe("WeekView grid layout math", () => {
 	beforeEach(() => vi.clearAllMocks());
 
@@ -88,18 +95,18 @@ describe("WeekView grid layout math", () => {
 
 	it("centers the vertical scroll region", () => {
 		const view = subject();
-		view.refs = { eventGridWrap: { scrollTop: 0, getBoundingClientRect: () => ({ height: 400 }) } };
+		const refs = setRefs(view, { eventGridWrap: { scrollTop: 0, getBoundingClientRect: () => ({ height: 400 }) } });
 		view._centerScrollRegion();
-		expect(view.refs.eventGridWrap.scrollTop).toBe(304);
+		expect(refs.eventGridWrap.scrollTop).toBe(304);
 	});
 
 	it("expands interval height to fill a tall viewport", () => {
 		const view = subject();
 		view._mounted = true;
-		view.refs = {
+		setRefs(view, {
 			eventGridWrap: { getBoundingClientRect: () => ({ height: 1440 }) },
 			eventGridLegendWrap: { style: {} },
-		};
+		});
 		view._setIntervalHeight();
 		expect(view.state.intervalHeight).toBe(30);
 	});
@@ -107,39 +114,39 @@ describe("WeekView grid layout math", () => {
 	it("keeps the minimum interval height in a short viewport", () => {
 		const view = subject();
 		view._mounted = true;
-		view.refs = {
+		setRefs(view, {
 			eventGridWrap: { getBoundingClientRect: () => ({ height: 480 }) },
 			eventGridLegendWrap: { style: {} },
-		};
+		});
 		view._setIntervalHeight();
 		expect(view.state.intervalHeight).toBe(21);
 	});
 
 	it("mirrors vertical grid scrolling to the legend", () => {
-		const view = subject(); view.refs = { eventGridLegendWrap: { scrollTop: 0 } };
+		const view = subject(); const refs = setRefs(view, { eventGridLegendWrap: { scrollTop: 0 } });
 		view._onScrollGrid({ target: { scrollTop: 275 } });
-		expect(view.refs.eventGridLegendWrap.scrollTop).toBe(275);
+		expect(refs.eventGridLegendWrap.scrollTop).toBe(275);
 	});
 
 	it("positions horizontal scrolling from the buffered timestamp", () => {
 		const view = subject();
 		view.state.startMoment = moment.unix(0); view.state.endMoment = moment.unix(1000); view._scrollTime = 250;
-		view.refs = { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 800 } };
+		const refs = setRefs(view, { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 800 } });
 		view._ensureHorizontalScrollPos();
-		expect(view.refs.calendarAreaWrap.scrollLeft).toBe(200);
+		expect(refs.calendarAreaWrap.scrollLeft).toBe(200);
 	});
 
 	it("clamps horizontal scrolling beyond the loaded range", () => {
 		const view = subject();
 		view.state.startMoment = moment.unix(0); view.state.endMoment = moment.unix(1000); view._scrollTime = 2000;
-		view.refs = { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 800 } };
+		const refs = setRefs(view, { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 800 } });
 		view._ensureHorizontalScrollPos();
-		expect(view.refs.calendarAreaWrap.scrollLeft).toBe(800);
+		expect(refs.calendarAreaWrap.scrollLeft).toBe(800);
 	});
 
 	it("moves to the previous week near the left buffer edge", () => {
 		const view = subject(); view.state.startMoment = moment.unix(0); view.state.endMoment = moment.unix(1000);
-		view.refs = { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 1000 } };
+		setRefs(view, { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 1000 } });
 		view._onClickPrevWeek = vi.fn(); view._ensureHorizontalScrollPos = vi.fn();
 		view._onScrollCalendarArea({ target: { scrollLeft: 100, scrollWidth: 1000 } });
 		expect(view._onClickPrevWeek).toHaveBeenCalledOnce();
@@ -147,7 +154,7 @@ describe("WeekView grid layout math", () => {
 
 	it("moves to the next week near the right buffer edge", () => {
 		const view = subject(); view.state.startMoment = moment.unix(0); view.state.endMoment = moment.unix(1000);
-		view.refs = { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 1000 } };
+		setRefs(view, { calendarAreaWrap: { scrollLeft: 0, scrollWidth: 1000 } });
 		view._onClickNextWeek = vi.fn(); view._ensureHorizontalScrollPos = vi.fn();
 		view._onScrollCalendarArea({ target: { scrollLeft: 900, scrollWidth: 1000 } });
 		expect(view._onClickNextWeek).toHaveBeenCalledOnce();

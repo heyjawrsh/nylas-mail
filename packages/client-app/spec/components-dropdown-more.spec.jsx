@@ -2,23 +2,6 @@ import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 
-const mocks = vi.hoisted(() => ({
-	findDOMNode: vi.fn((instance) => {
-		if (instance instanceof Node) return instance;
-		const name = instance?.constructor?.displayName || instance?.constructor?.name;
-		if (name === "KeyCommandsRegion") return document.querySelector(".key-commands-region");
-		if (name === "TimePicker") return document.querySelector(".time-picker-wrap");
-		if (name === "ResizableRegion") return document.querySelector("[data-testid='region']");
-		return document.querySelector(".button-dropdown");
-	}),
-}));
-
-vi.mock("react-dom", async (importOriginal) => {
-	const actual = await importOriginal();
-	const dom = { ...actual, findDOMNode: mocks.findDOMNode };
-	return { ...actual, default: dom };
-});
-
 vi.mock("nylas-component-kit", () => ({
 	default: {},
 	Menu: ({ items = [], itemContent, onSelect, onEscape }) => (

@@ -1,11 +1,19 @@
 import React from "react";
 import KeyCommandsRegion from "../key-commands-region.jsx";
+import { domNodeOf } from "../dom-node.js";
 
 function ListensToMovementKeys(ComposedComponent) {
 	return class extends ComposedComponent {
 		static displayName = ComposedComponent.displayName;
 		static containerRequired = ComposedComponent.containerRequired;
 		static containerStyles = ComposedComponent.containerStyles;
+
+		_movementRegionRef = React.createRef();
+
+		// The region's root node, for decorators layered on top (AutoFocuses).
+		getDOMNode() {
+			return domNodeOf(this._movementRegionRef.current);
+		}
 
 		localKeyHandlers() {
 			return {
@@ -70,6 +78,7 @@ function ListensToMovementKeys(ComposedComponent) {
 		render() {
 			return (
 				<KeyCommandsRegion
+					ref={this._movementRegionRef}
 					tabIndex="0"
 					localHandlers={this.localKeyHandlers()}
 					onKeyDown={this.onKeyDown}

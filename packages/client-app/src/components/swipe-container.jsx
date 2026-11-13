@@ -1,6 +1,5 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 import { exec } from "node:child_process";
 import { Utils } from "nylas-exports";
@@ -66,6 +65,7 @@ export default class SwipeContainer extends Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = createRef();
 		this.mounted = false;
 		this.tracking = false;
 		this.trackingInitialTargetX = 0;
@@ -146,7 +146,7 @@ export default class SwipeContainer extends Component {
 		let { fullDistance, thresholdDistance } = this.state;
 
 		if (fullDistance === "unknown") {
-			fullDistance = ReactDOM.findDOMNode(this).clientWidth;
+			fullDistance = this._rootRef.current.clientWidth;
 			thresholdDistance = 110;
 		}
 
@@ -349,6 +349,7 @@ export default class SwipeContainer extends Component {
 		}
 		return (
 			<div
+				ref={this._rootRef}
 				onWheel={this._onWheel}
 				onTouchStart={this._onTouchStart}
 				onTouchMove={this._onTouchMove}

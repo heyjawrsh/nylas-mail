@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 
 export default class ScrollbarTicks extends React.Component {
 	static displayName = "ScrollbarTicks";
@@ -8,6 +7,8 @@ export default class ScrollbarTicks extends React.Component {
 	static propTypes = {
 		ticks: PropTypes.array,
 	};
+
+	_rootRef = React.createRef();
 
 	componentDidMount() {
 		this._updateTicks();
@@ -31,10 +32,12 @@ export default class ScrollbarTicks extends React.Component {
 				return `<div class="t${className}" style="top: ${percent * 100}%" />`;
 			})
 			.join("");
-		ReactDOM.findDOMNode(this).innerHTML = html;
+		if (this._rootRef.current) {
+			this._rootRef.current.innerHTML = html;
+		}
 	}
 
 	render() {
-		return <div className="scrollbar-ticks" />;
+		return <div ref={this._rootRef} className="scrollbar-ticks" />;
 	}
 }

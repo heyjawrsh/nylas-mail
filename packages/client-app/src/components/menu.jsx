@@ -9,7 +9,6 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
 import classNames from "classnames";
 import _ from "underscore";
 import { DOMUtils } from "nylas-exports";
@@ -215,6 +214,7 @@ class Menu extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = React.createRef();
 		this.getSelectedItem = this.getSelectedItem.bind(this);
 		this.clearSelection = this.clearSelection.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
@@ -293,10 +293,18 @@ class Menu extends React.Component {
 		});
 	}
 
+	// The root node, for parents like TokenizingTextField.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	componentDidUpdate() {
-		const item = ReactDOM.findDOMNode(this).querySelector(".selected");
-		const container =
-			ReactDOM.findDOMNode(this).querySelector(".content-container");
+		const root = this._rootRef.current;
+		if (!root) {
+			return;
+		}
+		const item = root.querySelector(".selected");
+		const container = root.querySelector(".content-container");
 		const adjustment = DOMUtils.scrollAdjustmentToMakeNodeVisibleInContainer(
 			item,
 			container,
@@ -319,6 +327,7 @@ class Menu extends React.Component {
 		return React.createElement(
 			"div",
 			{
+				ref: this._rootRef,
 				onKeyDown: this._onKeyDown,
 				className: `menu ${className}`,
 				tabIndex: "-1",

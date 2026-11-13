@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Event } from "nylas-exports";
 import { InjectedComponentSet } from "nylas-component-kit";
 import { calcColor } from "./calendar-helpers.jsx";
@@ -33,6 +32,8 @@ export default class CalendarEvent extends React.Component {
 		onFocused: () => {},
 	};
 
+	_rootRef = React.createRef();
+
 	componentDidMount() {
 		this._scrollFocusedEventIntoView();
 	}
@@ -46,7 +47,7 @@ export default class CalendarEvent extends React.Component {
 		if (!focused) {
 			return;
 		}
-		const eventNode = ReactDOM.findDOMNode(this);
+		const eventNode = this._rootRef.current;
 		if (!eventNode) {
 			return;
 		}
@@ -109,6 +110,7 @@ export default class CalendarEvent extends React.Component {
 
 		return (
 			<div
+				ref={this._rootRef}
 				id={event.id}
 				style={this._getStyles()}
 				className={`calendar-event ${direction} ${selected ? "selected" : null}`}

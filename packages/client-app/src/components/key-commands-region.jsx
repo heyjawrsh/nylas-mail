@@ -1,7 +1,6 @@
 import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import classNames from "classnames";
 
 /*
@@ -105,6 +104,7 @@ export default class KeyCommandsRegion extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = React.createRef();
 		this._lostFocusToElement = null;
 		this.state = {
 			focused: false,
@@ -149,8 +149,13 @@ export default class KeyCommandsRegion extends React.Component {
 	// determine which keymappings can fire a particular command in a
 	// particular scope, we simply need to listen at the root window level
 	// here for all commands coming in.
+	// The root node, for parents and decorators that need it.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	_setupListeners(props) {
-		const $el = ReactDOM.findDOMNode(this);
+		const $el = this._rootRef.current;
 		$el.addEventListener("focusin", this._onFocusIn);
 		$el.addEventListener("focusout", this._onFocusOut);
 
@@ -176,9 +181,11 @@ export default class KeyCommandsRegion extends React.Component {
 			this._localDisposable.dispose();
 			this._localDisposable = null;
 		}
-		const $el = ReactDOM.findDOMNode(this);
-		$el.removeEventListener("focusin", this._onFocusIn);
-		$el.removeEventListener("focusout", this._onDidFocusOut);
+		const $el = this._rootRef.current;
+		if ($el) {
+			$el.removeEventListener("focusin", this._onFocusIn);
+			$el.removeEventListener("focusout", this._onDidFocusOut);
+		}
 		window.removeEventListener("browser-window-blur", this._onWindowBlur);
 		this._goingout = false;
 	}
@@ -237,7 +244,7 @@ export default class KeyCommandsRegion extends React.Component {
 		// This happens when component that used to have the focus is
 		// unmounted. An example is the url input field of the
 		// FloatingToolbar in the Composer's Contenteditable
-		if (ReactDOM.findDOMNode(this).contains(activeEl)) {
+		if (this._rootRef.current?.contains(activeEl)) {
 			return;
 		}
 
@@ -266,7 +273,11 @@ export default class KeyCommandsRegion extends React.Component {
 		);
 
 		return (
-			<div className={`${classname} ${this.props.className}`} {...otherProps}>
+			<div
+				ref={this._rootRef}
+				className={`${classname} ${this.props.className}`}
+				{...otherProps}
+			>
 				{this.props.children}
 			</div>
 		);

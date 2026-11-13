@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const m = vi.hoisted(() => ({ findDOMNode: vi.fn(), uuid: vi.fn(() => "list-1") }));
+const m = vi.hoisted(() => ({ focus: vi.fn(), uuid: vi.fn(() => "list-1") }));
 
 vi.mock("underscore", () => {
 	const underscore = {
@@ -21,21 +21,39 @@ vi.mock("react", () => {
 	return { default: react, ...react };
 });
 vi.mock("prop-types", () => ({ default: new Proxy({}, { get: () => Object.assign(() => null, { isRequired: null }) }) }));
-vi.mock("react-dom", () => ({ default: { findDOMNode: m.findDOMNode }, findDOMNode: m.findDOMNode }));
 vi.mock("../src/components/scroll-region.jsx", () => ({ default: function ScrollRegion() {} }));
 vi.mock("../src/components/key-commands-region.jsx", () => ({ default: function KeyCommandsRegion() {} }));
 vi.mock("../src/components/retina-img.jsx", () => ({ default: Object.assign(function RetinaImg() {}, { Mode: { ContentIsMask: "mask" } }) }));
 
 import EditableList from "../src/components/editable-list.jsx";
 
-const makeList = (overrides = {}) => new EditableList({
-	items: ["one", "two", "three"], itemContent: (item) => item, createInputProps: {},
-	onDeleteItem: vi.fn(), onItemEdited: vi.fn(), onItemCreated: vi.fn(), ...overrides,
-});
+const makeList = (overrides = {}) => {
+	const list = new EditableList({
+		items: ["one", "two", "three"], itemContent: (item) => item, createInputProps: {},
+		onDeleteItem: vi.fn(), onItemEdited: vi.fn(), onItemCreated: vi.fn(), ...overrides,
+	});
+	// The root KeyCommandsRegion hands over its node through getDOMNode().
+	list._regionRef.current = { getDOMNode: () => ({ focus: m.focus }) };
+	return list;
+};
 const keyEvent = (key, value = "value") => ({ key, target: { value }, stopPropagation: vi.fn() });
 
 describe("EditableList item callbacks and selection", () => {
-	beforeEach(() => { vi.clearAllMocks(); m.findDOMNode.mockReturnValue({ focus: vi.fn() }); });
+	beforeEach(() => { vi.clearAllMocks(); });
+
+	it("focuses its own root node through the region's getDOMNode()", () => {
+		const list = makeList(); list._focusSelf();
+		expect(m.focus).toHaveBeenCalledOnce();
+	});
+
+	it("scrolls the items wrapper to an item node found through its getDOMNode()", () => {
+		const list = makeList();
+		const nodes = ["a", "b", "c"];
+		const wrapper = { scrollTo: vi.fn(), getDOMNode: () => ({ querySelectorAll: () => nodes }) };
+		list.itemsWrapperRef.current = wrapper;
+		list._scrollTo(2);
+		expect(wrapper.scrollTo).toHaveBeenCalledWith("c");
+	});
 
 	it("stores a clicked item when selection is uncontrolled", () => {
 		const list = makeList(); list._onItemClick({}, "two", 1);

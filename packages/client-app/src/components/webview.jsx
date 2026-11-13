@@ -2,7 +2,6 @@ import url from "node:url";
 import React from "react";
 import PropTypes from "prop-types";
 import { shell } from "electron";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import networkErrors from "chromium-net-errors";
 
@@ -102,7 +101,7 @@ export default class Webview extends React.Component {
 
 	_setupWebview(props) {
 		if (!props.src) return;
-		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
+		const webview = this.webviewRef.current;
 		const listeners = {
 			"did-fail-load": this._webviewDidFailLoad,
 			"did-finish-load": this._webviewDidFinishLoad,
@@ -120,7 +119,7 @@ export default class Webview extends React.Component {
 	}
 
 	_onTryAgain = () => {
-		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
+		const webview = this.webviewRef.current;
 		webview.reload();
 	};
 
@@ -168,7 +167,7 @@ export default class Webview extends React.Component {
 		this.setState({ ready: true, webviewLoading: false });
 
 		if (!this.props.onDidFinishLoad) return;
-		const webview = ReactDOM.findDOMNode(this.webviewRef?.current);
+		const webview = this.webviewRef.current;
 		this.props.onDidFinishLoad(webview);
 	};
 

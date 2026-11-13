@@ -1,7 +1,6 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { ButtonDropdown, Menu } from "nylas-component-kit";
-import ReactDOM from "react-dom";
 
 /*
 Renders a drop down of items that can have multiple selected
@@ -38,12 +37,6 @@ class MultiselectDropdown extends Component {
 		buttonText: "",
 		itemContent: () => {},
 	};
-
-	componentDidUpdate() {
-		if (ReactDOM.findDOMNode(this.refs.select)) {
-			ReactDOM.findDOMNode(this.refs.select).focus();
-		}
-	}
 
 	_onItemClick = (item) => {
 		this.props.onToggleItem(item);

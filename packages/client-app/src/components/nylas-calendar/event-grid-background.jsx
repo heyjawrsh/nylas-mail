@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Utils } from "nylas-exports";
 
 export default class EventGridBackground extends React.Component {
@@ -15,6 +14,8 @@ export default class EventGridBackground extends React.Component {
 
 	constructor() {
 		super();
+		this._cursorRef = React.createRef();
+		this._canvasRef = React.createRef();
 		this._lastHoverRect = {};
 	}
 
@@ -34,7 +35,7 @@ export default class EventGridBackground extends React.Component {
 	}
 
 	_renderEventGridBackground() {
-		const canvas = ReactDOM.findDOMNode(this.refs.canvas);
+		const canvas = this._canvasRef.current;
 		const ctx = canvas.getContext("2d");
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		const height = this.props.height;
@@ -71,7 +72,7 @@ export default class EventGridBackground extends React.Component {
 			return;
 		}
 		this._lastHoverRect = r;
-		const cursor = ReactDOM.findDOMNode(this.refs.cursor);
+		const cursor = this._cursorRef.current;
 		cursor.style.left = `${r.x}px`;
 		cursor.style.top = `${r.y}px`;
 		cursor.style.width = `${r.width}px`;
@@ -85,8 +86,12 @@ export default class EventGridBackground extends React.Component {
 		};
 		return (
 			<div className="event-grid-bg-wrap">
-				<div ref="cursor" className="cursor" />
-				<canvas ref="canvas" className="event-grid-bg" style={styles} />
+				<div ref={this._cursorRef} className="cursor" />
+				<canvas
+					ref={this._canvasRef}
+					className="event-grid-bg"
+					style={styles}
+				/>
 			</div>
 		);
 	}

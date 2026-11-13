@@ -1,6 +1,6 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import { findDOMNode } from "react-dom";
+import { domNodeOf } from "./dom-node.js";
 
 const MIN_RANGE_SIZE = 2;
 
@@ -36,6 +36,7 @@ class LazyRenderedList extends Component {
 
 	constructor(props) {
 		super(props);
+		this._rootRef = createRef();
 		this.state = this.getRangeState(props);
 	}
 
@@ -57,7 +58,7 @@ class LazyRenderedList extends Component {
 	}
 
 	updateRangeState(props) {
-		const { scrollTop } = findDOMNode(this);
+		const { scrollTop } = domNodeOf(this._rootRef.current) || {};
 		this.setState(this.getRangeState({ ...props, scrollTop }));
 	}
 
@@ -90,6 +91,7 @@ class LazyRenderedList extends Component {
 		const { RootRenderer, containerHeight } = this.props;
 		return (
 			<RootRenderer
+				ref={this._rootRef}
 				style={{
 					height: containerHeight,
 					overflowX: "hidden",

@@ -1,7 +1,6 @@
 /* eslint react/no-danger: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 
 import { Actions, WorkspaceStore, DOMUtils } from "nylas-exports";
@@ -125,7 +124,14 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		constructor(props) {
 			super(props);
 			this._unlisteners = [];
+			this._wrapRef = React.createRef();
 			this.state = { visible: false };
+		}
+
+		// The wrapped component's root node: the first element inside the
+		// wrapper, which has display: contents so it adds no box of its own.
+		getDOMNode() {
+			return this._wrapRef.current?.firstElementChild || null;
 		}
 
 		componentDidMount() {
@@ -144,21 +150,20 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 			];
 			window.addEventListener("resize", this._onRecomputeTooltipPosition);
 
-			// unfortunately, we can't render() a container around ComposedComponent
-			// without modifying the DOM tree and messing with things like flexbox.
-			// Instead, we leave render() unchanged and attach the bubble and hover
-			// listeners to the DOM manually.
-			const el = ReactDOM.findDOMNode(this);
+			// render() puts a display: contents wrapper around ComposedComponent,
+			// so the wrapper adds no box and flexbox layout is unchanged. The
+			// bubble and hover listeners are attached to the DOM manually.
+			const wrap = this._wrapRef.current;
 
 			this.tipNode = document.createElement("div");
 			this.tipNode.classList.add("tutorial-tip");
 
-			this.tipAnchor = el.closest("[data-tooltips-anchor]") || document.body;
+			this.tipAnchor = wrap.closest("[data-tooltips-anchor]") || document.body;
 			this.tipAnchor
 				.querySelector(".tooltips-container")
 				.appendChild(this.tipNode);
 
-			el.addEventListener("mouseover", this._onMouseOver);
+			wrap.addEventListener("mouseover", this._onMouseOver);
 			this._onTooltipStateChanged();
 		}
 
@@ -190,7 +195,10 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		};
 
 		_isVisible = () => {
-			const el = ReactDOM.findDOMNode(this);
+			const el = this.getDOMNode();
+			if (!el) {
+				return false;
+			}
 			return (
 				TipsStore.isTipVisible(TipKey) &&
 				this._containingSheetIsVisible(el) &&
@@ -216,12 +224,16 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 				return;
 			}
 
-			const el = ReactDOM.findDOMNode(this);
-			el.removeEventListener("mouseover", this._onMouseOver);
+			const wrap = this._wrapRef.current;
+			const el = this.getDOMNode();
+			if (!wrap || !el) {
+				return;
+			}
+			wrap.removeEventListener("mouseover", this._onMouseOver);
 
 			const tipRect = this.tipNode.getBoundingClientRect();
 			const tipFocusCircleRadius = 64;
-			const rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+			const rect = el.getBoundingClientRect();
 			const rectCX = Math.round(
 				rect.left + rect.width / 2 - tipFocusCircleRadius,
 			);
@@ -236,7 +248,7 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 					title={TipConfig.title}
 					instructions={TipConfig.instructions}
 					onDismissed={() => {
-						el.addEventListener("mouseover", this._onMouseOver);
+						wrap.addEventListener("mouseover", this._onMouseOver);
 					}}
 				/>,
 				{
@@ -248,7 +260,10 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		};
 
 		_onRecomputeTooltipPosition = () => {
-			const el = ReactDOM.findDOMNode(this);
+			const el = this.getDOMNode();
+			if (!el) {
+				return;
+			}
 			let settled = 0;
 			let last = {};
 			const attempt = () => {
@@ -271,7 +286,15 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		};
 
 		render() {
-			return <ComposedComponent {...this.props} />;
+			return (
+				<span
+					ref={this._wrapRef}
+					className="tutorial-tip-target"
+					style={{ display: "contents" }}
+				>
+					<ComposedComponent {...this.props} />
+				</span>
+			);
 		}
 	};
 }

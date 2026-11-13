@@ -8,7 +8,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 import React from "react";
-import ReactDOM from "react-dom";
 import TabGroupContext from "./tab-group-context.js";
 
 class TabGroupRegion extends React.Component {
@@ -16,6 +15,7 @@ class TabGroupRegion extends React.Component {
 		super(...args);
 		this._onKeyDown = this._onKeyDown.bind(this);
 		this.shiftFocus = this.shiftFocus.bind(this);
+		this._rootRef = React.createRef();
 		// One value object for the region's lifetime, so consumers don't
 		// re-render just because the region did.
 		this._tabGroupContext = { parentTabGroup: this };
@@ -31,7 +31,11 @@ class TabGroupRegion extends React.Component {
 	}
 
 	shiftFocus(dir) {
-		const nodes = ReactDOM.findDOMNode(this).querySelectorAll(
+		const root = this._rootRef.current;
+		if (!root) {
+			return;
+		}
+		const nodes = root.querySelectorAll(
 			"input, textarea, [contenteditable], [tabIndex]",
 		);
 		const current = document.activeElement;
@@ -77,7 +81,10 @@ class TabGroupRegion extends React.Component {
 			{ value: this._tabGroupContext },
 			React.createElement(
 				"div",
-				Object.assign({}, this.props, { onKeyDown: this._onKeyDown }),
+				Object.assign({}, this.props, {
+					onKeyDown: this._onKeyDown,
+					ref: this._rootRef,
+				}),
 				this.props.children,
 			),
 		);

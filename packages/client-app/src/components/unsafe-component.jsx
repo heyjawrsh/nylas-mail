@@ -152,6 +152,11 @@ class UnsafeComponent extends React.Component {
 		};
 	}
 
+	// The wrapper node the injected component renders into.
+	getDOMNode() {
+		return this._wrapperRef.current;
+	}
+
 	componentDidMount() {
 		// One root per wrapper, reused on every update.
 		this._root = createRoot(this._wrapperRef.current);

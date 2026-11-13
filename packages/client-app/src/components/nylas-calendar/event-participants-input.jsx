@@ -53,8 +53,10 @@ export default class EventParticipantsInput extends React.Component {
 
 	// Public. Can be called by any component that has a ref to this one to
 	// focus the input field.
+	_textFieldRef = React.createRef();
+
 	focus = () => {
-		this.refs.textField.focus();
+		this._textFieldRef.current?.focus();
 	};
 
 	_completionNode = (p) => {
@@ -173,7 +175,7 @@ export default class EventParticipantsInput extends React.Component {
 		return (
 			<TokenizingTextField
 				className={this.props.className}
-				ref="textField"
+				ref={this._textFieldRef}
 				tokens={this.props.participants}
 				tokenKey={(p) => p.email}
 				tokenIsValid={(p) => ContactStore.isValidContact(p)}
