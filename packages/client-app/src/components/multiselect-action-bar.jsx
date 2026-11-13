@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactCSSTransitionGroup from "./css-transition-group-compat.jsx";
 import _ from "underscore";
+import { Utils } from "nylas-exports";
 
 import InjectedComponentSet from "./injected-component-set.jsx";
 
@@ -64,12 +65,11 @@ class MultiselectActionBar extends React.Component {
 	constructor(props) {
 		super();
 		this.componentDidMount = this.componentDidMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.teardownForProps = this.teardownForProps.bind(this);
 		this.setupForProps = this.setupForProps.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._renderBar = this._renderBar.bind(this);
 		this._renderActions = this._renderActions.bind(this);
@@ -85,13 +85,13 @@ class MultiselectActionBar extends React.Component {
 		return this.setupForProps(this.props);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (_.isEqual(this.props, newProps)) {
+	componentDidUpdate(prevProps) {
+		if (_.isEqual(prevProps, this.props)) {
 			return;
 		}
 		this.teardownForProps();
-		this.setupForProps(newProps);
-		return this.setState(this._getStateFromStores(newProps));
+		this.setupForProps(this.props);
+		this.setState(this._getStateFromStores());
 	}
 
 	componentWillUnmount() {
@@ -111,7 +111,10 @@ class MultiselectActionBar extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
+		// A new dataSource always updates, so componentDidUpdate re-subscribes
+		// even when the new one compares equal to the old.
 		return (
+			nextProps.dataSource !== this.props.dataSource ||
 			!Utils.isEqualReact(nextProps, this.props) ||
 			!Utils.isEqualReact(nextState, this.state)
 		);

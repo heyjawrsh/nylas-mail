@@ -18,6 +18,72 @@ class ListColumn {
 	}
 }
 
+// The list state for a rendered range of `args.dataSource`. Takes the
+// previous state so getDerivedStateFromProps can call it too.
+function stateForRange(prevState, args) {
+	const {
+		start = prevState.renderedRangeStart,
+		end = prevState.renderedRangeEnd,
+		dataSource,
+	} = args;
+
+	const items = {};
+	let animatingOut = {};
+
+	Utils.range(start, end).forEach((idx) => {
+		items[idx] = dataSource.get(idx);
+	});
+
+	// If we have a previous state, and the previous range matches the new range,
+	// (eg: we're not scrolling), identify removed items. We'll render them in one
+	// last time but not allocate height to them. This allows us to animate them
+	// being covered by other items, not just disappearing when others start to slide up.
+	if (prevState && start === prevState.renderedRangeStart) {
+		const nextIds = _.pluck(_.values(items), "id");
+		animatingOut = {};
+
+		// Keep items which are still animating out and are still not in the set
+		_.each(prevState.animatingOut, (record, recordIdx) => {
+			if (Date.now() < record.end && !nextIds.includes(record.item.id)) {
+				animatingOut[recordIdx] = record;
+			}
+		});
+
+		// Add items which are no longer found in the set
+		_.each(prevState.items, (previousItem, previousIdx) => {
+			if (!previousItem || nextIds.includes(previousItem.id)) {
+				return;
+			}
+			animatingOut[previousIdx] = {
+				idx: previousIdx,
+				item: previousItem,
+				end: Date.now() + 125,
+			};
+		});
+
+		// If we think /all/ the items are animating out, or a lot of them,
+		// the user probably switched to an entirely different perspective.
+		// Don't bother trying to animate.
+		const animatingCount = Object.keys(animatingOut).length;
+		if (
+			animatingCount > 8 ||
+			animatingCount === Object.keys(prevState.items).length
+		) {
+			animatingOut = {};
+		}
+	}
+
+	return {
+		items,
+		animatingOut,
+		renderedRangeStart: start,
+		renderedRangeEnd: end,
+		count: dataSource.count(),
+		loaded: dataSource.loaded(),
+		empty: dataSource.empty(),
+	};
+}
+
 class ListTabularRows extends Component {
 	static displayName = "ListTabularRows";
 
@@ -118,7 +184,10 @@ class ListTabular extends Component {
 		}
 
 		this._unlisten = () => {};
-		this.state = this.buildStateForRange({ start: -1, end: -1 });
+		this.state = {
+			...this.buildStateForRange({ start: -1, end: -1 }),
+			prevDataSource: props.dataSource,
+		};
 	}
 
 	componentDidMount() {
@@ -127,13 +196,22 @@ class ListTabular extends Component {
 		this.updateRangeState();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (nextProps.dataSource !== this.props.dataSource) {
-			this.setupDataSource(nextProps.dataSource);
+	// A new dataSource resets the rendered range before render, so the list
+	// never paints a frame of the old source's rows.
+	static getDerivedStateFromProps(props, state) {
+		if (props.dataSource === state.prevDataSource) {
+			return null;
 		}
+		return {
+			...stateForRange(state, { start: -1, end: -1, dataSource: props.dataSource }),
+			prevDataSource: props.dataSource,
+		};
 	}
 
 	componentDidUpdate(prevProps) {
+		if (prevProps.dataSource !== this.props.dataSource) {
+			this.listenToDataSource(this.props.dataSource);
+		}
 		if (this.props.onComponentDidUpdate) {
 			this.props.onComponentDidUpdate();
 		}
@@ -205,11 +283,15 @@ class ListTabular extends Component {
 	};
 
 	setupDataSource(dataSource) {
+		this.listenToDataSource(dataSource);
+		this.setState(this.buildStateForRange({ start: -1, end: -1, dataSource }));
+	}
+
+	listenToDataSource(dataSource) {
 		this._unlisten();
 		this._unlisten = dataSource.listen(() => {
 			this.setState(this.buildStateForRange());
 		});
-		this.setState(this.buildStateForRange({ start: -1, end: -1, dataSource }));
 	}
 
 	getRowsToRender() {
@@ -284,67 +366,10 @@ class ListTabular extends Component {
 	}
 
 	buildStateForRange(args = {}) {
-		const {
-			start = this.state.renderedRangeStart,
-			end = this.state.renderedRangeEnd,
-			dataSource = this.props.dataSource,
-		} = args;
-
-		const items = {};
-		let animatingOut = {};
-
-		Utils.range(start, end).forEach((idx) => {
-			items[idx] = dataSource.get(idx);
+		return stateForRange(this.state, {
+			dataSource: this.props.dataSource,
+			...args,
 		});
-
-		// If we have a previous state, and the previous range matches the new range,
-		// (eg: we're not scrolling), identify removed items. We'll render them in one
-		// last time but not allocate height to them. This allows us to animate them
-		// being covered by other items, not just disappearing when others start to slide up.
-		if (this.state && start === this.state.renderedRangeStart) {
-			const nextIds = _.pluck(_.values(items), "id");
-			animatingOut = {};
-
-			// Keep items which are still animating out and are still not in the set
-			_.each(this.state.animatingOut, (record, recordIdx) => {
-				if (Date.now() < record.end && !nextIds.includes(record.item.id)) {
-					animatingOut[recordIdx] = record;
-				}
-			});
-
-			// Add items which are no longer found in the set
-			_.each(this.state.items, (previousItem, previousIdx) => {
-				if (!previousItem || nextIds.includes(previousItem.id)) {
-					return;
-				}
-				animatingOut[previousIdx] = {
-					idx: previousIdx,
-					item: previousItem,
-					end: Date.now() + 125,
-				};
-			});
-
-			// If we think /all/ the items are animating out, or a lot of them,
-			// the user probably switched to an entirely different perspective.
-			// Don't bother trying to animate.
-			const animatingCount = Object.keys(animatingOut).length;
-			if (
-				animatingCount > 8 ||
-				animatingCount === Object.keys(this.state.items).length
-			) {
-				animatingOut = {};
-			}
-		}
-
-		return {
-			items,
-			animatingOut,
-			renderedRangeStart: start,
-			renderedRangeEnd: end,
-			count: dataSource.count(),
-			loaded: dataSource.loaded(),
-			empty: dataSource.empty(),
-		};
 	}
 
 	render() {

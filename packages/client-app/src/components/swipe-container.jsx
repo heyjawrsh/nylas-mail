@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import _ from "underscore";
 import { exec } from "node:child_process";
 import { Utils } from "nylas-exports";
+import shallowEqual from "./shallow-equal.js";
 
 // This is a stripped down version of
 // https://github.com/michaelvillar/dynamics.js/blob/master/src/dynamics.coffee#L1179,
@@ -84,10 +85,6 @@ export default class SwipeContainer extends Component {
 		this.mounted = true;
 		window.addEventListener("scroll-touch-begin", this._onScrollTouchBegin);
 		window.addEventListener("scroll-touch-end", this._onScrollTouchEnd);
-	}
-
-	UNSAFE_componentWillReceiveProps() {
-		this.isEnabled = null;
 	}
 
 	componentDidUpdate() {
@@ -314,6 +311,14 @@ export default class SwipeContainer extends Component {
 	}
 
 	render() {
+		// New props can change whether swiping is enabled: drop the cached value
+		// so the next gesture recomputes it. A setState-only render keeps it.
+		// (Compared by value: with defaultProps React hands over a fresh props
+		// object on every update.)
+		if (!shallowEqual(this.props, this._renderedProps)) {
+			this.isEnabled = null;
+			this._renderedProps = this.props;
+		}
 		const { currentX, targetX } = this.state;
 		const otherProps = Utils.fastOmit(
 			this.props,

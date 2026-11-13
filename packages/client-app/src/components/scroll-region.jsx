@@ -306,8 +306,6 @@ class ScrollRegion extends React.Component {
 		super(props);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 		this.shouldInvalidateScrollbarComponent =
@@ -373,12 +371,6 @@ class ScrollRegion extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
-		if (this.shouldInvalidateScrollbarComponent(props)) {
-			return (this._scrollbarComponent = null);
-		}
-	}
-
 	componentWillUnmount() {
 		this._heightObserver.disconnect();
 		return (this._mounted = false);
@@ -391,11 +383,16 @@ class ScrollRegion extends React.Component {
 		return true;
 	}
 
+	// Compares against the props the cached scrollbar was last rendered with.
 	shouldInvalidateScrollbarComponent(newProps) {
-		if (newProps.scrollTooltipComponent !== this.props.scrollTooltipComponent) {
+		const rendered = this._renderedProps;
+		if (!rendered) {
+			return false;
+		}
+		if (newProps.scrollTooltipComponent !== rendered.scrollTooltipComponent) {
 			return true;
 		}
-		if (newProps.getScrollbar !== this.props.getScrollbar) {
+		if (newProps.getScrollbar !== rendered.getScrollbar) {
 			return true;
 		}
 		return false;
@@ -409,6 +406,13 @@ class ScrollRegion extends React.Component {
 				dragging: this.state.dragging,
 				scrolling: this.state.scrolling,
 			});
+
+		// Rebuild the cached scrollbar element when the props it was built from
+		// change, before it is rendered.
+		if (this.shouldInvalidateScrollbarComponent(this.props)) {
+			this._scrollbarComponent = null;
+		}
+		this._renderedProps = this.props;
 
 		if (!this.props.getScrollbar) {
 			if (this._scrollbarComponent == null) {

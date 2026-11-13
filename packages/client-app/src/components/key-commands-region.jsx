@@ -2,6 +2,7 @@ import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import shallowEqual from "./shallow-equal.js";
 
 /*
 Public: Easily respond to keyboard shortcuts
@@ -118,16 +119,22 @@ export default class KeyCommandsRegion extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
+	componentDidUpdate(prevProps) {
+		// New props can carry new handlers. A focus-only setState keeps them.
+		// (Compared by value: with defaultProps React hands over a fresh props
+		// object on every update.)
+		if (shallowEqual(prevProps, this.props)) {
+			return;
+		}
 		this._unmountListeners();
-		this._setupListeners(newProps);
+		this._setupListeners(this.props);
 
 		// Updating menus in particular is expensive, so avoid teardown / re-add if identical
-		if (!_.isEqual(newProps.globalMenuItems, this.props.globalMenuItems)) {
+		if (!_.isEqual(this.props.globalMenuItems, prevProps.globalMenuItems)) {
 			if (this._menuDisposable) {
 				this._menuDisposable.dispose();
 			}
-			this._menuDisposable = NylasEnv.menu.add(newProps.globalMenuItems);
+			this._menuDisposable = NylasEnv.menu.add(this.props.globalMenuItems);
 		}
 	}
 

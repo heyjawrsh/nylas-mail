@@ -53,8 +53,6 @@ class MultiselectList extends React.Component {
 		this._rootRef = React.createRef();
 		this._listRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.teardownForProps = this.teardownForProps.bind(this);
@@ -79,16 +77,12 @@ class MultiselectList extends React.Component {
 		return this.setupForProps(this.props);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (_.isEqual(this.props, newProps)) {
-			return;
-		}
-		this.teardownForProps();
-		this.setupForProps(newProps);
-		return this.setState(this._getStateFromStores(newProps));
-	}
-
 	componentDidUpdate(prevProps, _prevState) {
+		if (!_.isEqual(prevProps, this.props)) {
+			this.teardownForProps();
+			this.setupForProps(this.props);
+			this.setState(this._getStateFromStores());
+		}
 		if (this.props.onComponentDidUpdate) {
 			this.props.onComponentDidUpdate();
 		}

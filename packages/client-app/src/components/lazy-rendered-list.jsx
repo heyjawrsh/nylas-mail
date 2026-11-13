@@ -40,8 +40,30 @@ class LazyRenderedList extends Component {
 		this.state = this.getRangeState(props);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.updateRangeState(nextProps);
+	// The range reads scrollTop as it was before the new items reach the DOM
+	// (a shorter list can clamp it), so take it here and apply it after.
+	getSnapshotBeforeUpdate(prevProps) {
+		const { items, itemHeight, containerHeight } = this.props;
+		if (
+			prevProps.items === items &&
+			prevProps.itemHeight === itemHeight &&
+			prevProps.containerHeight === containerHeight
+		) {
+			return null;
+		}
+		const { scrollTop } = domNodeOf(this._rootRef.current) || {};
+		return { scrollTop };
+	}
+
+	componentDidUpdate(_prevProps, _prevState, snapshot) {
+		if (!snapshot) return;
+		const range = this.getRangeState({
+			...this.props,
+			scrollTop: snapshot.scrollTop,
+		});
+		if (range.start !== this.state.start || range.end !== this.state.end) {
+			this.setState(range);
+		}
 	}
 
 	onScroll = () => {
