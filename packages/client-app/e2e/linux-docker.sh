@@ -14,7 +14,7 @@
 # modules are never touched.
 set -euo pipefail
 
-here="$(cd "$(dirname "$0")" && pwd)"
+here="$(CDPATH= cd -- "$(dirname "$0")" >/dev/null && pwd)"
 repo="$(git -C "$here" rev-parse --show-toplevel)"
 image="${E2E_DOCKER_IMAGE:-electronuserland/builder:latest}"
 work="$(mktemp -d "${TMPDIR:-/tmp}/nylas-e2e-linux.XXXXXX")"
