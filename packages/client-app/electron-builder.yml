@@ -1,7 +1,8 @@
 # Unsigned macOS pre-release build (story 1 of epic-platform-baseline).
 # Windows/Linux targets, signing and notarisation come later.
 # Build with `pnpm --filter nylas-mail dist:mac` (predist:mac builds the
-# renderer bundles first).
+# renderer bundles first; postdist:mac rebuilds the workspace's native
+# modules for the host arch, since the x64 leg leaves them x64).
 #
 # The build is unsigned, so Gatekeeper blocks a double-click. Open it with
 # right-click › Open, or clear the quarantine flag:
@@ -25,7 +26,8 @@ files:
   - menus/**/*
   - dot-nylas/**/*
   - internal_packages/**/*
-  # client-sync is a symlink into the workspace; a real copy is added below
+  # client-sync is a symlink into the workspace; a real copy is added below.
+  # Its dependencies ship because client-app depends on it (workspace:*).
   - "!internal_packages/client-sync{,/**/*}"
   # licensed fonts never ship in public builds (architecture AD-17)
   - "!internal_packages/nylas-private-fonts{,/**/*}"

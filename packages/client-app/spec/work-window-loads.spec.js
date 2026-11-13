@@ -55,6 +55,58 @@ describe("client-sync manifest", () => {
 	});
 });
 
+describe("client-sync imports", () => {
+	// names the app hands out at runtime (register-bundled-modules, electron)
+	const APP_PROVIDED = new Set([
+		"electron",
+		"@electron/remote",
+		"nylas-exports",
+		"nylas-component-kit",
+		"nylas-store",
+		"nylas-observables",
+		"react",
+		"react-dom",
+		"react/jsx-runtime",
+	]);
+	const BARE = /(?:\bfrom\s+|\brequire\(\s*|\bimport\s+)["']([^"'./][^"']*)["']/g;
+
+	const sourceFiles = (dir) =>
+		fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+			const full = path.join(dir, entry.name);
+			if (entry.isDirectory()) return sourceFiles(full);
+			return /\.jsx?$/.test(entry.name) ? [full] : [];
+		});
+
+	it("resolves every bare import from the package itself", () => {
+		const clientSync = fs.realpathSync(
+			path.join(packageRoot, "internal_packages", "client-sync"),
+		);
+		const files = [
+			path.join(clientSync, "main.js"),
+			...sourceFiles(path.join(clientSync, "src")),
+		];
+		const specifiers = new Set();
+		for (const file of files) {
+			for (const [, name] of fs.readFileSync(file, "utf8").matchAll(BARE)) {
+				if (!name.startsWith("node:") && !APP_PROVIDED.has(name)) {
+					specifiers.add(name);
+				}
+			}
+		}
+		const fromClientSync = createRequire(path.join(clientSync, "src", "index.js"));
+		const missing = [...specifiers].filter((name) => {
+			try {
+				fromClientSync.resolve(name);
+				return false;
+			} catch {
+				return true;
+			}
+		});
+		expect(specifiers).toContain("isomorphic-core/src/database-extensions.js");
+		expect(missing).toEqual([]);
+	});
+});
+
 describe("nylas-exports Rx", () => {
 	it("is rx-lite with the nylas-observables helpers", async () => {
 		const { default: $n } = await import("../src/global/nylas-exports.js");

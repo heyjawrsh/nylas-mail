@@ -1,12 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 // Works in Node ESM, CJS require(esm), and esbuild renderer bundles (where
 // import.meta.url is empty): fall back to require-based resolution.
 let __dirname;
 try {
-	__dirname = path.dirname(new URL(".", import.meta.url).pathname);
+	// fileURLToPath decodes %20 & co. (the packaged app lives in "Nylas Mail.app")
+	__dirname = path.dirname(fileURLToPath(new URL(".", import.meta.url)));
 } catch (_e) {
 	__dirname = path.dirname(
 		(typeof require !== "undefined" ? require : () => null)?.main?.filename ||
