@@ -350,6 +350,7 @@ class DatabaseStore extends NylasStore {
 						}
 						resolve(results);
 					},
+					reject,
 				);
 			}
 		});
@@ -447,38 +448,65 @@ class DatabaseStore extends NylasStore {
 
 	_executeInBackground(query, values) {
 		if (!this._agent) {
-			this._agentOpenQueries = {};
-			this._agent = childProcess.fork(
+			// per agent, so a dead agent's close can't settle its successor's queries
+			const openQueries = {};
+			// A query the agent can't answer (it errored, or it died) runs here
+			// instead, with the lock/schema retry _executeLocally has.
+			const runLocally = (id) => {
+				const open = openQueries[id];
+				if (!open) return;
+				delete openQueries[id];
+				this._executeLocally(open.query, open.values).then(
+					(results) => open.resolve({ results, backgroundTime: 0 }),
+					open.reject,
+				);
+			};
+			const runAllLocally = () => Object.keys(openQueries).forEach(runLocally);
+
+			this._agentOpenQueries = openQueries;
+			this._agentRunLocally = runLocally;
+			const agent = childProcess.fork(
 				databaseAgentPath(NylasEnv.getLoadSettings().resourcePath),
 				[],
 				{
 					silent: true,
 				},
 			);
-			this._agent.stdout.on("data", (data) => console.log(data.toString()));
-			this._agent.stderr.on("data", (data) => console.error(data.toString()));
-			this._agent.on("close", (code) => {
+			this._agent = agent;
+			agent.stdout.on("data", (data) => console.log(data.toString()));
+			agent.stderr.on("data", (data) => console.error(data.toString()));
+			agent.on("close", (code) => {
 				debug(`Query Agent: exited with code ${code}`);
-				this._agent = null;
+				if (this._agent === agent) this._agent = null;
+				runAllLocally();
 			});
-			this._agent.on("error", (err) => {
+			agent.on("error", (err) => {
 				console.error(
 					`Query Agent: failed to start or receive message: ${err.toString()}`,
 				);
-				this._agent.kill("SIGTERM");
-				this._agent = null;
+				agent.kill("SIGTERM");
+				if (this._agent === agent) this._agent = null;
+				runAllLocally();
 			});
-			this._agent.on("message", ({ type, id, results, agentTime }) => {
-				if (type === "results") {
-					this._agentOpenQueries[id]({ results, backgroundTime: agentTime });
-					delete this._agentOpenQueries[id];
+			agent.on("message", ({ type, id, results, agentTime, error }) => {
+				if (type === "results" && openQueries[id]) {
+					openQueries[id].resolve({ results, backgroundTime: agentTime });
+					delete openQueries[id];
+				} else if (type === "error") {
+					debug(`Query Agent: ${error}; running the query locally`);
+					runLocally(id);
 				}
 			});
 		}
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			const id = Utils.generateTempId();
-			this._agentOpenQueries[id] = resolve;
-			this._agent.send({ query, values, id, dbpath: this._databasePath });
+			this._agentOpenQueries[id] = { query, values, resolve, reject };
+			try {
+				this._agent.send({ query, values, id, dbpath: this._databasePath });
+			} catch (_err) {
+				// the agent's channel closed before its close event arrived
+				this._agentRunLocally(id);
+			}
 		});
 	}
 

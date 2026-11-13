@@ -9,27 +9,29 @@ const getDatabase = (dbpath) => {
 	if (!dbs[dbpath]) {
 		dbs[dbpath] = new Sqlite3(dbpath, {});
 	}
-	return Promise.resolve(dbs[dbpath]);
+	return dbs[dbpath];
 };
 
+// Every message gets a reply. On an error the parent runs the query itself.
 process.on("message", (m) => {
 	clearTimeout(deathTimer);
 	const { query, values, id, dbpath } = m;
 	const start = Date.now();
 
-	getDatabase(dbpath).then((db) => {
-		clearTimeout(deathTimer);
+	try {
+		const db = getDatabase(dbpath);
 		const fn = query.startsWith("SELECT") ? "all" : "run";
-		const stmt = db.prepare(query);
-		const results = stmt[fn](values);
+		const results = db.prepare(query)[fn](values);
 		process.send({
 			type: "results",
 			results,
 			id,
 			agentTime: Date.now() - start,
 		});
+	} catch (err) {
+		process.send({ type: "error", id, error: String(err) });
+	}
 
-		clearTimeout(deathTimer);
-		deathTimer = setTimeout(() => process.exit(0), deathDelay);
-	});
+	clearTimeout(deathTimer);
+	deathTimer = setTimeout(() => process.exit(0), deathDelay);
 });

@@ -13,8 +13,7 @@
 		"test": "vitest run --coverage",
 		"smoke": "node scripts/build-renderer.js && node scripts/smoke.js",
 		"predist:mac": "node scripts/build-renderer.js",
-		"dist:mac": "electron-builder --mac --config electron-builder.yml",
-		"postdist:mac": "electron-builder install-app-deps"
+		"dist:mac": "node scripts/dist-mac.mjs"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.1.3",

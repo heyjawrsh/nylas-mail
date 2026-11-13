@@ -1,8 +1,8 @@
 # Unsigned macOS pre-release build (story 1 of epic-platform-baseline).
 # Windows/Linux targets, signing and notarisation come later.
 # Build with `pnpm --filter nylas-mail dist:mac` (predist:mac builds the
-# renderer bundles first; postdist:mac rebuilds the workspace's native
-# modules for the host arch, since the x64 leg leaves them x64).
+# renderer bundles first; scripts/dist-mac.mjs then rebuilds the native
+# modules for the host arch, pass or fail, since the x64 leg leaves them x64).
 #
 # The build is unsigned, so Gatekeeper blocks a double-click. Open it with
 # right-click › Open, or clear the quarantine flag:
