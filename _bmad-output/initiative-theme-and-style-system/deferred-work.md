@@ -16,3 +16,12 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-shared-components-drop-finddomnode-and-string-refs-plan.md`
   summary: ListensToMovementKeys never creates its composedRef, so arrow-key forwarding does nothing.
   evidence: Existing bug the 13.3 implementer found, left unchanged.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-the-work-window-loads-and-sync-starts-plan.md`
+  summary: No automated check covers client-sync's dependency resolution in the packaged layout, where it resolves only from app.asar/node_modules.
+  evidence: The import spec resolves through packages/client-sync/node_modules (dev). A diverging dep version would land in node_modules/client-sync/node_modules, which the FileSet copy can't reach. Add to the 13.8 harness.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-the-work-window-loads-and-sync-starts-plan.md`
+  summary: The `document.baseURI` pathname fallbacks in nylas-env.js:27, nylas-exports.js:30 and nylas-component-kit.js:56 don't decode %20, so they would break inside "Nylas Mail.app" if reached.
+  evidence: The same bug was fixed in isomorphic-core load-models.js. These fallbacks weren't on the activation path.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-the-work-window-loads-and-sync-starts-plan.md`
+  summary: app.asar carries an unused second copy of client-sync at node_modules/client-sync (215 files), and hapi-swagger 17 expects joi 17 while client-sync uses 18.
+  evidence: Implementer follow-ups. The local API only starts with NYLAS_START_LOCAL_API=1, so the peer mismatch is a warning today.
