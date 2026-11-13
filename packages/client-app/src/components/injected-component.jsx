@@ -87,8 +87,6 @@ class InjectedComponent extends React.Component {
 		this._rootRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this.focus = this.focus.bind(this);
@@ -98,7 +96,10 @@ class InjectedComponent extends React.Component {
 		this._verifyRequiredMethods = this._verifyRequiredMethods.bind(this);
 		this._getStateFromStores = this._getStateFromStores.bind(this);
 		this.props = props;
-		this.state = this._getStateFromStores();
+		this.state = {
+			...this._getStateFromStores(),
+			prevMatching: props.matching,
+		};
 		this._verifyRequiredMethods();
 		this._setRequiredMethods(this.props.requiredMethods);
 	}
@@ -123,15 +124,16 @@ class InjectedComponent extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (
-			!_.isEqual(
-				newProps.matching,
-				this.props != null ? this.props.matching : undefined,
-			)
-		) {
-			return this.setState(this._getStateFromStores(newProps));
+	// Looked up before render so a new `matching` never renders a frame of the
+	// old component with the new exposedProps.
+	static getDerivedStateFromProps(props, state) {
+		if (_.isEqual(props.matching, state.prevMatching)) {
+			return null;
 		}
+		return {
+			...InjectedComponent.stateFromStores(props),
+			prevMatching: props.matching,
+		};
 	}
 
 	componentDidUpdate(_prevProps, prevState) {
@@ -279,19 +281,18 @@ for ${JSON.stringify(this.props.matching)}`,
 		}
 	}
 
-	_getStateFromStores(props) {
-		if (props == null) {
-			({ props } = this);
-		}
+	_getStateFromStores(props = this.props) {
+		return InjectedComponent.stateFromStores(props);
+	}
 
+	static stateFromStores(props) {
 		const components = ComponentRegistry.findComponentsMatching(props.matching);
 		if (components.length > 1) {
 			console.warn(`There are multiple components available for \
 ${JSON.stringify(props.matching)}. <InjectedComponent> is \
 only rendering the first one.`);
 		}
-		const component =
-			components.length === 0 ? this.props.fallback : components[0];
+		const component = components.length === 0 ? props.fallback : components[0];
 
 		return {
 			component,

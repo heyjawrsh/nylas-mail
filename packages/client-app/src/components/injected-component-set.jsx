@@ -89,8 +89,6 @@ class InjectedComponentSet extends React.Component {
 		this._flexboxRef = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.render = this.render.bind(this);
 		this._onComponentDidRender = this._onComponentDidRender.bind(this);
@@ -115,16 +113,10 @@ class InjectedComponentSet extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		if (
-			newProps.location !==
-			(this.props != null ? this.props.location : undefined)
-		) {
-			return this.setState(this._getStateFromStores(newProps));
+	componentDidUpdate(prevProps) {
+		if (prevProps.location !== this.props.location) {
+			this.setState(this._getStateFromStores());
 		}
-	}
-
-	componentDidUpdate() {
 		if (this.props.containersRequired === false) {
 			return this.props.onComponentsDidRender();
 		}

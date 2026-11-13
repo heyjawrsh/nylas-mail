@@ -1,5 +1,6 @@
 /* eslint no-prototype-builtins: 0 */
 import { Component, createRef } from "react";
+import shallowEqual from "../shallow-equal.js";
 
 function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 	return class extends Component {
@@ -15,21 +16,26 @@ function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 			// composer's send button exposes primarySend through it).
 			this.composedRef = createRef();
 			this._unlisteners = [];
-			this.state = getStateFromStores(props);
+			// storeState is what the wrapped component gets; prevProps lets
+			// getDerivedStateFromProps re-derive only when the props change.
+			this.state = { storeState: getStateFromStores(props), prevProps: props };
+		}
+
+		// Derived here, not in componentDidUpdate, so the wrapped component never
+		// renders a frame of state derived from the old props.
+		static getDerivedStateFromProps(props, state) {
+			if (shallowEqual(props, state.prevProps)) return null;
+			return { storeState: getStateFromStores(props), prevProps: props };
 		}
 
 		componentDidMount() {
 			stores.forEach((store) => {
 				this._unlisteners.push(
 					store.listen(() => {
-						this.setState(getStateFromStores(this.props));
+						this.setState({ storeState: getStateFromStores(this.props) });
 					}),
 				);
 			});
-		}
-
-		UNSAFE_componentWillReceiveProps(nextProps) {
-			this.setState(getStateFromStores(nextProps));
 		}
 
 		componentWillUnmount() {
@@ -42,7 +48,7 @@ function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 		render() {
 			const props = {
 				...this.props,
-				...this.state,
+				...this.state.storeState,
 			};
 			return <ComposedComponent ref={this.composedRef} {...props} />;
 		}

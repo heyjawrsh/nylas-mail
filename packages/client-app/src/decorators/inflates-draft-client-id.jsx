@@ -41,10 +41,10 @@ function InflatesDraftClientId(ComposedComponent) {
 			this._deleteDraftIfEmpty();
 		}
 
-		UNSAFE_componentWillReceiveProps(newProps) {
-			if (newProps.draftClientId !== this.props.draftClientId) {
+		componentDidUpdate(prevProps) {
+			if (prevProps.draftClientId !== this.props.draftClientId) {
 				this._teardownForDraft();
-				this._prepareForDraft(newProps.draftClientId);
+				this._prepareForDraft(this.props.draftClientId);
 			}
 		}
 
@@ -80,6 +80,7 @@ function InflatesDraftClientId(ComposedComponent) {
 			}
 			if (this._sessionUnlisten) {
 				this._sessionUnlisten();
+				this._sessionUnlisten = null;
 			}
 		}
 

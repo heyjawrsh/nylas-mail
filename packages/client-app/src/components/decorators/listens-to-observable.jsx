@@ -1,5 +1,6 @@
 import React from "react";
 import { domNodeOf } from "../dom-node.js";
+import shallowEqual from "../shallow-equal.js";
 
 function ListensToObservable(
 	ComposedComponent,
@@ -29,11 +30,14 @@ function ListensToObservable(
 			this.disposable = this.observable.subscribe(this.onObservableChanged);
 		}
 
-		UNSAFE_componentWillReceiveProps(nextProps) {
+		// New props can mean a new observable: drop the old subscription first,
+		// then subscribe to the one built from the current props.
+		componentDidUpdate(prevProps) {
+			if (shallowEqual(prevProps, this.props)) return;
 			if (this.disposable) {
 				this.disposable.dispose();
 			}
-			this.observable = getObservable(nextProps);
+			this.observable = getObservable(this.props);
 			this.disposable = this.observable.subscribe(this.onObservableChanged);
 		}
 
