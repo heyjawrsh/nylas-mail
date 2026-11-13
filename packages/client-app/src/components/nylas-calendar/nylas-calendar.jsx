@@ -104,7 +104,7 @@ export default class NylasCalendar extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		this._disposable = this._subscribeToCalendars();
 	}
 

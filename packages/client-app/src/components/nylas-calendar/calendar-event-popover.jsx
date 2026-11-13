@@ -32,14 +32,19 @@ export default class CalendarEventPopover extends React.Component {
 		this.state.participants = participants || [];
 	}
 
-	UNSAFE_componentWillReceiveProps = (nextProps) => {
-		const { description, start, end, location, participants } = nextProps.event;
+	// A new event replaces the fields. Edits in progress survive an unrelated
+	// re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.event === this.props.event) {
+			return;
+		}
+		const { description, start, end, location, participants } = this.props.event;
 		this.setState({ description, start, end, location });
 		this.setState({
 			participants: participants || [],
-			title: nextProps.event.displayTitle(),
+			title: this.props.event.displayTitle(),
 		});
-	};
+	}
 
 	onEdit = () => {
 		this.setState({ editing: true });

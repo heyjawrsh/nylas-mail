@@ -157,3 +157,24 @@ describe("CalendarEventPopover editing", () => {
 		expect(m.queueTask.mock.calls[0][0].clientId).toBe("client-1");
 	});
 });
+
+describe("CalendarEventPopover on re-render", () => {
+	const edit = (f) => {
+		act(() => f.ref.current.onEdit());
+		fireEvent.change(f.container.querySelector("input.title"), { target: { value: "Launch" } });
+	};
+
+	it("keeps an edit in progress through an unrelated re-render", () => {
+		const f = fixture();
+		edit(f);
+		f.rerender(<CalendarEventPopover ref={f.ref} event={f.model} />);
+		expect(f.ref.current.state.title).toBe("Launch");
+	});
+
+	it("takes the fields from a new event", () => {
+		const f = fixture();
+		edit(f);
+		f.rerender(<CalendarEventPopover ref={f.ref} event={event({ displayTitle: () => "Retro", location: "Room 9" })} />);
+		expect(f.ref.current.state).toMatchObject({ title: "Retro", location: "Room 9" });
+	});
+});

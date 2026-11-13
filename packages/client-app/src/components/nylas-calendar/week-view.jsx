@@ -26,6 +26,35 @@ const INTERVAL_TIME = moment.duration(30, "minutes").as("seconds");
 // This pre-fetches from Utils to prevent constant disc access
 const overlapsBounds = Utils.overlapsBounds;
 
+function calculateStartMoment(props) {
+	let start;
+
+	// NOTE: Since we initialize a new time from one of the properties of
+	// the props.currentMomet, we need to check for the timezone!
+	//
+	// Other relative operations (like adding or subtracting time) are
+	// independent of a timezone.
+	const tz = props.currentMoment.tz();
+	if (tz) {
+		start = moment.tz([props.currentMoment.year()], tz);
+	} else {
+		start = moment([props.currentMoment.year()]);
+	}
+
+	start = start
+		.weekday(0)
+		.week(props.currentMoment.week())
+		.subtract(BUFFER_DAYS, "days");
+	return start;
+}
+
+function calculateEndMoment(props) {
+	const end = moment(calculateStartMoment(props))
+		.add(BUFFER_DAYS * 2 + DAYS_IN_VIEW, "days")
+		.subtract(1, "millisecond");
+	return end;
+}
+
 export default class WeekView extends React.Component {
 	static displayName = "WeekView";
 
@@ -61,17 +90,34 @@ export default class WeekView extends React.Component {
 		this._eventGridLegendWrapRef = React.createRef();
 		this._calendarAreaWrapRef = React.createRef();
 		this._scrollbarRef = React.createRef();
+		this.todayYear = this._now().year();
+		this.todayDayOfYear = this._now().dayOfYear();
 		this.state = {
 			events: [],
 			intervalHeight: MIN_INTERVAL_HEIGHT,
+			...WeekView.rangeFor(props),
 		};
 	}
 
-	UNSAFE_componentWillMount() {
-		this._initializeComponent(this.props);
+	// The shown range follows currentMoment before render, so a new week never
+	// renders (or scrolls) against the old range.
+	static getDerivedStateFromProps(props, state) {
+		if (props.currentMoment === state.prevCurrentMoment) {
+			return null;
+		}
+		return WeekView.rangeFor(props);
+	}
+
+	static rangeFor(props) {
+		return {
+			startMoment: calculateStartMoment(props),
+			endMoment: calculateEndMoment(props),
+			prevCurrentMoment: props.currentMoment,
+		};
 	}
 
 	componentDidMount() {
+		this._initializeComponent(this.props);
 		this._mounted = true;
 		this._centerScrollRegion();
 		this._setIntervalHeight();
@@ -83,11 +129,14 @@ export default class WeekView extends React.Component {
 		window.addEventListener("resize", this._setIntervalHeight, true);
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
-		this._initializeComponent(props);
-	}
-
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.currentMoment !== this.props.currentMoment ||
+			prevProps.disabledCalendars !== this.props.disabledCalendars ||
+			prevProps.dataSource !== this.props.dataSource
+		) {
+			this._initializeComponent(this.props);
+		}
 		this._setIntervalHeight();
 		this._ensureHorizontalScrollPos();
 	}
@@ -111,10 +160,10 @@ export default class WeekView extends React.Component {
 			this._sub.dispose();
 		}
 
-		const startMoment = this._calculateStartMoment(props);
-		const endMoment = this._calculateEndMoment(props);
+		// getDerivedStateFromProps already set the range for these props.
+		const { startMoment, endMoment } = this.state;
 
-		this._sub = this.props.dataSource
+		this._sub = props.dataSource
 			.buildObservable({
 				disabledCalendars: props.disabledCalendars,
 				startTime: startMoment.unix(),
@@ -123,8 +172,6 @@ export default class WeekView extends React.Component {
 			.subscribe((state) => {
 				this.setState(state);
 			});
-
-		this.setState({ startMoment, endMoment });
 
 		const percent =
 			(this._scrollTime - startMoment.unix()) /
@@ -141,32 +188,11 @@ export default class WeekView extends React.Component {
 	}
 
 	_calculateStartMoment(props) {
-		let start;
-
-		// NOTE: Since we initialize a new time from one of the properties of
-		// the props.currentMomet, we need to check for the timezone!
-		//
-		// Other relative operations (like adding or subtracting time) are
-		// independent of a timezone.
-		const tz = props.currentMoment.tz();
-		if (tz) {
-			start = moment.tz([props.currentMoment.year()], tz);
-		} else {
-			start = moment([props.currentMoment.year()]);
-		}
-
-		start = start
-			.weekday(0)
-			.week(props.currentMoment.week())
-			.subtract(BUFFER_DAYS, "days");
-		return start;
+		return calculateStartMoment(props);
 	}
 
 	_calculateEndMoment(props) {
-		const end = moment(this._calculateStartMoment(props))
-			.add(BUFFER_DAYS * 2 + DAYS_IN_VIEW, "days")
-			.subtract(1, "millisecond");
-		return end;
+		return calculateEndMoment(props);
 	}
 
 	_renderDateLabel = (day) => {
