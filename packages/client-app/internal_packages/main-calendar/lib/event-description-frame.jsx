@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { EventedIFrame } from "nylas-component-kit";
 import { Utils } from "nylas-exports";
 
@@ -10,6 +9,9 @@ export default class EmailFrame extends React.Component {
 	static propTypes = {
 		content: PropTypes.string.isRequired,
 	};
+
+	_iframe = React.createRef();
+	_iframeHeightHolder = React.createRef();
 
 	componentDidMount() {
 		this._mounted = true;
@@ -35,7 +37,7 @@ export default class EmailFrame extends React.Component {
 	}
 
 	_writeContent = () => {
-		const iframeNode = ReactDOM.findDOMNode(this.refs.iframe);
+		const iframeNode = this._iframe.current.getDOMNode();
 		const doc = iframeNode.contentDocument;
 		if (!doc) {
 			return;
@@ -57,12 +59,12 @@ export default class EmailFrame extends React.Component {
 
 		// Notify the EventedIFrame that we've replaced it's document (with `open`)
 		// so it can attach event listeners again.
-		this.refs.iframe.didReplaceDocument();
+		this._iframe.current.didReplaceDocument();
 		this._onMustRecalculateFrameHeight();
 	};
 
 	_onMustRecalculateFrameHeight = () => {
-		this.refs.iframe.setHeightQuietly(0);
+		this._iframe.current.setHeightQuietly(0);
 		this._lastComputedHeight = 0;
 		this._setFrameHeight();
 	};
@@ -101,8 +103,8 @@ export default class EmailFrame extends React.Component {
 		// reset it's scrollTop to ~0 (the new combined heiht of all children).
 		// To prevent this, the holderNode holds the last computed height until
 		// the new height is computed.
-		const holderNode = ReactDOM.findDOMNode(this.refs.iframeHeightHolder);
-		const iframeNode = ReactDOM.findDOMNode(this.refs.iframe);
+		const holderNode = this._iframeHeightHolder.current;
+		const iframeNode = this._iframe.current.getDOMNode();
 		const height = this._getFrameHeight(iframeNode.contentDocument);
 
 		// Why 5px? Some emails have elements with a height of 100%, and then put
@@ -110,7 +112,7 @@ export default class EmailFrame extends React.Component {
 		// message is always <100% + 1px>, which leads us to resize them constantly.
 		// This is a hack, but I'm not sure of a better solution.
 		if (Math.abs(height - this._lastComputedHeight) > 5) {
-			this.refs.iframe.setHeightQuietly(height);
+			this._iframe.current.setHeightQuietly(height);
 			holderNode.style.height = `${height}px`;
 			this._lastComputedHeight = height;
 		}
@@ -124,11 +126,11 @@ export default class EmailFrame extends React.Component {
 		return (
 			<div
 				className="iframe-container"
-				ref="iframeHeightHolder"
+				ref={this._iframeHeightHolder}
 				style={{ height: this._lastComputedHeight }}
 			>
 				<EventedIFrame
-					ref="iframe"
+					ref={this._iframe}
 					seamless="seamless"
 					searchable
 					onResize={this._onMustRecalculateFrameHeight}

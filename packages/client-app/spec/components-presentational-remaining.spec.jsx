@@ -331,6 +331,13 @@ describe("MetadataComposerToggleButton", () => {
 		expect(screen.getByTitle("Disable plugin")).toBeDefined();
 	});
 
+	it("hands over its button through getDOMNode", () => {
+		mocks.configValues["plugins.calendar.defaultOn"] = false;
+		const ref = React.createRef();
+		const { container } = render(<MetadataComposerToggleButton ref={ref} {...makeProps()} />);
+		expect(ref.current.getDOMNode()).toBe(container.querySelector("button"));
+	});
+
 	it("authenticates and enables metadata when clicked", async () => {
 		mocks.configValues["plugins.calendar.defaultOn"] = false;
 		const props = makeProps();

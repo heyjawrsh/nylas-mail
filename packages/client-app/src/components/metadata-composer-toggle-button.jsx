@@ -37,6 +37,12 @@ export default class MetadataComposerToggleButton extends React.Component {
 		this.state = {
 			pending: false,
 		};
+		this._button = React.createRef();
+	}
+
+	// The button, for a wrapper that measures it (HasTutorialTip).
+	getDOMNode() {
+		return this._button.current;
 	}
 
 	UNSAFE_componentWillMount() {
@@ -130,6 +136,7 @@ export default class MetadataComposerToggleButton extends React.Component {
 
 		return (
 			<button
+				ref={this._button}
 				className={className}
 				onClick={this._onClick}
 				title={title}

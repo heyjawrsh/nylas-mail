@@ -66,9 +66,15 @@ class Probe extends React.Component {
 
 	focus = vi.fn(() => "focused");
 
+	_button = React.createRef();
+
+	getDOMNode() {
+		return this._button.current;
+	}
+
 	render() {
 		return (
-			<button type="button" data-extra={this.props.extra} onClick={this.props.onClick}>
+			<button ref={this._button} type="button" data-extra={this.props.extra} onClick={this.props.onClick}>
 				{this.props.label || this.props.draft?.subject || "probe"}
 			</button>
 		);
@@ -339,11 +345,39 @@ describe("HasTutorialTip render behavior", () => {
 		anchor.remove();
 	});
 
-	it("renders the wrapped component inside a wrapper that adds no box", () => {
+	it("renders the wrapped component with no wrapper element", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
-		renderInAnchor(<Decorated label="wrapped" />);
+		const { container } = renderInAnchor(<Decorated label="wrapped" />);
 		const button = screen.getByRole("button", { name: "wrapped" });
-		expect(button.parentNode.style.display).toBe("contents");
+		expect(button.parentNode).toBe(container);
+		expect(container.querySelector(".tutorial-tip-target")).toBeNull();
+	});
+
+	it("shows no bubble and doesn't throw when the wrapped component has no node", () => {
+		class NoNode extends React.Component {
+			static displayName = "DecoratorsMoreNoNode";
+			getDOMNode() {
+				return null;
+			}
+			render() {
+				return null;
+			}
+		}
+		const Decorated = HasTutorialTip(NoNode, { title: "Title", instructions: "Help" });
+		const view = render(<Decorated />);
+		const tip = document.querySelector(".tooltips-container > .tutorial-tip");
+		expect(tip.classList.contains("visible")).toBe(false);
+		expect(() => view.unmount()).not.toThrow();
+		expect(tip.parentNode).toBeNull();
+	});
+
+	it("stops listening for hover on the wrapped node after unmount", () => {
+		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
+		const view = renderInAnchor(<Decorated />);
+		const button = screen.getByRole("button");
+		view.unmount();
+		fireEvent.mouseOver(button);
+		expect(mocks.openPopover).not.toHaveBeenCalled();
 	});
 
 	it("hands over the wrapped component's root node", () => {

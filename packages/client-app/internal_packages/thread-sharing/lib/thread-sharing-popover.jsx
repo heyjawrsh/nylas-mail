@@ -1,7 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import {
 	Rx,
@@ -33,6 +32,7 @@ export default class ThreadSharingPopover extends React.Component {
 			saving: false,
 		};
 		this._disposable = { dispose: () => {} };
+		this._root = React.createRef();
 	}
 
 	componentDidMount() {
@@ -44,7 +44,7 @@ export default class ThreadSharingPopover extends React.Component {
 	}
 
 	componentDidUpdate() {
-		ReactDOM.findDOMNode(this).focus();
+		this._root.current.focus();
 	}
 
 	componentWillUnmount() {
@@ -120,7 +120,7 @@ export default class ThreadSharingPopover extends React.Component {
 
 		// tabIndex is necessary for the popover's onBlur events to work properly
 		return (
-			<div className={classes}>
+			<div ref={this._root} className={classes}>
 				<div className="share-toggle">
 					<label htmlFor="shareCheckbox">
 						{control}
@@ -129,7 +129,6 @@ export default class ThreadSharingPopover extends React.Component {
 				</div>
 				<div className="share-input">
 					<input
-						ref="urlInput"
 						id="urlInput"
 						type="text"
 						value={url}

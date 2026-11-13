@@ -5,6 +5,7 @@ import _ from "underscore";
 
 import { Actions, WorkspaceStore, DOMUtils } from "nylas-exports";
 import NylasStore from "nylas-store";
+import { domNodeOf } from "../dom-node.js";
 
 const TipsBackgroundEl = document.createElement("tutorial-tip-background");
 
@@ -124,14 +125,14 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		constructor(props) {
 			super(props);
 			this._unlisteners = [];
-			this._wrapRef = React.createRef();
+			this._composedRef = React.createRef();
+			this._hoverNode = null;
 			this.state = { visible: false };
 		}
 
-		// The wrapped component's root node: the first element inside the
-		// wrapper, which has display: contents so it adds no box of its own.
+		// The wrapped component's root node, from its own getDOMNode().
 		getDOMNode() {
-			return this._wrapRef.current?.firstElementChild || null;
+			return domNodeOf(this._composedRef.current);
 		}
 
 		componentDidMount() {
@@ -150,20 +151,21 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 			];
 			window.addEventListener("resize", this._onRecomputeTooltipPosition);
 
-			// render() puts a display: contents wrapper around ComposedComponent,
-			// so the wrapper adds no box and flexbox layout is unchanged. The
-			// bubble and hover listeners are attached to the DOM manually.
-			const wrap = this._wrapRef.current;
+			// render() adds no element around ComposedComponent, so flexbox layout
+			// is unchanged. The bubble and hover listeners are attached to the
+			// wrapped component's node manually. With no node there's no bubble.
+			const el = this.getDOMNode();
 
 			this.tipNode = document.createElement("div");
 			this.tipNode.classList.add("tutorial-tip");
 
-			this.tipAnchor = wrap.closest("[data-tooltips-anchor]") || document.body;
+			this.tipAnchor = el?.closest("[data-tooltips-anchor]") || document.body;
 			this.tipAnchor
 				.querySelector(".tooltips-container")
-				.appendChild(this.tipNode);
+				?.appendChild(this.tipNode);
 
-			wrap.addEventListener("mouseover", this._onMouseOver);
+			this._hoverNode = el;
+			el?.addEventListener("mouseover", this._onMouseOver);
 			this._onTooltipStateChanged();
 		}
 
@@ -178,7 +180,8 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 			this._disposables.forEach((disposable) => disposable.dispose());
 
 			window.removeEventListener("resize", this._onRecomputeTooltipPosition);
-			this.tipNode.parentNode.removeChild(this.tipNode);
+			this._hoverNode?.removeEventListener("mouseover", this._onMouseOver);
+			this.tipNode.parentNode?.removeChild(this.tipNode);
 			clearTimeout(this._workspaceTimer);
 			clearTimeout(this._themesTimer);
 
@@ -224,12 +227,12 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 				return;
 			}
 
-			const wrap = this._wrapRef.current;
+			const hoverNode = this._hoverNode;
 			const el = this.getDOMNode();
-			if (!wrap || !el) {
+			if (!hoverNode || !el) {
 				return;
 			}
-			wrap.removeEventListener("mouseover", this._onMouseOver);
+			hoverNode.removeEventListener("mouseover", this._onMouseOver);
 
 			const tipRect = this.tipNode.getBoundingClientRect();
 			const tipFocusCircleRadius = 64;
@@ -248,7 +251,7 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 					title={TipConfig.title}
 					instructions={TipConfig.instructions}
 					onDismissed={() => {
-						wrap.addEventListener("mouseover", this._onMouseOver);
+						hoverNode.addEventListener("mouseover", this._onMouseOver);
 					}}
 				/>,
 				{
@@ -286,15 +289,7 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 		};
 
 		render() {
-			return (
-				<span
-					ref={this._wrapRef}
-					className="tutorial-tip-target"
-					style={{ display: "contents" }}
-				>
-					<ComposedComponent {...this.props} />
-				</span>
-			);
+			return <ComposedComponent {...this.props} ref={this._composedRef} />;
 		}
 	};
 }

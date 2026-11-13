@@ -1,3 +1,6 @@
+import React from "react";
+import { domNodeOf } from "../dom-node.js";
+
 function ListensToObservable(
 	ComposedComponent,
 	{ getObservable, getStateFromObservable },
@@ -12,6 +15,13 @@ function ListensToObservable(
 			this.state = getStateFromObservable(null, { props });
 			this.disposable = null;
 			this.observable = getObservable(props);
+			this._observedRef = React.createRef();
+		}
+
+		// The wrapped component's node, so a measurer or HasTutorialTip that
+		// holds this decorator still reaches it.
+		getDOMNode() {
+			return domNodeOf(this._observedRef.current);
 		}
 
 		componentDidMount() {
@@ -38,7 +48,13 @@ function ListensToObservable(
 		};
 
 		render() {
-			return <ComposedComponent {...this.state} {...this.props} />;
+			return (
+				<ComposedComponent
+					{...this.state}
+					{...this.props}
+					ref={this._observedRef}
+				/>
+			);
 		}
 	};
 }

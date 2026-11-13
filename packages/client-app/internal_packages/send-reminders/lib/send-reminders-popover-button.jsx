@@ -1,6 +1,5 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Rx, Actions, Message, DatabaseStore } from "nylas-exports";
 import { RetinaImg, ListensToObservable } from "nylas-component-kit";
 import SendRemindersPopover from "./send-reminders-popover";
@@ -39,9 +38,15 @@ class SendRemindersPopoverButton extends Component {
 	static defaultProps = {
 		className: "btn btn-toolbar",
 		direction: "down",
-		getBoundingClientRect: (inst) =>
-			ReactDOM.findDOMNode(inst).getBoundingClientRect(),
+		getBoundingClientRect: (inst) => inst.getDOMNode().getBoundingClientRect(),
 	};
+
+	_button = createRef();
+
+	// The button, for the popover origin and HasTutorialTip.
+	getDOMNode() {
+		return this._button.current;
+	}
 
 	onSetReminder = (reminderDate, dateLabel) => {
 		const { latestMessage, thread } = this.props;
@@ -75,6 +80,7 @@ class SendRemindersPopoverButton extends Component {
 		const title = reminderDate ? "Edit reminder" : "Set reminder";
 		return (
 			<button
+				ref={this._button}
 				title={title}
 				tabIndex={-1}
 				className={`send-reminders-toolbar-button ${className}`}

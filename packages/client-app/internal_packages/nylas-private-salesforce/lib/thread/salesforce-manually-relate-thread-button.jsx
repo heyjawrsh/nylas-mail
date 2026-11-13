@@ -1,7 +1,6 @@
 import _ from "underscore";
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 
 import { RetinaImg, KeyCommandsRegion } from "nylas-component-kit";
 import { Rx, Actions, FocusedContactsStore } from "nylas-exports";
@@ -28,6 +27,7 @@ export default class SalesforceManuallyRelateThreadButton extends React.Componen
 
 	constructor(props) {
 		super(props);
+		this._button = React.createRef();
 		this._pendingPickerObjs = {};
 		this.state = {
 			isLoggedIn: SalesforceEnv.isLoggedIn(),
@@ -107,9 +107,7 @@ export default class SalesforceManuallyRelateThreadButton extends React.Componen
 	}
 
 	_openPopover = () => {
-		const buttonRect = ReactDOM.findDOMNode(
-			this.refs.button,
-		).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(
 			<SalesforceManuallyRelateThreadPopover
 				threads={this.props.items}
@@ -186,7 +184,7 @@ export default class SalesforceManuallyRelateThreadButton extends React.Componen
 				globalMenuItems={this._menuItems()}
 			>
 				<button
-					ref="button"
+					ref={this._button}
 					style={{ marginRight: 0 }}
 					title={title}
 					onClick={this._openPopover}

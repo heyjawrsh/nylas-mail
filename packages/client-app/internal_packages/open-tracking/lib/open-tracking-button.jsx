@@ -7,6 +7,8 @@ import { PLUGIN_ID, PLUGIN_NAME } from "./open-tracking-constants";
 export default class OpenTrackingButton extends React.Component {
 	static displayName = "OpenTrackingButton";
 
+	_toggle = React.createRef();
+
 	static propTypes = {
 		draft: PropTypes.object.isRequired,
 		session: PropTypes.object.isRequired,
@@ -17,6 +19,11 @@ export default class OpenTrackingButton extends React.Component {
 			nextProps.draft.metadataForPluginId(PLUGIN_ID) !==
 			this.props.draft.metadataForPluginId(PLUGIN_ID)
 		);
+	}
+
+	// The toggle's button, for HasTutorialTip.
+	getDOMNode() {
+		return this._toggle.current?.getDOMNode() || null;
 	}
 
 	_title(enabled) {
@@ -42,6 +49,7 @@ export default class OpenTrackingButton extends React.Component {
 
 		return (
 			<MetadataComposerToggleButton
+				ref={this._toggle}
 				title={this._title}
 				iconUrl="nylas://open-tracking/assets/icon-composer-eye@2x.png"
 				pluginId={PLUGIN_ID}

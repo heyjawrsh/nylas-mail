@@ -28,6 +28,8 @@ It behaves like a standard formItem with a `value` prop and `onChange`. The valu
 class SalesforceObjectPicker extends React.Component {
 	static displayName = "SalesforceObjectPicker";
 
+	_tokenizingTextField = React.createRef();
+
 	static extendedPropTypes = {
 		// Zero or more SalesforceObject's or PendingSalesforceObjects to turn
 		// into `tokens` in the TokenizingTextField
@@ -111,7 +113,7 @@ class SalesforceObjectPicker extends React.Component {
 	}
 
 	focus() {
-		this.refs.tokenizingTextField.focus();
+		this._tokenizingTextField.current.focus();
 	}
 
 	_tokens() {
@@ -350,7 +352,7 @@ class SalesforceObjectPicker extends React.Component {
 		return (
 			<div className="salesforce-object-picker">
 				<TokenizingTextField
-					ref="tokenizingTextField"
+					ref={this._tokenizingTextField}
 					onAdd={this._onTokensAdd}
 					tokens={this._tokens()}
 					onRemove={this._onTokensRemoved}

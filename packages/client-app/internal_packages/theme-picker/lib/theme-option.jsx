@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import fs from "fs-plus";
 import path from "node:path";
 
@@ -17,6 +16,7 @@ class ThemeOption extends React.Component {
 	constructor(props) {
 		super(props);
 		this.lessCache = null;
+		this._iframe = React.createRef();
 	}
 
 	componentDidMount() {
@@ -84,7 +84,7 @@ class ThemeOption extends React.Component {
 	}
 
 	_writeContent() {
-		const domNode = ReactDOM.findDOMNode(this.refs.iframe);
+		const domNode = this._iframe.current.getDOMNode();
 		const doc = domNode.contentDocument;
 		if (!doc) return;
 
@@ -115,7 +115,7 @@ class ThemeOption extends React.Component {
 		return (
 			<div className="clickable-theme-option" onMouseDown={this.props.onSelect}>
 				<EventedIFrame
-					ref="iframe"
+					ref={this._iframe}
 					className={`theme-preview-${this.props.theme.name.replace(/\./g, "-")}`}
 					frameBorder="0"
 					width="115px"

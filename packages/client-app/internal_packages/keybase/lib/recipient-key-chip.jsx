@@ -4,6 +4,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import React from "react";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";
 import PGPKeyStore from "./pgp-key-store";
@@ -59,14 +60,13 @@ class RecipientKeyChip extends React.Component {
 					<RetinaImg
 						url="nylas://keybase/key-present@2x.png"
 						mode={RetinaImg.Mode.ContentPreserve}
-						ref="keyIcon"
 					/>
 				</div>
 			);
 		} else {
 			return (
 				<div className="n1-keybase-recipient-key-chip">
-					<span ref="noKeyIcon"></span>
+					<span></span>
 				</div>
 			);
 		}

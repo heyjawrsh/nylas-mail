@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 import { Flexbox } from "nylas-component-kit";
+import { domNodeOf } from "../../../../../src/components/dom-node.js";
 import fs from "node:fs";
 
 import { keyAndModifiersForEvent } from "./mousetrap-keybinding-helpers";
@@ -20,14 +20,16 @@ export default class CommandKeybinding extends React.Component {
 		this.state = {
 			editing: false,
 		};
+		this._root = React.createRef();
 	}
+
 	componentDidUpdate() {
 		const { modifiers, keys, editing } = this.state;
 		if (editing) {
 			const finished =
 				(modifiers.length > 0 && keys.length > 0) || keys.length >= 2;
 			if (finished) {
-				ReactDOM.findDOMNode(this).blur();
+				domNodeOf(this._root.current).blur();
 			}
 		}
 	}
@@ -168,6 +170,7 @@ export default class CommandKeybinding extends React.Component {
 		}
 		return (
 			<Flexbox
+				ref={this._root}
 				className={classnames}
 				tabIndex={-1}
 				onKeyDown={this._onKey}

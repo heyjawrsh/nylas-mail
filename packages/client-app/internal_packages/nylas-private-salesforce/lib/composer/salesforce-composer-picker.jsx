@@ -44,7 +44,6 @@ class SalesforceComposerPicker extends React.Component {
 
 		return (
 			<Popover
-				ref="popover"
 				className="salesforce-composer-picker pull-right"
 				buttonComponent={button}
 			>

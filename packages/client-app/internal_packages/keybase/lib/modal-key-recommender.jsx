@@ -8,6 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import React from "react";
 import PropTypes from "prop-types";
 let ModalKeyRecommender;
 import PGPKeyStore from "./pgp-key-store";
@@ -209,7 +210,6 @@ module.exports = ModalKeyRecommender = (() => {
 						title="Delete Public"
 						className="btn btn-toolbar btn-danger"
 						onClick={() => PGPKeyStore.deleteKey(identity)}
-						ref="button"
 					>
 						Delete Key
 					</button>

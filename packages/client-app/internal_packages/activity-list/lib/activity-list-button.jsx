@@ -1,5 +1,5 @@
 import React from "react";
-import { Actions, ReactDOM } from "nylas-exports";
+import { Actions } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 
 import ActivityList from "./activity-list";
@@ -11,6 +11,12 @@ class ActivityListButton extends React.Component {
 	constructor() {
 		super();
 		this.state = this._getStateFromStores();
+		this._root = React.createRef();
+	}
+
+	// The button, for the popover origin and HasTutorialTip.
+	getDOMNode() {
+		return this._root.current;
 	}
 
 	componentDidMount() {
@@ -22,7 +28,7 @@ class ActivityListButton extends React.Component {
 	}
 
 	onClick = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._root.current.getBoundingClientRect();
 		Actions.openPopover(<ActivityList />, {
 			originRect: buttonRect,
 			direction: "down",
@@ -48,6 +54,7 @@ class ActivityListButton extends React.Component {
 		}
 		return (
 			<div
+				ref={this._root}
 				tabIndex={-1}
 				className="toolbar-activity"
 				title="View activity"

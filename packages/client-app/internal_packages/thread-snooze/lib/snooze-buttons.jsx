@@ -1,8 +1,8 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Actions, FocusedPerspectiveStore } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
+import { domNodeOf } from "../../../src/components/dom-node.js";
 import SnoozePopover from "./snooze-popover";
 
 class SnoozeButton extends Component {
@@ -18,9 +18,15 @@ class SnoozeButton extends Component {
 		className: "btn btn-toolbar",
 		direction: "down",
 		shouldRenderIconImg: true,
-		getBoundingClientRect: (inst) =>
-			ReactDOM.findDOMNode(inst).getBoundingClientRect(),
+		getBoundingClientRect: (inst) => inst.getDOMNode().getBoundingClientRect(),
 	};
+
+	_root = createRef();
+
+	// The button (or the empty span outside the inbox).
+	getDOMNode() {
+		return this._root.current;
+	}
 
 	onClick = (event) => {
 		event.stopPropagation();
@@ -34,10 +40,11 @@ class SnoozeButton extends Component {
 
 	render() {
 		if (!FocusedPerspectiveStore.current().isInbox()) {
-			return <span />;
+			return <span ref={this._root} />;
 		}
 		return (
 			<button
+				ref={this._root}
 				title="Snooze"
 				tabIndex={-1}
 				className={`snooze-button ${this.props.className}`}
@@ -63,10 +70,16 @@ export class QuickActionSnooze extends Component {
 
 	static containerRequired = false;
 
+	_root = createRef();
+
+	getDOMNode() {
+		return domNodeOf(this._root.current);
+	}
+
 	getBoundingClientRect = () => {
 		// Grab the parent node because of the zoom applied to this button. If we
 		// took this element directly, we'd have to divide everything by 2
-		const element = ReactDOM.findDOMNode(this).parentNode;
+		const element = this.getDOMNode().parentNode;
 		const { height, width, top, bottom, left, right } =
 			element.getBoundingClientRect();
 
@@ -76,10 +89,11 @@ export class QuickActionSnooze extends Component {
 
 	render() {
 		if (!FocusedPerspectiveStore.current().isInbox()) {
-			return <span />;
+			return <span ref={this._root} />;
 		}
 		return (
 			<SnoozeButton
+				ref={this._root}
 				direction="left"
 				threads={[this.props.thread]}
 				className="btn action action-snooze"
@@ -99,10 +113,18 @@ export class ToolbarSnooze extends Component {
 
 	static containerRequired = false;
 
+	_root = createRef();
+
+	// SnoozeButton's node (or the empty span outside the inbox), for
+	// HasTutorialTip.
+	getDOMNode() {
+		return domNodeOf(this._root.current);
+	}
+
 	render() {
 		if (!FocusedPerspectiveStore.current().isInbox()) {
-			return <span />;
+			return <span ref={this._root} />;
 		}
-		return <SnoozeButton threads={this.props.items} />;
+		return <SnoozeButton ref={this._root} threads={this.props.items} />;
 	}
 }

@@ -1,6 +1,5 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Actions } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 import SendRemindersPopover from "./send-reminders-popover";
@@ -25,6 +24,12 @@ class SendRemindersComposerButton extends Component {
 		this.state = {
 			saving: false,
 		};
+		this._button = createRef();
+	}
+
+	// The button, for the popover origin and HasTutorialTip.
+	getDOMNode() {
+		return this._button.current;
 	}
 
 	UNSAFE_componentWillReceiveProps() {
@@ -51,7 +56,7 @@ class SendRemindersComposerButton extends Component {
 
 	onClick = () => {
 		const { draft } = this.props;
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(
 			<SendRemindersPopover
 				onRemind={this.onSetReminder}
@@ -68,7 +73,12 @@ class SendRemindersComposerButton extends Component {
 
 		if (saving) {
 			return (
-				<button className={className} title="Saving reminder..." tabIndex={-1}>
+				<button
+					ref={this._button}
+					className={className}
+					title="Saving reminder..."
+					tabIndex={-1}
+				>
 					<RetinaImg
 						name="inline-loading-spinner.gif"
 						mode={RetinaImg.Mode.ContentDark}
@@ -88,6 +98,7 @@ class SendRemindersComposerButton extends Component {
 
 		return (
 			<button
+				ref={this._button}
 				tabIndex={-1}
 				className={className}
 				title={reminderLabel}

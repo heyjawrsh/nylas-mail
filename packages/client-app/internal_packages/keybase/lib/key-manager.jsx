@@ -5,6 +5,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+import React from "react";
 import PropTypes from "prop-types";
 let KeyManager;
 import PGPKeyStore from "./pgp-key-store";
@@ -76,7 +77,6 @@ module.exports = KeyManager = (() => {
 						title="Delete Public"
 						className="btn btn-toolbar btn-danger"
 						onClick={() => PGPKeyStore.deleteKey(identity)}
-						ref="button"
 					>
 						Delete Key
 					</button>
@@ -86,7 +86,6 @@ module.exports = KeyManager = (() => {
 						title="Export Public"
 						className="btn btn-toolbar"
 						onClick={() => PGPKeyStore.exportKey({ identity: identity })}
-						ref="button"
 					>
 						Export Key
 					</button>
@@ -112,7 +111,6 @@ module.exports = KeyManager = (() => {
 						title="Delete Private"
 						className="btn btn-toolbar btn-danger"
 						onClick={() => PGPKeyStore.deleteKey(identity)}
-						ref="button"
 					>
 						Delete Key
 					</button>
@@ -122,7 +120,6 @@ module.exports = KeyManager = (() => {
 						title="Export Private"
 						className="btn btn-toolbar"
 						onClick={(event) => this._exportPrivateKey(identity, event)}
-						ref="button"
 					>
 						Export Key
 					</button>

@@ -1,4 +1,4 @@
-import { React, ReactDOM, Actions } from "nylas-exports";
+import { React, Actions } from "nylas-exports";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";
 import OpenTrackingMessagePopover from "./open-tracking-message-popover";
@@ -13,6 +13,7 @@ export default class OpenTrackingIcon extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._root = React.createRef();
 		this.state = this._getStateFromThread(props.thread);
 	}
 
@@ -21,7 +22,7 @@ export default class OpenTrackingIcon extends React.Component {
 	}
 
 	onMouseDown = () => {
-		const rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const rect = this._root.current.getBoundingClientRect();
 		Actions.openPopover(
 			<OpenTrackingMessagePopover
 				message={this.state.message}
@@ -81,6 +82,7 @@ export default class OpenTrackingIcon extends React.Component {
 			: "This message has not been opened";
 		return (
 			<div
+				ref={this._root}
 				title={title}
 				className="open-tracking-icon"
 				onMouseDown={this.state.opened ? this.onMouseDown : null}

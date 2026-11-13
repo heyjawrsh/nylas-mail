@@ -76,7 +76,6 @@ class SalesforceManuallyRelateThreadPopover extends React.Component {
 			<SalesforceObjectPicker
 				id={PICKER_ID}
 				key="picker"
-				ref="objectPicker"
 				value={this.state.pickerValue}
 				onChange={this._onChange}
 				placeholder={this._placeholder()}

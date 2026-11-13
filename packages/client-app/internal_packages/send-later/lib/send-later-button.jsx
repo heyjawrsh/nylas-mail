@@ -1,7 +1,6 @@
 import fs from "node:fs";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import {
 	Actions,
 	DateUtils,
@@ -35,6 +34,12 @@ class SendLaterButton extends Component {
 		this.state = {
 			saving: false,
 		};
+		this._button = createRef();
+	}
+
+	// The button, for the popover origin and HasTutorialTip.
+	getDOMNode() {
+		return this._button.current;
 	}
 
 	componentDidMount() {
@@ -194,7 +199,7 @@ class SendLaterButton extends Component {
 	};
 
 	onClick = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(
 			<SendLaterPopover
 				sendLaterDate={this._sendLaterDateForDraft(this.props.draft)}
@@ -219,6 +224,7 @@ class SendLaterButton extends Component {
 		if (this.state.saving) {
 			return (
 				<button
+					ref={this._button}
 					className={className}
 					title="Saving send date..."
 					tabIndex={-1}
@@ -249,6 +255,7 @@ class SendLaterButton extends Component {
 		}
 		return (
 			<button
+				ref={this._button}
 				className={className}
 				title="Send later…"
 				onClick={this.onClick}

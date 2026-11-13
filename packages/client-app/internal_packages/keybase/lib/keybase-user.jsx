@@ -177,9 +177,7 @@ module.exports = KeybaseUser = (() => {
 					<ul>
 						{" "}
 						{emails}
-						<a ref="addEmail" onClick={this._addEmailClick}>
-							+ Add Email
-						</a>
+						<a onClick={this._addEmailClick}>+ Add Email</a>
 					</ul>
 				);
 			}

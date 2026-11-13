@@ -1,7 +1,6 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import {
 	Flexbox,
 	ScrollRegion,
@@ -11,6 +10,7 @@ import {
 } from "nylas-component-kit";
 import { PreferencesUIStore } from "nylas-exports";
 import PreferencesTabsBar from "./preferences-tabs-bar";
+import { domNodeOf } from "../../../src/components/dom-node.js";
 
 class PreferencesRoot extends React.Component {
 	static displayName = "PreferencesRoot";
@@ -23,8 +23,11 @@ class PreferencesRoot extends React.Component {
 		selection: PropTypes.object,
 	};
 
+	_root = React.createRef();
+	_scrollRegion = React.createRef();
+
 	componentDidMount() {
-		ReactDOM.findDOMNode(this).focus();
+		domNodeOf(this._root.current).focus();
 		this._focusContent();
 	}
 
@@ -70,9 +73,12 @@ class PreferencesRoot extends React.Component {
 	// Focus the first thing with a tabindex when we update.
 	// inside the content area. This makes it way easier to interact with prefs.
 	_focusContent() {
-		const node = ReactDOM.findDOMNode(this.refs.content).querySelector(
-			"[tabindex]",
-		);
+		// ConfigPropContainer renders the tab itself, so the tab's root is the
+		// one element in the scroll region's content.
+		const content = domNodeOf(this._scrollRegion.current)?.querySelector(
+			".scroll-region-content-inner",
+		)?.firstElementChild;
+		const node = content?.querySelector("[tabindex]");
 		if (node) {
 			node.focus();
 		}
@@ -83,14 +89,18 @@ class PreferencesRoot extends React.Component {
 
 		return (
 			<KeyCommandsRegion
+				ref={this._root}
 				className="preferences-wrap"
 				tabIndex="0"
 				localHandlers={this._localHandlers()}
 			>
 				<Flexbox direction="column">
 					<PreferencesTabsBar tabs={tabs} selection={selection} />
-					<ScrollRegion className="preferences-content">
-						<ConfigPropContainer ref="content">
+					<ScrollRegion
+						ref={this._scrollRegion}
+						className="preferences-content"
+					>
+						<ConfigPropContainer>
 							{tab ? (
 								<tab.component accountId={selection.get("accountId")} />
 							) : (

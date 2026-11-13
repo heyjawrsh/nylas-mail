@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 const {
 	MessageStore,
 	React,
-	ReactDOM,
 	FileDownloadStore,
 	MessageBodyProcessor,
 	Actions,
@@ -227,7 +226,6 @@ class DecryptMessageButton extends React.Component {
 					title="Decrypt email body"
 					className="btn btn-toolbar"
 					onClick={this._onClickDecrypt}
-					ref="button"
 				>
 					{decryptLabel}
 				</button>

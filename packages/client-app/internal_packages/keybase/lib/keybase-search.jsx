@@ -11,7 +11,6 @@ let KeybaseSearch;
 const {
 	Utils,
 	React,
-	ReactDOM,
 	Actions,
 	RegExpUtils,
 	IdentityStore,
@@ -151,7 +150,6 @@ module.exports = KeybaseSearch = (() => {
 						title="Import"
 						className="btn btn-toolbar"
 						onClick={(event) => boundFunc(profile, event)}
-						ref="button"
 					>
 						Import Key
 					</button>
@@ -197,13 +195,12 @@ module.exports = KeybaseSearch = (() => {
 							type="text"
 							value={this.state.query}
 							placeholder="Search for PGP public keys on Keybase"
-							ref="searchbar"
 							onChange={this._queryChange}
 						/>
 						{empty}
 						<div className="loading">{loading}</div>
 					</div>
-					<div className="results" ref="results">
+					<div className="results">
 						{profiles}
 						{badSearch}
 					</div>

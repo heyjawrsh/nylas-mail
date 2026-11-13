@@ -3,7 +3,6 @@ import _str from "underscore.string";
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import ReactDOM from "react-dom";
 import {
 	Utils,
 	DatabaseStore,
@@ -35,6 +34,7 @@ class RelatedObjectsForThread extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._relObjects = React.createRef();
 		this.state = this._initialState();
 	}
 
@@ -215,7 +215,7 @@ class RelatedObjectsForThread extends React.Component {
 	_editObj = (obj) => {
 		const reqEdit = _.debounce(() => this._requestEdit(obj), 1000, true);
 		return (event) => {
-			const wrap = ReactDOM.findDOMNode(this.refs.relObjects);
+			const wrap = this._relObjects.current;
 			const toggles = Array.from(wrap.querySelectorAll(".thread-toggles"));
 			for (const toggle of toggles) {
 				if (toggle.contains(event.target)) {
@@ -250,7 +250,7 @@ class RelatedObjectsForThread extends React.Component {
 						</span>
 					</span>
 
-					<span ref="syncThreadToggle" className="thread-toggles">
+					<span className="thread-toggles">
 						<SyncThreadToggle
 							thread={this.props.thread}
 							sObjectId={obj.id}
@@ -419,7 +419,7 @@ class RelatedObjectsForThread extends React.Component {
 	render() {
 		if (!this.props.thread) return false;
 		return (
-			<div className="salesforce related-objects-wrap" ref="relObjects">
+			<div className="salesforce related-objects-wrap" ref={this._relObjects}>
 				{this._renderMainObjects()}
 			</div>
 		);

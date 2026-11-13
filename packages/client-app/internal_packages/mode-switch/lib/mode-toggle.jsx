@@ -25,6 +25,7 @@ class ModeToggle extends React.Component {
 		this._onToggleMode = this._onToggleMode.bind(this);
 		this.props = props;
 		this.column = WorkspaceStore.Location.MessageListSidebar;
+		this._button = React.createRef();
 		this.state = this._getStateFromStores();
 	}
 
@@ -40,10 +41,16 @@ class ModeToggle extends React.Component {
 			: undefined;
 	}
 
+	// The button, for HasTutorialTip.
+	getDOMNode() {
+		return this._button.current;
+	}
+
 	render() {
 		return React.createElement(
 			"button",
 			{
+				ref: this._button,
 				className: `btn btn-toolbar mode-toggle mode-${this.state.hidden}`,
 				style: { order: 500 },
 				title: this.state.hidden ? "Show sidebar" : "Hide sidebar",

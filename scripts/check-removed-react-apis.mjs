@@ -21,12 +21,6 @@ const EXTENSIONS = new Set([".js", ".jsx"]);
 const REMOVED_DOM_NAMES = "render|hydrate|unmountComponentAtNode";
 const REACT_DOM = `["']react-dom["']`;
 
-// The internal packages that are clean of the path-scoped entries below:
-// thread-list, message-list, composer and every composer-* plugin.
-const MAIL_PACKAGES =
-	/^packages\/client-app\/internal_packages\/(?:thread-list|message-list|composer(?:-[^/]+)?)\//;
-const CLEAN = ["packages/client-app/src", MAIL_PACKAGES];
-
 // Each entry: a label for the report, a regex run over the whole file (so it
 // can span lines), and what to use instead. An entry with `only` checks just
 // the paths it lists: a string is a folder prefix, a regex is tested against
@@ -84,32 +78,28 @@ export const BANNED = [
 		pattern: /\bgetChildContext\b/,
 		why: "use a context Provider",
 	},
-	// The entries below cover src/ and the mail packages for now; the rest of
-	// internal_packages/ joins them once its last use is gone.
+	// findDOMNode and string refs: banned everywhere in src/ and
+	// internal_packages/ since every package dropped them.
 	{
 		label: "findDOMNode",
 		pattern: /\bfindDOMNode\b/,
 		why: "put a ref on the element, or call the child's getDOMNode()",
-		only: CLEAN,
 	},
 	{
 		label: "string ref",
 		// ref="x" or ref='x' in JSX, and ref: "x" in createElement props.
 		pattern: /\bref\s*[=:]\s*["']/,
 		why: "use createRef() or a callback ref",
-		only: CLEAN,
 	},
 	{
 		label: "string ref",
 		pattern: /\bref\s*=\s*\{\s*["'`]/,
 		why: "use createRef() or a callback ref",
-		only: CLEAN,
 	},
 	{
 		label: "this.refs",
 		pattern: /\.refs\b/,
 		why: "read the object ref's .current",
-		only: CLEAN,
 	},
 ];
 

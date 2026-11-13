@@ -15,7 +15,6 @@ const {
 	Actions,
 	DatabaseStore,
 	Contact,
-	ReactDOM,
 } = require("nylas-exports");
 const PGPKeyStore = require("./pgp-key-store");
 const Identity = require("./identity");
@@ -38,6 +37,7 @@ class EncryptMessageButton extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._root = React.createRef();
 		this._onKeystoreChange = this._onKeystoreChange.bind(this);
 		this._onClick = this._onClick.bind(this);
 		this._toggleCrypt = this._toggleCrypt.bind(this);
@@ -124,6 +124,11 @@ class EncryptMessageButton extends React.Component {
 		}
 	}
 
+	// The wrapper div, for the popover origin.
+	getDOMNode() {
+		return this._root.current;
+	}
+
 	render() {
 		let classnames = "btn btn-toolbar";
 		if (this.state.currentlyEncrypted) {
@@ -131,12 +136,11 @@ class EncryptMessageButton extends React.Component {
 		}
 
 		return (
-			<div className="n1-keybase">
+			<div ref={this._root} className="n1-keybase">
 				<button
 					title="Encrypt email body"
 					className={classnames}
 					onClick={() => this._onClick()}
-					ref="button"
 				>
 					<RetinaImg
 						url="nylas://keybase/encrypt-composer-button@2x.png"
@@ -229,7 +233,7 @@ encrypted. Compose a message, add recipients in the To: field, and try again.`);
 						/>
 					);
 					return Actions.openPopover(component, {
-						originRect: ReactDOM.findDOMNode(this).getBoundingClientRect(),
+						originRect: this._root.current.getBoundingClientRect(),
 						direction: "up",
 						closeOnAppBlur: false,
 					});

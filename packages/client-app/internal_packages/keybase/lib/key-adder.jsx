@@ -279,7 +279,6 @@ module.exports = KeyAdder = (() => {
 				<div className="key-adder">
 					<div className="key-text">
 						<textarea
-							ref="key-input"
 							value={this.state.keyContents || ""}
 							onChange={this._onKeyChange}
 							placeholder="Paste in your PGP key here!"
@@ -364,7 +363,6 @@ module.exports = KeyAdder = (() => {
 					<div className="key-text">
 						<div className="loading">{this.state.loading ? loading : null}</div>
 						<textarea
-							ref="key-output"
 							value={this.state.keyContents || ""}
 							disabled
 							placeholder={keyPlaceholder}

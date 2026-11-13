@@ -1,4 +1,4 @@
-import { Actions, React, ReactDOM } from "nylas-exports";
+import { Actions, React } from "nylas-exports";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";
 import ThreadSharingPopover from "./thread-sharing-popover";
@@ -7,6 +7,13 @@ export default class ThreadSharingButton extends React.Component {
 	static displayName = "ThreadSharingButton";
 
 	static containerRequired = false;
+
+	_root = React.createRef();
+
+	// The button (or the empty span for a multi-selection).
+	getDOMNode() {
+		return this._root.current;
+	}
 
 	static propTypes = {
 		items: PropTypes.array,
@@ -29,7 +36,7 @@ export default class ThreadSharingButton extends React.Component {
 				closePopover={Actions.closePopover}
 			/>,
 			{
-				originRect: ReactDOM.findDOMNode(this).getBoundingClientRect(),
+				originRect: this._root.current.getBoundingClientRect(),
 				direction: "down",
 			},
 		);
@@ -37,11 +44,12 @@ export default class ThreadSharingButton extends React.Component {
 
 	render() {
 		if (this.props.items && this.props.items.length > 1) {
-			return <span />;
+			return <span ref={this._root} />;
 		}
 
 		return (
 			<button
+				ref={this._root}
 				className="btn btn-toolbar thread-sharing-button"
 				title="Share"
 				style={{ marginRight: 0 }}
