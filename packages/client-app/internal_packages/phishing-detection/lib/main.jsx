@@ -7,7 +7,7 @@ import {
 	MessageStore,
 } from "nylas-exports";
 
-import tld from "tld";
+import { getDomain } from "tldts";
 
 // Notice that this file is `main.cjsx` rather than `main.coffee`. We use the
 // `.cjsx` filetype because we use the CJSX DSL to describe markup for React to
@@ -62,9 +62,11 @@ class PhishingIndicator extends React.Component {
 			return <span />;
 		}
 
-		const fromDomain = tld.registered(fromEmail.split("@")[1] || "");
-		const replyToDomain = tld.registered(replyToEmail.split("@")[1] || "");
-		if (replyToDomain !== fromDomain) {
+		// The registered domains (paypal-secure.net, not mail.paypal-secure.net).
+		// getDomain gives null for an empty or invalid host, and that's no warning.
+		const fromDomain = getDomain(fromEmail.split("@")[1] || "");
+		const replyToDomain = getDomain(replyToEmail.split("@")[1] || "");
+		if (fromDomain && replyToDomain && replyToDomain !== fromDomain) {
 			return (
 				<div className="phishingIndicator">
 					<b>This message looks suspicious!</b>

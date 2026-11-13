@@ -18,9 +18,9 @@ const {
 	CategoryStore,
 } = require("nylas-exports");
 
-const SidebarSection = require("./sidebar-section");
-const SidebarActions = require("./sidebar-actions");
-const AccountCommands = require("./account-commands");
+const SidebarSection = require("./sidebar-section").default;
+const SidebarActions = require("./sidebar-actions").default;
+const AccountCommands = require("./account-commands").default;
 
 const Sections = {
 	Standard: "Standard",

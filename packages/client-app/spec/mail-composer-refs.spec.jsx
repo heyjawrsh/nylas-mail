@@ -420,7 +420,6 @@ describe("composer toolbar buttons open their popover from their own rect", () =
 		let TranslateButton;
 		const load = createPackageLoader({
 			...base,
-			request: {},
 			"nylas-exports": {
 				React,
 				Actions: { openPopover },

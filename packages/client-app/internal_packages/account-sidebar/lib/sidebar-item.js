@@ -1,6 +1,11 @@
 import { createRequire } from "node:module";
 
-const nodeRequire = createRequire(import.meta.url);
+// The compile cache loads this file as CommonJS, where import.meta.url is
+// undefined; there the module's own require does the same job.
+const nodeRequire =
+	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
+		? createRequire(import.meta.url)
+		: require;
 
 /*
  * decaffeinate suggestions:

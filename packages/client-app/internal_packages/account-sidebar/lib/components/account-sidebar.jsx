@@ -10,7 +10,7 @@ const _ = require("underscore");
 const React = require("react");
 const { Utils, AccountStore } = require("nylas-exports");
 const { OutlineView, ScrollRegion, Flexbox } = require("nylas-component-kit");
-const AccountSwitcher = require("./account-switcher");
+const AccountSwitcher = require("./account-switcher").default;
 const SidebarStore = require("../sidebar-store");
 
 class AccountSidebar extends React.Component {

@@ -185,6 +185,9 @@ importers:
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
+      tldts:
+        specifier: ^7.4.11
+        version: 7.4.11
       underscore:
         specifier: ^1.13.8
         version: 1.13.8

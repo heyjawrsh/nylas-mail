@@ -1,5 +1,4 @@
 import _ from "underscore";
-import request from "request";
 import NylasStore from "nylas-store";
 import { FocusedContactsStore } from "nylas-exports";
 
@@ -104,14 +103,27 @@ class GithubUserStore extends NylasStore {
 		);
 	}
 
-	// Wrap the Node `request` library and pass the User-Agent header, which is required
-	// by Github's API. Also pass `json:true`, which causes responses to be automatically
-	// parsed.
+	// Fetch with the User-Agent header, which is required by Github's API. Like
+	// the `request` call this replaced (with `json: true`), any HTTP response
+	// hands its body to the callback, parsed when it's JSON, and only a network
+	// failure is an error.
 	_githubRequest(url, callback) {
-		return request(
-			{ url: url, headers: { "User-Agent": "request" }, json: true },
-			callback,
-		);
+		return fetch(url, { headers: { "User-Agent": "request" } })
+			.then((resp) =>
+				resp.text().then((text) => {
+					let body = text;
+					try {
+						body = JSON.parse(text);
+					} catch (_err) {
+						// Not JSON: hand over the text, as `request` did.
+					}
+					return [resp, body];
+				}),
+			)
+			.then(
+				([resp, body]) => callback(null, resp, body),
+				(err) => callback(err),
+			);
 	}
 }
 

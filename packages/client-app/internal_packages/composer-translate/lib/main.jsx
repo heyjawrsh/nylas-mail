@@ -6,7 +6,6 @@
 // TranslateButton is a simple React component that allows you to select
 // a language from a popup menu and translates draft text into that language.
 
-import request from "request";
 import PropTypes from "prop-types";
 
 import {
@@ -34,6 +33,18 @@ const YandexLanguages = {
 	Portuguese: "pt",
 	Korean: "ko",
 };
+
+// Encodes a query the way `request`'s `qs` option did (RFC 3986: everything
+// but letters, digits and -_.~ is escaped).
+const encodeQueryPart = (value) =>
+	encodeURIComponent(value).replace(
+		/[!'()*]/g,
+		(c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+	);
+const queryString = (params) =>
+	Object.entries(params)
+		.map(([key, value]) => `${encodeQueryPart(key)}=${encodeQueryPart(value)}`)
+		.join("&");
 
 class TranslateButton extends React.Component {
 	// Adding a `displayName` makes debugging React easier
@@ -79,29 +90,32 @@ class TranslateButton extends React.Component {
 			format: "html",
 		};
 
-		// Use Node's `request` library to perform the translation using the Yandex API.
-		request({ url: YandexTranslationURL, qs: query }, (error, resp, data) => {
-			if (resp.statusCode !== 200) {
-				this._onError(error);
-				return;
-			}
+		// Perform the translation using the Yandex API. A network failure, a
+		// status other than 200 or a bad body shows the error dialog.
+		fetch(`${YandexTranslationURL}?${queryString(query)}`)
+			.then((resp) =>
+				resp.status === 200
+					? resp.text()
+					: Promise.reject(new Error(`HTTP ${resp.status}`)),
+			)
+			.then((data) => {
+				const json = JSON.parse(data);
+				let translated = json.text.join("");
 
-			const json = JSON.parse(data);
-			let translated = json.text.join("");
+				// The new text of the draft is our translated response, plus any quoted text
+				// that we didn't process.
+				translated = QuotedHTMLTransformer.appendQuotedHTML(
+					translated,
+					draftHtml,
+				);
 
-			// The new text of the draft is our translated response, plus any quoted text
-			// that we didn't process.
-			translated = QuotedHTMLTransformer.appendQuotedHTML(
-				translated,
-				draftHtml,
-			);
-
-			// To update the draft, we add the new body to it's session. The session object
-			// automatically marshalls changes to the database and ensures that others accessing
-			// the same draft are notified of changes.
-			this.props.session.changes.add({ body: translated });
-			this.props.session.changes.commit();
-		});
+				// To update the draft, we add the new body to it's session. The session object
+				// automatically marshalls changes to the database and ensures that others accessing
+				// the same draft are notified of changes.
+				this.props.session.changes.add({ body: translated });
+				this.props.session.changes.commit();
+			})
+			.catch((error) => this._onError(error));
 	};
 
 	_button = React.createRef();
@@ -120,7 +134,7 @@ class TranslateButton extends React.Component {
 
 	// Helper method that will render the contents of our popover.
 	_renderPopover() {
-		const headerComponents = [<span>Translate:</span>];
+		const headerComponents = [<span key="header">Translate:</span>];
 		return (
 			<Menu
 				className="translate-language-picker"

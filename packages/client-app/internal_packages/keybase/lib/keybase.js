@@ -5,7 +5,31 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 const _ = require("underscore");
-const request = require("request");
+
+// Makes the GET the `request` library used to make. Any HTTP response hands
+// its body to the callback as (null, response, body): parsed when `json` is
+// set and the body is JSON, text otherwise. Only a network failure is an
+// error, as with `request`.
+function keybaseFetch(url, { json = false } = {}, callback) {
+	return fetch(url, { headers: { "User-Agent": "request" } })
+		.then((resp) =>
+			resp.text().then((text) => {
+				let body = text;
+				if (json) {
+					try {
+						body = JSON.parse(text);
+					} catch (_err) {
+						// Not JSON: `request` hands over the text as is.
+					}
+				}
+				return [resp, body];
+			}),
+		)
+		.then(
+			([resp, body]) => callback(null, resp, body),
+			(err) => callback(err),
+		);
+}
 
 class KeybaseAPI {
 	constructor() {
@@ -53,11 +77,9 @@ class KeybaseAPI {
 	}
 
 	getKey(username, callback) {
-		return request(
-			{
-				url: `${this.baseUrl}/${username}/key.asc`,
-				headers: { "User-Agent": "request" },
-			},
+		return keybaseFetch(
+			`${this.baseUrl}/${username}/key.asc`,
+			{},
 			(err, _resp, obj) => {
 				if (err) {
 					return callback(err, null);
@@ -77,14 +99,12 @@ class KeybaseAPI {
 	}
 
 	autocomplete(query, callback) {
-		const url = "/_/api/1.0/user/autocomplete.json";
-		return request(
-			{
-				url: this.baseUrl + url,
-				form: { q: query },
-				headers: { "User-Agent": "request" },
-				json: true,
-			},
+		// `request` sent q as a form body on a GET, which fetch can't send. The
+		// endpoint reads q from the query string.
+		const url = `/_/api/1.0/user/autocomplete.json?${new URLSearchParams({ q: query })}`;
+		return keybaseFetch(
+			this.baseUrl + url,
+			{ json: true },
 			(err, _resp, obj) => {
 				if (err) {
 					return callback(err, null);
@@ -101,14 +121,7 @@ class KeybaseAPI {
 	}
 
 	_keybaseRequest(url, callback) {
-		return request(
-			{
-				url: this.baseUrl + url,
-				headers: { "User-Agent": "request" },
-				json: true,
-			},
-			callback,
-		);
+		return keybaseFetch(this.baseUrl + url, { json: true }, callback);
 	}
 
 	_regularToAutocomplete(profile) {
