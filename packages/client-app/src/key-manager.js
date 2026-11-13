@@ -7,14 +7,18 @@ const nodeRequire =
 import * as remote from "@electron/remote";
 
 // Optional native secret storage; the renderer bundle runs against a stub.
+// KeyManager calls keytar synchronously, so the stub answers synchronously:
+// an async one returns a truthy promise, which sends getPassword down the
+// migration path and pops a "Password Management Error" dialog.
 let keytar = null;
 try {
 	keytar = nodeRequire("keytar");
 } catch (_e) {
 	keytar = {
-		getPassword: async () => null,
-		setPassword: async () => {},
-		deletePassword: async () => {},
+		getPassword: () => null,
+		setPassword: () => true,
+		replacePassword: () => true,
+		deletePassword: () => true,
 	};
 }
 

@@ -163,6 +163,8 @@ export function wrapMisspelledWords(rootNode) {
 let currentlyRunningSpellChecker = false;
 const runSpellChecker = _.debounce((editor) => {
 	if (!editor.currentSelection().isInScope()) return;
+	// No native spellchecker in this build (Spellchecker leaves handler null).
+	if (!Spellchecker.handler) return;
 	currentlyRunningSpellChecker = true;
 	unwrapWords(editor.rootNode);
 	Spellchecker.handler.provideHintText(editor.rootNode.textContent).then(() => {

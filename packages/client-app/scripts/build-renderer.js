@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 
-const BANNER = `
+export const BANNER = `
 (function () {
 	if (typeof window === "undefined" || window.NylasEnv) return;
 	// Bluebird-ism used across task/model code (Promise.props).
@@ -35,6 +35,45 @@ const BANNER = `
 			try { qs = Object.assign(JSON.parse(raw), qs); } catch (e) {}
 		}
 	} catch (e) {}
+	// Config subscriptions made before the real environment exists (stores
+	// built at module scope, like AccountStore). The real NylasEnv replays
+	// them onto its config before loading it, so they see the load.
+	var early = (window.__nylasEarlyConfigSubscriptions = []);
+	var subscribe = function (method, args) {
+		var record = { method: method, args: args, disposed: false, real: null };
+		early.push(record);
+		return {
+			dispose: function () {
+				record.disposed = true;
+				if (record.real) record.real.dispose();
+			},
+		};
+	};
+	// The saved settings, read once from the main process the way the real
+	// Config reads them, so stores built now (AccountStore loads the accounts
+	// in its constructor) see the real values. No schema defaults yet.
+	var settings = null;
+	var readSetting = function (keyPath) {
+		if (settings === null) {
+			try {
+				settings = JSON.parse(
+					require("@electron/remote")
+						.getGlobal("application")
+						.configPersistenceManager.getRawValuesString(),
+				);
+			} catch (e) {
+				settings = {};
+			}
+		}
+		if (!keyPath) return settings;
+		var value = settings;
+		var keys = String(keyPath).split(".");
+		for (var i = 0; i < keys.length; i++) {
+			if (value == null || typeof value !== "object") return null;
+			value = value[keys[i]];
+		}
+		return value === undefined ? null : JSON.parse(JSON.stringify(value));
+	};
 	window.NylasEnv = {
 		loadSettings: qs,
 		inSpecMode: function () { return qs.specMode === "1" || qs.specMode === "true"; },
@@ -58,10 +97,13 @@ const BANNER = `
 		emit: function () {},
 		errorLogger: { reportError: function () {} },
 		config: {
-			get: function () { return null; },
+			get: readSetting,
 			set: function () {},
-			onDidChange: function () { return { dispose: function () {} }; },
-			observe: function (_path, cb) { if (cb) cb(undefined); return { dispose: function () {} }; },
+			onDidChange: function () { return subscribe("onDidChange", Array.prototype.slice.call(arguments)); },
+			observe: function (path, cb) {
+				if (cb) cb(undefined);
+				return subscribe("observe", [path, cb]);
+			},
 			unobserve: function () {},
 			toggle: function () {},
 		},
@@ -85,8 +127,9 @@ const BANNER = `
 // only follows literal `require(...)`, so in the bundle those calls would load
 // a second, unbundled copy of the module from src/ (and fail outright for
 // paths relative to static/). Rewrite relative ones so they are bundled.
-const RELATIVE_NODE_REQUIRE =
-	/\bnodeRequire(\(\s*(["'`])\.{1,2}\/(?:(?!\2).)*\2\s*\))/g;
+// The formatter may leave a trailing comma after a wrapped argument.
+export const RELATIVE_NODE_REQUIRE =
+	/\bnodeRequire(\(\s*(["'`])\.{1,2}\/(?:(?!\2).)*\2\s*,?\s*\))/g;
 const bundleRelativeNodeRequires = {
 	name: "bundle-relative-node-requires",
 	setup(pluginBuild) {

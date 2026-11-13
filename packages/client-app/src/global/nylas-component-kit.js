@@ -102,9 +102,8 @@ class NylasComponentKit {
 		NylasComponentKit.load("BillingModal", () =>
 			require("../components/billing-modal.jsx"),
 		);
-		NylasComponentKit.load(
-			"OpenIdentityPageButton",
-			"open-identity-page-button",
+		NylasComponentKit.load("OpenIdentityPageButton", () =>
+			require("../components/open-identity-page-button.jsx"),
 		);
 		NylasComponentKit.load("Flexbox", () =>
 			require("../components/flexbox.jsx"),
@@ -139,9 +138,8 @@ class NylasComponentKit {
 		NylasComponentKit.load("MiniMonthView", () =>
 			require("../components/nylas-calendar/mini-month-view.jsx"),
 		);
-		NylasComponentKit.load(
-			"CalendarEventPopover",
-			"nylas-calendar/calendar-event-popover",
+		NylasComponentKit.load("CalendarEventPopover", () =>
+			require("../components/nylas-calendar/calendar-event-popover.jsx"),
 		);
 		NylasComponentKit.load("EventedIFrame", () =>
 			require("../components/evented-iframe.jsx"),
@@ -149,9 +147,8 @@ class NylasComponentKit {
 		NylasComponentKit.load("ButtonDropdown", () =>
 			require("../components/button-dropdown.jsx"),
 		);
-		NylasComponentKit.load(
-			"Contenteditable",
-			"contenteditable/contenteditable",
+		NylasComponentKit.load("Contenteditable", () =>
+			require("../components/contenteditable/contenteditable.jsx"),
 		);
 		NylasComponentKit.load("MultiselectList", () =>
 			require("../components/multiselect-list.jsx"),
@@ -182,7 +179,7 @@ class NylasComponentKit {
 		);
 		NylasComponentKit.loadDeprecated(
 			"MultiselectActionBar",
-			"multiselect-action-bar",
+			() => require("../components/multiselect-action-bar.jsx"),
 			{ instead: "MultiselectToolbar" },
 		);
 		NylasComponentKit.load("MultiselectToolbar", () =>
@@ -191,9 +188,8 @@ class NylasComponentKit {
 		NylasComponentKit.load("InjectedComponentSet", () =>
 			require("../components/injected-component-set.jsx"),
 		);
-		NylasComponentKit.load(
-			"MetadataComposerToggleButton",
-			"metadata-composer-toggle-button",
+		NylasComponentKit.load("MetadataComposerToggleButton", () =>
+			require("../components/metadata-composer-toggle-button.jsx"),
 		);
 		NylasComponentKit.load("ConfigPropContainer", () =>
 			require("../components/config-prop-container.jsx"),
@@ -250,13 +246,11 @@ class NylasComponentKit {
 		NylasComponentKit.load("LazyRenderedList", () =>
 			require("../components/lazy-rendered-list.jsx"),
 		);
-		NylasComponentKit.load(
-			"OverlaidComponents",
-			"overlaid-components/overlaid-components",
+		NylasComponentKit.load("OverlaidComponents", () =>
+			require("../components/overlaid-components/overlaid-components.jsx"),
 		);
-		NylasComponentKit.load(
-			"OverlaidComposerExtension",
-			"overlaid-components/overlaid-composer-extension",
+		NylasComponentKit.load("OverlaidComposerExtension", () =>
+			require("../components/overlaid-components/overlaid-composer-extension.js"),
 		);
 		NylasComponentKit.load("OAuthSignInPage", () =>
 			require("../components/oauth-signin-page.jsx"),
@@ -313,17 +307,14 @@ class NylasComponentKit {
 		);
 
 		// Higher order components
-		NylasComponentKit.load(
-			"ListensToObservable",
-			"decorators/listens-to-observable",
+		NylasComponentKit.load("ListensToObservable", () =>
+			require("../components/decorators/listens-to-observable.jsx"),
 		);
-		NylasComponentKit.load(
-			"ListensToFluxStore",
-			"decorators/listens-to-flux-store",
+		NylasComponentKit.load("ListensToFluxStore", () =>
+			require("../components/decorators/listens-to-flux-store.jsx"),
 		);
-		NylasComponentKit.load(
-			"ListensToMovementKeys",
-			"decorators/listens-to-movement-keys",
+		NylasComponentKit.load("ListensToMovementKeys", () =>
+			require("../components/decorators/listens-to-movement-keys.jsx"),
 		);
 		NylasComponentKit.load("HasTutorialTip", () =>
 			require("../components/decorators/has-tutorial-tip.jsx"),

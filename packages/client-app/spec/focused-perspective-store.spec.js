@@ -4,6 +4,7 @@ const mocks = vi.hoisted(() => ({
 	accountIds: vi.fn(() => ["a1", "a2"]),
 	accountForId: vi.fn((id) => (["a1", "a2"].includes(id) ? { id } : undefined)),
 	byId: vi.fn((_accountId, id) => ({ id })),
+	categories: vi.fn(() => []),
 	getStandardCategory: vi.fn((accountId, name) => ({ id: `${accountId}-${name}`, accountId, name })),
 	getArchiveCategory: vi.fn((accountId) => ({ id: `${accountId}-archive`, accountId })),
 	rootSheet: vi.fn(() => "Threads"),
@@ -26,6 +27,7 @@ vi.mock("../src/flux/stores/category-store.js", () => ({
 		getStandardCategory: mocks.getStandardCategory,
 		getArchiveCategory: mocks.getArchiveCategory,
 		byId: mocks.byId,
+		categories: mocks.categories,
 	},
 }));
 vi.mock("../src/flux/stores/workspace-store.js", () => ({
@@ -84,6 +86,7 @@ describe("FocusedPerspectiveStore", () => {
 			["a1", "a2"].includes(id) ? { id } : undefined,
 		);
 		mocks.byId.mockImplementation((_accountId, id) => ({ id }));
+		mocks.categories.mockReturnValue([]);
 		mocks.rootSheet.mockReturnValue("Threads");
 		NylasEnv.savedState = { sidebarAccountIds: ["a2", "a1"] };
 		NylasEnv.commands.add.mockImplementation((_element, commands) => Object.assign(mocks.commands, commands));
@@ -93,6 +96,17 @@ describe("FocusedPerspectiveStore", () => {
 
 	it("starts focused on nothing", () => {
 		expect(store.current().accountIds).toEqual([]);
+	});
+
+	it("focuses the inbox at once when the categories loaded before it", () => {
+		mocks.categories.mockReturnValue([{ id: "a1-inbox" }]);
+		const late = new focusedPerspectiveStore.constructor();
+		expect(late.current().categoriesSharedName()).toBe("inbox");
+	});
+
+	it("waits for the category store when no categories have loaded", () => {
+		expect(store.current().categories()).toEqual([]);
+		expect(store._initialized).toBe(false);
 	});
 
 	it("orders saved sidebar accounts using account-store order", () => {

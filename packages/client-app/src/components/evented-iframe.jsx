@@ -60,7 +60,6 @@ class EventedIFrame extends React.Component {
 		this._onIFrameMouseEvent = this._onIFrameMouseEvent.bind(this);
 		this._onIFrameKeyEvent = this._onIFrameKeyEvent.bind(this);
 		this._onIFrameContextualMenu = this._onIFrameContextualMenu.bind(this);
-		super(...args);
 	}
 
 	static initClass() {

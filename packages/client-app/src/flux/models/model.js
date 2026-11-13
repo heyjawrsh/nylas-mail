@@ -106,6 +106,15 @@ class Model {
 			if (values[key] == null) {
 				continue;
 			}
+			// Skip getter-only computed attributes, as fromJSON does (copying a
+			// Thread with `new Thread(thread)` would otherwise throw).
+			var descriptor = Object.getOwnPropertyDescriptor(
+				this.constructor.prototype,
+				key,
+			);
+			if (descriptor?.get && !descriptor.set) {
+				continue;
+			}
 			this[key] = values[key];
 		}
 

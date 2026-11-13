@@ -23,6 +23,13 @@ class FocusedPerspectiveStore extends NylasStore {
 			this._onEnsureCategoryIsFocused,
 		);
 		this._listenToCommands();
+
+		// The categories may have loaded before this store existed, in which
+		// case the trigger above never comes (offline, nothing syncs to trigger
+		// it again).
+		if (CategoryStore.categories().length > 0) {
+			this._onCategoryStoreChanged();
+		}
 	}
 
 	current() {

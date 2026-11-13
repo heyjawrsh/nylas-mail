@@ -180,19 +180,22 @@ export default class Account extends ModelWithMetadata {
 	}
 
 	canArchiveThreads() {
-		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
+		CategoryStore =
+			CategoryStore || nodeRequire("../stores/category-store.js").default;
 
 		return CategoryStore.getArchiveCategory(this);
 	}
 
 	canTrashThreads() {
-		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
+		CategoryStore =
+			CategoryStore || nodeRequire("../stores/category-store.js").default;
 
 		return CategoryStore.getTrashCategory(this);
 	}
 
 	defaultFinishedCategory() {
-		CategoryStore = CategoryStore || nodeRequire("../stores/category-store.js");
+		CategoryStore =
+			CategoryStore || nodeRequire("../stores/category-store.js").default;
 
 		const preferDelete = NylasEnv.config.get("core.reading.backspaceDelete");
 		const archiveCategory = CategoryStore.getArchiveCategory(this);

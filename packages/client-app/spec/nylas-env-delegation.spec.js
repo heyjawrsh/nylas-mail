@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => {
 	const win = {
@@ -352,5 +352,84 @@ describe("NylasEnv error, feedback, and dialog channels", () => {
 		m.showMessageBox.mockImplementation((_win, _options, callback) => callback(0));
 		env.showErrorDialog("Failed", { detail: "stack trace" });
 		expect(m.openModal).not.toHaveBeenCalled();
+	});
+});
+
+describe("NylasEnv early config subscriptions", () => {
+	// The renderer bundle's placeholder env records the config subscriptions
+	// stores make before the real env exists; loadConfig replays them.
+	const fakeConfig = (settingsValue = {}) => {
+		const calls = [];
+		return {
+			settings: settingsValue,
+			calls,
+			get: (keyPath) => keyPath.split(".").reduce((v, k) => v?.[k], settingsValue),
+			onDidChange: (...args) => {
+				calls.push(["onDidChange", ...args]);
+				return { dispose: vi.fn() };
+			},
+			observe: (...args) => {
+				calls.push(["observe", ...args]);
+				return { dispose: vi.fn() };
+			},
+		};
+	};
+	let env;
+	beforeEach(() => {
+		NylasEnv.loadSettings = settings();
+		env = new NylasEnv({ version: 1 });
+	});
+	afterEach(() => {
+		window.__nylasEarlyConfigSubscriptions = undefined;
+	});
+
+	it("moves every live subscription onto the real config and empties the list", () => {
+		const changed = vi.fn();
+		const observed = vi.fn();
+		window.__nylasEarlyConfigSubscriptions = [
+			{ method: "onDidChange", args: ["nylas.accountsVersion", changed], disposed: false },
+			{ method: "observe", args: ["core.themes", observed], disposed: false },
+		];
+		env.config = fakeConfig();
+		env.replayEarlyConfigSubscriptions();
+		expect(env.config.calls).toEqual([
+			["onDidChange", "nylas.accountsVersion", changed],
+			["observe", "core.themes", observed],
+		]);
+		expect(window.__nylasEarlyConfigSubscriptions).toBeNull();
+		expect(changed).not.toHaveBeenCalled();
+	});
+
+	it("skips a subscription disposed before the replay", () => {
+		window.__nylasEarlyConfigSubscriptions = [
+			{ method: "onDidChange", args: ["a.b", vi.fn()], disposed: true },
+		];
+		env.config = fakeConfig();
+		env.replayEarlyConfigSubscriptions();
+		expect(env.config.calls).toEqual([]);
+	});
+
+	it("hands the replayed subscription its real disposable", () => {
+		const record = { method: "onDidChange", args: ["a.b", vi.fn()], disposed: false };
+		window.__nylasEarlyConfigSubscriptions = [record];
+		env.config = fakeConfig();
+		env.replayEarlyConfigSubscriptions();
+		expect(typeof record.real.dispose).toBe("function");
+	});
+
+	it("tells a change subscriber the value it missed when settings already arrived", () => {
+		const changed = vi.fn();
+		window.__nylasEarlyConfigSubscriptions = [
+			{ method: "onDidChange", args: ["nylas.accountsVersion", changed], disposed: false },
+		];
+		env.config = fakeConfig({ nylas: { accountsVersion: 3 } });
+		env.replayEarlyConfigSubscriptions();
+		expect(changed).toHaveBeenCalledWith({ oldValue: undefined, newValue: 3 });
+	});
+
+	it("does nothing outside the renderer bundle", () => {
+		env.config = fakeConfig();
+		expect(() => env.replayEarlyConfigSubscriptions()).not.toThrow();
+		expect(env.config.calls).toEqual([]);
 	});
 });

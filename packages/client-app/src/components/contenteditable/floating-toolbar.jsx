@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import _ from "underscore";
 import classNames from "classnames";
 import React from "react";
+import { Utils, DOMUtils } from "nylas-exports";
 
 // Positions and renders a FloatingToolbar in the composer.
 //
