@@ -15,8 +15,7 @@
 		"check:react": "node scripts/check-removed-react-apis.mjs",
 		"check:public-build": "node scripts/check-public-build.mjs",
 		"format": "biome format --write .",
-		"build:renderer": "node packages/client-app/scripts/build-renderer.js",
-		"smoke": "pnpm --filter nylas-mail run smoke"
+		"build:renderer": "node packages/client-app/scripts/build-renderer.js"
 	},
 	"repository": {
 		"type": "git",

@@ -19,3 +19,32 @@ jobs:
       - run: pnpm check:react
       - run: pnpm -r run test
       - run: pnpm lint
+
+  # The real-app harness (architecture AD-19): build the unpacked Linux app
+  # and drive it with Playwright under xvfb. This, not smoke.js, is the gate.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      # version comes from package.json's packageManager
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter nylas-mail build:e2e
+      - name: e2e harness under xvfb
+        # Ubuntu 24.04 blocks the unprivileged user namespaces Chromium's
+        # sandbox needs, and the unpacked app's chrome-sandbox isn't setuid.
+        env:
+          E2E_LAUNCH_ARGS: --no-sandbox
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" pnpm --filter nylas-mail e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          include-hidden-files: true
+          path: |
+            packages/client-app/e2e/.tmp/report
+            packages/client-app/e2e/.tmp/test-results

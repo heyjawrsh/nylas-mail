@@ -85,16 +85,43 @@ export function fixtureData() {
 }
 
 // The config.json the app reads. With an account in it the app opens the
-// main window instead of onboarding.
+// main window instead of onboarding. asksAboutAppMove at 5 means a mac build
+// run from outside /Applications never shows the move-to-Applications dialog,
+// which would block the app (and a test run) until someone answers it.
 export function fixtureConfig(account) {
-	return {
-		"*": { nylas: { accounts: [account], accountsVersion: 1 } },
-	};
+	const config = { asksAboutAppMove: 5 };
+	if (account) config.nylas = { accounts: [account], accountsVersion: 1 };
+	return { "*": config };
+}
+
+// Folds the WAL back into edgehill.db so the seeded file stands on its own.
+// The app's other connections may hold a lock for a moment, and TRUNCATE then
+// throws "database table is locked" or reports busy (#13), so retry with
+// backoff and fall back to a PASSIVE checkpoint, which never waits on a
+// reader. Returns the mode that ran. Kept free of closures: the seed sends it
+// to the renderer as source.
+export async function checkpointWal(
+	db,
+	{ attempts = 6, delayMs = 50, sleep } = {},
+) {
+	const wait = sleep || ((ms) => new Promise((r) => setTimeout(r, ms)));
+	const isLock = (err) => /locked|busy/i.test(String(err?.message));
+	for (let i = 0; i < attempts; i++) {
+		try {
+			const [row] = db.pragma("wal_checkpoint(TRUNCATE)") || [];
+			if (!row?.busy) return "truncate";
+		} catch (err) {
+			if (!isLock(err)) throw err;
+		}
+		if (i < attempts - 1) await wait(delayMs * 2 ** i);
+	}
+	db.pragma("wal_checkpoint(PASSIVE)");
+	return "passive";
 }
 
 // Runs inside the work window (NylasEnv and $n are its globals). Kept free of
 // closures so it can be sent as source.
-async function seedInRenderer(account, mailbox) {
+async function seedInRenderer(account, mailbox, checkpoint) {
 	const { DatabaseStore, Thread, Message, Contact, Folder } = $n;
 	const accountId = account.id;
 	const contacts = {};
@@ -204,7 +231,7 @@ async function seedInRenderer(account, mailbox) {
 		threads: await count(Thread),
 		messages: await count(Message),
 	};
-	DatabaseStore._db.pragma("wal_checkpoint(TRUNCATE)");
+	result.checkpoint = await checkpoint(DatabaseStore._db);
 	return result;
 }
 
@@ -217,14 +244,18 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 		`${JSON.stringify(fixtureConfig(account), null, 2)}\n`,
 	);
 
-	const proc = spawn(
-		String(electronPath),
-		[appDir, "--dev", `--remote-debugging-port=${port}`],
-		{
-			env: { ...process.env, NYLAS_HOME: home },
-			stdio: ["ignore", "pipe", "pipe"],
-		},
-	);
+	// Options: `executable` runs a built app instead of the dev app, `args`
+	// adds launch flags (the e2e harness passes its container flags), and
+	// `userDataDir` keeps Chromium's profile, and the single-instance lock, out
+	// of the real one.
+	const args = options.executable ? [] : [appDir, "--dev"];
+	args.push(`--remote-debugging-port=${port}`);
+	if (options.userDataDir) args.push(`--user-data-dir=${options.userDataDir}`);
+	args.push(...(options.args ?? []));
+	const proc = spawn(options.executable ?? String(electronPath), args, {
+		env: { ...process.env, NYLAS_HOME: home },
+		stdio: ["ignore", "pipe", "pipe"],
+	});
 	let log = "";
 	proc.stdout.on("data", (chunk) => {
 		log += chunk;
@@ -243,7 +274,7 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 			timeout: 90_000,
 		});
 		const counts = await page.evaluate(
-			`(${seedInRenderer.toString()})(${JSON.stringify(account)}, ${JSON.stringify(mailbox)})`,
+			`(${seedInRenderer.toString()})(${JSON.stringify(account)}, ${JSON.stringify(mailbox)}, ${checkpointWal.toString()})`,
 		);
 		// The page goes away mid-call, so the evaluate itself may reject.
 		await page.evaluate("NylasEnv.quit()").catch(() => {});

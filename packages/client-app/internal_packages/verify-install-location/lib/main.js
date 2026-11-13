@@ -67,8 +67,9 @@ export function activate() {
 
 	const CANCEL_ID = 0;
 
-	remote.dialog.showMessageBox(
-		{
+	// showMessageBox returns a promise; it takes no callback (#14).
+	remote.dialog
+		.showMessageBox({
 			type: "warning",
 			buttons: buttons,
 			title: "A Better Place to Install Nylas Mail",
@@ -76,9 +77,8 @@ export function activate() {
 			detail: msg,
 			defaultId: 0,
 			cancelId: CANCEL_ID,
-		},
-		onDialogActionTaken(numAsks),
-	);
+		})
+		.then(({ response }) => onDialogActionTaken(numAsks)(response));
 }
 
 export function deactivate() {}

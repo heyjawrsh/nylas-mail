@@ -1,0 +1,22 @@
+[
+	{
+		"match": "^Access to (font|image) at 'nylas://[^']+' from origin 'file://' has been blocked by CORS policy",
+		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/5",
+		"note": "nylas:// isn't registered as a privileged, CORS-enabled scheme, so fonts and CSS images load in CORS mode and fail in every build"
+	},
+	{
+		"match": "^Failed to load resource: net::ERR_FAILED \\(nylas://",
+		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/5",
+		"note": "the network half of the nylas:// CORS failure above"
+	},
+	{
+		"match": "Cannot read properties of undefined \\(reading 'killed'\\)",
+		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/17",
+		"note": "BufferedProcess at main-window startup"
+	},
+	{
+		"match": "DraftNotFoundError",
+		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/11",
+		"note": "closing a pristine composer or popout"
+	}
+]

@@ -36,6 +36,12 @@ packages/client-app/dist
 spec-saved-state.json
 .nylas-fixture-home
 
+# e2e harness: temp homes, results and the HTML report. Only the Linux
+# reference screenshots are committed.
+packages/client-app/e2e/.tmp
+packages/client-app/e2e/reference/*
+!packages/client-app/e2e/reference/linux
+
 # Symlinked Jasmine config files
 **/jasmine/config.json
 !packages/isomorphic-core/spec/jasmine/config.json
