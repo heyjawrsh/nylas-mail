@@ -125,11 +125,11 @@ module.exports = ErrorLogger = (() => {
 	/////////////////////////////////////////////////////////////////////
 
 	ErrorLogger.prototype._startCrashReporter = (_args) => {
+		// Dumps are written locally and never sent (heyjawrsh/nylas-mail#8).
+		// scripts/check-public-build.mjs fails if upload is turned back on.
 		crashReporter?.start?.({
 			productName: "Nylas Mail",
-			companyName: "Nylas",
-			submitURL: "https://electron-crash-report-server.herokuapp.com/",
-			autoSubmit: true,
+			uploadToServer: false,
 		});
 	};
 

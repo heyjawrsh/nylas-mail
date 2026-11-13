@@ -207,50 +207,11 @@ const parseCommandLine = (argv) => {
 	};
 };
 
-/*
- * "Squirrel will spawn your app with command line flags on first run, updates,]
- * and uninstalls."
- *
- * Read: https://github.com/electron-archive/grunt-electron-installer#handling-squirrel-events
- * Read: https://github.com/electron/electron/blob/master/docs/api/auto-updater.md#windows
- */
-const handleStartupEventWithSquirrel = () => {
-	if (process.platform !== "win32") {
-		return false;
-	}
-	const options = {
-		allowEscalation: false,
-		registerDefaultIfPossible: false,
-	};
-
-	const WindowsUpdater = require("./windows-updater.js");
-	const squirrelCommand = process.argv[1];
-
-	switch (squirrelCommand) {
-		case "--squirrel-install":
-			WindowsUpdater.createRegistryEntries(options, () =>
-				WindowsUpdater.createShortcuts(() => app.quit()),
-			);
-			return true;
-		case "--squirrel-updated":
-			WindowsUpdater.restartN1(app);
-			return true;
-		case "--squirrel-uninstall":
-			WindowsUpdater.removeShortcuts(() => app.quit());
-			return true;
-		case "--squirrel-obsolete":
-			app.quit();
-			return true;
-		default:
-			return false;
-	}
-};
-
 const start = () => {
-	app.setAppUserModelId("com.squirrel.nylas.nylas");
-	if (handleStartupEventWithSquirrel()) {
-		return;
-	}
+	// The appId, so Windows attributes notifications to the app. Builds are
+	// NSIS, not Squirrel, so a --squirrel-* argument is just an unknown flag and
+	// the app starts as usual.
+	app.setAppUserModelId("com.nylas.nylas-mail");
 
 	const options = parseCommandLine(process.argv);
 

@@ -508,11 +508,11 @@ export default class Application extends EventEmitter {
 		});
 
 		app.on("ready", () => {
+			// Dumps are written locally and never sent (heyjawrsh/nylas-mail#8).
+			// scripts/check-public-build.mjs fails if upload is turned back on.
 			crashReporter?.start?.({
 				productName: "Nylas Mail",
-				companyName: "Nylas, Inc.",
-				submitURL: "https://nylas-breakpad-sentry.herokuapp.com/crashreport",
-				autoSubmit: true,
+				uploadToServer: false,
 			});
 		});
 

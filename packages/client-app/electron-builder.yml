@@ -1,10 +1,13 @@
-# Unsigned macOS pre-release build (story 1 of epic-platform-baseline).
-# Windows/Linux targets, signing and notarisation come later.
-# Build with `pnpm --filter nylas-mail dist:mac` (predist:mac builds the
-# renderer bundles first; scripts/dist-mac.mjs then rebuilds the native
-# modules for the host arch, pass or fail, since the x64 leg leaves them x64).
+# Unsigned pre-release builds for macOS, Windows and Linux (epic-platform-baseline).
+# Signing, notarisation and auto-update are out of scope.
+# Build with `pnpm --filter nylas-mail dist:<mac|win|linux>`. predist:* builds
+# the renderer bundles first; scripts/dist.mjs then rebuilds the native modules
+# for the host, pass or fail (the mac x64 leg leaves them x64), and runs the
+# public-build check (scripts/check-public-build.mjs) on dist/.
+# Build Windows and Linux on their own OS (CI does, see .github/workflows/dist.yml)
+# or in a container on a clean `git archive` copy, never on a mac working tree.
 #
-# The build is unsigned, so Gatekeeper blocks a double-click. Open it with
+# The mac build is unsigned, so Gatekeeper blocks a double-click. Open it with
 # right-click › Open, or clear the quarantine flag:
 #   xattr -dr com.apple.quarantine "/Applications/Nylas Mail.app"
 #
@@ -69,3 +72,23 @@ mac:
       arch: [arm64, x64]
     - target: zip
       arch: [arm64, x64]
+
+# Unsigned: no certificate is configured, so nothing is signed.
+win:
+  icon: build/resources/win/nylas.ico
+  target:
+    - target: nsis
+      arch: [x64]
+
+linux:
+  icon: build/resources/linux/icons
+  category: Network;Email
+  mimeTypes: [x-scheme-handler/mailto]
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+
+deb:
+  maintainer: Joshua Butner <53810+heyjawrsh@users.noreply.github.com>

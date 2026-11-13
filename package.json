@@ -13,6 +13,7 @@
 		"test": "pnpm -r run test",
 		"lint": "biome check .",
 		"check:react": "node scripts/check-removed-react-apis.mjs",
+		"check:public-build": "node scripts/check-public-build.mjs",
 		"format": "biome format --write .",
 		"build:renderer": "node packages/client-app/scripts/build-renderer.js",
 		"smoke": "pnpm --filter nylas-mail run smoke"
@@ -24,6 +25,7 @@
 	"author": "Nylas",
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.10",
+		"@electron/asar": "3.4.1",
 		"tsx": "^4.23.12",
 		"vitest": "^4.1.11"
 	}

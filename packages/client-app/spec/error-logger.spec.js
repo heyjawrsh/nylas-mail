@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
@@ -69,6 +70,20 @@ describe("ErrorLogger setup and formatting", () => {
 
 
 
+
+	it("starts the crash reporter with uploads off and no submit URL (#8)", () => {
+		// error-logger.js is CommonJS, so it gets electron through native
+		// require (spec/setup.js's bridge), not through vi.mock.
+		const { crashReporter } = createRequire(import.meta.url)("electron");
+		const start = vi.spyOn(crashReporter, "start").mockImplementation(() => {});
+		logger(); // the constructor starts it
+		expect(start).toHaveBeenCalledTimes(1);
+		expect(start.mock.calls[0][0]).toStrictEqual({
+			productName: "Nylas Mail",
+			uploadToServer: false,
+		});
+		start.mockRestore();
+	});
 
 	it("forwards API errors to the log and extensions", () => {
 		const instance = logger(); instance._appendLog = vi.fn(); instance._notifyExtensions = vi.fn();

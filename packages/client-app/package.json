@@ -13,7 +13,11 @@
 		"test": "vitest run --coverage",
 		"smoke": "node scripts/build-renderer.js && node scripts/smoke.js",
 		"predist:mac": "node scripts/build-renderer.js",
-		"dist:mac": "node scripts/dist-mac.mjs"
+		"dist:mac": "node scripts/dist.mjs mac",
+		"predist:win": "node scripts/build-renderer.js",
+		"dist:win": "node scripts/dist.mjs win",
+		"predist:linux": "node scripts/build-renderer.js",
+		"dist:linux": "node scripts/dist.mjs linux"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.1.3",

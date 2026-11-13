@@ -1,0 +1,55 @@
+name: dist
+# Unsigned pre-release packages for macOS, Windows and Linux. Each OS builds
+# on its own runner, so native modules compile natively (no cross-compiling).
+# dist:<os> runs the public-build check (scripts/check-public-build.mjs) on
+# dist/ after the build, so a package with licensed fonts or crash upload
+# turned on fails the job.
+on:
+  workflow_dispatch:
+  push:
+    branches: [modernize/current]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dist-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dist:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            target: mac
+          - os: windows-latest
+            target: win
+          - os: ubuntu-latest
+            target: linux
+    runs-on: ${{ matrix.os }}
+    env:
+      # unsigned: never pick up a signing identity from the runner
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter nylas-mail dist:${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nylas-mail-${{ matrix.target }}
+          if-no-files-found: error
+          path: |
+            packages/client-app/dist/*.dmg
+            packages/client-app/dist/*.zip
+            packages/client-app/dist/*.exe
+            packages/client-app/dist/*.AppImage
+            packages/client-app/dist/*.deb
