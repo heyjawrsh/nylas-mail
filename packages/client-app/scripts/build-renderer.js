@@ -36,11 +36,22 @@ export const BANNER = `
 		}
 	} catch (e) {}
 	// Config subscriptions made before the real environment exists (stores
-	// built at module scope, like AccountStore). The real NylasEnv replays
-	// them onto its config before loading it, so they see the load.
+	// built at module scope, like AccountStore). Each records the value its
+	// subscriber saw; once the real config has loaded, NylasEnv moves them
+	// onto it and reports any value that changed in between
+	// (src/early-config-subscriptions.js).
 	var early = (window.__nylasEarlyConfigSubscriptions = []);
 	var subscribe = function (method, args) {
-		var record = { method: method, args: args, disposed: false, real: null };
+		var keyPath = typeof args[0] === "function" ? undefined : args[0];
+		var callback = typeof args[0] === "function" ? args[0] : args[1];
+		var record = {
+			method: method,
+			keyPath: keyPath,
+			callback: callback,
+			seen: readSetting(keyPath),
+			disposed: false,
+			real: null,
+		};
 		early.push(record);
 		return {
 			dispose: function () {
@@ -101,7 +112,7 @@ export const BANNER = `
 			set: function () {},
 			onDidChange: function () { return subscribe("onDidChange", Array.prototype.slice.call(arguments)); },
 			observe: function (path, cb) {
-				if (cb) cb(undefined);
+				if (cb) cb(readSetting(path));
 				return subscribe("observe", [path, cb]);
 			},
 			unobserve: function () {},
@@ -157,6 +168,19 @@ const KIT_REGISTRATION =
 const KIT_NAMED_IMPORT =
 	/\bimport\s+(?:[\w$]+\s*,\s*)?\{([^}]*)\}\s*from\s*["']nylas-component-kit["']/g;
 
+// A registration whose module argument is a string path resolves at runtime,
+// relative to static/ inside the bundle, and fails. Every one must be a thunk
+// with a literal require so esbuild bundles the component.
+const KIT_STRING_PATH_REGISTRATION =
+	/NylasComponentKit\.(?:load|loadFrom|loadDeprecated|require|requireFrom)\(\s*"([\w$]+)",\s*(["'`])/g;
+
+export function kitStringPathRegistrations(source) {
+	return [...source.matchAll(KIT_STRING_PATH_REGISTRATION)].map((match) => ({
+		name: match[1],
+		...lineAndColumn(source, match.index),
+	}));
+}
+
 export function kitRegisteredNames(source) {
 	const names = new Set(["NylasComponentKit"]); // class handle set by the shim
 	for (const [, name] of source.matchAll(KIT_REGISTRATION)) names.add(name);
@@ -199,13 +223,27 @@ export const checkKitNamedImports = {
 			// no contents: the next plugin or esbuild loads the file
 		});
 		pluginBuild.onEnd(async () => {
-			const known = kitRegisteredNames(await fs.readFile(KIT_SOURCE, "utf8"));
+			const kitSource = await fs.readFile(KIT_SOURCE, "utf8");
+			const known = kitRegisteredNames(kitSource);
+			const stringPaths = kitStringPathRegistrations(kitSource).map(
+				({ name, line, column }) => ({
+					text: `Kit name "${name}" is registered by a string path, which the bundle can't resolve; register it with () => require("../components/...")`,
+					location: {
+						file: path.relative(root, KIT_SOURCE),
+						line,
+						column,
+						length: name.length,
+						lineText: kitSource.split("\n")[line - 1],
+					},
+				}),
+			);
 			const errors = imports
 				.filter(({ name }) => !known.has(name))
 				.map(({ name, ...location }) => ({
 					text: `Import "${name}" from "nylas-component-kit" is not a registered kit name (see src/global/nylas-component-kit.js)`,
 					location: { ...location, length: name.length },
-				}));
+				}))
+				.concat(stringPaths);
 			return { errors };
 		});
 	},

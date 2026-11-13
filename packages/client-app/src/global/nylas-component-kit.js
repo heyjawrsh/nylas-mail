@@ -81,9 +81,15 @@ class NylasComponentKit {
 			require("../components/spinner.jsx"),
 		);
 		NylasComponentKit.load("Switch", () => require("../components/switch.jsx"));
-		NylasComponentKit.loadDeprecated("Popover", "popover", {
-			instead: "Actions.openPopover",
-		});
+		// components/popover.jsx no longer exists; say so instead of failing
+		// to resolve a path.
+		NylasComponentKit.loadDeprecated(
+			"Popover",
+			() => {
+				throw new Error("Popover was removed; use Actions.openPopover");
+			},
+			{ instead: "Actions.openPopover" },
+		);
 		NylasComponentKit.load("FixedPopover", () =>
 			require("../components/fixed-popover.jsx"),
 		);

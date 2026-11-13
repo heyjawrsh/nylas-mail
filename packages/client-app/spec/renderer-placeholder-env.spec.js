@@ -2,7 +2,16 @@
 // The renderer bundle's banner seeds a placeholder NylasEnv for the stores
 // built while the bundle evaluates (scripts/build-renderer.js).
 import { describe, expect, it, vi } from "vitest";
-import { BANNER, RELATIVE_NODE_REQUIRE } from "../scripts/build-renderer.js";
+import fs from "node:fs";
+import path from "node:path";
+import { build } from "esbuild";
+import {
+	BANNER,
+	RELATIVE_NODE_REQUIRE,
+	buildOptions,
+	entries,
+	kitStringPathRegistrations,
+} from "../scripts/build-renderer.js";
 
 const runBanner = (savedSettings) => {
 	const window = { location: { search: "?loadSettings=%7B%22windowType%22%3A%22default%22%7D" } };
@@ -49,16 +58,19 @@ describe("placeholder NylasEnv config", () => {
 		expect(window.NylasEnv.config.get("nylas.accounts")).toBeNull();
 	});
 
-	it("records onDidChange and observe subscriptions for the real env to replay", () => {
-		const { window } = runBanner({});
+	it("records each subscription with the value its subscriber saw", () => {
+		const { window } = runBanner({ nylas: { accountsVersion: 1 }, core: { themes: ["ui-light"] } });
 		const changed = vi.fn();
 		const observed = vi.fn();
+		const whole = vi.fn();
 		window.NylasEnv.config.onDidChange("nylas.accountsVersion", changed);
 		window.NylasEnv.config.observe("core.themes", observed);
-		expect(observed).toHaveBeenCalledWith(undefined);
+		window.NylasEnv.config.onDidChange(whole);
+		expect(observed).toHaveBeenCalledWith(["ui-light"]);
 		expect(window.__nylasEarlyConfigSubscriptions).toMatchObject([
-			{ method: "onDidChange", args: ["nylas.accountsVersion", changed], disposed: false },
-			{ method: "observe", args: ["core.themes", observed], disposed: false },
+			{ method: "onDidChange", keyPath: "nylas.accountsVersion", callback: changed, seen: 1, disposed: false },
+			{ method: "observe", keyPath: "core.themes", callback: observed, seen: ["ui-light"] },
+			{ method: "onDidChange", keyPath: undefined, callback: whole },
 		]);
 	});
 
@@ -89,4 +101,34 @@ describe("relative nodeRequire rewrite", () => {
 	it("leaves bare module names alone", () => {
 		expect(rewrite('nodeRequire("keytar")')).toBe('nodeRequire("keytar")');
 	});
+});
+
+describe("kit registrations by string path", () => {
+	it("finds a registration whose module is a string, with its line", () => {
+		const source = [
+			"class K {",
+			'  static initClass() { NylasComponentKit.load("Menu", () => require("../components/menu.jsx"));',
+			'    NylasComponentKit.load(',
+			'      "ListensToFluxStore",',
+			'      "decorators/listens-to-flux-store",',
+			"    );",
+			'    NylasComponentKit.loadDeprecated("Popover", "popover", { instead: "x" });',
+			"  }",
+			"}",
+		].join("\n");
+		expect(kitStringPathRegistrations(source)).toMatchObject([
+			{ name: "ListensToFluxStore", line: 3 },
+			{ name: "Popover", line: 7 },
+		]);
+	});
+
+	it("finds none in the real kit", () => {
+		const kit = fs.readFileSync(path.join(__dirname, "..", "src/global/nylas-component-kit.js"), "utf8");
+		expect(kitStringPathRegistrations(kit)).toEqual([]);
+	});
+
+	it("the real bundle build passes the check", async () => {
+		const result = await build({ ...buildOptions(entries[0]), write: false, logLevel: "silent" });
+		expect(result.errors).toEqual([]);
+	}, 60_000);
 });

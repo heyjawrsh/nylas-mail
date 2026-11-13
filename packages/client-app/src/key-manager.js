@@ -6,21 +6,21 @@ const nodeRequire =
 		: require;
 import * as remote from "@electron/remote";
 
-// Optional native secret storage; the renderer bundle runs against a stub.
-// KeyManager calls keytar synchronously, so the stub answers synchronously:
-// an async one returns a truthy promise, which sends getPassword down the
-// migration path and pops a "Password Management Error" dialog.
+// Optional native secret storage. keytar isn't installed on Electron 45 (the
+// renderer bundle can't load it), so there is often no backend at all. Then
+// reads find no password and writes are skipped with a warning: nothing is
+// stored, and nothing claims it was. A real store is separate work.
 let keytar = null;
 try {
 	keytar = nodeRequire("keytar");
 } catch (_e) {
-	keytar = {
-		getPassword: () => null,
-		setPassword: () => true,
-		replacePassword: () => true,
-		deletePassword: () => true,
-	};
+	keytar = null;
 }
+
+const warnNoBackend = (action, keyName) =>
+	console.warn(
+		`KeyManager: no secure storage backend (keytar is not available); ${keyName} was not ${action}.`,
+	);
 
 /**
  * A basic wrap around keytar's secure key management. Consolidates all of
@@ -46,6 +46,10 @@ class KeyManager {
 	}
 
 	replacePassword(keyName, newVal) {
+		if (!keytar) {
+			warnNoBackend("stored", keyName);
+			return;
+		}
 		this._try(() => {
 			const keys = this._getKeyHash();
 			keys[keyName] = newVal;
@@ -58,6 +62,10 @@ class KeyManager {
 	}
 
 	deletePassword(keyName) {
+		if (!keytar) {
+			warnNoBackend("deleted", keyName);
+			return;
+		}
 		this._try(() => {
 			const keys = this._getKeyHash();
 			delete keys[keyName];
@@ -70,6 +78,9 @@ class KeyManager {
 	}
 
 	getPassword(keyName, { migrateFromService } = {}) {
+		if (!keytar) {
+			return null;
+		}
 		const keys = this._getKeyHash();
 		if (
 			!keys[keyName] &&

@@ -37,6 +37,7 @@ import path from "node:path";
 
 import { ipcRenderer, shell } from "electron";
 import * as remote from "@electron/remote";
+import { replayEarlyConfigSubscriptions } from "./early-config-subscriptions.js";
 
 import _ from "underscore";
 import { Emitter } from "event-kit";
@@ -1263,43 +1264,11 @@ export default class NylasEnvConstructor {
 				loadFromSrc("./config-schema.js", () => require("./config-schema.js")),
 			),
 		});
-		this.replayEarlyConfigSubscriptions();
-		return this.config.load();
-	}
-
-	// The renderer bundle's placeholder env records the config subscriptions
-	// made while the bundle evaluates (see scripts/build-renderer.js). Move
-	// them onto the real config so they hear the load and later changes.
-	replayEarlyConfigSubscriptions() {
-		const early =
-			typeof window !== "undefined"
-				? window.__nylasEarlyConfigSubscriptions
-				: null;
-		if (!early) {
-			return;
-		}
-		window.__nylasEarlyConfigSubscriptions = null;
-		const alreadyLoaded = Object.keys(this.config.settings || {}).length > 0;
-		for (const record of early) {
-			if (record.disposed) {
-				continue;
-			}
-			record.real = this.config[record.method](...record.args);
-			// The placeholder answered null for every key. If settings already
-			// arrived (the main process can push them before this runs), the load
-			// below changes nothing, so tell the subscriber what it missed.
-			const [keyPath, callback] = record.args;
-			if (
-				alreadyLoaded &&
-				record.method === "onDidChange" &&
-				typeof callback === "function"
-			) {
-				const newValue = this.config.get(keyPath);
-				if (newValue != null) {
-					callback({ oldValue: undefined, newValue });
-				}
-			}
-		}
+		const loaded = this.config.load();
+		// Stores built while the renderer bundle evaluated subscribed to the
+		// bundle's placeholder config; move them onto this one.
+		replayEarlyConfigSubscriptions(this.config);
+		return loaded;
 	}
 
 	watchThemes() {

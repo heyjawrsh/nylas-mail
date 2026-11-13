@@ -15,21 +15,26 @@ import FloatingToolbar from "../src/components/contenteditable/floating-toolbar.
 describe("KeyManager without the native keytar", () => {
 	afterEach(() => {
 		delete remote.dialog.showErrorBox;
+		vi.restoreAllMocks();
 	});
 
-	it("reads a missing password synchronously and shows no dialog", () => {
+	it("reads no password, skipping the migration branch and the dialog", () => {
 		remote.dialog.showErrorBox = vi.fn();
 		const value = KeyManager.getPassword("me@fixture.test.localSync", {
 			migrateFromService: "Nylas",
 		});
-		expect(value).toBeUndefined();
+		expect(value).toBeNull();
 		expect(remote.dialog.showErrorBox).not.toHaveBeenCalled();
 	});
 
-	it("stores a password without the Password Management Error dialog", () => {
+	it("skips a write with a warning instead of pretending it was stored", () => {
 		remote.dialog.showErrorBox = vi.fn();
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 		KeyManager.replacePassword("me@fixture.test.n1Cloud", "token");
+		expect(warn).toHaveBeenCalledWith(expect.stringMatching(/no secure storage backend.*n1Cloud was not stored/));
+		expect(KeyManager.getPassword("me@fixture.test.n1Cloud")).toBeNull();
 		KeyManager.deletePassword("me@fixture.test.n1Cloud");
+		expect(warn).toHaveBeenLastCalledWith(expect.stringMatching(/was not deleted/));
 		expect(remote.dialog.showErrorBox).not.toHaveBeenCalled();
 	});
 });
@@ -65,14 +70,6 @@ describe("FloatingToolbar", () => {
 
 describe("source wiring", () => {
 	const source = (rel) => fs.readFileSync(path.join(__dirname, "..", rel), "utf8");
-
-	it("registers no kit component by a string path the bundle can't resolve", () => {
-		const kit = source("src/global/nylas-component-kit.js");
-		const stringPaths = [
-			...kit.matchAll(/NylasComponentKit\.(?:load|loadFrom|require|requireFrom)\(\s*"\w+",\s*"([^"]+)"/g),
-		].map((m) => m[1]);
-		expect(stringPaths).toEqual([]);
-	});
 
 	it("reads CategoryStore's default export in Account", () => {
 		const account = source("src/flux/models/account.js");
