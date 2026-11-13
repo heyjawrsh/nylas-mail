@@ -8,7 +8,11 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const electronBuilder = (args) =>
-	spawnSync("electron-builder", args, { cwd: root, stdio: "inherit", shell: true });
+	spawnSync("electron-builder", args, {
+		cwd: root,
+		stdio: "inherit",
+		shell: true,
+	});
 
 const build = electronBuilder(["--mac", "--config", "electron-builder.yml"]);
 const restore = electronBuilder(["install-app-deps"]);
