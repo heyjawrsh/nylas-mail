@@ -25,3 +25,6 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-the-work-window-loads-and-sync-starts-plan.md`
   summary: app.asar carries an unused second copy of client-sync at node_modules/client-sync (215 files), and hapi-swagger 17 expects joi 17 while client-sync uses 18.
   evidence: Implementer follow-ups. The local API only starts with NYLAS_START_LOCAL_API=1, so the peer mismatch is a warning today.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-mail-packages-drop-finddomnode-and-string-refs-plan.md`
+  summary: Main-window startup logs "TypeError: Cannot read properties of undefined (reading 'killed')" from BufferedProcess in src. No story owns it.
+  evidence: Seen on the fixture launch on 4770026e8 and reported by the 13.4 implementer. Needs tracing to the BufferedProcess caller.
