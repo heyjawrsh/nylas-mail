@@ -3,14 +3,14 @@ title: 'Windows and Linux builds ship with no updater and no crash upload'
 type: 'feature'
 ticket: '7'
 created: '2026-11-13'
-status: 'in-progress'
+status: built
 baseline_revision: '76f079e963ec744b810d510c700cf583066846e3'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/epic-platform-baseline.md'
@@ -119,6 +119,19 @@ AC deviation (needs a human call): Electron 45's `crashReporter.getUploadedRepor
 
 ## Review Triage Log
 
+### Pass 1 (quick lens), 2026-11-13
+
+Counts: high 0, medium 2, low 2, false 0, accepted 1, known gap 1.
+
+| # | Finding | Verdict | Route | Evidence / action |
+|---|---------|---------|-------|-------------------|
+| 1 | AC 2 "getUploadedReports() is empty" fails after the crash | low | accepted deviation, flagged to Josh | Electron 45 lists local reports too. The one entry has `id: ""` and a 1970 date, so it was never sent. The handler has no `--url` and no sockets, and the dump stays in `pending/`. The intent (nothing sent) is met; the AC's proxy was wrong. |
+| 2 | `pnpm/action-setup@v4` `version: 11` clashes with `packageManager: pnpm@11.18.0` and fails setup | medium | patch | The v4 action rejects differing version strings, and no run has ever exercised this config. Drop `version:` in dist.yml and test.yml. |
+| 3 | check-public-build exits 0 silently through a symlinked path | medium | patch | `runAsScript` compares the unresolved argv[1] to the realpath'd module URL. A guard that silently doesn't run is the worst failure. Compare realpaths, and make the spec assert the "passed" line. |
+| 4 | the upload scan skips client-sync, which ships in the package | low | patch | The symlink isn't followed and `packages/client-sync` isn't a root. Add it. |
+| 5 | pnpm-workspace.yaml comment says "mac-only build" | low | patch | Direct correction. |
+| 6 | Windows package never built or checked | — | known gap | Recorded as CI-only. better-sqlite3 has no win32 prebuild and node-gyp can't cross-compile. The human step runs dist.yml. |
+
 ## Verification
 
 **Commands:**
@@ -142,3 +155,5 @@ AC deviation (needs a human call): Electron 45's `crashReporter.getUploadedRepor
 **Manual checks (human):**
 - Run the dist workflow in GitHub Actions: all three jobs green, with artifacts.
 - Install and open the Windows and Linux packages on real machines.
+
+Verification on 62631dfdd (orchestrator, 2026-11-13): `check:react` and `check:public-build` exit 0. vitest has 3899 passing across 201 files with none failed (4 known unhandled errors), lint shows 1 known error, and actionlint passes on both workflows. All 4 patch findings are fixed. The status stays `built`, not done, until the human steps pass: the dist workflow runs green on all three OSes, and the Windows and Linux packages are installed and opened on real machines. Backlog filed: #14 (showMessageBox API), #15 (Windows mailto registration), #16 (Linux icon and desktop entry).
