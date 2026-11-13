@@ -264,7 +264,6 @@ export default class NewEventCard extends React.Component {
 						{this._renderIcon("ic-eventcard-notes@2x.png")}
 
 						<textarea
-							ref="description"
 							name="description"
 							placeholder="Add notes"
 							value={this.props.event.description}

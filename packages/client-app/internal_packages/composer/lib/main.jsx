@@ -34,6 +34,7 @@ class ComposerWithWindowProps extends React.Component {
 				"Initialize popout composer windows with valid draftJSON",
 			);
 		}
+		this._composer = React.createRef();
 		const draft = new Message().fromJSON(draftJSON);
 		DraftStore._createSession(draftClientId, draft);
 		this.state = windowProps;
@@ -46,11 +47,11 @@ class ComposerWithWindowProps extends React.Component {
 	}
 
 	componentDidUpdate() {
-		this.refs.composer.focus();
+		this._composer.current.focus();
 	}
 
 	_onDraftReady = () => {
-		this.refs.composer.focus().then(() => {
+		this._composer.current.focus().then(() => {
 			NylasEnv.displayWindow();
 			this._recordComposerOpenTime();
 
@@ -99,7 +100,7 @@ class ComposerWithWindowProps extends React.Component {
 	render() {
 		return (
 			<ComposerViewForDraftClientId
-				ref="composer"
+				ref={this._composer}
 				onDraftReady={this._onDraftReady}
 				draftClientId={this.state.draftClientId}
 				className="composer-full-window"

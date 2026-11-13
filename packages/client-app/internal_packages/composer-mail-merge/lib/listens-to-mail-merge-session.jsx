@@ -1,5 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { mailMergeSessionForDraft } from "./mail-merge-draft-editing-session";
 
@@ -17,6 +17,9 @@ export default function ListensToMailMergeSession(ComposedComponent) {
 
 		constructor(props) {
 			super(props);
+			// The wrapped instance; the send button exposes its primarySend
+			// through it.
+			this.composedRef = createRef();
 			this.unlisten = () => {};
 			this.state = {
 				mailMergeSession: mailMergeSessionForDraft(
@@ -40,8 +43,8 @@ export default function ListensToMailMergeSession(ComposedComponent) {
 		}
 
 		focus() {
-			if (this.refs.composed) {
-				this.refs.composed.focus();
+			if (this.composedRef.current) {
+				this.composedRef.current.focus();
 			}
 		}
 
@@ -57,7 +60,7 @@ export default function ListensToMailMergeSession(ComposedComponent) {
 				sessionState: mailMergeSession.state,
 			};
 			if (Component.isPrototypeOf(ComposedComponent)) {
-				componentProps.ref = "composed";
+				componentProps.ref = this.composedRef;
 			}
 			return <ComposedComponent {...componentProps} />;
 		}

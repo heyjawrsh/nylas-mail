@@ -128,8 +128,8 @@ const EnhancedSendActionButton = ListensToFluxStore(SendActionButton, {
 // is already a bit of a hack.
 Object.assign(EnhancedSendActionButton.prototype, {
 	primarySend() {
-		if (this.refs.composed) {
-			this.refs.composed.primarySend();
+		if (this.composedRef.current) {
+			this.composedRef.current.primarySend();
 		}
 	},
 });

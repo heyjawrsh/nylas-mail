@@ -11,7 +11,6 @@
  */
 const _ = require("underscore");
 const React = require("react");
-const ReactDOM = require("react-dom");
 const classnames = require("classnames");
 
 const {
@@ -38,10 +37,11 @@ const {
 	FocusedPerspectiveStore,
 	FolderSyncProgressStore,
 } = require("nylas-exports");
+const { domNodeOf } = require("../../../src/components/dom-node.js");
 
 const ThreadListColumns = require("./thread-list-columns");
-const ThreadListScrollTooltip = require("./thread-list-scroll-tooltip");
-const ThreadListStore = require("./thread-list-store");
+const ThreadListScrollTooltip = require("./thread-list-scroll-tooltip").default;
+const ThreadListStore = require("./thread-list-store").default;
 const ThreadListContextMenu = require("./thread-list-context-menu").default;
 const CategoryRemovalTargetRulesets =
 	require("./category-removal-target-rulesets").default;
@@ -83,6 +83,7 @@ class ThreadList extends React.Component {
 		this._onSelectStarred = this._onSelectStarred.bind(this);
 		this._onSelectUnstarred = this._onSelectUnstarred.bind(this);
 		this.props = props;
+		this._list = React.createRef();
 		this.state = {
 			style: "unknown",
 			syncing: false,
@@ -93,10 +94,9 @@ class ThreadList extends React.Component {
 		this._reportAppBootTime();
 		this.unsub = FolderSyncProgressStore.listen(this._onSyncStatusChanged);
 		window.addEventListener("resize", this._onResize, true);
-		ReactDOM.findDOMNode(this).addEventListener(
-			"contextmenu",
-			this._onShowContextMenu,
-		);
+		// The list renders this component's root node.
+		this._rootNode = domNodeOf(this._list.current);
+		this._rootNode?.addEventListener("contextmenu", this._onShowContextMenu);
 		return this._onResize();
 	}
 
@@ -110,10 +110,8 @@ class ThreadList extends React.Component {
 	componentWillUnmount() {
 		this.unsub();
 		window.removeEventListener("resize", this._onResize, true);
-		return ReactDOM.findDOMNode(this).removeEventListener(
-			"contextmenu",
-			this._onShowContextMenu,
-		);
+		this._rootNode?.removeEventListener("contextmenu", this._onShowContextMenu);
+		this._rootNode = null;
 	}
 
 	_reportAppBootTime() {
@@ -204,7 +202,7 @@ class ThreadList extends React.Component {
 				FocusContainer,
 				{ collection: "thread" },
 				React.createElement(MultiselectList, {
-					ref: "list",
+					ref: this._list,
 					draggable: true,
 					columns: columns,
 					itemPropsProvider: this._threadPropsProvider,
@@ -330,7 +328,7 @@ class ThreadList extends React.Component {
 
 	_targetItemsForMouseEvent(event) {
 		let needle;
-		const itemThreadId = this.refs.list.itemIdAtPoint(
+		const itemThreadId = this._list.current.itemIdAtPoint(
 			event.clientX,
 			event.clientY,
 		);
@@ -396,8 +394,11 @@ class ThreadList extends React.Component {
 
 	_onResize(_event) {
 		const current = this.state.style;
-		const desired =
-			ReactDOM.findDOMNode(this).offsetWidth < 540 ? "narrow" : "wide";
+		const node = domNodeOf(this._list.current);
+		if (!node) {
+			return;
+		}
+		const desired = node.offsetWidth < 540 ? "narrow" : "wide";
 		if (current !== desired) {
 			return this.setState({ style: desired });
 		}
@@ -556,7 +557,7 @@ class ThreadList extends React.Component {
 		const items = dataSource.itemsCurrentlyInViewMatching(
 			(item) => !item.unread,
 		);
-		return this.refs.list.handler().onSelect(items);
+		return this._list.current.handler().onSelect(items);
 	}
 
 	_onSelectUnread() {
@@ -564,7 +565,7 @@ class ThreadList extends React.Component {
 		const items = dataSource.itemsCurrentlyInViewMatching(
 			(item) => item.unread,
 		);
-		return this.refs.list.handler().onSelect(items);
+		return this._list.current.handler().onSelect(items);
 	}
 
 	_onSelectStarred() {
@@ -572,7 +573,7 @@ class ThreadList extends React.Component {
 		const items = dataSource.itemsCurrentlyInViewMatching(
 			(item) => item.starred,
 		);
-		return this.refs.list.handler().onSelect(items);
+		return this._list.current.handler().onSelect(items);
 	}
 
 	_onSelectUnstarred() {
@@ -580,7 +581,7 @@ class ThreadList extends React.Component {
 		const items = dataSource.itemsCurrentlyInViewMatching(
 			(item) => !item.starred,
 		);
-		return this.refs.list.handler().onSelect(items);
+		return this._list.current.handler().onSelect(items);
 	}
 }
 ThreadList.initClass();

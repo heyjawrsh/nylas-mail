@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import { Actions, MessageStore, SearchableComponentStore } from "nylas-exports";
 import { RetinaImg, KeyCommandsRegion } from "nylas-component-kit";
@@ -9,6 +8,8 @@ export default class FindInThread extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._controlsWrap = React.createRef();
+		this._searchBox = React.createRef();
 		this.state = SearchableComponentStore.getCurrentSearchData();
 	}
 
@@ -51,7 +52,7 @@ export default class FindInThread extends React.Component {
 			return event.shiftKey ? this._onPrevResult() : this._onNextResult();
 		} else if (event.key === "Escape") {
 			this._clearSearch();
-			ReactDOM.findDOMNode(this.refs.searchBox).blur();
+			this._searchBox.current?.blur();
 		}
 		return null;
 	};
@@ -84,9 +85,9 @@ export default class FindInThread extends React.Component {
 	};
 
 	_focusSearch = (event) => {
-		const cw = ReactDOM.findDOMNode(this.refs.controlsWrap);
+		const cw = this._controlsWrap.current;
 		if (!event || !cw?.contains(event.target)) {
-			ReactDOM.findDOMNode(this.refs.searchBox).focus();
+			this._searchBox.current?.focus();
 		}
 	};
 
@@ -99,11 +100,11 @@ export default class FindInThread extends React.Component {
 		return (
 			<div className={rootCls} onClick={this._focusSearch}>
 				<KeyCommandsRegion globalHandlers={this._globalKeymapHandlers()}>
-					<div className="controls-wrap" ref="controlsWrap">
+					<div className="controls-wrap" ref={this._controlsWrap}>
 						<div className="input-wrap">
 							<input
 								type="text"
-								ref="searchBox"
+								ref={this._searchBox}
 								placeholder="Find in thread"
 								onChange={this._onFindChange}
 								onKeyDown={this._onFindKeyDown}

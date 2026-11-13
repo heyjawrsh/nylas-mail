@@ -25,6 +25,9 @@ const splitContents = (contents) => {
 class MarkdownEditor extends React.Component {
 	constructor(...args) {
 		super(...args);
+		this._container = React.createRef();
+		this._uneditableNotice = React.createRef();
+		this._uneditable = React.createRef();
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.focus = this.focus.bind(this);
@@ -51,7 +54,7 @@ class MarkdownEditor extends React.Component {
 	componentDidMount() {
 		this.mde = new SimpleMDE({
 			inputStyle: "contenteditable",
-			element: ReactDOM.findDOMNode(this.refs.container),
+			element: this._container.current,
 			hideIcons: ["fullscreen", "side-by-side"],
 			showIcons: ["code", "table"],
 			spellChecker: false,
@@ -88,9 +91,9 @@ class MarkdownEditor extends React.Component {
 	setCurrentBodyInDOM() {
 		const [editable, uneditable] = splitContents(this.props.body);
 
-		const uneditableEl = ReactDOM.findDOMNode(this.refs.uneditable);
+		const uneditableEl = this._uneditable.current;
 		uneditableEl.innerHTML = uneditable;
-		const uneditableNoticeEl = ReactDOM.findDOMNode(this.refs.uneditableNotice);
+		const uneditableNoticeEl = this._uneditableNotice.current;
 		if (Utils.getTextFromHtml(uneditable).length > 0) {
 			uneditableNoticeEl.style.display = "block";
 		} else {
@@ -101,7 +104,7 @@ class MarkdownEditor extends React.Component {
 	}
 
 	currentBodyInDOM() {
-		const uneditableEl = ReactDOM.findDOMNode(this.refs.uneditable);
+		const uneditableEl = this._uneditable.current;
 		return this.mde.value() + uneditableEl.innerHTML;
 	}
 
@@ -110,7 +113,7 @@ class MarkdownEditor extends React.Component {
 	getPreviousSelection() {}
 
 	setSelection() {
-		const container = ReactDOM.findDOMNode(this.refs.container);
+		const container = this._container.current;
 		const sel = document.getSelection();
 		return sel.setBaseAndExtent(container, 0, container, 0);
 	}
@@ -155,16 +158,16 @@ class MarkdownEditor extends React.Component {
 					{".btn-translate { display:none; }"}
 					{".btn-send-reminder { display:none; }"}
 				</style>
-				<div ref="container" className="editing-region" />
+				<div ref={this._container} className="editing-region" />
 				<div
-					ref="uneditableNotice"
+					ref={this._uneditableNotice}
 					style={{ display: "none" }}
 					className="uneditable-notice"
 				>
 					The markdown editor does not support editing signatures or quoted
 					text. Content below will be included in your message.
 				</div>
-				<div ref="uneditable"></div>
+				<div ref={this._uneditable}></div>
 			</div>
 		);
 	}

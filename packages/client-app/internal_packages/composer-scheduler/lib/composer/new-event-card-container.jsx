@@ -122,7 +122,6 @@ export default class NewEventCardContainer extends Component {
 			card = (
 				<NewEventCard
 					event={event}
-					ref="newEventCard"
 					draft={this.props.draft}
 					onRemove={this._removeEvent}
 					onChange={this._updateEvent}

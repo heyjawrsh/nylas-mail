@@ -1,5 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
-import { Component } from "react";
+import { Component, createRef } from "react";
 
 function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 	return class extends Component {
@@ -11,6 +11,9 @@ function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 
 		constructor(props) {
 			super(props);
+			// The wrapped instance, for wrappers that expose its methods (the
+			// composer's send button exposes primarySend through it).
+			this.composedRef = createRef();
 			this._unlisteners = [];
 			this.state = getStateFromStores(props);
 		}
@@ -41,9 +44,7 @@ function ListensToFluxStore(ComposedComponent, { stores, getStateFromStores }) {
 				...this.props,
 				...this.state,
 			};
-			// React 19: string refs removed. Nothing consumes this ref — drop it
-			// (getWrappedInstance never existed here).
-			return <ComposedComponent {...props} />;
+			return <ComposedComponent ref={this.composedRef} {...props} />;
 		}
 	};
 }

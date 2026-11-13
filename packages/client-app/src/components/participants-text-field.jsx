@@ -80,6 +80,13 @@ export default class ParticipantsTextField extends React.Component {
 		);
 	}
 
+	_rootRef = React.createRef();
+
+	// The root node, for the composer header's focus checks.
+	getDOMNode() {
+		return this._rootRef.current;
+	}
+
 	// Public. Can be called by any component that has a ref to this one to
 	// focus the input field.
 	focus = () => {
@@ -234,7 +241,7 @@ export default class ParticipantsTextField extends React.Component {
 		// TODO Ahh now that this component is part of the component kit this
 		// injected region feels out of place
 		return (
-			<div className={this.props.className}>
+			<div ref={this._rootRef} className={this.props.className}>
 				<InjectedComponent
 					ref={this.textFieldRef}
 					matching={{ role: "Composer:ParticipantsTextField" }}

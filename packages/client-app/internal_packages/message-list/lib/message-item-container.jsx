@@ -8,6 +8,7 @@ const {
 	ComponentRegistry,
 	MessageStore,
 } = require("nylas-exports");
+const { domNodeOf } = require("../../../src/components/dom-node.js");
 
 class MessageItemContainer extends React.Component {
 	static displayName = "MessageItemContainer";
@@ -33,6 +34,7 @@ class MessageItemContainer extends React.Component {
 		this._renderComposer = this._renderComposer.bind(this);
 		this._classNames = this._classNames.bind(this);
 		this._onSendingStateChanged = this._onSendingStateChanged.bind(this);
+		this._message = React.createRef();
 		this.state = this._getStateFromStores();
 	}
 
@@ -56,7 +58,12 @@ class MessageItemContainer extends React.Component {
 		}
 	}
 	focus() {
-		return this.refs.message.focus();
+		return this._message.current.focus();
+	}
+
+	// The message item's or the inline composer's node.
+	getDOMNode() {
+		return domNodeOf(this._message.current);
 	}
 
 	render() {
@@ -72,7 +79,7 @@ class MessageItemContainer extends React.Component {
 	_renderMessage({ pending }) {
 		return (
 			<MessageItem
-				ref="message"
+				ref={this._message}
 				pending={pending}
 				thread={this.props.thread}
 				message={this.props.message}
@@ -93,7 +100,7 @@ class MessageItemContainer extends React.Component {
 		}
 		return (
 			<Composer
-				ref="message"
+				ref={this._message}
 				draftClientId={this.props.message.clientId}
 				className={this._classNames()}
 				mode="inline"

@@ -21,9 +21,16 @@ const EXTENSIONS = new Set([".js", ".jsx"]);
 const REMOVED_DOM_NAMES = "render|hydrate|unmountComponentAtNode";
 const REACT_DOM = `["']react-dom["']`;
 
+// The internal packages that are clean of the path-scoped entries below:
+// thread-list, message-list, composer and every composer-* plugin.
+const MAIL_PACKAGES =
+	/^packages\/client-app\/internal_packages\/(?:thread-list|message-list|composer(?:-[^/]+)?)\//;
+const CLEAN = ["packages/client-app/src", MAIL_PACKAGES];
+
 // Each entry: a label for the report, a regex run over the whole file (so it
 // can span lines), and what to use instead. An entry with `only` checks just
-// the roots it lists. A line is reported once, under the first entry that
+// the paths it lists: a string is a folder prefix, a regex is tested against
+// the repo-relative path. A line is reported once, under the first entry that
 // matches it.
 export const BANNED = [
 	{
@@ -77,32 +84,32 @@ export const BANNED = [
 		pattern: /\bgetChildContext\b/,
 		why: "use a context Provider",
 	},
-	// The entries below cover src/ only for now; internal_packages/ joins
-	// them once its last use is gone.
+	// The entries below cover src/ and the mail packages for now; the rest of
+	// internal_packages/ joins them once its last use is gone.
 	{
 		label: "findDOMNode",
 		pattern: /\bfindDOMNode\b/,
 		why: "put a ref on the element, or call the child's getDOMNode()",
-		only: ["packages/client-app/src"],
+		only: CLEAN,
 	},
 	{
 		label: "string ref",
 		// ref="x" or ref='x' in JSX, and ref: "x" in createElement props.
 		pattern: /\bref\s*[=:]\s*["']/,
 		why: "use createRef() or a callback ref",
-		only: ["packages/client-app/src"],
+		only: CLEAN,
 	},
 	{
 		label: "string ref",
 		pattern: /\bref\s*=\s*\{\s*["'`]/,
 		why: "use createRef() or a callback ref",
-		only: ["packages/client-app/src"],
+		only: CLEAN,
 	},
 	{
 		label: "this.refs",
 		pattern: /\.refs\b/,
 		why: "read the object ref's .current",
-		only: ["packages/client-app/src"],
+		only: CLEAN,
 	},
 ];
 
@@ -119,6 +126,14 @@ function* sourceFiles(dir) {
 
 const lineAt = (text, index) => text.slice(0, index).split("\n").length;
 
+const inScope = (only, rel) =>
+	!only ||
+	only.some((scope) =>
+		typeof scope === "string"
+			? rel === scope || rel.startsWith(`${scope}/`)
+			: scope.test(rel),
+	);
+
 // Scans the ROOTS under `root` and returns { file, line, text } findings,
 // file relative to `root`. Exported so the spec can run it on fixtures.
 export function findRemovedReactApis(root = repoRoot) {
@@ -126,16 +141,17 @@ export function findRemovedReactApis(root = repoRoot) {
 	for (const scanRoot of ROOTS) {
 		for (const file of sourceFiles(path.join(root, scanRoot))) {
 			const text = readFileSync(file, "utf8");
+			const rel = path.relative(root, file).split(path.sep).join("/");
 			const reported = new Set();
 			for (const { label, pattern, why, only } of BANNED) {
-				if (only && !only.includes(scanRoot)) continue;
+				if (!inScope(only, rel)) continue;
 				const global = new RegExp(pattern.source, `${pattern.flags}g`);
 				for (const match of text.matchAll(global)) {
 					const line = lineAt(text, match.index);
 					if (reported.has(line)) continue;
 					reported.add(line);
 					findings.push({
-						file: path.relative(root, file),
+						file: rel,
 						line,
 						text: `${label} (${why})`,
 					});

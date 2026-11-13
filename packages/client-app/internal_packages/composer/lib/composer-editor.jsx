@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { ExtensionRegistry, DOMUtils } from "nylas-exports";
 import { DropZone, ScrollRegion, Contenteditable } from "nylas-component-kit";
@@ -76,6 +76,7 @@ class ComposerEditor extends Component {
 
 	constructor(props) {
 		super(props);
+		this._contenteditable = createRef();
 		this.state = {
 			extensions: ExtensionRegistry.Composer.extensions(),
 		};
@@ -93,15 +94,15 @@ class ComposerEditor extends Component {
 
 	// TODO Get rid of these selection methods
 	getCurrentSelection() {
-		return this.refs.contenteditable.getCurrentSelection();
+		return this._contenteditable.current.getCurrentSelection();
 	}
 
 	getPreviousSelection() {
-		return this.refs.contenteditable.getPreviousSelection();
+		return this._contenteditable.current.getPreviousSelection();
 	}
 
 	setSelection(selection) {
-		this.refs.contenteditable.setSelection(selection);
+		this._contenteditable.current.setSelection(selection);
 	}
 
 	focus() {
@@ -109,7 +110,7 @@ class ComposerEditor extends Component {
 		// the body. Be sure to choose the last node /above/ the signature and any
 		// quoted text that is visible. (as in forwarded messages.)
 		//
-		this.refs.contenteditable.atomicEdit(({ editor }) => {
+		this._contenteditable.current.atomicEdit(({ editor }) => {
 			editor.rootNode.focus();
 			const lastNode = this._findLastNodeBeforeQuoteOrSignature(editor);
 			if (lastNode) {
@@ -121,7 +122,7 @@ class ComposerEditor extends Component {
 	}
 
 	focusAbsoluteEnd() {
-		this.refs.contenteditable.atomicEdit(({ editor }) => {
+		this._contenteditable.current.atomicEdit(({ editor }) => {
 			editor.rootNode.focus();
 			this._selectNode(editor.rootNode, { collapseTo: NODE_END });
 		});
@@ -172,19 +173,19 @@ class ComposerEditor extends Component {
 	 * TODO refactor the tests!
 	 */
 	_onDOMMutated(mutations) {
-		this.refs.contenteditable._onDOMMutated(mutations);
+		this._contenteditable.current._onDOMMutated(mutations);
 	}
 
 	_onDrop = (event) => {
-		this.refs.contenteditable._onDrop(event);
+		this._contenteditable.current._onDrop(event);
 	};
 
 	_onDragOver = (event) => {
-		this.refs.contenteditable._onDragOver(event);
+		this._contenteditable.current._onDragOver(event);
 	};
 
 	_shouldAcceptDrop = (event) => {
-		return this.refs.contenteditable._shouldAcceptDrop(event);
+		return this._contenteditable.current._shouldAcceptDrop(event);
 	};
 	// Helpers
 
@@ -272,7 +273,7 @@ class ComposerEditor extends Component {
 				shouldAcceptDrop={this._shouldAcceptDrop}
 			>
 				<Contenteditable
-					ref="contenteditable"
+					ref={this._contenteditable}
 					value={this.props.body}
 					onChange={this.props.onBodyChanged}
 					onFilePaste={this.props.onFilePaste}

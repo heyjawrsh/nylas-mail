@@ -1,7 +1,6 @@
 /* eslint react/no-danger: 0 */
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import { findDOMNode } from "react-dom";
 import { EditorAPI } from "nylas-exports";
 import { OverlaidComponents, DropZone } from "nylas-component-kit";
 import ListensToMailMergeSession from "./listens-to-mail-merge-session";
@@ -22,12 +21,15 @@ class MailMergeSubjectTextField extends Component {
 		onSubjectChange: PropTypes.func.isRequired,
 	};
 
+	_contenteditable = createRef();
+	_fallback = createRef();
+
 	componentDidMount() {
 		const { isWorkspaceOpen } = this.props.sessionState;
 
 		this.savedSelection = null;
 		if (isWorkspaceOpen) {
-			this.editor = new EditorAPI(findDOMNode(this.refs.contenteditable));
+			this.editor = new EditorAPI(this._contenteditable.current);
 		}
 	}
 
@@ -44,7 +46,7 @@ class MailMergeSubjectTextField extends Component {
 		const { isWorkspaceOpen } = this.props.sessionState;
 
 		if (isWorkspaceOpen) {
-			this.editor = new EditorAPI(findDOMNode(this.refs.contenteditable));
+			this.editor = new EditorAPI(this._contenteditable.current);
 			if (this.savedSelection?.rawSelection.anchorNode) {
 				this.editor.select(this.savedSelection);
 				this.savedSelection = null;
@@ -81,9 +83,9 @@ class MailMergeSubjectTextField extends Component {
 		const { isWorkspaceOpen } = this.props.sessionState;
 
 		if (isWorkspaceOpen) {
-			findDOMNode(this.refs.contenteditable).focus();
+			this._contenteditable.current.focus();
 		} else {
-			this.refs.fallback.focus();
+			this._fallback.current.focus();
 		}
 	}
 
@@ -97,7 +99,7 @@ class MailMergeSubjectTextField extends Component {
 				shouldAcceptDrop={this.shouldAcceptDrop}
 			>
 				<div
-					ref="contenteditable"
+					ref={this._contenteditable}
 					contentEditable
 					name="subject"
 					placeholder="Subject"
@@ -114,7 +116,7 @@ class MailMergeSubjectTextField extends Component {
 		const { isWorkspaceOpen } = this.props.sessionState;
 		if (!isWorkspaceOpen) {
 			const Fallback = this.props.fallback;
-			return <Fallback ref="fallback" {...this.props} />;
+			return <Fallback ref={this._fallback} {...this.props} />;
 		}
 
 		const { draft, session } = this.props;

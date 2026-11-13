@@ -1,5 +1,5 @@
 import * as remote from "@electron/remote";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { RetinaImg } from "nylas-component-kit";
 import { sendMailMerge } from "./mail-merge-utils";
@@ -20,6 +20,7 @@ class MailMergeSendButton extends Component {
 
 	constructor(props) {
 		super(props);
+		this._fallbackButton = createRef();
 		this.state = {
 			sending: false,
 		};
@@ -58,8 +59,8 @@ class MailMergeSendButton extends Component {
 		// Primary click is called when mod+enter is pressed.
 		// If mail merge is not open, we should revert to default behavior
 		const { isWorkspaceOpen } = this.props.sessionState;
-		if (!isWorkspaceOpen && this.refs.fallbackButton) {
-			this.refs.fallbackButton.primarySend();
+		if (!isWorkspaceOpen && this._fallbackButton.current) {
+			this._fallbackButton.current.primarySend();
 		} else {
 			this.onClick();
 		}
@@ -70,7 +71,7 @@ class MailMergeSendButton extends Component {
 		const { isWorkspaceOpen, tableDataSource } = this.props.sessionState;
 		if (!isWorkspaceOpen) {
 			const Fallback = this.props.fallback;
-			return <Fallback ref="fallbackButton" {...this.props} />;
+			return <Fallback ref={this._fallbackButton} {...this.props} />;
 		}
 
 		const count = tableDataSource.rows().length;
@@ -111,8 +112,8 @@ const EnhancedMailMergeSendButton =
 	ListensToMailMergeSession(MailMergeSendButton);
 Object.assign(EnhancedMailMergeSendButton.prototype, {
 	primarySend() {
-		if (this.refs.composed) {
-			this.refs.composed.primarySend();
+		if (this.composedRef.current) {
+			this.composedRef.current.primarySend();
 		}
 	},
 });

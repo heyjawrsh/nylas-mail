@@ -1,6 +1,5 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import fs from "node:fs";
 import path from "node:path";
 import { Actions } from "nylas-exports";
@@ -18,6 +17,8 @@ export default class InlineImageUploadContainer extends Component {
 		isPreview: PropTypes.bool,
 	};
 
+	_root = React.createRef();
+
 	_onGoEdit = () => {
 		if (!this.props.session) {
 			console.warn(
@@ -27,7 +28,7 @@ export default class InlineImageUploadContainer extends Component {
 		}
 		// This is just a fun temporary hack because I was jealous of Apple Mail.
 		//
-		const el = ReactDOM.findDOMNode(this);
+		const el = this._root.current;
 		const rect = el.getBoundingClientRect();
 
 		const editorEl = document.createElement("div");
@@ -155,6 +156,7 @@ export default class InlineImageUploadContainer extends Component {
 
 		return (
 			<div
+				ref={this._root}
 				data-src={`cid:${upload.id}`}
 				className="inline-image-upload-container"
 				onDoubleClick={this._onGoEdit}

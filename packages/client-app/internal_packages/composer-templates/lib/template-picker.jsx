@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/tabindex-no-positive: 0 */
-import { Actions, React, ReactDOM } from "nylas-exports";
+import { Actions, React } from "nylas-exports";
 import PropTypes from "prop-types";
 import { Menu, RetinaImg } from "nylas-component-kit";
 import TemplateStore from "./template-store";
@@ -13,6 +13,7 @@ class TemplatePopover extends React.Component {
 
 	constructor() {
 		super();
+		this._menu = React.createRef();
 		this.state = {
 			searchValue: "",
 			templates: TemplateStore.items(),
@@ -64,7 +65,7 @@ class TemplatePopover extends React.Component {
 	};
 
 	_onClickButton = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._menu.current.getDOMNode().getBoundingClientRect();
 		Actions.openPopover(this._renderPopover(), {
 			originRect: buttonRect,
 			direction: "up",
@@ -96,6 +97,7 @@ class TemplatePopover extends React.Component {
 
 		return (
 			<Menu
+				ref={this._menu}
 				className="template-picker"
 				headerComponents={headerComponents}
 				footerComponents={footerComponents}
@@ -115,8 +117,14 @@ class TemplatePicker extends React.Component {
 		draftClientId: PropTypes.string,
 	};
 
+	_button = React.createRef();
+
+	getDOMNode() {
+		return this._button.current;
+	}
+
 	_onClickButton = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(
 			<TemplatePopover draftClientId={this.props.draftClientId} />,
 			{ originRect: buttonRect, direction: "up" },
@@ -126,6 +134,7 @@ class TemplatePicker extends React.Component {
 	render() {
 		return (
 			<button
+				ref={this._button}
 				tabIndex={-1}
 				className="btn btn-toolbar btn-templates narrow pull-right"
 				onClick={this._onClickButton}

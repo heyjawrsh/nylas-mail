@@ -1,5 +1,4 @@
 import React from "react";
-import { findDOMNode } from "react-dom";
 import { Actions } from "nylas-exports";
 import { RetinaImg, ScrollRegion } from "nylas-component-kit";
 
@@ -12,6 +11,7 @@ class EmojiButtonPopover extends React.Component {
 
 	constructor() {
 		super();
+		this._emojiCanvas = React.createRef();
 		const { categoryNames, categorizedEmoji, categoryPositions } =
 			this.getStateFromStore();
 		this.state = {
@@ -241,7 +241,7 @@ class EmojiButtonPopover extends React.Component {
 	}
 
 	renderCanvas() {
-		const canvas = findDOMNode(this.refs.emojiCanvas);
+		const canvas = this._emojiCanvas.current;
 		const keys = Object.keys(this.state.categoryPositions);
 		canvas.height =
 			this.state.categoryPositions[keys[keys.length - 1]].bottom * 2;
@@ -338,7 +338,7 @@ class EmojiButtonPopover extends React.Component {
 						/>
 					</div>
 					<canvas
-						ref="emojiCanvas"
+						ref={this._emojiCanvas}
 						width="400"
 						height="2000"
 						onMouseDown={this.onMouseDown}

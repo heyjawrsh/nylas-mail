@@ -155,7 +155,6 @@ export default class PreferencesSignatures extends React.Component {
 			: "";
 		return (
 			<Contenteditable
-				ref="signatureInput"
 				value={selectedBody}
 				spellcheck={false}
 				onChange={this._onEditSignature}

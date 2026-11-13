@@ -7,7 +7,6 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
-import ReactDOM from "react-dom";
 
 import {
 	Actions,
@@ -37,6 +36,7 @@ class CategoryPicker extends React.Component {
 		this._onOpenCategoryPopover = this._onOpenCategoryPopover.bind(this);
 		this.render = this.render.bind(this);
 		this.props = props;
+		this._button = React.createRef();
 		this._account = AccountStore.accountForItems(this.props.items);
 	}
 
@@ -58,9 +58,7 @@ class CategoryPicker extends React.Component {
 		if (this.context.sheetDepth !== WorkspaceStore.sheetStack().length - 1) {
 			return;
 		}
-		const buttonRect = ReactDOM.findDOMNode(
-			this.refs.button,
-		).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(
 			<CategoryPickerPopover
 				threads={this.props.items}
@@ -104,7 +102,7 @@ class CategoryPicker extends React.Component {
 			>
 				<button
 					tabIndex={-1}
-					ref="button"
+					ref={this._button}
 					title={tooltip}
 					onClick={this._onOpenCategoryPopover}
 					className={btnClasses}

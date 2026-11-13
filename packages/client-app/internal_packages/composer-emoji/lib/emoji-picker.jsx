@@ -1,4 +1,4 @@
-import { React, ReactDOM } from "nylas-exports";
+import { React } from "nylas-exports";
 import PropTypes from "prop-types";
 import emoji from "node-emoji";
 
@@ -14,12 +14,12 @@ class EmojiPicker extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._root = React.createRef();
 		this.state = {};
 	}
 
 	componentDidUpdate() {
-		const selectedButton =
-			ReactDOM.findDOMNode(this).querySelector(".emoji-option");
+		const selectedButton = this._root.current.querySelector(".emoji-option");
 		if (selectedButton) {
 			selectedButton.scrollIntoViewIfNeeded();
 		}
@@ -59,7 +59,11 @@ class EmojiPicker extends React.Component {
 				emojiButtons.push(<br key={`${emojiOption} br`} />);
 			});
 		}
-		return <div className="emoji-picker">{emojiButtons}</div>;
+		return (
+			<div ref={this._root} className="emoji-picker">
+				{emojiButtons}
+			</div>
+		);
 	}
 }
 

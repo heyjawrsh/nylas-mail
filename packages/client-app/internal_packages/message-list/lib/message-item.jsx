@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 const React = require("react");
-const ReactDOM = require("react-dom");
 const classNames = require("classnames");
 const _ = require("underscore");
-const MessageParticipants = require("./message-participants");
+const MessageParticipants = require("./message-participants").default;
 const MessageItemBody = require("./message-item-body");
 const MessageTimestamp = require("./message-timestamp").default;
-const MessageControls = require("./message-controls");
+const MessageControls = require("./message-controls").default;
 const {
 	Utils,
 	Actions,
@@ -22,6 +21,8 @@ const {
 	InjectedComponentSet,
 	InjectedComponent,
 } = require("nylas-component-kit");
+const { domNodeOf } = require("../../../src/components/dom-node.js");
+
 const _TransparentPixel =
 	"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNikAQAACIAHF/uBd8AAAAASUVORK5CYII=";
 
@@ -60,6 +61,8 @@ class MessageItem extends React.Component {
 		]) {
 			this[name] = this[name].bind(this);
 		}
+		this._root = React.createRef();
+		this._header = React.createRef();
 		const fileIds = this.props.message.fileIds();
 		this.state = {
 			downloads: FileDownloadStore.getDownloadDataForFiles(fileIds),
@@ -91,6 +94,10 @@ class MessageItem extends React.Component {
 		return this.props.collapsed ? this._renderCollapsed() : this._renderFull();
 	}
 
+	getDOMNode() {
+		return domNodeOf(this._root.current);
+	}
+
 	_renderCollapsed() {
 		let attachmentIcon = [];
 		if (Utils.showIconForAttachments(this.props.message.files)) {
@@ -98,7 +105,11 @@ class MessageItem extends React.Component {
 		}
 		const from = this.props.message.from;
 		return (
-			<div className={this.props.className} onClick={this._toggleCollapsed}>
+			<div
+				ref={this._root}
+				className={this.props.className}
+				onClick={this._toggleCollapsed}
+			>
 				<div className="message-item-white-wrap">
 					<div className="message-item-area">
 						<div className="collapsed-from">
@@ -121,7 +132,7 @@ class MessageItem extends React.Component {
 
 	_renderFull() {
 		return (
-			<div className={this.props.className}>
+			<div ref={this._root} className={this.props.className}>
 				<div className="message-item-white-wrap">
 					<div className="message-item-area">
 						{this._renderHeader()}
@@ -144,7 +155,11 @@ class MessageItem extends React.Component {
 			pending: this.props.pending,
 		});
 		return (
-			<header ref="header" className={classes} onClick={this._onClickHeader}>
+			<header
+				ref={this._header}
+				className={classes}
+				onClick={this._onClickHeader}
+			>
 				<InjectedComponent
 					matching={{ role: "MessageHeader" }}
 					exposedProps={{
@@ -158,7 +173,6 @@ class MessageItem extends React.Component {
 					style={{ position: "absolute", marginTop: -2 }}
 				>
 					<RetinaImg
-						ref="spinner"
 						name="sending-spinner.gif"
 						mode={RetinaImg.Mode.ContentPreserve}
 					/>
@@ -316,7 +330,7 @@ class MessageItem extends React.Component {
 	}
 
 	_setDetailedHeadersTogglePos() {
-		const header = ReactDOM.findDOMNode(this.refs.header);
+		const header = this._header.current;
 		if (!header) {
 			return;
 		}

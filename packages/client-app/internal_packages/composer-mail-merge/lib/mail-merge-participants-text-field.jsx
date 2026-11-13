@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { DropZone, TokenizingTextField } from "nylas-component-kit";
@@ -49,6 +49,7 @@ class MailMergeParticipantsTextField extends Component {
 
 	constructor(props) {
 		super(props);
+		this._textField = createRef();
 		this._tokenWasMovedBetweenFields = false;
 	}
 
@@ -89,7 +90,7 @@ class MailMergeParticipantsTextField extends Component {
 	};
 
 	focus() {
-		this.refs.textField.focus();
+		this._textField.current.focus();
 	}
 
 	shouldAcceptDrop = (event) => {
@@ -103,7 +104,7 @@ class MailMergeParticipantsTextField extends Component {
 			sessionState;
 
 		if (!isWorkspaceOpen) {
-			return <TokenizingTextField ref="textField" {...this.props} />;
+			return <TokenizingTextField ref={this._textField} {...this.props} />;
 		}
 
 		const classes = classnames({
@@ -120,7 +121,7 @@ class MailMergeParticipantsTextField extends Component {
 			<DropZone onDrop={this.onDrop} shouldAcceptDrop={this.shouldAcceptDrop}>
 				<TokenizingTextField
 					{...this.props}
-					ref="textField"
+					ref={this._textField}
 					className={classes}
 					tokens={tokens}
 					tokenKey={(token) => token.tokenId}

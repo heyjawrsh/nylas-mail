@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Utils } from "nylas-exports";
 import { DropZone, InjectedComponentSet } from "nylas-component-kit";
 
@@ -28,6 +27,7 @@ export default class CollapsedParticipants extends React.Component {
 
 	constructor(props = {}) {
 		super(props);
+		this._participantsWrap = React.createRef();
 		this.state = {
 			numToDisplay: NUM_TO_DISPLAY_MAX,
 			numRemaining: 0,
@@ -64,7 +64,7 @@ export default class CollapsedParticipants extends React.Component {
 	}
 
 	_setNumHiddenParticipants() {
-		const $wrap = ReactDOM.findDOMNode(this.refs.participantsWrap);
+		const $wrap = this._participantsWrap.current;
 		const $regulars = Array.from(
 			$wrap.getElementsByClassName("regular-contact"),
 		);
@@ -171,7 +171,10 @@ export default class CollapsedParticipants extends React.Component {
 				onDragStateChange={this.props.onDragChange}
 				onDrop={this.props.onDrop}
 			>
-				<div ref="participantsWrap" className="collapsed-composer-participants">
+				<div
+					ref={this._participantsWrap}
+					className="collapsed-composer-participants"
+				>
 					{this._renderNumRemaining()}
 					{toDisplay}
 				</div>

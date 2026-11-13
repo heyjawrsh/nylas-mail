@@ -11,7 +11,6 @@ import PropTypes from "prop-types";
 
 import {
 	React,
-	ReactDOM,
 	ComponentRegistry,
 	QuotedHTMLTransformer,
 	Actions,
@@ -105,8 +104,14 @@ class TranslateButton extends React.Component {
 		});
 	};
 
+	_button = React.createRef();
+
+	getDOMNode() {
+		return this._button.current;
+	}
+
 	_onClickTranslateButton = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(this._renderPopover(), {
 			originRect: buttonRect,
 			direction: "up",
@@ -145,6 +150,7 @@ class TranslateButton extends React.Component {
 	render() {
 		return (
 			<button
+				ref={this._button}
 				tabIndex={-1}
 				className="btn btn-toolbar btn-translate pull-right"
 				onClick={this._onClickTranslateButton}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import DraftStore from "../flux/stores/draft-store.js";
 import Actions from "../flux/actions.js";
 import Utils from "../flux/models/utils.js";
+import { domNodeOf } from "../components/dom-node.js";
 
 function InflatesDraftClientId(ComposedComponent) {
 	return class extends React.Component {
@@ -96,6 +97,10 @@ function InflatesDraftClientId(ComposedComponent) {
 			return Utils.waitFor(() => this.composedRef?.current)
 				.then(() => this.composedRef?.current.focus())
 				.catch(() => {});
+		}
+
+		getDOMNode() {
+			return domNodeOf(this.composedRef.current);
 		}
 
 		render() {

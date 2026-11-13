@@ -46,7 +46,6 @@ export default class EventDatetimeInput extends React.Component {
 		return (
 			<input
 				type={type}
-				ref={type}
 				name={`${this.props.name}-${type}`}
 				value={this._datePartStrings[type]}
 				onChange={(e) => {

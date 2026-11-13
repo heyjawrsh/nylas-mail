@@ -30,8 +30,8 @@ const {
 	ThreadTrashQuickAction,
 } = require("./thread-list-quick-actions");
 
-const ThreadListParticipants = require("./thread-list-participants");
-const _ThreadListStore = require("./thread-list-store");
+const ThreadListParticipants = require("./thread-list-participants").default;
+const _ThreadListStore = require("./thread-list-store").default;
 const ThreadListIcon = require("./thread-list-icon");
 
 // Get and format either last sent or last received timestamp depending on thread-list being viewed

@@ -1,6 +1,5 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
-import { findDOMNode } from "react-dom";
 
 export default class SubjectTextField extends Component {
 	static displayName = "SubjectTextField";
@@ -12,12 +11,14 @@ export default class SubjectTextField extends Component {
 		onSubjectChange: PropTypes.func,
 	};
 
+	_input = createRef();
+
 	onInputChange = ({ target: { value } }) => {
 		this.props.onSubjectChange(value);
 	};
 
 	focus() {
-		findDOMNode(this.refs.input).focus();
+		this._input.current.focus();
 	}
 
 	render() {
@@ -26,7 +27,7 @@ export default class SubjectTextField extends Component {
 		return (
 			<div className="composer-subject subject-field">
 				<input
-					ref="input"
+					ref={this._input}
 					type="text"
 					name="subject"
 					placeholder="Subject"

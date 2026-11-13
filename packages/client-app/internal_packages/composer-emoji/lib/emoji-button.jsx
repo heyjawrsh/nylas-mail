@@ -1,4 +1,4 @@
-import { Actions, React, ReactDOM } from "nylas-exports";
+import { Actions, React } from "nylas-exports";
 import { RetinaImg } from "nylas-component-kit";
 
 import EmojiButtonPopover from "./emoji-button-popover";
@@ -6,8 +6,14 @@ import EmojiButtonPopover from "./emoji-button-popover";
 class EmojiButton extends React.Component {
 	static displayName = "EmojiButton";
 
+	_button = React.createRef();
+
+	getDOMNode() {
+		return this._button.current;
+	}
+
 	onClick = () => {
-		const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		const buttonRect = this._button.current.getBoundingClientRect();
 		Actions.openPopover(<EmojiButtonPopover />, {
 			originRect: buttonRect,
 			direction: "up",
@@ -17,6 +23,7 @@ class EmojiButton extends React.Component {
 	render() {
 		return (
 			<button
+				ref={this._button}
 				tabIndex={-1}
 				className="btn btn-toolbar btn-emoji"
 				title="Insert emoji…"

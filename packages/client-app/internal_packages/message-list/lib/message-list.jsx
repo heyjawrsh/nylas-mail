@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 const _ = require("underscore");
 const React = require("react");
-const ReactDOM = require("react-dom");
 const classNames = require("classnames");
 const FindInThread = require("./find-in-thread").default;
 const MessageItemContainer = require("./message-item-container");
@@ -29,6 +28,7 @@ const {
 	KeyCommandsRegion,
 	InjectedComponentSet,
 } = require("nylas-component-kit");
+const { domNodeOf } = require("../../../src/components/dom-node.js");
 
 class MessageListScrollTooltip extends React.Component {
 	static displayName = "MessageListScrollTooltip";
@@ -107,6 +107,10 @@ class MessageList extends React.Component {
 		}
 		this.state = this._getStateFromStores();
 		this.state.minified = true;
+		this._messageWrap = React.createRef();
+		// Message containers by draft/message clientId, set by callback refs.
+		this._messageContainers = {};
+		this._messageContainerRefs = {};
 		this._draftScrollInProgress = false;
 		this.MINIFY_THRESHOLD = 3;
 	}
@@ -180,12 +184,27 @@ class MessageList extends React.Component {
 		return handlers;
 	}
 	_getMessageContainer(clientId) {
-		return this.refs[`message-container-${clientId}`];
+		return this._messageContainers[clientId];
+	}
+	// One stable callback per clientId, so React doesn't detach and reattach
+	// the ref on every render.
+	_messageContainerRef(clientId) {
+		if (!this._messageContainerRefs[clientId]) {
+			this._messageContainerRefs[clientId] = (container) => {
+				if (container) {
+					this._messageContainers[clientId] = container;
+				} else {
+					delete this._messageContainers[clientId];
+					delete this._messageContainerRefs[clientId];
+				}
+			};
+		}
+		return this._messageContainerRefs[clientId];
 	}
 	_focusDraft(draftElement) {
 		this._draftScrollInProgress = true;
 		draftElement.focus();
-		return this.refs.messageWrap.scrollTo(draftElement, {
+		return this._messageWrap.current.scrollTo(draftElement, {
 			position: ScrollRegion.ScrollPosition.Top,
 			settle: true,
 			done: () => {
@@ -228,14 +247,14 @@ class MessageList extends React.Component {
 				globalHandlers={this._globalKeymapHandlers()}
 				globalMenuItems={this._globalMenuItems()}
 			>
-				<FindInThread ref="findInThread" />
+				<FindInThread />
 				<div className={messageListClass} id="message-list">
 					<ScrollRegion
 						tabIndex="-1"
 						className={wrapClass}
 						scrollbarTickProvider={SearchableComponentStore}
 						scrollTooltipComponent={MessageListScrollTooltip}
-						ref="messageWrap"
+						ref={this._messageWrap}
 					>
 						{this._renderSubject()}
 						<div className="headers" style={{ position: "relative" }}>
@@ -377,7 +396,7 @@ class MessageList extends React.Component {
 		return Actions.toggleAllMessagesExpanded();
 	}
 	_onPrintThread() {
-		const node = ReactDOM.findDOMNode(this);
+		const node = this.getDOMNode();
 		return Actions.printThread(this.state.currentThread, node.innerHTML);
 	}
 	_onPopThreadIn() {
@@ -421,7 +440,7 @@ class MessageList extends React.Component {
 			elements.push(
 				<MessageItemContainer
 					key={message.clientId}
-					ref={`message-container-${message.clientId}`}
+					ref={this._messageContainerRef(message.clientId)}
 					thread={this.state.currentThread}
 					message={message}
 					messages={this.state.messages}
@@ -511,9 +530,11 @@ class MessageList extends React.Component {
 			}
 			const pos =
 				position != null ? position : ScrollRegion.ScrollPosition.Visible;
-			return this.refs.messageWrap.scrollTo(messageElement, { position: pos });
+			return this._messageWrap.current.scrollTo(messageElement, {
+				position: pos,
+			});
 		} else if (rect) {
-			return this.refs.messageWrap.scrollToRect(rect, {
+			return this._messageWrap.current.scrollToRect(rect, {
 				position: ScrollRegion.ScrollPosition.CenterIfInvisible,
 			});
 		}
@@ -535,8 +556,9 @@ class MessageList extends React.Component {
 		}
 	}
 	_onScrollByPage(direction) {
-		const height = ReactDOM.findDOMNode(this.refs.messageWrap).clientHeight;
-		return (this.refs.messageWrap.scrollTop += height * direction);
+		const messageWrap = this._messageWrap.current;
+		const height = domNodeOf(messageWrap).clientHeight;
+		return (messageWrap.scrollTop += height * direction);
 	}
 	_onChange() {
 		const newState = this._getStateFromStores();

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import { Actions, APIError, NylasAPI, NylasAPIHelpers } from "nylas-exports";
 import { Menu, RetinaImg } from "nylas-component-kit";
 import moment from "moment";
@@ -25,6 +24,7 @@ export default class SchedulerComposerButton extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._button = React.createRef();
 		this.state = { enabled: false };
 		this._unsubscribes = [];
 	}
@@ -34,6 +34,11 @@ export default class SchedulerComposerButton extends React.Component {
 			this.state !== nextState ||
 			this._hasPendingEvent(nextProps) !== this._hasPendingEvent(this.props)
 		);
+	}
+
+	// The button, for the popover origin and HasTutorialTip.
+	getDOMNode() {
+		return this._button.current;
 	}
 
 	_hasPendingEvent(props) {
@@ -94,7 +99,7 @@ export default class SchedulerComposerButton extends React.Component {
 				this.props.draft.accountId,
 			).catch(this._onPluginAuthError);
 
-			const buttonRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+			const buttonRect = this._button.current.getBoundingClientRect();
 			Actions.openPopover(this._renderPopover(), {
 				originRect: buttonRect,
 				direction: "up",
@@ -141,6 +146,7 @@ Please try again later.\n\nError: ${error}`;
 		}
 		return (
 			<button
+				ref={this._button}
 				className={`btn btn-toolbar btn-scheduler ${this._hasEvent() ? "btn-enabled" : ""}`}
 				onClick={this._onClick}
 				title="Schedule an event…"

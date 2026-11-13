@@ -47,10 +47,45 @@ describe("check-removed-react-apis path-scoped entries", () => {
 		expect(finding.text.startsWith(label)).toBe(true);
 	});
 
-	it.each(cases)("does not flag %s under internal_packages", (_name, _label, code) => {
+	it.each(cases)("does not flag %s under other internal_packages", (_name, _label, code) => {
 		const rel = `${INTERNAL}/some-plugin/lib/probe.jsx`;
 		write(rel, code);
 		expect(findingsIn(rel)).toEqual([]);
+	});
+
+	const mailPackages = [
+		"thread-list",
+		"message-list",
+		"composer",
+		"composer-emoji",
+		"composer-mail-merge",
+		"composer-scheduler/lib/composer",
+	];
+	const mailCases = mailPackages.flatMap((pkg) => cases.map(([name, label, code]) => [pkg, name, label, code]));
+
+	it.each(mailCases)("flags %s's %s with file:line", (pkg, _name, label, code) => {
+		const rel = `${INTERNAL}/${pkg}/probe.jsx`;
+		write(rel, `// probe\n${code}`);
+		const [finding, ...rest] = findingsIn(rel);
+		expect(rest).toEqual([]);
+		expect(finding).toMatchObject({ file: rel, line: 2 });
+		expect(finding.text.startsWith(label)).toBe(true);
+	});
+
+	it("does not treat a package that only starts with a mail package name as one", () => {
+		for (const pkg of ["thread-list-extras", "message-list2", "composerish"]) {
+			const rel = `${INTERNAL}/${pkg}/lib/probe.jsx`;
+			write(rel, "export const a = (c) => c.refs.box;\n");
+			expect(findingsIn(rel)).toEqual([]);
+		}
+	});
+
+	it("passes on the repo's own mail packages", () => {
+		const repoRoot = path.resolve(__dirname, "..", "..", "..");
+		const inMail = findRemovedReactApis(repoRoot).filter((f) =>
+			/internal_packages\/(thread-list|message-list|composer(-[^/]+)?)\//.test(f.file),
+		);
+		expect(inMail).toEqual([]);
 	});
 
 	it("does not flag href= attributes or ?ref= query strings", () => {
