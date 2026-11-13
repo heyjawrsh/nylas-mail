@@ -10,3 +10,9 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-shared-components-drop-finddomnode-and-string-refs-plan.md`
   summary: HasTutorialTip wraps each tipped plugin button in a `display:contents` span, an extra DOM level against story 13.3's "same DOM" rule. Remove it once the 9 tipped internal_packages buttons have getDOMNode() (stories 13.4–13.5).
   evidence: Child combinators and `:first-child`/`:last-child` now see the span. No stylesheet was found that breaks on it.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-shared-components-drop-finddomnode-and-string-refs-plan.md`
+  summary: css-transition-group-compat renders nothing when given more than one child, which SheetContainer can pass on deep sheet stacks and the activity sidebar does pass (Syncback plus Sync).
+  evidence: Reported twice by the 13.3 implementer as an existing bug, left unchanged. Needs a repro in the real app with two sync activities, or a sheet stack deeper than one.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-shared-components-drop-finddomnode-and-string-refs-plan.md`
+  summary: ListensToMovementKeys never creates its composedRef, so arrow-key forwarding does nothing.
+  evidence: Existing bug the 13.3 implementer found, left unchanged.
