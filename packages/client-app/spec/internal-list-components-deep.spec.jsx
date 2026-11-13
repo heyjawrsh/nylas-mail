@@ -156,17 +156,15 @@ describe("ThreadListScrollTooltip math", () => {
 	it("maps the viewport center proportionally to a data-source index", () => {
 		const get = vi.fn(() => ({ id: "row-25" }));
 		m.dataSource.mockReturnValue({ count: () => 100, get });
-		const view = instance();
-		view.setupForProps(view.props);
+		const state = ThreadListScrollTooltip.stateForProps({ viewportCenter: 250, totalHeight: 1000 });
 		expect(get).toHaveBeenCalledWith(25);
-		expect(view.state.idx).toBe(25);
+		expect(state.idx).toBe(25);
 	});
 
 	it("floors fractional indexes", () => {
 		const get = vi.fn();
 		m.dataSource.mockReturnValue({ count: () => 9, get });
-		const view = instance({ viewportCenter: 199, totalHeight: 1000 });
-		view.setupForProps(view.props);
+		ThreadListScrollTooltip.stateForProps({ viewportCenter: 199, totalHeight: 1000 });
 		expect(get).toHaveBeenCalledWith(1);
 	});
 

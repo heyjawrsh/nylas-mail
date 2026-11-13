@@ -94,7 +94,10 @@ class InjectedComponentSet extends React.Component {
 		this._onComponentDidRender = this._onComponentDidRender.bind(this);
 		this._getStateFromStores = this._getStateFromStores.bind(this);
 		this.props = props;
-		this.state = this._getStateFromStores();
+		this.state = {
+			...this._getStateFromStores(),
+			prevLocation: props.location,
+		};
 		this._renderedComponents = new Set();
 	}
 
@@ -113,10 +116,19 @@ class InjectedComponentSet extends React.Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
-		if (prevProps.location !== this.props.location) {
-			this.setState(this._getStateFromStores());
+	// Looked up before render, so a new location never renders a frame of the
+	// old location's components with the new exposedProps.
+	static getDerivedStateFromProps(props, state) {
+		if (props.location === state.prevLocation) {
+			return null;
 		}
+		return {
+			...InjectedComponentSet.stateFromStores(props),
+			prevLocation: props.location,
+		};
+	}
+
+	componentDidUpdate() {
 		if (this.props.containersRequired === false) {
 			return this.props.onComponentsDidRender();
 		}
@@ -203,16 +215,15 @@ class InjectedComponentSet extends React.Component {
 		}
 	}
 
-	_getStateFromStores(props) {
-		if (props == null) {
-			({ props } = this);
-		}
-		const limit = props.matchLimit;
+	_getStateFromStores(props = this.props) {
+		return InjectedComponentSet.stateFromStores(props);
+	}
 
+	static stateFromStores(props) {
 		return {
 			components: ComponentRegistry.findComponentsMatching(
-				this.props.matching,
-			).slice(0, limit),
+				props.matching,
+			).slice(0, props.matchLimit),
 			visible: ComponentRegistry.showComponentRegions(),
 		};
 	}

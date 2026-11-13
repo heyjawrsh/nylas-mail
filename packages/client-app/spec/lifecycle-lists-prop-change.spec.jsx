@@ -175,4 +175,22 @@ describe("SwipeContainer enabled cache", () => {
 		ref.current._isEnabled();
 		expect(shouldEnableSwipe).toHaveBeenCalledOnce();
 	});
+
+	it("recomputes it after a new shouldEnableSwipe prop", () => {
+		const ref = React.createRef();
+		const view = render(
+			<SwipeContainer ref={ref} onSwipeLeft={() => {}} shouldEnableSwipe={() => true}>
+				<span>Row</span>
+			</SwipeContainer>,
+		);
+		expect(ref.current._isEnabled()).toBe(true);
+		const disabled = vi.fn(() => false);
+		view.rerender(
+			<SwipeContainer ref={ref} onSwipeLeft={() => {}} shouldEnableSwipe={disabled}>
+				<span>Row</span>
+			</SwipeContainer>,
+		);
+		expect(ref.current._isEnabled()).toBe(false);
+		expect(disabled).toHaveBeenCalledOnce();
+	});
 });

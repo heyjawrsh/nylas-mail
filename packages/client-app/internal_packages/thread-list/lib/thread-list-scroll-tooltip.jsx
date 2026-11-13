@@ -34,10 +34,6 @@ class ThreadListScrollTooltip extends React.Component {
 		return (this.state != null ? this.state.idx : undefined) !== newState.idx;
 	}
 
-	setupForProps(props) {
-		return this.setState(ThreadListScrollTooltip.stateForProps(props));
-	}
-
 	static stateForProps(props) {
 		const idx = Math.floor(
 			(ThreadListStore.dataSource().count() / props.totalHeight) *

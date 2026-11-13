@@ -36,6 +36,11 @@ vi.mock("../src/components/unsafe-component.jsx", () => ({
 
 import InjectedComponent from "../src/components/injected-component.jsx";
 import InjectedComponentLabel from "../src/components/injected-component-label.jsx";
+import path from "node:path";
+import PropTypes from "prop-types";
+import * as jsxRuntime from "react/jsx-runtime";
+import underscore from "underscore";
+import { createPackageLoader } from "./helpers/load-package-module.js";
 import UnsafeComponent from "../src/components/unsafe-component.jsx";
 
 // injected-component.jsx is CommonJS; Vitest's default interop is the supported surface here.
@@ -233,5 +238,65 @@ describe("InjectedComponentLabel", () => {
 		render(<InjectedComponentLabel matching={{}} items={[]} callback={() => {}} />);
 		const label = screen.getByText(/items:<Array>/);
 		expect(label.textContent).toContain("callback:<Function>");
+	});
+});
+
+// injected-component-set.jsx reads nylas-exports through require(), which
+// vi.mock doesn't reach, so it loads through the package loader.
+describe("InjectedComponentSet on a new location", () => {
+	const setRegistry = {
+		findComponentsMatching: vi.fn(() => []),
+		showComponentRegions: () => false,
+		listen: () => () => {},
+	};
+	const InjectedComponentSet = createPackageLoader({
+		react: React,
+		"react/jsx-runtime": jsxRuntime,
+		"prop-types": PropTypes,
+		underscore,
+		"nylas-exports": {
+			Utils: { fastOmit: (o, keys) => underscore.omit(o, keys) },
+			Actions: {},
+			WorkspaceStore: {},
+			ComponentRegistry: setRegistry,
+		},
+		"./unsafe-component.jsx": { default: () => null },
+		"./flexbox.jsx": { default: ({ children }) => <div>{children}</div> },
+		"./dom-node.js": { domNodeOf: () => null },
+		"./injected-component-label.jsx": { default: () => null },
+	})(path.join(__dirname, "../src/components/injected-component-set.jsx")).default;
+	const find = setRegistry.findComponentsMatching;
+	beforeEach(() => find.mockReset());
+
+	it("never renders the old location's components with the new props", () => {
+		const seen = [];
+		const make = (name) => {
+			const C = ({ who }) => {
+				seen.push(`${name}:${who}`);
+				return <span>{name}</span>;
+			};
+			C.displayName = name;
+			return C;
+		};
+		const byLocation = { a: [make("A")], b: [make("B")] };
+		find.mockImplementation((matching) => byLocation[matching?.location] || []);
+		const set = (loc) => (
+			<InjectedComponentSet location={loc} matching={{ location: loc }} exposedProps={{ who: loc }} containersRequired={false} />
+		);
+		const view = render(set("a"));
+		view.rerender(set("b"));
+		expect(seen).not.toContain("A:b");
+		expect(seen).toContain("B:b");
+		expect(view.container.textContent).toBe("B");
+	});
+
+	it("keeps its components on an unrelated re-render", () => {
+		const C = () => <span>C</span>;
+		C.displayName = "C";
+		find.mockImplementation(() => [C]);
+		const view = render(<InjectedComponentSet location="a" matching={{ location: "a" }} containersRequired={false} />);
+		const calls = find.mock.calls.length;
+		view.rerender(<InjectedComponentSet location="a" matching={{ location: "a" }} containersRequired={false} className="x" />);
+		expect(find).toHaveBeenCalledTimes(calls);
 	});
 });
