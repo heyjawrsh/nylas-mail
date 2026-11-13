@@ -14,6 +14,11 @@ export default class SyncbackActivity extends React.Component {
 		);
 	}
 
+	// The root node, for the activity sidebar's fade transition.
+	getDOMNode() {
+		return this._node || null;
+	}
+
 	render() {
 		const { syncbackTasks } = this.props;
 		if (!syncbackTasks || syncbackTasks.length === 0) {
@@ -58,6 +63,14 @@ export default class SyncbackActivity extends React.Component {
 			);
 		}
 
-		return <div>{items}</div>;
+		return (
+			<div
+				ref={(node) => {
+					this._node = node;
+				}}
+			>
+				{items}
+			</div>
+		);
 	}
 }

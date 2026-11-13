@@ -119,34 +119,47 @@ function* sourceFiles(dir) {
 
 const lineAt = (text, index) => text.slice(0, index).split("\n").length;
 
-const findings = [];
-for (const root of ROOTS) {
-	for (const file of sourceFiles(path.join(repoRoot, root))) {
-		const text = readFileSync(file, "utf8");
-		const reported = new Set();
-		for (const { label, pattern, why, only } of BANNED) {
-			if (only && !only.includes(root)) continue;
-			const global = new RegExp(pattern.source, `${pattern.flags}g`);
-			for (const match of text.matchAll(global)) {
-				const line = lineAt(text, match.index);
-				if (reported.has(line)) continue;
-				reported.add(line);
-				findings.push({
-					file: path.relative(repoRoot, file),
-					line,
-					text: `${label} (${why})`,
-				});
+// Scans the ROOTS under `root` and returns { file, line, text } findings,
+// file relative to `root`. Exported so the spec can run it on fixtures.
+export function findRemovedReactApis(root = repoRoot) {
+	const findings = [];
+	for (const scanRoot of ROOTS) {
+		for (const file of sourceFiles(path.join(root, scanRoot))) {
+			const text = readFileSync(file, "utf8");
+			const reported = new Set();
+			for (const { label, pattern, why, only } of BANNED) {
+				if (only && !only.includes(scanRoot)) continue;
+				const global = new RegExp(pattern.source, `${pattern.flags}g`);
+				for (const match of text.matchAll(global)) {
+					const line = lineAt(text, match.index);
+					if (reported.has(line)) continue;
+					reported.add(line);
+					findings.push({
+						file: path.relative(root, file),
+						line,
+						text: `${label} (${why})`,
+					});
+				}
 			}
 		}
 	}
+	return findings.sort(
+		(a, b) => a.file.localeCompare(b.file) || a.line - b.line,
+	);
 }
 
-if (findings.length > 0) {
-	findings.sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
-	console.error(`Removed React APIs found (${findings.length}):`);
-	for (const { file, line, text } of findings) {
-		console.error(`  ${file}:${line}: ${text}`);
+const runAsScript =
+	process.argv[1] &&
+	path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (runAsScript) {
+	const findings = findRemovedReactApis();
+	if (findings.length > 0) {
+		console.error(`Removed React APIs found (${findings.length}):`);
+		for (const { file, line, text } of findings) {
+			console.error(`  ${file}:${line}: ${text}`);
+		}
+		process.exit(1);
 	}
-	process.exit(1);
+	console.log("No removed React APIs in src/ or internal_packages/.");
 }
-console.log("No removed React APIs in src/ or internal_packages/.");

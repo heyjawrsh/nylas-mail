@@ -22,6 +22,14 @@ export default class ReactCSSTransitionGroup extends Component {
 		children: PropTypes.node,
 	};
 
+	_containerRef = React.createRef();
+
+	// The group's own container node, so an outer group can animate this one
+	// as its child.
+	getDOMNode() {
+		return domNodeOf(this._containerRef.current);
+	}
+
 	render() {
 		const {
 			transitionName,
@@ -66,8 +74,17 @@ export default class ReactCSSTransitionGroup extends Component {
 			transitionChild = React.cloneElement(child, { ref: entry.ref });
 		}
 
+		const containerProps =
+			component === null
+				? { component: null }
+				: {
+						component: RefContainer,
+						containerAs: component,
+						containerRef: this._containerRef,
+					};
+
 		return (
-			<TransitionGroup className={className} component={component} {...rest}>
+			<TransitionGroup className={className} {...containerProps} {...rest}>
 				{child ? (
 					<CSSTransition key={child.key} {...transitionProps}>
 						{transitionChild}
@@ -104,6 +121,11 @@ export default class ReactCSSTransitionGroup extends Component {
 		entry.childRef = child.props.ref ?? null;
 		return entry;
 	}
+}
+
+// TransitionGroup's container, rendered with a ref for getDOMNode().
+function RefContainer({ containerAs: As, containerRef, ...rest }) {
+	return <As ref={containerRef} {...rest} />;
 }
 
 function setRef(ref, value) {

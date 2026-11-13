@@ -193,6 +193,17 @@ class MessageList extends React.Component {
 			},
 		});
 	}
+	// The root node, for SearchableComponentMaker's search region.
+	_setRoot = (value) => {
+		this._root = value;
+	};
+
+	getDOMNode() {
+		return this._root?.getDOMNode
+			? this._root.getDOMNode()
+			: this._root || null;
+	}
+
 	_onForward() {
 		if (this.state.currentThread) {
 			return Actions.composeForward({ thread: this.state.currentThread });
@@ -201,7 +212,7 @@ class MessageList extends React.Component {
 
 	render() {
 		if (!this.state.currentThread) {
-			return <span />;
+			return <span ref={this._setRoot} />;
 		}
 		const wrapClass = classNames({
 			"messages-wrap": true,
@@ -213,6 +224,7 @@ class MessageList extends React.Component {
 		});
 		return (
 			<KeyCommandsRegion
+				ref={this._setRoot}
 				globalHandlers={this._globalKeymapHandlers()}
 				globalMenuItems={this._globalMenuItems()}
 			>

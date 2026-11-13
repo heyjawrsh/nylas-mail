@@ -73,6 +73,34 @@ describe("ReactCSSTransitionGroup children", () => {
 		expect(container.querySelector(".panel").className).toContain("fade-appear");
 	});
 
+	it("gives an entering getDOMNode() child the enter class on its real node", () => {
+		const { container, rerender } = render(group(<Panel key="a" label="A" />));
+		rerender(group(<Panel key="b" label="B" />));
+		const entering = [...container.querySelectorAll(".panel")].find((n) => n.textContent === "B");
+		expect(entering.className).toContain("fade-enter");
+	});
+
+	it("gives an entering nested group the enter class on its container", () => {
+		const nested = (key) => (
+			<ReactCSSTransitionGroup key={key} className={`inner-${key}`} component="div" transitionName="inner">
+				<div key="x">inner</div>
+			</ReactCSSTransitionGroup>
+		);
+		const { container, rerender } = render(group(nested("a")));
+		rerender(group(nested("b")));
+		expect(container.querySelector(".inner-b").className).toContain("fade-enter");
+	});
+
+	it("hands over its own container node", () => {
+		const ref = React.createRef();
+		const { container } = render(
+			<ReactCSSTransitionGroup ref={ref} className="outer" component="div" transitionName="fade">
+				<div key="x">x</div>
+			</ReactCSSTransitionGroup>,
+		);
+		expect(ref.current.getDOMNode()).toBe(container.querySelector("div.outer"));
+	});
+
 	it("keeps the caller's own ref on a component child", () => {
 		const ref = React.createRef();
 		render(group(<Panel key="a" ref={ref} label="A" />));

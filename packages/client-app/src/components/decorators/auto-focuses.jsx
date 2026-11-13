@@ -39,6 +39,9 @@ function AutoFocuses(
 		}
 
 		isFocusable(currentNode = this.getDOMNode()) {
+			if (!currentNode) {
+				return false;
+			}
 			currentNode.focus();
 			return document.activeElement === currentNode;
 		}

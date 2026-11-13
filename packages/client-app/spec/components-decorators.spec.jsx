@@ -146,6 +146,11 @@ describe("AutoFocuses", () => {
 		expect(ref.current.getDOMNode()).toBe(document.activeElement.parentNode);
 	});
 
+	it("reports not focusable when the wrapped component has no node", () => {
+		const instance = new (AutoFocuses(FixtureComponent))({});
+		expect(instance.isFocusable()).toBe(false);
+	});
+
 	it("honors disabled mount and update focusing", () => {
 		const instance = new (AutoFocuses(FixtureComponent, { onMount: false, onUpdate: false }))({});
 		instance.focusElementWithTabIndex = vi.fn();
