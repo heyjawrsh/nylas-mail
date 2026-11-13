@@ -29,16 +29,19 @@ for arg in "$@"; do harness_args+=" $(printf '%q' "$arg")"; done
 # host) the GPU process only starts with the other three flags.
 docker run --rm --platform linux/amd64 \
 	-v "$work:/project" \
-	-v nylas-e2e-pnpm-store:/root/.local/share/pnpm/store \
+	-v nylas-e2e-pnpm-store:/pnpm-store \
+	-e npm_config_store_dir=/pnpm-store \
 	-w /project \
 	-e CI=1 \
 	-e E2E_LAUNCH_ARGS="--no-sandbox --disable-gpu --in-process-gpu --no-zygote" \
 	"$image" \
 	bash -euo pipefail -c "
-		command -v xvfb-run >/dev/null || { apt-get update -qq && apt-get install -y -qq xvfb >/dev/null; }
 		corepack enable
 		pnpm install --no-frozen-lockfile
 		pnpm --filter nylas-mail build:e2e
+		# Electron's runtime libraries (nss, gtk, gbm, ...) aren't in the
+		# builder image; Chromium's list from Playwright covers them.
+		pnpm --filter nylas-mail exec playwright install-deps chromium
 		status=0
 		xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' \
 			pnpm --filter nylas-mail e2e --$harness_args || status=\$?
