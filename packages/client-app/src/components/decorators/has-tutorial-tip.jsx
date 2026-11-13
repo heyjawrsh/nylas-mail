@@ -164,12 +164,12 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 				.querySelector(".tooltips-container")
 				?.appendChild(this.tipNode);
 
-			this._hoverNode = el;
-			el?.addEventListener("mouseover", this._onMouseOver);
+			this._syncHoverNode();
 			this._onTooltipStateChanged();
 		}
 
 		componentDidUpdate() {
+			this._syncHoverNode();
 			if (this.state.visible) {
 				this._onRecomputeTooltipPosition();
 			}
@@ -186,6 +186,21 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 			clearTimeout(this._themesTimer);
 
 			TipsStore.unmountedTip(TipKey);
+		}
+
+		// The wrapped component can swap its root element (ToolbarSnooze renders
+		// a span outside the inbox), so keep the hover listener on the current
+		// node. While the tip's popover is open the listener stays off.
+		_syncHoverNode() {
+			const el = this.getDOMNode();
+			if (el === this._hoverNode) {
+				return;
+			}
+			this._hoverNode?.removeEventListener("mouseover", this._onMouseOver);
+			this._hoverNode = el;
+			if (!this._hoverPaused) {
+				el?.addEventListener("mouseover", this._onMouseOver);
+			}
 		}
 
 		_containingSheetIsVisible = (el) => {
@@ -233,6 +248,7 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 				return;
 			}
 			hoverNode.removeEventListener("mouseover", this._onMouseOver);
+			this._hoverPaused = true;
 
 			const tipRect = this.tipNode.getBoundingClientRect();
 			const tipFocusCircleRadius = 64;
@@ -251,7 +267,8 @@ export default function HasTutorialTip(ComposedComponent, TipConfig) {
 					title={TipConfig.title}
 					instructions={TipConfig.instructions}
 					onDismissed={() => {
-						hoverNode.addEventListener("mouseover", this._onMouseOver);
+						this._hoverPaused = false;
+						this._hoverNode?.addEventListener("mouseover", this._onMouseOver);
 					}}
 				/>,
 				{

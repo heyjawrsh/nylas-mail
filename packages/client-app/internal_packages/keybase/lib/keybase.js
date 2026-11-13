@@ -9,7 +9,8 @@ const _ = require("underscore");
 // Makes the GET the `request` library used to make. Any HTTP response hands
 // its body to the callback as (null, response, body): parsed when `json` is
 // set and the body is JSON, text otherwise. Only a network failure is an
-// error, as with `request`.
+// error, as with `request`. A throw in the callback is reported, not left
+// unhandled.
 function keybaseFetch(url, { json = false } = {}, callback) {
 	return fetch(url, { headers: { "User-Agent": "request" } })
 		.then((resp) =>
@@ -28,7 +29,8 @@ function keybaseFetch(url, { json = false } = {}, callback) {
 		.then(
 			([resp, body]) => callback(null, resp, body),
 			(err) => callback(err),
-		);
+		)
+		.catch((err) => NylasEnv.reportError(err));
 }
 
 class KeybaseAPI {

@@ -545,6 +545,40 @@ describe("thread-sharing popover", () => {
 });
 
 describe("Salesforce", () => {
+	it("RelatedObjectsForThread ignores clicks in the thread toggles and edits on others", () => {
+		const openObjectForm = vi.fn();
+		const RelatedObjectsForThread = createPackageLoader({
+			...base,
+			"underscore.string": { titleize: (s) => s, humanize: (s) => s },
+			"nylas-exports": {
+				Utils: {},
+				DatabaseStore: {},
+				AccountStore: {},
+				FocusedContactsStore: { listen: () => () => {}, focusedContact: () => null, sortedContacts: () => [] },
+			},
+			"../shared-components/salesforce-icon": { default: Nothing },
+			"../models/salesforce-object": { default: class {} },
+			"./sync-thread-toggle": { default: () => <input type="checkbox" className="sync-toggle" /> },
+			"../salesforce-actions": { default: { openObjectForm } },
+			"../shared-components/open-in-salesforce-btn": { default: Nothing },
+			"../salesforce-object-helpers": {},
+			"../related-object-helpers": { observeRelatedSObjectsForThread: () => emptyObservable },
+			"../salesforce-constants": { CORE_RELATEABLE_OBJECT_TYPES: ["Opportunity", "Account"] },
+		})(pkg("nylas-private-salesforce/lib/thread/related-objects-for-thread.jsx")).default;
+		const ref = React.createRef();
+		const { container } = render(<RelatedObjectsForThread ref={ref} thread={{ id: "t1", participants: [] }} />);
+		const deal = { id: "o1", type: "Opportunity", name: "Deal" };
+		act(() => ref.current.setState({ relatedObjects: [deal] }));
+
+		fireEvent.click(container.querySelector(".thread-toggles .sync-toggle"));
+		expect(openObjectForm).not.toHaveBeenCalled();
+
+		fireEvent.click(container.querySelector(".linkable-object-name"));
+		expect(openObjectForm).toHaveBeenCalledWith(
+			expect.objectContaining({ objectId: "o1", objectType: "Opportunity" }),
+		);
+	});
+
 	it("SalesforceObjectPicker focuses its tokenizing field", () => {
 		const focus = vi.fn();
 		class TokenizingTextField extends React.Component {

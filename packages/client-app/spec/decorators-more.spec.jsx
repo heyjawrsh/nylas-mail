@@ -371,6 +371,32 @@ describe("HasTutorialTip render behavior", () => {
 		expect(tip.parentNode).toBeNull();
 	});
 
+	it("follows the wrapped component when it swaps its root element", () => {
+		// Like ToolbarSnooze: an empty span outside the inbox, a button in it.
+		class Swapper extends React.Component {
+			static displayName = "DecoratorsMoreSwapper";
+			_root = React.createRef();
+			getDOMNode() {
+				return this._root.current;
+			}
+			render() {
+				return this.props.asButton ? (
+					<button ref={this._root} type="button">swapped</button>
+				) : (
+					<span ref={this._root} data-testid="empty" />
+				);
+			}
+		}
+		const Decorated = HasTutorialTip(Swapper, { title: "Title", instructions: "Help" });
+		const view = renderInAnchor(<Decorated />);
+		const span = screen.getByTestId("empty");
+		view.rerender(<Decorated asButton />);
+		fireEvent.mouseOver(span);
+		expect(mocks.openPopover).not.toHaveBeenCalled();
+		fireEvent.mouseOver(screen.getByRole("button", { name: "swapped" }));
+		expect(mocks.openPopover).toHaveBeenCalledOnce();
+	});
+
 	it("stops listening for hover on the wrapped node after unmount", () => {
 		const Decorated = HasTutorialTip(Probe, { title: "Title", instructions: "Help" });
 		const view = renderInAnchor(<Decorated />);

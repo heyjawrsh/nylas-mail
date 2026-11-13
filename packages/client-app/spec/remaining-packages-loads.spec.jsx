@@ -29,6 +29,23 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 });
 
+// Collects unhandled rejections while `run` and a few ticks after it settle.
+const unhandledDuring = async (run) => {
+	const seen = [];
+	const onNode = (reason) => seen.push(reason);
+	const onWindow = (event) => seen.push(event.reason);
+	process.on("unhandledRejection", onNode);
+	window.addEventListener("unhandledrejection", onWindow);
+	try {
+		await run();
+		await new Promise((resolve) => setTimeout(resolve, 20));
+	} finally {
+		process.off("unhandledRejection", onNode);
+		window.removeEventListener("unhandledrejection", onWindow);
+	}
+	return seen;
+};
+
 // Calls a callback-style API and resolves with the callback's arguments.
 const callbackArgs = (call) => new Promise((resolve) => call((...args) => resolve(args)));
 
@@ -88,6 +105,16 @@ describe("keybase's API client", () => {
 		expect(err.message).toBe("Empty response!");
 	});
 
+	it("autocomplete reports a null body's throw instead of leaving it unhandled", async () => {
+		fetchMock.mockResolvedValue(response(200, "null"));
+		NylasEnv.reportError.mockClear();
+		const callback = vi.fn();
+		const seen = await unhandledDuring(() => loadKeybase().autocomplete("x", callback));
+		expect(seen).toEqual([]);
+		expect(callback).not.toHaveBeenCalled();
+		expect(NylasEnv.reportError).toHaveBeenCalledWith(expect.any(TypeError));
+	});
+
 	it("autocomplete sends q in the query string and hands over the completions", async () => {
 		fetchMock.mockResolvedValue(response(200, JSON.stringify({ status: { name: "OK" }, completions: [1, 2] })));
 		const [err, completions] = await callbackArgs((cb) => loadKeybase().autocomplete("ali ce", cb));
@@ -137,6 +164,36 @@ describe("github-contact-card's store", () => {
 		expect(warn).toHaveBeenCalledWith("API rate limit exceeded");
 		expect(store.profileForFocusedContact()).toBe(false);
 		warn.mockRestore();
+	});
+
+	it("keeps the profile with no repos when the repos request fails", async () => {
+		const store = loadStore();
+		NylasEnv.reportError.mockClear();
+		fetchMock
+			.mockResolvedValueOnce(response(200, JSON.stringify({ items: [{ login: "ada" }] })))
+			.mockRejectedValueOnce(new TypeError("Failed to fetch"));
+		const seen = await unhandledDuring(async () => {
+			store._githubFetchProfile("ada@fixture.test");
+			await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+		});
+		expect(seen).toEqual([]);
+		expect(NylasEnv.reportError).not.toHaveBeenCalled();
+		expect(store.profileForFocusedContact()).toMatchObject({ login: "ada", repos: [] });
+		expect(store.loading()).toBe(false);
+	});
+
+	it("reports a throw in the callback instead of leaving it unhandled", async () => {
+		const store = loadStore();
+		NylasEnv.reportError.mockClear();
+		fetchMock.mockResolvedValue(response(200, "{}"));
+		const boom = new Error("caller bug");
+		const seen = await unhandledDuring(() =>
+			store._githubRequest("https://api.github.com/search/users?q=x", () => {
+				throw boom;
+			}),
+		);
+		expect(seen).toEqual([]);
+		expect(NylasEnv.reportError).toHaveBeenCalledWith(boom);
 	});
 
 	it("stops on a network failure without an unhandled rejection", async () => {

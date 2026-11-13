@@ -83,7 +83,10 @@ class GithubUserStore extends NylasStore {
 					profile.repos = [];
 					this._githubRequest(
 						`https://api.github.com/search/repositories?q=user:${profile.login}&sort=stars&order=desc`,
-						(_reposErr, _reposResp, repos) => {
+						(reposErr, _reposResp, repos) => {
+							if (reposErr || !repos) {
+								return;
+							}
 							// Sort the repositories by their stars (`-` for descending order)
 							profile.repos = _.sortBy(
 								repos.items,
@@ -106,7 +109,8 @@ class GithubUserStore extends NylasStore {
 	// Fetch with the User-Agent header, which is required by Github's API. Like
 	// the `request` call this replaced (with `json: true`), any HTTP response
 	// hands its body to the callback, parsed when it's JSON, and only a network
-	// failure is an error.
+	// failure is an error. A throw in the callback is reported, not left
+	// unhandled.
 	_githubRequest(url, callback) {
 		return fetch(url, { headers: { "User-Agent": "request" } })
 			.then((resp) =>
@@ -123,7 +127,8 @@ class GithubUserStore extends NylasStore {
 			.then(
 				([resp, body]) => callback(null, resp, body),
 				(err) => callback(err),
-			);
+			)
+			.catch((err) => NylasEnv.reportError(err));
 	}
 }
 
