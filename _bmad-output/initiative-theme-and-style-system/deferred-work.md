@@ -28,3 +28,6 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-mail-packages-drop-finddomnode-and-string-refs-plan.md`
   summary: Main-window startup logs "TypeError: Cannot read properties of undefined (reading 'killed')" from BufferedProcess in src. No story owns it.
   evidence: Seen on the fixture launch on 4770026e8 and reported by the 13.4 implementer. Needs tracing to the BufferedProcess caller.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-remaining-packages-drop-finddomnode-and-string-refs-plan.md`
+  summary: Two plugin backends are dead. keybase.io's `/_/api/1.0/user/autocomplete.json` returns 404 (keybase search finds nothing), and composer-translate's Yandex v1.5 key gets 403 "API key is invalid" (translate always shows its error dialog).
+  evidence: Called from the dev app's renderer on 2026-11-13. Lookup and key.asc still return 200. Needs a replacement endpoint or provider, or removal of the feature.
