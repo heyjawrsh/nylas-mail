@@ -38,9 +38,18 @@ export default class CategoryPickerPopover extends Component {
 		this._registerObservables();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this._registerObservables(nextProps);
-		this.setState(this._recalculateState(nextProps));
+	// A new account: dispose the old category subscription and subscribe for
+	// the new one. New threads or account: recalculate, keeping the search.
+	componentDidUpdate(prevProps) {
+		if (prevProps.account !== this.props.account) {
+			this._registerObservables(this.props);
+		}
+		if (
+			prevProps.account !== this.props.account ||
+			prevProps.threads !== this.props.threads
+		) {
+			this.setState(this._recalculateState(this.props));
+		}
 	}
 
 	componentWillUnmount() {

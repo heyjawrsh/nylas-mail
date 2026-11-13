@@ -101,6 +101,13 @@ export const BANNED = [
 		pattern: /\.refs\b/,
 		why: "read the object ref's .current",
 	},
+	// Legacy lifecycles, prefixed or not. componentWillUnmount is current API
+	// and doesn't match.
+	{
+		label: "legacy lifecycle",
+		pattern: /\b(?:UNSAFE_)?componentWill(?:Mount|ReceiveProps|Update)\b/,
+		why: "use the constructor, componentDidMount, componentDidUpdate, getDerivedStateFromProps or getSnapshotBeforeUpdate",
+	},
 ];
 
 function* sourceFiles(dir) {

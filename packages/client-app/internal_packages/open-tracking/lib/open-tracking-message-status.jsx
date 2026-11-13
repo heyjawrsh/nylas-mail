@@ -21,8 +21,10 @@ export default class OpenTrackingMessageStatus extends React.Component {
 		this.state = this._getStateFromMessage(props.message);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState(this._getStateFromMessage(nextProps.message));
+	componentDidUpdate(prevProps) {
+		if (prevProps.message !== this.props.message) {
+			this.setState(this._getStateFromMessage(this.props.message));
+		}
 	}
 
 	onMouseDown = () => {

@@ -39,8 +39,10 @@ class SalesforceContactInfo extends React.Component {
 			});
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps = {}) {
-		this._fetchLead(nextProps);
+	componentDidUpdate(prevProps) {
+		if (prevProps.contact.email !== this.props.contact.email) {
+			this._fetchLead(this.props);
+		}
 	}
 
 	componentWillUnmount() {

@@ -19,12 +19,15 @@ export default class ParticipantDecorator extends React.Component {
 		this.state = { sfContacts: [] };
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		this._setupObserver(this.props);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this._setupObserver(nextProps);
+	// A new contact email: dispose the old query and observe the new one.
+	componentDidUpdate(prevProps) {
+		if (prevProps.contact.email !== this.props.contact.email) {
+			this._setupObserver(this.props);
+		}
 	}
 
 	componentWillUnmount() {

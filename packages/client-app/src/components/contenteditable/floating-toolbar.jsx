@@ -90,8 +90,8 @@ class FloatingToolbar extends React.Component {
 	}
 
 	// New props objects always update (even when deep-equal), so
-	// componentDidUpdate re-measures the toolbar as the old
-	// componentWillReceiveProps did on every parent render.
+	// componentDidUpdate re-measures the toolbar on every parent render, as
+	// before.
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			!shallowEqual(nextProps, this.props) ||

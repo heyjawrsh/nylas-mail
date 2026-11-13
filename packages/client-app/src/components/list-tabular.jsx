@@ -203,7 +203,11 @@ class ListTabular extends Component {
 			return null;
 		}
 		return {
-			...stateForRange(state, { start: -1, end: -1, dataSource: props.dataSource }),
+			...stateForRange(state, {
+				start: -1,
+				end: -1,
+				dataSource: props.dataSource,
+			}),
 			prevDataSource: props.dataSource,
 		};
 	}

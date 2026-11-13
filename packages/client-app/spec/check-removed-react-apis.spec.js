@@ -102,3 +102,65 @@ describe("check-removed-react-apis findDOMNode and string-ref entries", () => {
 		expect(findingsIn(rel)).toMatchObject([{ line: 1, text: expect.stringMatching(/^getChildContext/) }]);
 	});
 });
+
+describe("check-removed-react-apis legacy lifecycle entry", () => {
+	const lifecycles = [
+		"componentWillMount",
+		"componentWillReceiveProps",
+		"componentWillUpdate",
+		"UNSAFE_componentWillMount",
+		"UNSAFE_componentWillReceiveProps",
+		"UNSAFE_componentWillUpdate",
+	];
+
+	it.each(lifecycles)("flags %s in src and internal_packages with file:line", (name) => {
+		for (const rel of [`${SRC}/components/probe.jsx`, `${INTERNAL}/plugin/lib/probe.jsx`]) {
+			write(rel, `class A {\n\t${name}(nextProps) {}\n}\n`);
+			const [finding, ...rest] = findingsIn(rel);
+			expect(rest).toEqual([]);
+			expect(finding).toMatchObject({ file: rel, line: 2 });
+			expect(finding.text.startsWith("legacy lifecycle")).toBe(true);
+		}
+	});
+
+	it("flags a bind line and a class-field arrow", () => {
+		const rel = `${SRC}/probe.jsx`;
+		write(
+			rel,
+			[
+				"class A {",
+				"\tconstructor() {",
+				"\t\tthis.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);",
+				"\t}",
+				"\tcomponentWillReceiveProps = (p) => {};",
+				"}",
+				"",
+			].join("\n"),
+		);
+		expect(findingsIn(rel).map((f) => f.line)).toEqual([3, 5]);
+	});
+
+	it("passes componentWillUnmount and the current lifecycles", () => {
+		const rel = `${SRC}/probe.jsx`;
+		write(
+			rel,
+			[
+				"class A {",
+				"\tcomponentDidMount() {}",
+				"\tcomponentDidUpdate(prevProps) {}",
+				"\tcomponentWillUnmount() {}",
+				"\tstatic getDerivedStateFromProps() { return null; }",
+				"\tgetSnapshotBeforeUpdate() { return null; }",
+				"}",
+				"",
+			].join("\n"),
+		);
+		expect(findingsIn(rel)).toEqual([]);
+	});
+
+	it("does not scan spec or vendor directories for it", () => {
+		write(`${INTERNAL}/plugin/spec/probe.jsx`, "class A { UNSAFE_componentWillMount() {} }\n");
+		write(`${SRC}/vendor/reflux.js`, "const mixin = { componentWillMount() {} };\n");
+		expect(findRemovedReactApis(root)).toEqual([]);
+	});
+});

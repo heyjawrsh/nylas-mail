@@ -17,10 +17,14 @@ class CopyButton extends React.Component {
 		this._timeout = null;
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		clearTimeout(this._timeout);
-		this._timeout = null;
-		this.setState({ btnLabel: nextProps.btnLabel });
+	// A new label cancels a pending "Copied!" reset and shows the label. An
+	// unrelated re-render leaves "Copied!" up.
+	componentDidUpdate(prevProps) {
+		if (prevProps.btnLabel !== this.props.btnLabel) {
+			clearTimeout(this._timeout);
+			this._timeout = null;
+			this.setState({ btnLabel: this.props.btnLabel });
+		}
 	}
 
 	componentWillUnmount() {

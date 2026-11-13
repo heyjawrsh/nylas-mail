@@ -20,8 +20,8 @@ export default class ThreadSharingButton extends React.Component {
 		thread: PropTypes.object,
 	};
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (nextProps.thread.id !== this.props.thread.id) {
+	componentDidUpdate(prevProps) {
+		if (prevProps.thread.id !== this.props.thread.id) {
 			Actions.closePopover();
 		}
 	}

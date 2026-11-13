@@ -42,8 +42,8 @@ class MessageListScrollTooltip extends React.Component {
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 	}
 	// Reads the message offsets during render, before this update's DOM
-	// changes, as componentWillMount/ReceiveProps did. It has to run before
-	// shouldComponentUpdate, which only compares state.
+	// changes, as before. It has to run before shouldComponentUpdate, which
+	// only compares state.
 	static getDerivedStateFromProps(props) {
 		const els = document.querySelectorAll(".message-item-wrap");
 		let idx = _.findIndex(els, (el) => el.offsetTop > props.viewportCenter);

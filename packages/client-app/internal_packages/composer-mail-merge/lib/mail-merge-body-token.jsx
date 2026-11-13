@@ -48,8 +48,9 @@ class MailMergeBodyToken extends Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState(this.getState(nextProps, this.state.colIdx));
+	// Derived before render: shouldComponentUpdate compares colIdx in state.
+	static getDerivedStateFromProps(props) {
+		return MailMergeBodyToken.stateFor(props);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -97,6 +98,10 @@ class MailMergeBodyToken extends Component {
 	}
 
 	getState(props) {
+		return MailMergeBodyToken.stateFor(props);
+	}
+
+	static stateFor(props) {
 		// Keep colIdx as state in case the column changes index when importing a
 		// new csv file, thus changing styling
 		const {

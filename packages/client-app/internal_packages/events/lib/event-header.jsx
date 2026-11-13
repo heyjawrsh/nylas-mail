@@ -36,8 +36,7 @@ class EventHeader extends React.Component {
 		super();
 		this._onChange = this._onChange.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.render = this.render.bind(this);
 		this._renderEventActions = this._renderEventActions.bind(this);
@@ -74,9 +73,13 @@ class EventHeader extends React.Component {
 		return this._onChange();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ event: nextProps.message.events[0] });
-		return this._onChange();
+	// A new message shows its event, then refreshes that event from the
+	// database. (_onChange runs once the new event is in state; it used to read
+	// the old one.)
+	componentDidUpdate(prevProps) {
+		if (prevProps.message !== this.props.message) {
+			this.setState({ event: this.props.message.events[0] }, this._onChange);
+		}
 	}
 
 	componentWillUnmount() {

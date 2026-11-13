@@ -65,8 +65,12 @@ module.exports = KeybaseSearch = (() => {
 			return this._search();
 		}
 
-		UNSAFE_componentWillReceiveProps(props) {
-			return this.setState({ query: props.initialSearch });
+		// A new initialSearch replaces the query. A query being typed survives
+		// an unrelated re-render.
+		componentDidUpdate(prevProps) {
+			if (prevProps.initialSearch !== this.props.initialSearch) {
+				this.setState({ query: this.props.initialSearch });
+			}
 		}
 
 		_search() {

@@ -38,13 +38,18 @@ class CategoryPicker extends React.Component {
 		this.props = props;
 		this._button = React.createRef();
 		this._account = AccountStore.accountForItems(this.props.items);
+		this._accountItems = this.props.items;
 	}
 
 	// If the threads we're picking categories for change, (like when they
 	// get their categories updated), we expect our parents to pass us new
-	// props. We don't listen to the DatabaseStore ourselves.
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		return (this._account = AccountStore.accountForItems(nextProps.items));
+	// props. We don't listen to the DatabaseStore ourselves. Recomputed in
+	// render, before it is read.
+	_updateAccount() {
+		if (this.props.items !== this._accountItems) {
+			this._accountItems = this.props.items;
+			this._account = AccountStore.accountForItems(this.props.items);
+		}
 	}
 
 	_keymapHandlers() {
@@ -69,6 +74,7 @@ class CategoryPicker extends React.Component {
 	}
 
 	render() {
+		this._updateAccount();
 		if (!this._account) {
 			return <span />;
 		}

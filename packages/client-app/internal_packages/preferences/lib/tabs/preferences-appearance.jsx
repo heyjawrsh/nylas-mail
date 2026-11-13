@@ -11,15 +11,20 @@ class AppearanceModeSwitch extends React.Component {
 
 	constructor(props) {
 		super();
+		this._configValue = props.config.get("core.workspace.mode");
 		this.state = {
-			value: props.config.get("core.workspace.mode"),
+			value: this._configValue,
 		};
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({
-			value: nextProps.config.get("core.workspace.mode"),
-		});
+	// Follow the configured mode when it changes. A mode picked but not yet
+	// applied survives an unrelated re-render.
+	componentDidUpdate() {
+		const value = this.props.config.get("core.workspace.mode");
+		if (value !== this._configValue) {
+			this._configValue = value;
+			this.setState({ value });
+		}
 	}
 
 	_onApplyChanges = () => {

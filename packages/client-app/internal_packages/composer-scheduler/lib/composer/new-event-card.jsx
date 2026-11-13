@@ -44,8 +44,9 @@ export default class NewEventCard extends React.Component {
 		this._loadCalendarsForEmail(email);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		const email = newProps.draft.from[0].email;
+	// _loadCalendarsForEmail skips an email it already loaded.
+	componentDidUpdate() {
+		const email = this.props.draft.from[0].email;
 		this._loadCalendarsForEmail(email);
 	}
 

@@ -12,7 +12,8 @@ import TabGroupContext from "./tab-group-context.js";
 
 // Same instant, whether given as a number, Date or moment.
 const sameTime = (a, b) =>
-	a === b || (a != null && b != null && moment(a).valueOf() === moment(b).valueOf());
+	a === b ||
+	(a != null && b != null && moment(a).valueOf() === moment(b).valueOf());
 
 require("moment-round"); // overrides moment
 

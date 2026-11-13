@@ -25,9 +25,11 @@ class SalesforceSyncLabel extends React.Component {
 		this._setupDataSource(this.props);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this._setupDataSource(nextProps);
-		this.setState(this._initialState(nextProps));
+	componentDidUpdate(prevProps) {
+		if (prevProps.thread !== this.props.thread) {
+			this._setupDataSource(this.props);
+			this.setState(this._initialState(this.props));
+		}
 	}
 
 	componentWillUnmount() {
@@ -43,7 +45,7 @@ class SalesforceSyncLabel extends React.Component {
 		};
 	}
 
-	_setupDataSource() {
+	_setupDataSource(props) {
 		if (this.disposable?.dispose) {
 			this.disposable.dispose();
 		}
@@ -52,7 +54,7 @@ class SalesforceSyncLabel extends React.Component {
 		this.observableTimeout = setTimeout(() => {
 			if (!this._mounted) return;
 			this.disposable = relatedHelpers
-				.observeRelatedSObjectsForThread(this.props.thread)
+				.observeRelatedSObjectsForThread(props.thread)
 				.subscribe((relatedObjects) => {
 					this.setState({ relatedObjects: relatedObjects });
 				});

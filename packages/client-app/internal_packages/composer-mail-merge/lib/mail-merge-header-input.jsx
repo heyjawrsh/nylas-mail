@@ -21,8 +21,12 @@ class MailMergeHeaderInput extends Component {
 		this.state = { inputSize: getInputSize(props.defaultValue) };
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ inputSize: getInputSize(nextProps.defaultValue) });
+	// Resize for a new defaultValue. The size of text being typed survives an
+	// unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.defaultValue !== this.props.defaultValue) {
+			this.setState({ inputSize: getInputSize(this.props.defaultValue) });
+		}
 	}
 
 	onInputBlur = (event) => {

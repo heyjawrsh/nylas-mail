@@ -23,6 +23,7 @@ class SendRemindersComposerButton extends Component {
 		super(props);
 		this.state = {
 			saving: false,
+			prevDraft: props.draft,
 		};
 		this._button = createRef();
 	}
@@ -32,10 +33,13 @@ class SendRemindersComposerButton extends Component {
 		return this._button.current;
 	}
 
-	UNSAFE_componentWillReceiveProps() {
-		if (this.state.saving) {
-			this.setState({ saving: false });
+	// A new draft ends the saving state before render: shouldComponentUpdate
+	// ignores state, so a later setState would never paint.
+	static getDerivedStateFromProps(props, state) {
+		if (props.draft === state.prevDraft) {
+			return null;
 		}
+		return { saving: false, prevDraft: props.draft };
 	}
 
 	shouldComponentUpdate(nextProps) {

@@ -57,7 +57,7 @@ class SalesforceObjectForm extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		this._usubs = [
 			SalesforceActions.deleteSuccess.listen(this._onDeleteSuccess),
 			SalesforceActions.syncbackFailed.listen(this._onSyncbackFailed),

@@ -286,7 +286,7 @@ describe("toolbar and popover buttons open their popover from their own rect", (
 			"../tasks/manually-relate-salesforce-object-task": { default: class {} },
 			"./salesforce-manually-relate-thread-popover": { default: Nothing },
 		})(pkg("nylas-private-salesforce/lib/thread/salesforce-manually-relate-thread-button.jsx")).default;
-		Button.prototype.UNSAFE_componentWillMount = () => {};
+		Button.prototype.componentDidMount = () => {};
 		Button.prototype.componentWillUnmount = () => {};
 		fireAndCheck(<Button items={[]} />, ".btn-salesforce");
 	});
@@ -599,7 +599,7 @@ describe("Salesforce", () => {
 			"./pending-salesforce-object": { default: class {} },
 			"./form-data-helpers": {},
 		})(pkg("nylas-private-salesforce/lib/form/salesforce-object-picker.jsx")).default;
-		SalesforceObjectPicker.prototype.UNSAFE_componentWillMount = () => {};
+		SalesforceObjectPicker.prototype.componentDidMount = () => {};
 		SalesforceObjectPicker.prototype.componentWillUnmount = () => {};
 		const ref = React.createRef();
 		render(<SalesforceObjectPicker ref={ref} onChange={() => {}} objectType="Opportunity" />);

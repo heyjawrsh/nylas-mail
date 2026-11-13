@@ -38,7 +38,8 @@ export default class CalendarEventPopover extends React.Component {
 		if (prevProps.event === this.props.event) {
 			return;
 		}
-		const { description, start, end, location, participants } = this.props.event;
+		const { description, start, end, location, participants } =
+			this.props.event;
 		this.setState({ description, start, end, location });
 		this.setState({
 			participants: participants || [],

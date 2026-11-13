@@ -97,7 +97,7 @@ class SalesforceObjectPicker extends React.Component {
 		},
 	};
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		this._usubs = [
 			SalesforceActions.salesforceWindowClosing.listen(
 				this._onSalesforceWindowClosing,

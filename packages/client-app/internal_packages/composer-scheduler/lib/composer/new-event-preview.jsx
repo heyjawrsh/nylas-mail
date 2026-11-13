@@ -25,8 +25,11 @@ export default class NewEventPreview extends React.Component {
 		this.state = this._stateFromProps(props);
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
-		this.setState(this._stateFromProps(props));
+	// The session hands over a new draft object on every change.
+	componentDidUpdate(prevProps) {
+		if (prevProps.draft !== this.props.draft) {
+			this.setState(this._stateFromProps(this.props));
+		}
 	}
 
 	_stateFromProps(props) {

@@ -49,8 +49,13 @@ class SendRemindersThreadTimestamp extends Component {
 		this.setupMessageObservable(message);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { thread, messages } = nextProps;
+	// A new thread or message list: drop the old message's subscription, then
+	// follow the latest message with a reminder.
+	componentDidUpdate(prevProps) {
+		const { thread, messages } = this.props;
+		if (prevProps.thread === thread && prevProps.messages === messages) {
+			return;
+		}
 		const message = getLatestMessageWithReminder(thread, messages);
 		this.disposeMessageObservable();
 		if (!message) {

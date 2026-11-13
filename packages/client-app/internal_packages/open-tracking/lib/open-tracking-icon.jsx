@@ -17,8 +17,10 @@ export default class OpenTrackingIcon extends React.Component {
 		this.state = this._getStateFromThread(props.thread);
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		this.setState(this._getStateFromThread(newProps.thread));
+	componentDidUpdate(prevProps) {
+		if (prevProps.thread !== this.props.thread) {
+			this.setState(this._getStateFromThread(this.props.thread));
+		}
 	}
 
 	onMouseDown = () => {

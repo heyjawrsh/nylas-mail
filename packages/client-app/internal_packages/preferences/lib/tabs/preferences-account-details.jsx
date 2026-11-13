@@ -15,8 +15,12 @@ class PreferencesAccountDetails extends Component {
 		this.state = { account: props.account.clone() };
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ account: nextProps.account.clone() });
+	// A new account replaces the form. Edits in progress survive an unrelated
+	// re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.account !== this.props.account) {
+			this.setState({ account: this.props.account.clone() });
+		}
 	}
 
 	componentWillUnmount() {

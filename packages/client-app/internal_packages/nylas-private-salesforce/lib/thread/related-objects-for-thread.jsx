@@ -38,13 +38,17 @@ class RelatedObjectsForThread extends React.Component {
 		this.state = this._initialState();
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		this._setupDataSource(this.props);
 		this._usub = FocusedContactsStore.listen(this._onContactChange);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this._setupDataSource(nextProps);
+	// A new thread starts over: reset, dispose the old observable and observe
+	// the new thread. An expanded panel survives an unrelated re-render.
+	componentDidUpdate(prevProps) {
+		if (prevProps.thread !== this.props.thread) {
+			this._setupDataSource(this.props);
+		}
 	}
 
 	componentWillUnmount() {
