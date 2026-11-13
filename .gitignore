@@ -34,6 +34,7 @@ packages/client-app/dist
 
 # Tests
 spec-saved-state.json
+.nylas-fixture-home
 
 # Symlinked Jasmine config files
 **/jasmine/config.json

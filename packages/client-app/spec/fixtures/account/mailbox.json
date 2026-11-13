@@ -1,0 +1,118 @@
+{
+	"folders": [
+		{ "id": "fixture-folder-inbox", "name": "inbox", "display_name": "Inbox" },
+		{ "id": "fixture-folder-sent", "name": "sent", "display_name": "Sent" },
+		{ "id": "fixture-folder-drafts", "name": "drafts", "display_name": "Drafts" },
+		{ "id": "fixture-folder-archive", "name": "archive", "display_name": "Archive" },
+		{ "id": "fixture-folder-trash", "name": "trash", "display_name": "Trash" },
+		{ "id": "fixture-folder-spam", "name": "spam", "display_name": "Spam" }
+	],
+	"contacts": [
+		{ "id": "fixture-contact-me", "name": "Fixture Person", "email": "me@fixture.test" },
+		{ "id": "fixture-contact-ada", "name": "Ada Example", "email": "ada@fixture.test" },
+		{ "id": "fixture-contact-ben", "name": "Ben Example", "email": "ben@fixture.test" },
+		{ "id": "fixture-contact-cleo", "name": "Cleo Example", "email": "cleo@fixture.test" }
+	],
+	"threads": [
+		{
+			"id": "fixture-thread-welcome",
+			"subject": "Welcome to the fixture inbox",
+			"folders": ["inbox"],
+			"unread": true,
+			"starred": false,
+			"messages": [
+				{
+					"id": "fixture-msg-welcome-1",
+					"from": "ada",
+					"to": ["me"],
+					"cc": [],
+					"date": "2026-11-10T15:04:00Z",
+					"unread": true,
+					"body": "<p>Hi there,</p><p>This thread lives in the offline fixture account. Open it, reply, and nothing leaves the machine.</p><p>Ada</p>"
+				}
+			]
+		},
+		{
+			"id": "fixture-thread-lunch",
+			"subject": "Lunch on Thursday?",
+			"folders": ["inbox"],
+			"unread": false,
+			"starred": true,
+			"messages": [
+				{
+					"id": "fixture-msg-lunch-1",
+					"from": "ben",
+					"to": ["me"],
+					"cc": ["cleo"],
+					"date": "2026-11-09T12:10:00Z",
+					"unread": false,
+					"body": "<p>Are you free for lunch on Thursday? Cleo is in.</p><p>Ben</p>"
+				},
+				{
+					"id": "fixture-msg-lunch-2",
+					"from": "me",
+					"to": ["ben"],
+					"cc": ["cleo"],
+					"date": "2026-11-09T13:42:00Z",
+					"unread": false,
+					"folders": ["sent"],
+					"body": "<p>Thursday works. Noon?</p>"
+				},
+				{
+					"id": "fixture-msg-lunch-3",
+					"from": "cleo",
+					"to": ["me", "ben"],
+					"cc": [],
+					"date": "2026-11-09T14:05:00Z",
+					"unread": false,
+					"body": "<p>Noon is perfect. See you both there.</p><p>Cleo</p>"
+				}
+			]
+		},
+		{
+			"id": "fixture-thread-notes",
+			"subject": "Meeting notes",
+			"folders": ["inbox"],
+			"unread": false,
+			"starred": false,
+			"messages": [
+				{
+					"id": "fixture-msg-notes-1",
+					"from": "cleo",
+					"to": ["me"],
+					"cc": ["ada"],
+					"date": "2026-11-06T09:30:00Z",
+					"unread": false,
+					"body": "<p>Notes from today:</p><ul><li>Ship the fixture account</li><li>Check the reply composer</li></ul><p>Cleo</p>"
+				},
+				{
+					"id": "fixture-msg-notes-2",
+					"from": "ada",
+					"to": ["cleo", "me"],
+					"cc": [],
+					"date": "2026-11-06T10:15:00Z",
+					"unread": false,
+					"body": "<p>Thanks, Cleo. One more: keep it offline.</p><p>Ada</p>"
+				}
+			]
+		},
+		{
+			"id": "fixture-thread-archived",
+			"subject": "Receipt for October",
+			"folders": ["archive"],
+			"unread": false,
+			"starred": false,
+			"messages": [
+				{
+					"id": "fixture-msg-archived-1",
+					"from": "ben",
+					"to": ["me"],
+					"cc": [],
+					"date": "2026-10-31T18:00:00Z",
+					"unread": false,
+					"body": "<p>Here is the receipt for October. Nothing to do.</p>"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"id": "fixture-account",
+	"object": "account",
+	"account_id": "fixture-account",
+	"name": "Fixture Person",
+	"provider": "imap",
+	"email_address": "me@fixture.test",
+	"organization_unit": "folder",
+	"label": "me@fixture.test",
+	"aliases": [],
+	"sync_state": "running"
+}
