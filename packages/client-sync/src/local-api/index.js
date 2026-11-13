@@ -2,11 +2,10 @@
 /* eslint global-require: 0 */
 import Hapi from "@hapi/hapi";
 import HapiSwagger from "hapi-swagger";
-import HapiBoom from "hapi-boom-decorators";
-import HapiBasicAuth from "hapi-auth-basic";
+import HapiBasicAuth from "@hapi/basic";
 import Inert from "@hapi/inert";
 import Vision from "@hapi/vision";
-import Package from "../../package.js";
+import Package from "../../package.json";
 import fs from "node:fs";
 import path from "node:path";
 import LocalDatabaseConnector from "../shared/local-database-connector.js";
@@ -24,7 +23,6 @@ const plugins = [
 	{ plugin: Inert },
 	{ plugin: Vision },
 	{ plugin: HapiBasicAuth },
-	{ plugin: HapiBoom },
 	{
 		plugin: HapiSwagger,
 		options: {

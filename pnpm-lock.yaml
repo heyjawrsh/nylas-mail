@@ -216,6 +216,9 @@ importers:
 
   packages/client-sync:
     dependencies:
+      '@hapi/basic':
+        specifier: ^7.0.2
+        version: 7.0.2
       '@hapi/boom':
         specifier: ^10.0.1
         version: 10.0.1
@@ -234,6 +237,9 @@ importers:
       debug:
         specifier: ^4.4.3
         version: 4.4.3(supports-color@7.2.0)
+      hapi-swagger:
+        specifier: ^17.3.2
+        version: 17.3.2(@hapi/hapi@21.4.10)(joi@18.2.5)(openapi-types@12.1.3)
       iconv-lite:
         specifier: ^0.7.3
         version: 0.7.3
@@ -255,6 +261,9 @@ importers:
       moment-timezone:
         specifier: ^0.6.1
         version: 0.6.3
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
       rxjs:
         specifier: ^7.8.0
         version: 7.8.2

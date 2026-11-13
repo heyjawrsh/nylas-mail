@@ -29,6 +29,7 @@
 	"license": "ISC",
 	"type": "module",
 	"exports": {
-		".": "./index.js"
+		".": "./index.js",
+		"./src/database-extensions.js": "./src/database-extensions.js"
 	}
 }

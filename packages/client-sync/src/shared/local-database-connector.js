@@ -1,5 +1,5 @@
 import * as IsomorphicCore from "isomorphic-core";
-import "../../../isomorphic-core/src/database-extensions.js"; // streamAll — relative so spec mocks of the package don't strip the side effect
+import "isomorphic-core/src/database-extensions.js"; // streamAll — a subpath, so spec mocks of the package don't strip the side effect
 import createDebug from "debug";
 import Sequelize from "sequelize";
 import fs from "node:fs";
