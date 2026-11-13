@@ -1,8 +1,18 @@
 // @vitest-environment node
 // The offline fixture account (spec/fixtures/account, seeded into a NYLAS_HOME
 // by scripts/seed-fixture-account.mjs).
-import { describe, expect, it } from "vitest";
-import { fixtureConfig, fixtureData } from "../scripts/seed-fixture-account.mjs";
+import fs from "node:fs";
+import net from "node:net";
+import os from "node:os";
+import path from "node:path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import {
+	MARKER,
+	fixtureConfig,
+	fixtureData,
+	freePort,
+	prepareHome,
+} from "../scripts/seed-fixture-account.mjs";
 
 describe("fixture account data", () => {
 	const { account, mailbox } = fixtureData();
@@ -44,5 +54,59 @@ describe("fixture account data", () => {
 
 	it("has a thread with several messages, so the message list collapses some", () => {
 		expect(Math.max(...mailbox.threads.map((t) => t.messages.length))).toBeGreaterThanOrEqual(3);
+	});
+});
+
+describe("prepareHome", () => {
+	let dir;
+	beforeEach(() => {
+		dir = fs.mkdtempSync(path.join(os.tmpdir(), "fixture-home-"));
+	});
+	afterEach(() => {
+		fs.rmSync(dir, { recursive: true, force: true });
+	});
+
+	it("creates a missing directory and marks it", () => {
+		const home = path.join(dir, "new-home");
+		prepareHome(home);
+		expect(fs.readdirSync(home)).toEqual([MARKER]);
+	});
+
+	it("uses an empty directory", () => {
+		prepareHome(dir);
+		expect(fs.readdirSync(dir)).toEqual([MARKER]);
+	});
+
+	it("replaces a directory it seeded before", () => {
+		fs.writeFileSync(path.join(dir, MARKER), "");
+		fs.writeFileSync(path.join(dir, "edgehill.db"), "old");
+		prepareHome(dir);
+		expect(fs.readdirSync(dir)).toEqual([MARKER]);
+	});
+
+	it("refuses a directory with data and no marker, and leaves it alone", () => {
+		fs.writeFileSync(path.join(dir, "config.json"), "{}");
+		expect(() => prepareHome(dir)).toThrow(/Refusing to replace .*no \.nylas-fixture marker/);
+		expect(fs.readdirSync(dir)).toEqual(["config.json"]);
+	});
+
+	it("refuses a file", () => {
+		const file = path.join(dir, "not-a-dir");
+		fs.writeFileSync(file, "x");
+		expect(() => prepareHome(file)).toThrow(/not a directory/);
+		expect(fs.readFileSync(file, "utf8")).toBe("x");
+	});
+});
+
+describe("freePort", () => {
+	it("returns a port that can be listened on", async () => {
+		const port = await freePort();
+		const server = net.createServer();
+		await new Promise((resolve, reject) => {
+			server.on("error", reject);
+			server.listen(port, "127.0.0.1", resolve);
+		});
+		server.close();
+		expect(port).toBeGreaterThan(0);
 	});
 });

@@ -53,6 +53,15 @@ describe("placeholder NylasEnv config", () => {
 		expect(window.NylasEnv.config.get("nylas.accounts")).toEqual([{ id: "a1" }]);
 	});
 
+	it("hands out a copy of the whole settings too", () => {
+		const { window } = runBanner({ nylas: { accounts: [{ id: "a1" }] } });
+		const all = window.NylasEnv.config.get();
+		expect(all).toEqual({ nylas: { accounts: [{ id: "a1" }] } });
+		all.nylas.accounts = [];
+		expect(window.NylasEnv.config.get().nylas.accounts).toEqual([{ id: "a1" }]);
+		expect(window.NylasEnv.config.get("nylas.accounts")).toEqual([{ id: "a1" }]);
+	});
+
 	it("falls back to null when the main process has no settings", () => {
 		const { window } = runBanner(null);
 		expect(window.NylasEnv.config.get("nylas.accounts")).toBeNull();

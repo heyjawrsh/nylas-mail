@@ -76,7 +76,7 @@ export const BANNER = `
 				settings = {};
 			}
 		}
-		if (!keyPath) return settings;
+		if (!keyPath) return JSON.parse(JSON.stringify(settings));
 		var value = settings;
 		var keys = String(keyPath).split(".");
 		for (var i = 0; i < keys.length; i++) {

@@ -469,16 +469,40 @@ describe("node accessors the composer packages measure", () => {
 		const Wrapped = InflatesDraftClientId(RootedComponent);
 		const ref = React.createRef();
 		const { container } = render(<Wrapped ref={ref} draftClientId="d1" className="composer" />);
-		expect(ref.current.getDOMNode()).toBeNull();
+		// While the session loads, the placeholder stands in.
+		expect(ref.current.getDOMNode()).toBe(container.querySelector("span"));
 		await act(async () => {});
 		expect(ref.current.getDOMNode()).toBe(container.querySelector(".composer"));
 		spy.mockRestore();
 	});
 
-	it("ParticipantsTextField hands over its root node", async () => {
-		const { default: ParticipantsTextField } = await import("../src/components/participants-text-field.jsx");
-		const field = new ParticipantsTextField({ participants: { to: [] }, field: "to" });
-		field._rootRef.current = document.createElement("div");
-		expect(field.getDOMNode()).toBe(field._rootRef.current);
+	it("ParticipantsTextField hands over its rendered root node", async () => {
+		const load = createPackageLoader({
+			...base,
+			electron: { clipboard: {} },
+			"@electron/remote": {},
+			"nylas-exports": { Utils: { isEqualReact: () => false }, ContactStore: {} },
+			"nylas-component-kit": {
+				TokenizingTextField: Nothing,
+				Menu: Nothing,
+				InjectedComponent: Nothing,
+				InjectedComponentSet: Nothing,
+			},
+		});
+		const ParticipantsTextField = load(
+			path.join(__dirname, "..", "src/components/participants-text-field.jsx"),
+		).default;
+		const ref = React.createRef();
+		const { container } = render(
+			<ParticipantsTextField
+				ref={ref}
+				field="to"
+				className="composer-participant-field to-field"
+				participants={{ to: [], cc: [], bcc: [] }}
+				change={() => {}}
+			/>,
+		);
+		expect(ref.current.getDOMNode()).toBe(container.querySelector(".to-field"));
+		expect(container.querySelector(".to-field")).toBe(container.firstChild);
 	});
 });

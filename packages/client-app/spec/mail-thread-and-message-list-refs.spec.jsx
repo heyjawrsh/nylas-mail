@@ -269,6 +269,19 @@ describe("MessageList", () => {
 		);
 	});
 
+	it("unblocks scrolling when scrolling to a draft fails", async () => {
+		const { list } = renderList();
+		region.scrollTo.mockImplementationOnce(() => {
+			throw new Error("no node to scroll to");
+		});
+		await act(async () => {
+			await focusDraftListener({ draftClientId: "c2" });
+		});
+		expect(list._draftScrollInProgress).toBe(false);
+		list._scrollTo({ clientId: "c1" });
+		expect(region.scrollTo).toHaveBeenLastCalledWith(containers.c1, { position: "visible" });
+	});
+
 	it("scrolls to a message container or a rect", () => {
 		const { list } = renderList();
 		list._scrollTo({ clientId: "c1" });

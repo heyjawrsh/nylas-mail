@@ -203,14 +203,20 @@ class MessageList extends React.Component {
 	}
 	_focusDraft(draftElement) {
 		this._draftScrollInProgress = true;
-		draftElement.focus();
-		return this._messageWrap.current.scrollTo(draftElement, {
-			position: ScrollRegion.ScrollPosition.Top,
-			settle: true,
-			done: () => {
-				this._draftScrollInProgress = false;
-			},
-		});
+		try {
+			draftElement.focus();
+			return this._messageWrap.current.scrollTo(draftElement, {
+				position: ScrollRegion.ScrollPosition.Top,
+				settle: true,
+				done: () => {
+					this._draftScrollInProgress = false;
+				},
+			});
+		} catch (err) {
+			// done() never comes, so don't leave _scrollTo blocked.
+			this._draftScrollInProgress = false;
+			throw err;
+		}
 	}
 	// The root node, for SearchableComponentMaker's search region.
 	_setRoot = (value) => {

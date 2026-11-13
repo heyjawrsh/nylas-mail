@@ -80,10 +80,12 @@ export async function listTargets(port) {
 
 // Polls until a page whose NylasEnv window type is `windowType` is up and
 // `ready` (an expression) is truthy in it, then returns a connected CdpPage.
+// With `configDirPath`, a matching window from an app on any other config dir
+// is an error, not a match.
 export async function waitForWindow(
 	port,
 	windowType,
-	{ ready = "true", timeout = 60_000 } = {},
+	{ ready = "true", timeout = 60_000, configDirPath } = {},
 ) {
 	const deadline = Date.now() + timeout;
 	while (Date.now() < deadline) {
@@ -95,14 +97,23 @@ export async function waitForWindow(
 		}
 		for (const target of targets.filter((t) => t.type === "page")) {
 			let page;
+			let found = null;
 			try {
 				page = await CdpPage.connect(target.webSocketDebuggerUrl);
-				const match = await page.evaluate(
-					`typeof NylasEnv !== "undefined" && NylasEnv.getWindowType() === ${JSON.stringify(windowType)} && !!(${ready})`,
+				found = await page.evaluate(
+					`typeof NylasEnv !== "undefined" && NylasEnv.getWindowType() === ${JSON.stringify(windowType)} && !!(${ready}) ? NylasEnv.getConfigDirPath() : null`,
 				);
-				if (match) return page;
 			} catch {
 				// The page is still loading or went away.
+			}
+			if (found !== null && found !== undefined) {
+				if (configDirPath === undefined || found === configDirPath) {
+					return page;
+				}
+				page.close();
+				throw new Error(
+					`the ${windowType} window on port ${port} belongs to an app on ${found}, not ${configDirPath}; refusing to use it`,
+				);
 			}
 			page?.close();
 		}

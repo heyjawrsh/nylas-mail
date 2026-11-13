@@ -23,6 +23,7 @@ function InflatesDraftClientId(ComposedComponent) {
 		constructor(props) {
 			super(props);
 			this.composedRef = React.createRef();
+			this.placeholderRef = React.createRef();
 			this.state = {
 				session: null,
 				draft: null,
@@ -99,13 +100,18 @@ function InflatesDraftClientId(ComposedComponent) {
 				.catch(() => {});
 		}
 
+		// The composer's node, or the placeholder's while the draft loads.
 		getDOMNode() {
-			return domNodeOf(this.composedRef.current);
+			return (
+				domNodeOf(this.composedRef.current) ||
+				this.placeholderRef.current ||
+				null
+			);
 		}
 
 		render() {
 			if (!this.state.draft) {
-				return <span />;
+				return <span ref={this.placeholderRef} />;
 			}
 			return (
 				<ComposedComponent

@@ -3,8 +3,10 @@
 //
 //   node packages/client-app/scripts/seed-fixture-account.mjs [dir]
 //
-// `dir` defaults to <repo>/.nylas-fixture-home and is deleted and rebuilt
-// on every run. Then launch the dev app on it:
+// `dir` defaults to <repo>/.nylas-fixture-home and is rebuilt on every run.
+// The script only replaces a directory that is missing, empty, or one it
+// seeded before (it holds a .nylas-fixture marker), so a typo or a real
+// NYLAS_HOME is refused, not wiped. Then launch the dev app on it:
 //
 //   NYLAS_HOME=<dir> pnpm --filter nylas-mail start
 //
@@ -15,7 +17,16 @@
 // writes. Nothing is sent: there are no credentials and no Nylas identity,
 // so sync logs "Can't start sync" and stops.
 import { spawn } from "node:child_process";
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+	existsSync,
+	mkdirSync,
+	readdirSync,
+	readFileSync,
+	rmSync,
+	statSync,
+	writeFileSync,
+} from "node:fs";
+import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import electronPath from "electron";
@@ -27,6 +38,41 @@ const appDir = path.resolve(here, "..");
 const repoRoot = path.resolve(appDir, "..", "..");
 export const fixtureDir = path.join(appDir, "spec", "fixtures", "account");
 export const defaultHome = path.join(repoRoot, ".nylas-fixture-home");
+export const MARKER = ".nylas-fixture";
+
+// Empties `home` for a new seed, refusing anything that might hold real data.
+export function prepareHome(home) {
+	if (existsSync(home)) {
+		if (!statSync(home).isDirectory()) {
+			throw new Error(`Refusing to seed ${home}: it is not a directory.`);
+		}
+		const entries = readdirSync(home);
+		if (entries.length > 0 && !entries.includes(MARKER)) {
+			throw new Error(
+				`Refusing to replace ${home}: it isn't empty and has no ${MARKER} marker, so it may be a real NYLAS_HOME. Pass a new or empty directory.`,
+			);
+		}
+		rmSync(home, { recursive: true, force: true });
+	}
+	mkdirSync(home, { recursive: true });
+	writeFileSync(
+		path.join(home, MARKER),
+		"Seeded by packages/client-app/scripts/seed-fixture-account.mjs; safe to replace.\n",
+	);
+}
+
+// A port nothing is listening on, so the seed can't attach to another app.
+export function freePort() {
+	return new Promise((resolve, reject) => {
+		const server = net.createServer();
+		server.unref();
+		server.on("error", reject);
+		server.listen(0, "127.0.0.1", () => {
+			const { port } = server.address();
+			server.close(() => resolve(port));
+		});
+	});
+}
 
 const readJSON = (name) =>
 	JSON.parse(readFileSync(path.join(fixtureDir, name), "utf8"));
@@ -162,13 +208,10 @@ async function seedInRenderer(account, mailbox) {
 	return result;
 }
 
-export async function seedFixtureAccount(
-	home = defaultHome,
-	{ port = 9339 } = {},
-) {
+export async function seedFixtureAccount(home = defaultHome, options = {}) {
+	const port = options.port ?? (await freePort());
 	const { account, mailbox } = fixtureData();
-	rmSync(home, { recursive: true, force: true });
-	mkdirSync(home, { recursive: true });
+	prepareHome(home);
 	writeFileSync(
 		path.join(home, "config.json"),
 		`${JSON.stringify(fixtureConfig(account), null, 2)}\n`,
@@ -195,6 +238,8 @@ export async function seedFixtureAccount(
 	try {
 		page = await waitForWindow(port, "work", {
 			ready: "$n.DatabaseStore._open",
+			// Refuse to write into any app but the one launched on `home`.
+			configDirPath: home,
 			timeout: 90_000,
 		});
 		const counts = await page.evaluate(
