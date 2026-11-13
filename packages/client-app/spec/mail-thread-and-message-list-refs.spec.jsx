@@ -304,9 +304,35 @@ describe("MessageList", () => {
 		expect(actions.printThread).toHaveBeenCalledWith(thread, list.getDOMNode().innerHTML);
 		expect(list.getDOMNode().innerHTML).toContain("Lunch on Thursday?");
 	});
+
+	it("its scroll tooltip reads message offsets on mount and before each new-props render", () => {
+		renderList();
+		const Tooltip = region.props.scrollTooltipComponent;
+		const wraps = [100, 300, 500].map((top) => {
+			const el = document.createElement("div");
+			el.className = "message-item-wrap";
+			Object.defineProperty(el, "offsetTop", { value: top });
+			document.body.appendChild(el);
+			return el;
+		});
+		const seen = [];
+		const original = Tooltip.prototype.render;
+		const spy = vi.spyOn(Tooltip.prototype, "render").mockImplementation(function () {
+			seen.push(this.state.idx);
+			return original.call(this);
+		});
+		const view = render(<Tooltip viewportCenter={50} totalHeight={600} />);
+		expect(view.container.textContent).toBe("0 of 3");
+		view.rerender(<Tooltip viewportCenter={400} totalHeight={600} />);
+		expect(seen).toEqual([0, 2]);
+		expect(view.container.textContent).toBe("2 of 3");
+		spy.mockRestore();
+		for (const el of wraps) el.remove();
+	});
 });
 
 describe("MessageItemContainer", () => {
+	const sending = new Set();
 	let MessageItemContainer;
 	let item;
 	let composer;
@@ -333,7 +359,7 @@ describe("MessageItemContainer", () => {
 			"./message-item": FakeMessageItem,
 			"nylas-exports": {
 				Utils: { isEqualReact: () => false },
-				DraftStore: { listen: () => () => {}, isSendingDraft: () => false },
+				DraftStore: { listen: () => () => {}, isSendingDraft: (id) => sending.has(id) },
 				ComponentRegistry: { findComponentsMatching: () => [FakeComposer] },
 			},
 		});
@@ -353,6 +379,24 @@ describe("MessageItemContainer", () => {
 		expect(container.getDOMNode()).toBe(item.getDOMNode());
 		container.focus();
 		expect(item.focus).toHaveBeenCalled();
+	});
+
+	it("picks the sending state for a new message before rendering it", () => {
+		const seen = [];
+		const original = MessageItemContainer.prototype.render;
+		const spy = vi.spyOn(MessageItemContainer.prototype, "render").mockImplementation(function () {
+			seen.push(this.state.isSending);
+			return original.call(this);
+		});
+		const ref = React.createRef();
+		const first = { id: "d1", clientId: "d1", draft: true };
+		const view = render(<MessageItemContainer ref={ref} thread={{ id: "t1" }} message={first} messages={[first]} />);
+		sending.add("d2");
+		const second = { id: "d2", clientId: "d2", draft: true };
+		seen.length = 0;
+		view.rerender(<MessageItemContainer ref={ref} thread={{ id: "t1" }} message={second} messages={[second]} />);
+		expect(seen[0]).toBe(true);
+		spy.mockRestore();
 	});
 
 	it("hands over the inline composer's node and focus for a draft", () => {

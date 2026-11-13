@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Utils } from "nylas-exports";
 import { DropZone, InjectedComponentSet } from "nylas-component-kit";
+import shallowEqual from "../../../src/components/shallow-equal.js";
 
 const NUM_TO_DISPLAY_MAX = 999;
 
@@ -32,6 +33,7 @@ export default class CollapsedParticipants extends React.Component {
 			numToDisplay: NUM_TO_DISPLAY_MAX,
 			numRemaining: 0,
 			numBccRemaining: 0,
+			prevProps: props,
 		};
 	}
 
@@ -39,15 +41,24 @@ export default class CollapsedParticipants extends React.Component {
 		this._setNumHiddenParticipants();
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (!Utils.isEqualReact(nextProps, this.props)) {
-			// Always re-evaluate the hidden participant count when the participant set changes
-			this.setState({
-				numToDisplay: NUM_TO_DISPLAY_MAX,
-				numRemaining: 0,
-				numBccRemaining: 0,
-			});
+	// Reset before render, so a changed participant set never paints with the
+	// old count. componentDidUpdate then re-measures.
+	static getDerivedStateFromProps(props, state) {
+		// shallowEqual first: React hands a fresh props object to every update
+		// (defaultProps), including the setState-only ones.
+		if (
+			shallowEqual(props, state.prevProps) ||
+			Utils.isEqualReact(props, state.prevProps)
+		) {
+			return null;
 		}
+		// Always re-evaluate the hidden participant count when the participant set changes
+		return {
+			numToDisplay: NUM_TO_DISPLAY_MAX,
+			numRemaining: 0,
+			numBccRemaining: 0,
+			prevProps: props,
+		};
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {

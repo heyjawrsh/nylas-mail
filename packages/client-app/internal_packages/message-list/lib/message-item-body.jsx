@@ -27,7 +27,7 @@ class MessageItemBody extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
+		this.componentDidUpdate = this.componentDidUpdate.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.componentWillUnmount = this.componentWillUnmount.bind(this);
 		this.render = this.render.bind(this);
@@ -42,22 +42,22 @@ class MessageItemBody extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
+		this._mounted = true;
+		// subscribe() defers its callback, so the first paint is the loading
+		// state either way.
 		this._unsub = MessageBodyProcessor.subscribe(
 			this.props.message,
 			(processedBody) => this.setState({ processedBody }),
 		);
 	}
-	componentDidMount() {
-		this._mounted = true;
-	}
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (nextProps.message.id !== this.props.message.id) {
+	componentDidUpdate(prevProps) {
+		if (prevProps.message.id !== this.props.message.id) {
 			if (this._unsub != null) {
 				this._unsub();
 			}
 			this._unsub = MessageBodyProcessor.subscribe(
-				nextProps.message,
+				this.props.message,
 				(processedBody) => this.setState({ processedBody }),
 			);
 		}

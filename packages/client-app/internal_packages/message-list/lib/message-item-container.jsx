@@ -35,11 +35,22 @@ class MessageItemContainer extends React.Component {
 		this._classNames = this._classNames.bind(this);
 		this._onSendingStateChanged = this._onSendingStateChanged.bind(this);
 		this._message = React.createRef();
-		this.state = this._getStateFromStores();
+		this.state = {
+			...this._getStateFromStores(),
+			prevMessage: props.message,
+		};
 	}
 
-	UNSAFE_componentWillReceiveProps(newProps) {
-		return this.setState(this._getStateFromStores(newProps));
+	// Before render: isSending picks the composer or the message, and a frame
+	// of the wrong one would mount it.
+	static getDerivedStateFromProps(props, state) {
+		if (props.message === state.prevMessage) {
+			return null;
+		}
+		return {
+			isSending: DraftStore.isSendingDraft(props.message.clientId),
+			prevMessage: props.message,
+		};
 	}
 	componentDidMount() {
 		if (this.props.message.draft) {

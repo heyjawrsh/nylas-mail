@@ -181,6 +181,20 @@ describe("ComposerView", () => {
 		session._composerViewSelectionRestore("other");
 		expect(body.setSelection).toHaveBeenCalledWith("other");
 	});
+
+	it("unhooks the old session and hooks up the new one when the session changes", () => {
+		const ref = React.createRef();
+		const first = { changes: { add: vi.fn() } };
+		const second = { changes: { add: vi.fn() } };
+		const view = render(<ComposerView ref={ref} draft={draft} session={first} />);
+		expect(first._composerViewSelectionRetrieve).toBeTypeOf("function");
+		view.rerender(<ComposerView ref={ref} draft={draft} session={second} />);
+		expect(first._composerViewSelectionRetrieve).toBeNull();
+		expect(first._composerViewSelectionRestore).toBeNull();
+		expect(second._composerViewSelectionRetrieve).toBeTypeOf("function");
+		view.unmount();
+		expect(second._composerViewSelectionRetrieve).toBeNull();
+	});
 });
 
 describe("ComposerHeader", () => {
@@ -272,6 +286,40 @@ describe("ComposerHeader", () => {
 		act(() => header.hideField("textFieldCc"));
 		expect(shiftFocus).toHaveBeenCalledWith(-1);
 		expect(header.state.enabledFields).not.toContain("textFieldCc");
+	});
+
+	describe("on prop change", () => {
+		const baseDraft = { clientId: "d1", to: [], cc: [], bcc: [], from: [{}], subject: "" };
+
+		it("turns on Cc when a new draft in the same session has cc", () => {
+			const ref = React.createRef();
+			const session = { changes: { add: vi.fn() } };
+			const view = render(<ComposerHeader ref={ref} draft={baseDraft} session={session} />);
+			expect(ref.current.state.enabledFields).not.toContain("textFieldCc");
+			view.rerender(
+				<ComposerHeader ref={ref} draft={{ ...baseDraft, cc: [{ email: "c@x" }] }} session={session} />,
+			);
+			expect(ref.current.state.enabledFields).toContain("textFieldCc");
+		});
+
+		it("keeps a field the user opened through an unrelated re-render", () => {
+			const ref = React.createRef();
+			const session = { changes: { add: vi.fn() } };
+			const draft = { ...baseDraft, cc: [{ email: "c@x" }] };
+			const view = render(<ComposerHeader ref={ref} draft={draft} session={session} />);
+			act(() => ref.current.setState({ enabledFields: [...ref.current.state.enabledFields, "textFieldBcc"] }));
+			view.rerender(<ComposerHeader ref={ref} draft={draft} session={session} initiallyFocused={false} />);
+			expect(ref.current.state.enabledFields).toContain("textFieldBcc");
+		});
+
+		it("starts over for a new session", () => {
+			const ref = React.createRef();
+			const view = render(<ComposerHeader ref={ref} draft={baseDraft} session={{ changes: {} }} />);
+			act(() => ref.current.setState({ enabledFields: [...ref.current.state.enabledFields, "textFieldBcc"] }));
+			view.rerender(<ComposerHeader ref={ref} draft={baseDraft} session={{ changes: {} }} initiallyFocused />);
+			expect(ref.current.state.enabledFields).not.toContain("textFieldBcc");
+			expect(ref.current.state.participantsFocused).toBe(true);
+		});
 	});
 });
 
@@ -376,6 +424,30 @@ describe("small composer pieces", () => {
 		const CollapsedParticipants = load(pkg("composer/lib/collapsed-participants.jsx")).default;
 		const { container } = render(<CollapsedParticipants to={[]} cc={[]} bcc={[]} />);
 		expect(container.querySelector(".collapsed-composer-participants")).not.toBeNull();
+	});
+
+	it("CollapsedParticipants resets its count before rendering a new participant set", () => {
+		const load = createPackageLoader({
+			...base,
+			"nylas-exports": { Utils: { isEqualReact: (a, b) => a.to === b.to } },
+			"nylas-component-kit": { DropZone: Passthrough, InjectedComponentSet: Nothing },
+		});
+		const CollapsedParticipants = load(pkg("composer/lib/collapsed-participants.jsx")).default;
+		const contact = (name) => ({ email: `${name}@x`, displayName: () => name });
+		const seen = [];
+		const original = CollapsedParticipants.prototype.render;
+		vi.spyOn(CollapsedParticipants.prototype, "render").mockImplementation(function () {
+			seen.push(this.state.numToDisplay);
+			return original.call(this);
+		});
+		const ref = React.createRef();
+		const view = render(<CollapsedParticipants ref={ref} to={[contact("a")]} />);
+		act(() => ref.current.setState({ numToDisplay: 0, numRemaining: 1 }));
+		seen.length = 0;
+		view.rerender(<CollapsedParticipants ref={ref} to={[contact("b")]} />);
+		// The first render for the new set already has the reset count (999).
+		expect(seen[0]).toBe(999);
+		vi.restoreAllMocks();
 	});
 });
 

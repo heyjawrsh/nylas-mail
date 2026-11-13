@@ -38,27 +38,22 @@ class MessageListScrollTooltip extends React.Component {
 	};
 	constructor() {
 		super(...arguments);
-		this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
+		this.state = {};
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
 	}
-	UNSAFE_componentWillMount() {
-		return this.setupForProps(this.props);
-	}
-	UNSAFE_componentWillReceiveProps(newProps) {
-		return this.setupForProps(newProps);
-	}
-	shouldComponentUpdate(_newProps, newState) {
-		return !_.isEqual(this.state, newState);
-	}
-	setupForProps(props) {
+	// Reads the message offsets during render, before this update's DOM
+	// changes, as componentWillMount/ReceiveProps did. It has to run before
+	// shouldComponentUpdate, which only compares state.
+	static getDerivedStateFromProps(props) {
 		const els = document.querySelectorAll(".message-item-wrap");
 		let idx = _.findIndex(els, (el) => el.offsetTop > props.viewportCenter);
 		if (idx === -1) {
 			idx = els.length;
 		}
-		return this.setState({ idx, count: els.length });
+		return { idx, count: els.length };
+	}
+	shouldComponentUpdate(_newProps, newState) {
+		return !_.isEqual(this.state, newState);
 	}
 	render() {
 		return (

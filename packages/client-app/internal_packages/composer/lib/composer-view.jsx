@@ -59,21 +59,22 @@ export default class ComposerView extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (nextProps.session !== this.props.session) {
-			this._teardownForProps();
-			this._setupForProps(nextProps);
+	componentDidUpdate(prevProps) {
+		// A new session: unhook the old one first, then hook up the new one.
+		if (prevProps.session !== this.props.session) {
+			this._teardownForProps(prevProps);
+			this._setupForProps(this.props);
 		}
 		if (
-			DraftHelpers.isForwardedMessage(this.props.draft) !==
-				DraftHelpers.isForwardedMessage(nextProps.draft) ||
-			DraftHelpers.shouldAppendQuotedText(this.props.draft) !==
-				DraftHelpers.shouldAppendQuotedText(nextProps.draft)
+			DraftHelpers.isForwardedMessage(prevProps.draft) !==
+				DraftHelpers.isForwardedMessage(this.props.draft) ||
+			DraftHelpers.shouldAppendQuotedText(prevProps.draft) !==
+				DraftHelpers.shouldAppendQuotedText(this.props.draft)
 		) {
 			this.setState({
-				showQuotedText: DraftHelpers.isForwardedMessage(nextProps.draft),
+				showQuotedText: DraftHelpers.isForwardedMessage(this.props.draft),
 				showQuotedTextControl: DraftHelpers.shouldAppendQuotedText(
-					nextProps.draft,
+					this.props.draft,
 				),
 			});
 		}
@@ -184,10 +185,10 @@ export default class ComposerView extends React.Component {
 		});
 	}
 
-	_teardownForProps() {
-		if (this.props.session) {
-			this.props.session._composerViewSelectionRestore = null;
-			this.props.session._composerViewSelectionRetrieve = null;
+	_teardownForProps(props = this.props) {
+		if (props.session) {
+			props.session._composerViewSelectionRestore = null;
+			props.session._composerViewSelectionRetrieve = null;
 		}
 	}
 

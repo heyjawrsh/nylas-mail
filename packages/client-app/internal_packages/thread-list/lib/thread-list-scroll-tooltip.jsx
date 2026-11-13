@@ -11,12 +11,10 @@ import React from "react";
 import ThreadListStore from "./thread-list-store";
 
 class ThreadListScrollTooltip extends React.Component {
-	constructor(...args) {
-		super(...args);
-		this.UNSAFE_componentWillMount = this.UNSAFE_componentWillMount.bind(this);
-		this.UNSAFE_componentWillReceiveProps =
-			this.UNSAFE_componentWillReceiveProps.bind(this);
+	constructor(props) {
+		super(props);
 		this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+		this.state = ThreadListScrollTooltip.stateForProps(props);
 	}
 
 	static initClass() {
@@ -27,27 +25,28 @@ class ThreadListScrollTooltip extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
-		return this.setupForProps(this.props);
-	}
-
-	UNSAFE_componentWillReceiveProps(newProps) {
-		return this.setupForProps(newProps);
+	// Before shouldComponentUpdate, which only looks at the index in state.
+	static getDerivedStateFromProps(props) {
+		return ThreadListScrollTooltip.stateForProps(props);
 	}
 
 	shouldComponentUpdate(_newProps, newState) {
 		return (this.state != null ? this.state.idx : undefined) !== newState.idx;
 	}
 
-	setupForProps(_props) {
+	setupForProps(props) {
+		return this.setState(ThreadListScrollTooltip.stateForProps(props));
+	}
+
+	static stateForProps(props) {
 		const idx = Math.floor(
-			(ThreadListStore.dataSource().count() / this.props.totalHeight) *
-				this.props.viewportCenter,
+			(ThreadListStore.dataSource().count() / props.totalHeight) *
+				props.viewportCenter,
 		);
-		return this.setState({
+		return {
 			idx,
 			item: ThreadListStore.dataSource().get(idx),
-		});
+		};
 	}
 
 	render() {

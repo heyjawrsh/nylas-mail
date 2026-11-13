@@ -49,11 +49,14 @@ export default class ComposerHeader extends React.Component {
 		this.state = this._initialStateForDraft(this.props.draft, props);
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (this.props.session !== nextProps.session) {
-			this.setState(this._initialStateForDraft(nextProps.draft, nextProps));
-		} else {
-			this._ensureFilledFieldsEnabled(nextProps.draft);
+	// A new session starts the header over; a new draft in the same session
+	// only turns on fields that now have content. Gated on the draft, since
+	// _ensureFilledFieldsEnabled sets state whenever cc or bcc is filled.
+	componentDidUpdate(prevProps) {
+		if (prevProps.session !== this.props.session) {
+			this.setState(this._initialStateForDraft(this.props.draft, this.props));
+		} else if (prevProps.draft !== this.props.draft) {
+			this._ensureFilledFieldsEnabled(this.props.draft);
 		}
 	}
 
