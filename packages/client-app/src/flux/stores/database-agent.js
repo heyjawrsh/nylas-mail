@@ -4,27 +4,12 @@ const dbs = {};
 const deathDelay = 5000;
 let deathTimer = setTimeout(() => process.exit(0), deathDelay);
 
+// better-sqlite3 opens synchronously and has no open/close events.
 const getDatabase = (dbpath) => {
-	if (dbs[dbpath]) {
-		return dbs[dbpath].openPromise;
+	if (!dbs[dbpath]) {
+		dbs[dbpath] = new Sqlite3(dbpath, {});
 	}
-
-	let openResolve = null;
-
-	dbs[dbpath] = new Sqlite3(dbpath, {});
-	dbs[dbpath].on("close", (err) => {
-		console.error(err);
-		process.exit(1);
-	});
-	dbs[dbpath].on("open", () => {
-		openResolve(dbs[dbpath]);
-	});
-
-	dbs[dbpath].openPromise = new Promise((resolve) => {
-		openResolve = resolve;
-	});
-
-	return dbs[dbpath].openPromise;
+	return Promise.resolve(dbs[dbpath]);
 };
 
 process.on("message", (m) => {

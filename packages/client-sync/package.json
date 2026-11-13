@@ -4,6 +4,12 @@
 	"private": true,
 	"description": "The local sync engine for Nylas Mail",
 	"main": "./main.js",
+	"engines": {
+		"nylas": "*"
+	},
+	"windowTypes": {
+		"work": true
+	},
 	"scripts": {
 		"test": "vitest run --coverage"
 	},

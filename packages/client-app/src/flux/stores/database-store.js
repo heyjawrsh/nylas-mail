@@ -30,6 +30,12 @@ import {
 const debug = createDebug("app:RxDB");
 const debugVerbose = createDebug("app:RxDB:all");
 
+// The agent is forked as its own process, so it runs from source rather than
+// the renderer bundle (which lives in static/, where __filename points).
+// resourcePath is the app root in dev and app.asar when packaged.
+export const databaseAgentPath = (resourcePath) =>
+	path.join(resourcePath, "src", "flux", "stores", "database-agent.js");
+
 const DatabaseVersion = "23";
 const DatabasePhase = {
 	Setup: "setup",
@@ -443,7 +449,7 @@ class DatabaseStore extends NylasStore {
 		if (!this._agent) {
 			this._agentOpenQueries = {};
 			this._agent = childProcess.fork(
-				path.join(path.dirname(__filename), "database-agent.js"),
+				databaseAgentPath(NylasEnv.getLoadSettings().resourcePath),
 				[],
 				{
 					silent: true,

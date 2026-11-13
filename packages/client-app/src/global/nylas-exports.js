@@ -802,7 +802,16 @@ lazyLoad(`ContenteditableExtension`, () =>
 );
 
 // 3rd party libraries
-lazyLoadWithGetter(`Rx`, () => nodeRequire("rxjs"));
+// rx-lite, the copy nylas-observables extends with fromQuery, fromStore & co.
+// In the bundle both requires are literal, so they get the bundled instances.
+lazyLoadWithGetter(`Rx`, () => {
+	if (typeof require !== "undefined" && require.resolve) {
+		require("./nylas-observables.js");
+		return require("rx-lite");
+	}
+	nodeRequire("./nylas-observables.js");
+	return nodeRequire("rx-lite");
+});
 lazyLoadWithGetter(`React`, () => nodeRequire("react"));
 lazyLoadWithGetter(`Reflux`, () => nodeRequire("reflux"));
 lazyLoadWithGetter(`ReactDOM`, () => nodeRequire("react-dom"));
