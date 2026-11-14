@@ -82,7 +82,7 @@ module.exports = APMWrapper = class APMWrapper {
 			callback,
 		);
 
-		return handleProcessErrors(apmProcess, errorMessage, callback);
+		return handleListErrors(apmProcess, errorMessage, { dev: [], user: [] }, callback);
 	}
 
 	loadFeatured(options, callback) {
@@ -101,7 +101,7 @@ module.exports = APMWrapper = class APMWrapper {
 			errorMessage,
 			callback,
 		);
-		return handleProcessErrors(apmProcess, errorMessage, callback);
+		return handleListErrors(apmProcess, errorMessage, [], callback);
 	}
 
 	loadOutdated(callback) {
@@ -117,7 +117,7 @@ module.exports = APMWrapper = class APMWrapper {
 			errorMessage,
 			callback,
 		);
-		return handleProcessErrors(apmProcess, errorMessage, callback);
+		return handleListErrors(apmProcess, errorMessage, [], callback);
 	}
 
 	loadPackage(packageName, callback) {
@@ -440,5 +440,17 @@ const createProcessError = (message, processError) => {
 var handleProcessErrors = (apmProcess, message, callback) =>
 	apmProcess.onWillThrowError(({ error, handle }) => {
 		handle();
+		return callback(createProcessError(message, error));
+	});
+
+// Builds no longer ship apm, so a missing binary means there is nothing to
+// list. List commands resolve empty rather than fail; installs still fail.
+const handleListErrors = (apmProcess, message, empty, callback) =>
+	apmProcess.onWillThrowError(({ error, handle }) => {
+		handle();
+		if (error.code === "ENOENT") {
+			console.warn(`${message} apm isn't installed.`);
+			return callback(null, empty);
+		}
 		return callback(createProcessError(message, error));
 	});

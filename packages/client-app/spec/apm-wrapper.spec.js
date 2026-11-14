@@ -107,6 +107,24 @@ describe("APMWrapper package commands and availability checks", () => {
 	});
 
 
+	it("lists nothing when apm isn't installed", () => {
+		const missing = Object.assign(new Error("spawn /app/apm ENOENT"), { code: "ENOENT", syscall: "spawn /app/apm" });
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+		wrapper.runCommandReturningPackages = vi.fn(() => ({ onWillThrowError: (handler) => handler({ error: missing, handle: vi.fn() }) }));
+		const installed = vi.fn(); wrapper.loadInstalled(installed);
+		const featured = vi.fn(); wrapper.loadFeatured({}, featured);
+		expect(installed).toHaveBeenCalledWith(null, { dev: [], user: [] });
+		expect(featured).toHaveBeenCalledWith(null, []);
+		expect(warn).toHaveBeenCalled(); warn.mockRestore();
+	});
+
+	it("still fails an install when apm isn't installed", () => {
+		const missing = Object.assign(new Error("spawn /app/apm ENOENT"), { code: "ENOENT", syscall: "spawn /app/apm" });
+		wrapper.runCommandReturningPackages = vi.fn(() => ({ onWillThrowError: (handler) => handler({ error: missing, handle: vi.fn() }) }));
+		const callback = vi.fn(); wrapper.loadPackage("missing", callback);
+		expect(callback.mock.calls[0][0]).toBeInstanceOf(Error);
+	});
+
 	it("converts process startup errors into command errors", () => {
 		wrapper.runCommandReturningPackages = vi.fn(() => ({ onWillThrowError: (handler) => handler({ error: new Error("spawn ENOENT"), handle: vi.fn() }) }));
 		const callback = vi.fn(); wrapper.loadPackage("missing", callback);

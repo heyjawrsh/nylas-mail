@@ -10,11 +10,6 @@
 		"note": "the network half of the nylas:// CORS failure above"
 	},
 	{
-		"match": "Cannot read properties of undefined \\(reading 'killed'\\)",
-		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/17",
-		"note": "BufferedProcess at main-window startup"
-	},
-	{
 		"match": "ENOENT: no such file or directory, watch '[^']+/keys/(private|public)'",
 		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/22",
 		"note": "keybase's key store calls watch() before its async mkdir of the key dirs finishes; Linux watches each subdir, so it throws"

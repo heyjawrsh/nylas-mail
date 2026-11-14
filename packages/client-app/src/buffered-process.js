@@ -262,7 +262,7 @@ module.exports = BufferedProcess = class BufferedProcess {
 		let stderrClosed = true;
 		let processExited = true;
 		let exitCode = 0;
-		const triggerExitCallback = function () {
+		const triggerExitCallback = () => {
 			if (this.killed) {
 				return;
 			}
