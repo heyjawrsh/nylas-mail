@@ -1,6 +1,9 @@
 name: dist
 # Unsigned pre-release packages for macOS, Windows and Linux. Each OS builds
 # on its own runner, so native modules compile natively (no cross-compiling).
+# Linux builds in the pinned Ubuntu 22.04 builder image with native modules
+# from source, and dist:linux fails a package that needs a glibc newer than
+# 2.35 (scripts/check-glibc-floor.mjs, #21).
 # dist:<os> runs the public-build check (scripts/check-public-build.mjs) on
 # dist/ after the build, so a package with licensed fonts or crash upload
 # turned on fails the job.
@@ -26,8 +29,6 @@ jobs:
             target: mac
           - os: windows-latest
             target: win
-          - os: ubuntu-latest
-            target: linux
     runs-on: ${{ matrix.os }}
     env:
       # unsigned: never pick up a signing identity from the runner
@@ -50,5 +51,29 @@ jobs:
             packages/client-app/dist/*.dmg
             packages/client-app/dist/*.zip
             packages/client-app/dist/*.exe
+
+  linux:
+    runs-on: ubuntu-latest
+    # The same digest as e2e/linux-docker.sh and scripts/dist-linux-docker.sh
+    # (spec/linux-builder-image.spec.js fails if they drift). Ubuntu 22.04,
+    # glibc 2.35, with Node 24 and objdump.
+    container:
+      image: electronuserland/builder@sha256:22c93521ff6ea682e7ef153bb4846d90b769aa3b3f3f3be9ec9090aabc3e877c
+    env:
+      # unsigned: never pick up a signing identity from the runner
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      # link native modules against this image's glibc, not a prebuild's
+      npm_config_build_from_source: "true"
+    steps:
+      - uses: actions/checkout@v5
+      # pnpm's version comes from package.json's packageManager
+      - run: corepack enable
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter nylas-mail dist:linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nylas-mail-linux
+          if-no-files-found: error
+          path: |
             packages/client-app/dist/*.AppImage
             packages/client-app/dist/*.deb
