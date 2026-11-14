@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const nodeRequire = createRequire(import.meta.url);
 const originalJsLoader = nodeRequire.extensions[".js"];
@@ -53,17 +53,7 @@ const m = vi.hoisted(() => {
 		last: (items) => items[items.length - 1],
 		isNumber: (value) => typeof value === "number",
 	};
-	const nockChains = [];
-	const nock = vi.fn((root) => {
-		const chain = { root };
-		for (const method of ["persist", "filteringPath", "get", "filteringRequestBody", "put", "post", "times", "socketDelay", "reply", "replyWithError"]) {
-			chain[method] = vi.fn(() => chain);
-		}
-		nockChains.push(chain);
-		return chain;
-	});
-	nock.restore = vi.fn(); nock.cleanAll = vi.fn(() => "cleaned");
-	return { path, files, fs, babel, coffee, typescript, sourceMapSupport, Actions, databaseStore, DatabaseChangeRecord, Utils, ipcRenderer, remote, electron, Disposable, underscore, nock, nockChains };
+	return { path, files, fs, babel, coffee, typescript, sourceMapSupport, Actions, databaseStore, DatabaseChangeRecord, Utils, ipcRenderer, remote, electron, Disposable, underscore };
 });
 
 vi.mock("node:path", () => ({ default: m.path, ...m.path }));
@@ -78,8 +68,6 @@ vi.mock("../src/flux/models/utils.js", () => ({ default: m.Utils, ...m.Utils }))
 vi.mock("electron", () => ({ default: m.electron, ...m.electron }));
 vi.mock("@electron/remote", () => ({ default: m.remote, ...m.remote, remote: m.remote }));
 vi.mock("event-kit", () => ({ default: { Disposable: m.Disposable }, Disposable: m.Disposable }));
-vi.mock("nock", () => ({ default: m.nock, ...m.nock }));
-vi.mock("../src/flux/nylas-api.js", () => ({ default: { APIRoot: "https://api.test" }, APIRoot: "https://api.test" }));
 
 globalThis.NylasEnv = {
 	isWorkWindow: vi.fn(() => true), isEmptyWindow: vi.fn(() => false), inSpecMode: vi.fn(() => true), inDevMode: vi.fn(() => false),
@@ -104,6 +92,19 @@ const managerImport = await import("../src/menu-manager.js");
 const MenuManager = managerImport.default || managerImport;
 const bridgeImport = await import("../src/flux/action-bridge.js");
 const ActionBridge = bridgeImport.default || bridgeImport;
+// chaos-monkey.js loads nylas-api.js with a native require(), which vi.mock
+// can't reach. Left alone, that pulls the real API stack into the worker,
+// and it rejects with a jsdom NetworkError after the tests finish. Seed the
+// require cache with the one field chaos-monkey reads instead.
+{
+	const Module = nodeRequire("node:module");
+	const file = nodeRequire.resolve("../src/flux/nylas-api.js");
+	const stub = new Module(file);
+	stub.filename = file;
+	stub.loaded = true;
+	stub.exports = { default: { APIRoot: "https://api.test" } };
+	Module._cache[file] = stub;
+}
 const chaosImport = await import("../src/chaos-monkey.js");
 const ChaosMonkey = chaosImport.default || chaosImport;
 
@@ -148,6 +149,15 @@ describe("action bridge broadcasts", () => {
 });
 
 describe("chaos monkey API failures", () => {
-	beforeEach(() => { vi.clearAllMocks(); m.nockChains.length = 0; });
-	it("persists all interceptors by default", () => { ChaosMonkey.unleashOnAPI(); expect(m.nockChains.every((chain) => chain.persist.mock.calls.length === 1)).toBe(true); });
+	// chaos-monkey.js loads nock with require(), which vi.mock can't reach, so
+	// these tests drive the real nock and must clear its interceptors after.
+	const nock = nodeRequire("nock");
+	beforeEach(() => { vi.clearAllMocks(); if (!nock.isActive()) nock.activate(); });
+	afterEach(() => { ChaosMonkey.goHome(); expect(nock.pendingMocks()).toEqual([]); });
+	it("persists all interceptors by default", () => {
+		ChaosMonkey.unleashOnAPI();
+		const pending = nock.pendingMocks();
+		expect(pending).toHaveLength(3);
+		for (const method of ["GET", "PUT", "POST"]) expect(pending.some((mock) => mock.startsWith(`${method} https://api.test`))).toBe(true);
+	});
 });

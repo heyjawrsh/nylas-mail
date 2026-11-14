@@ -73,7 +73,7 @@ globalThis.NylasEnv = {
 	store: () => ({ get: () => ({}), set: () => {}, onDidChange: () => ({ dispose: () => {} }) }),
 	isMainWindow: vi.fn(() => true),
 	getWindowType: vi.fn(() => 'root'),
-	getLoadSettings: vi.fn(() => ({ windowType: 'root' })),
+	getLoadSettings: vi.fn(() => ({ windowType: 'root', resourcePath: packageRoot })),
 	loadTime: 0,
 	keymaps: {
 		add: vi.fn(),

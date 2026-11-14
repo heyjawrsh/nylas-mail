@@ -133,7 +133,7 @@ describe("WindowEventHandler unload lifecycle", () => {
 		expect(m.storeDimensions).not.toHaveBeenCalled();
 	});
 	it("finishes a delayed unload after its completion callback runs", () => {
-		const finished = vi.spyOn(handler, "runUnloadFinished"); let complete;
+		const finished = vi.spyOn(handler, "runUnloadFinished").mockImplementation(() => {}); let complete;
 		handler.addUnloadCallback((done) => { complete = done; return false; });
 		handler.runUnloadCallbacks(); complete(); expect(finished).toHaveBeenCalledOnce();
 	});

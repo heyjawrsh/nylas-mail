@@ -106,9 +106,11 @@ describe("TaskQueue processing and sequencing", () => {
 	it("ignores a task already being processed", () => {
 		const task = new Task(); task.queueState.isProcessing = true; expect(queue._processTask(task)).toBeUndefined(); expect(task.runRemote).not.toHaveBeenCalled();
 	});
-	it("sets the processing flag before remote work", () => {
-		let observed; const task = new Task(); task.runRemote.mockImplementation(() => { observed = task.queueState.isProcessing; return Promise.resolve(Task.Status.Success); }); queue._queue = [task]; queue._processTask(task);
-		expect(observed).toBe(true);
+	it("sets the processing flag before remote work", async () => {
+		let observed; const task = new Task(); task.runRemote.mockImplementation(() => { observed = task.queueState.isProcessing; return Promise.resolve(Task.Status.Success); }); queue._queue = [task];
+		queue.dequeue = vi.fn(); queue._updateSoon = vi.fn();
+		await queue._processTask(task);
+		expect(observed).toBe(true); expect(queue.dequeue).toHaveBeenCalledWith(task);
 	});
 	it("starts periodic updates while a task is processing", () => {
 		vi.useFakeTimers(); const task = new Task(); task.queueState.isProcessing = true; queue._queue = [task]; queue._ensurePeriodicUpdates(); expect(vi.getTimerCount()).toBe(1);
