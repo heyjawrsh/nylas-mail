@@ -2,7 +2,11 @@
 // nylas-mail dist:<os>`): build the unsigned packages for one OS, then rebuild
 // the workspace's native modules for the host. The mac x64 leg rebuilds them
 // in place, so the restore runs even when the build fails. A good build is
-// then checked by scripts/check-public-build.mjs.
+// then checked by scripts/check-public-build.mjs, and a Linux package also by
+// scripts/check-glibc-floor.mjs (#21).
+//
+// `linux` only runs on a Linux host. On a mac use scripts/dist-linux-docker.sh,
+// which builds in the pinned Ubuntu 22.04 builder image from a clean copy.
 //
 // `host --dir` (run as `build:e2e`) builds only the unpacked app for this OS
 // and arch (dist/mac-arm64, dist/mac, dist/linux-unpacked), which is what the
@@ -21,6 +25,13 @@ const dirOnly = flags.includes("--dir");
 if (!TARGETS[target] || flags.some((f) => f !== "--dir")) {
 	console.error(
 		`usage: dist.mjs <${Object.keys(TARGETS).join("|")}|host> [--dir]`,
+	);
+	process.exit(2);
+}
+
+if (target === "linux" && process.platform !== "linux") {
+	console.error(
+		"dist:linux: build Linux packages on Linux. On this host run packages/client-app/scripts/dist-linux-docker.sh, which builds them in the pinned Ubuntu 22.04 image.",
 	);
 	process.exit(2);
 }
@@ -55,5 +66,19 @@ const check = spawnSync(
 	{ cwd: root, stdio: "inherit" },
 );
 if (check.status !== 0) process.exit(check.status ?? 1);
+
+// A Linux package must run on glibc 2.35 (Ubuntu 22.04, #21). --dir builds
+// (build:e2e) only feed the harness on the build machine, so they skip it.
+if (target === "linux" && !dirOnly) {
+	const glibc = spawnSync(
+		process.execPath,
+		[
+			path.join(root, "scripts", "check-glibc-floor.mjs"),
+			path.join(root, "dist", "linux-unpacked"),
+		],
+		{ cwd: root, stdio: "inherit" },
+	);
+	if (glibc.status !== 0) process.exit(glibc.status ?? 1);
+}
 // a failed restore fails an otherwise good run too
 process.exit(restore.status ?? 1);
