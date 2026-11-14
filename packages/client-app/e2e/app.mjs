@@ -235,13 +235,34 @@ async function keepInBackground(app) {
 // quits the app and deletes the home.
 export async function launchApp({ seeded = true } = {}) {
 	const executable = builtAppPath();
-	const { dir, home, userDataDir } = freshHome({ seeded });
-	const app = await electron.launch({
-		executablePath: executable,
-		args: [`--user-data-dir=${userDataDir}`, ...launchArgs()],
-		env: { ...process.env, NYLAS_HOME: home },
-		timeout: 120_000,
-	});
+	// Each attempt gets its own home, so a half-started first attempt can't
+	// hold the second's database.
+	const attempt = async () => {
+		const paths = freshHome({ seeded });
+		try {
+			const app = await electron.launch({
+				executablePath: executable,
+				args: [`--user-data-dir=${paths.userDataDir}`, ...launchArgs()],
+				env: { ...process.env, NYLAS_HOME: paths.home },
+				timeout: 120_000,
+			});
+			return { app, ...paths };
+		} catch (err) {
+			rmSync(paths.dir, { recursive: true, force: true });
+			throw err;
+		}
+	};
+	let launched;
+	try {
+		launched = await attempt();
+	} catch (err) {
+		// Under qemu emulation Playwright's inspector connection sometimes drops
+		// while the app boots. Retry that once; any other launch failure, or a
+		// second drop, fails the test.
+		if (!/socket hang up/.test(err.message)) throw err;
+		launched = await attempt();
+	}
+	const { app, dir, home } = launched;
 	if (process.platform === "darwin" && process.env.E2E_FOREGROUND !== "1") {
 		await keepInBackground(app);
 	}
@@ -347,6 +368,9 @@ export async function fixWindowSize(run, page) {
 	await win.evaluate((w, size) => {
 		w.setContentSize(size.width, size.height);
 		w.center();
+		// The work window is never shown, and a hidden window paints no frames
+		// to screenshot. Show it without focus.
+		if (!w.isVisible()) w.showInactive();
 	}, WINDOW_SIZE);
 	await evaluate(
 		page,
