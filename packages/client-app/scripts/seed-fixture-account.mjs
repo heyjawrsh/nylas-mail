@@ -29,6 +29,7 @@ import {
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import Database from "better-sqlite3";
 import electronPath from "electron";
 
 import { waitForWindow } from "./lib/cdp.mjs";
@@ -95,33 +96,29 @@ export function fixtureConfig(account) {
 }
 
 // Folds the WAL back into edgehill.db so the seeded file stands on its own.
-// The app's other connections may hold a lock for a moment, and TRUNCATE then
-// throws "database table is locked" or reports busy (#13), so retry with
-// backoff and fall back to a PASSIVE checkpoint, which never waits on a
-// reader. Returns the mode that ran. Kept free of closures: the seed sends it
-// to the renderer as source.
-export async function checkpointWal(
-	db,
-	{ attempts = 6, delayMs = 50, sleep } = {},
-) {
-	const wait = sleep || ((ms) => new Promise((r) => setTimeout(r, ms)));
-	const isLock = (err) => /locked|busy/i.test(String(err?.message));
-	for (let i = 0; i < attempts; i++) {
-		try {
-			const [row] = db.pragma("wal_checkpoint(TRUNCATE)") || [];
-			if (!row?.busy) return "truncate";
-		} catch (err) {
-			if (!isLock(err)) throw err;
+// Runs from Node on a fresh connection once the app has exited. Inside the
+// app, DatabaseStore's own connection always has a statement or transaction
+// open, so a checkpoint there hit SQLITE_LOCKED in any mode (#13). With the
+// app gone nothing should hold the file; if something still does, say so
+// rather than ship a seed that needs its WAL.
+export function checkpointWal(dbPath, { timeout = 5000 } = {}) {
+	const db = new Database(dbPath, { timeout });
+	try {
+		const [row] = db.pragma("wal_checkpoint(TRUNCATE)");
+		if (row?.busy) {
+			throw new Error(
+				`Couldn't checkpoint ${dbPath}: another connection still has it open.`,
+			);
 		}
-		if (i < attempts - 1) await wait(delayMs * 2 ** i);
+		return row;
+	} finally {
+		db.close();
 	}
-	db.pragma("wal_checkpoint(PASSIVE)");
-	return "passive";
 }
 
 // Runs inside the work window (NylasEnv and $n are its globals). Kept free of
 // closures so it can be sent as source.
-async function seedInRenderer(account, mailbox, checkpoint) {
+async function seedInRenderer(account, mailbox) {
 	const { DatabaseStore, Thread, Message, Contact, Folder } = $n;
 	const accountId = account.id;
 	const contacts = {};
@@ -225,14 +222,12 @@ async function seedInRenderer(account, mailbox, checkpoint) {
 	});
 
 	const count = async (klass) => DatabaseStore.count(klass);
-	const result = {
+	return {
 		folders: await count(Folder),
 		contacts: await count(Contact),
 		threads: await count(Thread),
 		messages: await count(Message),
 	};
-	result.checkpoint = await checkpoint(DatabaseStore._db);
-	return result;
 }
 
 export async function seedFixtureAccount(home = defaultHome, options = {}) {
@@ -266,6 +261,7 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 	const exited = new Promise((resolve) => proc.on("exit", resolve));
 
 	let page;
+	let counts;
 	try {
 		page = await waitForWindow(port, "work", {
 			ready: "$n.DatabaseStore._open",
@@ -273,12 +269,11 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 			configDirPath: home,
 			timeout: 90_000,
 		});
-		const counts = await page.evaluate(
-			`(${seedInRenderer.toString()})(${JSON.stringify(account)}, ${JSON.stringify(mailbox)}, ${checkpointWal.toString()})`,
+		counts = await page.evaluate(
+			`(${seedInRenderer.toString()})(${JSON.stringify(account)}, ${JSON.stringify(mailbox)})`,
 		);
 		// The page goes away mid-call, so the evaluate itself may reject.
 		await page.evaluate("NylasEnv.quit()").catch(() => {});
-		return counts;
 	} catch (err) {
 		err.message += `\n--- app log (tail) ---\n${log.slice(-4000)}`;
 		proc.kill("SIGTERM");
@@ -289,6 +284,8 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 		await exited;
 		clearTimeout(timer);
 	}
+	checkpointWal(path.join(home, "edgehill.db"));
+	return { ...counts, checkpoint: "truncate" };
 }
 
 const runAsScript =

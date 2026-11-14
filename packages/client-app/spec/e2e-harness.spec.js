@@ -4,7 +4,8 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import Database from "better-sqlite3";
+import { afterEach, describe, expect, it } from "vitest";
 import {
 	compareToBaseline,
 	countViolations,
@@ -150,59 +151,50 @@ describe("known errors", () => {
 });
 
 describe("checkpointWal (#13)", () => {
-	const noWait = () => Promise.resolve();
-	const locked = () => {
-		throw new Error("database table is locked");
+	let dir;
+	const open = [];
+	const connect = (file, options) => {
+		const db = new Database(file, options);
+		open.push(db);
+		return db;
+	};
+	// An app-like database: WAL mode, rows still in the WAL, writer open.
+	const seeded = () => {
+		dir = fs.mkdtempSync(path.join(os.tmpdir(), "nylas-wal-"));
+		const file = path.join(dir, "edgehill.db");
+		const app = connect(file);
+		app.pragma("journal_mode = WAL");
+		app.pragma("wal_autocheckpoint = 0");
+		app.exec("CREATE TABLE thread (id TEXT)");
+		const insert = app.prepare("INSERT INTO thread VALUES (?)");
+		for (let i = 0; i < 25; i++) insert.run(`t${i}`);
+		return { file, app };
 	};
 
-	it("truncates when nothing holds a lock", async () => {
-		const db = { pragma: vi.fn(() => [{ busy: 0 }]) };
-		await expect(checkpointWal(db, { sleep: noWait })).resolves.toBe(
-			"truncate",
+	afterEach(() => {
+		for (const db of open.splice(0)) if (db.open) db.close();
+		if (dir) fs.rmSync(dir, { recursive: true, force: true });
+		dir = null;
+	});
+
+	it("folds the WAL into the main file so the file stands on its own", () => {
+		const { file } = seeded();
+		expect(fs.statSync(`${file}-wal`).size).toBeGreaterThan(0);
+		const row = checkpointWal(file);
+		expect(row.busy).toBe(0);
+		expect(fs.statSync(`${file}-wal`).size).toBe(0);
+		const copy = path.join(dir, "copy.db");
+		fs.copyFileSync(file, copy);
+		expect(connect(copy).prepare("SELECT count(*) AS n FROM thread").get().n).toBe(25);
+	});
+
+	it("reports clearly, not SQLITE_LOCKED, when a connection has a statement open", () => {
+		const { file, app } = seeded();
+		const rows = app.prepare("SELECT id FROM thread").iterate();
+		rows.next();
+		expect(() => checkpointWal(file, { timeout: 10 })).toThrow(
+			/another connection still has it open/,
 		);
-		expect(db.pragma).toHaveBeenCalledWith("wal_checkpoint(TRUNCATE)");
-	});
-
-	it("retries a locked TRUNCATE with backoff, then succeeds", async () => {
-		const pragma = vi
-			.fn()
-			.mockImplementationOnce(locked)
-			.mockImplementationOnce(() => [{ busy: 1 }])
-			.mockImplementation(() => [{ busy: 0 }]);
-		const waits = [];
-		const sleep = (ms) => {
-			waits.push(ms);
-			return Promise.resolve();
-		};
-		await expect(
-			checkpointWal({ pragma }, { sleep, delayMs: 10 }),
-		).resolves.toBe("truncate");
-		expect(pragma).toHaveBeenCalledTimes(3);
-		expect(waits).toEqual([10, 20]);
-	});
-
-	it("falls back to PASSIVE when the lock never clears", async () => {
-		const pragma = vi.fn((sql) => {
-			if (sql.includes("TRUNCATE")) locked();
-			return [{ busy: 0 }];
-		});
-		await expect(
-			checkpointWal({ pragma }, { sleep: noWait, attempts: 3 }),
-		).resolves.toBe("passive");
-		expect(pragma.mock.calls.map(([sql]) => sql)).toEqual([
-			"wal_checkpoint(TRUNCATE)",
-			"wal_checkpoint(TRUNCATE)",
-			"wal_checkpoint(TRUNCATE)",
-			"wal_checkpoint(PASSIVE)",
-		]);
-	});
-
-	it("rethrows an error that isn't a lock", async () => {
-		const pragma = vi.fn(() => {
-			throw new Error("disk I/O error");
-		});
-		await expect(checkpointWal({ pragma }, { sleep: noWait })).rejects.toThrow(
-			"disk I/O error",
-		);
+		rows.return();
 	});
 });
