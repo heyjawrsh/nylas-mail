@@ -8,6 +8,7 @@
  */
 import PropTypes from "prop-types";
 import React from "react";
+import { DateUtils } from "nylas-exports";
 import ThreadListStore from "./thread-list-store";
 
 class ThreadListScrollTooltip extends React.Component {

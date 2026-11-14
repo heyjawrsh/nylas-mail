@@ -186,7 +186,6 @@ describe("ThreadListScrollTooltip math", () => {
 		const date = new Date("2020-01-01T00:00:00Z");
 		const view = instance();
 		view.state = { idx: 2, item: { lastMessageReceivedTimestamp: date } };
-		globalThis.DateUtils = { shortTimeString: m.shortTimeString };
 		render(view.render());
 		expect(m.shortTimeString).toHaveBeenCalledWith(date);
 		expect(screen.getByText("Aug 27")).toBeDefined();
