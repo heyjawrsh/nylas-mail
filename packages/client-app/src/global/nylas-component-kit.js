@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+import appRootFromBaseURI from "../app-root-from-base-uri.js";
 
 const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
@@ -53,8 +54,7 @@ const requireFromSrc = (rel) => {
 	} catch (_e) {
 		let root = global.NylasEnv?.getResourcePath?.();
 		if (!root && typeof document !== "undefined") {
-			const here = new URL(".", document.baseURI).pathname;
-			root = here.replace(/\/$/, "").replace(/\/static$/, "");
+			root = appRootFromBaseURI(document.baseURI);
 		}
 		const stripped = resolved.replace(/^(?:\.\.\/)+/, "");
 		const abs2 = `${root}/src/${stripped}`;

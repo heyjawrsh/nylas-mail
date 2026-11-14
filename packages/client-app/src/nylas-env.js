@@ -1,6 +1,7 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 import { createRequire } from "node:module";
+import appRootFromBaseURI from "./app-root-from-base-uri.js";
 
 const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
@@ -24,9 +25,7 @@ const loadFromSrc = (rel, bundled) => {
 		const root =
 			global.NylasEnv?.getResourcePath?.() ??
 			(typeof document !== "undefined"
-				? new URL(".", document.baseURI).pathname
-						.replace(/\/$/, "")
-						.replace(/\/static$/, "")
+				? appRootFromBaseURI(document.baseURI)
 				: "");
 		const mod = nodeRequire(`${root}/src/${rel.replace(/^\.\//, "")}`);
 		return mod.default || mod;

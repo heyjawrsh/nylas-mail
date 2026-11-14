@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+import appRootFromBaseURI from "../app-root-from-base-uri.js";
 
 const nodeRequire =
 	typeof import.meta.url === "string" && import.meta.url.startsWith("file:")
@@ -27,8 +28,7 @@ const requireFromSrc = (rel) => {
 		if (!root && typeof document !== "undefined") {
 			// Bundled context: this file executes from <root>/static/, so the
 			// app root is the parent of the current document's directory.
-			const here = new URL(".", document.baseURI).pathname;
-			root = here.replace(/\/$/, "").replace(/\/static$/, "");
+			root = appRootFromBaseURI(document.baseURI);
 		}
 		const stripped = rel.replace(/^(?:\.\.\/)+/, "");
 		return nodeRequire(`${root}/src/${stripped}`);
