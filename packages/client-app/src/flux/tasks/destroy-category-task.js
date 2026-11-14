@@ -86,7 +86,8 @@ export default class DestroyCategoryTask extends Task {
 			}).run();
 		}
 
-		return runPromise.thenReturn(Task.Status.Success).catch(APIError, (err) => {
+		return runPromise.then(() => Task.Status.Success).catch((err) => {
+			if (!(err instanceof APIError)) throw err;
 			if (!NylasAPI.PermanentErrorCodes.includes(err.statusCode)) {
 				return Promise.resolve(Task.Status.Retry);
 			}

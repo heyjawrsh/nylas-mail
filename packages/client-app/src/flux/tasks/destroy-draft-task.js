@@ -20,7 +20,10 @@ export default class DestroyDraftTask extends BaseDraftTask {
 			.then(() =>
 				DatabaseStore.inTransaction((t) => t.unpersistModel(this.draft)),
 			)
-			.catch(BaseDraftTask.DraftNotFoundError, () => Promise.resolve());
+			.catch((err) => {
+				// A pristine draft may never have been saved; it's already gone.
+				if (!(err instanceof BaseDraftTask.DraftNotFoundError)) throw err;
+			});
 	}
 
 	performRemote() {
@@ -57,8 +60,9 @@ export default class DestroyDraftTask extends BaseDraftTask {
 				.run()
 				// We deliberately do not decrement the change count, ensuring no deltas
 				// about this object are received that could restore it.
-				.thenReturn(Task.Status.Success)
-				.catch(APIError, (err) => {
+				.then(() => Task.Status.Success)
+				.catch((err) => {
+					if (!(err instanceof APIError)) throw err;
 					NylasAPI.decrementRemoteChangeLock(Message, this.draft.serverId);
 
 					const inboxMsg = err.body?.message ? err.body.message : "";
@@ -71,7 +75,7 @@ export default class DestroyDraftTask extends BaseDraftTask {
 					if (inboxMsg.indexOf("is not a draft") >= 0) {
 						return Promise.resolve(Task.Status.Continue);
 					}
-					if (!NylasAPI.PermanentErrorCodes.inclue(err.statusCode)) {
+					if (!NylasAPI.PermanentErrorCodes.includes(err.statusCode)) {
 						return Promise.resolve(Task.Status.Retry);
 					}
 

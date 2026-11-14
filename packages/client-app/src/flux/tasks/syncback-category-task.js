@@ -95,8 +95,9 @@ export default class SyncbackCategoryTask extends Task {
 					t.persistModel(this.category),
 				);
 			})
-			.thenReturn(Task.Status.Success)
-			.catch(APIError, async (err) => {
+			.then(() => Task.Status.Success)
+			.catch(async (err) => {
+				if (!(err instanceof APIError)) throw err;
 				if (!NylasAPI.PermanentErrorCodes.includes(err.statusCode)) {
 					return Task.Status.Retry;
 				}

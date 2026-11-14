@@ -331,7 +331,7 @@ class DraftFactory {
 
 		return DatabaseStore.inTransaction((t) => {
 			return t.persistModel(draft);
-		}).thenReturn(draft);
+		}).then(() => draft);
 	}
 
 	_fromContactForReply(message) {

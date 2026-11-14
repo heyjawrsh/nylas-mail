@@ -35,7 +35,7 @@ export default class SyncbackModelTask extends Task {
 			.then(this.verifyModel)
 			.then(this.makeRequest)
 			.then(this.updateLocalModel)
-			.thenReturn(Task.Status.Success)
+			.then(() => Task.Status.Success)
 			.catch(this.handleRemoteError);
 	}
 
@@ -104,7 +104,7 @@ export default class SyncbackModelTask extends Task {
 				const changed = this.applyRemoteChangesToModel(model, responseJSON);
 				return t.persistModel(changed);
 			});
-		}).thenReturn(true);
+		}).then(() => true);
 	};
 
 	applyRemoteChangesToModel = (model, { version, id }) => {

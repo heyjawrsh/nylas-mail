@@ -308,7 +308,7 @@ class DraftEditingSession {
 				threadId: null,
 				replyToMessageId: null,
 			});
-			return this.changes.commit().thenReturn(this);
+			return this.changes.commit().then(() => this);
 		}
 		return Promise.resolve(this);
 	}

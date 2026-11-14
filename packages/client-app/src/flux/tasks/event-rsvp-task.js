@@ -50,12 +50,13 @@ export default class EventRSVPTask extends Task {
 			},
 		})
 			.run()
-			.thenReturn(Task.Status.Success)
-			.catch(APIError, (err) => {
+			.then(() => Task.Status.Success)
+			.catch((err) => {
+				if (!(err instanceof APIError)) throw err;
 				this.event.participants = this._previousParticipantsState;
 				return DatabaseStore.inTransaction((t) =>
 					t.persistModel(this.event),
-				).thenReturn(Task.Status.Failed, err);
+				).then(() => Task.Status.Failed);
 			});
 	}
 

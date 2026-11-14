@@ -8,10 +8,18 @@ const mocks = vi.hoisted(() => ({
 	persistModel: vi.fn(),
 	refreshDraftReference: vi.fn(),
 	unpersistModel: vi.fn(),
+	run: vi.fn(),
+	api: {
+		incrementRemoteChangeLock: vi.fn(),
+		decrementRemoteChangeLock: vi.fn(),
+		PermanentErrorCodes: [400, 403],
+	},
 }));
 
 vi.mock("../src/flux/tasks/task.js", () => ({
 	default: class Task {
+		static Status = { Success: "success", Continue: "continue", Retry: "retry", Failed: "failed" };
+
 		constructor() {
 			this.sequentialId = null;
 		}
@@ -51,15 +59,26 @@ vi.mock("../src/flux/tasks/change-labels-task.js", () => ({
 vi.mock("../src/flux/tasks/syncback-category-task.js", () => ({
 	default: class SyncbackCategoryTask {},
 }));
-vi.mock("../src/flux/nylas-api.js", () => ({ default: class NylasAPI {} }));
+vi.mock("../src/flux/nylas-api.js", () => ({ default: mocks.api }));
+// run() is async in the app, so it returns a native promise: the tasks
+// can't lean on Bluebird-only methods like thenReturn or a typed catch.
 vi.mock("../src/flux/nylas-api-request.js", () => ({
-	default: class NylasAPIRequest {},
+	default: class NylasAPIRequest {
+		async run() {
+			return mocks.run();
+		}
+	},
 }));
 vi.mock("../src/flux/syncback-task-api-request.js", () => ({
 	default: class SyncbackTaskAPIRequest {},
 }));
 vi.mock("../src/flux/errors.js", () => ({
-	APIError: class APIError extends Error {},
+	APIError: class APIError extends Error {
+		constructor(statusCode) {
+			super(`API ${statusCode}`);
+			this.statusCode = statusCode;
+		}
+	},
 }));
 
 import BaseDraftTask from "../src/flux/tasks/base-draft-task.js";
@@ -71,6 +90,7 @@ import Event from "../src/flux/models/event.js";
 import ChangeFolderTask from "../src/flux/tasks/change-folder-task.js";
 import ChangeLabelsTask from "../src/flux/tasks/change-labels-task.js";
 import SyncbackCategoryTask from "../src/flux/tasks/syncback-category-task.js";
+import { APIError } from "../src/flux/errors.js";
 
 beforeEach(() => {
 	vi.clearAllMocks();
@@ -178,12 +198,42 @@ describe("DestroyDraftTask", () => {
 		expect(mocks.unpersistModel).toHaveBeenCalledWith(draft);
 	});
 
-	it("surfaces a missing-draft error with the native Promise runtime", async () => {
+	it("treats a missing draft as already gone", async () => {
 		mocks.refreshDraftReference.mockRejectedValue(new BaseDraftTask.DraftNotFoundError());
-		// The source uses Bluebird's typed catch signature. Vitest runs native
-		// Promises, where the error constructor becomes the sole catch handler.
-		await expect(new DestroyDraftTask("draft-1").performLocal()).rejects.toThrow();
+		await expect(new DestroyDraftTask("draft-1").performLocal()).resolves.toBeUndefined();
 		expect(mocks.inTransaction).not.toHaveBeenCalled();
+	});
+
+	it("still rejects other local errors", async () => {
+		mocks.refreshDraftReference.mockRejectedValue(new Error("disk"));
+		await expect(new DestroyDraftTask("draft-1").performLocal()).rejects.toThrow("disk");
+	});
+
+	const synced = () => {
+		const task = new DestroyDraftTask("draft-1");
+		task.draft = { serverId: "s1", version: 2, accountId: "a1" };
+		return task;
+	};
+
+	it("succeeds when the server deletes the draft", async () => {
+		mocks.run.mockResolvedValue({});
+		await expect(synced().performRemote()).resolves.toBe("success");
+	});
+
+	it("continues when the server already deleted the draft", async () => {
+		mocks.run.mockRejectedValue(new APIError(404));
+		await expect(synced().performRemote()).resolves.toBe("continue");
+		expect(mocks.api.decrementRemoteChangeLock).toHaveBeenCalled();
+	});
+
+	it("retries a temporary server error", async () => {
+		mocks.run.mockRejectedValue(new APIError(503));
+		await expect(synced().performRemote()).resolves.toBe("retry");
+	});
+
+	it("rethrows an error that isn't from the API", async () => {
+		mocks.run.mockRejectedValue(new TypeError("boom"));
+		await expect(synced().performRemote()).rejects.toThrow("boom");
 	});
 });
 
@@ -262,6 +312,23 @@ describe("EventRSVPTask", () => {
 		await task.performLocal();
 		expect(task._previousParticipantsState).toEqual([{ email: "a@example.com", status: "no" }]);
 		expect(task._previousParticipantsState).not.toBe(event.participants);
+	});
+
+	it("succeeds when the server takes the RSVP", async () => {
+		mocks.run.mockResolvedValue({});
+		const task = new EventRSVPTask({ id: "event-1", accountId: "a1", participants: [] }, "a@example.com", "yes");
+		await expect(task.performRemote()).resolves.toBe("success");
+	});
+
+	it("restores the participants and fails on an API error", async () => {
+		mocks.run.mockRejectedValue(new APIError(400));
+		const before = [{ email: "a@example.com", status: "no" }];
+		const event = { id: "event-1", accountId: "a1", participants: [{ email: "a@example.com", status: "yes" }] };
+		const task = new EventRSVPTask(event, "a@example.com", "yes");
+		task._previousParticipantsState = before;
+		await expect(task.performRemote()).resolves.toBe("failed");
+		expect(event.participants).toBe(before);
+		expect(mocks.persistModel).toHaveBeenCalledWith(event);
 	});
 
 	it("leaves all participants unchanged when the email is absent", async () => {

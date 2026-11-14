@@ -13,10 +13,5 @@
 		"match": "ENOENT: no such file or directory, watch '[^']+/keys/(private|public)'",
 		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/22",
 		"note": "keybase's key store calls watch() before its async mkdir of the key dirs finishes; Linux watches each subdir, so it throws"
-	},
-	{
-		"match": "DraftNotFoundError",
-		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/11",
-		"note": "closing a pristine composer or popout"
 	}
 ]
