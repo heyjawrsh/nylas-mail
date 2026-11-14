@@ -31,8 +31,8 @@ export default class ReprocessMailRulesTask extends Task {
 	}
 
 	performRemote() {
-		return Promise.fromCallback(this._processAllMessages).then(() =>
-			Task.Status.Success,
+		return Promise.fromCallback(this._processAllMessages).then(
+			() => Task.Status.Success,
 		);
 	}
 

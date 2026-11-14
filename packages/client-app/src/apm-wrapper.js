@@ -82,7 +82,12 @@ module.exports = APMWrapper = class APMWrapper {
 			callback,
 		);
 
-		return handleListErrors(apmProcess, errorMessage, { dev: [], user: [] }, callback);
+		return handleListErrors(
+			apmProcess,
+			errorMessage,
+			{ dev: [], user: [] },
+			callback,
+		);
 	}
 
 	loadFeatured(options, callback) {

@@ -86,22 +86,24 @@ export default class DestroyCategoryTask extends Task {
 			}).run();
 		}
 
-		return runPromise.then(() => Task.Status.Success).catch((err) => {
-			if (!(err instanceof APIError)) throw err;
-			if (!NylasAPI.PermanentErrorCodes.includes(err.statusCode)) {
-				return Promise.resolve(Task.Status.Retry);
-			}
-			NylasAPI.decrementRemoteChangeLock(Category, this.category.serverId);
-			return DatabaseStore.inTransaction((t) =>
-				t.persistModel(this.category),
-			).then(() => {
-				NylasEnv.reportError(
-					new Error(`Deleting category responded with ${err.statusCode}!`),
-				);
-				this._notifyUserOfError(this.category, err);
-				return Promise.resolve(Task.Status.Failed);
+		return runPromise
+			.then(() => Task.Status.Success)
+			.catch((err) => {
+				if (!(err instanceof APIError)) throw err;
+				if (!NylasAPI.PermanentErrorCodes.includes(err.statusCode)) {
+					return Promise.resolve(Task.Status.Retry);
+				}
+				NylasAPI.decrementRemoteChangeLock(Category, this.category.serverId);
+				return DatabaseStore.inTransaction((t) =>
+					t.persistModel(this.category),
+				).then(() => {
+					NylasEnv.reportError(
+						new Error(`Deleting category responded with ${err.statusCode}!`),
+					);
+					this._notifyUserOfError(this.category, err);
+					return Promise.resolve(Task.Status.Failed);
+				});
 			});
-		});
 	}
 
 	_notifyUserOfError(category, err) {
