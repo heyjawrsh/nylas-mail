@@ -60,51 +60,17 @@ class PGPKeyStore extends NylasStore {
 		this._pubKeyDir = path.join(this._keyDir, "public");
 		this._privKeyDir = path.join(this._keyDir, "private");
 
-		// Create the key storage file system if it doesn't already exist
-		fs.access(this._keyDir, fs.R_OK | fs.W_OK, (err) => {
-			if (err) {
-				return fs.mkdir(this._keyDir, (err) => {
-					if (err) {
-						return console.warn(err);
-					} else {
-						return fs.mkdir(this._pubKeyDir, (err) => {
-							if (err) {
-								return console.warn(err);
-							} else {
-								return fs.mkdir(this._privKeyDir, (err) => {
-									if (err) {
-										return console.warn(err);
-									} else {
-										return this.watch();
-									}
-								});
-							}
-						});
-					}
-				});
-			} else {
-				fs.access(this._pubKeyDir, fs.R_OK | fs.W_OK, (err) => {
-					if (err) {
-						return fs.mkdir(this._pubKeyDir, (err) => {
-							if (err) {
-								return console.warn(err);
-							}
-						});
-					}
-				});
-				fs.access(this._privKeyDir, fs.R_OK | fs.W_OK, (err) => {
-					if (err) {
-						return fs.mkdir(this._privKeyDir, (err) => {
-							if (err) {
-								return console.warn(err);
-							}
-						});
-					}
-				});
-				this._populate();
-				return this.watch();
-			}
-		});
+		// Create both key dirs before watching them. Linux watches each subdir
+		// on its own, and watch() throws on a dir that isn't there yet.
+		try {
+			fs.mkdirSync(this._pubKeyDir, { recursive: true });
+			fs.mkdirSync(this._privKeyDir, { recursive: true });
+		} catch (err) {
+			console.warn(err);
+			return;
+		}
+		this._populate();
+		this.watch();
 	}
 
 	validAddress(address, isPub) {

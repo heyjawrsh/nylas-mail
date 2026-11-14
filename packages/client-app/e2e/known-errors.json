@@ -8,10 +8,5 @@
 		"match": "^Failed to load resource: net::ERR_FAILED \\(nylas://",
 		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/18",
 		"note": "the network half of the nylas:// CORS failure above"
-	},
-	{
-		"match": "ENOENT: no such file or directory, watch '[^']+/keys/(private|public)'",
-		"issue": "https://github.com/heyjawrsh/nylas-mail/issues/22",
-		"note": "keybase's key store calls watch() before its async mkdir of the key dirs finishes; Linux watches each subdir, so it throws"
 	}
 ]
