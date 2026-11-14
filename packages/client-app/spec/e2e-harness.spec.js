@@ -93,16 +93,26 @@ describe("axe baseline file", () => {
 	it("counts nodes per rule and rewrites only the window it's given", () => {
 		dir = fs.mkdtempSync(path.join(os.tmpdir(), "axe-baseline-"));
 		const file = path.join(dir, "axe-baseline.json");
-		fs.writeFileSync(file, JSON.stringify({ work: { region: 2 } }));
+		fs.writeFileSync(
+			file,
+			JSON.stringify({
+				linux: { work: { region: 2 } },
+				mac: { default: { region: 9 } },
+			}),
+		);
 		updateBaseline(
 			"default",
 			[violation("region", [".a"]), violation("button-name", [".b", ".c"])],
 			file,
+			"linux",
 		);
-		expect(readBaseline(file)).toEqual({
+		expect(readBaseline(file, "linux")).toEqual({
 			default: { "button-name": 2, region: 1 },
 			work: { region: 2 },
 		});
+		// Another OS's entry is untouched.
+		expect(readBaseline(file, "mac")).toEqual({ default: { region: 9 } });
+		expect(readBaseline(file, "windows")).toEqual({});
 		expect(countViolations([])).toEqual({});
 	});
 });

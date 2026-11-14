@@ -1,49 +1,107 @@
 {
-	"calendar": {
-		"html-has-lang": 1,
-		"region": 1
+	"linux": {
+		"calendar": {
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"composer": {
+			"color-contrast": 3,
+			"html-has-lang": 1,
+			"image-alt": 3,
+			"label": 1,
+			"region": 7
+		},
+		"default": {
+			"color-contrast": 4,
+			"html-has-lang": 1,
+			"image-alt": 3,
+			"region": 28
+		},
+		"onboarding": {
+			"html-has-lang": 1,
+			"image-alt": 2,
+			"region": 2
+		},
+		"print": {
+			"color-contrast": 1,
+			"document-title": 1,
+			"html-has-lang": 1,
+			"landmark-one-main": 1,
+			"region": 2
+		},
+		"SalesforceObjectForm": {
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"scheduler-calendar": {
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"thread-popout": {
+			"color-contrast": 10,
+			"frame-title": 1,
+			"html-has-lang": 1,
+			"region": 7
+		},
+		"work": {
+			"html-has-lang": 1,
+			"region": 2
+		}
 	},
-	"composer": {
-		"color-contrast": 3,
-		"html-has-lang": 1,
-		"image-alt": 3,
-		"label": 1,
-		"region": 7
-	},
-	"default": {
-		"color-contrast": 4,
-		"html-has-lang": 1,
-		"image-alt": 3,
-		"region": 28
-	},
-	"onboarding": {
-		"html-has-lang": 1,
-		"image-alt": 2,
-		"region": 2
-	},
-	"print": {
-		"color-contrast": 1,
-		"document-title": 1,
-		"html-has-lang": 1,
-		"landmark-one-main": 1,
-		"region": 2
-	},
-	"SalesforceObjectForm": {
-		"html-has-lang": 1,
-		"region": 1
-	},
-	"scheduler-calendar": {
-		"html-has-lang": 1,
-		"region": 1
-	},
-	"thread-popout": {
-		"color-contrast": 10,
-		"frame-title": 1,
-		"html-has-lang": 1,
-		"region": 7
-	},
-	"work": {
-		"html-has-lang": 1,
-		"region": 2
+	"mac": {
+		"calendar": {
+			"button-name": 3,
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"composer": {
+			"button-name": 3,
+			"color-contrast": 3,
+			"html-has-lang": 1,
+			"image-alt": 3,
+			"label": 1,
+			"region": 7
+		},
+		"default": {
+			"button-name": 3,
+			"color-contrast": 7,
+			"html-has-lang": 1,
+			"image-alt": 3,
+			"region": 29
+		},
+		"onboarding": {
+			"html-has-lang": 1,
+			"image-alt": 2,
+			"region": 2
+		},
+		"print": {
+			"color-contrast": 1,
+			"document-title": 1,
+			"html-has-lang": 1,
+			"landmark-one-main": 1,
+			"region": 2
+		},
+		"SalesforceObjectForm": {
+			"button-name": 3,
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"scheduler-calendar": {
+			"button-name": 3,
+			"html-has-lang": 1,
+			"region": 1
+		},
+		"thread-popout": {
+			"button-name": 3,
+			"color-contrast": 10,
+			"frame-title": 1,
+			"html-has-lang": 1,
+			"region": 7
+		},
+		"work": {
+			"button-name": 3,
+			"html-has-lang": 1,
+			"region": 2
+		}
 	}
 }

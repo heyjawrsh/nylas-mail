@@ -1,14 +1,24 @@
-// The axe gate. axe-baseline.json records today's violations, keyed by
-// window type, then rule id, then node count. A window fails on a rule id
-// that isn't in its baseline or a node count above it; fewer nodes pass (the
-// baseline can then be shrunk). Only `--update-axe-baseline` rewrites the
-// file, and it says so when it does.
+// The axe gate. axe-baseline.json records today's violations, keyed by OS
+// (the same names as reference/<os>/), then window type, then rule id, then
+// node count. Each OS has its own entry because the app's chrome differs:
+// macOS draws its own window-control buttons, Linux uses the system frame.
+// A window fails on a rule id that isn't in its baseline or a node count
+// above it; fewer nodes pass (the baseline can then be shrunk). Only
+// `--update-axe-baseline` rewrites the file, and only this OS's entry.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const axeBaselinePath = path.join(here, "axe-baseline.json");
+export const OS_NAME = { linux: "linux", darwin: "mac", win32: "windows" }[
+	process.platform
+];
+
+const sortKeys = (obj) =>
+	Object.fromEntries(
+		Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)),
+	);
 
 // { ruleId: nodeCount } for one axe result.
 export function countViolations(violations) {
@@ -52,18 +62,27 @@ export function formatFailures(windowType, failures) {
 		.join("\n");
 }
 
-export function readBaseline(file = axeBaselinePath) {
-	return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {};
+const readAll = (file) =>
+	existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {};
+
+// One OS's baseline: { windowType: { ruleId: nodeCount } }.
+export function readBaseline(file = axeBaselinePath, os = OS_NAME) {
+	return readAll(file)[os] ?? {};
 }
 
-// Writes one window's counts into the baseline file, sorted so diffs stay
-// small.
-export function updateBaseline(windowType, violations, file = axeBaselinePath) {
-	const all = readBaseline(file);
-	all[windowType] = countViolations(violations);
-	const sorted = Object.fromEntries(
-		Object.entries(all).sort(([a], [b]) => a.localeCompare(b)),
-	);
-	writeFileSync(file, `${JSON.stringify(sorted, null, "\t")}\n`);
-	return sorted[windowType];
+// Writes one window's counts into this OS's baseline, leaving other windows
+// and other OSes alone, sorted so diffs stay small.
+export function updateBaseline(
+	windowType,
+	violations,
+	file = axeBaselinePath,
+	os = OS_NAME,
+) {
+	const all = readAll(file);
+	all[os] = sortKeys({
+		...all[os],
+		[windowType]: countViolations(violations),
+	});
+	writeFileSync(file, `${JSON.stringify(sortKeys(all), null, "\t")}\n`);
+	return all[os][windowType];
 }
