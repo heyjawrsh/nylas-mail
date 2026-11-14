@@ -16,7 +16,9 @@ set -euo pipefail
 
 here="$(CDPATH= cd -- "$(dirname "$0")" >/dev/null && pwd)"
 repo="$(git -C "$here" rev-parse --show-toplevel)"
-image="${E2E_DOCKER_IMAGE:-electronuserland/builder:latest}"
+# Pinned by digest so the Linux references and axe baseline don't drift with
+# the image's fonts and libraries (the 2026-10-24 build of :latest).
+image="${E2E_DOCKER_IMAGE:-electronuserland/builder@sha256:22c93521ff6ea682e7ef153bb4846d90b769aa3b3f3f3be9ec9090aabc3e877c}"
 work="$(mktemp -d "${TMPDIR:-/tmp}/nylas-e2e-linux.XXXXXX")"
 trap 'rm -rf "$work"' EXIT
 
@@ -25,12 +27,15 @@ git -C "$repo" archive HEAD | tar -x -C "$work"
 harness_args=""
 for arg in "$@"; do harness_args+=" $(printf '%q' "$arg")"; done
 
-# Root in the container needs --no-sandbox; under qemu emulation (an arm64
-# host) the GPU process only starts with the other three flags.
+# The unpacked app's chrome-sandbox isn't setuid, so it needs --no-sandbox;
+# under qemu emulation (an arm64 host) the GPU process only starts with the
+# other three flags. Native modules build from source so they link against
+# this image's glibc rather than the prebuilt binaries' newer one (#21).
 docker run --rm --platform linux/amd64 \
 	-v "$work:/project" \
 	-v nylas-e2e-pnpm-store:/pnpm-store \
 	-e npm_config_store_dir=/pnpm-store \
+	-e npm_config_build_from_source=true \
 	-w /project \
 	-e CI=1 \
 	-e E2E_LAUNCH_ARGS="--no-sandbox --disable-gpu --in-process-gpu --no-zygote" \
@@ -44,9 +49,15 @@ docker run --rm --platform linux/amd64 \
 		# GTK 3 and a few desktop libraries that list leaves out.
 		pnpm --filter nylas-mail exec playwright install-deps chromium
 		apt-get install -y --no-install-recommends libgtk-3-0 libnotify4 libxss1 libxtst6 libsecret-1-0
+		# CI runs the harness as an ordinary user, and Electron refuses some
+		# child processes as root, so run it as one here too.
+		useradd -m e2e
+		chown -R e2e /project
 		status=0
-		xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' \
-			pnpm --filter nylas-mail e2e --$harness_args || status=\$?
+		cd /project/packages/client-app
+		runuser -u e2e -- env HOME=/home/e2e \
+			xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' \
+			node e2e/run.mjs$harness_args || status=\$?
 		exit \$status
 	" || status=$?
 

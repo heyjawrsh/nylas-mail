@@ -74,13 +74,6 @@ const declareOptions = (argv) => {
 		.boolean("b")
 		.describe("b", "Run in benchmark mode.");
 	options
-		.alias("S", "smoke")
-		.boolean("S")
-		.describe(
-			"S",
-			"Boot, wait for the main window + sync backend, then exit 0.",
-		);
-	options
 		.alias("t", "test")
 		.boolean("t")
 		.describe(
@@ -147,7 +140,6 @@ const parseCommandLine = (argv) => {
 	const benchmarkMode = args.benchmark;
 	const logFile = args["log-file"];
 	const specMode = args.test;
-	const smokeMode = args.smoke || process.env.NYLAS_SMOKE === "1";
 	const jUnitXmlPath = args["junit-xml"];
 	const safeMode = args.safe;
 	const background = args.background;
@@ -193,7 +185,6 @@ const parseCommandLine = (argv) => {
 		background,
 		logFile,
 		specMode,
-		smokeMode,
 		benchmarkMode,
 		jUnitXmlPath,
 		safeMode,
@@ -260,19 +251,6 @@ const start = () => {
 		).default;
 		global.application = new Application();
 		global.application.start(options);
-		if (options.smokeMode) {
-			const quitWhenReady = () => {
-				// Give the window + sync backend a moment to settle, then exit 0.
-				setTimeout(() => {
-					console.log("SMOKE_PASS: app booted");
-					app.exit(0);
-				}, 5_000);
-			};
-			// Arm both paths: window-load when the renderer finishes, or a
-			// hard fallback so headless runs always terminate.
-			global.application.once("window-load", quitWhenReady);
-			setTimeout(quitWhenReady, 15_000);
-		}
 		if (!options.specMode) {
 			console.log(`App load time: ${Date.now() - global.shellStartTime}ms`);
 		}

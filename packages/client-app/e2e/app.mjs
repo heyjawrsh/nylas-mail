@@ -91,7 +91,14 @@ export async function seedTemplate(executable = builtAppPath()) {
 	try {
 		return await seedFixtureAccount(templateHome, {
 			executable,
-			args: launchArgs(),
+			// The seed drives the app over CDP, so on macOS it can keep the
+			// main window hidden instead of taking focus (see keepInBackground).
+			args: [
+				...launchArgs(),
+				...(process.platform === "darwin" && process.env.E2E_FOREGROUND !== "1"
+					? ["--background"]
+					: []),
+			],
 			userDataDir,
 		});
 	} finally {
@@ -210,6 +217,19 @@ class ErrorCollector {
 	}
 }
 
+// On macOS the app's windows would take focus from whatever the person
+// running the harness is doing. Run it as an accessory app (no dock icon) and
+// open windows without activating them; E2E_FOREGROUND=1 skips this to watch
+// a run. Linux runs are under xvfb and need neither.
+async function keepInBackground(app) {
+	await app.evaluate(({ app: electronApp, BrowserWindow }) => {
+		electronApp.setActivationPolicy("accessory");
+		BrowserWindow.prototype.show = BrowserWindow.prototype.showInactive;
+		BrowserWindow.prototype.focus = () => {};
+		electronApp.focus = () => {};
+	});
+}
+
 // Launches the built app on a fresh temporary NYLAS_HOME. Returns the
 // Playwright ElectronApplication plus the error collector and a close() that
 // quits the app and deletes the home.
@@ -222,6 +242,9 @@ export async function launchApp({ seeded = true } = {}) {
 		env: { ...process.env, NYLAS_HOME: home },
 		timeout: 120_000,
 	});
+	if (process.platform === "darwin" && process.env.E2E_FOREGROUND !== "1") {
+		await keepInBackground(app);
+	}
 	const errors = new ErrorCollector();
 	const run = { app, home, errors, known: loadKnownErrors() };
 	const watch = (page) => {
@@ -246,7 +269,7 @@ export async function launchApp({ seeded = true } = {}) {
 		log: () => log,
 		async close() {
 			const exited = new Promise((resolve) => {
-				if (proc.exitCode !== null) resolve();
+				if (proc.exitCode !== null || proc.signalCode !== null) resolve();
 				else proc.once("exit", resolve);
 			});
 			// app.close() quits through the main process, which can wait on a

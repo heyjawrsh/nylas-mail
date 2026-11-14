@@ -1,11 +1,9 @@
 {
 	"calendar": {
-		"button-name": 3,
 		"html-has-lang": 1,
 		"region": 1
 	},
 	"composer": {
-		"button-name": 3,
 		"color-contrast": 3,
 		"html-has-lang": 1,
 		"image-alt": 3,
@@ -13,11 +11,10 @@
 		"region": 7
 	},
 	"default": {
-		"button-name": 3,
-		"color-contrast": 7,
+		"color-contrast": 4,
 		"html-has-lang": 1,
 		"image-alt": 3,
-		"region": 29
+		"region": 28
 	},
 	"onboarding": {
 		"html-has-lang": 1,
@@ -32,24 +29,20 @@
 		"region": 2
 	},
 	"SalesforceObjectForm": {
-		"button-name": 3,
 		"html-has-lang": 1,
 		"region": 1
 	},
 	"scheduler-calendar": {
-		"button-name": 3,
 		"html-has-lang": 1,
 		"region": 1
 	},
 	"thread-popout": {
-		"button-name": 3,
 		"color-contrast": 10,
 		"frame-title": 1,
 		"html-has-lang": 1,
 		"region": 7
 	},
 	"work": {
-		"button-name": 3,
 		"html-has-lang": 1,
 		"region": 2
 	}

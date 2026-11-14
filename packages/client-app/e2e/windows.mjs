@@ -87,6 +87,12 @@ export const WINDOWS = [
 			return page;
 		},
 	},
+	// The next three windows open empty in this build: a toolbar and nothing
+	// else, so their ready checks can only see the window title. main-calendar's
+	// activate() is switched off upstream, composer-scheduler is filtered out
+	// by its supportedEnvs (#20), and nylas-private-salesforce is in the default
+	// core.disabledPackages. They still gate renderer errors and the toolbar's
+	// axe results. Give each a content check once its package renders again.
 	{
 		type: "calendar",
 		async open(run) {

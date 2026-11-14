@@ -2,6 +2,8 @@
 
 Goal: revive the archived Nylas Mail monorepo on a current toolchain (Node LTS, pnpm workspaces, Vitest, Biome), current dependency majors, zero CoffeeScript, coverage-gated passing tests, and current mail/auth protocols. This file is the decision log and the only allowlist for `pnpm outdated` exceptions.
 
+> The `smoke` script and the app's `--smoke` mode named below are gone. Since story 13.8 the boot gate is the Playwright harness on the built app: `pnpm --filter nylas-mail build:e2e`, then `pnpm --filter nylas-mail e2e` (see `packages/client-app/e2e/`).
+
 ## Baseline (recorded 2026-08-27, from `master` @ a6ec21617)
 
 | Fact | Value |
