@@ -39,9 +39,11 @@ docker run --rm --platform linux/amd64 \
 		corepack enable
 		pnpm install --no-frozen-lockfile
 		pnpm --filter nylas-mail build:e2e
-		# Electron's runtime libraries (nss, gtk, gbm, ...) aren't in the
-		# builder image; Chromium's list from Playwright covers them.
+		# Electron's runtime libraries aren't in the builder image. Chromium's
+		# list from Playwright covers nss, gbm and xvfb; Electron also links
+		# GTK 3 and a few desktop libraries that list leaves out.
 		pnpm --filter nylas-mail exec playwright install-deps chromium
+		apt-get install -y --no-install-recommends libgtk-3-0 libnotify4 libxss1 libxtst6 libsecret-1-0
 		status=0
 		xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' \
 			pnpm --filter nylas-mail e2e --$harness_args || status=\$?

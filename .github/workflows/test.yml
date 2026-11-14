@@ -34,8 +34,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter nylas-mail build:e2e
-      # Electron's runtime libraries and xvfb, from Playwright's Chromium list
+      # Electron's runtime libraries and xvfb: Playwright's Chromium list, plus
+      # GTK 3 and the desktop libraries Electron links that it leaves out
       - run: pnpm --filter nylas-mail exec playwright install-deps chromium
+      - run: sudo apt-get install -y --no-install-recommends libgtk-3-0 libnotify4 libxss1 libxtst6 libsecret-1-0
       - name: e2e harness under xvfb
         # Ubuntu 24.04 blocks the unprivileged user namespaces Chromium's
         # sandbox needs, and the unpacked app's chrome-sandbox isn't setuid.
