@@ -42,7 +42,7 @@ _cache[_bpPath] = { id: _bpPath, filename: _bpPath, loaded: true, exports: { def
 import APMWrapper from "../src/apm-wrapper.js";
 
 const packages = {
-	getApmPath: vi.fn(() => "/app/apm"), isPackageActive: vi.fn(),
+	getApmPath: vi.fn(() => process.execPath), isPackageActive: vi.fn(),
 	isPackageDisabled: vi.fn(), isPackageLoaded: vi.fn(), deactivatePackage: vi.fn(),
 	unloadPackage: vi.fn(), activatePackage: vi.fn(), loadPackage: vi.fn(),
 };
@@ -107,6 +107,21 @@ describe("APMWrapper package commands and availability checks", () => {
 	});
 
 
+	it("lists nothing, without spawning, when the apm path doesn't exist", () => {
+		packages.getApmPath.mockReturnValue("/nonexistent/apm.cmd");
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+		wrapper.runCommandReturningPackages = vi.fn();
+		const installed = vi.fn(); wrapper.loadInstalled(installed);
+		const featured = vi.fn(); wrapper.loadFeatured({}, featured);
+		const outdated = vi.fn(); wrapper.loadOutdated(outdated);
+		expect(wrapper.runCommandReturningPackages).not.toHaveBeenCalled();
+		expect(installed).toHaveBeenCalledWith(null, { dev: [], user: [] });
+		expect(featured).toHaveBeenCalledWith(null, []);
+		expect(outdated).toHaveBeenCalledWith(null, []);
+		expect(warn).toHaveBeenCalledOnce(); warn.mockRestore();
+		packages.getApmPath.mockReturnValue(process.execPath);
+	});
+
 	it("lists nothing when apm isn't installed", () => {
 		const missing = Object.assign(new Error("spawn /app/apm ENOENT"), { code: "ENOENT", syscall: "spawn /app/apm" });
 		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -115,7 +130,7 @@ describe("APMWrapper package commands and availability checks", () => {
 		const featured = vi.fn(); wrapper.loadFeatured({}, featured);
 		expect(installed).toHaveBeenCalledWith(null, { dev: [], user: [] });
 		expect(featured).toHaveBeenCalledWith(null, []);
-		expect(warn).toHaveBeenCalled(); warn.mockRestore();
+		warn.mockRestore();
 	});
 
 	it("still fails an install when apm isn't installed", () => {

@@ -10,6 +10,7 @@ let APMWrapper;
 const _ = require("underscore");
 const _Q = require("q");
 const semver = require("semver");
+const fs = require("node:fs");
 
 const BufferedProcess = require("./buffered-process.js");
 
@@ -76,6 +77,7 @@ module.exports = APMWrapper = class APMWrapper {
 	loadInstalled(callback) {
 		const args = ["ls", "--json"];
 		const errorMessage = "Fetching local packages failed.";
+		if (apmMissing(errorMessage)) return callback(null, { dev: [], user: [] });
 		const apmProcess = this.runCommandReturningPackages(
 			args,
 			errorMessage,
@@ -100,6 +102,7 @@ module.exports = APMWrapper = class APMWrapper {
 			args.push("--compatible", version);
 		}
 		const errorMessage = "Fetching featured packages failed.";
+		if (apmMissing(errorMessage)) return callback(null, []);
 
 		const apmProcess = this.runCommandReturningPackages(
 			args,
@@ -116,6 +119,7 @@ module.exports = APMWrapper = class APMWrapper {
 			args.push("--compatible", version);
 		}
 		const errorMessage = "Fetching outdated packages and themes failed.";
+		if (apmMissing(errorMessage)) return callback(null, []);
 
 		const apmProcess = this.runCommandReturningPackages(
 			args,
@@ -454,8 +458,23 @@ const handleListErrors = (apmProcess, message, empty, callback) =>
 	apmProcess.onWillThrowError(({ error, handle }) => {
 		handle();
 		if (error.code === "ENOENT") {
-			console.warn(`${message} apm isn't installed.`);
+			warnMissingApm(message);
 			return callback(null, empty);
 		}
 		return callback(createProcessError(message, error));
 	});
+
+let warnedMissingApm = false;
+const warnMissingApm = (message) => {
+	if (warnedMissingApm) return;
+	warnedMissingApm = true;
+	console.warn(`${message} apm isn't installed.`);
+};
+
+// On Windows apm runs through cmd.exe, so a missing apm.cmd never raises
+// ENOENT; cmd just exits 1. Check the path before spawning instead.
+const apmMissing = (message) => {
+	if (fs.existsSync(NylasEnv.packages.getApmPath())) return false;
+	warnMissingApm(message);
+	return true;
+};
