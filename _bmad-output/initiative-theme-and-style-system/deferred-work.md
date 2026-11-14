@@ -31,3 +31,15 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-remaining-packages-drop-finddomnode-and-string-refs-plan.md`
   summary: Two plugin backends are dead. keybase.io's `/_/api/1.0/user/autocomplete.json` returns 404 (keybase search finds nothing), and composer-translate's Yandex v1.5 key gets 403 "API key is invalid" (translate always shows its error dialog).
   evidence: Called from the dev app's renderer on 2026-11-13. Lookup and key.asc still return 200. Needs a replacement endpoint or provider, or removal of the feature.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-the-real-app-harness-gates-ci-plan.md`
+  summary: The seed's PASSIVE checkpoint fallback (after TRUNCATE retries run out) may throw the same SQLITE_LOCKED it is meant to absorb, so the #13 flake could return under heavy load.
+  evidence: maybe-false (medium if true). 28 seeds passed, all through TRUNCATE. To settle it, hold a lock past the ~1.5 s retry budget and see whether `wal_checkpoint(PASSIVE)` throws.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-refactor-sweep-plan.md`
+  summary: Convert the 24 remaining pre-Electron-6 showMessageBox calls (#14). 9 index reads become showMessageBoxSync; 3 callbacks become .then(({response})); application.js:80/316/731 run in main before quit or relaunch and need Sync.
+  evidence: Split from 13.9 to keep it to one goal (a clean gate). Every site is mechanical; the list comes from the 13.9 scoping pass at ac6a3807a.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-refactor-sweep-plan.md`
+  summary: css-transition-group-compat renders null for more than one child (activity-sidebar.jsx:94/109, sheet-container). It needs one CSSTransition per keyed child.
+  evidence: Split from 13.9. It predates the initiative (c9e7cd333, 2026-08-27). Fixing it needs a two-children spec plus an e2e repro with two sync activities.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-refactor-sweep-plan.md`
+  summary: app.asar ships client-sync twice. The workspace dependency (client-app package.json:31) puts it in node_modules/client-sync, and the electron-builder.yml FileSet (:42-48) copies it again. Exclude node_modules/client-sync except its nested node_modules.
+  evidence: Split from 13.9. Confirming it needs a test dist and `asar list`, plus the packaged e2e run, which is packaging work rather than cleanup.

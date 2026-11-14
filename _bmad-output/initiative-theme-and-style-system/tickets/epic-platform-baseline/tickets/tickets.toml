@@ -122,3 +122,27 @@ covers = ["R3"]
 after = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11]
 hitl = false
 risk = "low"
+
+[[entry]]
+id = 12
+type = "story"
+title = "Linux packages run on Ubuntu 22.04"
+description = "Builds the Linux packages inside the pinned Ubuntu 22.04 electronuserland/builder image, with native modules compiled from source, so the shipped sqlite3 links against glibc 2.35 rather than the prebuilt binary's 2.38 (#21). Applies to the dist workflow's Linux job and the local dist:linux path."
+verify = "The .deb built this way installs on a stock Ubuntu 22.04 image and the harness passes there, with no GLIBC_2.38 error from the work window."
+covers = ["R2"]
+after = [7, 8]
+hitl = false
+risk = "medium"
+notes = ["Added 2026-11-13 from 13.8 verification. Josh left the distro floor to the agent; Ubuntu 22.04 LTS was chosen (#21)."]
+
+[[entry]]
+id = 13
+type = "story"
+title = "Cloud-backed plugins are removed"
+description = "Removes the packages that only worked against the Nylas cloud: activity-list, composer-mail-merge, composer-scheduler, link-tracking, open-tracking, send-later, send-reminders and nylas-private-salesforce, along with their specs, the e2e windows that only they opened (scheduler-calendar, SalesforceObjectForm) and their axe baseline entries. Also makes PackageManager.loadPackage log a warning when it skips a package for its env (#20)."
+verify = "None of those packages remain, no remaining code imports them, Vitest and the harness pass, and starting the app logs no package load errors."
+covers = ["R3"]
+after = [9]
+hitl = false
+risk = "medium"
+notes = ["Added 2026-11-13. Josh approved removal; the code stays in git history if a local-only send-later or reminders is wanted later (#20). Runs before epic-token-platform so the LESS removal has eight fewer packages."]

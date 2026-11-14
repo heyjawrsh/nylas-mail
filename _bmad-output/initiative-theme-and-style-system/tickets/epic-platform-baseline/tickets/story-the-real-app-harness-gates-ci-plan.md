@@ -3,14 +3,14 @@ title: 'The real-app harness gates CI'
 type: 'feature'
 ticket: '8'
 created: '2026-11-13'
-status: 'draft'
-baseline_revision: ''
+status: 'built'
+baseline_revision: '22099e19391a4b967cbb29876aae092d84c520a0'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/epic-platform-baseline.md'
@@ -110,9 +110,37 @@ context:
 
 ## Implementation Notes
 
+- **Commits:** the implementer wrote the harness in e5cd0427a, 1c5305787 and 6664da29e. Its session ended mid Linux run, so the top-level session finished the Linux work and the review fixes in 8a860ea67, 3f0838a69 and ac6a3807a.
+- **Linux launch:** the builder image lacks Electron's runtime libraries. Playwright's `install-deps chromium` covers nss, gbm and xvfb, and GTK 3, libnotify, libxss, libxtst and libsecret are installed on top, in both the Docker script and the CI job.
+- **Docker vs CI:** prebuilt `sqlite3` needs glibc 2.38 (#21). The Docker run builds natives from source, the image is pinned by digest, and the harness runs as a non-root user, as it does in CI.
+- **Baseline:** `axe-baseline.json` is keyed by OS (`linux`, `mac`), because macOS draws its own window-control buttons (`button-name` ×3).
+- **Focus:** Josh asked that Mac runs not take screen focus. The harness runs the app as an accessory app, opens windows inactive, and starts the seed with `--background`. `E2E_FOREGROUND=1` opts out.
+- **Empty windows:** calendar, scheduler-calendar and SalesforceObjectForm open empty in this build: upstream switched off calendar's `activate()`, scheduler is filtered by `supportedEnvs` (#20), and Salesforce is disabled by default. `windows.mjs` says so.
+- **Known errors:** the `nylas://` font and image CORS errors stay listed as known errors (#18), and so does the Linux keybase watch race (#22).
+- **New issues:**
+  - #19: window opens are flaky under load and just after a rebuild.
+  - #20: cloud plugins never load.
+  - #21: glibc floor.
+  - #22: keybase watch race.
+
 ## Plan Change Log
 
 ## Review Triage Log
+
+Quick lens, iteration 0. The implementer's session ended before review, so I applied the patches myself.
+
+| # | Finding | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | `e2e/reference/linux/` not committed, and the source of axe-baseline.json is unclear | false | — | Neither was missing from the design: the Linux Docker runs had failed at launch (libnspr4, then libgtk-3), and both are written by the `--update-axe-baseline --capture-reference` Docker run, which commits them |
+| 2 | scheduler-calendar and SalesforceObjectForm ready checks pass on a blank window (title-bar text) | low | patch | The windows are blank, but the app renders them that way. Probing the built app showed `composer-scheduler` is skipped silently by `supportedEnvs` because config `env` is never set (filed #20), `nylas-private-salesforce` is in the default `core.disabledPackages`, and `main-calendar`'s `activate()` returns at once. A content check has nothing to find yet. Patch: a comment in `windows.mjs` says these windows are empty and why |
+| 3 | `launchApp().close()` hangs when the app died from a signal | low | patch | `exitCode` is null for a signalled process and `exit` has already fired; it's a one-condition fix, and a crash under test is exactly when it matters |
+| 4 | seed PASSIVE checkpoint fallback likely throws the same SQLITE_LOCKED | maybe-false | defer | 10 of 10 fresh-dir seeds and 18 harness seeds passed, all via TRUNCATE. Settling it needs a lock held past the retry budget to see whether PASSIVE throws. If true, it's medium (#13 returns under heavy load) |
+| 5 | 10-seed verification not run or recorded | false | — | Run during verification: 10 of 10, recorded under Verification |
+| 6 | app's `--smoke` mode and MODERNIZATION.md still name smoke as the gate | medium | patch | Dead code with a timer-based pass, against the "one gate" intent. The mode is removed from `main.js`/`application.js`, and MODERNIZATION.md gets a note at the top, its history left as written |
+| 7 | verify-install-location `.then` has no `.catch` | low | reject | showMessageBox rejects only if its window is destroyed mid-dialog, on a darwin, non-dev, outside-/Applications path, and the fix adds a guard |
+| 8 | `dist.mjs` passes `--arm` on 32-bit ARM hosts | low | reject | No 32-bit ARM build host is in scope, and the fix adds a mapping |
+| 9 | Docker image unpinned (`:latest`) | medium | patch | References and the axe baseline would drift with the image's fonts and libraries. Pinned by digest to the image the baseline was captured with |
+| 10 | (Josh, mid-review) Mac runs take screen focus | medium | patch | The harness now runs the app as an accessory app and opens windows inactive in the main process; the seed launch adds `--background`. `E2E_FOREGROUND=1` opts out |
 
 ## Design Notes
 
@@ -130,3 +158,16 @@ Keep the launch helper the one place that knows the app path, the temp home, lau
 - `pnpm --filter nylas-mail e2e` on the mac build -- expected: pass; with `E2E_PROBE_FAIL=1`, it fails
 - Docker Linux build, then the harness under xvfb, then `--capture-reference` -- expected: pass, with PNGs written
 - `actionlint` -- expected: exit 0
+
+**Results (2026-11-13/14):**
+- **Static checks:** `check:react`, `check:public-build`, Biome (no errors; the `.nylas-smoke-home` error is gone) and `actionlint` all exit 0.
+- **Vitest:** 3915 passed, the same 4 known unhandled errors (story 13.9 owns them).
+- **Seeds:** 10 of 10 into fresh dirs, with no `database table is locked`.
+- **Mac e2e on the built app:**
+  - 18 passed, on several runs with the machine idle.
+  - Failures came only under load or on the first launches after a rebuild (#19).
+  - `E2E_PROBE_FAIL=1` exits 1, with the deliberate error in all 9 windows.
+  - App focus stayed on the terminal through the seed and every launch.
+- **Linux in Docker:** across runs 3 to 5, every window type passed both its error test and its axe test at least once with no app errors, and the reference PNGs were written for all 9 window types. Every remaining failure was qemu's inspector socket dropping at launch, which isn't an app error. The axe baseline was stable between runs.
+- **Linux check mode (no update flags):** 18 passed with the 9 screenshot tests skipped, exit 0, which is what CI runs.
+- **CI:** not run, since nothing is pushed. Running the e2e job in GitHub is the human step.
