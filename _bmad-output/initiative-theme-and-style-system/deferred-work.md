@@ -43,3 +43,6 @@
 - source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-refactor-sweep-plan.md`
   summary: app.asar ships client-sync twice. The workspace dependency (client-app package.json:31) puts it in node_modules/client-sync, and the electron-builder.yml FileSet (:42-48) copies it again. Exclude node_modules/client-sync except its nested node_modules.
   evidence: Split from 13.9. Confirming it needs a test dist and `asar list`, plus the packaged e2e run, which is packaging work rather than cleanup.
+- source_plan: `_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/tickets/story-refactor-sweep-plan.md`
+  summary: packages-store.jsx `_onPackagesChanged` has no `.catch`, so any apm list failure other than a missing binary is an unhandled rejection in the renderer.
+  evidence: `internal_packages/plugins/lib/packages-store.jsx:215` calls `this._apm.getInstalled().then(...)` with no catch; 13.9 only stopped the missing-apm case from rejecting.

@@ -3,7 +3,7 @@ title: 'The real-app harness gates CI'
 type: 'feature'
 ticket: '8'
 created: '2026-11-13'
-status: 'built'
+status: done
 baseline_revision: '22099e19391a4b967cbb29876aae092d84c520a0'
 route: 'full'
 route_source: 'auto'

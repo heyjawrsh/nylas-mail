@@ -3,14 +3,14 @@ title: 'Refactor sweep: the gate runs clean'
 type: 'refactor'
 ticket: '9'
 created: '2026-11-14'
-status: 'ready-for-dev'
-baseline_revision: ''
+status: done
+baseline_revision: '1573f9acbef3a377bedd68d14b2caf68399e035b'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/epic-platform-baseline.md'
@@ -103,9 +103,20 @@ A few small deferred defects also remain: the tooltip's missing DateUtils import
 
 ## Implementation Notes
 
+- The NetworkError came from chaos-monkey's native `require()` of nylas-api.js, not from nock (vi.mock can't reach it). The spec seeds the require cache and drives the real nock.
+- `spec/tasks-remaining.spec.js:181` asserted the #11 bug; it now expects a missing draft to resolve. Also fixed `PermanentErrorCodes.inclue` in destroy-draft-task.
+- draft-store's `.reflect()` became `Promise.allSettled` (Bluebird 3.7.2 has it too).
+- After the checkpoint the `-wal` file stays at 0 bytes; the main file stands alone (the spec reads a copy).
+- Found, not fixed: a dotfile in keys/ hangs keybase's `_populate` (#23).
+
 ## Plan Change Log
 
 ## Review Triage Log
+
+| # | Lens | Finding | Verdict | Route | Evidence |
+|---|------|---------|---------|-------|----------|
+| 1 | quick | missing apm on Windows still rejects `getInstalled()` | medium | patch | BufferedProcess spawns `cmd.exe /s /c` on win32, so a missing `apm.cmd` exits 1, not ENOENT; `packages-store.jsx:215` has no catch, so preparing the Plugins tab leaves an unhandled rejection. |
+| 2 | quick | AC2 and AC3 (real-app runs) unverified | false | reject | Mac e2e ran on this tree: 18 passed, exit 0. The Linux Docker run is recorded under Verification. |
 
 ## Verification
 
@@ -116,3 +127,11 @@ A few small deferred defects also remain: the tooltip's missing DateUtils import
 - `pnpm --filter nylas-mail build:e2e && pnpm --filter nylas-mail e2e` -- expected: 18 passed. If the post-rebuild flake from #19 appears, rerun and record it
 - `packages/client-app/e2e/linux-docker.sh` -- expected: pass
 - seed 10 times into fresh dirs -- expected: 10 of 10
+
+**Results** (after the review patch 1e21da01e):
+- `check:react`, `check:public-build`, Biome: pass, no errors
+- Vitest: exit 0, no unhandled errors, 3932 passed
+- Mac e2e: 18 passed, 9 skipped, background mode; no #19 flake
+- Linux Docker: 18 passed (9.4m), exit 0
+- Seeds: 10 of 10 with the built app, each `checkpoint=truncate`, WAL 0 bytes
+- `known-errors.json` keeps only the two #18 entries
