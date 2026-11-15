@@ -92,3 +92,16 @@ linux:
 
 deb:
   maintainer: Joshua Butner <53810+heyjawrsh@users.noreply.github.com>
+  # Electron links libgbm and libasound, which electron-builder's default Depends omit, so the app would not start on stock Ubuntu 22.04 (#21).
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+    - libgbm1
+    - libasound2
