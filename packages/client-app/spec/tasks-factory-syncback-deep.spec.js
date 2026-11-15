@@ -51,8 +51,8 @@ const { default: SyncCategory } = await import("../src/flux/tasks/syncback-categ
 beforeEach(() => { vi.clearAllMocks(); m.requests.length = 0; m.syncRequests.length = 0; m.cp.fork.mockReturnValue(m.child); m.accountForId.mockReturnValue({ usesFolders: () => false, usesLabels: () => true }); m.db.inTransaction.mockImplementation(cb => cb({ persistModel: vi.fn(x => Promise.resolve(x)), unpersistModel: vi.fn(x => Promise.resolve(x)) })); });
 
 describe("process Task lifecycle", () => {
-	it("uses the final function as completion callback", () => { const cb = vi.fn(), t = new ProcessTask("../src/task-bootstrap.js"); t.start("a", cb); t.emitter.emit("task:completed", ["done"]); expect(cb).toHaveBeenCalledWith("done"); });
-	it("runs a once listener once", () => { const cb = vi.fn(), t = new ProcessTask("../src/task-bootstrap.js"); t.once("ready", cb); t.emitter.emit("ready", [1]); t.emitter.emit("ready", [2]); expect(cb).toHaveBeenCalledOnce(); });
+	it("uses the final function as completion callback", () => { const cb = vi.fn(), t = new ProcessTask("../src/task-bootstrap.js"); t.start("a", cb); t.emitter.emit("task:completed", ["done"]); expect(cb).toHaveBeenCalledWith("done"); t.terminate(); });
+	it("runs a once listener once", () => { const cb = vi.fn(), t = new ProcessTask("../src/task-bootstrap.js"); t.once("ready", cb); t.emitter.emit("ready", [1]); t.emitter.emit("ready", [2]); expect(cb).toHaveBeenCalledOnce(); t.terminate(); });
 	it("rejects start after termination", () => { const t = new ProcessTask("../src/task-bootstrap.js"); t.terminate(); expect(() => t.start()).toThrow("Cannot start terminated process"); });
 	it("rejects send after termination", () => { const t = new ProcessTask("../src/task-bootstrap.js"); t.terminate(); expect(() => t.send({})).toThrow("Cannot send message to terminated process"); });
 	it("emits cancellation for a live child", () => { const cb = vi.fn(), t = new ProcessTask("../src/task-bootstrap.js"); t.on("task:canceled", cb); expect(t.cancel()).toBe(true); expect(cb).toHaveBeenCalledOnce(); });

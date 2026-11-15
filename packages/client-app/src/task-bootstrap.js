@@ -49,12 +49,17 @@ const setupGlobals = () => {
 		},
 	};
 
-	global.emit = (event, ...args) => process.send({ event, args });
+	global.emit = (event, ...args) => {
+		if (!process.connected) return;
+		return process.send({ event, args });
+	};
 	global.navigator = { userAgent };
 	return (global.window = global);
 };
 
 const handleEvents = () => {
+	// Exit orphaned tasks and avoid logging into a closed IPC channel (#24).
+	process.on("disconnect", () => process.exit(0));
 	process.on("unhandledRejection", (reason, promise) =>
 		console.error(reason.stack, promise),
 	);
