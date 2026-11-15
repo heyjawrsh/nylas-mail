@@ -167,9 +167,10 @@ describe("check-glibc-floor CLI", () => {
 		writeFileSync(path.join(fixtures, "over.node"), OVER);
 		writeFileSync(path.join(fixtures, "at.so"), AT);
 		const fake = path.join(bin, "objdump");
+		// a static binary: real objdump says this and exits 1
 		writeFileSync(
 			fake,
-			`#!/bin/sh\ncat "${fixtures}/$(basename "$2")"\n`,
+			`#!/bin/sh\ncase "$2" in\n*/static) echo "objdump: $2: not a dynamic object" >&2; exit 1 ;;\n*/broken) echo "objdump: $2: file format not recognized" >&2; exit 1 ;;\nesac\ncat "${fixtures}/$(basename "$2")"\n`,
 		);
 		chmodSync(fake, 0o755);
 	});
@@ -209,6 +210,32 @@ describe("check-glibc-floor CLI", () => {
 			expect(result.stderr).toBe("");
 			expect(result.stdout).toContain("glibc floor check passed: 1 ELF files");
 			expect(result.status).toBe(0);
+		},
+	);
+
+	it.skipIf(process.platform === "win32")(
+		"passes a static binary, which needs no glibc",
+		() => {
+			const pkg = path.join(root, "linux-unpacked");
+			mkdirSync(pkg);
+			writeFileSync(path.join(pkg, "at.so"), ELF_HEADER);
+			writeFileSync(path.join(pkg, "static"), ELF_HEADER);
+			const result = run(pkg);
+			expect(result.stderr).toBe("");
+			expect(result.stdout).toContain("glibc floor check passed: 2 ELF files");
+			expect(result.status).toBe(0);
+		},
+	);
+
+	it.skipIf(process.platform === "win32")(
+		"fails loudly when objdump can't read a binary",
+		() => {
+			const pkg = path.join(root, "linux-unpacked");
+			mkdirSync(pkg);
+			writeFileSync(path.join(pkg, "broken"), ELF_HEADER);
+			const result = run(pkg);
+			expect(result.status).not.toBe(0);
+			expect(result.stderr).toContain("file format not recognized");
 		},
 	);
 

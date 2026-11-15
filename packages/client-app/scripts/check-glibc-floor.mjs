@@ -81,9 +81,13 @@ export function objdumpSymbols(file) {
 	if (result.error) {
 		throw new Error(`objdump failed on ${file}: ${result.error.message}`);
 	}
-	// objdump exits non-zero on an ELF file with no dynamic symbols (a
-	// static binary), which needs no glibc at all.
-	if (result.status !== 0 && /no dynamic symbol table/i.test(result.stderr)) {
+	// objdump exits non-zero on a static binary, which needs no glibc at all:
+	// "not a dynamic object" (esbuild's Go binaries) or "no dynamic symbol
+	// table".
+	if (
+		result.status !== 0 &&
+		/not a dynamic object|no dynamic symbol table/i.test(result.stderr)
+	) {
 		return "";
 	}
 	if (result.status !== 0) {
