@@ -30,7 +30,6 @@ import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Database from "better-sqlite3";
-import electronPath from "electron";
 
 import { waitForWindow } from "./lib/cdp.mjs";
 
@@ -247,7 +246,10 @@ export async function seedFixtureAccount(home = defaultHome, options = {}) {
 	args.push(`--remote-debugging-port=${port}`);
 	if (options.userDataDir) args.push(`--user-data-dir=${options.userDataDir}`);
 	args.push(...(options.args ?? []));
-	const proc = spawn(options.executable ?? String(electronPath), args, {
+	// Import lazily so runs against a built app never fetch the dev binary.
+	const executable =
+		options.executable ?? String((await import("electron")).default);
+	const proc = spawn(executable, args, {
 		env: { ...process.env, NYLAS_HOME: home },
 		stdio: ["ignore", "pipe", "pipe"],
 	});
