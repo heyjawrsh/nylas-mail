@@ -16,7 +16,7 @@ here="$(CDPATH= cd -- "$(dirname "$0")" >/dev/null && pwd)"
 repo="$(git -C "$here" rev-parse --show-toplevel)"
 # The same digest as e2e/linux-docker.sh and .github/workflows/dist.yml
 # (spec/linux-builder-image.spec.js fails if they drift).
-image="${DIST_DOCKER_IMAGE:-electronuserland/builder@sha256:22c93521ff6ea682e7ef153bb4846d90b769aa3b3f3f3be9ec9090aabc3e877c}"
+image="electronuserland/builder@sha256:22c93521ff6ea682e7ef153bb4846d90b769aa3b3f3f3be9ec9090aabc3e877c"
 work="$(mktemp -d "${TMPDIR:-/tmp}/nylas-dist-linux.XXXXXX")"
 trap 'rm -rf "$work"' EXIT
 

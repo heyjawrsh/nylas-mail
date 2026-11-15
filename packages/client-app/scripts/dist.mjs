@@ -1,4 +1,4 @@
-// `node scripts/dist.mjs <mac|win|linux|host> [--dir]` (run as `pnpm --filter
+// `node scripts/dist.mjs <mac|win|linux|host> [--dir|--check-host]` (run as `pnpm --filter
 // nylas-mail dist:<os>`): build the unsigned packages for one OS, then rebuild
 // the workspace's native modules for the host. The mac x64 leg rebuilds them
 // in place, so the restore runs even when the build fails. A good build is
@@ -7,6 +7,8 @@
 //
 // `linux` only runs on a Linux host. On a mac use scripts/dist-linux-docker.sh,
 // which builds in the pinned Ubuntu 22.04 builder image from a clean copy.
+// `--check-host` only runs that refusal, so predist:linux can stop before the
+// renderer build.
 //
 // `host --dir` (run as `build:e2e`) builds only the unpacked app for this OS
 // and arch (dist/mac-arm64, dist/mac, dist/linux-unpacked), which is what the
@@ -22,9 +24,10 @@ const HOSTS = { darwin: "mac", win32: "win", linux: "linux" };
 const [requested, ...flags] = process.argv.slice(2);
 const target = requested === "host" ? HOSTS[process.platform] : requested;
 const dirOnly = flags.includes("--dir");
-if (!TARGETS[target] || flags.some((f) => f !== "--dir")) {
+const FLAGS = new Set(["--dir", "--check-host"]);
+if (!TARGETS[target] || flags.some((f) => !FLAGS.has(f))) {
 	console.error(
-		`usage: dist.mjs <${Object.keys(TARGETS).join("|")}|host> [--dir]`,
+		`usage: dist.mjs <${Object.keys(TARGETS).join("|")}|host> [--dir|--check-host]`,
 	);
 	process.exit(2);
 }
@@ -35,6 +38,7 @@ if (target === "linux" && process.platform !== "linux") {
 	);
 	process.exit(2);
 }
+if (flags.includes("--check-host")) process.exit(0);
 
 const run = (command, args) =>
 	spawnSync(command, args, { cwd: root, stdio: "inherit", shell: true });

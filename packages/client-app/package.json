@@ -17,7 +17,7 @@
 		"dist:mac": "node scripts/dist.mjs mac",
 		"predist:win": "node scripts/build-renderer.js",
 		"dist:win": "node scripts/dist.mjs win",
-		"predist:linux": "node scripts/build-renderer.js",
+		"predist:linux": "node scripts/dist.mjs linux --check-host && node scripts/build-renderer.js",
 		"dist:linux": "node scripts/dist.mjs linux"
 	},
 	"dependencies": {
