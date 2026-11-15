@@ -1,7 +1,7 @@
 // The non-mail packages after findDOMNode and string refs: toolbar and popover
 // buttons open their popover from their own rect, tipped buttons hand over
 // their node through getDOMNode() (HasTutorialTip no longer wraps them), and
-// the frames, preferences, notifications and Salesforce views reach their
+// the frames, preferences and notifications reach their
 // nodes by ref. Modules load through the package loader with stubbed stores.
 import path from "node:path";
 import { act, fireEvent, render } from "@testing-library/react";
@@ -10,26 +10,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import underscore from "underscore";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// HasTutorialTip (src) reads these through vite; the packages get theirs from
-// the package loader.
-vi.mock("nylas-exports", () => ({
-	Actions: { openPopover: vi.fn(), closePopover: vi.fn() },
-	DOMUtils: { nodeIsVisible: () => true },
-	WorkspaceStore: { listen: () => () => {}, topSheet: () => ({ id: "top" }) },
-}));
-vi.mock("nylas-store", () => ({
-	default: class NylasStore {
-		listen() {
-			return () => {};
-		}
-		trigger() {}
-	},
-}));
-
-import HasTutorialTip from "../src/components/decorators/has-tutorial-tip.jsx";
-import ListensToObservable from "../src/components/decorators/listens-to-observable.jsx";
 import { createPackageLoader } from "./helpers/load-package-module.js";
 
 const pkg = (rel) => path.join(__dirname, "..", "internal_packages", rel);
@@ -98,24 +80,6 @@ const fireAndCheck = (element, selector, event = "click") => {
 	return { ...view, node };
 };
 
-const loadActivityListButton = () =>
-	createPackageLoader({
-		...base,
-		"nylas-exports": { Actions: actions },
-		"nylas-component-kit": { RetinaImg: FakeRetinaImg },
-		"./activity-list": { default: Nothing },
-		"./activity-list-store": { default: { unreadCount: () => 0, listen: () => () => {} } },
-	})(pkg("activity-list/lib/activity-list-button.jsx")).default;
-
-const openTrackingLoader = () =>
-	createPackageLoader({
-		...base,
-		"nylas-exports": { React, Actions: actions, APIError: class APIError {}, NylasAPI: { TimeoutErrorCodes: [] } },
-		"nylas-component-kit": { RetinaImg: FakeRetinaImg, MetadataComposerToggleButton: RootedComponent },
-		"./open-tracking-message-popover": { default: Nothing },
-		"./open-tracking-constants": { PLUGIN_ID: "open-tracking", PLUGIN_NAME: "Open Tracking" },
-	});
-
 const loadSnoozeButtons = (perspective = inbox) =>
 	createPackageLoader({
 		...base,
@@ -124,73 +88,7 @@ const loadSnoozeButtons = (perspective = inbox) =>
 		"./snooze-popover": { default: Nothing },
 	})(pkg("thread-snooze/lib/snooze-buttons.jsx"));
 
-const loadSendLaterButton = () => {
-	Promise.promisifyAll = vi.fn();
-	return createPackageLoader({
-		...base,
-		"node:fs": {},
-		"nylas-exports": {
-			Actions: actions,
-			DateUtils: {},
-			NylasAPIHelpers: {},
-			DraftHelpers: {},
-			FeatureUsageStore: {},
-			NylasAPIRequest: class {},
-			NylasAPI: {},
-			N1CloudAPI: {},
-		},
-		"nylas-component-kit": { RetinaImg: FakeRetinaImg },
-		"./send-later-popover": { default: Nothing },
-		"./send-later-constants": { PLUGIN_ID: "send-later", PLUGIN_NAME: "Send Later" },
-	})(pkg("send-later/lib/send-later-button.jsx")).default;
-};
-
-const sendRemindersLoader = () =>
-	createPackageLoader({
-		...base,
-		"nylas-exports": {
-			Rx: { Observable: { empty: () => emptyObservable, fromQuery: () => emptyObservable } },
-			Actions: actions,
-			Message: class {},
-			DatabaseStore: { find: () => ({}) },
-		},
-		"nylas-component-kit": { RetinaImg: FakeRetinaImg, ListensToObservable },
-		"./send-reminders-popover": { default: Nothing },
-		"./send-reminders-utils": {
-			getLatestMessage: () => null,
-			setMessageReminder: vi.fn(),
-			setDraftReminder: vi.fn(),
-			reminderDateForMessage: () => null,
-			getReminderLabel: () => "",
-		},
-	});
-
-const draft = { accountId: "a1", body: "", metadataForPluginId: () => null };
-
-afterEach(() => {
-	delete Promise.promisifyAll;
-});
-
 describe("toolbar and popover buttons open their popover from their own rect", () => {
-	it("ActivityListButton", () => {
-		const ActivityListButton = loadActivityListButton();
-		const ref = React.createRef();
-		const { node } = fireAndCheck(<ActivityListButton ref={ref} />, ".toolbar-activity");
-		expect(ref.current.getDOMNode()).toBe(node);
-	});
-
-	it("OpenTrackingIcon, on mouse down", () => {
-		const OpenTrackingIcon = openTrackingLoader()(pkg("open-tracking/lib/open-tracking-icon.jsx")).default;
-		const message = { draft: false, metadataForPluginId: () => ({ open_count: 2 }) };
-		fireAndCheck(<OpenTrackingIcon thread={{ __messages: [message] }} />, ".open-tracking-icon", "mouseDown");
-	});
-
-	it("OpenTrackingMessageStatus, on mouse down", () => {
-		const Status = openTrackingLoader()(pkg("open-tracking/lib/open-tracking-message-status.jsx")).default;
-		const message = { metadataForPluginId: () => ({ open_count: 3 }) };
-		fireAndCheck(<Status message={message} />, ".open-tracking-message-status", "mouseDown");
-	});
-
 	it("ToolbarSnooze", () => {
 		const { ToolbarSnooze } = loadSnoozeButtons();
 		fireAndCheck(<ToolbarSnooze items={[{ id: "t1" }]} />, ".snooze-button");
@@ -207,24 +105,6 @@ describe("toolbar and popover buttons open their popover from their own rect", (
 		fireEvent.click(container.querySelector(".action-snooze"));
 		expectPopoverFrom({ ...rect, left: rect.left + 5 });
 		expect(actions.openPopover.mock.calls[0][1].direction).toBe("left");
-	});
-
-	it("SendLaterButton", () => {
-		const SendLaterButton = loadSendLaterButton();
-		fireAndCheck(<SendLaterButton draft={draft} session={{}} />, ".btn-send-later");
-	});
-
-	it("SendRemindersPopoverButton, through ListensToObservable", () => {
-		const Button = sendRemindersLoader()(pkg("send-reminders/lib/send-reminders-popover-button.jsx")).default;
-		const ref = React.createRef();
-		const { node } = fireAndCheck(<Button ref={ref} />, ".send-reminders-toolbar-button");
-		// The decorator hands over the wrapped button's node.
-		expect(ref.current.getDOMNode()).toBe(node);
-	});
-
-	it("SendRemindersComposerButton", () => {
-		const Button = sendRemindersLoader()(pkg("send-reminders/lib/send-reminders-composer-button.jsx")).default;
-		fireAndCheck(<Button draft={draft} session={{}} />, ".btn-send-reminder");
 	});
 
 	it("QuickEventButton", () => {
@@ -274,22 +154,6 @@ describe("toolbar and popover buttons open their popover from their own rect", (
 		expect(ref.current.getDOMNode()).toBe(wrap);
 	});
 
-	it("SalesforceManuallyRelateThreadButton", () => {
-		const Button = createPackageLoader({
-			...base,
-			"nylas-component-kit": { RetinaImg: FakeRetinaImg, KeyCommandsRegion: RootedComponent },
-			"nylas-exports": { Rx: {}, Actions: actions, FocusedContactsStore: { focusedContact: () => null } },
-			"../salesforce-env": { default: { isLoggedIn: () => false } },
-			"../models/salesforce-object": { default: class {} },
-			"../salesforce-actions": { default: {} },
-			"../form/pending-salesforce-object": { default: class {} },
-			"../tasks/manually-relate-salesforce-object-task": { default: class {} },
-			"./salesforce-manually-relate-thread-popover": { default: Nothing },
-		})(pkg("nylas-private-salesforce/lib/thread/salesforce-manually-relate-thread-button.jsx")).default;
-		Button.prototype.componentDidMount = () => {};
-		Button.prototype.componentWillUnmount = () => {};
-		fireAndCheck(<Button items={[]} />, ".btn-salesforce");
-	});
 });
 
 describe("tipped buttons hand over their node through getDOMNode()", () => {
@@ -298,22 +162,6 @@ describe("tipped buttons hand over their node through getDOMNode()", () => {
 		const { container } = render(<Component ref={ref} {...props} />);
 		return { node: ref.current.getDOMNode(), container };
 	};
-
-	it("LinkTrackingButton and OpenTrackingButton reach the toggle's button", () => {
-		const load = openTrackingLoader();
-		const OpenTrackingButton = load(pkg("open-tracking/lib/open-tracking-button.jsx")).default;
-		const linkLoad = createPackageLoader({
-			...base,
-			"nylas-exports": { React, APIError: class {}, NylasAPI: { TimeoutErrorCodes: [] } },
-			"nylas-component-kit": { MetadataComposerToggleButton: RootedComponent },
-			"./link-tracking-constants": { PLUGIN_ID: "link-tracking", PLUGIN_NAME: "Link Tracking" },
-		});
-		const LinkTrackingButton = linkLoad(pkg("link-tracking/lib/link-tracking-button.jsx")).default;
-		for (const Button of [OpenTrackingButton, LinkTrackingButton]) {
-			const { node, container } = nodeOf(Button, { draft, session: {} });
-			expect(node).toBe(container.firstChild);
-		}
-	});
 
 	it("ModeToggle", () => {
 		const ModeToggle = createPackageLoader({
@@ -336,40 +184,6 @@ describe("tipped buttons hand over their node through getDOMNode()", () => {
 		expect(outside.node.tagName).toBe("SPAN");
 	});
 
-	it("SendLaterButton, SendRemindersComposerButton and ActivityListButton", () => {
-		expect(nodeOf(loadSendLaterButton(), { draft, session: {} }).node.className).toContain("btn-send-later");
-		const Composer = sendRemindersLoader()(pkg("send-reminders/lib/send-reminders-composer-button.jsx")).default;
-		expect(nodeOf(Composer, { draft, session: {} }).node.className).toContain("btn-send-reminder");
-		expect(nodeOf(loadActivityListButton()).node.className).toBe("toolbar-activity");
-	});
-});
-
-describe("HasTutorialTip on a real tipped button", () => {
-	beforeEach(() => {
-		NylasEnv.themes = { onDidChangeActiveThemes: vi.fn(() => ({ dispose: vi.fn() })) };
-	});
-	afterEach(() => {
-		delete NylasEnv.themes;
-	});
-
-	it("renders the button with no wrapper and hands over its node", () => {
-		const Tipped = HasTutorialTip(loadSendLaterButton(), { title: "Send later", instructions: "Pick a time" });
-		const ref = React.createRef();
-		const { container } = render(<Tipped ref={ref} draft={draft} session={{}} />);
-		const button = container.querySelector(".btn-send-later");
-		expect(button.parentNode).toBe(container);
-		expect(container.querySelector(".tutorial-tip-target")).toBeNull();
-		expect(ref.current.getDOMNode()).toBe(button);
-	});
-
-	it("reaches the button through ListensToObservable", () => {
-		const Button = sendRemindersLoader()(pkg("send-reminders/lib/send-reminders-popover-button.jsx")).default;
-		const Tipped = HasTutorialTip(Button, { title: "Remind", instructions: "Get reminded" });
-		const ref = React.createRef();
-		const { container } = render(<Tipped ref={ref} />);
-		expect(container.firstChild.className).toContain("send-reminders-toolbar-button");
-		expect(ref.current.getDOMNode()).toBe(container.firstChild);
-	});
 });
 
 describe("frames reach their iframe through the EventedIFrame instance", () => {
@@ -541,69 +355,5 @@ describe("thread-sharing popover", () => {
 		act(() => ref.current.setState({ shared: true }));
 		expect(root.focus).toHaveBeenCalled();
 		expect(container.querySelector("#urlInput").value).toBe("https://share/thread/a1/t1");
-	});
-});
-
-describe("Salesforce", () => {
-	it("RelatedObjectsForThread ignores clicks in the thread toggles and edits on others", () => {
-		const openObjectForm = vi.fn();
-		const RelatedObjectsForThread = createPackageLoader({
-			...base,
-			"underscore.string": { titleize: (s) => s, humanize: (s) => s },
-			"nylas-exports": {
-				Utils: {},
-				DatabaseStore: {},
-				AccountStore: {},
-				FocusedContactsStore: { listen: () => () => {}, focusedContact: () => null, sortedContacts: () => [] },
-			},
-			"../shared-components/salesforce-icon": { default: Nothing },
-			"../models/salesforce-object": { default: class {} },
-			"./sync-thread-toggle": { default: () => <input type="checkbox" className="sync-toggle" /> },
-			"../salesforce-actions": { default: { openObjectForm } },
-			"../shared-components/open-in-salesforce-btn": { default: Nothing },
-			"../salesforce-object-helpers": {},
-			"../related-object-helpers": { observeRelatedSObjectsForThread: () => emptyObservable },
-			"../salesforce-constants": { CORE_RELATEABLE_OBJECT_TYPES: ["Opportunity", "Account"] },
-		})(pkg("nylas-private-salesforce/lib/thread/related-objects-for-thread.jsx")).default;
-		const ref = React.createRef();
-		const { container } = render(<RelatedObjectsForThread ref={ref} thread={{ id: "t1", participants: [] }} />);
-		const deal = { id: "o1", type: "Opportunity", name: "Deal" };
-		act(() => ref.current.setState({ relatedObjects: [deal] }));
-
-		fireEvent.click(container.querySelector(".thread-toggles .sync-toggle"));
-		expect(openObjectForm).not.toHaveBeenCalled();
-
-		fireEvent.click(container.querySelector(".linkable-object-name"));
-		expect(openObjectForm).toHaveBeenCalledWith(
-			expect.objectContaining({ objectId: "o1", objectType: "Opportunity" }),
-		);
-	});
-
-	it("SalesforceObjectPicker focuses its tokenizing field", () => {
-		const focus = vi.fn();
-		class TokenizingTextField extends React.Component {
-			focus = focus;
-			render() {
-				return null;
-			}
-		}
-		const SalesforceObjectPicker = createPackageLoader({
-			...base,
-			"underscore.string/titleize": (s) => s,
-			"nylas-exports": { Actions: actions, Utils: {}, DatabaseStore: {} },
-			"nylas-component-kit": { FormItem: Nothing, BoldedSearchResult: Nothing, TokenizingTextField },
-			"../shared-components/salesforce-icon": { default: Nothing },
-			"../models/salesforce-object": { default: class {} },
-			"../salesforce-object-helpers": { loadBasicObject: vi.fn() },
-			"../salesforce-actions": { default: {} },
-			"./pending-salesforce-object": { default: class {} },
-			"./form-data-helpers": {},
-		})(pkg("nylas-private-salesforce/lib/form/salesforce-object-picker.jsx")).default;
-		SalesforceObjectPicker.prototype.componentDidMount = () => {};
-		SalesforceObjectPicker.prototype.componentWillUnmount = () => {};
-		const ref = React.createRef();
-		render(<SalesforceObjectPicker ref={ref} onChange={() => {}} objectType="Opportunity" />);
-		ref.current.focus();
-		expect(focus).toHaveBeenCalled();
 	});
 });

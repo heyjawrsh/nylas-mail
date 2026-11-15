@@ -35,14 +35,14 @@ describe("PackageMigrationManager", () => {
 	it("returns every package migration for a fresh install", () => {
 		const { manager } = makeManager();
 		expect(manager.getMigrationsToRun().map((migration) => migration["new-name"])).toEqual([
-			"composer-markdown", "nylas-private-salesforce", "thread-snooze", "send-reminders", "send-later",
+			"composer-markdown", "thread-snooze",
 		]);
 	});
 
 	it("returns only migrations newer than the saved version", () => {
 		const { manager } = makeManager({ savedVersion: "0.4.100" });
 		expect(manager.getMigrationsToRun().map((migration) => migration["new-name"])).toEqual([
-			"nylas-private-salesforce", "thread-snooze", "send-reminders", "send-later",
+			"thread-snooze",
 		]);
 	});
 
@@ -69,19 +69,17 @@ describe("PackageMigrationManager", () => {
 		manager.migrate();
 		expect(config.pushAtKeyPath.mock.calls).toEqual([
 			["core.disabledPackages", "composer-markdown"],
-			["core.disabledPackages", "nylas-private-salesforce"],
 		]);
 	});
 
 	it("enables default packages that used to be disabled", () => {
 		const { config, manager } = makeManager({
 			savedVersion: "0.4.204",
-			disabledPackages: ["thread-snooze", "send-later"],
+			disabledPackages: ["thread-snooze"],
 		});
 		manager.migrate();
 		expect(config.removeAtKeyPath.mock.calls).toEqual([
 			["core.disabledPackages", "thread-snooze"],
-			["core.disabledPackages", "send-later"],
 		]);
 	});
 

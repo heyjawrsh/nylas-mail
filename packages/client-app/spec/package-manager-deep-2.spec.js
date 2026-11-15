@@ -1,4 +1,7 @@
+import { createRequire } from "node:module";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const NativePackage = createRequire(import.meta.url)("../src/package.js");
 
 const m = vi.hoisted(() => ({
 	fs: {
@@ -210,6 +213,25 @@ describe("PackageManager deep package discovery and lifecycle", () => {
 		const manager = makeManager(); const pack = { name: "mail" }; manager.loadedPackages.mail = pack;
 		expect(manager.loadPackage("mail")).toBe(pack);
 		expect(m.packageInstances).toHaveLength(0);
+	});
+
+	it("warns and skips packages that do not support the current environment", () => {
+		const manager = makeManager();
+		manager.resolvePackagePath = vi.fn(() => "/pkgs/composer-scheduler");
+		const loadMetadata = vi.spyOn(NativePackage, "loadMetadata").mockReturnValue({
+			name: "composer-scheduler", supportedEnvs: ["staging"],
+		});
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+		try {
+			expect(manager.loadPackage("composer-scheduler")).toBeNull();
+			expect(warn).toHaveBeenCalledOnce();
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining("composer-scheduler"));
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining("staging"));
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining("production"));
+		} finally {
+			loadMetadata.mockRestore();
+			warn.mockRestore();
+		}
 	});
 
 	it("activates a loaded package after setup completes", async () => {

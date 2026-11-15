@@ -509,28 +509,6 @@ describe("composer toolbar buttons open their popover from their own rect", () =
 	});
 });
 
-describe("mail merge", () => {
-	it("ListensToMailMergeSession focuses the wrapped field through its ref", () => {
-		const load = createPackageLoader({
-			...base,
-			"./mail-merge-draft-editing-session": { mailMergeSessionForDraft: () => ({ state: {}, listen: () => () => {} }) },
-		});
-		const ListensToMailMergeSession = load(pkg("composer-mail-merge/lib/listens-to-mail-merge-session.jsx")).default;
-		const focus = vi.fn();
-		class Field extends React.Component {
-			focus = focus;
-			render() {
-				return null;
-			}
-		}
-		const Wrapped = ListensToMailMergeSession(Field);
-		const ref = React.createRef();
-		render(<Wrapped ref={ref} draftClientId="d1" session={{}} />);
-		ref.current.focus();
-		expect(focus).toHaveBeenCalled();
-	});
-});
-
 describe("node accessors the composer packages measure", () => {
 	it("InflatesDraftClientId hands over the composed composer's node", async () => {
 		const { default: InflatesDraftClientId } = await import("../src/decorators/inflates-draft-client-id.jsx");

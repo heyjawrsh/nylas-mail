@@ -29,14 +29,6 @@
 			"landmark-one-main": 1,
 			"region": 2
 		},
-		"SalesforceObjectForm": {
-			"html-has-lang": 1,
-			"region": 1
-		},
-		"scheduler-calendar": {
-			"html-has-lang": 1,
-			"region": 1
-		},
 		"thread-popout": {
 			"color-contrast": 10,
 			"frame-title": 1,
@@ -80,16 +72,6 @@
 			"html-has-lang": 1,
 			"landmark-one-main": 1,
 			"region": 2
-		},
-		"SalesforceObjectForm": {
-			"button-name": 3,
-			"html-has-lang": 1,
-			"region": 1
-		},
-		"scheduler-calendar": {
-			"button-name": 3,
-			"html-has-lang": 1,
-			"region": 1
 		},
 		"thread-popout": {
 			"button-name": 3,

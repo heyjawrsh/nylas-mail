@@ -790,17 +790,20 @@ module.exports = PackageManager = (() => {
 					let left;
 					const metadata =
 						(left = Package.loadMetadata(packagePath)) != null ? left : {};
-					if (metadata.theme) {
-						pack = new ThemePackage(packagePath, metadata);
-					} else {
-						pack = new Package(packagePath, metadata);
-					}
-
 					if (
 						metadata.supportedEnvs &&
 						!metadata.supportedEnvs.includes(NylasEnv.config.get("env"))
 					) {
+						console.warn(
+							`Skipping package '${metadata.name || name}' because its supportedEnvs [${metadata.supportedEnvs.join(", ")}] do not include the current env '${NylasEnv.config.get("env")}'`,
+						);
 						return null;
+					}
+
+					if (metadata.theme) {
+						pack = new ThemePackage(packagePath, metadata);
+					} else {
+						pack = new Package(packagePath, metadata);
 					}
 
 					pack.load();

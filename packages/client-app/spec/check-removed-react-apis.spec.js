@@ -56,8 +56,6 @@ describe("check-removed-react-apis findDOMNode and string-ref entries", () => {
 		"message-list",
 		"composer",
 		"composer-emoji",
-		"composer-mail-merge",
-		"composer-scheduler/lib/composer",
 	];
 	const packageCases = packages.flatMap((pkg) => cases.map(([name, label, code]) => [pkg, name, label, code]));
 

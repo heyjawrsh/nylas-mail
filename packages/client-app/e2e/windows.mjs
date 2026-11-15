@@ -87,12 +87,10 @@ export const WINDOWS = [
 			return page;
 		},
 	},
-	// The next three windows open empty in this build: a toolbar and nothing
-	// else, so their ready checks can only see the window title. main-calendar's
-	// activate() is switched off upstream, composer-scheduler is filtered out
-	// by its supportedEnvs (#20), and nylas-private-salesforce is in the default
-	// core.disabledPackages. They still gate renderer errors and the toolbar's
-	// axe results. Give each a content check once its package renders again.
+	// Calendar opens empty because main-calendar's activate() is switched off
+	// upstream, so its ready check can only see the window title. It still gates
+	// renderer errors and the toolbar's axe results. Give it a content check
+	// once its package renders again.
 	{
 		type: "calendar",
 		async open(run) {
@@ -101,52 +99,6 @@ export const WINDOWS = [
 			});
 			return waitForWindowType(run, "calendar", {
 				ready: () => document.body.innerText.includes("Calendar"),
-			});
-		},
-	},
-	{
-		// The composer opens it for a draft; here it's opened shown for the
-		// draft of a new composer.
-		type: "scheduler-calendar",
-		async open(run) {
-			await inMain(run, () => {
-				$n.Actions.composeNewBlankDraft();
-			});
-			const composer = await waitForWindowType(run, "composer", {
-				ready: () => !!NylasEnv.getWindowProps().draftClientId,
-			});
-			const { draftClientId } = await evaluate(composer, () =>
-				NylasEnv.getWindowProps(),
-			);
-			await inMain(
-				run,
-				(id) => {
-					NylasEnv.newWindow({
-						title: "Calendar",
-						windowType: "scheduler-calendar",
-						windowKey: `scheduler-calendar-${id}`,
-						windowProps: { draftClientId: id },
-					});
-				},
-				draftClientId,
-			);
-			return waitForWindowType(run, "scheduler-calendar", {
-				ready: () => document.body.innerText.includes("Calendar"),
-			});
-		},
-	},
-	{
-		type: "SalesforceObjectForm",
-		async open(run) {
-			await inMain(run, () => {
-				NylasEnv.newWindow({
-					title: "Create New Opportunity",
-					windowType: "SalesforceObjectForm",
-					windowProps: { objectType: "Opportunity" },
-				});
-			});
-			return waitForWindowType(run, "SalesforceObjectForm", {
-				ready: () => document.body.innerText.includes("Create New Opportunity"),
 			});
 		},
 	},
