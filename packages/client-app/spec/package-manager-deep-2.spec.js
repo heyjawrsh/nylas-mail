@@ -217,15 +217,15 @@ describe("PackageManager deep package discovery and lifecycle", () => {
 
 	it("warns and skips packages that do not support the current environment", () => {
 		const manager = makeManager();
-		manager.resolvePackagePath = vi.fn(() => "/pkgs/composer-scheduler");
+		manager.resolvePackagePath = vi.fn(() => "/pkgs/staging-only");
 		const loadMetadata = vi.spyOn(NativePackage, "loadMetadata").mockReturnValue({
-			name: "composer-scheduler", supportedEnvs: ["staging"],
+			name: "staging-only", supportedEnvs: ["staging"],
 		});
 		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 		try {
-			expect(manager.loadPackage("composer-scheduler")).toBeNull();
+			expect(manager.loadPackage("staging-only")).toBeNull();
 			expect(warn).toHaveBeenCalledOnce();
-			expect(warn).toHaveBeenCalledWith(expect.stringContaining("composer-scheduler"));
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining("staging-only"));
 			expect(warn).toHaveBeenCalledWith(expect.stringContaining("staging"));
 			expect(warn).toHaveBeenCalledWith(expect.stringContaining("production"));
 		} finally {

@@ -151,12 +151,9 @@ class MarkdownEditor extends React.Component {
 		return (
 			<div className="markdown-editor" onFocus={this.focus}>
 				<style>
-					{".btn-mail-merge { display:none; }"}
 					{".btn-emoji { display:none; }"}
 					{".btn-templates { display:none; }"}
-					{".btn-scheduler { display:none; }"}
 					{".btn-translate { display:none; }"}
-					{".btn-send-reminder { display:none; }"}
 				</style>
 				<div ref={this._container} className="editing-region" />
 				<div

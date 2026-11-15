@@ -10,8 +10,26 @@ import PropTypes from "prop-types";
 import React from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import underscore from "underscore";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+// HasTutorialTip (src) reads these through vite; the packages get theirs from
+// the package loader.
+vi.mock("nylas-exports", () => ({
+	Actions: { openPopover: vi.fn(), closePopover: vi.fn() },
+	DOMUtils: { nodeIsVisible: () => true },
+	WorkspaceStore: { listen: () => () => {}, topSheet: () => ({ id: "top" }) },
+}));
+vi.mock("nylas-store", () => ({
+	default: class NylasStore {
+		listen() {
+			return () => {};
+		}
+		trigger() {}
+	},
+}));
+
+import HasTutorialTip from "../src/components/decorators/has-tutorial-tip.jsx";
+import ListensToObservable from "../src/components/decorators/listens-to-observable.jsx";
 import { createPackageLoader } from "./helpers/load-package-module.js";
 
 const pkg = (rel) => path.join(__dirname, "..", "internal_packages", rel);
@@ -184,6 +202,43 @@ describe("tipped buttons hand over their node through getDOMNode()", () => {
 		expect(outside.node.tagName).toBe("SPAN");
 	});
 
+});
+
+describe("HasTutorialTip on a real tipped button", () => {
+	beforeEach(() => {
+		NylasEnv.themes = { onDidChangeActiveThemes: vi.fn(() => ({ dispose: vi.fn() })) };
+	});
+	afterEach(() => {
+		delete NylasEnv.themes;
+	});
+
+	it("renders the button with no wrapper and hands over its node", () => {
+		const Tipped = HasTutorialTip(loadSnoozeButtons().ToolbarSnooze, { title: "Snooze", instructions: "Pick a time" });
+		const ref = React.createRef();
+		const { container } = render(<Tipped ref={ref} items={[]} />);
+		const button = container.querySelector(".snooze-button");
+		expect(button.parentNode).toBe(container);
+		expect(container.querySelector(".tutorial-tip-target")).toBeNull();
+		expect(ref.current.getDOMNode()).toBe(button);
+	});
+
+	it("reaches the button through ListensToObservable", () => {
+		class Button extends RootedComponent {
+			static displayName = "ObservableButton";
+			render() {
+				return <button ref={this.root}>Snooze</button>;
+			}
+		}
+		const ObservedButton = ListensToObservable(Button, {
+			getObservable: () => emptyObservable,
+			getStateFromObservable: () => ({}),
+		});
+		const Tipped = HasTutorialTip(ObservedButton, { title: "Snooze", instructions: "Pick a time" });
+		const ref = React.createRef();
+		const { container } = render(<Tipped ref={ref} />);
+		expect(container.firstChild.tagName).toBe("BUTTON");
+		expect(ref.current.getDOMNode()).toBe(container.firstChild);
+	});
 });
 
 describe("frames reach their iframe through the EventedIFrame instance", () => {

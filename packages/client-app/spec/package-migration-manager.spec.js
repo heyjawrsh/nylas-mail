@@ -65,17 +65,18 @@ describe("PackageMigrationManager", () => {
 	});
 
 	it("disables packages whose migrations are not enabled by default", () => {
-		const { config, manager } = makeManager();
+		const { config, manager } = makeManager({ disabledPackages: ["N1-Markdown-Composer", "keybase"] });
 		manager.migrate();
 		expect(config.pushAtKeyPath.mock.calls).toEqual([
 			["core.disabledPackages", "composer-markdown"],
 		]);
+		expect(config.removeAtKeyPath).not.toHaveBeenCalled();
 	});
 
 	it("enables default packages that used to be disabled", () => {
 		const { config, manager } = makeManager({
 			savedVersion: "0.4.204",
-			disabledPackages: ["thread-snooze"],
+			disabledPackages: ["thread-snooze", "keybase"],
 		});
 		manager.migrate();
 		expect(config.removeAtKeyPath.mock.calls).toEqual([
