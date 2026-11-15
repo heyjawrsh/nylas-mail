@@ -3,14 +3,14 @@ title: 'Linux packages run on Ubuntu 22.04'
 type: 'bugfix'
 ticket: '12'
 created: '2026-11-14'
-status: 'ready-for-dev'
-baseline_revision: ''
+status: done
+baseline_revision: 'b79f3ef97590130c6ce1397bdd351e94575dc2e8'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/epic-platform-baseline.md'
@@ -86,12 +86,12 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `packages/client-app/scripts/check-glibc-floor.mjs`: the floor check -- the guard
-- [ ] `packages/client-app/scripts/dist.mjs`: the Linux package check, and refusing on non-Linux hosts -- the local path
-- [ ] `packages/client-app/scripts/dist-linux-docker.sh`: the Docker package build -- local `dist:linux`
-- [ ] `packages/client-app/e2e/linux-deb-docker.sh`: the stock 22.04 install and harness -- the proof
-- [ ] `.github/workflows/dist.yml`: the Linux job in the pinned container, from source -- CI
-- [ ] specs:
+- [x] `packages/client-app/scripts/check-glibc-floor.mjs`: the floor check -- the guard
+- [x] `packages/client-app/scripts/dist.mjs`: the Linux package check, and refusing on non-Linux hosts -- the local path
+- [x] `packages/client-app/scripts/dist-linux-docker.sh`: the Docker package build -- local `dist:linux`
+- [x] `packages/client-app/e2e/linux-deb-docker.sh`: the stock 22.04 install and harness -- the proof
+- [x] `.github/workflows/dist.yml`: the Linux job in the pinned container, from source -- CI
+- [x] specs:
   - the parse and compare logic against captured `objdump -T` text (over, at and under the floor, plus a non-glibc symbol)
   - ELF detection skips non-ELF files
   - `dist.mjs` refuses `linux` on a non-Linux host
@@ -106,6 +106,24 @@ context:
 
 The guard checks the built package, not the build host. A source build on a 24.04 runner can still pull in 2.38-and-later symbols (#21), so only the shipped binaries can tell. Running it on every Linux package build turns the floor into a rule CI enforces.
 
+## Implementation Notes
+
+- The deb installs to `/opt/Nylas Mail/nylas-mail`. The glibc check, run by hand on the shipped deb, passes on all 14 ELF files at glibc 2.35 or older.
+- `objdump` reports a static binary in two ways ("no dynamic symbol table" and "not a dynamic object"). The check accepts both (c34079eee).
+- The stock-22.04 run found that the deb didn't start: libgbm1 and libasound2 were missing from the default Depends. They're now in `deb.depends` (677331a9d). The proof script adds no libraries.
+- The seed's top-level `import "electron"` downloaded the dev binary on every proof run, and one run hung for 40 minutes. It's lazy now (dad2e0176).
+- **AC2 is partly met.** On stock 22.04 the harness passes 17 tests and fails 1: the default window's axe baseline, with color-contrast at 7 nodes against a baseline of 4. That baseline came from the builder image. Matching Playwright's nine font packages didn't change the count, so fonts aren't the cause. Per this plan, the baseline isn't rewritten. Josh to decide.
+- One run hit `qemu-x86_64: QEMU internal SIGBUS` at launch (Docker x86 emulation on arm64). The rerun didn't.
+- Found, not fixed: the x64 package ships `@esbuild/linux-arm64` (#25) and a musl better-sqlite3 prebuild.
+
+## Review Triage Log
+
+| # | Lens | Finding | Verdict | Route | Evidence |
+|---|------|---------|---------|-------|----------|
+| 1 | quick | `dist:linux` on macOS builds the renderer before refusing | medium | patch | `package.json:20`, where `predist:linux` runs `build-renderer.js` before `dist.mjs` gets to its host check; the spec calls `dist.mjs` directly, so it misses the pnpm path. |
+| 2 | quick | stage 2 may lack libasound2 and libgbm1 | high | patch | The stock-22.04 run on 5f3b35a9b failed to launch: `libgbm.so.1: cannot open shared object file`. `ldd` on the installed binary finds libgbm.so.1 and libasound.so.2 missing. A product bug: the fix is `deb.depends` in electron-builder.yml, not extra libraries in the proof script. |
+| 3 | quick | `DIST_DOCKER_IMAGE` lets a package build use any image | low | patch | `dist-linux-docker.sh:19`; shipped packages must come from the pinned digest, and the spec checks only the default. |
+
 ## Verification
 
 **Commands:**
@@ -116,3 +134,10 @@ The guard checks the built package, not the build host. A source build on a 24.0
 - `packages/client-app/scripts/dist-linux-docker.sh` -- expected: deb and AppImage built; glibc check passes
 - `packages/client-app/e2e/linux-deb-docker.sh` -- expected: install succeeds; 18 passed
 - `pnpm --filter nylas-mail build:e2e && pnpm --filter nylas-mail e2e` -- expected: 18 passed (mac unchanged, background mode)
+
+**Results** (on dad2e0176):
+- `check:react`, `check:public-build`, Biome and actionlint: pass, with no new warnings (Biome has the same 37 as the baseline)
+- Vitest: 3975 passed, no unhandled errors
+- `dist-linux-docker.sh`: deb and AppImage built; public-build and glibc checks pass in the container (14 ELF files at 2.35 or older)
+- `linux-deb-docker.sh`: installs on stock ubuntu:22.04 and the app starts; 17 passed and 1 failed (the default-window axe color-contrast count, 7 against 4; see Implementation Notes)
+- Mac `build:e2e` plus `e2e`: 18 passed, 9 skipped, background mode
