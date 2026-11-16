@@ -3,14 +3,14 @@ title: 'Cloud-backed plugins are removed'
 type: 'refactor'
 ticket: '13'
 created: '2026-11-15'
-status: 'ready-for-dev'
-baseline_revision: ''
+status: done
+baseline_revision: '7bcbd7333ae7ea2edda465c8c27329bfaea0e50c'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-platform-baseline/epic-platform-baseline.md'
@@ -74,15 +74,34 @@ All paths are under `packages/client-app`.
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] removal lane: package dirs, dedicated and mixed specs, config, migration manager, darkside rule, asar hint
-- [ ] e2e lane: windows.mjs, axe-baseline.json, reference PNGs
-- [ ] warning lane: `src/package-manager.js` plus its spec (#20)
+- [x] removal lane: package dirs, dedicated and mixed specs, config, migration manager, darkside rule, asar hint
+- [x] e2e lane: windows.mjs, axe-baseline.json, reference PNGs
+- [x] warning lane: `src/package-manager.js` plus its spec (#20)
 
 **Acceptance Criteria:**
 - Given the repo, when `git grep -E '<the eight names>|scheduler-calendar|SalesforceObjectForm' -- packages/client-app ':!**/CHANGELOG.md'` runs, then it finds only `send-draft-task.js`, its spec, and the two doc comments listed above.
 - Given the repo, when Vitest runs, then it exits 0 with no unhandled errors. The test count drops only by the removed packages' tests.
 - Given the built mac app, when the harness runs, then every remaining window passes, and the run logs no package load errors.
 - Given a package with `supportedEnvs` excluding the env, when `loadPackage` runs, then it returns null and warns once with the package name and env.
+
+## Implementation Notes
+
+- The work ran as three parallel Ringer lanes on gpt-6-astra (removal, e2e, warning). Each passed first try. Commits: d64d3e5f8, plus 1e24c40aa for the review fixes.
+- 308 files deleted with the packages and their four dedicated specs. All seven mixed specs were trimmed, none deleted. Vitest went from 3977 to 3875 tests, then back up to 3877 with the rebuilt HasTutorialTip tests.
+- The skip check in `loadPackage` now runs before the Package is built, so a package that isn't loaded is never built.
+- The spec reaches the real Package through `createRequire`: `package-manager.js` loads it with a native require, so `vi.mock` can't reach it.
+- 23 images used only by the removed packages are gone. `mail-merge/icon-column-*` stays, because `src/components/editable-table.jsx` uses it.
+- The first Mac e2e after each rebuild hit the #19 print-window timeout, and the rerun passed. One Linux run died on a qemu SIGBUS at launch, and the retry passed.
+
+## Review Triage Log
+
+| # | Lens | Finding | Verdict | Route | Evidence |
+|---|------|---------|---------|-------|----------|
+| 1 | quick | new #20 spec uses `composer-scheduler` as its fixture name | medium | patch | AC1 grep hits `spec/package-manager-deep-2.spec.js:220-228`. Rename to a neutral name. |
+| 2 | quick | images used only by the removed packages still ship | medium | patch | `static/images/{activity-list,mail-merge}/…`, the linktracking and reminders composer icons, the thread-list reminder icons and `toolbar/ic-toolbar-native-reminder@*`. `git grep` finds no reference outside the deleted packages. |
+| 3 | quick | composer-markdown still hides `.btn-mail-merge`, `.btn-scheduler` and `.btn-send-reminder` | low | patch | `markdown-editor.jsx:154-159`; only the removed packages rendered those classes. |
+| 4 | quick | the HasTutorialTip block in `remaining-packages-refs.spec.jsx` was dropped | medium | patch | It tested the kept decorator via send-later and send-reminders fixtures. Nothing else covers HasTutorialTip around `ListensToObservable`. Rebuild it on thread-snooze's tipped buttons. |
+| 5 | quick | migration-manager spec deleted fixtures instead of replacing them | low | patch | Both tests now hold one entry, so they no longer show that only matching names change. Add an unrelated name. |
 
 ## Verification
 
@@ -93,3 +112,10 @@ All paths are under `packages/client-app`.
 - the AC1 `git grep` -- expected: only the allowed hits
 - `pnpm --filter nylas-mail build:e2e && pnpm --filter nylas-mail e2e` -- expected: all pass, background mode
 - `packages/client-app/e2e/linux-docker.sh` -- expected: pass
+
+**Results** (on 1e24c40aa):
+- AC1 grep: matches only CHANGELOG.md, `send-draft-task.js` and its spec, the two doc comments, and `zero-coverage-stores-deep.spec.js`
+- Vitest: 3877 passed, no unhandled errors, no orphaned task children
+- `check:react` and `check:public-build` pass; Biome has 37 warnings, the same as the baseline
+- Mac `build:e2e` plus `e2e`: 14 passed, 7 skipped (the two removed windows took 6 tests), no package load errors, background mode
+- `linux-docker.sh`: 14 passed, 7 skipped
