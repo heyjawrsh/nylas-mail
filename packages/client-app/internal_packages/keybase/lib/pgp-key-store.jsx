@@ -130,7 +130,8 @@ class PGPKeyStore extends NylasStore {
 						[privFilenames, true],
 					],
 					(readresults) => {
-						const filenames = readresults[0];
+						// A key dir that vanished (readdir error) counts as empty.
+						const filenames = readresults[0] || [];
 						let i = 0;
 						if (filenames.length === 0) {
 							this.trigger(this);

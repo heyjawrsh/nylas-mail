@@ -49,4 +49,16 @@ describe("keybase PGPKeyStore key dirs", () => {
 		expect(loaded._pubWatcher).not.toBeNull();
 		expect(loaded._privWatcher).not.toBeNull();
 	});
+
+	it("treats key dirs that vanished as empty instead of throwing", async () => {
+		const loaded = await load();
+		loaded.unwatch();
+		fs.rmSync(path.join(configDir, "keys"), { recursive: true, force: true });
+		const triggered = new Promise((resolve) => {
+			const stop = loaded.listen(() => { stop(); resolve(); });
+		});
+		loaded._populate();
+		await triggered;
+		expect(Object.keys(loaded._identities)).toEqual([]);
+	});
 });
