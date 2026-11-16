@@ -12,4 +12,8 @@ function layerStatement() {
 	return `@layer ${LAYERS.join(", ")};`;
 }
 
-module.exports = { LAYERS, layerStatement };
+function kernelSheet() {
+	return `${layerStatement()}\n@layer kernel { [data-look] { --text-scale: 1; } }`;
+}
+
+module.exports = { LAYERS, layerStatement, kernelSheet };

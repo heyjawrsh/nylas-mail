@@ -30,6 +30,7 @@ vi.mock("nylas-exports", () => ({
 }));
 import PrintWindow from "../internal_packages/print/lib/print-window.js";
 import Printer from "../internal_packages/print/lib/printer.js";
+import { kernelSheet } from "../src/appearance/layers.js";
 
 describe("print window", () => {
 	beforeEach(() => { vi.clearAllMocks(); m.browserOptions.length = 0; });
@@ -51,11 +52,14 @@ describe("print window", () => {
 		expect(m.writeFileSync).toHaveBeenCalledWith("/tmp/nylas-print/print.html", expect.any(String));
 	});
 
-	it("declares the kernel layer order before copied styles", () => {
+	it("declares the shared kernel before copied styles", () => {
 		const styleTags = "<style>@layer baseline { .message { color: red } }</style>";
 		build({ styleTags });
 		const html = m.writeFileSync.mock.calls[0][1];
-		expect(html).toMatch(/<head>\s*<meta charset="utf-8">\s*<style id="nylas-kernel">@layer reset, kernel, theme, font, baseline, style, plugin;<\/style>/);
+		const doc = new DOMParser().parseFromString(html, "text/html");
+		const styles = doc.head.querySelectorAll('style, link[rel="stylesheet"]');
+		expect(styles[0].id).toBe("nylas-kernel");
+		expect(styles[0].textContent).toBe(kernelSheet());
 		expect(html.indexOf('id="nylas-kernel"')).toBeLessThan(html.indexOf(styleTags));
 	});
 

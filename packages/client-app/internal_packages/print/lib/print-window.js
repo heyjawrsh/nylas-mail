@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "node:fs";
 import * as remote from "@electron/remote";
-import { layerStatement } from "../../../src/appearance/layers.js";
+import { kernelSheet } from "../../../src/appearance/layers.js";
 
 const { app, BrowserWindow } = remote;
 
@@ -48,7 +48,7 @@ export default class PrintWindow {
       <html${lookAttributes}>
         <head>
           <meta charset="utf-8">
-          <style id="nylas-kernel">${layerStatement()}</style>
+          <style id="nylas-kernel">${kernelSheet()}</style>
           ${styleTags}
           <link rel="stylesheet" type="text/css" href="${stylesPath}">
         </head>

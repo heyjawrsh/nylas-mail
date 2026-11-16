@@ -68,7 +68,7 @@ function compileTheme(
 	function add(code, level, parts, message, line = lineAt(parts)) {
 		report.push({ code, level, path: parts.join("."), line, message });
 	}
-	if (text.length > 256 * 1024) {
+	if (new TextEncoder().encode(text).length > 256 * 1024) {
 		add("too-large", "error", [], "Theme exceeds 256 KiB of text.");
 		return result("");
 	}
@@ -134,7 +134,13 @@ function compileTheme(
 	indexLines(tree, []);
 	const theme = getNodeValue(tree);
 	if (!validateTheme(theme)) {
-		for (const error of validateTheme.errors) {
+		const specificErrors = validateTheme.errors.filter(
+			(error) =>
+				!validateTheme.errors.some((other) =>
+					other.instancePath.startsWith(`${error.instancePath}/`),
+				),
+		);
+		for (const error of specificErrors) {
 			const parts = error.instancePath
 				? error.instancePath
 						.slice(1)
@@ -171,54 +177,78 @@ function compileTheme(
 		);
 	}
 
-	function resolvedValue(token, root) {
-		let value = token.node.$value;
-		const seen = new Set([token.parts.join(".")]);
-		while (typeof value === "string" && ALIAS.test(value)) {
-			const target = value.match(ALIAS)[1];
-			if (seen.has(target)) {
-				add(
-					"alias-cycle",
-					"error",
-					token.parts,
-					`Alias cycle through ${target}.`,
+	const authoredIndex = new Map(
+		authored.map((token) => [token.parts.join("."), token]),
+	);
+	const fallbackIndex = new Map(
+		fallback.map((token) => [token.parts.join("."), token]),
+	);
+	function resolvedValue(token, index) {
+		let failed = false;
+		function resolve(value, seen) {
+			if (typeof value === "string" && ALIAS.test(value)) {
+				const target = value.match(ALIAS)[1];
+				if (seen.has(target)) {
+					add(
+						"alias-cycle",
+						"error",
+						token.parts,
+						`Alias cycle through ${target}.`,
+					);
+					failed = true;
+					return {};
+				}
+				const referenced = index.get(target);
+				if (!referenced) {
+					add(
+						"forbidden-value",
+						"error",
+						token.parts,
+						`Alias target ${target} is not a token.`,
+					);
+					failed = true;
+					return {};
+				}
+				const resolved = resolve(
+					referenced.node.$value,
+					new Set([...seen, target]),
 				);
-				return { failed: true };
+				return {
+					value: resolved.value,
+					type: referenced.type ?? resolved.type,
+				};
 			}
-			seen.add(target);
-			let node = root;
-			for (const part of target.split("."))
-				node =
-					isObject(node) && Object.hasOwn(node, part) ? node[part] : undefined;
-			if (!isObject(node) || !Object.hasOwn(node, "$value")) {
-				add(
-					"forbidden-value",
-					"error",
-					token.parts,
-					`Alias target ${target} is not a token.`,
-				);
-				return { failed: true };
-			}
-			value = node.$value;
+			if (Array.isArray(value))
+				return { value: value.map((item) => resolve(item, seen).value) };
+			if (isObject(value))
+				return {
+					value: Object.fromEntries(
+						Object.entries(value).map(([key, item]) => [
+							key,
+							resolve(item, seen).value,
+						]),
+					),
+				};
+			return { value };
 		}
-		return { value };
+		const resolved = resolve(
+			token.node.$value,
+			new Set([token.parts.join(".")]),
+		);
+		return { ...resolved, type: token.type ?? resolved.type, failed };
 	}
 
 	// Check aliases even when their tokens are outside the emitted role contract.
 	const resolvedAuthored = new Map(
 		authored.map((token) => [
 			pathKey(token.parts),
-			resolvedValue(token, theme),
+			resolvedValue(token, authoredIndex),
 		]),
 	);
 	const lines = ["@layer theme {"];
 	for (const variant of VARIANTS) {
 		const present = Object.hasOwn(theme, variant);
-		const canFill =
-			!builtIn &&
-			!variant.endsWith("-hc") &&
-			isObject(classicTokens?.[variant]);
-		if (!present && !canFill) {
+		if (!present) {
 			if (builtIn && !allowMissingVariants.includes(variant)) {
 				for (const role of Object.keys(ROLES).sort())
 					add(
@@ -243,7 +273,7 @@ function compileTheme(
 				add("schema", "error", token.parts, `Duplicate role: ${role}.`);
 				continue;
 			}
-			roles.set(role, { ...token, root: theme });
+			roles.set(role, token);
 			if (!Object.hasOwn(ROLES, role))
 				add(
 					"unknown-token",
@@ -263,38 +293,39 @@ function compileTheme(
 			let filled = false;
 			if (!token) {
 				if (builtIn) {
-					if (!allowMissingVariants.includes(variant))
-						add(
-							"gate",
-							"error",
-							[variant, role],
-							`Missing ${variant}.${role}.`,
-						);
+					add("gate", "error", [variant, role], `Missing ${variant}.${role}.`);
 					continue;
 				}
 				const classic = classicRoles.get(role);
 				if (!classic) continue;
-				token = { ...classic, root: classicTokens };
+				token = classic;
 				filled = true;
 			}
 			const type = ROLES[role];
-			if (token.type !== type) {
+			const resolved = filled
+				? resolvedValue(token, fallbackIndex)
+				: resolvedAuthored.get(pathKey(token.parts));
+			if (resolved.failed) continue;
+			if (resolved.type !== type) {
 				add(
 					"schema",
 					"error",
 					token.parts,
-					`Role ${role} requires type ${type}; received ${JSON.stringify(token.type) ?? "no type"}.`,
+					`Role ${role} requires type ${type}; received ${JSON.stringify(resolved.type) ?? "no type"}.`,
 				);
 				continue;
 			}
-			const resolved = filled
-				? resolvedValue(token, token.root)
-				: resolvedAuthored.get(pathKey(token.parts));
-			if (resolved.failed) continue;
 			try {
 				if (!valueValidators[type](resolved.value))
 					throw new Error(`Expected a DTCG ${type} value.`);
-				const css = serialize(type, resolved.value, role);
+				const css = serialize(type, resolved.value, role, (message) =>
+					add(
+						"color-mismatch",
+						"warning",
+						token.parts,
+						`${token.parts.join(".")}: ${message}`,
+					),
+				);
 				emitted.set(role, {
 					css,
 					parts: filled ? [variant, role] : token.parts,
@@ -317,7 +348,10 @@ function compileTheme(
 			if (!emitted.has(fg) || !emitted.has(bg)) continue;
 			const ratio = wcagContrast(emitted.get(fg).css, emitted.get(bg).css);
 			if (ratio >= minimum) continue;
-			const gate = builtIn && fg === "text-strong" && bg === "surface-panel";
+			const gate =
+				builtIn &&
+				(variant.endsWith("-hc") ||
+					(fg === "text-strong" && bg === "surface-panel"));
 			add(
 				gate ? "gate" : "contrast",
 				gate ? "error" : "warning",

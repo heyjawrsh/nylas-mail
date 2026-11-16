@@ -13,12 +13,17 @@ const require = createRequire(import.meta.url);
 const {
 	ROLES,
 	VARIANTS,
+	CONTRAST_PAIRS,
 } = require("../src/appearance/theme-compiler/contract.js");
 const script = fileURLToPath(
 	new URL("../scripts/build-themes.mjs", import.meta.url),
 );
 const execFileAsync = promisify(execFile);
-const color = (hex) => ({ colorSpace: "srgb", components: [0, 0, 0], hex });
+const color = (hex) => ({ colorSpace: "srgb", components: [1, 3, 5].map((start) => Number.parseInt(hex.slice(start, start + 2), 16) / 255), hex });
+const darkRoles = new Set([
+	...CONTRAST_PAIRS.map(([fg]) => fg).filter((fg) => fg !== "accent-on"),
+	"accent-hover",
+]);
 function fixture(id = "classic", variants = ["light", "dark"]) {
 	return {
 		$schema: "https://www.designtokens.org/schemas/2025.10/format.json",
@@ -40,7 +45,7 @@ function fixture(id = "classic", variants = ["light", "dark"]) {
 						{
 							$type: type,
 							$value: {
-								color: color(role === "text-strong" ? "#000000" : "#ffffff"),
+								color: color(darkRoles.has(role) ? "#000000" : "#ffffff"),
 								dimension: { value: 14, unit: "px" },
 								fontFamily: "Example Sans",
 								fontWeight: 400,
@@ -133,6 +138,18 @@ describe("theme build", () => {
 		expect(logs).toHaveBeenCalledWith(
 			expect.stringContaining("other.tokens.json:1: error: gate: light-hc."),
 		);
+	});
+	it.each(["missing-role", "contrast"])("fails Classic with a present HC group's %s error", async (failure) => {
+		const input = fixture("classic", ["light", "dark", "light-hc"]);
+		if (failure === "missing-role") delete input["light-hc"]["surface-app"];
+		else input["light-hc"]["icon-default"].$value = color("#ffffff");
+		await write("classic.tokens.json", input);
+		await write("classic.css", "previous valid output\n");
+		await expect(buildThemes(dir)).rejects.toThrow("classic.tokens.json");
+		expect(logs).toHaveBeenCalledWith(expect.stringContaining(
+			failure === "missing-role" ? "Missing light-hc.surface-app." : "light-hc: icon-default on surface-panel",
+		));
+		expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toBe("previous valid output\n");
 	});
 	it("prints compiler reports with filename and source line", async () => {
 		const input = fixture();

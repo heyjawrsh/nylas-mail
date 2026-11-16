@@ -1,4 +1,5 @@
 // @vitest-environment node
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 
@@ -13,7 +14,7 @@ const {
 } = require("../src/appearance/theme-compiler/contract.js");
 const color = (hex = "#ffffff", alpha = 1) => ({
 	colorSpace: "srgb",
-	components: [1, 1, 1],
+	components: [1, 3, 5].map((start) => Number.parseInt(hex.slice(start, start + 2), 16) / 255),
 	hex,
 	alpha,
 });
@@ -47,6 +48,10 @@ const errors = (result) =>
 	result.report.filter((entry) => entry.level === "error");
 const lineOf = (text, key) =>
 	text.slice(0, text.indexOf(JSON.stringify(key))).split("\n").length;
+const darkRoles = new Set([
+	...CONTRAST_PAIRS.map(([fg]) => fg).filter((fg) => fg !== "accent-on"),
+	"accent-hover",
+]);
 function complete(variants = VARIANTS) {
 	return theme(
 		Object.fromEntries(
@@ -58,7 +63,7 @@ function complete(variants = VARIANTS) {
 						token(
 							type,
 							{
-								color: color(role === "text-strong" ? "#000000" : "#ffffff"),
+								color: color(darkRoles.has(role) ? "#000000" : "#ffffff"),
 								shadow: shadow(),
 								fontFamily: ["Example Sans"],
 								dimension: dimension(14),
@@ -101,7 +106,7 @@ describe("source validation and reports", () => {
 	});
 
 	it("rejects oversized text before parsing, including multi-byte characters", () => {
-		const result = compileTheme("é".repeat(256 * 1024 + 1));
+		const result = compileTheme("é".repeat(128 * 1024 + 1));
 		expect([...result.report]).toEqual([
 			{
 				code: "too-large",
@@ -113,6 +118,7 @@ describe("source validation and reports", () => {
 		]);
 		expect(result.css).toBe("");
 		expect(compileTheme(" ".repeat(256 * 1024)).report[0].code).toBe("parse");
+		expect(compileTheme("é".repeat(128 * 1024)).report[0].code).toBe("parse");
 	});
 
 	it("maps every Ajv failure to an instance path and nearest token line", () => {
@@ -120,11 +126,8 @@ describe("source validation and reports", () => {
 		const entries = result.report.filter((entry) => entry.code === "schema");
 		expect(entries.length).toBeGreaterThan(0);
 		for (const entry of entries) {
-			expect(entry.line).toBe(
-				entry.path.startsWith("light.surface-app")
-					? result.line
-					: lineOf(result.input, "light"),
-			);
+			expect(entry.line).toBe(result.line);
+			expect(entry.path.startsWith("light.surface-app")).toBe(true);
 			expect(entry).toMatchObject({
 				level: "error",
 				path: expect.any(String),
@@ -260,6 +263,53 @@ describe("source validation and reports", () => {
 });
 
 describe("typed serialization", () => {
+	it("uses canonical components and warns at the token path when hex disagrees", () => {
+		const result = single("surface-app", "color", {
+			colorSpace: "hsl", components: [0, 100, 50], hex: "#000000", alpha: 0.5,
+		});
+		expect(errors(result)).toEqual([]);
+		expect(result.css).toContain("--surface-app: #ff000080;");
+		expect(result.report).toContainEqual(expect.objectContaining({
+			level: "warning", path: "light.surface-app", line: result.line,
+			message: expect.stringContaining("light.surface-app"),
+		}));
+		const rounded = single("surface-app", "color", {
+			colorSpace: "srgb", components: [0.4667, 0.4667, 0.4667], hex: "#777777",
+		});
+		expect([...rounded.report]).toEqual([]);
+	});
+	it("serializes hex as a fallback only when components are absent", () => {
+		const { serialize } = require("../src/appearance/theme-compiler/serialize.js");
+		expect(serialize("color", { hex: "#123456", alpha: 0.5 }, "surface-app")).toBe("#12345680");
+		expect(() => serialize("color", { components: [], hex: "#123456" }, "surface-app")).toThrow();
+	});
+	it("warns about mismatched colours inside shadows", () => {
+		const result = single("shadow-card", "shadow", shadow({
+			color: { ...color("#ffffff"), components: [0, 0, 0] },
+		}));
+		expect(errors(result)).toEqual([]);
+		expect(result.css).toContain("--shadow-card: 0 1px 4px 0 #000000;");
+		expect(result.report).toContainEqual(expect.objectContaining({
+			level: "warning", path: "light.shadow-card", line: result.line,
+		}));
+	});
+	it.each([
+		"serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui",
+		"ui-serif", "ui-sans-serif", "ui-monospace", "ui-rounded", "emoji", "math", "fangsong",
+	])("keeps generic family %s unquoted", (name) => {
+		const result = single("type-meta-family", "fontFamily", [name]);
+		expect(errors(result)).toEqual([]);
+		expect(result.css).toContain(`--type-meta-family: ${name},`);
+		expect(result.css).not.toContain(`"${name}"`);
+	});
+	it.each([
+		["system-ui", "Segoe UI", "Noto Sans", "sans-serif"],
+		["ui-monospace", "SF Mono", "Menlo", "Consolas", "Noto Sans Mono", "monospace"],
+	])("appends only fallback families absent from %j", (...families) => {
+		const result = single("type-meta-family", "fontFamily", families);
+		const stack = result.css.match(/--type-meta-family: ([^;]+);/)[1].split(", ");
+		expect(new Set(stack).size).toBe(stack.length);
+	});
 	it("contains exactly the 48 colour, 3 shadow, and 95 type tokens", () => {
 		expect(COLOR_ROLES).toHaveLength(48);
 		expect(TYPE_ROLES).toEqual([
@@ -393,7 +443,7 @@ describe("typed serialization", () => {
 		]);
 		expect(errors(result)).toEqual([]);
 		expect(result.css).toContain(
-			'--type-meta-family: "A \\"Quote\\" \\\\ Font", system-ui, sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans", "Noto Sans CJK SC", "Noto Sans Arabic", "Noto Sans Hebrew", sans-serif;',
+			'--type-meta-family: "A \\"Quote\\" \\\\ Font", system-ui, sans-serif, -apple-system, "Segoe UI", "Noto Sans", "Noto Sans CJK SC", "Noto Sans Arabic", "Noto Sans Hebrew";',
 		);
 	});
 	it("accepts a single family and escapes control characters", () => {
@@ -406,7 +456,7 @@ describe("typed serialization", () => {
 			single("type-meta-family", "fontFamily", ["Example Mono", "monospace"])
 				.css,
 		).toContain(
-			'"Example Mono", monospace, ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono", monospace;',
+			'"Example Mono", monospace, ui-monospace, "SF Mono", "Menlo", "Consolas", "Noto Sans Mono";',
 		);
 		expect(
 			single("type-meta-family", "fontFamily", ["monospace", "Example"]).css,
@@ -546,6 +596,63 @@ describe("typed serialization", () => {
 });
 
 describe("aliases, fills, gates and determinism", () => {
+	it("compiles shipped Classic light and dark with every contract role", () => {
+		const input = readFileSync(new URL("../static/themes/classic.tokens.json", import.meta.url), "utf8");
+		const result = compileTheme(input, {
+			builtIn: true, allowMissingVariants: ["light-hc", "dark-hc"],
+		});
+		expect(errors(result)).toEqual([]);
+		const variants = [...result.css.matchAll(/data-variant="([^"]+)"\] \{([^}]+)\}/g)];
+		expect(variants.map((match) => match[1])).toEqual(["light", "dark"]);
+		for (const [, , css] of variants)
+			for (const role of Object.keys(ROLES)) expect(css).toContain(`--${role}:`);
+	});
+	it("inherits an alias target's type through chains and inherited group types", () => {
+		const result = compile({
+			palette: { $type: "color", base: { $value: color("#123456") } },
+			intermediate: { $value: "{palette.base}" },
+			light: { "surface-app": { $value: "{intermediate}" } },
+		});
+		expect(errors(result)).toEqual([]);
+		expect(result.css).toContain("--surface-app: #123456;");
+	});
+	it("preserves an alias token's explicit or inherited type", () => {
+		for (const light of [
+			{ "surface-app": token("number", "{palette.base}") },
+			{ $type: "number", "surface-app": { $value: "{palette.base}" } },
+		]) {
+			const result = compile({ palette: { base: token("color", color()) }, light });
+			expect(errors(result)).toContainEqual(expect.objectContaining({
+				code: "schema", message: expect.stringContaining('received "number"'),
+			}));
+		}
+	});
+	it("resolves shadow members and array aliases without mistaking shared targets for cycles", () => {
+		const input = theme({
+			palette: { black: token("color", color("#000000", 0.15)) },
+			lengths: { zero: token("dimension", dimension()), one: token("dimension", dimension(1)), blur: token("dimension", dimension(4)) },
+			shadows: { card: token("shadow", {
+				color: "{palette.black}", offsetX: "{lengths.zero}", offsetY: "{lengths.one}",
+				blur: "{lengths.blur}", spread: "{lengths.zero}",
+			}) },
+			light: { "shadow-card": token("shadow", ["{shadows.card}", "{shadows.card}"]) },
+		});
+		const before = textOf(input);
+		const result = compileTheme(before);
+		expect(errors(result)).toEqual([]);
+		expect(result.css).toContain("--shadow-card: 0 1px 4px 0 #00000026, 0 1px 4px 0 #00000026;");
+		expect(textOf(input)).toBe(before);
+	});
+	it.each(["cycle", "missing"])("rejects %s references inside composite values at the token line", (kind) => {
+		const result = single("shadow-card", "shadow", shadow({
+			color: kind === "cycle" ? "{light.shadow-card}" : "{palette.missing}",
+		}));
+		expect(errors(result)).toContainEqual(expect.objectContaining({
+			code: kind === "cycle" ? "alias-cycle" : "forbidden-value",
+			path: "light.shadow-card", line: result.line,
+		}));
+		expect(result.css).not.toContain("--shadow-card:");
+	});
 	it("detects cycles among unknown tokens without emitting them", () => {
 		const input = textOf(theme({ light: {
 			aa: token("color", "{light.bb}"),
@@ -662,10 +769,11 @@ describe("aliases, fills, gates and determinism", () => {
 		expect(result.css).not.toContain('data-variant="light-hc"');
 		expect(textOf(classicTokens)).toBe(before);
 	});
-	it("fills missing standard modes and present HC roles from their matching Classic group", () => {
+	it("fills only present variant groups from their matching Classic group", () => {
 		const result = compile({ "light-hc": {} }, { classicTokens: complete() });
-		expect(result.report.filledRoles).toHaveLength(438);
-		expect(result.css).toContain('data-variant="dark"');
+		expect(result.report.filledRoles).toHaveLength(146);
+		expect(result.css).not.toContain('data-variant="dark"');
+		expect(result.css).not.toContain('data-variant="light"');
 		expect(result.css).not.toContain('data-variant="dark-hc"');
 		expect(errors(result)).toEqual([]);
 	});
@@ -717,7 +825,7 @@ describe("aliases, fills, gates and determinism", () => {
 			}),
 		);
 	});
-	it("allows only explicitly listed missing variants or roles", () => {
+	it("allows only absent variants, never missing roles in present variants", () => {
 		const result = compileTheme(textOf(complete(["light", "dark"])), {
 			builtIn: true,
 			allowMissingVariants: ["light-hc", "dark-hc"],
@@ -730,11 +838,12 @@ describe("aliases, fills, gates and determinism", () => {
 			builtIn: true,
 			allowMissingVariants: ["light-hc", "dark-hc"],
 		});
-		expect(errors(partialResult)).toHaveLength(1);
+		expect(errors(partialResult)).toHaveLength(147);
+		expect(errors(partialResult).filter((entry) => entry.path.startsWith("light-hc."))).toHaveLength(146);
 		expect(errors(partialResult)[0].path).toBe("light.surface-app");
 	});
 	it.each(VARIANTS)(
-		"gates the label pair in %s, even with a missing-role allowance",
+		"gates the label pair in %s, even with a missing-variant allowance",
 		(variant) => {
 			const input = complete();
 			input[variant]["text-strong"].$value = color();
@@ -742,83 +851,57 @@ describe("aliases, fills, gates and determinism", () => {
 				builtIn: true,
 				allowMissingVariants: [variant],
 			});
-			expect(errors(result)).toEqual([
+			expect(errors(result)).toContainEqual(
 				expect.objectContaining({
 					code: "gate",
 					path: `${variant}.text-strong`,
 					line: expect.any(Number),
 					message: `${variant}: text-strong on surface-panel is 1.00:1; requires 4.5:1.`,
 				}),
-			]);
+			);
 			if (variant === "light")
 				expect(errors(result)[0].line).toBe(
 					lineOf(textOf(input), "text-strong"),
 				);
 		},
 	);
-	it.each(
-		CONTRAST_PAIRS.filter(
-			([fg, bg]) => !(fg === "text-strong" && bg === "surface-panel"),
-		),
-	)(
-		"reports %s on %s below %s as a warning, including HC",
+	it.each(CONTRAST_PAIRS)(
+		"gates HC failures for %s on %s below %s and warns for standard non-label pairs",
 		(fg, bg, min, scope) => {
-			const group = {
-				[fg]: token("color", color()),
-				[bg]: token("color", color()),
-			};
-			const result = compile(
-				{ "light-hc": group },
-				{ builtIn: true, allowMissingVariants: VARIANTS },
-			);
-			expect(errors(result)).toEqual([]);
-			expect(result.report).toContainEqual(
-				expect.objectContaining({
-					code: "contrast",
-					level: "warning",
-					path: `light-hc.${fg}`,
-					message: `light-hc: ${fg} on ${bg} is 1.00:1; requires ${min}:1.`,
-				}),
-			);
-			expect(result.css).toContain(`--${fg}: #ffffff;`);
-			if (!scope)
-				expect(compile({ light: group }).report).toContainEqual(
-					expect.objectContaining({ code: "contrast", level: "warning" }),
-				);
+			for (const variant of VARIANTS) {
+				const input = complete();
+				input[variant][fg].$value = color();
+				input[variant][bg].$value = color();
+				const result = compileTheme(textOf(input), { builtIn: true });
+				const message = `${variant}: ${fg} on ${bg} is 1.00:1; requires ${min}:1.`;
+				if (scope === "hc" && !variant.endsWith("-hc")) {
+					expect(result.report.some((entry) => entry.message === message)).toBe(false);
+					continue;
+				}
+				const gate = variant.endsWith("-hc") || (fg === "text-strong" && bg === "surface-panel");
+				expect(result.report).toContainEqual(expect.objectContaining({
+					code: gate ? "gate" : "contrast", level: gate ? "error" : "warning",
+					path: `${variant}.${fg}`, message,
+				}));
+			}
 		},
 	);
+
 	it("checks contrast using emitted rounded hex and exact thresholds", () => {
-		const value = { colorSpace: "srgb", components: [0.4667, 0.4667, 0.4667] };
-		const result = compile(
-			{
-				light: {
-					"text-strong": token("color", value),
-					"surface-panel": token("color", color()),
-				},
-			},
-			{ builtIn: true, allowMissingVariants: VARIANTS },
-		);
+		const input = complete(["light"]);
+		input.light["text-strong"].$value = {
+			colorSpace: "srgb", components: [0.4667, 0.4667, 0.4667],
+		};
+		const options = { builtIn: true, allowMissingVariants: ["dark", "light-hc", "dark-hc"] };
+		const result = compileTheme(textOf(input), options);
 		expect(result.css).toContain("--text-strong: #777777;");
-		expect(result.report).toContainEqual(
-			expect.objectContaining({
-				code: "gate",
-				message: expect.stringContaining("4.48:1"),
-			}),
-		);
-		expect(
-			errors(
-				compile(
-					{
-						light: {
-							"text-strong": token("color", color("#767676")),
-							"surface-panel": token("color", color()),
-						},
-					},
-					{ builtIn: true, allowMissingVariants: VARIANTS },
-				),
-			),
-		).toEqual([]);
+		expect(errors(result)).toEqual([
+			expect.objectContaining({ code: "gate", message: expect.stringContaining("4.48:1") }),
+		]);
+		input.light["text-strong"].$value = color("#767676");
+		expect(errors(compileTheme(textOf(input), options))).toEqual([]);
 	});
+
 	it("keeps scrollbar contrast HC-only and never gates third-party label pairs", () => {
 		const result = compile({
 			light: {

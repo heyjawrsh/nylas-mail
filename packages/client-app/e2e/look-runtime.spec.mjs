@@ -35,11 +35,17 @@ for (const spec of WINDOWS) {
 				),
 			);
 			const surface = tokens.light.surface.app.$value.hex;
+			const readingSize = tokens.light.type["body-reading"].size.$value.value;
 			const state = await evaluate(page, () => {
 				const kernel = document.styleSheets[0];
 				const rule = kernel?.cssRules[0];
 				const root = document.documentElement;
 				const messageList = document.querySelector("#message-list");
+				const el = document.createElement("span");
+				el.style.fontSize = "var(--type-body-reading-size)";
+				document.body.appendChild(el);
+				const fontSize = getComputedStyle(el).fontSize;
+				el.remove();
 				const styles = Array.from(
 					// The print window has no <nylas-styles>; its copied sheets sit in <head>.
 					document.querySelectorAll(
@@ -61,9 +67,7 @@ for (const spec of WINDOWS) {
 					surface: getComputedStyle(root)
 						.getPropertyValue("--surface-app")
 						.trim(),
-					readingSize: getComputedStyle(root)
-						.getPropertyValue("--type-body-reading-size")
-						.trim(),
+					fontSize,
 					cardShadow: getComputedStyle(root)
 						.getPropertyValue("--shadow-card")
 						.trim(),
@@ -87,7 +91,8 @@ for (const spec of WINDOWS) {
 			expect(state.theme).toBe("classic");
 			expect(state.variant).toBe("light");
 			expect(state.surface).toBe(surface);
-			expect(state.readingSize.startsWith("calc(")).toBe(true);
+			expect(state.fontSize).toMatch(/^\d+(?:\.\d+)?px$/);
+			expect(state.fontSize).toBe(`${readingSize}px`);
 			expect(state.cardShadow).not.toBe("");
 			expect(state.styleCount).toBeGreaterThan(0);
 			expect(state.unlayered).toEqual([]);
@@ -104,5 +109,47 @@ for (const spec of WINDOWS) {
 				expect(state.messageBackground).toBe(`rgb(${rgb.join(", ")})`);
 			}
 		});
+
+		if (spec.type === "default") {
+			test("applies Classic dark tokens when ui-dark is activated", async () => {
+				const tokens = JSON.parse(
+					readFileSync(
+						new URL("../static/themes/classic.tokens.json", import.meta.url),
+						"utf8",
+					),
+				);
+				try {
+					await evaluate(page, () => {
+						NylasEnv.config.set("core.themes", ["ui-dark"]);
+					});
+					await expect
+						.poll(() =>
+							evaluate(page, () =>
+								document.documentElement.getAttribute("data-variant"),
+							),
+						)
+						.toBe("dark");
+					const state = await evaluate(page, () => ({
+						theme: document.documentElement.getAttribute("data-theme"),
+						surface: getComputedStyle(document.documentElement)
+							.getPropertyValue("--surface-app")
+							.trim(),
+					}));
+					expect(state.theme).toBe("classic");
+					expect(state.surface).toBe(tokens.dark.surface.app.$value.hex);
+				} finally {
+					await evaluate(page, () => {
+						NylasEnv.config.set("core.themes", ["ui-light"]);
+					});
+					await expect
+						.poll(() =>
+							evaluate(page, () =>
+								document.documentElement.getAttribute("data-variant"),
+							),
+						)
+						.toBe("light");
+				}
+			});
+		}
 	});
 }

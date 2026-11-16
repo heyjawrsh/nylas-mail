@@ -504,6 +504,7 @@
 		},
 		"type": {
 			"wordmark": {
+				"$description": "static/workspace.less .sheet-toolbar .item-container .window-title; legacy application-title equivalent, 36px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -530,6 +531,7 @@
 				}
 			},
 			"heading-reading": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less #message-list .message-subject and .message-subject-wrap; @font-size-large, inherited @font-size-large * 1.8 line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -556,6 +558,7 @@
 				}
 			},
 			"heading-view": {
+				"$description": "static/type.less h1; legacy view-heading equivalent, @font-size-h1, @font-weight-semi-bold, @line-height-heading. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -582,6 +585,7 @@
 				}
 			},
 			"heading-rail": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less .sidebar-section h2; 11px and @font-weight-semi-bold, heading line height from static/type.less h2. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -608,6 +612,7 @@
 				}
 			},
 			"heading-section": {
+				"$description": "static/components/outline-view.less .nylas-outline-view .heading; @font-size-small * 0.9, @font-weight-semi-bold, -0.2px tracking converted to em. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -634,6 +639,7 @@
 				}
 			},
 			"title-row": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject and .list-tabular-item; @font-size-base, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -660,6 +666,7 @@
 				}
 			},
 			"title-row-read": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject and .list-tabular-item; @font-size-base, inherited 21px line height; non-variable-face read weight 400. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -686,6 +693,7 @@
 				}
 			},
 			"title-row-unread": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject, .list-tabular-item and .thread-list .unread:not(.focused) .subject; @font-size-base, inherited 21px line height; non-variable-face unread weight 700 overrides legacy 600. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -712,6 +720,7 @@
 				}
 			},
 			"body-reading": {
+				"$description": "static/email-frame.less .ignore-in-parent-frame html, body; reading-pane email frame, 14.5px and 1.5 line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -738,6 +747,7 @@
 				}
 			},
 			"label-nav": {
+				"$description": "static/components/outline-view.less .nylas-outline-view .item .name; @font-size-base and weight 400 from .item; @line-height-small = 19.95px. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -764,6 +774,7 @@
 				}
 			},
 			"label-control": {
+				"$description": "static/buttons.less .btn; @font-size-small, 1.9em line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -790,6 +801,7 @@
 				}
 			},
 			"input": {
+				"$description": "static/inputs.less input[type=\"text\"]; weight 400, @line-height-computed = 21px; inherited base size. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -816,6 +828,7 @@
 				}
 			},
 			"input-search-overlay": {
+				"$description": "static/components/search-bar.less .nylas-search-bar .menu .header-container input; legacy search-input equivalent; static/inputs.less input[type=\"text\"] supplies weight 400 and 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -842,6 +855,7 @@
 				}
 			},
 			"body-sm": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .snippet-and-labels .snippet and .list-tabular-item; @font-size-small, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -868,6 +882,7 @@
 				}
 			},
 			"name-sm": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less #message-list .message-header and .message-participants .from-contact; @font-size-small, @headings-font-weight. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -894,6 +909,7 @@
 				}
 			},
 			"meta": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list .timestamp and .thread-list-narrow .list-tabular-item; @font-size-small, @font-weight-normal, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -920,6 +936,7 @@
 				}
 			},
 			"badge": {
+				"$description": "static/mixins/common-ui-elements.less .item-count-box; @font-size-tiny and 15px line height; static/components/outline-view.less .nylas-outline-view .item .item-count-box supplies @font-weight-semi-bold. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -946,6 +963,7 @@
 				}
 			},
 			"label-search-section": {
+				"$description": "static/components/menu.less .menu .item.divider; legacy search suggestion section label, @font-size-small and @headings-font-weight. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -972,6 +990,7 @@
 				}
 			},
 			"caption": {
+				"$description": "internal_packages/preferences/stylesheets/preferences.less .preferences-wrap p; preference explanation caption, @font-size-smaller. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1494,6 +1513,7 @@
 		},
 		"type": {
 			"wordmark": {
+				"$description": "static/workspace.less .sheet-toolbar .item-container .window-title; legacy application-title equivalent, 36px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1520,6 +1540,7 @@
 				}
 			},
 			"heading-reading": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less #message-list .message-subject and .message-subject-wrap; @font-size-large, inherited @font-size-large * 1.8 line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1546,6 +1567,7 @@
 				}
 			},
 			"heading-view": {
+				"$description": "static/type.less h1; legacy view-heading equivalent, @font-size-h1, @font-weight-semi-bold, @line-height-heading. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1572,6 +1594,7 @@
 				}
 			},
 			"heading-rail": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less .sidebar-section h2; 11px and @font-weight-semi-bold, heading line height from static/type.less h2. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1598,6 +1621,7 @@
 				}
 			},
 			"heading-section": {
+				"$description": "static/components/outline-view.less .nylas-outline-view .heading; @font-size-small * 0.9, @font-weight-semi-bold, -0.2px tracking converted to em. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1624,6 +1648,7 @@
 				}
 			},
 			"title-row": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject and .list-tabular-item; @font-size-base, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1650,6 +1675,7 @@
 				}
 			},
 			"title-row-read": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject and .list-tabular-item; @font-size-base, inherited 21px line height; non-variable-face read weight 400. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1676,6 +1702,7 @@
 				}
 			},
 			"title-row-unread": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .subject, .list-tabular-item and .thread-list .unread:not(.focused) .subject; @font-size-base, inherited 21px line height; non-variable-face unread weight 700 overrides legacy 600. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1702,6 +1729,7 @@
 				}
 			},
 			"body-reading": {
+				"$description": "static/email-frame.less .ignore-in-parent-frame html, body; reading-pane email frame, 14.5px and 1.5 line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1728,6 +1756,7 @@
 				}
 			},
 			"label-nav": {
+				"$description": "static/components/outline-view.less .nylas-outline-view .item .name; @font-size-base and weight 400 from .item; @line-height-small = 19.95px. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1754,6 +1783,7 @@
 				}
 			},
 			"label-control": {
+				"$description": "static/buttons.less .btn; @font-size-small, 1.9em line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1780,6 +1810,7 @@
 				}
 			},
 			"input": {
+				"$description": "static/inputs.less input[type=\"text\"]; weight 400, @line-height-computed = 21px; inherited base size. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1806,6 +1837,7 @@
 				}
 			},
 			"input-search-overlay": {
+				"$description": "static/components/search-bar.less .nylas-search-bar .menu .header-container input; legacy search-input equivalent; static/inputs.less input[type=\"text\"] supplies weight 400 and 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1832,6 +1864,7 @@
 				}
 			},
 			"body-sm": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list-narrow .snippet-and-labels .snippet and .list-tabular-item; @font-size-small, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1858,6 +1891,7 @@
 				}
 			},
 			"name-sm": {
+				"$description": "internal_packages/message-list/stylesheets/message-list.less #message-list .message-header and .message-participants .from-contact; @font-size-small, @headings-font-weight. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1884,6 +1918,7 @@
 				}
 			},
 			"meta": {
+				"$description": "internal_packages/thread-list/stylesheets/thread-list.less .thread-list .timestamp and .thread-list-narrow .list-tabular-item; @font-size-small, @font-weight-normal, inherited 21px line height. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1910,6 +1945,7 @@
 				}
 			},
 			"badge": {
+				"$description": "static/mixins/common-ui-elements.less .item-count-box; @font-size-tiny and 15px line height; static/components/outline-view.less .nylas-outline-view .item .item-count-box supplies @font-weight-semi-bold. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1936,6 +1972,7 @@
 				}
 			},
 			"label-search-section": {
+				"$description": "static/components/menu.less .menu .item.divider; legacy search suggestion section label, @font-size-small and @headings-font-weight. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]
@@ -1962,6 +1999,7 @@
 				}
 			},
 			"caption": {
+				"$description": "internal_packages/preferences/stylesheets/preferences.less .preferences-wrap p; preference explanation caption, @font-size-smaller. Unset values use static/workspace.less html, body and static/variables/ui-variables.less base values.",
 				"family": {
 					"$type": "fontFamily",
 					"$value": ["system-ui"]

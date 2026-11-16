@@ -1,9 +1,38 @@
 const { converter, formatHex, formatHex8, getMode, parse } = require("culori");
 
-const SANS =
-	'system-ui, -apple-system, "Segoe UI", "Noto Sans", "Noto Sans CJK SC", "Noto Sans Arabic", "Noto Sans Hebrew", sans-serif';
-const MONO =
-	'ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono", monospace';
+const SANS = [
+	"system-ui",
+	"-apple-system",
+	"Segoe UI",
+	"Noto Sans",
+	"Noto Sans CJK SC",
+	"Noto Sans Arabic",
+	"Noto Sans Hebrew",
+	"sans-serif",
+];
+const MONO = [
+	"ui-monospace",
+	"SF Mono",
+	"Menlo",
+	"Consolas",
+	"Noto Sans Mono",
+	"monospace",
+];
+const GENERIC_FAMILIES = new Set([
+	"serif",
+	"sans-serif",
+	"monospace",
+	"cursive",
+	"fantasy",
+	"system-ui",
+	"ui-serif",
+	"ui-sans-serif",
+	"ui-monospace",
+	"ui-rounded",
+	"emoji",
+	"math",
+	"fangsong",
+]);
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Escape control characters inside CSS strings.
 const CONTROL_CHARACTERS = /[\x00-\x1f\x7f]/g;
 const WEIGHTS = {
@@ -54,34 +83,44 @@ function forbidden(value) {
 	);
 }
 
-function color(value) {
-	const mode = COLOR_MODES[value?.colorSpace];
-	if (
-		!mode ||
-		!Array.isArray(value.components) ||
-		value.components.length !== 3
-	)
-		throw new Error("Expected colour components.");
-	const channels = getMode(mode).channels.slice(0, 3);
-	const parts = value.components.map((part) => (part === "none" ? 0 : part));
-	if (!parts.every(Number.isFinite))
-		throw new Error("Expected numeric colour components.");
-	// DTCG HSL/HWB use percentages; culori uses fractions for these channels.
-	if (mode === "hsl" || mode === "hwb") {
-		parts[1] /= 100;
-		parts[2] /= 100;
+function color(value, warn) {
+	let source;
+	if (value?.components !== undefined) {
+		const mode = COLOR_MODES[value.colorSpace];
+		if (
+			!mode ||
+			!Array.isArray(value.components) ||
+			value.components.length !== 3
+		)
+			throw new Error("Expected colour components.");
+		const channels = getMode(mode).channels.slice(0, 3);
+		const parts = value.components.map((part) => (part === "none" ? 0 : part));
+		if (!parts.every(Number.isFinite))
+			throw new Error("Expected numeric colour components.");
+		// DTCG HSL/HWB use percentages; culori uses fractions for these channels.
+		if (mode === "hsl" || mode === "hwb") {
+			parts[1] /= 100;
+			parts[2] /= 100;
+		}
+		source = {
+			mode,
+			...Object.fromEntries(channels.map((channel, i) => [channel, parts[i]])),
+		};
+	} else {
+		source = parse(value?.hex);
 	}
-	const source = value.hex
-		? parse(value.hex)
-		: {
-				mode,
-				...Object.fromEntries(
-					channels.map((channel, i) => [channel, parts[i]]),
-				),
-			};
+	if (!source) throw new Error("Invalid colour.");
 	const rgb = converter("rgb")({ ...source, alpha: value.alpha ?? 1 });
 	if (!rgb || ![rgb.r, rgb.g, rgb.b, rgb.alpha].every(Number.isFinite))
 		throw new Error("Invalid colour.");
+	if (
+		value.components !== undefined &&
+		value.hex &&
+		formatHex(rgb) !== formatHex(parse(value.hex))
+	)
+		warn?.(
+			"Colour components disagree with hex after rounding to 8-bit; using components.",
+		);
 	return rgb.alpha < 1 ? formatHex8(rgb) : formatHex(rgb);
 }
 
@@ -102,15 +141,20 @@ function family(value) {
 		!list.every((item) => typeof item === "string" && item.trim())
 	)
 		throw new Error("Expected font family names.");
-	const names = list.map((item) =>
-		["system-ui", "sans-serif", "monospace"].includes(item)
+	const authored = new Set(list.map((item) => item.toLowerCase()));
+	const fallback = list.at(-1).toLowerCase() === "monospace" ? MONO : SANS;
+	const names = [
+		...list,
+		...fallback.filter((item) => !authored.has(item.toLowerCase())),
+	].map((item) =>
+		GENERIC_FAMILIES.has(item.toLowerCase()) || item === "-apple-system"
 			? item
 			: `"${item.replace(/[\\"]/g, "\\$&").replace(CONTROL_CHARACTERS, (ch) => `\\${ch.charCodeAt(0).toString(16)} `)}"`,
 	);
-	return `${names.join(", ")}, ${list.at(-1) === "monospace" ? MONO : SANS}`;
+	return names.join(", ");
 }
 
-function shadow(value) {
+function shadow(value, warn) {
 	const list = Array.isArray(value) ? value : [value];
 	if (!list.length) throw new Error("Expected at least one shadow.");
 	const parts = list.map((item) => {
@@ -118,7 +162,7 @@ function shadow(value) {
 		const lengths = dimensions.map((part) => dimension(part, true));
 		if (item.blur.value < 0)
 			throw new Error("Shadow blur must not be negative.");
-		const paint = color(item.color);
+		const paint = color(item.color, warn);
 		if (
 			list.length === 1 &&
 			dimensions.every((part) => part.value === 0) &&
@@ -130,14 +174,14 @@ function shadow(value) {
 	return parts.join(", ");
 }
 
-function serialize(type, value, role) {
+function serialize(type, value, role, warn) {
 	if (forbidden(value))
 		throw new Error(
 			"Value contains forbidden CSS syntax, an unresolved reference, or a non-finite number.",
 		);
 	switch (type) {
 		case "color":
-			return color(value);
+			return color(value, warn);
 		case "dimension": {
 			const length = dimension(value);
 			if (!role.startsWith("type-") || !role.endsWith("-size")) return length;
@@ -152,7 +196,7 @@ function serialize(type, value, role) {
 		case "number":
 			return `${value}${role.endsWith("-letter-spacing") ? "em" : ""}`;
 		case "shadow":
-			return shadow(value);
+			return shadow(value, warn);
 		default:
 			throw new Error(`Unsupported token type: ${type}.`);
 	}
