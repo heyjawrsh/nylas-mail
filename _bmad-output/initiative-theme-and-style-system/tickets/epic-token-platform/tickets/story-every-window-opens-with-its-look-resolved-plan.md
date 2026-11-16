@@ -3,7 +3,7 @@ title: 'Every window opens with its look resolved'
 type: 'feature'
 ticket: '8'
 created: '2026-11-16'
-status: 'built'
+status: done
 baseline_revision: '3ba0dbfcc'
 route: 'full'
 route_source: 'auto'
