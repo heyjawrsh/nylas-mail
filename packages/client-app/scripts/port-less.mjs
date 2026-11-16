@@ -62,7 +62,7 @@ export async function compileFile(input) {
 			path.join(appRoot, "static/variables"),
 			path.join(appRoot, "static"),
 		],
-		plugins: [createPlugin({ ...config, filename, input, report })],
+		plugins: [createPlugin({ ...config, appRoot, filename, input, report })],
 	});
 	const leftover = result.css.match(
 		/var\(--L-|\d+fz[a-z_]+|__port_floor_|(?<![\w-])(?:darken|lighten|fade|fadeout|mix|desaturate|saturate)\(|@layer\b/,

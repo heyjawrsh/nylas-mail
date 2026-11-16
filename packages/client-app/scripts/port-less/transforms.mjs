@@ -85,13 +85,22 @@ export function valueParts(value) {
 	);
 }
 
+export function hasHorizontalTranslate(value) {
+	return [...value.matchAll(/\btranslate(X|3d)?\(\s*([^,\s)]+)/gi)].some(
+		([, axis, first]) =>
+			axis?.toLowerCase() === "x" || !/^0(?:px|%)?$/i.test(first),
+	);
+}
+
 export function logicalDeclaration(name, value, hasTranslate = false) {
 	const unconvertible = [];
 	const important = value.match(/\s*!important\s*$/i)?.[0] || "";
 	if (important) value = value.slice(0, -important.length);
 	if (name === "left" && value === "50%" && hasTranslate)
 		unconvertible.push("centring");
-	if (/\btranslate(?:X|Y|3d)?\(/i.test(value)) unconvertible.push("translate");
+	else if (/^(left|right)$/.test(name))
+		name = `inset-inline-${name === "left" ? "start" : "end"}`;
+	if (hasHorizontalTranslate(value)) unconvertible.push("translate");
 	if (/gradient\(/i.test(value) && /\b(left|right)\b/.test(value))
 		unconvertible.push("gradient-direction");
 	if (
@@ -104,6 +113,23 @@ export function logicalDeclaration(name, value, hasTranslate = false) {
 		const parts = valueParts(value);
 		if (parts.length === 4 && parts[1] !== parts[3])
 			unconvertible.push("asymmetric-shorthand");
+	}
+	if (name === "border-radius") {
+		const parts = valueParts(value.replaceAll("/", " / "));
+		const slash = parts.indexOf("/");
+		const axes =
+			slash < 0 ? [parts] : [parts.slice(0, slash), parts.slice(slash + 1)];
+		if (
+			axes.some(
+				([
+					topLeft,
+					topRight = topLeft,
+					bottomRight = topLeft,
+					bottomLeft = topRight,
+				]) => topLeft !== topRight || bottomLeft !== bottomRight,
+			)
+		)
+			unconvertible.push("asymmetric-radius");
 	}
 	name = name.replace(
 		/^border-(top|bottom)-(left|right)-radius$/,

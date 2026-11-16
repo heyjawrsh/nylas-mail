@@ -2,6 +2,7 @@ import path from "node:path";
 import {
 	colourFunction,
 	fontUnit,
+	hasHorizontalTranslate,
 	hasVariableImport,
 	logicalDeclaration,
 	motionCompanion,
@@ -14,6 +15,7 @@ export function createPlugin({
 	map,
 	classicSizes,
 	classicDefinitions,
+	appRoot,
 	filename,
 	input,
 	report,
@@ -23,12 +25,18 @@ export function createPlugin({
 			const sources = new Map();
 			const definitions = placeholders(map);
 			const prefixes = new Set();
+			const variablesFile = path.join(
+				appRoot,
+				"static/variables/ui-variables.less",
+			);
+			const isBundle = filename === path.join(appRoot, "static/index.less");
 			manager.addPreProcessor({
 				process(source, { fileInfo }) {
 					const file = fileInfo.filename;
-					if (path.basename(file) === "ui-variables.less") source = definitions;
+					if (path.resolve(file) === variablesFile) source = definitions;
 					else {
-						source = referenceImports(source);
+						// The bundle emits shared classes, including transitive mixin imports.
+						if (!isBundle) source = referenceImports(source);
 						if (file === filename && !hasVariableImport(source)) {
 							// No newline: declaration line numbers remain those of the input.
 							source = definitions + source;
@@ -54,7 +62,7 @@ export function createPlugin({
 				dependencies[name] = names;
 			}
 			const isPlaceholder = (node) =>
-				path.basename(node.fileInfo().filename) === "ui-variables.less" ||
+				path.resolve(node.fileInfo().filename) === variablesFile ||
 				(prefixes.has(node.fileInfo().filename) &&
 					node.getIndex() < definitions.length);
 			function hasOverride(name, context, seen = new Set()) {
@@ -159,7 +167,7 @@ export function createPlugin({
 						(rule) => rule.type === "Declaration" && !rule.variable,
 					);
 					const hasTranslate = declarations.some((rule) =>
-						/\btranslate(?:X|Y|3d)?\(/i.test(rule.value.toCSS({})),
+						hasHorizontalTranslate(rule.value.toCSS({})),
 					);
 					for (const declaration of declarations) {
 						const at = location(declaration);

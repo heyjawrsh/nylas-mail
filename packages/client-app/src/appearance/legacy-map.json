@@ -238,7 +238,7 @@
 		"note": "Josh selected the body-reading family for the generic sans stack and its aliases."
 	},
 	"@font-family-monospace": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "Menlo, Monaco, Consolas, \"Courier New\", monospace",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
@@ -248,7 +248,7 @@
 		"note": "Josh selected the body-reading family for the generic sans stack and its aliases."
 	},
 	"@font-family-serif": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "Georgia, \"Times New Roman\", Times, serif",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
@@ -318,27 +318,27 @@
 		"note": "Exact single-role size match from the Classic typography tokens."
 	},
 	"@font-weight-blond": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "300",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
 	"@font-weight-medium": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "500",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
 	"@font-weight-normal": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "400",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
 	"@font-weight-semi-bold": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "600",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
 	"@font-weight-thin": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "200",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},
@@ -372,7 +372,7 @@
 		"note": "Research role mapping. Light exact (#f6f7f8); dark legacy #131313 vs role #282b30."
 	},
 	"@headings-font-weight": {
-		"kind": "font",
+		"kind": "literal",
 		"css": "600",
 		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
 	},

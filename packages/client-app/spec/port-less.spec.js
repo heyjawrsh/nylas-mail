@@ -99,6 +99,117 @@ async function compile(source, name = "inline") {
 }
 
 describe("LESS integration", () => {
+	it.each(["ui-dark", "ui-ubuntu"])(
+		"preserves %s's ui-variables rules",
+		async (theme) => {
+			const { css } = await compileFile(
+				path.join(
+					appRoot,
+					`internal_packages/${theme}/styles/ui-variables.less`,
+				),
+			);
+			expect(css).toContain(".sheet-toolbar");
+			if (theme === "ui-dark") expect(css).toContain(".mail-label");
+			else expect(css).toContain(".sheet-toolbar-container");
+		},
+	);
+
+	it("preserves same-named variable sheets and their local alias overrides", async () => {
+		const directory = await mkdtemp(path.join(temporary, "variables-"));
+		const filename = path.join(directory, "ui-variables.less");
+		await writeFile(
+			filename,
+			"@text-color: #112233;\n.x { color: @btn-default-text-color; }",
+		);
+		const { css } = await compileFile(filename);
+		expect(css).toContain(".x {\n  color: #112233;");
+	});
+
+	it("keeps shared classes out of ordinary sheets", async () => {
+		const { css } = await compile(
+			'@import "ui-mixins";\n@import "buttons";\n.x { color: @text-color; }',
+		);
+		expect(css).toBe(".x {\n  color: var(--text-default);\n}\n");
+	});
+
+	it.each([
+		[
+			"font-family-monospace",
+			"font-family",
+			'Menlo, Monaco, Consolas, "Courier New", monospace',
+		],
+		[
+			"font-family-serif",
+			"font-family",
+			'Georgia, "Times New Roman", Times, serif',
+		],
+		["font-weight-thin", "font-weight", "200"],
+		["font-weight-blond", "font-weight", "300"],
+		["font-weight-normal", "font-weight", "400"],
+		["font-weight-medium", "font-weight", "500"],
+		["font-weight-semi-bold", "font-weight", "600"],
+		["headings-font-weight", "font-weight", "600"],
+	])("ports and reports literal @%s", async (variable, property, value) => {
+		const { css, report } = await compile(
+			`@import "ui-variables";\n.x { ${property}: @${variable}; }`,
+		);
+		expect(css).toContain(`${property}: ${value};`);
+		expect(report.literals).toEqual([
+			{
+				file: path.join(temporary, "inline.less"),
+				line: 2,
+				variable: `@${variable}`,
+			},
+		]);
+	});
+
+	it.each([
+		["translateX(-50%)", true],
+		["translate(-50%, 0)", true],
+		["translate3d(-50%, 0, 0)", true],
+		["translateY(-50%)", false],
+		["translate(0px, -50%)", false],
+		["translate3d(0, 0, 0)", false],
+	])(
+		"uses horizontal transforms for centring: %s",
+		async (transform, horizontal) => {
+			const { css, report } = await compile(
+				`.x {\nleft: 50%;\ntransform: ${transform};\nright: auto;\n}`,
+			);
+			expect(css).toContain(
+				`${horizontal ? "left" : "inset-inline-start"}: 50%;`,
+			);
+			expect(css).toContain("inset-inline-end: auto;");
+			expect(
+				report.unconvertible.map(({ line, kind }) => [line, kind]),
+			).toEqual(
+				horizontal
+					? [
+							[2, "centring"],
+							[3, "translate"],
+						]
+					: [],
+			);
+		},
+	);
+
+	it("reports asymmetric radii with source locations", async () => {
+		const { css, report } = await compile(
+			".x {\nborder-radius: 3px 0 0 3px;\nleft: 0;\nright: 2px;\n}",
+		);
+		expect(css).toContain("border-radius: 3px 0 0 3px;");
+		expect(css).toContain("inset-inline-start: 0;");
+		expect(css).toContain("inset-inline-end: 2px;");
+		expect(report.unconvertible).toEqual([
+			{
+				file: path.join(temporary, "inline.less"),
+				line: 2,
+				kind: "asymmetric-radius",
+				text: "border-radius: 3px 0 0 3px;",
+			},
+		]);
+	});
+
 	it("nests every colour function while literal maths uses LESS", async () => {
 		const { css } = await compile(`@import "ui-variables";
 .x { color: fade(saturate(desaturate(lighten(darken(@text-color, 10%), 5%), 20%), 3%), 70%);
@@ -213,10 +324,67 @@ describe("pure transforms", () => {
 		["border-top-right-radius", "border-start-end-radius"],
 		["border-bottom-left-radius", "border-end-start-radius"],
 		["border-bottom-right-radius", "border-end-end-radius"],
-		["left", "left"],
-		["right", "right"],
+		["left", "inset-inline-start"],
+		["right", "inset-inline-end"],
 	])("converts %s to %s", (before, after) => {
 		expect(logicalDeclaration(before, "2px").name).toBe(after);
+	});
+
+	it.each(["0", "auto", "50%", "calc(100% - 2px)", "var(--offset)"])(
+		"converts inset value %s",
+		(value) => {
+			for (const [name, side] of [
+				["left", "start"],
+				["right", "end"],
+			]) {
+				expect(logicalDeclaration(name, value)).toEqual({
+					name: `inset-inline-${side}`,
+					value,
+					unconvertible: [],
+				});
+			}
+		},
+	);
+
+	it.each([
+		["translateX(0)", true],
+		["translateX(-2px)", true],
+		["translate(2px, 0)", true],
+		["translate(0, 2px)", false],
+		["translate(0px, 2px)", false],
+		["translate(0%, 2px)", false],
+		["translate3d(0, 0, 0)", false],
+		["translate3d(0%, 2px, 0)", false],
+		["translate3d(2px, 0, 0)", true],
+		["translateY(2px)", false],
+		["translateZ(2px)", false],
+		["translateY(2px) translate(3px, 0)", true],
+		["translate(calc(100% - 2px), 0)", true],
+	])("reports only horizontal transforms: %s", (value, horizontal) => {
+		expect(logicalDeclaration("transform", value)).toEqual({
+			name: "transform",
+			value,
+			unconvertible: horizontal ? ["translate"] : [],
+		});
+	});
+
+	it.each([
+		["3px", false],
+		["3px 3px", false],
+		["3px 0", true],
+		["3px 3px 0", true],
+		["3px 0 0 3px", true],
+		["0 0 0 3px", true],
+		["3px 3px 0 0", false],
+		["3px 3px 0 0 / 1px 1px 2px 2px", false],
+		["3px / 1px 0", true],
+		["3px 0 0 3px !important", true],
+	])("reports asymmetric border-radius: %s", (value, asymmetric) => {
+		expect(logicalDeclaration("border-radius", value)).toEqual({
+			name: "border-radius",
+			value,
+			unconvertible: asymmetric ? ["asymmetric-radius"] : [],
+		});
 	});
 
 	it.each([
