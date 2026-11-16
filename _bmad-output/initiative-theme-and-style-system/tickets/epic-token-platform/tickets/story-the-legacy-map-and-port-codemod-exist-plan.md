@@ -3,14 +3,14 @@ title: 'The legacy map and port codemod exist'
 type: 'feature'
 ticket: '3'
 created: '2026-11-16'
-status: in-progress
+status: built
 baseline_revision: '7b4d6326f2bcd1424f09e2fb9505c2dea806db32'
 route: 'full'
 route_source: 'auto'
 risk: 'high'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-token-platform/epic-token-platform.md'
@@ -117,3 +117,31 @@ All paths are under `packages/client-app`. The research digest is in the Ringer 
 - `node scripts/port-less.mjs <all in-scope .less> --out-dir /tmp/ported --report /tmp/report.json` -- expected: exit 0; the report reviewed
 - Ticket extra check: port the three largest package sheets (`message-list.less`, `onboarding.less`, `composer.less`), load each in place of its LESS in a scratch build, and compare the thread-popout, onboarding and composer windows against the LESS build (computed-style diff or screenshot). Expected: no visible change beyond reported sites.
 - `npx biome check .`, `pnpm check:react` -- expected: pass
+
+## Review Triage Log
+
+Quick lens, 2026-11-16, on the diff since `7b4d6326f`.
+
+| # | Finding | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | No durable check that every in-scope sheet compiles (AC3) | medium | patch | Only the two fixture specs ship; the all-sheets proof lived in a scratch probe. Adds `spec/port-less-all.spec.js` over every static/ and package `.less` but the layout three. |
+| 2 | Inset `left`/`right` stay physical and unreported; asymmetric radius shorthands unreported | medium | patch | AD-9: a physical `left`/`right` in ported CSS fails `pnpm lint`. `logicalDeclaration` only reports `left: 50%` centring. |
+| 3 | Any file named `ui-variables.less` is replaced by placeholders | medium | patch | `plugin.mjs` matches by basename, so ui-dark's and ui-ubuntu's `.sheet-toolbar` rules vanish with exit 0. |
+| 4 | The root `static/index.less` imports buttons and mixins as `(reference)` | high | patch | Verified: the ported `index.css` drops 49 selectors that plain LESS emits, including all 35 `.btn` rules and `.item-count-box` (used in `outline-view-item.jsx`). |
+| 5a | `@standard-shadow`/`@btn-shadow` are `literal` with a role css | low | reject | No kind in the plan's enum fits a shadow; the cost is 6 extra report rows. |
+| 5b | Eight no-role font families and weights are `font`, not `literal` | low | patch | Josh's rule makes no-role variables literals; their uses are missing from `report.literals`. Direct correction in the supplement. |
+| 6 | `@input-font-size` should be ambiguous | false | reject | The size is shared by seven roles, but the variable's name names one role (`input`, research §2); 0 uses. |
+| 7 | CLI requires `--out-dir`/`--report`; the plan shows them optional | low | reject | A missing flag is a loud usage error; optional flags need invented defaults. |
+| 8 | Every `translate` is reported, including `translateY` and `translate3d(0,0,0)` | low | patch | Noise in a report the port stories read; a direct regex correction. |
+| 9 | Font-size fake units miscompute under `+`/`-`/`round()` | low | reject | No such expression in any in-scope sheet (all arithmetic is `* factor`); a guard adds branches. |
+
+## Verification Results
+
+2026-11-16, on `822b3c5f6`:
+- `npx vitest run`: 217 files, 4280 tests pass, no unhandled errors. `spec/port-less-all.spec.js` compiles every static/ and package `.less` except the layout three.
+- `node scripts/build-legacy-map.mjs --check`: no drift. Biome: 0 errors. `pnpm check:react`: pass.
+- Codemod on the 94 sheets the port stories own: 0 errors. The report is the work list for stories 4–6.
+- Extra check: `message-list.less`, `onboarding.less` and `composer.less` were ported and loaded in place of their LESS in a scratch build. A computed-style dump of every element in the composer, thread-popout and onboarding windows was diffed against the LESS build; two LESS runs diff to zero, so the dump is deterministic.
+  - Boxes: no element moved or resized in any window. Onboarding: no differences.
+  - Same rendering, new spelling: `text-align`/`float` compute as `start`/`end`/`inline-*`; relative colour syntax serialises as `color(srgb …)` within 0.5/255 of the LESS value; a faded gradient starts from transparent black instead of transparent `#fcfcfc` (gradients blend with premultiplied alpha, so it renders the same).
+  - One real change, as designed: `@text-color-subtle`/`-very-subtle` were translucent (`rgba(35,31,32,.8/.5)`); their roles `text-secondary`/`text-faint` are solid composites on white (`#4f4c4d`, `#918f90`). Identical on white; slightly different on tinted surfaces. Stories 4–5 should budget for it (research §1, double-application hazard).
