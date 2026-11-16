@@ -240,6 +240,9 @@ importers:
       jsdom:
         specifier: ^30.0.1
         version: 30.0.1(@noble/hashes@1.8.0)
+      less:
+        specifier: 3.13.1
+        version: 3.13.1
       vitest:
         specifier: 4.1.11
         version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.3.0)(@vitest/coverage-v8@4.1.11)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12))
@@ -5584,7 +5587,7 @@ snapshots:
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)
+      vite: 8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(less@3.13.1)(tsx@4.23.12)
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -8693,7 +8696,7 @@ snapshots:
 
   validator@13.15.35: {}
 
-  vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12):
+  vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(less@3.13.1)(tsx@4.23.12):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -8705,6 +8708,7 @@ snapshots:
       esbuild: 0.28.2
       fsevents: 2.3.3
       jiti: 2.7.0
+      less: 3.13.1
       tsx: 4.23.12
 
   vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@26.3.0)(@vitest/coverage-v8@4.1.11)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)):
@@ -8727,7 +8731,7 @@ snapshots:
       tinyexec: 1.3.0
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.1
-      vite: 8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)
+      vite: 8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(less@3.13.1)(tsx@4.23.12)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
