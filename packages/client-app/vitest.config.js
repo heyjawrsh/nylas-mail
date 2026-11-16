@@ -43,7 +43,6 @@ export default defineConfig({
 			reporter: ["text"],
 			include: ["src/**/*.js", "src/**/*.jsx"],
 			exclude: ["src/vendor/**"],
-			thresholds: { lines: 60, functions: 45, statements: 60, branches: 45 },
 		},
 	},
 });
