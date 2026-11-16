@@ -174,7 +174,13 @@ export default class ConfigPersistenceManager {
 
 	emitChangeEvent = ({ sourceWebcontentsId } = {}) => {
 		global.application.config.updateSettings(this.settings);
-		global.application.themeLibrary?.repaintWindows(global.application.config);
+		try {
+			global.application.themeLibrary?.repaintWindows(
+				global.application.config,
+			);
+		} catch (error) {
+			console.error("Could not repaint window backgrounds", error);
+		}
 
 		BrowserWindow.getAllWindows().forEach((win) => {
 			if (win.webContents && win.webContents.id !== sourceWebcontentsId) {

@@ -119,20 +119,18 @@ describe("ThemeLibrary", () => {
 		expect(config.set).not.toHaveBeenCalled();
 	});
 
-	it("uses dark surface for explicit dark mode and Auto on a dark OS", () => {
+	it("uses dark surface for explicit dark mode but keeps Auto light on a dark OS", () => {
 		expect(
 			library.windowLook(configFor({ mode: "dark" })).backgroundColor,
 		).toBe(classic.swatch.dark.surface);
 		electron.nativeTheme.shouldUseDarkColors = true;
-		expect(library.windowLook(configFor())).toMatchObject({
-			attributes: { "data-variant": "dark" },
-			backgroundColor: classic.swatch.dark.surface,
+		expect(library.windowLook(configFor({ mode: "auto" }))).toMatchObject({
+			attributes: { "data-variant": "light" },
+			backgroundColor: classic.swatch.light.surface,
 		});
-		expect(readSignalsSnapshot()).toEqual({
-			...DEFAULT_SIGNALS,
-			colorScheme: "dark",
-			revision: 0,
-		});
+		expect(readSignalsSnapshot()).toEqual(DEFAULT_SIGNALS);
+		expect(readSignalsSnapshot()).not.toBe(DEFAULT_SIGNALS);
+		expect(readSignalsSnapshot()).not.toBe(readSignalsSnapshot());
 	});
 
 	it.each(["light", "dark"])(
@@ -156,6 +154,26 @@ describe("ThemeLibrary", () => {
 		},
 	);
 
+	it.each([undefined, {}, { light: { surface: "#123456" } }])(
+		"uses the default dark swatch when a published theme lacks it (%j)",
+		(swatch) => {
+			library.publish({
+				id: "custom",
+				status: "ok",
+				variants: ["dark", "dark-hc"],
+				swatch,
+			});
+			expect(
+				library.windowLook(
+					configFor({ theme: "custom", mode: "dark", increaseContrast: "on" }),
+				),
+			).toMatchObject({
+				attributes: { "data-theme": "custom", "data-variant": "dark-hc" },
+				backgroundColor: classic.swatch.dark.surface,
+			});
+		},
+	);
+
 	it("uses an hc surface when present", () => {
 		library.publish({
 			...classic,
@@ -168,7 +186,14 @@ describe("ThemeLibrary", () => {
 		).toBe("#fff");
 	});
 
-	it("repaints visible, hidden work and hot windows", () => {
+	it("keeps the built-in surface if the default descriptor is published without swatches", () => {
+		library.publish({ id: "classic", status: "ok" });
+		expect(
+			library.windowLook(configFor({ mode: "dark" })).backgroundColor,
+		).toBe(classic.swatch.dark.surface);
+	});
+
+	it("repaints visible, hidden work and hot windows only when the surface changes", () => {
 		const windows = Object.fromEntries(
 			["main", "work", "hot"].map((key) => [
 				key,
@@ -179,10 +204,18 @@ describe("ThemeLibrary", () => {
 		);
 		library.setWindowManager({ _windows: windows });
 		library.repaintWindows(configFor({ mode: "dark" }));
+		library.repaintWindows(configFor({ mode: "dark", density: "compact" }));
 		for (const win of Object.values(windows)) {
 			expect(
 				win.browserWindow.setBackgroundColor,
 			).toHaveBeenCalledExactlyOnceWith(classic.swatch.dark.surface);
+		}
+		library.repaintWindows(configFor({ mode: "light" }));
+		for (const win of Object.values(windows)) {
+			expect(win.browserWindow.setBackgroundColor).toHaveBeenCalledTimes(2);
+			expect(win.browserWindow.setBackgroundColor).toHaveBeenLastCalledWith(
+				classic.swatch.light.surface,
+			);
 		}
 	});
 });

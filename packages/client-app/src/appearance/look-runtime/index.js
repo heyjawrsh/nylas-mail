@@ -5,21 +5,6 @@ import { DEFAULTS, DEFAULT_SIGNALS } from "./defaults";
 
 export const BUILTIN_LIBRARY = { themes: { classic }, styles: ["classic"] };
 
-// Config is loaded later in startup. Preserve main's resolved look until then.
-function appliedFromAttributes(attributes = {}) {
-	return {
-		theme: attributes["data-theme"],
-		style: attributes["data-style"],
-		mode: attributes["data-variant"]?.startsWith("dark") ? "dark" : "light",
-		increaseContrast: Object.hasOwn(attributes, "data-increased-contrast")
-			? "on"
-			: "off",
-		density: attributes["data-density"],
-		textSize: Number(attributes["data-text-size"]) / 100,
-		font: attributes["data-font"],
-	};
-}
-
 export function installLookRuntime(env) {
 	if (env.lookRuntime) return env.lookRuntime;
 	const appearance = env.getLoadSettings().appearance;
@@ -28,9 +13,7 @@ export function installLookRuntime(env) {
 	const runtime = createLookRuntime({
 		root: document.documentElement,
 		state: {
-			applied: appearance?.attributes
-				? appliedFromAttributes(appearance.attributes)
-				: env.config.get("core.appearance"),
+			applied: env.config.get("core.appearance"),
 			signals: appearance?.signals || DEFAULT_SIGNALS,
 			attributes: appearance?.attributes,
 			library,
@@ -56,11 +39,7 @@ export function installLookRuntime(env) {
 		),
 		shell.onLoadSettingsChanged(({ appearance }) => {
 			if (!appearance) return;
-			revision = Math.max(revision, appearance.revision);
-			return commit({
-				applied: appliedFromAttributes(appearance.attributes),
-				signals: appearance.signals,
-			});
+			return commit({ signals: appearance.signals });
 		}),
 	];
 	let disposed = false;

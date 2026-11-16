@@ -24,6 +24,7 @@ export default class WindowManager {
 		configDirPath,
 		initializeInBackground,
 		config,
+		themeLibrary,
 	}) {
 		this.initializeInBackground = initializeInBackground;
 		this._windows = {};
@@ -40,6 +41,7 @@ export default class WindowManager {
 			resourcePath,
 			configDirPath,
 			config,
+			themeLibrary,
 			onCreatedHotWindow,
 		});
 	}

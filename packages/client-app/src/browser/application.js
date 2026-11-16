@@ -122,6 +122,7 @@ export default class Application extends EventEmitter {
 			configDirPath: this.configDirPath,
 		});
 		this.windowManager = new WindowManager({
+			themeLibrary: this.themeLibrary,
 			resourcePath: this.resourcePath,
 			configDirPath: this.configDirPath,
 			config: this.config,

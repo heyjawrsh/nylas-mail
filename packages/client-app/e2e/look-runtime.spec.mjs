@@ -34,9 +34,7 @@ for (const spec of WINDOWS) {
 					"utf8",
 				),
 			);
-			const variant = await run.app.evaluate(({ nativeTheme }) =>
-				nativeTheme.shouldUseDarkColors ? "dark" : "light",
-			);
+			const variant = "light";
 			const surface = tokens[variant].surface.app.$value.hex;
 			const readingSize =
 				tokens[variant].type["body-reading"].size.$value.value;
@@ -132,9 +130,7 @@ for (const spec of WINDOWS) {
 						!!NylasEnv.lookRuntime &&
 						!!document.documentElement.getAttribute("data-theme"),
 				});
-				const variant = await run.app.evaluate(({ nativeTheme }) =>
-					nativeTheme.shouldUseDarkColors ? "dark" : "light",
-				);
+				const variant = "light";
 				const state = await evaluate(hot, async () => {
 					const root = document.documentElement;
 					return {

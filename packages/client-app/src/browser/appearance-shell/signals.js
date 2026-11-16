@@ -1,10 +1,6 @@
-import { nativeTheme } from "electron";
 import { DEFAULT_SIGNALS } from "../../appearance/look-runtime/defaults.js";
 
 export function readSignalsSnapshot() {
-	return {
-		...DEFAULT_SIGNALS,
-		colorScheme: nativeTheme.shouldUseDarkColors ? "dark" : "light",
-		revision: 0,
-	};
+	// Story 9 replaces this default snapshot with live OS signals.
+	return { ...DEFAULT_SIGNALS };
 }

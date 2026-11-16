@@ -133,13 +133,12 @@ describe("window appearance at launch", () => {
 		);
 	});
 
-	it("gets the library through Application before WindowManager creates its hot window", () => {
+	it("passes the supplied library through WindowManager before creating its hot window", () => {
 		const { themeLibrary, config } = setup(true);
 		vi.stubGlobal("application", {
-			themeLibrary,
 			applicationMenu: { addWindow: vi.fn() },
 		});
-		const manager = new WindowManager({ config });
+		const manager = new WindowManager({ config, themeLibrary });
 		expect(manager.windowLauncher.themeLibrary).toBe(themeLibrary);
 		expect(
 			manager.windowLauncher.hotWindow.options.appearance.backgroundColor,

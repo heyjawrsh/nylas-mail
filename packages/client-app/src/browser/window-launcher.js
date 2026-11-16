@@ -31,7 +31,7 @@ export default class WindowLauncher {
 		configDirPath,
 		onCreatedHotWindow,
 		config,
-		themeLibrary = global.application?.themeLibrary,
+		themeLibrary,
 	}) {
 		this.defaultWindowOpts = {
 			frame: process.platform !== "darwin",
