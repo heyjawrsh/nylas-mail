@@ -22,20 +22,12 @@ export async function buildThemes(dir = defaultDir) {
 					`${file}: ${entry.level}: ${entry.path}: ${entry.message}`,
 				);
 			}
-			let id;
-			try {
-				id = JSON.parse(text)?.$extensions?.["org.nylas.theme"]?.id;
-			} catch {
-				// The compiler already reports malformed JSON.
+			if (report.some((entry) => entry.level === "error")) {
+				failures.push(file);
+				continue;
 			}
-			const name =
-				typeof id === "string" && id.trim()
-					? id
-					: file.slice(0, -".tokens.json".length);
-			if (/[\\/]/.test(name) || name.includes("\0"))
-				throw new Error("Theme id must be a filename without path separators.");
-			await fs.writeFile(path.join(dir, `${name}.css`), css);
-			if (report.some((entry) => entry.level === "error")) failures.push(file);
+			const id = JSON.parse(text).$extensions["org.nylas.theme"].id;
+			await fs.writeFile(path.join(dir, `${id}.css`), css);
 		} catch (error) {
 			console.error(`${file}: error: ${error.message}`);
 			failures.push(file);

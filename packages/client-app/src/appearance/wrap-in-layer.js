@@ -27,7 +27,7 @@ function statementEnd(source, start) {
 
 function layerImport(statement, layer) {
 	const target =
-		/^@import(?:\s|\/\*[\s\S]*?\*\/)+(?:url\((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\\.|[^)"'\\])*\)|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/i.exec(
+		/^@import(?:\s|\/\*[\s\S]*?\*\/)*(?:url\((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\\.|[^)"'\\])*\)|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/i.exec(
 			statement,
 		);
 	if (!target) return statement;

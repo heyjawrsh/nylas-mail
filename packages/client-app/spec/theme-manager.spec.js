@@ -24,6 +24,8 @@ describe("ThemeManager theme listing and activation state", () => {
 	let manager; let packageManager; let stylesElement;
 	beforeEach(() => {
 		vi.clearAllMocks(); document.head.innerHTML = ""; document.body.className = "";
+		document.documentElement.removeAttribute("data-theme");
+		document.documentElement.removeAttribute("data-variant");
 		stylesElement = document.createElement("nylas-styles");
 		stylesElement.onDidAddStyleElement = vi.fn(); stylesElement.onDidRemoveStyleElement = vi.fn(); stylesElement.onDidUpdateStyleElement = vi.fn(); document.head.appendChild(stylesElement);
 		packageManager = { registerPackageActivator: vi.fn(), getLoadedPackages: vi.fn(() => []), getActivePackages: vi.fn(() => []), resolvePackagePath: vi.fn(), activatePackage: vi.fn(() => Promise.resolve()), deactivatePackage: vi.fn() };
@@ -50,6 +52,28 @@ describe("ThemeManager theme listing and activation state", () => {
 	it("adds resolved stylesheet content to the style manager", () => { m.resolveOnLoadPath.mockReturnValue("/theme.css"); m.readFileSync.mockReturnValue("body {}"); const disposable = { dispose: vi.fn() }; globalThis.NylasEnv.styles.addStyleSheet.mockReturnValue(disposable); expect(manager.requireStylesheet("theme")).toBe(disposable); expect(globalThis.NylasEnv.styles.addStyleSheet).toHaveBeenCalledWith("body {}", { sourcePath: "/theme.css", layer: "baseline" }); });
 	it("disposes a previously applied stylesheet", () => { const disposable = { dispose: vi.fn() }; manager.styleSheetDisposablesBySourcePath["/theme.css"] = disposable; manager.removeStylesheet("/theme.css"); expect(disposable.dispose).toHaveBeenCalledOnce(); });
 	it("adds a body class for each active theme", () => { packageManager.getActivePackages.mockReturnValue([theme("ui-light"), theme("solarized")]); manager.addActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-light")).toBe(true); expect(document.body.classList.contains("theme-solarized")).toBe(true); });
+	it("sets Classic light attributes when ui-light is activated", () => {
+		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
+		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
+	});
+
+	it.each(["ui-dark", "ui-taiga"])("removes Classic attributes when switching to %s with the ui-light base", (name) => {
+		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		manager.removeActiveThemeClasses();
+		packageManager.getActivePackages.mockReturnValue([theme(name), theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		expect(document.documentElement.hasAttribute("data-theme")).toBe(false);
+		expect(document.documentElement.hasAttribute("data-variant")).toBe(false);
+		expect(document.body.classList.contains(`theme-${name}`)).toBe(true);
+		manager.removeActiveThemeClasses();
+		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
+		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
+	});
 	it("removes body classes for active themes", () => { document.body.classList.add("theme-ui-dark"); packageManager.getActivePackages.mockReturnValue([theme("ui-dark")]); manager.removeActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-dark")).toBe(false); });
 	it("deactivates every active theme", () => { packageManager.getActivePackages.mockReturnValue([theme("one"), theme("two")]); manager.deactivateThemes(); expect(packageManager.deactivatePackage.mock.calls.map(([name]) => name)).toEqual(["one", "two"]); });
 	it("uses active theme stylesheet directories as import paths", () => { packageManager.getActivePackages.mockReturnValue([theme("ui-dark")]); m.isDirectorySync.mockReturnValue(true); expect(manager.getImportPaths()).toEqual(["/themes/ui-dark/styles"]); });

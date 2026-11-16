@@ -139,6 +139,14 @@ class StylesElement extends HTMLElement {
 		const styleElementClone =
 			this.styleElementClonesByOriginalElement.get(styleElement);
 		styleElementClone.textContent = styleElement.textContent;
+		if (styleElement.hasAttribute("layer")) {
+			styleElementClone.setAttribute(
+				"layer",
+				styleElement.getAttribute("layer"),
+			);
+		} else {
+			styleElementClone.removeAttribute("layer");
+		}
 		return this.emitter.emit("did-update-style-element", styleElementClone);
 	}
 

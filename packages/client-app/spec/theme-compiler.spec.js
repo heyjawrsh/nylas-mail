@@ -33,6 +33,82 @@ describe("theme compiler", () => {
 		expect(compileTheme(classic)).toEqual(compileTheme(classic));
 	});
 
+	it.each([
+		"x; color: red; --y",
+		"Upper",
+		"a_b",
+		"a--b",
+		"-a",
+		"a-",
+		"",
+		"a\n",
+	])("rejects unsafe role names: %j", (name) => {
+		const { css, report } = compile({
+			light: { surface: { [name]: color([0, 0, 0]) } },
+		});
+		expect(report).toEqual([
+			{
+				level: "error",
+				path: `light.surface.${name}`,
+				message: expect.any(String),
+			},
+		]);
+		expect(css).not.toContain("--surface-");
+	});
+
+	it("reports duplicate flattened roles as schema errors and keeps only the first", () => {
+		const { css, report } = compile({
+			light: { a: { b: color([0, 0, 0]) }, "a-b": color([1, 1, 1]) },
+			dark: { "a-b": color([1, 1, 1]) },
+		});
+		expect(report).toEqual([
+			{
+				level: "error",
+				code: "schema",
+				path: "light.a-b",
+				message: expect.stringContaining("a-b"),
+			},
+		]);
+		expect(css.match(/--a-b: #[0-9a-f]+;/g)).toEqual([
+			"--a-b: #000000;",
+			"--a-b: #ffffff;",
+		]);
+	});
+
+	it.each([
+		"../escape",
+		'x"] {}',
+		"Classic",
+		"a_b",
+		"a--b",
+		"-a",
+		"a-",
+		"a\n",
+		12,
+	])("rejects invalid theme ids: %j", (id) => {
+		const { css, report } = compile({
+			$extensions: { "org.nylas.theme": { id } },
+		});
+		expect(css).toBe("");
+		expect(report).toEqual([
+			{
+				level: "error",
+				path: "$extensions.org.nylas.theme.id",
+				message: expect.stringContaining("invalid-id"),
+			},
+		]);
+	});
+
+	it("accepts lowercase alphanumeric names separated by hyphens", () => {
+		const { css, report } = compile({
+			$extensions: { "org.nylas.theme": { id: "classic-2" } },
+			light: { "surface-2": color([0, 0, 0]) },
+		});
+		expect(report).toEqual([]);
+		expect(css).toContain('[data-theme="classic-2"]');
+		expect(css).toContain("--surface-2: #000000;");
+	});
+
 	it("reports malformed JSON without throwing", () => {
 		expect(compileTheme("{")).toEqual({
 			css: "",
@@ -98,6 +174,51 @@ describe("theme compiler", () => {
 		expect(
 			compile({ light: { accent: color([0, 0, 0], { hex: "#ABCDEF" }) } }).css,
 		).toContain("--accent: #abcdef;");
+	});
+
+	it.each([
+		["#000000", 0.5, "#00000080"],
+		["#ABCDEF", 0, "#abcdef00"],
+		["#ABCDEF", 1, "#abcdef"],
+		["#ABCDEF00", 0.5, "#abcdef80"],
+		["#ABCDEF00", 1, "#abcdef"],
+	])("applies alpha to supplied hex: %s, %s", (hex, alpha, expected) => {
+		const { css, report } = compile({
+			light: { accent: color([0, 0, 0], { hex, alpha }) },
+		});
+		expect(report).toEqual([]);
+		expect(css).toContain(`--accent: ${expected};`);
+	});
+
+	it("reports unresolved token types as errors", () => {
+		const { css, report } = compile({
+			light: {
+				surface: {
+					app: { $value: { colorSpace: "srgb", components: [0, 0, 0] } },
+				},
+			},
+		});
+		expect(report).toEqual([
+			{
+				level: "error",
+				path: "light.surface.app",
+				message: expect.stringContaining("type"),
+			},
+		]);
+		expect(css).not.toContain("--surface-app:");
+	});
+
+	it("resolves types inherited from the root", () => {
+		const { css, report } = compile({
+			$type: "color",
+			light: {
+				surface: {
+					app: { $value: { colorSpace: "srgb", components: [0, 0, 0] } },
+				},
+			},
+		});
+		expect(report).toEqual([]);
+		expect(css).toContain("--surface-app: #000000;");
 	});
 
 	it("emits variants in order with the appropriate colour scheme", () => {

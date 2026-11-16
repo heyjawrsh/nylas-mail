@@ -413,6 +413,13 @@ ${error.message}\
 			for (var pack of Array.from(this.getActiveThemes())) {
 				document.body.classList.add(`theme-${pack.name}`);
 			}
+			if (this.getActiveTheme()?.name === "ui-light") {
+				document.documentElement.setAttribute("data-theme", "classic");
+				document.documentElement.setAttribute("data-variant", "light");
+			} else {
+				document.documentElement.removeAttribute("data-theme");
+				document.documentElement.removeAttribute("data-variant");
+			}
 		}
 
 		removeActiveThemeClasses() {

@@ -258,8 +258,6 @@ export default class NylasEnvConstructor {
 		document.body.classList.add(`platform-${process.platform}`);
 		document.body.classList.add(`window-type-${windowType}`);
 		document.documentElement.setAttribute("data-look", "");
-		document.documentElement.setAttribute("data-theme", "classic");
-		document.documentElement.setAttribute("data-variant", "light");
 
 		// Add 'src/global' to module search path.
 		const globalPath = path.join(resourcePath, "src", "global");

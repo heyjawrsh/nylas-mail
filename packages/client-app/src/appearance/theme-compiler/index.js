@@ -1,4 +1,6 @@
 const VARIANTS = ["light", "dark", "light-hc", "dark-hc"];
+// Require the actual end of the string, including for trailing newlines.
+const NAME = /^[a-z0-9]+(-[a-z0-9]+)*(?![\s\S])/;
 
 function isObject(value) {
 	return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -27,7 +29,14 @@ function colorValue(value) {
 	) {
 		return null;
 	}
-	if (value.hex !== undefined) return value.hex.toLowerCase();
+	if (value.hex !== undefined) {
+		const hex = value.hex.toLowerCase();
+		if (value.alpha === undefined) return hex;
+		const alpha = Math.round(value.alpha * 255)
+			.toString(16)
+			.padStart(2, "0");
+		return hex.slice(0, 7) + (value.alpha < 1 ? alpha : "");
+	}
 	const components = [...value.components];
 	if (value.alpha !== undefined && value.alpha < 1)
 		components.push(value.alpha);
@@ -52,32 +61,52 @@ function compileTheme(text) {
 		};
 	}
 	const id = theme?.$extensions?.["org.nylas.theme"]?.id;
-	if (typeof id !== "string" || !id.trim()) {
+	if (typeof id !== "string" || !NAME.test(id)) {
 		return {
 			css: "",
 			report: [
 				{
 					level: "error",
 					path: "$extensions.org.nylas.theme.id",
-					message: "Theme id is required.",
+					message:
+						"invalid-id: Expected lowercase letters and digits separated by single hyphens.",
 				},
 			],
 		};
 	}
-	const selectorId = id.replace(
-		// biome-ignore lint/suspicious/noControlCharactersInRegex: Escape control characters in CSS strings.
-		/["\\\x00-\x1f\x7f]/g,
-		(char) => `\\${char.charCodeAt(0).toString(16)} `,
-	);
 	const lines = ["@layer theme {"];
 	for (const variant of VARIANTS) {
 		if (!Object.hasOwn(theme, variant)) continue;
 		const tokens = [];
+		const roles = new Set();
 		function walk(node, parts, inheritedType) {
 			if (!isObject(node)) return;
 			const type = node.$type ?? inheritedType;
 			if (Object.hasOwn(node, "$value")) {
 				const path = [variant, ...parts].join(".");
+				const role = parts.join("-");
+				if (!NAME.test(role)) {
+					report.push({ level: "error", path, message: "Invalid role name." });
+					return;
+				}
+				if (roles.has(role)) {
+					report.push({
+						level: "error",
+						code: "schema",
+						path,
+						message: `Duplicate role: ${role}.`,
+					});
+					return;
+				}
+				roles.add(role);
+				if (type === undefined) {
+					report.push({
+						level: "error",
+						path,
+						message: "Token type could not be resolved.",
+					});
+					return;
+				}
 				if (type !== "color") {
 					report.push({
 						level: "warning",
@@ -96,7 +125,7 @@ function compileTheme(text) {
 					});
 					return;
 				}
-				tokens.push([parts.join("-"), value]);
+				tokens.push([role, value]);
 				return;
 			}
 			for (const key of Object.keys(node).sort()) {
@@ -105,7 +134,7 @@ function compileTheme(text) {
 		}
 		walk(theme[variant], [], theme.$type);
 		lines.push(
-			`\t[data-look][data-theme="${selectorId}"][data-variant="${variant}"] {`,
+			`\t[data-look][data-theme="${id}"][data-variant="${variant}"] {`,
 		);
 		lines.push(
 			`\t\tcolor-scheme: ${variant.startsWith("dark") ? "dark" : "light"};`,

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
 	getPath: vi.fn(() => "/tmp/nylas-print"),
@@ -33,6 +33,11 @@ import Printer from "../internal_packages/print/lib/printer.js";
 
 describe("print window", () => {
 	beforeEach(() => { vi.clearAllMocks(); m.browserOptions.length = 0; });
+	afterEach(() => {
+		for (const name of ["data-look", "data-theme", "data-variant"]) {
+			document.documentElement.removeAttribute(name);
+		}
+	});
 
 	const build = (overrides = {}) => new PrintWindow({
 		subject: "Quarterly update", account: { name: "Ada", email: "ada@example.com" },
@@ -44,6 +49,47 @@ describe("print window", () => {
 	it("writes the generated document to the app temp directory", () => {
 		build();
 		expect(m.writeFileSync).toHaveBeenCalledWith("/tmp/nylas-print/print.html", expect.any(String));
+	});
+
+	it("declares the kernel layer order before copied styles", () => {
+		const styleTags = "<style>@layer baseline { .message { color: red } }</style>";
+		build({ styleTags });
+		const html = m.writeFileSync.mock.calls[0][1];
+		expect(html).toMatch(/<head>\s*<meta charset="utf-8">\s*<style id="nylas-kernel">@layer reset, kernel, theme, font, baseline, style, plugin;<\/style>/);
+		expect(html.indexOf('id="nylas-kernel"')).toBeLessThan(html.indexOf(styleTags));
+	});
+
+	it("copies the opener's current look attributes each time it builds", () => {
+		document.documentElement.setAttribute("data-look", "");
+		document.documentElement.setAttribute("data-theme", "classic");
+		document.documentElement.setAttribute("data-variant", "light");
+		build();
+		expect(m.writeFileSync.mock.calls[0][1]).toContain('<html data-look="" data-theme="classic" data-variant="light">');
+		document.documentElement.setAttribute("data-variant", "dark");
+		build();
+		expect(m.writeFileSync.mock.calls[1][1]).toContain('data-variant="dark"');
+	});
+
+	it.each([null, "data-look", "data-theme", "data-variant"])("omits absent look attributes with %s present", (present) => {
+		if (present) document.documentElement.setAttribute(present, "");
+		build();
+		const root = new DOMParser().parseFromString(m.writeFileSync.mock.calls[0][1], "text/html").documentElement;
+		for (const name of ["data-look", "data-theme", "data-variant"]) {
+			expect(root.hasAttribute(name)).toBe(name === present);
+		}
+	});
+
+	it("escapes look attribute values without adding markup", () => {
+		const value = `" data-injected="yes"><script>&amp;'</script>`;
+		for (const name of ["data-look", "data-theme", "data-variant"]) {
+			document.documentElement.setAttribute(name, value);
+		}
+		build();
+		const html = m.writeFileSync.mock.calls[0][1];
+		expect(html).toContain("&quot; data-injected=&quot;yes&quot;&gt;&lt;script&gt;&amp;amp;&#39;&lt;/script&gt;");
+		const root = new DOMParser().parseFromString(html, "text/html").documentElement;
+		expect(root.getAttributeNames()).toEqual(["data-look", "data-theme", "data-variant"]);
+		for (const name of root.getAttributeNames()) expect(root.getAttribute(name)).toBe(value);
 	});
 
 	it("includes thread, account, participant, and message data", () => {

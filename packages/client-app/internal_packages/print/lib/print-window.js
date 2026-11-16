@@ -1,6 +1,7 @@
 import path from "node:path";
 import fs from "node:fs";
 import * as remote from "@electron/remote";
+import { layerStatement } from "../../../src/appearance/layers.js";
 
 const { app, BrowserWindow } = remote;
 
@@ -29,11 +30,25 @@ export default class PrintWindow {
 				return `<li class="participant"><span>${part.name} &lt;${part.email}&gt;</span></li>`;
 			})
 			.join("");
+		const lookAttributes = ["data-look", "data-theme", "data-variant"]
+			.map((name) => {
+				const value = document.documentElement.getAttribute(name);
+				if (value === null) return "";
+				const escaped = value
+					.replace(/&/g, "&amp;")
+					.replace(/"/g, "&quot;")
+					.replace(/</g, "&lt;")
+					.replace(/>/g, "&gt;")
+					.replace(/'/g, "&#39;");
+				return ` ${name}="${escaped}"`;
+			})
+			.join("");
 
 		const content = `
-      <html>
+      <html${lookAttributes}>
         <head>
           <meta charset="utf-8">
+          <style id="nylas-kernel">${layerStatement()}</style>
           ${styleTags}
           <link rel="stylesheet" type="text/css" href="${stylesPath}">
         </head>

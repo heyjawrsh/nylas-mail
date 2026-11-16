@@ -47,16 +47,16 @@ describe("theme build", () => {
 		expect(errors).toHaveBeenCalledWith(
 			expect.stringContaining("broken.tokens.json: error:"),
 		);
-		expect(await fs.readFile(path.join(dir, "broken.css"), "utf8")).toBe("");
+		expect(await fs.readdir(dir)).not.toContain("broken.css");
 		expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toContain(
 			"--surface-app: #f6f6f6;",
 		);
 	});
 
-	it("falls back to the basename when the id is missing", async () => {
+	it("does not write CSS when the id is missing", async () => {
 		await fs.writeFile(path.join(dir, "unnamed.tokens.json"), "{}");
 		await expect(buildThemes(dir)).rejects.toThrow("unnamed.tokens.json");
-		expect(await fs.readFile(path.join(dir, "unnamed.css"), "utf8")).toBe("");
+		expect(await fs.readdir(dir)).toEqual(["unnamed.tokens.json"]);
 	});
 
 	it("prints warnings without failing", async () => {
@@ -72,16 +72,45 @@ describe("theme build", () => {
 		);
 	});
 
-	it("rejects ids that would write outside the theme directory", async () => {
-		await fs.writeFile(
-			path.join(dir, "unsafe.tokens.json"),
-			JSON.stringify({
-				$extensions: { "org.nylas.theme": { id: "../escape" } },
-			}),
-		);
-		await expect(buildThemes(dir)).rejects.toThrow("unsafe.tokens.json");
-		expect(await fs.readdir(dir)).toEqual(["unsafe.tokens.json"]);
-	});
+	it.each(["../escape", "Classic", "a--b", "a\n"])(
+		"does not write CSS for invalid id %j",
+		async (id) => {
+			await fs.writeFile(
+				path.join(dir, "unsafe.tokens.json"),
+				JSON.stringify({
+					$extensions: { "org.nylas.theme": { id } },
+				}),
+			);
+			await expect(buildThemes(dir)).rejects.toThrow("unsafe.tokens.json");
+			expect(await fs.readdir(dir)).toEqual(["unsafe.tokens.json"]);
+		},
+	);
+
+	it.each(["malformed JSON", "invalid colour", "missing type"])(
+		"preserves existing CSS on %s and exits 1 naming the file",
+		async (failure) => {
+			await fs.copyFile(classic, path.join(dir, "classic.tokens.json"));
+			await buildThemes(dir);
+			const previous = await fs.readFile(path.join(dir, "classic.css"), "utf8");
+			const theme = JSON.parse(await fs.readFile(classic, "utf8"));
+			if (failure === "invalid colour")
+				theme.light.surface.app.$value = "invalid";
+			if (failure === "missing type") delete theme.light.surface.app.$type;
+			await fs.writeFile(
+				path.join(dir, "classic.tokens.json"),
+				failure === "malformed JSON" ? "{" : JSON.stringify(theme),
+			);
+			await expect(
+				execFileAsync(process.execPath, [script, dir]),
+			).rejects.toMatchObject({
+				code: 1,
+				stderr: expect.stringContaining("classic.tokens.json"),
+			});
+			expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toBe(
+				previous,
+			);
+		},
+	);
 
 	it("exits 1 and names the file when the CLI encounters an error", async () => {
 		await fs.writeFile(path.join(dir, "broken.tokens.json"), "{");

@@ -8,9 +8,7 @@ import { WINDOWS } from "./windows.mjs";
 const require = createRequire(import.meta.url);
 const { LAYERS } = require("../src/appearance/layers.js");
 
-for (const spec of WINDOWS.filter((window) =>
-	["default", "thread-popout"].includes(window.type),
-)) {
+for (const spec of WINDOWS) {
 	test.describe(`${spec.type} look runtime`, () => {
 		let run;
 		let page;
@@ -43,7 +41,12 @@ for (const spec of WINDOWS.filter((window) =>
 				const root = document.documentElement;
 				const messageList = document.querySelector("#message-list");
 				const styles = Array.from(
-					document.querySelectorAll("nylas-styles style"),
+					// The print window has no <nylas-styles>; its copied sheets sit in <head>.
+					document.querySelectorAll(
+						document.querySelector("nylas-styles")
+							? "nylas-styles style"
+							: "head style:not(#nylas-kernel)",
+					),
 				).filter(
 					(style) =>
 						!style.getAttribute("source-path")?.includes("email-frame"),

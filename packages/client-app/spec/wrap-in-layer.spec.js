@@ -20,6 +20,10 @@ describe("wrapInLayer", () => {
 		expect(wrapInLayer(source, "baseline")).toBe('@charset "utf-8";\n@import url("font-awesome.min.css") layer(baseline);\n@layer baseline {\n\n.a { color: red; }\n}');
 	});
 
+	it.each(['@import"x.css";', '@import url(x.css);', '@import/**/"x.css";'])("layers the import %s", (source) => {
+		expect(wrapInLayer(source, "baseline")).toBe(`${source.slice(0, -1)} layer(baseline);\n@layer baseline {\n\n}`);
+	});
+
 	it("hoists multiple imports through comments and whitespace", () => {
 		const source = '/* license */\n@charset "utf-8";\n/* fonts */\n@import "fonts.css" screen;\n\t@import url(colors.css) print;\n/* rules */\n.a {}';
 		const output = wrapInLayer(source, "style");
