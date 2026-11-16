@@ -3,14 +3,14 @@ title: 'One Classic role reaches the running app'
 type: 'feature'
 ticket: '1'
 created: '2026-11-15'
-status: 'ready-for-dev'
-baseline_revision: ''
+status: done
+baseline_revision: 'a52d64ad437ef736c28de957bb843ff5892c738a'
 route: 'full'
 route_source: 'auto'
 risk: 'high'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-token-platform/epic-token-platform.md'
@@ -103,8 +103,8 @@ All paths are under `packages/client-app`.
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] compiler lane: `theme-compiler`, `classic.tokens.json`, `build-themes.mjs` plus its `build-renderer` hook, `.gitignore`, and specs
-- [ ] runtime lane: `layers.js`, the kernel in `index.html`, `wrapInLayer`, the StyleManager, Package and ThemeManager layer plumbing, the look root, the `#message-list` var, specs, and the e2e spec
+- [x] compiler lane: `theme-compiler`, `classic.tokens.json`, `build-themes.mjs` plus its `build-renderer` hook, `.gitignore`, and specs
+- [x] runtime lane: `layers.js`, the kernel in `index.html`, `wrapInLayer`, the StyleManager, Package and ThemeManager layer plumbing, the look root, the `#message-list` var, specs, and the e2e spec
 
 **Acceptance Criteria:**
 - Given the built app, when any window loads, then `document.styleSheets[0]` is the kernel sheet declaring `LAYERS` in order.
@@ -116,6 +116,30 @@ All paths are under `packages/client-app`.
 
 Layering changes cascade precedence. Within `baseline`, order of insertion still decides, as before. Across layers, `style` beats `baseline` and `plugin` beats both, whatever the insertion order. Unlayered CSS beats every layer: today that's the loading cover and component `<style>` tags. `!important` declarations invert the layer order, so a legacy theme's `!important` in `style` loses to a base `!important` in `baseline`. The non-default legacy themes use `!important` 93 times. Classic light (`ui-light`) is variables only, so the default look isn't affected. The epic's person-compare covers the rest before story 7.
 
+## Implementation Notes
+
+- Ringer lanes on gpt-6-astra built this: compiler and runtime in parallel (8884dfdbc), two review-fix lanes, and a print-window lane (c2372ec23).
+- Classic's attributes go on `<html>` only while `ui-light` is the active UI theme. Other legacy themes keep their own `@background-secondary` through the `var()` fallback, so nothing changes for `ui-dark` users until story 7.
+- The print window builds its own HTML. It now writes the kernel sheet before the copied style tags and copies the look attributes. The look-runtime e2e checks every window in `WINDOWS`.
+- Repaint check, done by hand: `surface-app` set to `#ff00ff`, rebuilt, and `#message-list` painted it in the real app, then reverted.
+- Found during verification and fixed separately (505ab4ece): the 13.9 keybase spec's `_populate` race. It caused the "unhandled errors" on every cold-cache run.
+- CI's first run also showed that the coverage gate had never passed. Josh made coverage report-only (cef389f76). The CI Linux axe counts differ from the builder image, so Josh had the Linux default window re-baselined from CI: color-contrast 7 (9381cc456), region 29 (f8236e4f0).
+
+## Review Triage Log
+
+| # | Lens | Finding | Verdict | Route | Evidence |
+|---|------|---------|---------|-------|----------|
+| 1 | quick | `#message-list` turns light grey on every non-default legacy theme | high | patch | The Classic light attributes are hard-coded, and `ui-dark` sets `@background-secondary: #333539` with no override of its own. Set the Classic attributes only while the active UI theme is `ui-light`, and keep a LESS fallback in the `var()`. |
+| 2 | quick | the e2e checks the kernel only in two windows | medium | patch | AC1 says every window. Check the kernel and look attributes in every `WINDOWS` entry; check the paint where `#message-list` exists (thread-popout). |
+| 3 | quick | role names go into the CSS raw | medium | patch | AD-31 forbids CSS injection. Validate roles as `^[a-z0-9]+(-[a-z0-9]+)*$` and report an error otherwise. |
+| 4 | quick | duplicate roles pass silently | medium | patch | AD-6 makes two paths to one role a `schema` error. |
+| 5 | quick | the theme id isn't validated | medium | patch | AD-31's `^[a-z0-9]+(-[a-z0-9]+)*$`, else `invalid-id`. `build-themes` writes raw ids as file names. |
+| 6 | quick | alpha is dropped when `hex` is present | low | patch | `colorValue` returns `hex` before it reads `alpha`. |
+| 7 | quick | a colour with no `$type` only warns | medium | patch | The matrix requires a build error. A missing `$type` drops the role, and the build stays green. |
+| 8 | quick | `build-themes` overwrites good CSS with a broken file's output | medium | patch | It writes before checking errors. A malformed `classic.tokens.json` empties `classic.css`. |
+| 9 | quick | `@import"x.css"` (no whitespace) stays unlayered | low | patch | The regex needs whitespace after `@import`. |
+| 10 | quick | the mounted `<nylas-styles>` clone keeps a stale `layer` attribute | low | patch | `styleElementUpdated` copies only `textContent`. |
+
 ## Verification
 
 **Commands:**
@@ -126,3 +150,12 @@ Layering changes cascade precedence. Within `baseline`, order of insertion still
 - `pnpm --filter nylas-mail build:e2e && pnpm --filter nylas-mail e2e` -- expected: all pass, look-runtime included, background mode
 - once, by hand: set `surface-app` to `#ff00ff`, rebuild, rerun look-runtime (passes against the new value), then revert
 - `packages/client-app/e2e/linux-docker.sh` -- expected: pass
+
+**Results** (on f8236e4f0):
+- Vitest: 3985 passed, no unhandled errors, two cold-cache runs
+- `check:react` and `check:public-build` pass; Biome has 37 warnings, the same as the baseline
+- `build-themes`: writes `classic.css` with `--surface-app: #f6f6f6`; a malformed file exits 1 and leaves the last good CSS
+- Mac `build:e2e` plus `e2e`: 21 passed, 7 skipped, look-runtime included in every window, background mode
+- Repaint check by hand: `#ff00ff` painted in `#message-list`, then reverted
+- `linux-docker.sh`: 21 passed, 7 skipped
+- CI (`dist` and `modernize-ci`): all jobs green
