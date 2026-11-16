@@ -330,11 +330,22 @@ module.exports = Package = (() => {
 					context = undefined;
 				}
 
+				let layer;
+				if (context !== "email-frame" && !sourcePath.includes("email-frame")) {
+					layer =
+						this.getType() === "theme"
+							? "style"
+							: this.bundledPackage
+								? "baseline"
+								: "plugin";
+				}
+
 				this.stylesheetDisposables.add(
 					NylasEnv.styles.addStyleSheet(source, {
 						sourcePath,
 						priority,
 						context,
+						layer,
 					}),
 				);
 			}

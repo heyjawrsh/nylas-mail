@@ -335,6 +335,8 @@ if (
 	process.argv[1] &&
 	realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))
 ) {
+	const { buildThemes } = await import("./build-themes.mjs");
+	await buildThemes();
 	for (const entry of entries) {
 		await build(buildOptions(entry));
 		console.log(`bundled ${entry.out}.js`);

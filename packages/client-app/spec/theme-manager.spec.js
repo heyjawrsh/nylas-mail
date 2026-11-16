@@ -47,7 +47,7 @@ describe("ThemeManager theme listing and activation state", () => {
 	it("resolves stylesheets with an explicit extension directly", () => { manager.resolveStylesheet("theme.css"); expect(m.resolveOnLoadPath).toHaveBeenCalledWith("theme.css"); });
 	it("reads css stylesheets as utf8", () => { m.readFileSync.mockReturnValue("body {}"); expect(manager.loadStylesheet("/theme.css")).toBe("body {}"); expect(m.readFileSync).toHaveBeenCalledWith("/theme.css", "utf8"); });
 	it("throws when a required stylesheet cannot be found", () => { m.resolveOnLoadPath.mockReturnValue(null); expect(() => manager.requireStylesheet("missing")).toThrow("Could not find a file at path 'missing'"); });
-	it("adds resolved stylesheet content to the style manager", () => { m.resolveOnLoadPath.mockReturnValue("/theme.css"); m.readFileSync.mockReturnValue("body {}"); const disposable = { dispose: vi.fn() }; globalThis.NylasEnv.styles.addStyleSheet.mockReturnValue(disposable); expect(manager.requireStylesheet("theme")).toBe(disposable); expect(globalThis.NylasEnv.styles.addStyleSheet).toHaveBeenCalledWith("body {}", { sourcePath: "/theme.css" }); });
+	it("adds resolved stylesheet content to the style manager", () => { m.resolveOnLoadPath.mockReturnValue("/theme.css"); m.readFileSync.mockReturnValue("body {}"); const disposable = { dispose: vi.fn() }; globalThis.NylasEnv.styles.addStyleSheet.mockReturnValue(disposable); expect(manager.requireStylesheet("theme")).toBe(disposable); expect(globalThis.NylasEnv.styles.addStyleSheet).toHaveBeenCalledWith("body {}", { sourcePath: "/theme.css", layer: "baseline" }); });
 	it("disposes a previously applied stylesheet", () => { const disposable = { dispose: vi.fn() }; manager.styleSheetDisposablesBySourcePath["/theme.css"] = disposable; manager.removeStylesheet("/theme.css"); expect(disposable.dispose).toHaveBeenCalledOnce(); });
 	it("adds a body class for each active theme", () => { packageManager.getActivePackages.mockReturnValue([theme("ui-light"), theme("solarized")]); manager.addActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-light")).toBe(true); expect(document.body.classList.contains("theme-solarized")).toBe(true); });
 	it("removes body classes for active themes", () => { document.body.classList.add("theme-ui-dark"); packageManager.getActivePackages.mockReturnValue([theme("ui-dark")]); manager.removeActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-dark")).toBe(false); });
@@ -57,4 +57,37 @@ describe("ThemeManager theme listing and activation state", () => {
 	it("drops theme import paths that are not directories", () => { packageManager.getActivePackages.mockReturnValue([theme("broken")]); m.isDirectorySync.mockReturnValue(false); expect(manager.getImportPaths()).toEqual([]); });
 	it("refreshes an existing less cache with current import paths", () => { manager.lessCache = { setImportPaths: vi.fn() }; manager.getImportPaths = vi.fn(() => ["/themes/current/styles"]); manager.refreshLessCache(); expect(manager.lessCache.setImportPaths).toHaveBeenCalledWith(["/themes/current/styles"]); });
 	it("reports initial loading as incomplete before activation", () => { expect(manager.isInitialLoadComplete()).toBe(false); });
+
+	it("applies base stylesheets in baseline but leaves email-frame sheets unwrapped", () => {
+		manager.applyStylesheet("/app/static/index.css", "body {}");
+		manager.applyStylesheet("/app/static/email-frame.css", ".message {}");
+		expect(NylasEnv.styles.addStyleSheet).toHaveBeenNthCalledWith(1, "body {}", { sourcePath: "/app/static/index.css", layer: "baseline" });
+		expect(NylasEnv.styles.addStyleSheet).toHaveBeenNthCalledWith(2, ".message {}", { sourcePath: "/app/static/email-frame.css", layer: undefined });
+	});
+
+	it("reloads compiled Classic without wrapping and keeps platform sheets in baseline", () => {
+		m.resolveOnLoadPath.mockImplementation((source) => {
+			if (source === process.platform) return "/app/static/platform.css";
+			if (source.endsWith("/index")) return "/app/static/index.css";
+			if (source.endsWith("/email-frame")) return "/app/static/email-frame.css";
+			if (source.endsWith("/classic.css")) return "/app/static/themes/classic.css";
+			return source;
+		});
+		const compiled = "@layer theme { [data-theme=classic] { --surface-app: #ffffff; } }";
+		m.readFileSync.mockImplementation((source) => source.endsWith("/classic.css") ? compiled : "body {}");
+		manager.reloadBaseStylesheets();
+		expect(m.resolveOnLoadPath).toHaveBeenCalledWith("../static/themes/classic.css");
+		expect(NylasEnv.styles.addStyleSheet.mock.calls).toEqual([
+			["body {}", { sourcePath: "/app/static/index.css", layer: "baseline" }],
+			["body {}", { sourcePath: "/app/static/email-frame.css", layer: undefined }],
+			[compiled, { sourcePath: "/app/static/themes/classic.css", layer: null }],
+			["body {}", { sourcePath: "/app/static/platform.css", layer: "baseline" }],
+		]);
+	});
+
+	it("fails loudly if Classic has not been compiled", () => {
+		m.resolveOnLoadPath.mockImplementation((source) => source.endsWith("/classic.css") ? null : `${source}.css`);
+		m.readFileSync.mockReturnValue("body {}");
+		expect(() => manager.reloadBaseStylesheets()).toThrow("Could not find a file at path '../static/themes/classic.css'");
+	});
 });

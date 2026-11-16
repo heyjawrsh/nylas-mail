@@ -1,0 +1,26 @@
+{
+	"$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+	"$extensions": {
+		"org.nylas.theme": {
+			"id": "classic",
+			"name": "Classic",
+			"author": "Nylas",
+			"version": "1.0.0",
+			"license": "GPL-3.0"
+		}
+	},
+	"light": {
+		"surface": {
+			"app": {
+				"$type": "color",
+				"$value": {
+					"colorSpace": "srgb",
+					"components": [
+						0.9647058823529412, 0.9647058823529412, 0.9647058823529412
+					],
+					"hex": "#f6f6f6"
+				}
+			}
+		}
+	}
+}

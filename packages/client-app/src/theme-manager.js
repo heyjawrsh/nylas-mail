@@ -247,11 +247,11 @@ const ThemeManager = (() => {
 		//
 		// Returns a {Disposable} on which `.dispose()` can be called to remove the
 		// required stylesheet.
-		requireStylesheet(stylesheetPath) {
+		requireStylesheet(stylesheetPath, layer = "baseline") {
 			let fullPath;
 			if ((fullPath = this.resolveStylesheet(stylesheetPath))) {
 				const content = this.loadStylesheet(fullPath);
-				return this.applyStylesheet(fullPath, content);
+				return this.applyStylesheet(fullPath, content, layer);
 			} else {
 				throw new Error(`Could not find a file at path '${stylesheetPath}'`);
 			}
@@ -265,6 +265,8 @@ const ThemeManager = (() => {
 			let nativeStylesheetPath;
 			this.requireStylesheet("../static/index");
 			this.requireStylesheet("../static/email-frame");
+			// Compiled themes already declare their own theme layer.
+			this.requireStylesheet("../static/themes/classic.css", null);
 			if (
 				(nativeStylesheetPath = fs.resolveOnLoadPath(process.platform, [
 					"css",
@@ -348,9 +350,12 @@ ${error.message}\
 				: undefined;
 		}
 
-		applyStylesheet(path, text) {
+		applyStylesheet(path, text, layer = "baseline") {
 			return (this.styleSheetDisposablesBySourcePath[path] =
-				NylasEnv.styles.addStyleSheet(text, { sourcePath: path }));
+				NylasEnv.styles.addStyleSheet(text, {
+					sourcePath: path,
+					layer: path.includes("email-frame") ? undefined : layer,
+				}));
 		}
 
 		stringToId(string) {

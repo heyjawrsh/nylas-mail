@@ -10,6 +10,7 @@ let StyleManager;
 const _fs = require("fs-plus");
 const _path = require("node:path");
 const { Emitter, Disposable } = require("event-kit");
+const { wrapInLayer } = require("./appearance/wrap-in-layer.js");
 
 // Extended: A singleton instance of this class available via `NylasEnv.styles`,
 // which you can use to globally query and observe the set of active style
@@ -110,6 +111,7 @@ module.exports = StyleManager = class StyleManager {
 		const sourcePath = params != null ? params.sourcePath : undefined;
 		const context = params != null ? params.context : undefined;
 		const priority = params != null ? params.priority : undefined;
+		const layer = params != null ? params.layer : undefined;
 
 		if (
 			sourcePath != null &&
@@ -134,7 +136,12 @@ module.exports = StyleManager = class StyleManager {
 			}
 		}
 
-		styleElement.textContent = source;
+		if (layer) {
+			styleElement.setAttribute("layer", layer);
+		} else {
+			styleElement.removeAttribute("layer");
+		}
+		styleElement.textContent = wrapInLayer(source, layer);
 
 		if (updated) {
 			this.emitter.emit("did-update-style-element", styleElement);
