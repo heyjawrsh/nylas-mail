@@ -3,14 +3,14 @@ title: 'The theme compiler and Classic light and dark are complete'
 type: 'feature'
 ticket: '2'
 created: '2026-11-16'
-status: 'ready-for-dev'
-baseline_revision: ''
+status: done
+baseline_revision: 'b4b0a92a56d4e0eda6e9c49c457b9599bd4cf202'
 route: 'full'
 route_source: 'auto'
 risk: 'medium'
-review: ''
-review_source: ''
-lenses_ran: []
+review: 'quick'
+review_source: 'pinned'
+lenses_ran: ['quick']
 review_loop_iteration: 0
 context:
   - '{project-root}/_bmad-output/initiative-theme-and-style-system/tickets/epic-token-platform/epic-token-platform.md'
@@ -118,14 +118,48 @@ All paths are under `packages/client-app`.
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] compiler lane: `theme-compiler/*` (parse, schema, contract, aliases, serialise, fill, gate), `build-themes.mjs`, and specs
-- [ ] tokens lane: the complete `classic.tokens.json` (light and dark), the ThemeManager dark mapping and its spec, and the look-runtime type and shadow checks
+- [x] compiler lane: `theme-compiler/*` (parse, schema, contract, aliases, serialise, fill, gate), `build-themes.mjs`, and specs
+- [x] tokens lane: the complete `classic.tokens.json` (light and dark), the ThemeManager dark mapping and its spec, and the look-runtime type and shadow checks
 
 **Acceptance Criteria:**
 - Given each error kind, when compiled, then the report carries its code and the token's line, and the build exits 1.
 - Given `classic.tokens.json`, when built, then both variants emit every contract role, and the gate passes with only standard-pair and hc-allowance warnings.
 - Given a built-in missing a role, when built, then the gate fails naming it.
 - Given the packaged app, when it starts on `ui-light`, then the compiled Classic light sheet supplies `--surface-app`, a type role and a shadow role. On `ui-dark` it supplies Classic dark.
+
+## Implementation Notes
+
+- Groundwork (c4093435a): ajv 8.20.0, ajv-formats 3.0.1, culori 4.0.2 and jsonc-parser 3.3.1, pinned exactly, and the DTCG 2025.10 format schema vendored under `theme-compiler/vendor/` (sha256 `32e93b78…`, re-downloaded and matched).
+- Two Ringer lanes on gpt-6-astra built it: compiler and tokens (44956297c). Two review-fix lanes followed (2f83aab7c).
+- The runtime fix lane "failed" twice on a grep bug in my check; its work was right, and it passed once the check was fixed.
+- Classic typography is ported from the legacy LESS, with each type group's `$description` naming its source. Some values carry LESS arithmetic (e.g. 13.02px, a line height of 1.6129). They're kept exact, so Classic renders as it does today.
+- `--text-scale: 1` now lives in the kernel sheet (`kernelSheet()` in `layers.js`), shared by `index.html` and the print window. Without it every type size was invalid at computed time, which the e2e caught.
+- `ui-dark` now maps to Classic dark, checked in the real app by switching themes in the e2e.
+- Spec drift found while planning is filed as #26.
+- `linux-docker.sh` always copies `axe-baseline.json` back, so committing while it runs can revert a newer baseline. That happened once and was restored.
+
+## Review Triage Log
+
+| # | Lens | Finding | Verdict | Route |
+|---|------|---------|---------|-------|
+| 1 | quick | a failing `-hc` pair is only a warning; a spec asserts this | high | patch |
+| 2 | quick | the allowance also covers a present but incomplete `-hc` group | medium | patch |
+| 3 | quick | no spec compiles the shipped `classic.tokens.json` | medium | patch |
+| 4 | quick | `ui-dark` → Classic dark has no real-app check | medium | patch |
+| 5 | quick | `gate()` is not exported (it's inlined) | low | reject |
+| 6 | quick | `too-large` counts characters, not bytes | low | patch |
+| 7 | quick | aliases inside composite values become `forbidden-value` | medium | patch |
+| 8 | quick | an untyped alias token doesn't take its target's type | low | patch |
+| 9 | quick | `hex` wins over `components` | low | patch |
+| 10 | quick | the other CSS generic families get quoted | low | patch |
+| 11 | quick | the fallback prefix duplicates `system-ui` | low | patch |
+| 12 | quick | only `size` type tokens have a `$description` | low | patch |
+| 13 | quick | one combined allowance line, not one per group | low | reject |
+| 14 | quick | group-level schema noise beside the token's line | low | patch |
+| 15 | quick | whole missing variants are filled from Classic (that's derivation) | medium | patch |
+| 16 | quick | `--text-scale` is defined nowhere, so every type size is invalid at computed time (also caught by the e2e) | high | patch |
+
+Rejected: 5. The gate behaviour is inlined, so only the Code Map wording differs. 13. One line per build still warns every build, as decided.
 
 ## Verification
 
@@ -136,3 +170,12 @@ All paths are under `packages/client-app`.
 - `pnpm --filter nylas-mail build:e2e && pnpm --filter nylas-mail e2e` -- expected: all pass, background mode
 - `packages/client-app/e2e/linux-docker.sh` -- expected: pass. Don't commit while it runs (it copies `axe-baseline.json` back)
 - push, then CI green
+
+
+**Results** (on 2f83aab7c):
+- `build-themes`: Classic light and dark compile with no errors (standard-pair and hc-allowance warnings only)
+- Vitest: 4172 passed, cold cache, no unhandled errors
+- `check:react` and `check:public-build` pass; Biome has 37 warnings, the same as the baseline
+- Mac `build:e2e` plus `e2e`: 22 passed, 7 skipped (type sizes resolve to px; the ui-dark case passes)
+- `linux-docker.sh`: 22 passed, 7 skipped
+- CI (`dist` and `modernize-ci`): all jobs green
