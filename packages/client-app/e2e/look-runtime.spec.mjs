@@ -61,6 +61,12 @@ for (const spec of WINDOWS) {
 					surface: getComputedStyle(root)
 						.getPropertyValue("--surface-app")
 						.trim(),
+					readingSize: getComputedStyle(root)
+						.getPropertyValue("--type-body-reading-size")
+						.trim(),
+					cardShadow: getComputedStyle(root)
+						.getPropertyValue("--shadow-card")
+						.trim(),
 					messageBackground: messageList
 						? getComputedStyle(messageList).backgroundColor
 						: null,
@@ -81,6 +87,8 @@ for (const spec of WINDOWS) {
 			expect(state.theme).toBe("classic");
 			expect(state.variant).toBe("light");
 			expect(state.surface).toBe(surface);
+			expect(state.readingSize.startsWith("calc(")).toBe(true);
+			expect(state.cardShadow).not.toBe("");
 			expect(state.styleCount).toBeGreaterThan(0);
 			expect(state.unlayered).toEqual([]);
 

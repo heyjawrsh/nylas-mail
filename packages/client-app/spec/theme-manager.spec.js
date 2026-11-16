@@ -59,7 +59,22 @@ describe("ThemeManager theme listing and activation state", () => {
 		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
 	});
 
-	it.each(["ui-dark", "ui-taiga"])("removes Classic attributes when switching to %s with the ui-light base", (name) => {
+	it("sets Classic dark attributes when switching from ui-light to ui-dark", () => {
+		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		manager.removeActiveThemeClasses();
+		packageManager.getActivePackages.mockReturnValue([theme("ui-dark"), theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
+		expect(document.documentElement.getAttribute("data-variant")).toBe("dark");
+		manager.removeActiveThemeClasses();
+		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+		manager.addActiveThemeClasses();
+		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
+		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
+	});
+
+	it.each(["ui-taiga"])("removes Classic attributes when switching to %s with the ui-light base", (name) => {
 		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
 		manager.addActiveThemeClasses();
 		manager.removeActiveThemeClasses();
