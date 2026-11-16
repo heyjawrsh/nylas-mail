@@ -1,0 +1,28 @@
+// Adapted from static/buttons.less, static/type.less, and static/workspace.less.
+@import "ui-variables";
+@import "ui-mixins";
+.btn {
+  color: @text-color;
+  background: darken(@background-secondary, 10%);
+  border-color: fade(@black, 20%);
+  box-shadow: @standard-shadow;
+  font-size: @font-size-small;
+  margin-left: 4px;
+  padding-right: 2px;
+  border-top-left-radius: 3px;
+  text-align: left;
+  float: right;
+  transition: opacity 0.2s;
+  outline: none !important;
+  &-tiny { font-size: @font-size-tiny; }
+  .scaled { font-size: @font-size-tiny * 0.8; }
+  &:active { background: @btn-emphasis-bg-color; }
+}
+.centred {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.gradient { background: linear-gradient(to right, red, blue); }
+.lead { font-size: floor((@font-size-base * 1.15)); }
+.small { font-size: floor((100% * @font-size-small / @font-size-base)); }
+.literal-math { color: lighten(#000000, 20%); }

@@ -1,0 +1,46 @@
+.btn {
+  color: var(--text-default);
+  background: hsl(from var(--surface-app) h s calc(l - 10));
+  border-color: color-mix(in srgb, #231f20 20%, transparent);
+  box-shadow: var(--shadow-card);
+  font-size: calc(13.02px * var(--text-scale));
+  margin-inline-start: 4px;
+  padding-inline-end: 2px;
+  border-start-start-radius: 3px;
+  text-align: start;
+  float: inline-end;
+  transition: opacity 0.2s;
+  outline: none !important;
+}
+@scope ([data-look]) to ([data-look]) {
+  :scope[data-reduced-motion] .btn {
+    transition: none;
+    animation: none;
+  }
+}
+
+.btn-tiny {
+  font-size: var(--type-badge-size);
+}
+.btn .scaled {
+  font-size: calc(var(--type-badge-size) * 0.8);
+}
+.btn:active {
+  background: #5b90fb;
+}
+.centred {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.gradient {
+  background: linear-gradient(to right, red, blue);
+}
+.lead {
+  font-size: calc(16px * var(--text-scale));
+}
+.small {
+  font-size: 93%;
+}
+.literal-math {
+  color: #333333;
+}

@@ -1,0 +1,58 @@
+{
+  "literals": [
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 7,
+      "variable": "@black"
+    },
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 8,
+      "variable": "@standard-shadow"
+    },
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 19,
+      "variable": "@btn-emphasis-bg-color"
+    }
+  ],
+  "unconvertible": [
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 22,
+      "kind": "centring",
+      "text": "left: 50%;"
+    },
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 23,
+      "kind": "translate",
+      "text": "transform: translateX(-50%);"
+    },
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 25,
+      "kind": "gradient-direction",
+      "text": "background: linear-gradient(to right, red, blue);"
+    }
+  ],
+  "important": [
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 16,
+      "text": "outline: none !important;"
+    }
+  ],
+  "fontSizeFloor": [
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 26,
+      "text": "font-size: calc(16px * var(--text-scale));"
+    },
+    {
+      "file": "spec/fixtures/port-less/static-excerpt.less",
+      "line": 27,
+      "text": "font-size: 93%;"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "literals": [
+    {
+      "file": "spec/fixtures/port-less/imports/shared.less",
+      "line": 3,
+      "variable": "@color-info"
+    }
+  ],
+  "unconvertible": [
+    {
+      "file": "spec/fixtures/port-less/package-excerpt.less",
+      "line": 10,
+      "kind": "gradient-direction",
+      "text": "background-image: -webkit-linear-gradient(left, color-mix(in srgb, var(--surface-sunken) 0%, transparent) 0%, var(--surface-sunken) 10%);"
+    },
+    {
+      "file": "spec/fixtures/port-less/package-excerpt.less",
+      "line": 32,
+      "kind": "background-position",
+      "text": "background-position: right top;"
+    },
+    {
+      "file": "spec/fixtures/port-less/package-excerpt.less",
+      "line": 33,
+      "kind": "asymmetric-shorthand",
+      "text": "padding: 1px 2px 3px 4px;"
+    }
+  ],
+  "important": [
+    {
+      "file": "spec/fixtures/port-less/imports/shared.less",
+      "line": 3,
+      "text": "color: #3187e1 !important;"
+    }
+  ],
+  "fontSizeFloor": []
+}
