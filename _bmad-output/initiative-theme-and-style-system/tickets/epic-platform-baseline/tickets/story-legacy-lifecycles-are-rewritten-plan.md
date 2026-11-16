@@ -140,3 +140,5 @@ That costs one extra commit after a change. Where it would show a frame of stale
 - `cd packages/client-app && npx vitest run` -- expected: no failed file and no fewer passing tests than baseline (3813; 4 known unhandled errors)
 - `npx biome check .` -- expected: no new findings (1 known error)
 - dev launch on a seeded fixture account (`--enable-logging`, `--remote-debugging-port`), then drive the AC 2 surfaces over CDP -- expected: no React errors and no `componentWill` warnings in the log; quit afterwards
+
+- 2026-11-16, Josh signed off: the behaviour change is noted and accepted.

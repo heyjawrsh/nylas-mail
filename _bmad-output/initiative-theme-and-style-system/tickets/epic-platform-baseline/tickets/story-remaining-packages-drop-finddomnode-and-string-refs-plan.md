@@ -185,3 +185,5 @@ fetch(url, { headers: { "User-Agent": "request" } })
 - `cd packages/client-app && npx vitest run` -- expected: no failed file and no fewer passing tests than baseline (3745; 4 known unhandled errors)
 - `npx biome check .` -- expected: no new findings (1 known error, `.nylas-smoke-home/config.json`)
 - dev launch on a seeded fixture account with `--remote-debugging-port`, then open each declared window type over CDP -- expected: no package load errors and no React errors in any window; quit afterwards
+
+- 2026-11-16, Josh signed off: the crossing of the src boundary is accepted.

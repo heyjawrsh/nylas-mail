@@ -3,7 +3,7 @@ title: 'Windows and Linux builds ship with no updater and no crash upload'
 type: 'feature'
 ticket: '7'
 created: '2026-11-13'
-status: built
+status: done
 baseline_revision: '76f079e963ec744b810d510c700cf583066846e3'
 route: 'full'
 route_source: 'auto'
@@ -157,3 +157,5 @@ Counts: high 0, medium 2, low 2, false 0, accepted 1, known gap 1.
 - Install and open the Windows and Linux packages on real machines.
 
 Verification on 62631dfdd (orchestrator, 2026-11-13): `check:react` and `check:public-build` exit 0. vitest has 3899 passing across 201 files with none failed (4 known unhandled errors), lint shows 1 known error, and actionlint passes on both workflows. All 4 patch findings are fixed. The status stays `built`, not done, until the human steps pass: the dist workflow runs green on all three OSes, and the Windows and Linux packages are installed and opened on real machines. Backlog filed: #14 (showMessageBox API), #15 (Windows mailto registration), #16 (Linux icon and desktop entry).
+
+- 2026-11-16, Josh signed off: the Windows and Linux packages install and open (CI dist run 43789734069, f8236e4f0). The AC2 deviation is accepted: the crash report is never sent, though getUploadedReports() lists it locally.
