@@ -1,0 +1,664 @@
+{
+	"@accent-primary": {
+		"kind": "colour",
+		"css": "var(--accent-default)"
+	},
+	"@accent-primary-dark": {
+		"kind": "colour",
+		"css": "var(--accent-hover)"
+	},
+	"@background-color-error": {
+		"kind": "literal",
+		"css": "#ca2541",
+		"note": "Keep Classic light. DESIGN explicitly gives this notification fill no role."
+	},
+	"@background-color-info": {
+		"kind": "colour",
+		"css": "var(--status-info)"
+	},
+	"@background-color-pending": {
+		"kind": "literal",
+		"css": "#b4babd",
+		"note": "Keep Classic light. DESIGN explicitly gives this notification fill no role."
+	},
+	"@background-color-success": {
+		"kind": "literal",
+		"css": "#00ac6f",
+		"note": "Keep Classic light. DESIGN explicitly gives this notification fill no role."
+	},
+	"@background-color-warning": {
+		"kind": "literal",
+		"css": "#ff4800",
+		"note": "Keep Classic light. DESIGN explicitly gives this notification fill no role."
+	},
+	"@background-gradient": {
+		"kind": "literal",
+		"css": "linear-gradient(to top, rgba(241, 241, 241, 0.75) 0%, rgba(253, 253, 253, 0.75) 100%)",
+		"note": "Keep Classic light. Gradient of literal colours; no gradient role exists."
+	},
+	"@background-off-primary": {
+		"kind": "colour",
+		"css": "var(--surface-sunken)"
+	},
+	"@background-primary": {
+		"kind": "colour",
+		"css": "var(--surface-panel)"
+	},
+	"@background-secondary": {
+		"kind": "colour",
+		"css": "var(--surface-app)"
+	},
+	"@background-tertiary": {
+		"kind": "colour",
+		"css": "var(--control-border)"
+	},
+	"@black": {
+		"kind": "literal",
+		"css": "#231f20",
+		"note": "Keep Classic light. Constant used for overlays; no theme role preserves its meaning."
+	},
+	"@blue": {
+		"kind": "colour",
+		"css": "var(--accent-default)",
+		"note": "Research role mapping. Light exact. ui-dark does not override @blue (#419bf9) but the dark role is #5e6a77. 3 uses, workspace .btn-feedback."
+	},
+	"@blue-dark": {
+		"kind": "colour",
+		"css": "var(--accent-hover)",
+		"note": "Research role mapping. Exact light. 0 real uses."
+	},
+	"@blue-light": {
+		"kind": "colour",
+		"css": "var(--status-info)",
+		"note": "Alias source for DESIGN background-color-info; use the same status role."
+	},
+	"@border-color-divider": {
+		"kind": "colour",
+		"css": "var(--border-subtle)"
+	},
+	"@border-color-primary": {
+		"kind": "colour",
+		"css": "hsl(from var(--surface-panel) h s calc(l - 10))",
+		"note": "Translate the legacy darken call with relative HSL per Josh’s decision; preserve the LESS lightness change."
+	},
+	"@border-color-secondary": {
+		"kind": "colour",
+		"css": "var(--border-subtle)",
+		"note": "Alias source for DESIGN border-color-divider; use the same border role."
+	},
+	"@border-color-tertiary": {
+		"kind": "colour",
+		"css": "hsl(from var(--control-border) h s calc(l - 10))",
+		"note": "Translate the legacy darken call with relative HSL per Josh’s decision; preserve the LESS lightness change."
+	},
+	"@border-radius-base": {
+		"kind": "dimension",
+		"css": "3px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@border-radius-large": {
+		"kind": "dimension",
+		"css": "5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@border-radius-small": {
+		"kind": "dimension",
+		"css": "2px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@btn-action-bg-color": {
+		"kind": "colour",
+		"css": "var(--status-success)",
+		"note": "Research role mapping. alias; exact."
+	},
+	"@btn-action-text-color": {
+		"kind": "colour",
+		"css": "var(--text-default)",
+		"note": "Research role mapping. alias; exact."
+	},
+	"@btn-danger-bg-color": {
+		"kind": "colour",
+		"css": "var(--status-danger)",
+		"note": "Research role mapping. exact; but DESIGN says status-danger is \"not a fill under text\"."
+	},
+	"@btn-danger-text-color": {
+		"kind": "literal",
+		"css": "#ffffff",
+		"note": "Keep Classic light. No status-danger-on role exists."
+	},
+	"@btn-default-bg-color": {
+		"kind": "colour",
+		"css": "hsl(from var(--surface-panel) h s calc(l - 0.5))",
+		"note": "Translate the legacy darken call with relative HSL per Josh’s decision; preserve the LESS lightness change."
+	},
+	"@btn-default-text-color": {
+		"kind": "colour",
+		"css": "var(--text-default)",
+		"note": "Research role mapping. alias of @text-color; exact both."
+	},
+	"@btn-emphasis-bg-color": {
+		"kind": "literal",
+		"css": "#5b90fb",
+		"note": "Keep Classic light. No role matches #5b90fb; accent-default would visibly change Classic buttons."
+	},
+	"@btn-emphasis-text-color": {
+		"kind": "colour",
+		"css": "var(--accent-on)",
+		"note": "Research role mapping. exact."
+	},
+	"@btn-icon-color": {
+		"kind": "colour",
+		"css": "var(--icon-default)"
+	},
+	"@btn-shadow": {
+		"kind": "literal",
+		"css": "var(--shadow-card)",
+		"note": "Josh selected shadow-card from DESIGN’s shadow-soft / shadow-card pair; btn-shadow aliases standard-shadow. The map has no shadow kind."
+	},
+	"@color-danger": {
+		"kind": "colour",
+		"css": "var(--status-danger)"
+	},
+	"@color-error": {
+		"kind": "colour",
+		"css": "var(--status-danger)",
+		"note": "The second variable in the DESIGN color-danger / color-error row shares status-danger."
+	},
+	"@color-info": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. No info-callout role matches the Classic colour."
+	},
+	"@color-success": {
+		"kind": "colour",
+		"css": "var(--status-success)"
+	},
+	"@color-warning": {
+		"kind": "colour",
+		"css": "var(--status-warning)"
+	},
+	"@component-active-bg": {
+		"kind": "colour",
+		"css": "var(--surface-panel)",
+		"note": "Alias of background-primary; keep its mapped CSS."
+	},
+	"@component-active-color": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. Used as fills; DESIGN’s sidebar text role would turn these fills white in Darkside."
+	},
+	"@component-border-radius": {
+		"kind": "dimension",
+		"css": "2px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@component-icon-padding": {
+		"kind": "dimension",
+		"css": "5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@component-icon-size": {
+		"kind": "dimension",
+		"css": "16px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@component-line-height": {
+		"kind": "dimension",
+		"css": "25px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@component-padding": {
+		"kind": "dimension",
+		"css": "10px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@dropdown-default-bg-color": {
+		"kind": "colour",
+		"css": "var(--surface-panel)",
+		"note": "Research role mapping. dark legacy #404040."
+	},
+	"@dropdown-default-border-color": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, hsl(from var(--surface-panel) h s calc(l - 10)) 90%, transparent)",
+		"note": "Legacy fadeout(border-color-primary, 10%); retain 90% of the mapped border colour."
+	},
+	"@dropdown-default-text-color": {
+		"kind": "colour",
+		"css": "var(--text-default)",
+		"note": "Research role mapping. exact."
+	},
+	"@font-family": {
+		"kind": "font",
+		"css": "var(--type-body-reading-family)",
+		"note": "Josh selected the body-reading family for the generic sans stack and its aliases."
+	},
+	"@font-family-heading": {
+		"kind": "font",
+		"css": "var(--type-body-reading-family)",
+		"note": "Josh selected the body-reading family for the generic sans stack and its aliases."
+	},
+	"@font-family-monospace": {
+		"kind": "font",
+		"css": "Menlo, Monaco, Consolas, \"Courier New\", monospace",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-family-sans-serif": {
+		"kind": "font",
+		"css": "var(--type-body-reading-family)",
+		"note": "Josh selected the body-reading family for the generic sans stack and its aliases."
+	},
+	"@font-family-serif": {
+		"kind": "font",
+		"css": "Georgia, \"Times New Roman\", Times, serif",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-size": {
+		"kind": "font",
+		"css": "calc(14px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-base": {
+		"kind": "font",
+		"css": "calc(14px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-h1": {
+		"kind": "font",
+		"css": "var(--type-heading-view-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-size-h2": {
+		"kind": "font",
+		"css": "var(--type-heading-view-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-size-h3": {
+		"kind": "font",
+		"css": "calc(20.02px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-h4": {
+		"kind": "font",
+		"css": "calc(18.06px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-h5": {
+		"kind": "font",
+		"css": "calc(14px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-h6": {
+		"kind": "font",
+		"css": "var(--type-caption-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-size-large": {
+		"kind": "font",
+		"css": "var(--type-heading-reading-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-size-larger": {
+		"kind": "font",
+		"css": "calc(18.06px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-small": {
+		"kind": "font",
+		"css": "calc(13.02px * var(--text-scale))",
+		"note": "No unambiguous type role; scale the computed Classic size per Josh’s decision."
+	},
+	"@font-size-smaller": {
+		"kind": "font",
+		"css": "var(--type-caption-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-size-tiny": {
+		"kind": "font",
+		"css": "var(--type-badge-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@font-weight-blond": {
+		"kind": "font",
+		"css": "300",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-weight-medium": {
+		"kind": "font",
+		"css": "500",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-weight-normal": {
+		"kind": "font",
+		"css": "400",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-weight-semi-bold": {
+		"kind": "font",
+		"css": "600",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@font-weight-thin": {
+		"kind": "font",
+		"css": "200",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@gray": {
+		"kind": "literal",
+		"css": "#586069",
+		"note": "Keep Classic light. Only derived lighten expressions have candidate roles; the base colour has none."
+	},
+	"@gray-base": {
+		"kind": "literal",
+		"css": "#0a0b0c",
+		"note": "Keep Classic light. No role at #0a0b0c; only shadowed onboarding references remain."
+	},
+	"@gray-dark": {
+		"kind": "literal",
+		"css": "#383e44",
+		"note": "Keep Classic light. No role and no real uses."
+	},
+	"@gray-darker": {
+		"kind": "colour",
+		"css": "var(--inverse-surface)",
+		"note": "DESIGN has two roles in this row; select inverse-surface for the first variable. The toast port must remove its existing opacity."
+	},
+	"@gray-light": {
+		"kind": "colour",
+		"css": "var(--control-track)"
+	},
+	"@gray-lighter": {
+		"kind": "colour",
+		"css": "var(--surface-sidebar)",
+		"note": "Research role mapping. Light exact (#f6f7f8); dark legacy #131313 vs role #282b30."
+	},
+	"@headings-font-weight": {
+		"kind": "font",
+		"css": "600",
+		"note": "Keep the Classic font stack or numeric weight; no generic role exists."
+	},
+	"@input-bg": {
+		"kind": "colour",
+		"css": "var(--surface-field)"
+	},
+	"@input-bg-disabled": {
+		"kind": "colour",
+		"css": "var(--surface-sidebar)",
+		"note": "Research role mapping. 0 real uses (onboarding shadowed)."
+	},
+	"@input-border-color": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, hsl(from var(--surface-panel) h s calc(l - 10)) 90%, transparent)",
+		"note": "Legacy fadeout(border-color-primary, 10%); retain 90% of the mapped border colour."
+	},
+	"@input-border-color-blurred": {
+		"kind": "colour",
+		"css": "hsl(from color-mix(in srgb, hsl(from var(--surface-panel) h s calc(l - 10)) 90%, transparent) h calc(s - 100) l)",
+		"note": "Legacy desaturate(input-border-color, 100%); relative HSL preserves the operation on every theme."
+	},
+	"@input-font-size": {
+		"kind": "font",
+		"css": "var(--type-input-size)",
+		"note": "Exact single-role size match from the Classic typography tokens."
+	},
+	"@line-height-base": {
+		"kind": "dimension",
+		"css": "1.5",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@line-height-computed": {
+		"kind": "dimension",
+		"css": "21px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@line-height-heading": {
+		"kind": "dimension",
+		"css": "1.1",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@line-height-large": {
+		"kind": "dimension",
+		"css": "27.3px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@line-height-small": {
+		"kind": "dimension",
+		"css": "19.95px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@list-bg": {
+		"kind": "colour",
+		"css": "var(--surface-panel)",
+		"note": "Research role mapping. dark legacy #333 vs #333539."
+	},
+	"@list-border": {
+		"kind": "colour",
+		"css": "var(--border-subtle)",
+		"note": "Research role mapping. light exact; dark #383838 vs #313236."
+	},
+	"@list-focused-bg": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. Aliases the flagged component-active-color fill."
+	},
+	"@list-focused-border": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. Aliases the flagged list-focused-bg fill."
+	},
+	"@list-focused-color": {
+		"kind": "colour",
+		"css": "var(--surface-panel)",
+		"note": "Alias of list-bg; keep its mapped CSS."
+	},
+	"@list-hover-bg": {
+		"kind": "colour",
+		"css": "var(--surface-hover)"
+	},
+	"@list-selected-bg": {
+		"kind": "colour",
+		"css": "var(--accent-tint)"
+	},
+	"@list-selected-border": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, #3187e1 50%, var(--surface-panel))",
+		"note": "Legacy mix(component-active-color, list-bg, 50%); component-active-color is a flagged Classic literal and list-bg maps to surface-panel."
+	},
+	"@list-selected-color": {
+		"kind": "literal",
+		"css": "inherit",
+		"note": "Keep Classic light. The legacy value is the CSS keyword inherit."
+	},
+	"@menu-item-color-hover": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, var(--status-info) 10%, transparent)",
+		"note": "Research role mapping. 0 uses."
+	},
+	"@menu-item-color-selected": {
+		"kind": "colour",
+		"css": "var(--status-info)",
+		"note": "Research role mapping. 0 uses."
+	},
+	"@menu-text-color-selected": {
+		"kind": "colour",
+		"css": "var(--accent-on)",
+		"note": "Alias of text-color-inverse; keep its default mapped CSS."
+	},
+	"@padding-base-horizontal": {
+		"kind": "dimension",
+		"css": "12px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-base-vertical": {
+		"kind": "dimension",
+		"css": "5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-large-horizontal": {
+		"kind": "dimension",
+		"css": "16px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-large-vertical": {
+		"kind": "dimension",
+		"css": "9px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-small-horizontal": {
+		"kind": "dimension",
+		"css": "10px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-small-vertical": {
+		"kind": "dimension",
+		"css": "4px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-xs-horizontal": {
+		"kind": "dimension",
+		"css": "5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@padding-xs-vertical": {
+		"kind": "dimension",
+		"css": "1px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@panel-background-color": {
+		"kind": "colour",
+		"css": "var(--surface-sidebar)"
+	},
+	"@shadow-border": {
+		"kind": "literal",
+		"css": "0 0.5px 0 rgba(0, 0, 0, 0.15), 0 -0.5px 0 rgba(0, 0, 0, 0.15), 0.5px 0 0 rgba(0, 0, 0, 0.15), -0.5px 0 0 rgba(0, 0, 0, 0.15)",
+		"note": "Keep Classic light. Four hairline shadows have no role."
+	},
+	"@source-list-active-bg": {
+		"kind": "colour",
+		"css": "var(--surface-sidebar)",
+		"note": "Research role mapping. alias; exact both."
+	},
+	"@source-list-active-color": {
+		"kind": "colour",
+		"css": "var(--text-on-sidebar-active)"
+	},
+	"@source-list-bg": {
+		"kind": "colour",
+		"css": "var(--surface-sidebar)",
+		"note": "Research role mapping. alias; exact both."
+	},
+	"@spacing-double": {
+		"kind": "dimension",
+		"css": "28px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@spacing-half": {
+		"kind": "dimension",
+		"css": "7px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@spacing-quarter": {
+		"kind": "dimension",
+		"css": "3.5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@spacing-standard": {
+		"kind": "dimension",
+		"css": "14px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@spacing-three-quarters": {
+		"kind": "dimension",
+		"css": "10.5px",
+		"note": "Keep the computed Classic spacing, size, radius, or line height."
+	},
+	"@spec-test-variable": {
+		"kind": "literal",
+		"css": "#987b00",
+		"note": "Keep Classic light. No role; unused legacy spec helper."
+	},
+	"@standard-shadow": {
+		"kind": "literal",
+		"css": "var(--shadow-card)",
+		"note": "Josh selected shadow-card from DESIGN’s shadow-soft / shadow-card pair; btn-shadow aliases standard-shadow. The map has no shadow kind."
+	},
+	"@standard-shadow-color": {
+		"kind": "literal",
+		"css": "rgba(0, 0, 0, 0.15)",
+		"note": "Keep Classic light. Constant shadow alpha; no standalone colour role exists."
+	},
+	"@standard-shadow-up": {
+		"kind": "literal",
+		"css": "0 -1px 4px 0 rgba(0, 0, 0, 0.15)",
+		"note": "Keep Classic light. No upward shadow role exists."
+	},
+	"@text-color": {
+		"kind": "colour",
+		"css": "var(--text-default)",
+		"note": "Use the general text role; DESIGN also maps email-frame and toolbar contexts to text-reading and text-on-toolbar. Those need per-use ports."
+	},
+	"@text-color-heading": {
+		"kind": "colour",
+		"css": "var(--text-strong)"
+	},
+	"@text-color-inverse": {
+		"kind": "colour",
+		"css": "var(--accent-on)",
+		"note": "Use text on accent fills; DESIGN also maps notification bars to status-info-on. That context needs a per-use port."
+	},
+	"@text-color-inverse-subtle": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, var(--accent-on) 80%, transparent)",
+		"note": "Research role mapping. Exact."
+	},
+	"@text-color-inverse-very-subtle": {
+		"kind": "colour",
+		"css": "color-mix(in srgb, var(--accent-on) 50%, transparent)",
+		"note": "Research role mapping. Exact."
+	},
+	"@text-color-link": {
+		"kind": "colour",
+		"css": "var(--accent-text)"
+	},
+	"@text-color-link-active": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. No link-active role exists."
+	},
+	"@text-color-link-hover": {
+		"kind": "literal",
+		"css": "#3187e1",
+		"note": "Keep Classic light. No link-hover role exists."
+	},
+	"@text-color-search-current-match": {
+		"kind": "literal",
+		"css": "#ff8b1a",
+		"note": "Keep Classic light. DESIGN explicitly gives the current search match no role."
+	},
+	"@text-color-search-match": {
+		"kind": "colour",
+		"css": "var(--highlight-bg)"
+	},
+	"@text-color-selected": {
+		"kind": "colour",
+		"css": "var(--accent-on)",
+		"note": "Research role mapping. 0 uses."
+	},
+	"@text-color-subtle": {
+		"kind": "colour",
+		"css": "var(--text-secondary)",
+		"note": "Use the general secondary text role; DESIGN also maps sidebar items to text-on-sidebar. That context needs a per-use port."
+	},
+	"@text-color-very-subtle": {
+		"kind": "colour",
+		"css": "var(--text-faint)"
+	},
+	"@toolbar-background-color": {
+		"kind": "colour",
+		"css": "var(--surface-toolbar)"
+	},
+	"@white": {
+		"kind": "literal",
+		"css": "#ffffff",
+		"note": "Keep Classic light. Used for both text and backgrounds; one role cannot represent both."
+	}
+}
