@@ -19,7 +19,13 @@ const script = fileURLToPath(
 	new URL("../scripts/build-themes.mjs", import.meta.url),
 );
 const execFileAsync = promisify(execFile);
-const color = (hex) => ({ colorSpace: "srgb", components: [1, 3, 5].map((start) => Number.parseInt(hex.slice(start, start + 2), 16) / 255), hex });
+const color = (hex) => ({
+	colorSpace: "srgb",
+	components: [1, 3, 5].map(
+		(start) => Number.parseInt(hex.slice(start, start + 2), 16) / 255,
+	),
+	hex,
+});
 const darkRoles = new Set([
 	...CONTRAST_PAIRS.map(([fg]) => fg).filter((fg) => fg !== "accent-on"),
 	"accent-hover",
@@ -82,6 +88,62 @@ afterEach(async () => {
 });
 
 describe("theme build", () => {
+	it("writes deterministic descriptors with metadata and compiled variant swatches", async () => {
+		const input = fixture("another", VARIANTS);
+		input.$extensions["org.nylas.theme"].name = "Another Theme";
+		input.light["surface-app"].$value = "{light.surface-panel}";
+		input.dark["surface-app"].$value = color("#123456");
+		await write("another.tokens.json", input);
+		await buildThemes(dir);
+		const filename = path.join(dir, "another.descriptor.json");
+		const text = await fs.readFile(filename, "utf8");
+		const descriptor = JSON.parse(text);
+		expect(descriptor).toEqual({
+			id: "another",
+			name: "Another Theme",
+			author: "Nylas",
+			version: "1.0.0",
+			license: "GPL-3.0",
+			source: "builtin",
+			status: "ok",
+			file: "another.tokens.json",
+			error: null,
+			revision: 0,
+			variants: VARIANTS,
+			swatch: Object.fromEntries(
+				VARIANTS.map((variant) => [
+					variant,
+					{
+						surface: variant === "dark" ? "#123456" : "#ffffff",
+						text: "#000000",
+						accent: "#000000",
+					},
+				]),
+			),
+			report: { filledRoles: [] },
+		});
+		expect(descriptor).not.toHaveProperty("css");
+		expect(text).toBe(`${JSON.stringify(descriptor, null, "\t")}\n`);
+		await buildThemes(dir);
+		expect(await fs.readFile(filename, "utf8")).toBe(text);
+	});
+	it("uses built-in metadata defaults and lists only compiled variants", async () => {
+		const input = fixture();
+		input.$extensions["org.nylas.theme"] = { id: "classic" };
+		await write("classic.tokens.json", input);
+		await buildThemes(dir);
+		const descriptor = JSON.parse(
+			await fs.readFile(path.join(dir, "classic.descriptor.json"), "utf8"),
+		);
+		expect(descriptor).toMatchObject({
+			name: "classic",
+			author: "Nylas",
+			version: "1.0.0",
+			license: "GPL-3.0",
+			variants: ["light", "dark"],
+		});
+		expect(Object.keys(descriptor.swatch)).toEqual(["light", "dark"]);
+	});
 	it("writes CSS by id for every token file and ignores unrelated files", async () => {
 		await write("source.tokens.json", fixture());
 		await write("another.tokens.json", fixture("another", VARIANTS));
@@ -139,18 +201,31 @@ describe("theme build", () => {
 			expect.stringContaining("other.tokens.json:1: error: gate: light-hc."),
 		);
 	});
-	it.each(["missing-role", "contrast"])("fails Classic with a present HC group's %s error", async (failure) => {
-		const input = fixture("classic", ["light", "dark", "light-hc"]);
-		if (failure === "missing-role") delete input["light-hc"]["surface-app"];
-		else input["light-hc"]["icon-default"].$value = color("#ffffff");
-		await write("classic.tokens.json", input);
-		await write("classic.css", "previous valid output\n");
-		await expect(buildThemes(dir)).rejects.toThrow("classic.tokens.json");
-		expect(logs).toHaveBeenCalledWith(expect.stringContaining(
-			failure === "missing-role" ? "Missing light-hc.surface-app." : "light-hc: icon-default on surface-panel",
-		));
-		expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toBe("previous valid output\n");
-	});
+	it.each(["missing-role", "contrast"])(
+		"fails Classic with a present HC group's %s error",
+		async (failure) => {
+			const input = fixture("classic", ["light", "dark", "light-hc"]);
+			if (failure === "missing-role") delete input["light-hc"]["surface-app"];
+			else input["light-hc"]["icon-default"].$value = color("#ffffff");
+			await write("classic.tokens.json", input);
+			await write("classic.css", "previous valid output\n");
+			await write("classic.descriptor.json", "previous valid descriptor\n");
+			await expect(buildThemes(dir)).rejects.toThrow("classic.tokens.json");
+			expect(logs).toHaveBeenCalledWith(
+				expect.stringContaining(
+					failure === "missing-role"
+						? "Missing light-hc.surface-app."
+						: "light-hc: icon-default on surface-panel",
+				),
+			);
+			expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toBe(
+				"previous valid output\n",
+			);
+			expect(
+				await fs.readFile(path.join(dir, "classic.descriptor.json"), "utf8"),
+			).toBe("previous valid descriptor\n");
+		},
+	);
 	it("prints compiler reports with filename and source line", async () => {
 		const input = fixture();
 		input.light.unknown = { $type: "number", $value: 1 };
@@ -219,6 +294,7 @@ describe("theme build", () => {
 		if (failure === "invalid-id")
 			input.$extensions["org.nylas.theme"].id = "../escape";
 		await write("classic.css", "previous valid output\n");
+		await write("classic.descriptor.json", "previous valid descriptor\n");
 		await write(
 			"classic.tokens.json",
 			failure === "parse"
@@ -238,6 +314,9 @@ describe("theme build", () => {
 		expect(await fs.readFile(path.join(dir, "classic.css"), "utf8")).toBe(
 			"previous valid output\n",
 		);
+		expect(
+			await fs.readFile(path.join(dir, "classic.descriptor.json"), "utf8"),
+		).toBe("previous valid descriptor\n");
 	});
 	it("exits zero for a complete Classic fixture with the allowance warning", async () => {
 		await write("classic.tokens.json", fixture());

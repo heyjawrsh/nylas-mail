@@ -11,6 +11,47 @@ export const HC_ALLOWANCE = {
 	classic: { missing: ["light-hc", "dark-hc"], until: "story 12" },
 };
 
+function descriptorFor(theme, css, report) {
+	const metadata = theme.$extensions["org.nylas.theme"];
+	const swatch = {};
+	// Read compiled values so aliases and colour normalization match the sheet.
+	for (const [, variant, declarations] of css.matchAll(
+		/\[data-variant="([^"]+)"\] \{([^}]+)\}/g,
+	)) {
+		const values = Object.fromEntries(
+			[
+				...declarations.matchAll(
+					/--(surface-app|text-default|accent-default): ([^;]+);/g,
+				),
+			].map(([, role, value]) => [role, value]),
+		);
+		swatch[variant] = {
+			surface: values["surface-app"],
+			text: values["text-default"],
+			accent: values["accent-default"],
+		};
+	}
+	return {
+		id: metadata.id,
+		name: metadata.name ?? metadata.id,
+		author: metadata.author ?? "Nylas",
+		version: metadata.version ?? "1.0.0",
+		license: metadata.license ?? "GPL-3.0",
+		source: "builtin",
+		status: "ok",
+		file: `${metadata.id}.tokens.json`,
+		error: null,
+		revision: 0,
+		variants: Object.keys(swatch),
+		swatch,
+		report: Object.fromEntries(
+			["derived", "filledRoles", "rederivedPairs", "fontFamilyName"]
+				.filter((key) => Object.hasOwn(report, key))
+				.map((key) => [key, report[key]]),
+		),
+	};
+}
+
 export async function buildThemes(dir = defaultDir) {
 	const failures = [];
 	const warned = new Set();
@@ -54,6 +95,10 @@ export async function buildThemes(dir = defaultDir) {
 				continue;
 			}
 			await fs.writeFile(path.join(dir, `${id}.css`), css);
+			await fs.writeFile(
+				path.join(dir, `${id}.descriptor.json`),
+				`${JSON.stringify(descriptorFor(theme, css, report), null, "\t")}\n`,
+			);
 		} catch (error) {
 			console.error(`${file}:1: error: ${error.message}`);
 			failures.push(file);

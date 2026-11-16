@@ -23,6 +23,8 @@ describe("window kernel layer declaration", () => {
 		expect(styles[0].textContent).toBe(kernelSheet());
 		expect(doc.querySelectorAll("#nylas-kernel")).toHaveLength(1);
 		expect(styles[1].textContent).toContain(".application-loading-cover");
+		expect(styles[1].textContent).toContain("background: var(--surface-app, transparent)");
+		expect(doc.documentElement.style.background).toBe("");
 	});
 });
 

@@ -24,6 +24,7 @@ import { EventEmitter } from "node:events";
 
 import GlobalTimer from "./global-timer.js";
 import WindowManager from "./window-manager.js";
+import ThemeLibrary from "./appearance-services/theme-library.js";
 import FileListCache from "./file-list-cache.js";
 import DatabaseReader from "./database-reader.js";
 import ConfigMigrator from "./config-migrator.js";
@@ -116,6 +117,10 @@ export default class Application extends EventEmitter {
 		}
 
 		this.applicationMenu = new ApplicationMenu(version);
+		this.themeLibrary = new ThemeLibrary({
+			resourcePath: this.resourcePath,
+			configDirPath: this.configDirPath,
+		});
 		this.windowManager = new WindowManager({
 			resourcePath: this.resourcePath,
 			configDirPath: this.configDirPath,
@@ -126,6 +131,7 @@ export default class Application extends EventEmitter {
 			safeMode: this.safeMode,
 			initializeInBackground: initializeInBackground,
 		});
+		this.themeLibrary.setWindowManager(this.windowManager);
 		this.systemTrayManager = new SystemTrayManager(process.platform, this);
 		this._databasePhase = "setup";
 

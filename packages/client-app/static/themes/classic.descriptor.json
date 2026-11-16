@@ -1,0 +1,31 @@
+{
+	"id": "classic",
+	"name": "Classic",
+	"author": "Nylas",
+	"version": "1.0.0",
+	"license": "GPL-3.0",
+	"source": "builtin",
+	"status": "ok",
+	"file": "classic.tokens.json",
+	"error": null,
+	"revision": 0,
+	"variants": [
+		"light",
+		"dark"
+	],
+	"swatch": {
+		"light": {
+			"surface": "#f6f6f6",
+			"text": "#231f20",
+			"accent": "#419bf9"
+		},
+		"dark": {
+			"surface": "#333539",
+			"text": "#c0c6cb",
+			"accent": "#5e6a77"
+		}
+	},
+	"report": {
+		"filledRoles": []
+	}
+}

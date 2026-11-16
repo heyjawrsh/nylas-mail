@@ -50,6 +50,13 @@ import StoreRegistry from "./registries/store-registry.js";
 
 import Utils from "./flux/models/utils.js";
 import Config from "./config.js";
+import {
+	BUILTIN_LIBRARY,
+	installLookRuntime,
+} from "./appearance/look-runtime/index.js";
+import { applyLookAttributes } from "./appearance/look-runtime/commit-queue.js";
+import { resolveLook } from "./appearance/look-runtime/resolve-look";
+import { DEFAULT_SIGNALS } from "./appearance/look-runtime/defaults";
 // PackageManager transitively instantiates the flux layer (DatabaseStore
 // singleton at module scope), which reads NylasEnv during construction.
 // Deferred to first access so the environment global exists first.
@@ -253,11 +260,16 @@ export default class NylasEnvConstructor {
 			resourcePath,
 			configDirPath,
 			windowType,
+			appearance,
 		} = this.getLoadSettings();
 
 		document.body.classList.add(`platform-${process.platform}`);
 		document.body.classList.add(`window-type-${windowType}`);
-		document.documentElement.setAttribute("data-look", "");
+		applyLookAttributes(
+			document.documentElement,
+			appearance?.attributes ||
+				resolveLook({}, {}, DEFAULT_SIGNALS, BUILTIN_LIBRARY),
+		);
 
 		// Add 'src/global' to module search path.
 		const globalPath = path.join(resourcePath, "src", "global");
@@ -286,6 +298,7 @@ export default class NylasEnvConstructor {
 
 		// Setup config and load it immediately so it's available to our singletons
 		this.config = new Config({ configDirPath, resourcePath });
+		installLookRuntime(this);
 
 		this.keymaps = new KeymapManager({ configDirPath, resourcePath });
 

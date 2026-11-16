@@ -31,6 +31,7 @@ export default class WindowLauncher {
 		configDirPath,
 		onCreatedHotWindow,
 		config,
+		themeLibrary = global.application?.themeLibrary,
 	}) {
 		this.defaultWindowOpts = {
 			frame: process.platform !== "darwin",
@@ -48,6 +49,8 @@ export default class WindowLauncher {
 			configDirPath,
 		};
 		this.config = config;
+		// WindowManager constructs this launcher before it returns to Application.
+		this.themeLibrary = themeLibrary;
 		this.onCreatedHotWindow = onCreatedHotWindow;
 		if (specMode) return;
 		this.createHotWindow();
@@ -55,6 +58,7 @@ export default class WindowLauncher {
 
 	newWindow(options) {
 		const opts = Object.assign({}, this.defaultWindowOpts, options);
+		opts.appearance = this.themeLibrary?.windowLook(this.config);
 
 		let win;
 		if (this._mustUseColdWindow(opts)) {
@@ -66,6 +70,7 @@ export default class WindowLauncher {
 				this.createHotWindow();
 			}
 			win = this.hotWindow;
+			opts.appearance = this.themeLibrary?.windowLook(this.config);
 
 			const newLoadSettings = Object.assign({}, win.loadSettings(), opts);
 			if (newLoadSettings.windowType === WindowLauncher.EMPTY_WINDOW) {
@@ -86,6 +91,9 @@ export default class WindowLauncher {
 				win.browserWindow.setSize(options.width, options.height);
 			}
 
+			if (opts.appearance) {
+				win.browserWindow.setBackgroundColor(opts.appearance.backgroundColor);
+			}
 			win.setLoadSettings(newLoadSettings);
 
 			setTimeout(() => {
@@ -142,6 +150,7 @@ export default class WindowLauncher {
 		const hotWindowOpts = Object.assign({}, this.defaultWindowOpts);
 		hotWindowOpts.packageLoadingDeferred = true;
 		hotWindowOpts.hidden = DEBUG_SHOW_HOT_WINDOW;
+		hotWindowOpts.appearance = this.themeLibrary?.windowLook(this.config);
 		return hotWindowOpts;
 	}
 }

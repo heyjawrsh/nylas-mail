@@ -30,10 +30,10 @@ export default class PrintWindow {
 				return `<li class="participant"><span>${part.name} &lt;${part.email}&gt;</span></li>`;
 			})
 			.join("");
-		const lookAttributes = ["data-look", "data-theme", "data-variant"]
-			.map((name) => {
-				const value = document.documentElement.getAttribute(name);
-				if (value === null) return "";
+		// The print root carries the caller's full look attribute set (AD-1).
+		const lookAttributes = Array.from(document.documentElement.attributes)
+			.filter(({ name }) => name.startsWith("data-"))
+			.map(({ name, value }) => {
 				const escaped = value
 					.replace(/&/g, "&amp;")
 					.replace(/"/g, "&quot;")

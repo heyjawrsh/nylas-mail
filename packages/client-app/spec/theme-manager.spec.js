@@ -52,42 +52,15 @@ describe("ThemeManager theme listing and activation state", () => {
 	it("adds resolved stylesheet content to the style manager", () => { m.resolveOnLoadPath.mockReturnValue("/theme.css"); m.readFileSync.mockReturnValue("body {}"); const disposable = { dispose: vi.fn() }; globalThis.NylasEnv.styles.addStyleSheet.mockReturnValue(disposable); expect(manager.requireStylesheet("theme")).toBe(disposable); expect(globalThis.NylasEnv.styles.addStyleSheet).toHaveBeenCalledWith("body {}", { sourcePath: "/theme.css", layer: "baseline" }); });
 	it("disposes a previously applied stylesheet", () => { const disposable = { dispose: vi.fn() }; manager.styleSheetDisposablesBySourcePath["/theme.css"] = disposable; manager.removeStylesheet("/theme.css"); expect(disposable.dispose).toHaveBeenCalledOnce(); });
 	it("adds a body class for each active theme", () => { packageManager.getActivePackages.mockReturnValue([theme("ui-light"), theme("solarized")]); manager.addActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-light")).toBe(true); expect(document.body.classList.contains("theme-solarized")).toBe(true); });
-	it("sets Classic light attributes when ui-light is activated", () => {
-		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
+	it.each(["ui-light", "ui-dark", "ui-taiga"])("leaves look-runtime attributes intact when %s activates", (name) => {
+		document.documentElement.setAttribute("data-theme", "classic");
+		document.documentElement.setAttribute("data-variant", "dark");
+		packageManager.getActivePackages.mockReturnValue([theme(name)]);
 		manager.addActiveThemeClasses();
-		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
-		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
-	});
-
-	it("sets Classic dark attributes when switching from ui-light to ui-dark", () => {
-		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
-		manager.addActiveThemeClasses();
-		manager.removeActiveThemeClasses();
-		packageManager.getActivePackages.mockReturnValue([theme("ui-dark"), theme("ui-light")]);
-		manager.addActiveThemeClasses();
-		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
-		expect(document.documentElement.getAttribute("data-variant")).toBe("dark");
-		manager.removeActiveThemeClasses();
-		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
-		manager.addActiveThemeClasses();
-		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
-		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
-	});
-
-	it.each(["ui-taiga"])("removes Classic attributes when switching to %s with the ui-light base", (name) => {
-		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
-		manager.addActiveThemeClasses();
-		manager.removeActiveThemeClasses();
-		packageManager.getActivePackages.mockReturnValue([theme(name), theme("ui-light")]);
-		manager.addActiveThemeClasses();
-		expect(document.documentElement.hasAttribute("data-theme")).toBe(false);
-		expect(document.documentElement.hasAttribute("data-variant")).toBe(false);
 		expect(document.body.classList.contains(`theme-${name}`)).toBe(true);
 		manager.removeActiveThemeClasses();
-		packageManager.getActivePackages.mockReturnValue([theme("ui-light")]);
-		manager.addActiveThemeClasses();
 		expect(document.documentElement.getAttribute("data-theme")).toBe("classic");
-		expect(document.documentElement.getAttribute("data-variant")).toBe("light");
+		expect(document.documentElement.getAttribute("data-variant")).toBe("dark");
 	});
 	it("removes body classes for active themes", () => { document.body.classList.add("theme-ui-dark"); packageManager.getActivePackages.mockReturnValue([theme("ui-dark")]); manager.removeActiveThemeClasses(); expect(document.body.classList.contains("theme-ui-dark")).toBe(false); });
 	it("deactivates every active theme", () => { packageManager.getActivePackages.mockReturnValue([theme("one"), theme("two")]); manager.deactivateThemes(); expect(packageManager.deactivatePackage.mock.calls.map(([name]) => name)).toEqual(["one", "two"]); });

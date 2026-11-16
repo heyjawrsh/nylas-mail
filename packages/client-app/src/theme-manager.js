@@ -13,7 +13,7 @@ import path from "node:path";
 import _ from "underscore";
 import * as _emissary from "emissary";
 const EmitterMixin = _emissary.Emitter || _emissary.default?.Emitter;
-import { Emitter, Disposable, CompositeDisposable } from "event-kit";
+import { Emitter } from "event-kit";
 let File = null;
 try {
 	({ File } = require("pathwatcher"));
@@ -23,7 +23,7 @@ try {
 import fs from "fs-plus";
 import Q from "q";
 
-import _Package from "./package.js";
+import "./package.js";
 
 // Extended: Handles loading and activating available themes.
 //
@@ -412,17 +412,6 @@ ${error.message}\
 		addActiveThemeClasses() {
 			for (var pack of Array.from(this.getActiveThemes())) {
 				document.body.classList.add(`theme-${pack.name}`);
-			}
-			const themeName = this.getActiveTheme()?.name;
-			if (themeName === "ui-light" || themeName === "ui-dark") {
-				document.documentElement.setAttribute("data-theme", "classic");
-				document.documentElement.setAttribute(
-					"data-variant",
-					themeName === "ui-dark" ? "dark" : "light",
-				);
-			} else {
-				document.documentElement.removeAttribute("data-theme");
-				document.documentElement.removeAttribute("data-variant");
 			}
 		}
 

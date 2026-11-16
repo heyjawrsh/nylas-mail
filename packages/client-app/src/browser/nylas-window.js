@@ -69,6 +69,7 @@ module.exports = NylasWindow = (() => {
 
 			const browserWindowOptions = {
 				show: false,
+				backgroundColor: settings.appearance?.backgroundColor,
 				title: title != null ? title : "Nylas Mail",
 				frame,
 				width,

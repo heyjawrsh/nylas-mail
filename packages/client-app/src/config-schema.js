@@ -1,7 +1,38 @@
+const { DEFAULTS } = require("./appearance/look-runtime/defaults");
+
 const __schema = {
 	core: {
 		type: "object",
 		properties: {
+			appearance: {
+				type: "object",
+				properties: {
+					style: { type: "string", default: DEFAULTS.style },
+					theme: { type: "string", default: DEFAULTS.theme },
+					mode: {
+						type: "string",
+						default: DEFAULTS.mode,
+						enum: ["auto", "light", "dark"],
+					},
+					increaseContrast: {
+						type: "string",
+						default: DEFAULTS.increaseContrast,
+						enum: ["system", "on", "off"],
+					},
+					density: {
+						type: "string",
+						default: DEFAULTS.density,
+						enum: ["compact", "comfortable", "spacious"],
+					},
+					textSize: {
+						type: "number",
+						default: DEFAULTS.textSize,
+						minimum: 0.875,
+						maximum: 1.5,
+					},
+					font: { type: "string", default: DEFAULTS.font },
+				},
+			},
 			workspace: {
 				type: "object",
 				properties: {

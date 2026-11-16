@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { expect, test } from "@playwright/test";
 
-import { evaluate, launchApp } from "./app.mjs";
+import { evaluate, launchApp, waitForWindowType } from "./app.mjs";
 import { WINDOWS } from "./windows.mjs";
 
 const require = createRequire(import.meta.url);
@@ -27,15 +27,19 @@ for (const spec of WINDOWS) {
 			await run?.close();
 		});
 
-		test("loads the kernel first and applies Classic light tokens", async () => {
+		test("loads the kernel first with the full resolved Classic look", async () => {
 			const tokens = JSON.parse(
 				readFileSync(
 					new URL("../static/themes/classic.tokens.json", import.meta.url),
 					"utf8",
 				),
 			);
-			const surface = tokens.light.surface.app.$value.hex;
-			const readingSize = tokens.light.type["body-reading"].size.$value.value;
+			const variant = await run.app.evaluate(({ nativeTheme }) =>
+				nativeTheme.shouldUseDarkColors ? "dark" : "light",
+			);
+			const surface = tokens[variant].surface.app.$value.hex;
+			const readingSize =
+				tokens[variant].type["body-reading"].size.$value.value;
 			const state = await evaluate(page, () => {
 				const kernel = document.styleSheets[0];
 				const rule = kernel?.cssRules[0];
@@ -61,9 +65,14 @@ for (const spec of WINDOWS) {
 					kernelId: kernel?.ownerNode.id,
 					isLayerStatement: rule instanceof CSSLayerStatementRule,
 					layers: Array.from(rule?.nameList || []),
-					look: root.getAttribute("data-look"),
-					theme: root.getAttribute("data-theme"),
-					variant: root.getAttribute("data-variant"),
+					attributes: Object.fromEntries(
+						Array.from(root.attributes)
+							.filter(
+								({ name }) =>
+									name.startsWith("data-") && name !== "data-reflow",
+							)
+							.map(({ name, value }) => [name, value]),
+					),
 					surface: getComputedStyle(root)
 						.getPropertyValue("--surface-app")
 						.trim(),
@@ -87,9 +96,15 @@ for (const spec of WINDOWS) {
 			expect(state.kernelId).toBe("nylas-kernel");
 			expect(state.isLayerStatement).toBe(true);
 			expect(state.layers).toEqual(LAYERS);
-			expect(state.look).toBe("");
-			expect(state.theme).toBe("classic");
-			expect(state.variant).toBe("light");
+			expect(state.attributes).toEqual({
+				"data-look": "",
+				"data-theme": "classic",
+				"data-variant": variant,
+				"data-style": "classic",
+				"data-density": "comfortable",
+				"data-text-size": "100",
+				"data-font": "theme",
+			});
 			expect(state.surface).toBe(surface);
 			expect(state.fontSize).toMatch(/^\d+(?:\.\d+)?px$/);
 			expect(state.fontSize).toBe(`${readingSize}px`);
@@ -111,43 +126,117 @@ for (const spec of WINDOWS) {
 		});
 
 		if (spec.type === "default") {
-			test("applies Classic dark tokens when ui-dark is activated", async () => {
+			test("prepares the hot window before population and serves a revisioned library", async () => {
+				const hot = await waitForWindowType(run, "emptyWindow", {
+					ready: () =>
+						!!NylasEnv.lookRuntime &&
+						!!document.documentElement.getAttribute("data-theme"),
+				});
+				const variant = await run.app.evaluate(({ nativeTheme }) =>
+					nativeTheme.shouldUseDarkColors ? "dark" : "light",
+				);
+				const state = await evaluate(hot, async () => {
+					const root = document.documentElement;
+					return {
+						attributes: Object.fromEntries(
+							Array.from(root.attributes)
+								.filter(
+									({ name }) =>
+										name.startsWith("data-") && name !== "data-reflow",
+								)
+								.map(({ name, value }) => [name, value]),
+						),
+						library:
+							await require("electron").ipcRenderer.invoke("get-theme-library"),
+					};
+				});
+				expect(state.attributes).toEqual({
+					"data-look": "",
+					"data-theme": "classic",
+					"data-variant": variant,
+					"data-style": "classic",
+					"data-density": "comfortable",
+					"data-text-size": "100",
+					"data-font": "theme",
+				});
+				expect(state.library.revision).toBeGreaterThanOrEqual(0);
+				expect(state.library.themesFolder).toMatchObject({
+					exists: expect.any(Boolean),
+					writable: expect.any(Boolean),
+				});
+				expect(state.library.descriptors).toContainEqual(
+					expect.objectContaining({
+						id: "classic",
+						status: "ok",
+						css: expect.stringContaining("--surface-app"),
+						revision: expect.any(Number),
+					}),
+				);
+			});
+
+			test("commits one appearance key across main, composer and thread windows", async () => {
+				const composer = await WINDOWS.find(
+					({ type }) => type === "composer",
+				).open(run);
+				const thread = await WINDOWS.find(
+					({ type }) => type === "thread-popout",
+				).open(run);
+				const pages = [page, composer, thread];
 				const tokens = JSON.parse(
 					readFileSync(
 						new URL("../static/themes/classic.tokens.json", import.meta.url),
 						"utf8",
 					),
 				);
+				const originalMode = await evaluate(page, () =>
+					NylasEnv.config.get("core.appearance.mode"),
+				);
+				const readUnchanged = (window) =>
+					evaluate(window, () => {
+						const { mode: _mode, ...appearance } =
+							NylasEnv.config.get("core.appearance") || {};
+						return { themes: NylasEnv.config.get("core.themes"), appearance };
+					});
+				const before = await Promise.all(pages.map(readUnchanged));
 				try {
-					await evaluate(page, () => {
-						NylasEnv.config.set("core.themes", ["ui-dark"]);
-					});
-					await expect
-						.poll(() =>
-							evaluate(page, () =>
-								document.documentElement.getAttribute("data-variant"),
-							),
-						)
-						.toBe("dark");
-					const state = await evaluate(page, () => ({
-						theme: document.documentElement.getAttribute("data-theme"),
-						surface: getComputedStyle(document.documentElement)
-							.getPropertyValue("--surface-app")
-							.trim(),
-					}));
-					expect(state.theme).toBe("classic");
-					expect(state.surface).toBe(tokens.dark.surface.app.$value.hex);
+					await evaluate(page, () =>
+						NylasEnv.config.set("core.appearance.mode", "light"),
+					);
+					for (const window of pages) {
+						await expect
+							.poll(() =>
+								evaluate(window, () =>
+									document.documentElement.getAttribute("data-variant"),
+								),
+							)
+							.toBe("light");
+					}
+					await evaluate(page, () =>
+						NylasEnv.config.set("core.appearance.mode", "dark"),
+					);
+					for (const [index, window] of pages.entries()) {
+						await expect
+							.poll(() =>
+								evaluate(window, () => ({
+									variant:
+										document.documentElement.getAttribute("data-variant"),
+									surface: getComputedStyle(document.documentElement)
+										.getPropertyValue("--surface-app")
+										.trim(),
+								})),
+							)
+							.toEqual({
+								variant: "dark",
+								surface: tokens.dark.surface.app.$value.hex,
+							});
+						expect(await readUnchanged(window)).toEqual(before[index]);
+					}
 				} finally {
-					await evaluate(page, () => {
-						NylasEnv.config.set("core.themes", ["ui-light"]);
-					});
-					await expect
-						.poll(() =>
-							evaluate(page, () =>
-								document.documentElement.getAttribute("data-variant"),
-							),
-						)
-						.toBe("light");
+					await evaluate(
+						page,
+						(mode) => NylasEnv.config.set("core.appearance.mode", mode),
+						originalMode,
+					);
 				}
 			});
 		}

@@ -112,6 +112,10 @@ globalThis.NylasEnv = {
 };
 globalThis.$n = { PackageManager: { default: m.PackageManager }, Spellchecker: { default: { check: vi.fn() } } };
 
+vi.mock("../src/appearance/look-runtime/index.js", async (importOriginal) => ({
+	...await importOriginal(), installLookRuntime: vi.fn(),
+}));
+const { installLookRuntime } = await import("../src/appearance/look-runtime/index.js");
 const { default: NylasEnv } = await import("../src/nylas-env.js");
 
 const loadSettings = (overrides = {}) => ({
@@ -133,6 +137,22 @@ describe("NylasEnv initialized service surfaces", () => {
 		initializationResult = env.initialize();
 	});
 
+	it("sets the full Classic fallback before installing the look runtime", () => {
+		expect(installLookRuntime).toHaveBeenCalledWith(env);
+		for (const [name, value] of Object.entries({ "data-look": "", "data-theme": "classic", "data-variant": "light", "data-style": "classic", "data-density": "comfortable", "data-text-size": "100", "data-font": "theme" })) {
+			expect(document.documentElement.getAttribute(name)).toBe(value);
+		}
+	});
+	it("applies main's complete appearance before services or React mount, including hot windows", () => {
+		const attributes = { "data-look": "", "data-theme": "classic", "data-variant": "dark", "data-style": "classic", "data-density": "compact", "data-text-size": "125", "data-font": "theme", "data-forced-colors": "", "data-reduced-motion": "", "data-reduced-transparency": "" };
+		NylasEnv.loadSettings = loadSettings({ windowType: "emptyWindow", packageLoadingDeferred: true, appearance: { attributes } });
+		installLookRuntime.mockImplementationOnce(() => {
+			for (const [name, value] of Object.entries(attributes)) expect(document.documentElement.getAttribute(name)).toBe(value);
+		});
+		const mount = vi.spyOn(env, "initializeReactRoot");
+		env.initialize();
+		expect(mount).not.toHaveBeenCalled();
+	});
 	it("constructs the commands surface", () => { expect(env.commands).toBeInstanceOf(m.CommandRegistry); });
 	it("adds commands through the public commands surface", () => { expect(env.commands.add("body", { "mail:archive": vi.fn() })).toBe("command-disposable"); });
 	it("dispatches commands through the public commands surface", () => { expect(env.commands.dispatch(document.body, "mail:archive")).toBe(true); });
