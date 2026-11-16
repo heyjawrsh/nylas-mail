@@ -3,7 +3,7 @@ title: 'The legacy map and port codemod exist'
 type: 'feature'
 ticket: '3'
 created: '2026-11-16'
-status: built
+status: done
 baseline_revision: '7b4d6326f2bcd1424f09e2fb9505c2dea806db32'
 route: 'full'
 route_source: 'auto'
